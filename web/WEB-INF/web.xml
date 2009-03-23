@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>K-Samsök</display-name>
+
+	<!-- ladda lucene vid uppstart först -->
+    <servlet>
+        <servlet-name>Lucene</servlet-name>
+        <servlet-class>se.raa.ksamsok.lucene.LuceneServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+    </servlet>
+
+	<!-- sen skördeservleten -->
+    <servlet>
+        <servlet-name>Harvester</servlet-name>
+        <servlet-class>se.raa.ksamsok.harvest.HarvesterServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+    </servlet>
+
+	<!-- resten laddas vid användning -->
+    <servlet>
+        <servlet-name>SRU</servlet-name>
+        <servlet-class>se.raa.ksamsok.sru.SRUServlet</servlet-class>
+    </servlet>
+
+	<!--
+		Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen
+		(pathInfo) matchar [/resurser]/*/*/*[/*]. Övriga requests skickas vidare till
+		namngivna dispatchers (jsp och default) vilka finns som default i tomcat.
+		Detta för att kunna hantera dynamisk uppslagning av uri:s där prefixen är okända,
+		men ändå kunna leverera jsp, js och bilder osv. 
+	 -->
+    <servlet>
+        <servlet-name>Resolver</servlet-name>
+        <servlet-class>se.raa.ksamsok.resolve.ResolverServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SRU</servlet-name>
+        <url-pattern>/sru</url-pattern>
+    </servlet-mapping>
+
+	<!--  matchar "allt" -->
+    <servlet-mapping>
+        <servlet-name>Resolver</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+	<resource-ref>
+		<description>Databasuppkoppling</description>
+		<res-ref-name>jdbc/harvestdb</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Administration</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ksamsok</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>K-Samsök, administration</realm-name>
+	</login-config>
+
+	<security-role>
+		<description>Administratörer, ksamsök</description>
+		<role-name>ksamsok</role-name>
+	</security-role>
+</web-app>

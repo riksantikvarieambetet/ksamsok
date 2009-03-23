@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/EntityType">
+	
+	<EntityType rdf:ID="object">
+		<name>Objekt/föremål</name>
+		<description>Objektbeskrivningar, metadata om objekt.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="objectImage">
+		<name>Objektavbildning</name>
+		<description>Objektavbildningar.</description>
+	</EntityType>
+	
+	<EntityType rdf:ID="photo">
+		<name>Foto</name>
+		<description>Data om fotografier.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="interactiveResource">
+		<name>Bearbetning/interaktiv resurs</name>
+		<description>Data om bearbetningar och interaktiva resurser som texter, Internet-sidor, multimedia.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="video">
+		<name>Film/video</name>
+		<description>Data om rörlig bild.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="sound">
+		<name>Ljud</name>
+		<description>Data om ljudupptagning.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="document">
+		<name>Dokument</name>
+		<description>Data om dokument och handlingar.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="book">
+		<name>Bok</name>
+		<description>Data om en bok, rapport.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="drawing">
+		<name>Teckning</name>
+		<description>Data om en teckning.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="art">
+		<name>Konstverk</name>
+		<description>Data om ett konstverk.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="blueprint">
+		<name>Ritning</name>
+		<description>Data om en ritning.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="collection">
+		<name>Samling</name>
+		<description>Data om en samling eller annat urval.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="site">
+		<name>Miljö</name>
+		<description>Data om miljöer eller platsbundna objekt som fornlämningar och bebyggelse.</description>
+	</EntityType>
+	
+</rdf:RDF>

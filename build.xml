@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="ksamsok" basedir="." default="war">
+
+    <description>
+        Ant-byggfil, ksamsok.
+    </description>
+
+    <target name="init">
+        <tstamp/>
+        <property environment="env"/>
+
+        <property file="local.properties"/>
+
+        <property name="project.build.dir" value="${basedir}/build"/>
+
+        <property name="project.name" value="ksamsok"/>
+        <property name="project.version" value="${DSTAMP}"/>
+        <property name="project.src.dir" value="${basedir}/src"/>
+        <property name="project.src.lib.dir" value="${basedir}/lib"/>
+        <property name="jar.name"
+            value="${project.name}-${project.version}.jar"/>
+        <property name="war.name"
+            value="${project.name}-${project.version}.war"/>
+        <property name="short.war.name"
+            value="${project.name}.war"/>
+
+        <!-- för rpm, öka vid ny version... -->
+		<property name="major.minor" 	value="0.1" />
+		<property name="release" 		value="6" />
+
+        <property name="javac.debug" value="true"/>
+        <property name="javac.optimize" value="true"/>
+
+        <path id="project.classpath">
+            <fileset dir="${project.src.lib.dir}">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+
+        <fileset id="deploy.jars" dir="${project.src.lib.dir}">
+            <patternset id="deploy.jars.pattern" />
+        </fileset>
+
+		<!-- Konfigurationsfiler -->
+        <patternset id="conf.files">
+            <include name="**/*.properties"/>
+            <include name="**/*.xml"/>
+            <include name="**/*.dtd"/>
+            <!--  snowball/lucene, stopp-ordsfiler -->
+            <include name="**/*_stop.txt"/>
+            <!-- uri till namnuppslagning -->
+            <include name="**/*.rdf"/>
+        </patternset>
+
+        <mkdir dir="${project.build.dir}"/>
+		<mkdir dir="${project.build.dir}/lib"/>
+		<mkdir dir="${project.build.dir}/war"/>
+    </target>
+
+    <target name="compile" depends="init"
+		description="Kompilerar java-klasser.">
+        <javac srcdir="${project.src.dir}"
+            destdir="${project.build.dir}"
+            classpathref="project.classpath"
+            debug="${javac.debug}" optimize="${javac.optimize}">
+            <patternset>
+                <include name="**/*.java"/>
+            </patternset>
+        </javac>
+    </target>
+
+	<!-- Bygger en JAR -->
+	<target name="jar" depends="init,compile,conf-copy"
+		description="Skapar en JAR.">
+		<jar jarfile="${project.build.dir}/lib/${jar.name}"
+			basedir="${project.build.dir}"
+			update="false" duplicate="preserve" index="true">
+			<patternset>
+				<include name="**/*.class"/>
+			</patternset>
+			<patternset refid="conf.files"/>
+		</jar>
+	</target>
+
+	<!-- Bygger en WAR -->
+	<target name="war" depends="jar" description="Skapar en WAR för deployment.">
+		<war excludes="**/web.xml" basedir="${basedir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${basedir}/web/WEB-INF/web.xml">
+			<lib dir="${project.build.dir}/lib">
+				<include name="${jar.name}" />
+			</lib>
+			<lib dir="${project.src.lib.dir}">
+				<include name="*.jar" />
+				<exclude name="servlet-*.jar" />
+			</lib>			
+		</war>
+		<copy file="${project.build.dir}/war/${war.name}" tofile="${project.build.dir}/war/${short.war.name}"/>
+	</target>
+
+	<target name="conf-copy" depends="init">
+        <copy todir="${project.build.dir}">
+            <fileset dir="${project.src.dir}">
+                <patternset refid="conf.files"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build" depends="init" description="Bygger.">
+        <antcall target="compile"/>
+        <antcall target="conf-copy"/>
+    </target>
+
+    <target name="clean" depends="init"
+        description="Tar bort build-katalogen.">
+        <delete includeemptydirs="true" >
+            <fileset dir="${project.build.dir}">
+                <patternset>
+                    <include name="**"/>
+                </patternset>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="javadoc" depends="init"
+		description="Genererar javadoc.">
+        <javadoc sourcepath="${project.src.dir}"
+        	classpathref="project.classpath"
+            destdir="${project.build.dir}/javadoc"
+            packagenames="se.raa.ksamsok.*"
+            defaultexcludes="yes"
+            windowtitle="K-samsök"
+            access="package"
+            use="true"
+            >
+        </javadoc>
+    </target>
+
+	<target name="rpm" depends="war" description="Skapa rpm för raä:s driftmiljö">
+
+		<!-- skapa RPM-struktur -->
+		<mkdir dir="${project.build.dir}/rpm/RPMS" />
+		<mkdir dir="${project.build.dir}/rpm/SPECS" />
+		<mkdir dir="${project.build.dir}/rpm/SOURCES" />
+		<mkdir dir="${project.build.dir}/rpm/BUILD" />
+		<mkdir dir="${project.build.dir}/rpm/SRPMS" />
+		<mkdir dir="${project.build.dir}/rpm/INSTALL" />
+
+		<copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec" />
+		<replace file="${project.build.dir}/rpm/SPECS/ksamsok.spec" token="@@KSAMSOKVERSION@@" value="${major.minor}" />
+		<replace file="${project.build.dir}/rpm/SPECS/ksamsok.spec" token="@@KSAMSOKRELEASE@@" value="${release}" />
+		<!-- kopiera in så som det ska se ut sen efter installation -->
+		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/webapps/">
+			<fileset dir="${project.build.dir}/war">
+				<include name="ksamsok.war"/>
+			</fileset>
+		</copy>
+		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/conf/">
+			<fileset dir="rpm">
+				<include name="context.xml"/>
+				<include name="tomcat-users.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/lib/">
+			<fileset dir="rpm">
+				<include name="oracle-*"/>
+			</fileset>
+		</copy>
+
+		<!--
+			rpm-task:en funkar bara bra med ant 1.7 (dock otestat :) ) och på linux med rpmbuild installerat
+			kommandot ska motsvara: (OBS att det ska vara 2x '-' överallt i argumenten
+			istf bara ett som nu, men pga att detta är en xml-kommentar funkar det ej att skriva två '-')
+
+			rpmbuild -bb -buildroot=${project.build.dir}/rpm/INSTALL -clean -rmsource -rmspec -define _topdir${project.build.dir}/rpm ${project.build.dir}/rpm/SPECS/ksamsok.spec
+
+			vilket man kan köra manuellt om man byter ut sökvägarna förstås
+		 -->
+		<rpm specfile="ksamsok.spec" topDir="${project.build.dir}/rpm" command="--bb --buildroot=${project.build.dir}/rpm/INSTALL" cleanbuilddir="true" removesource="true" removespec="true"/>
+
+		<!-- kopiera till rpm-dist, onödigt kanske men... -->
+		<mkdir dir="${project.build.dir}/rpm-dist"/>
+		<copy todir="${project.build.dir}/rpm-dist" file="${project.build.dir}/rpm/RPMS/noarch/raa-ksamsok-8080-${major.minor}-${release}.noarch.rpm" />
+
+	</target>
+
+</project>

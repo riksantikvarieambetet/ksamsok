@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/DataQuality">
+	
+	<DataQuality rdf:ID="raw">
+		<name>Rådata</name>
+		<description>Tjänsten innehåller i huvudsak rå, generell information som skapats för att tillgodose den egna organisationens behov.</description>
+	</DataQuality>
+	
+	<DataQuality rdf:ID="processed">
+		<name>Bearbetad</name>
+		<description>Tjänsten innehåller bearbetad, mer utförlig, information som är redaktionellt anpassad och kanske även medvetet utvald.</description>
+	</DataQuality>
+</rdf:RDF>

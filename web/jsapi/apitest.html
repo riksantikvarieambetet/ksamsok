@@ -1,0 +1,24 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="http://127.0.0.1:8080/ksamsok/jsapi/ksamsok_api.js"></script>
+	<script type="text/javascript">
+		function searchAndShow() {
+			KSamsok.search(document.getElementById('text').value, "setData");
+		}
+		function setData(data) {
+			// en array med en strängar innehållande träffarnas presentations-xml
+			var str = "";
+			for (var i = 0; i < data.length; ++i) {
+				str += "\n\n" + data[i];
+			}
+			document.getElementById('visa').value = str;
+		}
+	</script>
+</head>
+<body>
+<input type="text" id="text"/><button onclick="searchAndShow();">S&ouml;k</button>
+<br/>
+<textarea rows="30" cols="120" id="visa"></textarea>
+</body>
+</html>

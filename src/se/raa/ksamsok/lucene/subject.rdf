@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/Subject">
+	
+	<Subject rdf:ID="site">
+		<name>Miljö</name>
+		<description>Anger att tjänsten innehåller miljö- eller platsbeskrivningar eller geografiska företeelser (objekt) som fornlämningar eller bebyggelse.</description>
+	</Subject>
+
+	<Subject rdf:ID="archaeology">
+		<name>Arkeologi</name>
+		<description>Anger att tjänsten innehåller information om arkeologiskt (jordfunnet) material.</description>
+	</Subject>
+
+	<Subject rdf:ID="art">
+		<name>Konst</name>
+		<description>Anger att tjänsten innehåller konst.</description>
+	</Subject>
+
+	<Subject rdf:ID="culturalHistory">
+		<name>Kulturhistoria</name>
+		<description>Anger att tjänsten innehåller kulturhistoria.</description>
+	</Subject>
+
+	<Subject rdf:ID="naturalHistory">
+		<name>Natur</name>
+		<description>Anger att tjänsten innehåller information om naturlämningar eller ekofakter.</description>
+	</Subject>
+
+</rdf:RDF>
