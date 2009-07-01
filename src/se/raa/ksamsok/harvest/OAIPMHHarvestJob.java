@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -192,9 +193,10 @@ public class OAIPMHHarvestJob extends HarvestJob {
             }
             os.write(listRecords.toString().getBytes("UTF-8"));
             os.write("\n".getBytes("UTF-8"));
+            // om token är "" betyder det ingen resumption
             String resumptionToken = listRecords.getResumptionToken();
             // hämta totala antalet (om det skickas) fast bara första gången
-            if (completeListSize < 0 && c == 0 && resumptionToken != null) {
+            if (completeListSize < 0 && c == 0 && StringUtils.isNotBlank(resumptionToken)) {
             	try {
             		completeListSize = Integer.parseInt(listRecords.getSingleString(
             				"/oai20:OAI-PMH/oai20:ListRecords/oai20:resumptionToken/@completeListSize"));
