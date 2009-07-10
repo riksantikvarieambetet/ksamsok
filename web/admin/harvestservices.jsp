@@ -56,7 +56,7 @@
    		}
 %>
 				<tr class="<%= className %>">
-					<td><a href="editservice.jsp?serviceId=<%= serviceId %>"><%= serviceId %></a></td>
+					<td><a href="editservice.jsp?serviceId=<%= java.net.URLEncoder.encode(serviceId, "ISO-8859-1") %>"><%= serviceId %></a></td>
 					<td><%= service.getName() %></td>
 					<td><%= cronstring %></td>
 					<td><%= service.getHarvestURL() + (service.getHarvestSetSpec() != null ? " (" + service.getHarvestSetSpec() + ")" : "") %></td>
