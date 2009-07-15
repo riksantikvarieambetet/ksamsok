@@ -91,6 +91,10 @@
 			<lib dir="${project.src.lib.dir}">
 				<include name="*.jar" />
 				<exclude name="servlet-*.jar" />
+				<!-- oracle-filer måste läggas i tomcat/lib och kan ej vara med
+				      i war-filen pga diverse klassladdarproblem -->
+				<exclude name="ora10-*.jar" />
+				<exclude name="oracle-*.jar" />
 			</lib>			
 		</war>
 		<copy file="${project.build.dir}/war/${war.name}" tofile="${project.build.dir}/war/${short.war.name}"/>

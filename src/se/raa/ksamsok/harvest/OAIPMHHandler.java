@@ -17,6 +17,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.spatial.GMLDBWriter;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
+import se.raa.ksamsok.spatial.GMLUtil;
 
 /**
  * Handler för xml-parsning som lagrar poster i repositoryt och gör commit med jämna
@@ -30,6 +33,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	private static final int XACT_LIMIT = 1000;
 
 	Connection c;
+	GMLDBWriter gmlDBWriter;
 	HarvestService service;
 	ContentHelper contentHelper;
 	String oaiURI;
@@ -56,6 +60,7 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.OAIPMHHandler");
 
+
 	public OAIPMHHandler(StatusService ss, HarvestService service, ContentHelper contentHelper, ServiceMetadata sm, Connection c, Timestamp ts) {
 		this.ss = ss;
 		this.service = service;
@@ -63,6 +68,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		this.c = c;
 		this.sm = sm;
 		this.ts = ts;
+		gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
 	}
 
 	@Override
@@ -234,6 +240,9 @@ public class OAIPMHHandler extends DefaultHandler {
 		}
 		PreparedStatement pst = null;
 		try {
+			if (gmlDBWriter != null) {
+				gmlDBWriter.deleteAllForService();
+			}
 			pst = c.prepareStatement("delete from content where serviceId = ?");
 			pst.setString(1, service.getId());
 			int num = pst.executeUpdate();
@@ -257,7 +266,21 @@ public class OAIPMHHandler extends DefaultHandler {
 			logger.debug("* Tar bort oaiURI=" + oaiURI + " från tjänst med id: " + service.getId());
 		}
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
+			// bort med ev spatialt data
+			if (gmlDBWriter != null) {
+				// hämta ut uri:n då oai-uri bara är intern identifierare
+				pst = c.prepareStatement("select uri from content where oaiuri = ?");
+				pst.setString(1, oaiURI);
+				rs = pst.executeQuery();
+				if (rs.next()) {
+					String uri = rs.getString("uri");
+					gmlDBWriter.delete(uri);
+				}
+				// stäng för återanvändning (rs stängs i finally)
+				pst.close();
+			}
 			pst = c.prepareStatement("delete from content where serviceId = ? and oaiuri = ?");
 			pst.setString(1, service.getId());
 			pst.setString(2, oaiURI);
@@ -269,7 +292,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			}
 			commitIfLimitReached();
 		} finally {
-			DBBasedManagerImpl.closeDBResources(null, pst, null);
+			DBBasedManagerImpl.closeDBResources(rs, pst, null);
 		}
 	}
 	
@@ -280,9 +303,11 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param oaiURI OAI-identifierare
 	 * @param uri (rdf-)identifierare
 	 * @param xmlContent xml-innehåll
+	 * @param gmlInfoHolder hållare för geometrier mm
 	 * @throws Exception
 	 */
-	protected void insertRecord(String oaiURI, String uri, String xmlContent) throws Exception {
+	protected void insertRecord(String oaiURI, String uri, String xmlContent,
+			GMLInfoHolder gmlInfoHolder) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Stoppar in data för oaiURI=" + oaiURI + ", uri=" +
 					uri + " för tjänst med id: " + service.getId());
@@ -298,6 +323,10 @@ public class OAIPMHHandler extends DefaultHandler {
 			pst.setCharacterStream(4, new StringReader(xmlContent), xmlContent.length());
 			pst.setTimestamp(5, ts);
 			pst.executeUpdate();
+			// stoppa in ev spatialdata om vi har nåt
+			if (gmlDBWriter != null && gmlInfoHolder != null && gmlInfoHolder.hasGeometries()) {
+				gmlDBWriter.insert(gmlInfoHolder);
+			}
 			++numInsertedXact;
 			if (logger.isDebugEnabled()) {
 				logger.debug("* Stoppade in data för oaiURI=" + oaiURI + ", uri=" +
@@ -315,9 +344,11 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param oaiURI OAI-identifierare
 	 * @param uri (rdf-)identifierare
 	 * @param xmlContent xml-innehåll
+	 * @param gmlInfoHolder hållare för geometrier mm
 	 * @throws Exception
 	 */
-	protected void updateRecord(String oaiURI, String uri, String xmlContent) throws Exception {
+	protected void updateRecord(String oaiURI, String uri, String xmlContent,
+			GMLInfoHolder gmlInfoHolder) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Uppdaterar data för oaiURI=" + oaiURI + ", uri=" +
 					uri + " för tjänst med id: " + service.getId());
@@ -332,6 +363,11 @@ public class OAIPMHHandler extends DefaultHandler {
 			pst.setCharacterStream(4, new StringReader(xmlContent), xmlContent.length());
 			pst.setString(5, uri);
 			pst.executeUpdate();
+			// spara gml (obs, inget villkor på att det finns geometrier då det kanske
+			// fanns gamla som nu ska tas bort)
+			if (gmlDBWriter != null && gmlInfoHolder != null) {
+				gmlDBWriter.update(gmlInfoHolder);
+			}
 			++numUpdatedXact;
 			if (logger.isDebugEnabled()) {
 				logger.debug("* Uppdaterade data för oaiURI=" + oaiURI + ", uri=" +
@@ -353,8 +389,13 @@ public class OAIPMHHandler extends DefaultHandler {
 	 */
 	protected void insertOrUpdateRecord(String oaiURI, String xmlContent) throws Exception {
 		String uri = null;
+		GMLInfoHolder gmlih = null;
+		if (gmlDBWriter != null) {
+			// om vi ska hantera spatiala data, skapa en datahållare att fylla på
+			gmlih = new GMLInfoHolder();
+		}
 		try {
-			uri = contentHelper.extractIdentifier(xmlContent);
+			uri = contentHelper.extractIdentifierAndGML(xmlContent, gmlih);
 			PreparedStatement pst = null;
 			ResultSet rs = null;
 			try {
@@ -364,13 +405,13 @@ public class OAIPMHHandler extends DefaultHandler {
 					pst.setString(1, uri);
 					rs = pst.executeQuery();
 					if (rs.next()) {
-						updateRecord(oaiURI, uri, xmlContent);
+						updateRecord(oaiURI, uri, xmlContent, gmlih);
 					} else {
-						insertRecord(oaiURI, uri, xmlContent);
+						insertRecord(oaiURI, uri, xmlContent, gmlih);
 					}
 				} else {
 					// insert bara
-					insertRecord(oaiURI, uri, xmlContent);
+					insertRecord(oaiURI, uri, xmlContent, gmlih);
 				}
 			} finally {
 				DBBasedManagerImpl.closeDBResources(rs, pst, null);

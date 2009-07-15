@@ -6,8 +6,11 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import javax.vecmath.Point2d;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -40,7 +43,12 @@ import org.jrdf.graph.URIReference;
 import org.jrdf.parser.rdfxml.GraphRdfXmlParser;
 import org.xml.sax.InputSource;
 
+import com.pjaol.search.geo.utils.projections.CartesianTierPlotter;
+import com.pjaol.search.geo.utils.projections.SinusoidalProjector;
+
 import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
+import se.raa.ksamsok.spatial.GMLUtil;
 
 /**
  * Klass som hanterar k-samsöksformat (xml/rdf).
@@ -122,6 +130,7 @@ public class SamsokContentHelper extends ContentHelper {
 	private static final URI uri_rMunicipality = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#municipality");
 	private static final URI uri_rProvince = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#province");
 	private static final URI uri_rParish = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#parish");
+	private static final URI uri_rCoordinates = URI.create(uriPrefixKSamsok + "coordinates");
 
 	// vem-kontext
 	private static final URI uri_rFirstName = URI.create("http://xmlns.com/foaf/0.1/#firstName");
@@ -165,12 +174,21 @@ public class SamsokContentHelper extends ContentHelper {
 
 	// map med uri -> värde för indexering
 	private static final Map<String,String> uriValues = new HashMap<String,String>();
+	// lista med cartesiantierplotterinstanser
+	private static final List<CartesianTierPlotter> ctps = new LinkedList<CartesianTierPlotter>();
+
 	static {
 		// läs in uri-värden för uppslagning
 		readURIValueResource("entitytype.rdf", uri_r__Name);
 		readURIValueResource("subject.rdf", uri_r__Name);
 		readURIValueResource("dataquality.rdf", uri_r__Name);
 		readURIValueResource("contexttype.rdf", uri_rContextLabel);
+
+		// init av saker för locallucenes punkt + distans-sökning
+		SinusoidalProjector project = new SinusoidalProjector();
+		for (int i = 2; i <= 15; ++i){
+			ctps.add(new CartesianTierPlotter(i ,project ));
+		}
 	}
 
 	public SamsokContentHelper() {
@@ -185,7 +203,6 @@ public class SamsokContentHelper extends ContentHelper {
 		StringReader r = null;
 		Graph graph = null;
 		String identifier = null;
-		// TODO: är detta ett bra sätt att läsa ut rdf?
 		try {
 			graph = jrdfFactory.getNewGraph();
 			GraphRdfXmlParser parser = new GraphRdfXmlParser(graph, new MemMapFactory());
@@ -265,7 +282,7 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rMunicipality = elementFactory.createURIReference(uri_rMunicipality);
 			URIReference rProvince = elementFactory.createURIReference(uri_rProvince);
 			URIReference rParish = elementFactory.createURIReference(uri_rParish);
-
+			URIReference rCoordinates = elementFactory.createURIReference(uri_rCoordinates);
 			// vem
 			URIReference rFirstName = elementFactory.createURIReference(uri_rFirstName);
 			URIReference rSurname = elementFactory.createURIReference(uri_rSurname);
@@ -461,6 +478,8 @@ public class SamsokContentHelper extends ContentHelper {
 			ip.setCurrent(relIx, false);
 			extractValue(graph, s, rVisualizes, null, ip);
 
+			LinkedList<String> gmlGeometries = new LinkedList<String>();
+
 			// hämta ut diverse data ur en kontext-nod
 			// värden från kontexten indexeras dels i angivet index och dels i
 			// ett index per kontexttyp genom att skicka in ett prefix till ip.setCurrent()
@@ -573,9 +592,6 @@ public class SamsokContentHelper extends ContentHelper {
 
 					// time
 
-					// TODO: acceptera enligt iso 8601 men indexera bara årtalet(?)
-					//       fixa också så att minus-år och intervall hanteras
-					//       gäller såklart både fromtime och totime
 					ip.setCurrent(IX_FROMTIME, contextType);
 					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rFromTime, ip));
 
@@ -602,6 +618,12 @@ public class SamsokContentHelper extends ContentHelper {
 
 					ip.setCurrent(IX_EVENTAUTH, contextType);
 					extractSingleValue(graph, cS, rEventAuth, ip);
+
+					// hämta ut gml
+					String gml = extractSingleValue(graph, cS, rCoordinates, null);
+					if (gml != null && gml.length() > 0) {
+						gmlGeometries.add(gml);
+					}
 
 //					ip.setCurrent(IX_TIMETEXT, contextType);
 //					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rTimeText, ip));
@@ -647,6 +669,31 @@ public class SamsokContentHelper extends ContentHelper {
 				luceneDoc.add(new Field(I_IX_PRES, pres.getBytes("UTF-8"), Field.Store.COMPRESS));
 			}
 
+			// lagra den första geometrins centroid
+			if (gmlGeometries.size() > 0) {
+				String gml = gmlGeometries.getFirst();
+				if (gmlGeometries.size() > 1 && logger.isInfoEnabled()) {
+					logger.info("Hämtade " + gmlGeometries.size() +
+							" geometrier för " + identifier + ", kommer bara " +
+							"att använda den första");
+				}
+				try {
+					Point2d p = GMLUtil.getLonLatCentroid(gml);
+					luceneDoc.add(new Field(I_IX_LON, transformNumberToLuceneString(p.x),Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+					luceneDoc.add(new Field(I_IX_LAT, transformNumberToLuceneString(p.y),Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+					int ctpsize = ctps.size();
+					for (int i = 0; i < ctpsize; i++){
+						CartesianTierPlotter ctp = ctps.get(i);
+						luceneDoc.add(new Field(ctp.getTierFieldName(),
+								transformNumberToLuceneString(ctp.getTierBoxId(p.y, p.x)),
+								Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+					}
+				} catch (Exception e) {
+					addProblemMessage("Fel vid indexering av geometrier för " + identifier +
+							": " + e.getMessage());
+				}
+			}
+
 			// TODO: ska detta lagras av lucene, vi kan annars hämta det från db
 			//       ska det lagras av lucene måste vi helst här se till att det lagras utan
 			//       xml-deklaration pss som för pres ovan
@@ -670,7 +717,7 @@ public class SamsokContentHelper extends ContentHelper {
 	}
 
 	@Override
-	public String extractIdentifier(String xmlContent) throws Exception {
+	public String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception {
 		StringReader r = null;
 		String identifier = null;
 		Graph graph = null;
@@ -683,15 +730,65 @@ public class SamsokContentHelper extends ContentHelper {
 			GraphElementFactory elementFactory = graph.getElementFactory();
 			URIReference rdfType = elementFactory.createURIReference(uri_rdfType);
 			URIReference samsokEntity = elementFactory.createURIReference(uri_samsokEntity);
+			SubjectNode s = null;
 			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
 				if (identifier != null) {
 					throw new Exception("Ska bara finnas en entity");
 				}
-				identifier = triple.getSubject().toString();
+				s = triple.getSubject();
+				identifier = s.toString();
 			}
 			if (identifier == null) {
 				logger.error("Kunde inte extrahera identifierare ur rdf-grafen:\n" + xmlContent);
 				throw new Exception("Kunde inte extrahera identifierare ur rdf-grafen");
+			}
+			if (gmlInfoHolder != null) {
+				try {
+					// sätt identifier först då den används för deletes etc även om det går
+					// fel nedan
+					gmlInfoHolder.setIdentifier(identifier);
+					URIReference rCoordinates = elementFactory.createURIReference(uri_rCoordinates);
+					URIReference rContext = elementFactory.createURIReference(uri_rContext);
+					// hämta ev gml från kontext-noder
+					LinkedList<String> gmlGeometries = new LinkedList<String>();
+					for (Triple triple: graph.find(s, rContext, AnyObjectNode.ANY_OBJECT_NODE)) {
+						if (triple.getObject() instanceof SubjectNode) {
+							SubjectNode cS = (SubjectNode) triple.getObject();
+							String gml = extractSingleValue(graph, cS, rCoordinates, null);
+							if (gml != null && gml.length() > 0) {
+								// vi konverterar till SWEREF 99 TM då det är vårt standardformat
+								// dessutom fungerar konverteringen som en kontroll av om gml:en är ok
+								gml = GMLUtil.convertTo(gml, SWEREF99_3006);
+								gmlGeometries.add(gml);
+							}
+						}
+					}
+					gmlInfoHolder.setGmlGeometries(gmlGeometries);
+					// itemTitle kan vara 0M så om den saknas försöker vi ta itemName och
+					// om den saknas, itemType
+					URIReference rItemTitle = elementFactory.createURIReference(uri_rItemTitle);
+					String name = StringUtils.trimToNull(extractValue(graph, s, rItemTitle, null, null));
+					if (name == null) {
+						URIReference rItemName = elementFactory.createURIReference(uri_rItemName);
+						name = StringUtils.trimToNull(extractValue(graph, s, rItemName, null, null));
+						if (name == null) {
+							URIReference rItemType = elementFactory.createURIReference(uri_rItemType);
+							String typeUri = extractSingleValue(graph, s, rItemType, null);
+							if (typeUri != null) {
+								name = uriValues.get(typeUri);
+							}
+						}
+					}
+					if (name == null) {
+						name = "Okänt objekt";
+					}
+					gmlInfoHolder.setName(name);
+				} catch (Exception e) {
+					//logger.error("Fel vid gmlhantering för " + identifier, e);
+					// rensa mängd med geometrier
+					gmlInfoHolder.setGmlGeometries(null);
+					addProblemMessage("Problem med gml för " + identifier + ": " + e.getMessage());
+				}
 			}
 		} finally {
 			if (r != null) {
@@ -705,10 +802,6 @@ public class SamsokContentHelper extends ContentHelper {
 		}
 		return identifier;
 	}
-
-	//private String extractValue(Graph graph, SubjectNode s, URIReference ref, URIReference refRef) throws Exception {
-	//	return extractValue(graph, s, ref, refRef);
-	//}
 
 	// läser ut ett värde ur subjektnoden eller subjektnodens objektnod om denna är en subjektnod
 	// och lägger till värdet mha indexprocessorn
@@ -891,7 +984,10 @@ public class SamsokContentHelper extends ContentHelper {
 		return sw.toString();
 	}
 
-	// klass som hanterar indexprocessning (översättning av värden, hur de lagras av lucene etc) 
+	/**
+	 * Klass som hanterar indexprocessning (översättning av värden, hur de
+	 * lagras av lucene etc).
+	 */
 	private static class IndexProcessor {
 		final Document doc;
 		String[] indexNames;
@@ -1100,7 +1196,7 @@ public class SamsokContentHelper extends ContentHelper {
 	}
 
 	// hjälpmetod som tar ut suffixet ur strängen om den startar med inskickad startsträng
-	// och försöker tolka värdet som en sträng om asNumber är sant
+	// och försöker tolka värdet som ett heltal om asNumber är sant
 	private static String restIfStartsWith(String str, String start, boolean asNumber) {
 		String value = null;
 		if (str.startsWith(start)) {

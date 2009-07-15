@@ -8,10 +8,24 @@
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
 <%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
 <%@page import="org.apache.lucene.search.TopDocs"%>
-<%@page import="org.apache.lucene.search.ScoreDoc"%><html>
+<%@page import="org.apache.lucene.search.ScoreDoc"%>
+<%@page import="org.apache.solr.util.NumberUtils"%>
+<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%><html>
 	<head>
 		<title>Sök</title>
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript">
+			function toggle(id) {
+				var el = document.getElementById(id);
+				if (el) {
+					if (el.className.indexOf('hide') >= 0) {
+						el.className = el.className.replace('hide', '');
+					} else {
+						el.className = el.className + ' hide';
+					}
+				}
+			}
+		</script>
 	</head>
 <%
 	String query = request.getParameter("query");
@@ -34,9 +48,11 @@
 	TopDocs hits = null;
 	String message = "";
 	IndexSearcher s = null;
+	HarvestRepositoryManager hrm = null;
 	if (query.length() > 0) {
 		try {
 			s = LuceneServlet.getInstance().borrowIndexSearcher();
+			hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
 			// fk. QueryParser är ej trådsäker
 			// vi analyzerar detta med en stemmer då vi vet att IX_TEXT analyseras vid indexering
 			// se ContentHelper.isAnalyzedIndex()
@@ -54,11 +70,21 @@
 				Document d = s.doc(sd.doc);
 				String ident = d.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
 				byte[] presBytes = d.getBinaryValue(ContentHelper.I_IX_PRES);
+				String lonLat = "kartdata saknas";
+				String lon = d.get(ContentHelper.I_IX_LON);
+				String lat = d.get(ContentHelper.I_IX_LAT);
+				if (lon != null && lat != null) {
+					lonLat = NumberUtils.SortableStr2double(lon) + " / " + NumberUtils.SortableStr2double(lat);
+				}
 				String pres = "inget innehåll";
 				if (presBytes != null) {
 					pres = new String(presBytes, "UTF-8");
 					// ful-escape-xml
 					pres = pres.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
+				}
+				String rdf = hrm.getXMLData(ident);
+				if (rdf != null) {
+					rdf = rdf.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
 				}
 %>
 			<p>
@@ -66,7 +92,9 @@
 				<div><span class="bold">Källsystem</span> : <%=d.get(ContentHelper.I_IX_SERVICE)%></div>
 				<div><span class="bold">URI</span> : <a href="<%=ident%>" target="_blank"><%=ident%></a> (nytt fönster/flik)</div>
 				<div><span class="bold">Titel</span> : <%=d.get(ContentHelper.IX_ITEMTITLE)%></div>
-				<div><span class="bold">Presentation</span> : <%=pres%></div>
+				<div><span class="bold">Lon/Lat</span> : <%=lonLat%></div>
+				<div><span onclick="toggle('pres_<%= i %>')"><b>Presentation</b> [visa/dölj]</span> : <span id="pres_<%= i %>" class="hide"><%=pres%></span></div>
+				<div><span onclick="toggle('rdf_<%= i %>')"><b>RDF</b> [visa/dölj]</span> : <span id="rdf_<%= i %>" class="hide"><%=rdf%></span></div>
 			</p>
 <%
 			}

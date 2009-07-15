@@ -18,6 +18,7 @@ import org.apache.lucene.analysis.snowball.SnowballAnalyzer;
 import org.apache.lucene.document.Document;
 
 import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 /**
  * Basklass för innehållshantering av tjänstedata och index samt diverse hjälpmetoder.
@@ -38,6 +39,8 @@ public abstract class ContentHelper {
 	public static final String I_IX_SERVICE = "_service";
 	public static final String I_IX_HTML_URL = "_htmlurl";
 	public static final String I_IX_MUSEUMDAT_URL = "_museumdaturl";
+	public static final String I_IX_LON = "_lon";
+	public static final String I_IX_LAT = "_lat";
 	//public static final String I_IX_RDF = "_rdf";
 	
 	// generella
@@ -135,6 +138,15 @@ public abstract class ContentHelper {
 	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
 	public static final String IX_VISUALIZES = "visualizes";
 
+	// spatiala specialindex
+	public static final String IX_BOUNDING_BOX = "boundingBox";
+	public static final String IX_POINT_DISTANCE = "pointDistance";
+
+	// spatiala koordinatkonstanter
+	public static final String SWEREF99_3006 = "SWEREF99";
+	public static final String RT90_3021 = "RT90";
+	public static final String WGS84_4326 = "WGS84";
+
 	// alla index
 	private static final HashMap<String,Index> indices = new LinkedHashMap<String,Index>();
 	// publika index
@@ -192,6 +204,23 @@ public abstract class ContentHelper {
 		addIndex(IX_PARISH, "Socken, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_PLACE, "Var - Fritext i geografiska data", IndexType.ANALYZED);
 
+		// spatiala virtuella index
+		String coordExplain = "koordinater separerade med mellanslag i (nästan) valfritt format " +
+		"((EPSG:3006 (SWEREF99 TM) är default, OBS att x,y förutsätts! Giltiga värden förutom " +
+		"EPSG:XXXX är '" + SWEREF99_3006 + "' (EPSG:3006 - SWEREF99 TM), " +
+		"'" + RT90_3021 + "' (EPSG:3021 - RT90 2.5 gon V) och " +
+		"'" + WGS84_4326 + "' (EPSG:4326))";
+		addIndex(IX_BOUNDING_BOX, "Spatial sökning med omslutande rektangel, " +
+				coordExplain + " - ex " +
+				IX_BOUNDING_BOX + "=/EPSG:3021 \"1628000.0 6585000.0 1628490.368 6585865.547\" eller " +
+				IX_BOUNDING_BOX + "=/" + RT90_3021 + "\"1628000.0 6585000.0 1628490.368 6585865.547\"",
+				IndexType.SPATIAL_VIRTUAL);
+		addIndex(IX_POINT_DISTANCE, "Spatial närhetssökning med angiven punkt och radie, " +
+				coordExplain + " och radien i km - ex " +
+				IX_POINT_DISTANCE + "=/EPSG:3021 \"1628000.0 6585000.0 3.5\" eller " +
+				IX_POINT_DISTANCE + "=/" + RT90_3021 + " \"1628000.0 6585000.0 3.5\"",
+				IndexType.SPATIAL_VIRTUAL);
+
 		// person
 		addIndex(IX_FIRSTNAME, "Förnamn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_SURNAME, "Efternamn [*]", IndexType.TOLOWERCASE);
@@ -243,6 +272,8 @@ public abstract class ContentHelper {
 		addIndex(I_IX_SERVICE, "tjänst", IndexType.VERBATIM, false);
 		addIndex(I_IX_HTML_URL, "html-representation, url", IndexType.VERBATIM, false);
 		addIndex(I_IX_MUSEUMDAT_URL, "museumdat-representation, url", IndexType.VERBATIM, false);
+		addIndex(I_IX_LON, "longitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
+		addIndex(I_IX_LAT, "lattitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
 		addIndex(CONTEXT_SET_REC + "." + IX_REC_IDENTIFIER, "identifierare", IndexType.VERBATIM, false);
 		//addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
 
@@ -278,10 +309,11 @@ public abstract class ContentHelper {
 	 * vara en URI och xml-innehållet är en post med k-samsöks-xml (rdf).
 	 * 
 	 * @param xmlContent xml-innehåll
+	 * @param gmlInfoHolder böna som fylls på med funna gml-geometrier mm om ej null
 	 * @return identifierare
 	 * @throws Exception vid problem
 	 */
-	public abstract String extractIdentifier(String xmlContent) throws Exception;
+	public abstract String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
 	 * Skapar ett lucene-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster
@@ -356,7 +388,31 @@ public abstract class ContentHelper {
 	 */
 	public static boolean isToLowerCaseIndex(String indexName) {
 		// de index som indexerats med lower case
-		return IndexType.TOLOWERCASE== getIndexType(indexName);
+		return IndexType.TOLOWERCASE == getIndexType(indexName);
+	}
+
+	/**
+	 * Ger sant om indexnamnet är ett spatialt virtuellt index. Denna typ är
+	 * ett specialfall som hanteras olika beroende på indexnamn då de kan ha
+	 * olika utseende på sina parametrar skapa frågor som söker i andra index etc.
+	 * 
+	 * @param indexName indexnamn
+	 * @return sant för spatiala index
+	 */
+	public static boolean isSpatialVirtualIndex(String indexName) {
+		// de index som indexerats med lower case
+		return IndexType.SPATIAL_VIRTUAL == getIndexType(indexName);
+	}
+
+	/**
+	 * Ger sant om indexnamnet är ett spatialt index vars värden är rena koordinater.
+	 * 
+	 * @param indexName indexnamn
+	 * @return sant för spatiala index
+	 */
+	public static boolean isSpatialCoordinateIndex(String indexName) {
+		// de index som indexerats med lower case
+		return IndexType.SPATIAL_COORDINATE == getIndexType(indexName);
 	}
 
 	/**
@@ -395,7 +451,7 @@ public abstract class ContentHelper {
 	/**
 	 * Enum för indextyp.
 	 */
-	public static enum IndexType { ANALYZED, VERBATIM, TOLOWERCASE, ISO8601DATEYEAR };
+	public static enum IndexType { ANALYZED, VERBATIM, TOLOWERCASE, ISO8601DATEYEAR, SPATIAL_VIRTUAL, SPATIAL_COORDINATE };
 
 	/**
 	 * Klass som representerar ett index.
@@ -538,7 +594,8 @@ public abstract class ContentHelper {
 	 * Initierar mappen med problemmeddelanden för denna tråd.
 	 */
 	public static void initProblemMessages() {
-		problemMessages.set(new HashMap<String, Integer>());
+		// linked hashmap för att behålla ordningen
+		problemMessages.set(new LinkedHashMap<String, Integer>());
 	}
 
 	/**
@@ -558,11 +615,17 @@ public abstract class ContentHelper {
 	 * @param message meddelande
 	 */
 	public static void addProblemMessage(String message) {
+		final int maxSize = 200;
+		final String xMessage = "Fler felmeddelanden finns, visar bara max " + maxSize + " olika";
 		Map<String,Integer> map = problemMessages.get();
 		if (map != null) {
 			Integer c = map.get(message);
 			if (c == null) {
 				c = 0;
+				if (map.size() >= maxSize && !xMessage.equals(message)) {
+					addProblemMessage(xMessage);
+					return;
+				}
 			}
 			map.put(message, c + 1);
 		}
@@ -627,6 +690,9 @@ public abstract class ContentHelper {
 	 * @return strängrepresentation av värde
 	 */
 	public static String transformNumberToLuceneString(long val) {
+		// TODO: iom att locallucene måste ha NumberUtils kanske den ska användas här, dock
+		//       håller locallucene på att infogas i ett spatial-block i lucene/solr och
+		//       också på att byta algoritm
 		int offset = 0;
 		char[] out = new char[5];
 		val += Long.MIN_VALUE;
@@ -636,5 +702,19 @@ public abstract class ContentHelper {
 	    out[offset++] = (char)(val >>>15 & 0x7fff);
 	    out[offset] = (char)(val & 0x7fff);
 	    return new String(out,0,5);
+	}
+
+	/**
+	 * Gör om invärdet till en sträng som kan sorteras och användas korrekt i
+	 * intervallsökningar i lucene. Algoritm lånad från solr:s NumberUtils (apache-licens).
+	 * 
+	 * @param val värde
+	 * @return strängrepresentation av värde
+	 */
+	public static String transformNumberToLuceneString(double val) {
+		// TODO: se todo i metod ovan
+		long f = Double.doubleToRawLongBits(val);
+	    if (f<0) f ^= 0x7fffffffffffffffL;
+	    return transformNumberToLuceneString(f);
 	}
 }

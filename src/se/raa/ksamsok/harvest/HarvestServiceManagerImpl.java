@@ -358,7 +358,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	public void deleteService(HarvestService service) throws Exception {
 	    Connection c = null;
-	    PreparedStatement  pst = null;
+	    PreparedStatement pst = null;
 	    try {
 	    	c = ds.getConnection();
 			pst = c.prepareStatement("delete from harvestservices where serviceId = ?");
@@ -374,6 +374,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				logger.warn("Problem att avschedulera jobb för tjänst med id = " +
 						service.getId(), e);
 			}
+			// rensa data i repo (rdf + ev spatialt data)
 			hrm.deleteData(service);
 	    } catch (Exception e) {
 	    	DBBasedManagerImpl.rollback(c);

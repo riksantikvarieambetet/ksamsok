@@ -14,6 +14,7 @@ import org.apache.lucene.document.Field;
 import org.xml.sax.InputSource;
 
 import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 /**
  * Klass främst för test som hanterar dublin core-data.
@@ -76,7 +77,7 @@ public class DCContentHelper extends ContentHelper {
 	}
 
 	@Override
-	public String extractIdentifier(String xmlContent) {
+	public String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) {
 		String identifier = null;
 		try {
 	        org.w3c.dom.Document doc = parseDocument(xmlContent);

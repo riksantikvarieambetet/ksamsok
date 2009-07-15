@@ -2,6 +2,8 @@ package se.raa.ksamsok.sru;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
@@ -11,11 +13,14 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.ConstantScoreQuery;
 import org.apache.lucene.search.ConstantScoreRangeQuery;
+import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.WildcardQuery;
+import org.apache.solr.util.NumberUtils;
 import org.z3950.zing.cql.CQLAndNode;
 import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
@@ -23,8 +28,14 @@ import org.z3950.zing.cql.CQLNotNode;
 import org.z3950.zing.cql.CQLOrNode;
 import org.z3950.zing.cql.CQLSortNode;
 import org.z3950.zing.cql.CQLTermNode;
+import org.z3950.zing.cql.Modifier;
 
 import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.spatial.GMLUtil;
+
+import com.pjaol.lucene.search.SerialChainFilter;
+import com.pjaol.search.geo.utils.BoundaryBoxFilter;
+import com.pjaol.search.geo.utils.DistanceQuery;
 
 /**
  * Kod mer eller mindre kopierad från LuceneTranslator från 
@@ -134,7 +145,10 @@ public class CQL2Lucene {
 
 			if (!index.equals("")) {
 				String term = ctn.getTerm();
-				if(relation.equals("=") || relation.equals("scr")) {
+				// hantera virtuellt index
+				if (ContentHelper.isSpatialVirtualIndex(index)) {
+					query = createSpatialQuery(index, ctn);
+				} else if (relation.equals("=") || relation.equals("scr")) {
 					query = createTermQuery(index,term, relation);
 				} else if (relation.equals("<")) {
 					//term is upperbound, exclusive
@@ -354,6 +368,75 @@ public class CQL2Lucene {
 	}
 
 	/**
+	 * Skapar en spatial-query för lucene för ett virtuellt spatialt index.
+	 * Queryn blir olika beroende på index.
+	 * @param index indexnamn
+	 * @param ctn termnod
+	 * @return query
+	 * @throws DiagnosticsException vid problem
+	 */
+	private static Query createSpatialQuery(String index, CQLTermNode ctn) throws DiagnosticsException {
+		Query query;
+		String relation = ctn.getRelation().getBase();
+		if (!"=".equals(relation)) {
+			throw new DiagnosticsException(22, "Unsupported combination of relation and index",
+					index + " " + relation);
+		}
+		String term = ctn.getTerm();
+		if (ContentHelper.IX_BOUNDING_BOX.equals(index)) {
+			double[] coords = parseDoubleValues(term, 4);
+			if (coords == null) {
+				throw new DiagnosticsException(36,
+						"Term in invalid format for index or relation",
+						index + ": " + term);
+			}
+			
+			String epsgIdent = getSingleModifier(ctn);
+			epsgIdent = translateEPSGModifier(epsgIdent);
+			coords = transformCoordsToWGS84(epsgIdent, coords);
+			// gör pss som locallucene, men utan påtvingad fyrkant (dvs vi tillåter rektanglar)
+			BoundaryBoxFilter latFilter = new BoundaryBoxFilter(ContentHelper.I_IX_LAT, NumberUtils.double2sortableStr(coords[1]), NumberUtils.double2sortableStr(coords[3]), true, true);
+			BoundaryBoxFilter lngFilter = new BoundaryBoxFilter(ContentHelper.I_IX_LON, NumberUtils.double2sortableStr(coords[0]), NumberUtils.double2sortableStr(coords[2]), true, true);
+			query = new ConstantScoreQuery(new SerialChainFilter(new Filter[] {latFilter, lngFilter},
+                     new int[] {SerialChainFilter.AND, SerialChainFilter.AND}));
+		} else if (ContentHelper.IX_POINT_DISTANCE.equals(index)) {
+			double[] coordsAndDist = parseDoubleValues(term, 3);
+			if (coordsAndDist == null) {
+				throw new DiagnosticsException(36,
+						"Term in invalid format for index or relation",
+						index + ": " + term);
+			}
+			String epsgIdent = getSingleModifier(ctn);
+			epsgIdent = translateEPSGModifier(epsgIdent);
+			// hämta ut punkten
+			double[] point = { coordsAndDist[0], coordsAndDist[1] };
+			// och hämta distansen och konvertera den till miles för locallucenes DistanceQuery
+			double distInKm = coordsAndDist[2];
+			double distInMiles =  distInKm / 0.621371;
+			if (distInMiles < 1) {
+				// locallucene ger fel om distansvärdet är för litet så vi kontrollerar här först
+				throw new DiagnosticsException(36,
+						"Term in invalid format for index or relation",
+						"distance too small");
+			} else if (distInKm > 30) {
+				// locallucene cachar upp en massa data för punkt + distans så det här värdet
+				// får definitivt inte vara för stort heller, då riskerar vi oom - 30km kanske är ok?
+				throw new DiagnosticsException(36,
+						"Term in invalid format for index or relation",
+						"distance too great");
+			}
+			point = transformCoordsToWGS84(epsgIdent, point);
+			query = new DistanceQuery(point[1], point[0], distInMiles, ContentHelper.I_IX_LAT,
+					ContentHelper.I_IX_LON, true).getQuery();
+		} else {
+			// Hmm, det här borde inte hända
+			logger.warn("Indexet " + index + " är flaggat som spatialt virtuellt, men kändes ej igen");
+			throw new DiagnosticsException(16, "Unsupported index", index);
+		}
+		return query;
+	}
+
+	/**
 	 * Join the two queries together with boolean AND
 	 * @param query
 	 * @param query2
@@ -449,9 +532,19 @@ public class CQL2Lucene {
 		} else if (ContentHelper.isToLowerCaseIndex(field)) {
 			value = value.toLowerCase();
 		} else if (ContentHelper.isISO8601DateYearIndex(field)) {
-			// gör om år till för lucene tillfixad sträng så att interval mm stöds
+			// gör om år till för lucene tillfixad sträng så att intervall mm stöds
 			try {
 				value = ContentHelper.transformNumberToLuceneString(parseYear(value));
+			} catch (Exception e) {
+				throw new DiagnosticsException(36,
+						"Term in invalid format for index or relation",
+						field + ": " + value);
+			}
+		} else if (ContentHelper.isSpatialCoordinateIndex(field)) {
+			// gör om till för lucene tillfixad sträng så att intervall mm stöds
+			// lon/lat lagras som double och värdena här måste vara double
+			try {
+				value = ContentHelper.transformNumberToLuceneString(Double.parseDouble(value));
 			} catch (Exception e) {
 				throw new DiagnosticsException(36,
 						"Term in invalid format for index or relation",
@@ -463,6 +556,83 @@ public class CQL2Lucene {
 
 	private static int parseYear(String value) {
 		return Integer.parseInt(value);
+	}
+
+	private static double[] parseDoubleValues(String value, int expected) {
+		double[] values = null;
+		StringTokenizer tok = new StringTokenizer(value, " ");
+		if (tok.countTokens() == expected) {
+			values = new double[expected];
+			int i = 0;
+			while (tok.hasMoreTokens()) {
+				try {
+					values[i] = Double.parseDouble(tok.nextToken());
+					++i;
+				} catch (Exception e) {
+					values = null;
+					break;
+				}
+			}
+		}
+		return values;
+	}
+
+	private static String getSingleModifier(CQLTermNode ctn) throws DiagnosticsException {
+		String singleModifier = null;
+		List<Modifier> modifiers = ctn.getRelation().getModifiers();
+		if (modifiers.size() > 1) {
+			String diagData = modifiers.get(0).getType();
+			for (int j = 1; j < modifiers.size(); ++j) {
+				diagData += "/" + modifiers.get(j).getType();
+			}
+			throw new DiagnosticsException(21,
+					"Unsupported combination of relation modifiers", diagData);
+		} else if (modifiers.size() == 1) {
+			singleModifier = modifiers.get(0).getType().toUpperCase();
+		}
+		return singleModifier;
+	}
+
+	private static double[] transformCoordsToWGS84(String fromCRS, double[] coords) throws DiagnosticsException {
+		if (fromCRS != null && !GMLUtil.CRS_WGS84_4326.equals(fromCRS)) {
+			if (coords == null || coords.length == 0) {
+				throw new DiagnosticsException(36,
+						"Term in invalid format for index or relation", "no coordinates");
+			}
+			if (logger.isDebugEnabled()) {
+				logger.debug("Transformerar koordinater från " + fromCRS +
+						" till WGS 84, före: " + Arrays.asList(coords));
+			}
+			try {
+				coords = GMLUtil.transformCRS(coords, fromCRS, GMLUtil.CRS_WGS84_4326);
+			} catch (Exception e) {
+				throw new DiagnosticsException(20,
+						"Unsupported relation modifier", fromCRS);
+
+			}
+			if (logger.isDebugEnabled()) {
+				logger.debug("Transformerar koordinater från " + fromCRS +
+						" till WGS 84, efter: " + Arrays.asList(coords));
+			}
+		}
+		return coords;
+	}
+
+	private static String translateEPSGModifier(String epsgIdent) {
+		if (epsgIdent != null) {
+			// översätt kända konstanter till epsg-koder
+			if (ContentHelper.WGS84_4326.equalsIgnoreCase(epsgIdent)) {
+				epsgIdent = GMLUtil.CRS_WGS84_4326;
+			} else if (ContentHelper.SWEREF99_3006.equalsIgnoreCase(epsgIdent)) {
+				epsgIdent = GMLUtil.CRS_SWEREF99_TM_3006;
+			} else if (ContentHelper.RT90_3021.equalsIgnoreCase(epsgIdent)) {
+				epsgIdent = GMLUtil.CRS_RT90_3021;
+			}
+		} else {
+			// default är SWEREF99 så vi måste alltid transformera då koordinater lagras i wgs84
+			epsgIdent = GMLUtil.CRS_SWEREF99_TM_3006;
+		}
+		return epsgIdent;
 	}
 
 	// bara för debug, dumpar cql-trädet

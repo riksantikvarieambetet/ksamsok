@@ -19,6 +19,8 @@ import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.DCContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
+import se.raa.ksamsok.spatial.GMLDBWriter;
+import se.raa.ksamsok.spatial.GMLUtil;
 
 public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements HarvestRepositoryManager {
 
@@ -42,6 +44,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		String serviceId = null;
 		OAIPMHHandler h = null;
 		boolean updated;
+		ContentHelper.initProblemMessages();
 		try {
 			serviceId = service.getId();
 			c = ds.getConnection();
@@ -73,6 +76,16 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						" (committade), bort: " + h.getDeleted() +
 						", nya: " + h.getInserted() +
 						", ändrade: " + h.getUpdated());
+			}
+		}
+		// rapportera eventuella problemmeddelanden
+		Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
+		if (problemMessages != null && problemMessages.size() > 0) {
+			ss.setStatusTextAndLog(service, "OBS! Fick följande problem vid lagring av skörd");
+			logger.warn(serviceId + ", fick följande problem vid lagring av skörd: ");
+			for (String uri: problemMessages.keySet()) {
+				ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " ggr");
+				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " ggr");
 			}
 		}
 		return updated;
@@ -201,9 +214,15 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			try {
 				serviceId = service.getId();
 				c = ds.getConnection();
+				// rensa först allt vanligt innehåll
 				pst = c.prepareStatement("delete from content where serviceId = ?");
 				pst.setString(1, serviceId);
 				pst.executeUpdate();
+				// och rensa ev spatial-data för tjänsten
+				GMLDBWriter gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
+				if (gmlDBWriter != null) {
+					gmlDBWriter.deleteAllForService();
+				}
 				iw = LuceneServlet.getInstance().borrowIndexWriter();
 				iw.deleteDocuments(new Term(ContentHelper.I_IX_SERVICE, serviceId));
 				iw.prepareCommit();

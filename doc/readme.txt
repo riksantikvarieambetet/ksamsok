@@ -17,7 +17,10 @@ Ex i context.xml för en hsqldb i fil-mode:
 		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
 		defaultAutoCommit="false" />
 
-jdbc-driver måste in i tomcat/lib
+Jdbc-driver för rätt databastyp måste in i tomcat/lib. I och med införandet av indexering av
+spatialdata följer hsqldb med i lib (den används av internt av geotools), men den bör/måste
+flyttas till tomcat/lib *om* det är den databastypen som också används för lagring av innehåll
+för att undvika klassladdarproblem.
 
 * skapa tabeller enligt sql i sql/repo.sql för datakällan
 
@@ -28,6 +31,15 @@ jdbc-driver måste in i tomcat/lib
  en skörd hämtas först till en temporärfil och flyttas sen till spool-katalogen så att den kan
  återanvändas om jobbet går fel vid senare steg, tex lagring i databas
  om ej pekas ut kommer javas default-tempdir att användas
+
+* ange om inte datakällan stödjer spatialt data med -Dsamsok.spatial=false
+ default är sant och en klass för att hantera spatialdata kommer att försöka härledas
+ fram utfrån klassen på uppkopplingen - fn stöds bara oracle
+
+* ange ev egen klass för att hantera spatialt data med -Dsamsok.spatial.class=xx.yy.Z
+ klassen måste implementera interfacet se.raa.ksamsok.spatial.GMLDBWriter och ha en publik
+ default-konstruktor
+ främst för debug eller tredjeparts utv, har inget defaultvärde och bör normalt ej sättas
 
 * kör "ant war" och kopiera war-fil till tomcat/webapps
 

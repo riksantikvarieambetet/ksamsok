@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.MapFieldSelector;
@@ -25,9 +26,11 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.search.BooleanQuery.TooManyClauses;
+import org.apache.solr.util.NumberUtils;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
@@ -339,6 +342,11 @@ public class SRUServlet extends HttpServlet {
         			rel + " is unsupported for the scan operation");
 					
 				}
+				String index = CQL2Lucene.translateIndexName(termNode.getIndex());
+				if (ContentHelper.isSpatialVirtualIndex(index)) {
+					throw new DiagnosticsException(4, "Unsupported operation",
+							"scan not supported for index " + index);
+				}
 				Query q = CQL2Lucene.makeQuery(rootNode);
 				// TODO: är det här ok med alla relationstyper vi godkänner ovan?
 				//       för exact ska vi kanske returnera fältinnehållet?
@@ -476,9 +484,10 @@ public class SRUServlet extends HttpServlet {
 		IndexSearcher s = null;
 		CQLParser cqlParser = new CQLParser();
 		// TODO: flytta ut som statiska
+		// TODO: bort med lon och lat då de bara används för debug
 		final String[] fieldNames = {
 				ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER,
-				ContentHelper.I_IX_PRES};
+				ContentHelper.I_IX_PRES, ContentHelper.I_IX_LON, ContentHelper.I_IX_LAT};
 		final MapFieldSelector fieldSelector = new MapFieldSelector(fieldNames);
 
 		if (query != null && query.length() > 0) {
@@ -488,16 +497,6 @@ public class SRUServlet extends HttpServlet {
 				CQLNode rootNode = cqlParser.parse(query);
 				CQL2Lucene.dumpQueryTree(rootNode);
 				Query q = CQL2Lucene.makeQuery(rootNode);
-				/*
-				s.search(q, new HitCollector() {
-
-					@Override
-					public void collect(int doc, float score) {
-						logger.error("HIT: " + doc + ", score: " + score);
-					}
-					
-				});
-				*/
 				int nDocs = first_record - 1 + num_hits_per_page;
 				hits = s.search(q, nDocs == 0 ? 1 : nDocs);
 				if (hits.totalHits > 0 && hits.totalHits < first_record) {
@@ -513,16 +512,20 @@ public class SRUServlet extends HttpServlet {
 					String content;
 					String uri;
 					for (int i=first_record - 1; i<hits.totalHits && i < first_record -1 + num_hits_per_page;i++) {
-						/*
-						// TODO: hämta från repo? eller från lucene?
-						//       fördel med att hämta från lucene är att man kan se
-						//       alla records även om en harvest fn pågår(?)
-						content = hits.doc(i).get("xmlContent");
-						*/
 						// TODO: fler och bättre felkontroller
 						// TODO: stödja fler format?
-						Document doc = s.doc(hits.scoreDocs[i].doc, fieldSelector);
+						ScoreDoc scoreDoc = hits.scoreDocs[i];
+						double score = scoreDoc.score;
+						Document doc = s.doc(scoreDoc.doc, fieldSelector);
 						uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
+						// TODO: ta bort?
+						if (logger.isDebugEnabled()) {
+							String lon = doc.get(ContentHelper.I_IX_LON);
+							String lat = doc.get(ContentHelper.I_IX_LAT);
+							logger.debug("hit - uri: " + uri + " -> " +
+									"lon=" + (lon != null ? NumberUtils.SortableStr2double(lon) : "??") +
+									" lat=" + (lat != null ? NumberUtils.SortableStr2double(lat) : "??"));
+						}
 						if (NS_SAMSOK_PRES.equals(record_schema)) {
 							byte[] pres = doc.getBinaryValue(ContentHelper.I_IX_PRES);
 							if (pres != null) {
@@ -532,6 +535,10 @@ public class SRUServlet extends HttpServlet {
 								logger.warn("Hittade inte presentationsdata för " + uri);
 							}
 						} else {
+							// TODO: hämta från repo? eller från lucene?
+							//       fördelen med att hämta från lucene är att man kan se
+							//       alla records även om en harvest fn pågår
+							//       content = doc.get("xmlContent");
 							content = hrm.getXMLData(uri);
 						}
 						if (content != null) {
@@ -542,6 +549,9 @@ public class SRUServlet extends HttpServlet {
 							writer.println("     <srw:recordSchema>" + xmlEscape(record_schema) + "</srw:recordSchema>");
 							writer.println("     <srw:recordPacking>xml</srw:recordPacking>");
 							writer.println("     <srw:recordData>" + content + "</srw:recordData>");
+							writer.println("     <srw:extraRecordData>");
+							writer.println("        <rel:score xmlns:rel=\"info:srw/extension/2/relevancy-1.0\">" + score + "</rel:score>");
+							writer.println("     </srw:extraRecordData>");
 							writer.println("  </srw:record>");
 						} else {
 							// skriv ut en diagnostic-post istället
@@ -693,7 +703,8 @@ public class SRUServlet extends HttpServlet {
 						if (par.length == 2) {
 							params.put(par[0], URLDecoder.decode(par[1], "UTF-8"));
 						} else {
-							// vi är snälla och tillåter = okodat i parametrar
+							// vi är snälla och tillåter = okodat i parametrar för att enklare
+							// kunna testa
 							StringBuffer pVal = new StringBuffer();
 							pVal.append(par[1]);
 							for (int i = 2; i < par.length; ++i) {
@@ -713,7 +724,8 @@ public class SRUServlet extends HttpServlet {
 	// grundläggande xml-escape
 	private static String xmlEscape(String s) {
 		// TODO: inte helt 100
-		return s.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
+		//return s.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
+		return StringEscapeUtils.escapeXml(s);
 	}
 
 }

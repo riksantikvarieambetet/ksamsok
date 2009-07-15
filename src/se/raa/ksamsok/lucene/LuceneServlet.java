@@ -37,6 +37,7 @@ public class LuceneServlet extends HttpServlet {
 	// konstanter som kan påverka lucene-prestanda, se lucene-dokumentation
 	private static final int MERGE_FACTOR = 20; // default är 10
 	private static final double RAM_BUFFER_SIZE_MB = 48; // default är 16
+	private static final int TERM_INDEX_INTERVAL = 256; // default är 128
 
 	/**
 	 * Systemparameter för katalog för lucene-index, om ej satt används /var/lucene-index/ksamsok.
@@ -219,10 +220,11 @@ public class LuceneServlet extends HttpServlet {
 		synchronized (searchers) {
 			Long c = searchers.get(ret);
 			if (c == null) {
-				logger.error("Fick tillbaks en is som inte använts?: " + ret);
+				logger.error("Fick tillbaka en is som inte använts?: " + ret);
 			} else {
 				c = Long.valueOf(c.longValue() - 1);
 				if (ret != is && c.longValue() == 0) {
+					// om det är en gammal instans som kommer tillbaka så stänger vi den
 					searchers.remove(ret);
 					IndexReader ir = ret.getIndexReader();
 					try {
@@ -233,6 +235,11 @@ public class LuceneServlet extends HttpServlet {
 					}
 					logger.debug("Stängde en gammal is (och ir): " + ret);
 				} else {
+					if (c.longValue() < 0) {
+						// varna och försök "fixa"
+						logger.warn("IndexSearcher har lämnats tillbaka mer gånger än den lånats ut");
+						c = Long.valueOf(0);
+					}
 					searchers.put(ret, c);
 				}
 
@@ -299,6 +306,14 @@ public class LuceneServlet extends HttpServlet {
 					IndexReader old = is.getIndexReader();
 					IndexReader reopened = old.reopen();
 					if (reopened != old) {
+						// indexet har uppdaterats och en ny searcher/reader måste skapas
+						Long c = searchers.get(is);
+						if (c == null || c.longValue() == 0) {
+							// om ej utlånad, stäng och ta bort
+							searchers.remove(is);
+							is.close();
+							old.close();
+						}
 						is = new IndexSearcher(reopened);
 						if (logger.isInfoEnabled()) {
 							logger.info("lucene-index har uppdaterats");
@@ -425,6 +440,7 @@ public class LuceneServlet extends HttpServlet {
 		IndexWriter iw = new IndexWriter(indexDir, ContentHelper.getSwedishAnalyzer(), create, IndexWriter.MaxFieldLength.UNLIMITED);
 		iw.setRAMBufferSizeMB(RAM_BUFFER_SIZE_MB);
 		iw.setMergeFactor(MERGE_FACTOR);
+		iw.setTermIndexInterval(TERM_INDEX_INTERVAL);
 		return iw;
 	}
 }

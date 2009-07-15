@@ -29,6 +29,7 @@ xmldata clob
 alter table content add constraint pk_content primary key (uri) using index tablespace KSAMSOK_INDX;
 create index ix_content_serv_oai on content (serviceId, oaiURI) tablespace KSAMSOK_INDX;
 create index ix_content_serv on content (serviceId) tablespace KSAMSOK_INDX;
+create index ix_content_oai on content (oaiURI) tablespace KSAMSOK_INDX;
 
 --drop table servicelog
 create table servicelog (
@@ -52,3 +53,48 @@ BEFORE INSERT ON servicelog FOR EACH ROW
 BEGIN
 	select servicelog_seq.nextval into :NEW.eventId from dual;
 END;
+
+-- spatiala data
+--drop table geometries
+create table geometries (
+uri varchar(1024) not null,
+serviceId varchar(20) not null,
+name varchar(1024),
+geometry "MDSYS"."SDO_GEOMETRY" NOT NULL
+);
+
+create index ix_geometries_uri on geometries (uri) tablespace KSAMSOK_INDX;
+create index ix_geometries_serv on geometries (serviceId) tablespace KSAMSOK_INDX;
+
+-- tala om spatial-info för oracle (3006 är sweref99 tm)
+insert into USER_SDO_GEOM_METADATA
+values(
+'GEOMETRIES',
+'GEOMETRY',
+MDSYS.SDO_DIM_ARRAY(
+ MDSYS.SDO_DIM_ELEMENT('X', 217000, 1090000, 5.0000E-10),
+ MDSYS.SDO_DIM_ELEMENT('Y', 6110000, 7700000, 5.0000E-10)
+),
+3006);
+
+-- spatialt index
+CREATE INDEX IX_GEOMETRIES_GEOMETRY ON GEOMETRIES (GEOMETRY) 
+   INDEXTYPE IS "MDSYS"."SPATIAL_INDEX" PARAMETERS ('tablespace=KSAMSOK_INDX')
+
+-- skapa motsvarande vy för geoserver (måste heta samma som feature type i geoservers conf)
+-- notera att man skulle kunna gå direkt mot tabellen geometries men iom att vi gör
+-- en vy skulle man kunna stoppa in fler värden som hämtas/genereras utifrån annat
+-- data, exempelvis gtype mm
+create or replace view KSAMSOK_WMS as select * from geometries;
+
+-- och tala om spatial-info för oracle för denna vy också (samma som för tabellen)
+insert into USER_SDO_GEOM_METADATA
+values(
+'KSAMSOK_WMS',
+'GEOMETRY',
+MDSYS.SDO_DIM_ARRAY(
+ MDSYS.SDO_DIM_ELEMENT('X', 217000, 1090000, 5.0000E-10),
+ MDSYS.SDO_DIM_ELEMENT('Y', 6110000, 7700000, 5.0000E-10)
+),
+3006);
+
