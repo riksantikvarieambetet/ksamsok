@@ -20,7 +20,8 @@ Ex i context.xml för en hsqldb i fil-mode:
 Jdbc-driver för rätt databastyp måste in i tomcat/lib. I och med införandet av indexering av
 spatialdata följer hsqldb med i lib (den används av internt av geotools), men den bör/måste
 flyttas till tomcat/lib *om* det är den databastypen som också används för lagring av innehåll
-för att undvika klassladdarproblem.
+för att undvika klassladdarproblem. För Oracle behöver man tex jbdc-jar och även spatial-utökningar
+för att kunna lagra spatiala data (sdoapi, sdoutl och Oracles xmlparser).
 
 * skapa tabeller enligt sql i sql/repo.sql för datakällan
 
