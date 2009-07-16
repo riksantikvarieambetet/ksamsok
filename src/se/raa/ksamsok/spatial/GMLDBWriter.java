@@ -19,21 +19,21 @@ public interface GMLDBWriter {
 	void init(String serviceId, Connection c);
 
 	/**
-	 * Anropas vid insert av ny post i repositoriet (nytt lucenedokument).
+	 * Anropas vid insert av post.
 	 * @param gmlInfoHolder gmldatahållare
 	 * @throws Exception vid fel
 	 */
 	void insert(GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
-	 * Anropas vid update av ny post i repositoriet (nytt lucenedokument).
+	 * Anropas vid update av post.
 	 * @param gmlInfoHolder gmldatahållare
 	 * @throws Exception vid fel
 	 */
 	void update(GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
-	 * Anropas när en post tas bort ur repositoriet.
+	 * Anropas när en post tas bort.
 	 * @param oaiURI oaiURI
 	 * @throws Exception vid fel
 	 */
