@@ -758,7 +758,7 @@ public class SamsokContentHelper extends ContentHelper {
 							if (gml != null && gml.length() > 0) {
 								// vi konverterar till SWEREF 99 TM då det är vårt standardformat
 								// dessutom fungerar konverteringen som en kontroll av om gml:en är ok
-								gml = GMLUtil.convertTo(gml, SWEREF99_3006);
+								gml = GMLUtil.convertTo(gml, GMLUtil.CRS_SWEREF99_TM_3006);
 								gmlGeometries.add(gml);
 							}
 						}
