@@ -64,6 +64,7 @@ public class OracleGMLDBWriter extends AbstractGMLDBWriter {
 	@Override
 	protected Object convertToNative(String gml) throws Exception {
 		// hack då oracles GML-klasser inte gillar GeometryCollection utan föredrar MultiGeometry
+		// GeometryCollection finns inte i gml 2+ utan bara i gml 1 men förekommer i raä:s data fn
 		gml = gml.replace("GeometryCollection", "MultiGeometry");
 		parser.parse(new StringReader(gml));
 		Node geomNode = parser.getDocument().getFirstChild();

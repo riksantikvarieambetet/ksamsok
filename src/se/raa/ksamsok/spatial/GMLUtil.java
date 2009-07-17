@@ -26,6 +26,8 @@ import com.vividsolutions.jts.geom.Point;
 
 /**
  * Klass med metoder för att jobba med GML, koordinater och koordinatsystem.
+ * TODO: se över allt som har med GML-versioner och koordinatsystem/ordning att göra - nu
+ *       känns det som om det är en salig blandning
  */
 public class GMLUtil {
 
@@ -37,11 +39,11 @@ public class GMLUtil {
 	private static boolean gmlDBWriterClassNameSet = false;
 
 	static {
-		// TODO: räcker detta eller måste propertysättningen läggas nån annanstans?
-
 		// OBS! denna är väldigt viktig - det blir fel annars - i alla fall om srsName är på formen EPSG:4326
-		// TODO: kolla upp vad som händer om man får in en uri på formen http://www.opengis.net/gml/srs/epsg.xml#4326
-		//       eller på formen urn:x-ogc:def:crs:EPSG:4326 som geotools kan producera
+		// TODO: kolla upp vad som händer om man får in en uri på formen
+		//       http://www.opengis.net/gml/srs/epsg.xml#4326 (lon först?)
+		//       eller på formen urn:x-ogc:def:crs:EPSG:4326 (lat först(default)?)
+		//       som geotools kan producera
 		System.setProperty("org.geotools.referencing.forceXY", "true");
 	}
 
@@ -52,6 +54,9 @@ public class GMLUtil {
 	/** EPSG:3021, RT90 2.5 gon V */
 	public static final String CRS_RT90_3021 = "EPSG:3021";
 
+	// vi använder en enda parser och synkroniserar parsning pga följande bug i geotools 2.5.5
+	// http://jira.codehaus.org/browse/GEOT-2615
+	// TODO: när den är fixat och geotools uppgraderas kan man ta bort synkroniseringen
 	private static final Configuration configuration = new GMLConfiguration();
 	private static final Parser parser = new Parser(configuration);
 	private static final GeometryFactory geometryFactory = new GeometryFactory();
@@ -228,15 +233,35 @@ public class GMLUtil {
 	}
 
 	// försöker skapa en geometri-instans från gml
-	private static Geometry parseGeometry(String gml) throws Exception {
+	static Geometry parseGeometry(String gml) throws Exception {
 		Object o;
+		if (gml == null) {
+			throw new Exception("gml är null");
+		}
+		// fulfix för oracle-genererade srsName med SDO som authority vilket geotools inte
+		// känner till nåt om
+		gml = gml.replace("SDO:", "EPSG:");
 		try {
-			// fulfix för oracle-genererade srsName med SDO som authority vilket geotools inte
-			// känner till nåt om
-			gml = gml.replace("SDO:", "EPSG:");
-			o = parser.parse(new StringReader(gml));
+			// vi måste synkronisera parsningen pga en bug i geotools (eller eclipse-emf/xsd)
+			// se http://jira.codehaus.org/browse/GEOT-2615
+			// obs att det inte spelar nån roll om man använder nya parserinstanser istf en
+			// enda utan problemet uppstår i alla fall
+			// ett alternativ skulle kunna vara att använda "xdo"-parser istället då den
+			// inte berörs av buggen och dessutom är snabbare  - den gör dock lite annorlunda
+			// med koordinatsystemen och lägger till skillnad från gt-xml bara namnet på
+			// utparsat srsName i userData istället för själva CoordinateReferenceSystem-
+			// instansen vilket man i så fall måste ta hänsyn till
+			// typ:
+			// XMLReader reader = XMLReaderFactory.createXMLReader();
+			// XMLSAXHandler xmlHandler = new XMLSAXHandler(new HashMap());
+			// reader.setContentHandler(xmlHandler);
+			// reader.parse(new InputSource(new StringReader(gml)));
+			// Object o = xmlHandler.getDocument(); // bör ge en Geometry-instans
+			synchronized (parser) {
+				o = parser.parse(new StringReader(gml));
+			}
 		} catch (Throwable t) {
-			throw new Exception("Fel vid parsning av gml", t);
+			throw new Exception("Fel vid parsning av gml: " + t.getMessage(), t);
 		}
 		if (o == null) {
 			throw new Exception("Kunde inte tolka inskickad xml som gml");
@@ -248,18 +273,28 @@ public class GMLUtil {
 	}
 
 	// hämtar ut koordinatsystem från geometri
+	// TODO: är detta samma som GML2EncodingUtils.getCRS()? om ja, använd den istället?
 	private static CoordinateReferenceSystem getCRS(Geometry g) throws Exception {
 		// i userdata lägger geotools-parsern fn info om vilket koordinatsystem gml:en var i
 		Object o = g.getUserData();
-		if (o == null) {
+		if (o == null || "".equals(o)) {
 			// TODO: förutsätta att det är nåt speciellt crs och ge tillbaka en sån instans?
 			throw new Exception("GML/XML-parsern från Geotools la ingen koordinatsystem-info " +
 					"i userdata, saknas den i gml:en?");
 		}
-		if (!(o instanceof CoordinateReferenceSystem)) {
+		if (!(o instanceof CoordinateReferenceSystem || o instanceof String)) {
 			throw new Exception("GML/XML-parsern har lagt nåt annat än koordinatsystem-info " +
 					"i userdata, en instans av " + o.getClass().getName());
 		}
+		if (o instanceof String) {
+			CoordinateReferenceSystem crs = CRS.decode((String) o);
+			if (o == null) {
+				throw new Exception("Fick ingen koordinatsystem-info vid avkodning av uttolkat " +
+						"srsName: " + o);
+			}
+			o = crs;
+		}
+
 		return (CoordinateReferenceSystem) o;
 	}
 
@@ -268,6 +303,15 @@ public class GMLUtil {
 		if (crs == null) {
 			crs = getCRS(g);
 		}
+		// skulle kunna använda xdo istället men det är svårt att styra saker, typ:
+		// GMLConfiguration conf = new GMLConfiguration(); // gml2 eller 3
+		// org.geotools.xml.Encoder e = new org.geotools.xml.Encoder(conf);
+		// e.setOmitXMLDeclaration(true);
+		// e.setIndenting(true);
+		// QName qname = new QName(GMLSchema.NAMESPACE.toString(), gType, "gml");
+		// // g måste ha en crs-instans i userdata för att få med srsName i gml:en, namnet räcker ej
+		// e.encode(g, qname, System.out);
+
 		// TODO: detta är lite hackigt då det var svårt att få ut ett ok gml-fragment
 		//       så som vi vill ha det med angivet srsName och inga extra namespaces
 		//       från geotools
@@ -276,6 +320,7 @@ public class GMLUtil {
 			@Override
 			public Translator createTranslator(
 					ContentHandler handler) {
+				// TODO: 8 decimaler ok?
 				GeometryTranslator gt = new GeometryTranslator(handler, 8) {
 
 					@Override
