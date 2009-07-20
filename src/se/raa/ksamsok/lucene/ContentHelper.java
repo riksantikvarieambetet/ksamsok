@@ -114,6 +114,8 @@ public abstract class ContentHelper {
 	public static final String IX_FIRSTNAME = "firstName";
 	public static final String IX_SURNAME = "surname";
 	public static final String IX_NAME = "name";
+	public static final String IX_FULLNAME = "fullName";
+	public static final String IX_GENDER = "gender";
 	public static final String IX_ORGANIZATION = "organization";
 	public static final String IX_TITLE = "title";
 	public static final String IX_NAMEID = "nameId";
@@ -225,6 +227,8 @@ public abstract class ContentHelper {
 		addIndex(IX_FIRSTNAME, "Förnamn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_SURNAME, "Efternamn [*]", IndexType.TOLOWERCASE);
 		//addIndex(IX_NAME, "Namn", IndexType.TOLOWERCASE); // ej index, bara i med fritext
+		addIndex(IX_GENDER, "Kön [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_FULLNAME, "Fullständigt namn ([förnamn] [efternamn]) [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_ORGANIZATION, "Organisation [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_TITLE, "Titel (person) [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.VERBATIM);

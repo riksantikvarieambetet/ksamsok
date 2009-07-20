@@ -135,6 +135,7 @@ public class SamsokContentHelper extends ContentHelper {
 	private static final URI uri_rFirstName = URI.create("http://xmlns.com/foaf/0.1/#firstName");
 	private static final URI uri_rSurname = URI.create("http://xmlns.com/foaf/0.1/#surname");
 	private static final URI uri_rName = URI.create("http://xmlns.com/foaf/0.1/#name");
+	private static final URI uri_rGender = URI.create("http://xmlns.com/foaf/0.1/#gender");
 	private static final URI uri_rOrganization = URI.create("http://xmlns.com/foaf/0.1/#organization");
 	private static final URI uri_rTitle = URI.create("http://xmlns.com/foaf/0.1/#title");
 	private static final URI uri_rNameId = URI.create(uriPrefixKSamsok + "nameId");
@@ -291,6 +292,7 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rFirstName = elementFactory.createURIReference(uri_rFirstName);
 			URIReference rSurname = elementFactory.createURIReference(uri_rSurname);
 			URIReference rName = elementFactory.createURIReference(uri_rName);
+			URIReference rGender = elementFactory.createURIReference(uri_rGender);
 			URIReference rTitle = elementFactory.createURIReference(uri_rTitle);
 			URIReference rOrganization = elementFactory.createURIReference(uri_rOrganization);
 			URIReference rNameId = elementFactory.createURIReference(uri_rNameId);
@@ -574,13 +576,27 @@ public class SamsokContentHelper extends ContentHelper {
 					// actor
 
 					ip.setCurrent(IX_FIRSTNAME, contextType);
-					appendToTextBuffer(actorText, extractSingleValue(graph, cS, rFirstName, ip));
+					String firstName = extractSingleValue(graph, cS, rFirstName, ip);
+					appendToTextBuffer(actorText, firstName);
 
 					ip.setCurrent(IX_SURNAME, contextType);
-					appendToTextBuffer(actorText, extractSingleValue(graph, cS, rSurname, ip));
+					String lastName = extractSingleValue(graph, cS, rSurname, ip);
+					appendToTextBuffer(actorText, lastName);
+
+					// om vi har ett förnamn och ett efternamn så lägger vi in det i IX_FULLNAME
+					if (firstName != null && lastName != null) {
+						ip.setCurrent(IX_FULLNAME, contextType);
+						ip.addToDoc(firstName + " " + lastName);
+					}
 
 					ip.setCurrent(IX_NAME, contextType);
 					appendToTextBuffer(actorText, extractSingleValue(graph, cS, rName, ip));
+
+					// TODO: bara vissa värden? http://xmlns.com/foaf/spec/#term_gender:
+					// "In most cases the value will be the string 'female' or 'male' (in
+					//  lowercase without surrounding quotes or spaces)."
+					ip.setCurrent(IX_GENDER, contextType);
+					extractSingleValue(graph, cS, rGender, ip);
 
 					ip.setCurrent(IX_ORGANIZATION, contextType);
 					appendToTextBuffer(actorText, extractSingleValue(graph, cS, rOrganization, ip));
@@ -629,12 +645,6 @@ public class SamsokContentHelper extends ContentHelper {
 						gmlGeometries.add(gml);
 					}
 
-//					ip.setCurrent(IX_TIMETEXT, contextType);
-//					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rTimeText, ip));
-
-					//} else {
-					//	logger.warn("Fick okänd contextLabel: " + contextLabel);
-					//}
 				} else {
 					logger.warn("context borde vara en blank-nod? Ingen context-info utläst");
 				}
