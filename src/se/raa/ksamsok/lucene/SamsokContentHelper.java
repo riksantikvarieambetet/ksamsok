@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -184,6 +183,11 @@ public class SamsokContentHelper extends ContentHelper {
 		readURIValueResource("dataquality.rdf", uri_r__Name);
 		readURIValueResource("contexttype.rdf", uri_rContextLabel);
 
+		// minska locallucenes loggning genom att skapa en dummy-föräldralogger och
+		// sätta mer restriktiv loggning för den för att slippa dess "debugmeddelanden"
+		// på info-kanalen
+		java.util.logging.Logger dummy = java.util.logging.Logger.getLogger("com.pjaol");
+		dummy.setLevel(java.util.logging.Level.WARNING);
 		// init av saker för locallucenes punkt + distans-sökning
 		SinusoidalProjector project = new SinusoidalProjector();
 		for (int i = 2; i <= 15; ++i){
