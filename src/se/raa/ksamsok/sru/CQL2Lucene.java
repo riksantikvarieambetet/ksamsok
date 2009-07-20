@@ -2,10 +2,10 @@ package se.raa.ksamsok.sru;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
@@ -594,28 +594,25 @@ public class CQL2Lucene {
 	}
 
 	private static double[] transformCoordsToWGS84(String fromCRS, double[] coords) throws DiagnosticsException {
+		double[] xformedCoords = coords;
 		if (fromCRS != null && !GMLUtil.CRS_WGS84_4326.equals(fromCRS)) {
 			if (coords == null || coords.length == 0) {
 				throw new DiagnosticsException(36,
 						"Term in invalid format for index or relation", "no coordinates");
 			}
-			if (logger.isDebugEnabled()) {
-				logger.debug("Transformerar koordinater från " + fromCRS +
-						" till WGS 84, före: " + Arrays.asList(coords));
-			}
 			try {
-				coords = GMLUtil.transformCRS(coords, fromCRS, GMLUtil.CRS_WGS84_4326);
+				xformedCoords = GMLUtil.transformCRS(coords, fromCRS, GMLUtil.CRS_WGS84_4326);
 			} catch (Exception e) {
 				throw new DiagnosticsException(20,
 						"Unsupported relation modifier", fromCRS);
-
 			}
 			if (logger.isDebugEnabled()) {
-				logger.debug("Transformerar koordinater från " + fromCRS +
-						" till WGS 84, efter: " + Arrays.asList(coords));
+				logger.debug("Transformerade koordinater från " + fromCRS +
+						" till WGS 84 (" + ArrayUtils.toString(coords) + " -> " +
+						ArrayUtils.toString(xformedCoords) + ")");
 			}
 		}
-		return coords;
+		return xformedCoords;
 	}
 
 	private static String translateEPSGModifier(String epsgIdent) {
