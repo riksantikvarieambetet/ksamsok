@@ -2,6 +2,7 @@ package se.raa.ksamsok.lucene;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DurationFormatUtils;
@@ -730,4 +732,40 @@ public abstract class ContentHelper {
 	    if (f<0) f ^= 0x7fffffffffffffffL;
 	    return transformNumberToLuceneString(f);
 	}
+
+	// 
+
+	/**
+	 * Hjälpmetod som extraherar parametrar kodade mha utf-8 från query-strängen, krävs bla
+	 * för sru/cql.
+	 * @param qs querysträng
+	 * @return map med avkodade parametrar och värden
+	 * @throws Exception vid fel med avkodning eller annat
+	 */
+	public static Map<String, String> extractUTF8Params(String qs) throws Exception {
+		HashMap<String, String> params = new HashMap<String, String>();
+		if (qs != null && qs.length() > 0) {
+			StringTokenizer tok = new StringTokenizer(qs, "&");
+			while (tok.hasMoreTokens()) {
+				String[] par = tok.nextToken().split("=");
+				if (par.length > 1 && par[1].length() > 0) {
+					if (par.length == 2) {
+						params.put(par[0], URLDecoder.decode(par[1], "UTF-8"));
+					} else {
+						// vi är snälla och tillåter = okodat i parametrar för att enklare
+						// kunna testa
+						StringBuffer pVal = new StringBuffer();
+						pVal.append(par[1]);
+						for (int i = 2; i < par.length; ++i) {
+							pVal.append("=").append(par[i]);
+						}
+						params.put(par[0], URLDecoder.decode(pVal.toString(), "UTF-8"));
+					}
+				}
+			}
+		}
+		return params;
+	}
+
+
 }

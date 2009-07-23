@@ -10,7 +10,8 @@
 <%@page import="org.apache.lucene.search.TopDocs"%>
 <%@page import="org.apache.lucene.search.ScoreDoc"%>
 <%@page import="org.apache.solr.util.NumberUtils"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%><html>
+<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
+<%@page import="java.util.Map"%><html>
 	<head>
 		<title>Sök</title>
 		<!--
@@ -22,6 +23,7 @@
 
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript">
+			var map = null;
 			function toggle(id) {
 				var el = document.getElementById(id);
 				if (el) {
@@ -32,7 +34,9 @@
 					}
 				}
 			}
-			var map = null;
+			function zoomTo(lon, lat) {
+				map.setCenter(new OpenLayers.LonLat(lon, lat), map.getNumZoomLevels() - 3);
+			}
 			var markers = new OpenLayers.Layer.Markers( "Markers" );
 			function init(){
 				map = new OpenLayers.Map('map');
@@ -44,23 +48,44 @@
 
 				map.addLayers([ol_wms, markers]);
 				map.addControl(new OpenLayers.Control.LayerSwitcher());
+				map.addControl(new OpenLayers.Control.MousePosition());
+				map.addControl(new OpenLayers.Control.Scale());
 				map.zoomToMaxExtent();
 			}
 			var size = new OpenLayers.Size(10,17);
 			var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
 			var icon = new OpenLayers.Icon('http://boston.openguides.org/markers/AQUA.png',size,offset);
 
-			function addMarker(lon, lat, text) {
+			function addMarker(lon, lat, text, uri) {
 				var m = new OpenLayers.Marker(new OpenLayers.LonLat(lon, lat), icon.clone());
 				m.events.register("click", m, function (e) {
-					alert(text);
+					var popup = new OpenLayers.Popup("x",
+						new OpenLayers.LonLat(lon,lat),
+						new OpenLayers.Size(220,60),
+						"<b class='capitalize'>" + text + "</b><br>" +
+						"<span style='font-size: 77%;'>" + lon + "," + lat + "</span><br>" +
+						"<span style='font-size: 69%; white-space: nowrap;'>" + uri + "</span>",
+						true);
+					map.panTo(new OpenLayers.LonLat(lon, lat));
+					map.addPopup(popup, true);
 				});
 				markers.addMarker(m);
+			}
+
+			function updateMapCount() {
+				var el = document.getElementById("mapCount");
+				if (el) {
+					var val = parseInt(el.innerHTML);
+					if (!isNaN(val)) {
+						el.innerHTML = "" + ++val;
+					}
+				}
 			}
 		</script>
 	</head>
 <%
-	String query = request.getParameter("query");
+	Map<String,String> params = ContentHelper.extractUTF8Params(request.getQueryString());
+	String query = params.get("query");
 	query = (query == null ? "" : query.trim());
 %>
 	<body onload="init()" class="bgGrayUltraLight">
@@ -70,7 +95,7 @@
 			<a href="search.jsp">Sök utan karta</a>
 		</div>
 		<hr/>
-		<form action="" accept-charset="iso-8859-1">
+		<form action="" accept-charset="utf-8">
 			<div class="center">
 				<input name="query" value="<%=query.replace("\"", "&quot;")%>">
 				<button>Sök</button>
@@ -78,8 +103,6 @@
 		</form>
 		<hr/>
 		<div id="map" style="width: 512px; height: 256px; border: 1px solid #ccc;" class="smallmap"></div>
-		<p>Obs, vid sökning med svenska tecken kommer kanske inte kartan kunna laddas pga ev bugg i openlayers/FF, se
-		http://trac.openlayers.org/ticket/1704</p>
 <%
 	TopDocs hits = null;
 	String message = "";
@@ -99,7 +122,7 @@
 			int i = 0;
 			int antal = hits.totalHits;
 %>
-			<h2>Sökningen gav <%=antal%> träffar (visar max <%=maxHits%>)</h2>
+			<h2>Sökningen gav <%=antal%> träffar (visar max <%=maxHits%>, varav <span id="mapCount">0</span> på kartan)</h2>
 <%
 			for (ScoreDoc sd: hits.scoreDocs) {
 				++i;
@@ -113,11 +136,17 @@
 				String lonLat = "kartdata saknas";
 				String lon = d.get(ContentHelper.I_IX_LON);
 				String lat = d.get(ContentHelper.I_IX_LAT);
+				String zoomTo = "", zoomToTitle = "";
 				if (lon != null && lat != null) {
-					lonLat = NumberUtils.SortableStr2double(lon) + " / " + NumberUtils.SortableStr2double(lat);
+					double lonDouble = NumberUtils.SortableStr2double(lon);
+					double latDouble = NumberUtils.SortableStr2double(lat);
+					lonLat = lonDouble + " / " + latDouble;
+					zoomTo = "zoomTo(" + lonDouble + "," + latDouble + ")";
+					zoomToTitle = "Klicka för att zooma in till";
 %>
 				<script type="text/javascript">
-					addMarker(<%=NumberUtils.SortableStr2double(lon)%>,<%=NumberUtils.SortableStr2double(lat)%>, '<%=itemTitle%> (<%=ident%>)');
+					addMarker(<%=NumberUtils.SortableStr2double(lon)%>,<%=NumberUtils.SortableStr2double(lat)%>, '<%=itemTitle%>', '<%=ident%>');
+					updateMapCount();
 				</script>
 <%
 				}
@@ -131,13 +160,18 @@
 				if (rdf != null) {
 					rdf = rdf.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
 				}
+				String htmlURL = d.get(ContentHelper.I_IX_HTML_URL);
+				String museumdatURL = d.get(ContentHelper.I_IX_MUSEUMDAT_URL);
 %>
 			<p>
 				<h4 class="bgGrayLight">träff <%=i%>/<%=antal%>, score: <%=sd.score%></h4>
 				<div><span class="bold">Källsystem</span> : <%=d.get(ContentHelper.I_IX_SERVICE)%></div>
-				<div><span class="bold">URI</span> : <a href="<%=ident%>" target="_blank"><%=ident%></a> (nytt fönster/flik)</div>
+				<div><span class="bold">URI</span> : <a href="<%=ident%>" target="_blank"><%=ident%></a> [
+					<% if (htmlURL != null) { %> <a href="<%=htmlURL%>" target="_blank">HTML</a><%}%>
+					<% if (museumdatURL != null) { %> <a href="<%=museumdatURL%>" target="_blank">MUSEUMDAT</a><%}%> ]
+					(öppnas i nytt fönster/flik)</div>
 				<div><span class="bold">Titel</span> : <%=itemTitle%></div>
-				<div><span class="bold">Lon/Lat</span> : <%=lonLat%></div>
+				<div><span onclick="<%=zoomTo%>" title="<%=zoomToTitle%>"><b>Lon/Lat</b> : <%=lonLat%></span></div>
 				<div><span onclick="toggle('pres_<%= i %>')"><b>Presentation</b> [visa/dölj]</span> : <span id="pres_<%= i %>" class="hide"><%=pres%></span></div>
 				<div><span onclick="toggle('rdf_<%= i %>')"><b>RDF</b> [visa/dölj]</span> : <span id="rdf_<%= i %>" class="hide"><%=rdf%></span></div>
 			</p>

@@ -10,7 +10,8 @@
 <%@page import="org.apache.lucene.search.TopDocs"%>
 <%@page import="org.apache.lucene.search.ScoreDoc"%>
 <%@page import="org.apache.solr.util.NumberUtils"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%><html>
+<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
+<%@page import="java.util.Map"%><html>
 	<head>
 		<title>Sök</title>
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
@@ -28,7 +29,8 @@
 		</script>
 	</head>
 <%
-	String query = request.getParameter("query");
+	Map<String,String> params = ContentHelper.extractUTF8Params(request.getQueryString());
+	String query = params.get("query");
 	query = (query == null ? "" : query.trim());
 %>
 	<body class="bgGrayUltraLight">
@@ -38,7 +40,7 @@
 			<a href="map.jsp">Sök + karta</a>
 		</div>
 		<hr/>
-		<form action="" accept-charset="iso-8859-1">
+		<form action="" accept-charset="utf-8">
 			<div class="center">
 				<input name="query" value="<%=query.replace("\"", "&quot;")%>">
 				<button>Sök</button>

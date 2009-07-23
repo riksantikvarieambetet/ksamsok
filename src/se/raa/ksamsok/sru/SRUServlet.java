@@ -2,14 +2,12 @@ package se.raa.ksamsok.sru;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -96,7 +94,12 @@ public class SRUServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// parametrar in ska vara kodade i utf-8 enligt sru-standard
-		Map<String, String> reqParams = extractUTF8Params(req.getQueryString());
+		Map<String, String> reqParams;
+		try {
+			reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+		} catch (Exception e) {
+			throw new ServletException("Fel i query-sträng", e);
+		}
 		String operation = reqParams.get("operation");
 		// tala om att det är xml vi skickar 
 		resp.setContentType("text/xml; charset=UTF-8");
@@ -689,36 +692,6 @@ public class SRUServlet extends HttpServlet {
 			return false;
 		}
 		return true;
-	}
-
-	// hjälpmetod som extraherar parametrar kodade mha utf-8 från query-strängen, krävs för sru/cql
-	private static Map<String, String> extractUTF8Params(String qs) throws ServletException {
-		HashMap<String, String> params = new HashMap<String, String>();
-		if (qs != null && qs.length() > 0) {
-			try {
-				StringTokenizer tok = new StringTokenizer(qs, "&");
-				while (tok.hasMoreTokens()) {
-					String[] par = tok.nextToken().split("=");
-					if (par.length > 1 && par[1].length() > 0) {
-						if (par.length == 2) {
-							params.put(par[0], URLDecoder.decode(par[1], "UTF-8"));
-						} else {
-							// vi är snälla och tillåter = okodat i parametrar för att enklare
-							// kunna testa
-							StringBuffer pVal = new StringBuffer();
-							pVal.append(par[1]);
-							for (int i = 2; i < par.length; ++i) {
-								pVal.append("=").append(par[i]);
-							}
-							params.put(par[0], URLDecoder.decode(pVal.toString(), "UTF-8"));
-						}
-					}
-				}
-			} catch (Exception e) {
-				throw new ServletException("Fel i query-sträng", e);
-			}
-		}
-		return params;
 	}
 
 	// grundläggande xml-escape
