@@ -11,6 +11,7 @@ public class HarvestServiceImpl implements HarvestService {
 	String harvestURL;
 	String harvestSetSpec;
 	Date lastHarvestDate;
+	Date firstIndexDate;
 	boolean alwaysHarvestEverything;
 
 	public HarvestServiceImpl() {}
@@ -71,6 +72,13 @@ public class HarvestServiceImpl implements HarvestService {
 		this.lastHarvestDate = lastHarvestDate;
 	}
 
+	public Date getFirstIndexDate() {
+		return firstIndexDate;
+	}
+
+	public void setFirstIndexDate(Date date) {
+		this.firstIndexDate = date;
+	}
 
 	public boolean getAlwaysHarvestEverything() {
 		return alwaysHarvestEverything;

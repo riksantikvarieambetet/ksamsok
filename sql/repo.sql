@@ -12,6 +12,7 @@ harvestURL varchar(4000),
 harvestSetSpec varchar(50),
 cronstring varchar(50),
 lastHarvestDate timestamp,
+firstIndexDate timestamp,
 alwayseverything integer -- boolean
 );
 

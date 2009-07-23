@@ -78,6 +78,20 @@ public interface HarvestService {
 	void setLastHarvestDate(Date date);
 
 	/**
+	 * Ger datum/tid för första lyckade indexeringen.
+	 * 
+	 * @return datum
+	 */
+	Date getFirstIndexDate();
+
+	/**
+	 * Sätter datum/tid för första lyckade indexeringen.
+	 * 
+	 * @param date datum
+	 */
+	void setFirstIndexDate(Date date);
+
+	/**
 	 * Ger tjänstetyp som talar om vad denna tjänst klarar av att skörda.
 	 * 
 	 * @return tjänstetyp

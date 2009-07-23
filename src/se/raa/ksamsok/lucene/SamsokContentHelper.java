@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,6 +66,8 @@ public class SamsokContentHelper extends ContentHelper {
 	// "tagnamn"
 	private static final URI uri_rServiceName = URI.create(uriPrefixKSamsok + "serviceName");
 	private static final URI uri_rServiceOrganization = URI.create(uriPrefixKSamsok + "serviceOrganization");
+	private static final URI uri_rCreatedDate = URI.create(uriPrefixKSamsok + "createdDate");
+	private static final URI uri_rLastChangedDate = URI.create(uriPrefixKSamsok + "lastChangedDate");
 	private static final URI uri_rItemTitle = URI.create(uriPrefixKSamsok + "itemTitle");
 	private static final URI uri_rItemType = URI.create(uriPrefixKSamsok + "itemType");
 	private static final URI uri_rItemClass = URI.create(uriPrefixKSamsok + "itemClass");
@@ -208,6 +211,13 @@ public class SamsokContentHelper extends ContentHelper {
 		StringReader r = null;
 		Graph graph = null;
 		String identifier = null;
+		// TODO: refaktorera lite så att en del av variablerna försvinner
+		//       skicka tex med elementFactory i ip-konstruktorn och ha en lokal map med
+		//       URI/URIReference-par som skapas dynamiskt? kanske flytta ut URI-variablerna
+		//       i ett interface eller nåt också? dela upp indexeringen i mindre metoder?
+		//       - kanske ska vänta lite med detta tills kravet kommer att kunna hantera
+		//         flera protokollversioner, då måste med största sannolikhet en refaktorering
+		//         till oavsett
 		try {
 			graph = jrdfFactory.getNewGraph();
 			GraphRdfXmlParser parser = new GraphRdfXmlParser(graph, new MemMapFactory());
@@ -223,6 +233,8 @@ public class SamsokContentHelper extends ContentHelper {
 			// korrekt om man skapar globala URIReferenceImpl-instanser
 			URIReference rServiceName = elementFactory.createURIReference(uri_rServiceName);
 			URIReference rServiceOrganization = elementFactory.createURIReference(uri_rServiceOrganization);
+			URIReference rCreatedDate = elementFactory.createURIReference(uri_rCreatedDate);
+			URIReference rLastChangedDate = elementFactory.createURIReference(uri_rLastChangedDate);
 			URIReference rItemTitle = elementFactory.createURIReference(uri_rItemTitle);
 			URIReference rItemType = elementFactory.createURIReference(uri_rItemType);
 			URIReference rItemClass = elementFactory.createURIReference(uri_rItemClass);
@@ -361,6 +373,30 @@ public class SamsokContentHelper extends ContentHelper {
 			// hämta ut serviceOrganization (01, fast 11 egentligen?)
 			ip.setCurrent(IX_SERVICEORGANISATION);
 			appendToTextBuffer(allText, extractSingleValue(graph, s, rServiceOrganization, ip));
+			// hämta ut createdDate (01, fast 11 egentligen?)
+			String createdDate = extractSingleValue(graph, s, rCreatedDate, null);
+			Date created = parseISO8601Date(createdDate);
+			if (created == null) {
+				addProblemMessage("Kunde inte tolka '" + IX_CREATEDDATE +
+						"' som ISO8601: " + createdDate);
+			} else {
+				ip.setCurrent(IX_CREATEDDATE);
+				ip.addToDoc(formatDate(created, false));
+			}
+			// lite logik för att sätta datum då posten först lades till i indexet
+			Date addedToIndex = calculateAddedToIndex(service.getFirstIndexDate(), created);
+			ip.setCurrent(IX_ADDEDTOINDEXDATE);
+			ip.addToDoc(formatDate(addedToIndex, false));
+			// hämta ut lastChangedDate (01, fast 11 egentligen?)
+			String lastChangedDate = extractSingleValue(graph, s, rLastChangedDate, null);
+			Date lastChanged = parseISO8601Date(lastChangedDate);
+			if (lastChanged == null) {
+				addProblemMessage("Kunde inte tolka '" + IX_LASTCHANGEDDATE +
+						"' som ISO8601: " + lastChangedDate);
+			} else {
+				ip.setCurrent(IX_LASTCHANGEDDATE);
+				ip.addToDoc(formatDate(lastChanged, false));
+			}
 			// hämta ut itemTitle (0m)
 			ip.setCurrent(IX_ITEMTITLE, Field.Store.YES);
 			appendToTextBuffer(itemText, extractValue(graph, s, rItemTitle, null, ip));
@@ -949,6 +985,19 @@ public class SamsokContentHelper extends ContentHelper {
 		return result;
 	}
 
+	// parse av iso8601-datum
+	private static Date parseISO8601Date(String dateStr) {
+		Date date = null;
+		if (dateStr != null) {
+			try {
+				DateTime dateTime = isoDateTimeFormatter.parseDateTime(dateStr);
+				date = dateTime.toDate();
+			} catch (Exception ignore) {
+			}
+		}
+		return date;
+	}
+
 	// hjälpmetod som lägger till text till en textbuffer
 	private void appendToTextBuffer(StringBuffer buffer, String text) {
 		if (text == null || text.length() == 0) {
@@ -1224,6 +1273,44 @@ public class SamsokContentHelper extends ContentHelper {
 			}
 		}
 		return value;
+	}
+
+	// beräknar när posten först lades till indexet, används för att få fram listningar
+	// på nya objekt i indexet
+	// hänsyn tas till när tjänsten först indexerades och när posten skapades för att
+	// få fram ett någorlunda bra datum, se kommentar nedan
+	// beräknas i praktiken som max(firstIndexed, recordCreated)
+	private static Date calculateAddedToIndex(Date firstIndexed, Date recordCreated) {
+		Date addedToIndex = null;
+		if (firstIndexed != null) {
+			// tjänsten har redan indexerats (minst) en gång
+			if (recordCreated != null) {
+				if (recordCreated.after(firstIndexed)) {
+					// nytt objekt i redan indexerad tjänst
+					// OBS:  detta datum är inte riktigt 100% sant egentligen utan det
+					//       beror också på med vilken frekvens tjänsten skördas, tex
+					//       om tjänsten skördas var tredje dag så kan det skilja på
+					//       två dagar när objektet egentligen först dök upp i indexet
+					//       och vilket värde som används, så fn får det ses som en uppskattning
+					addedToIndex = recordCreated;
+				} else {
+					// "gammalt" objekt i redan indexerad tjänst
+					addedToIndex = firstIndexed;
+				}
+			} else {
+				// objekt med okänt skapad-datum i redan indexerad tjänst
+				// TODO: sätta "nu" istället eller är detta ok? kan vara nytt, kan vara
+				//       gammalt men då vi inte vet kanske det ska få vara gammalt?
+				addedToIndex = firstIndexed;
+			}
+		} else {
+			// ny tjänst -> nytt objekt
+			// TODO: kanske alltid ska ha samma värde? kan gå över dygngräns
+			//       egentligen vill man alltid ha datumet då indexeringen lyckades (= gick
+			//       klart ok) men det vet man ju aldrig här (varken om eller när)...
+			addedToIndex = new Date();
+		}
+		return addedToIndex;
 	}
 
 	@SuppressWarnings("unchecked")

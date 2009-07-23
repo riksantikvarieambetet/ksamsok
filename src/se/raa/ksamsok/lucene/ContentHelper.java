@@ -48,6 +48,9 @@ public abstract class ContentHelper {
 	public static final String IX_TEXT = "text"; // fritext för "alla" fält
 	public static final String IX_SERVICENAME = "serviceName";
 	public static final String IX_SERVICEORGANISATION = "serviceOrganization";
+	public static final String IX_CREATEDDATE = "createdDate";
+	public static final String IX_LASTCHANGEDDATE = "lastChangedDate";
+	public static final String IX_ADDEDTOINDEXDATE = "addedToIndexDate"; // special
 
 	// entitet
 
@@ -187,6 +190,8 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMSTYLE, "Stil som präglar objektet", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMCOLOR, "Färg som präglar objektet", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMNUMBER, "Inventarienummer eller annan identifikation av objektet", IndexType.VERBATIM);
+		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
+		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 
 		// plats
 		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE);
@@ -270,6 +275,10 @@ public abstract class ContentHelper {
 		addIndex(IX_ISVISUALIZEDBY, "Visualiseras av annat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_SAMEAS, "Samma som (uri)", IndexType.VERBATIM);
 		addIndex(IX_VISUALIZES, "Visualiserar objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_ADDEDTOINDEXDATE, "Datum posten lades till i indexet (yyyy-mm-dd) - " + 
+				"obs att detta datum är ungefärligt då det beror på skördfrekvens för " +
+				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
+				IX_CREATEDDATE + ")", IndexType.VERBATIM);
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);

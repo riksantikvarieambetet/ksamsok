@@ -54,6 +54,12 @@ public interface HarvestServiceManager {
 	void updateServiceDate(HarvestService service, Date date) throws Exception;
 
 	/**
+	 * Lagrar första gången tjänsten indexerades ok om inget värde finns.
+	 * @param service tjänst
+	 */
+	void storeFirstIndexDateIfNotSet(HarvestService service) throws Exception;
+
+	/**
 	 * Tar bort en tjänst ur databasen. Tar även bort data ur repositoryt och ifrån
 	 * indexet.
 	 * 

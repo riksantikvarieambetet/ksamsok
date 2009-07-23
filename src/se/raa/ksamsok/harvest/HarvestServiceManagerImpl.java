@@ -228,6 +228,10 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		if (ts != null) {
 			service.setLastHarvestDate(new Date(ts.getTime()));
 		}
+		ts = rs.getTimestamp("firstIndexDate");
+		if (ts != null) {
+			service.setFirstIndexDate(new Date(ts.getTime()));
+		}
 		service.setAlwaysHarvestEverything(rs.getBoolean("alwaysEverything"));
 		return service;
 	}
@@ -332,7 +336,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			throw new RuntimeException("Hittade inte service med id: " + service.getId());
 		}
 	    Connection c = null;
-	    PreparedStatement  pst = null;
+	    PreparedStatement pst = null;
 	    try {
 	    	c = ds.getConnection();
 			pst = c.prepareStatement("update harvestservices set " +
@@ -340,7 +344,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					"where serviceId = ?");
 			Timestamp ts = new Timestamp(date.getTime());
 			pst.setTimestamp(1, ts);
-
 			pst.setString(2, service.getId());
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);
@@ -350,6 +353,42 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    } catch (Exception e) {
 	    	DBBasedManagerImpl.rollback(c);
 	    	logger.error("Fel vid uppdatering av datum för tjänst med id " + service.getId(), e);
+	    	throw e;
+	    } finally {
+	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
+	    }
+	}
+
+	@Override
+	public void storeFirstIndexDateIfNotSet(HarvestService service) throws Exception {
+		HarvestService dbService = getService(service.getId());
+		if (dbService == null) {
+			throw new RuntimeException("Hittade inte service med id: " + service.getId());
+		}
+		// har vi ett datum behöver vi inte göra nåt
+		if (dbService.getFirstIndexDate() != null) {
+			return;
+		}
+	    Connection c = null;
+	    PreparedStatement pst = null;
+	    try {
+	    	c = ds.getConnection();
+			pst = c.prepareStatement("update harvestservices set " +
+					"firstIndexDate = ? " +
+					"where serviceId = ?");
+			Timestamp ts = new Timestamp(new Date().getTime());
+			pst.setTimestamp(1, ts);
+			pst.setString(2, service.getId());
+			pst.executeUpdate();
+			DBBasedManagerImpl.commit(c);
+			if (logger.isInfoEnabled()) {
+				logger.info("Uppdaterade första indexeringsdatum för tjänst med id " +
+						service.getId());
+			}
+	    } catch (Exception e) {
+	    	DBBasedManagerImpl.rollback(c);
+	    	logger.error("Fel vid uppdatering av första indexeringsdatum för tjänst med id " +
+	    			service.getId(), e);
 	    	throw e;
 	    } finally {
 	    	DBBasedManagerImpl.closeDBResources(null, pst, c);

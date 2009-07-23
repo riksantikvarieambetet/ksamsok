@@ -189,6 +189,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				ss.setStatusTextAndLog(service, "Uppdaterar lucene-index från repository");
 				ss.setStep(service, Step.INDEX);
 				hrm.updateLuceneIndex(service, null);
+				hsm.storeFirstIndexDateIfNotSet(service);
 				long durationMillis = System.currentTimeMillis() - start;
 				ss.setStatusTextAndLog(service, "Ok, körtid " + ContentHelper.formatRunTime(durationMillis));
 				ss.setStep(service, Step.IDLE);
@@ -337,6 +338,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 									" > " + lastSuccessfulHarvestTs : ""));
 					ss.setStep(service, Step.INDEX);
 					hrm.updateLuceneIndex(service, lastSuccessfulHarvestTs);
+					hsm.storeFirstIndexDateIfNotSet(service);
 				} else {
 					if (logger.isInfoEnabled()) {
 						logger.info(serviceId + ", ingen index-uppdatering nödvändig");
