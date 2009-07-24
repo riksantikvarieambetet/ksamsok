@@ -82,6 +82,7 @@ public class SamsokContentHelper extends ContentHelper {
 	private static final URI uri_rItemColor = URI.create(uriPrefixKSamsok + "itemColor");
 	private static final URI uri_rItemNumber = URI.create(uriPrefixKSamsok + "itemNumber");
 	private static final URI uri_rItemDescription = URI.create(uriPrefixKSamsok + "itemDescription");
+	private static final URI uri_rItemLicense = URI.create(uriPrefixKSamsok + "itemLicense");
 	private static final URI uri_rSubject = URI.create(uriPrefixKSamsok + "subject");
 	private static final URI uri_rCollection = URI.create(uriPrefixKSamsok + "collection");
 	private static final URI uri_rDataQuality = URI.create(uriPrefixKSamsok + "dataQuality");
@@ -249,6 +250,7 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rItemColor = elementFactory.createURIReference(uri_rItemColor);
 			URIReference rItemNumber = elementFactory.createURIReference(uri_rItemNumber);
 			URIReference rItemDescription = elementFactory.createURIReference(uri_rItemDescription);
+			URIReference rItemLicense = elementFactory.createURIReference(uri_rItemLicense);
 			URIReference rSubject = elementFactory.createURIReference(uri_rSubject);
 			URIReference rCollection = elementFactory.createURIReference(uri_rCollection);
 			URIReference rDataQuality = elementFactory.createURIReference(uri_rDataQuality);
@@ -439,6 +441,9 @@ public class SamsokContentHelper extends ContentHelper {
 			// hämta ut itemDescription, resursnod (0m)
 			ip.setCurrent(IX_ITEMDESCRIPTION); // fritext
 			appendToTextBuffer(itemText, extractValue(graph, s, rItemDescription, r__Desc, ip));
+			// hämta ut itemLicense (01)
+			ip.setCurrent(IX_ITEMLICENSE);
+			extractSingleValue(graph, s, rItemLicense, ip); // in i fritext om licens är kod?
 			// TODO: subject inte rätt, är bara en uri-pekare nu(?)
 			// hämta ut subject (0m)
 			ip.setCurrent(IX_SUBJECT);
