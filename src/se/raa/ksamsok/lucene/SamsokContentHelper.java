@@ -373,15 +373,16 @@ public class SamsokContentHelper extends ContentHelper {
 			// hämta ut serviceOrganization (01, fast 11 egentligen?)
 			ip.setCurrent(IX_SERVICEORGANISATION);
 			appendToTextBuffer(allText, extractSingleValue(graph, s, rServiceOrganization, ip));
-			// hämta ut createdDate (01, fast 11 egentligen?)
+			// hämta ut createdDate (01, fast 11 egentligen? speciellt om man vill ha ut info
+			// om nya objekt i indexet)
+			Date created = null;
 			String createdDate = extractSingleValue(graph, s, rCreatedDate, null);
-			Date created = parseISO8601Date(createdDate);
-			if (created == null) {
-				addProblemMessage("Kunde inte tolka '" + IX_CREATEDDATE +
-						"' som ISO8601: " + createdDate);
+			if (createdDate != null) {
+				created = parseAndIndexISO8601DateAsDate(IX_CREATEDDATE, createdDate, ip);
 			} else {
-				ip.setCurrent(IX_CREATEDDATE);
-				ip.addToDoc(formatDate(created, false));
+				addProblemMessage("Värde för '" + IX_CREATEDDATE +
+						// troligen saknas det på alla så identifier inte med tillsvidare
+						"' saknas"); //  för " + identifier);
 			}
 			// lite logik för att sätta datum då posten först lades till i indexet
 			Date addedToIndex = calculateAddedToIndex(service.getFirstIndexDate(), created);
@@ -389,13 +390,12 @@ public class SamsokContentHelper extends ContentHelper {
 			ip.addToDoc(formatDate(addedToIndex, false));
 			// hämta ut lastChangedDate (01, fast 11 egentligen?)
 			String lastChangedDate = extractSingleValue(graph, s, rLastChangedDate, null);
-			Date lastChanged = parseISO8601Date(lastChangedDate);
-			if (lastChanged == null) {
-				addProblemMessage("Kunde inte tolka '" + IX_LASTCHANGEDDATE +
-						"' som ISO8601: " + lastChangedDate);
+			if (lastChangedDate != null) {
+				parseAndIndexISO8601DateAsDate(IX_LASTCHANGEDDATE, lastChangedDate, ip);
 			} else {
-				ip.setCurrent(IX_LASTCHANGEDDATE);
-				ip.addToDoc(formatDate(lastChanged, false));
+				// lastChanged är inte lika viktig som createdDate så den varnar vi inte för tills vidare
+				// addProblemMessage("Värde för '" + IX_LASTCHANGEDDATE +
+				//		"' saknas för " + identifier);
 			}
 			// hämta ut itemTitle (0m)
 			ip.setCurrent(IX_ITEMTITLE, Field.Store.YES);
@@ -994,6 +994,19 @@ public class SamsokContentHelper extends ContentHelper {
 				date = dateTime.toDate();
 			} catch (Exception ignore) {
 			}
+		}
+		return date;
+	}
+
+	// tolkar och indexerar ett iso-datum som yyyy-mm-dd
+	private static Date parseAndIndexISO8601DateAsDate(String index, String dateStr, IndexProcessor ip) {
+		Date date = parseISO8601Date(dateStr);
+		if (date != null) {
+			ip.setCurrent(index);
+			ip.addToDoc(formatDate(date, false));
+		} else {
+			addProblemMessage("Kunde inte tolka '" + index +
+					"' som ISO8601: " + dateStr);
 		}
 		return date;
 	}
