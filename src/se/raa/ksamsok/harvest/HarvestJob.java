@@ -30,9 +30,6 @@ import se.raa.ksamsok.lucene.ContentHelper;
  */
 public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 
-	/** parameter som pekar ut var hämtad xml ska mellanlagras, om ej satt används tempdir */
-	protected static final String D_HARVEST_SPOOL_DIR = "samsok-harvest-spool-dir";
-
 	protected final Logger logger;
 	boolean interrupted;
 
@@ -131,22 +128,6 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 		interrupted = true;
 	}
 
-	/**
-	 * Ger spoolkatalog, antingen satt via parametern {@link #D_HARVEST_SPOOL_DIR} eller
-	 * java.io.tempdir.
-	 * 
-	 * @return spoolkatalog
-	 */
-	protected File getSpoolDir() {
-		File spoolDir = new File(System.getProperty(D_HARVEST_SPOOL_DIR,
-				System.getProperty("java.io.tmpdir")));
-		if (spoolDir.exists() && spoolDir.isDirectory() && spoolDir.canWrite()) {
-			return spoolDir;
-		}
-		throw new RuntimeException("Problem med spooldir " + spoolDir +
-				", kontrollera att katalogen finns och är skrivbar");
-	}
-
 	/* (non-Javadoc)
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
 	 */
@@ -202,7 +183,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			ServiceMetadata sm = performIdentify(service);
 
 			int numRecords = -1; // -1 är okänt antal poster
-			spoolFile = new File(getSpoolDir(), serviceId + "_.xml");
+			spoolFile = hrm.getSpoolFile(service);
 			// kolla om vi har en hämtad fil som vi kan använda
 			if (!spoolFile.exists()) {
 				// ingen tidigare hämtning att använda

@@ -4,7 +4,8 @@
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
-<%@page import="se.raa.ksamsok.lucene.LuceneServlet"%><html>
+<%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
+<%@page import="java.io.File"%><html>
 	<body>
 		Jobbar...
 <%
@@ -77,6 +78,11 @@
    			throw new RuntimeException("Hittade inte optimize-servicen");
    		}
    		redirTo = "indexservices.jsp";
+   	} else if ("deletespool".equals(action)) {
+   		File spoolFile = hrm.getSpoolFile(service);
+   		if (spoolFile.exists()) {
+   			spoolFile.delete();
+   		}
    	} else {
    		throw new RuntimeException("Felaktig action: " + action);
    	}

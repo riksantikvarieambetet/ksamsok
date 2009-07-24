@@ -66,4 +66,11 @@ public interface HarvestRepositoryManager {
 	 * @throws Exception
 	 */
 	int getCount(HarvestService service) throws Exception;
+
+	/**
+	 * Ger spoolfil för en tjänst.
+	 * @param service tjänst
+	 * @return spoolfil
+	 */
+	File getSpoolFile(HarvestService service);
 }

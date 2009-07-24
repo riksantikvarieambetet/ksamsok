@@ -31,12 +31,14 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	private SAXParserFactory spf;
 	private StatusService ss;
+	private File spoolDir;
 
-	public HarvestRepositoryManagerImpl(DataSource ds, StatusService ss) {
+	public HarvestRepositoryManagerImpl(DataSource ds, StatusService ss, File spoolDir) {
 		super(ds);
 		spf = SAXParserFactory.newInstance();
 		spf.setNamespaceAware(true);
 		this.ss = ss;
+		this.spoolDir = spoolDir;
 	}
 
 	public boolean storeHarvest(HarvestService service, ServiceMetadata sm, File xmlFile, Timestamp ts) throws Exception {
@@ -314,6 +316,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			closeDBResources(rs, pst, c);
 		}
 		return count;
+	}
+
+	@Override
+	public File getSpoolFile(HarvestService service) {
+		return new File(spoolDir, service.getId() + "_.xml");
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package se.raa.ksamsok.harvest;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -20,6 +21,9 @@ import org.apache.log4j.Logger;
  */
 public class HarvesterServlet extends HttpServlet {
 
+	/** parameter som pekar ut var hämtad xml ska mellanlagras, om ej satt används tempdir */
+	protected static final String D_HARVEST_SPOOL_DIR = "samsok-harvest-spool-dir";
+
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.HarvesterServlet");
 
 	/**
@@ -33,10 +37,15 @@ public class HarvesterServlet extends HttpServlet {
 	protected HarvestServiceManagerImpl hsm;
 	protected HarvestRepositoryManagerImpl hrm;
 	protected StatusService ss;
+	protected File spoolDir;
 
 	private static HarvesterServlet instance = null;
 
 	public static HarvesterServlet getInstance() {
+		if (instance == null) {
+			throw new RuntimeException("Systemet ej korrekt initialiserat eller " +
+					"på väg att stängas ned (ingen instans)");
+		}
 		return instance;
 	}
 
@@ -54,9 +63,15 @@ public class HarvesterServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
+		spoolDir = new File(System.getProperty(D_HARVEST_SPOOL_DIR,
+				System.getProperty("java.io.tmpdir")));
+		if (!spoolDir.exists() || !spoolDir.isDirectory() || !spoolDir.canWrite()) {
+			throw new ServletException("Problem med spooldir " + spoolDir +
+				", kontrollera att katalogen finns och är skrivbar");
+		}
 		try {
 			ss = new StatusServiceImpl(ds);
-			hrm = new HarvestRepositoryManagerImpl(ds, ss);
+			hrm = new HarvestRepositoryManagerImpl(ds, ss, spoolDir);
 			hsm = new HarvestServiceManagerImpl(ds, hrm, ss);
 			hsm.init();
 		} catch (Exception se) {
@@ -78,6 +93,7 @@ public class HarvesterServlet extends HttpServlet {
 		if (logger.isInfoEnabled()) {
 			logger.info("HarvesterServlet stoppad");
 		}
+		instance = null;
 	}
 
 	@Override
@@ -121,6 +137,17 @@ public class HarvesterServlet extends HttpServlet {
 	public StatusService getStatusService() {
 		return ss;
 	}
+
+	/**
+	 * Ger spoolkatalog, antingen satt via parametern {@link #D_HARVEST_SPOOL_DIR} eller
+	 * java.io.tempdir.
+	 * 
+	 * @return spoolkatalog
+	 */
+	public File getSpoolDir() {
+		return spoolDir;
+	}
+
 
 	private void writePageHead(PrintWriter p, String title) {
 		p.write("<html><head><title>" +  title + "</title></head><body>");

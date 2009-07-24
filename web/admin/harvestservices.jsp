@@ -3,10 +3,22 @@
 <%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="java.util.Date"%>
-<%@page import="se.raa.ksamsok.lucene.ContentHelper"%><html>
+<%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
+<%@page import="java.io.File"%><html>
 <%
 	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
 	String uidString = " [" + request.getRemoteUser() + "]";
+	Runtime runtime = Runtime.getRuntime();
+
+	int procs = runtime.availableProcessors();
+	int freeMem = (int) (runtime.freeMemory() / (1024 * 1024));
+	int maxMem = (int) (runtime.maxMemory() / (1024 * 1024));
+	int totalMem = (int) (runtime.totalMemory() / (1024 * 1024));
+	File spoolDir = HarvesterServlet.getInstance().getSpoolDir();
+	int freeDisk = (int) (spoolDir.getFreeSpace() / (1024 * 1024));
+	String jvmInfo = procs + " processorer, minne - ledigt: " + freeMem + "Mb allokerat: " +
+		totalMem + "Mb max: " + maxMem + "Mb, disk - ledigt " + freeDisk + "Mb " +
+		"<span style='font-size: 85%;'>(på spool: " + spoolDir.getAbsolutePath() + ")</span>";
 %>
 	<head>
 		<title>Tjänstelista<%= uidString %></title>
@@ -21,6 +33,7 @@
 		<hr/>
 		<div>
 			<button onclick="javascript:window.location='editservice.jsp'; return false;">Ny tjänst</button>
+			<span class="paddingWideLeft">JVMInfo: <%=jvmInfo %></span>
 		</div>
 		<hr/>
 		<table id="servicetable">

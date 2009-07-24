@@ -42,7 +42,14 @@
 	} else {
 		lastHarvest = ContentHelper.formatDate(lastHarvestDate, true);
 	}
-
+	Date firstIndexDate = service.getFirstIndexDate();
+	String firstIndexed;
+  	if (firstIndexDate == null) {
+  		firstIndexed = "aldrig";
+	} else {
+		firstIndexed = ContentHelper.formatDate(firstIndexDate, true);
+	}
+	File spoolFile = hrm.getSpoolFile(service);
 %>
 		<form action="serviceaction.jsp" method="post" accept-charset="iso-8859-1">
 			<br/>
@@ -52,6 +59,9 @@
 					<button name="action" value="delete" onclick="javascript:return confirm('Vill du verkligen ta bort denna tjänst?')">Ta bort</button>
 					<% if (!hsm.isRunning(service)) { %>
 						<button name="action" value="trigger" onclick="javascript:return confirm('Vill du verkligen köra denna tjänst nu?')">Kör</button>
+						<% if (spoolFile.exists()) { %>
+							<button name="action" value="deletespool" onclick="javascript:return confirm('Vill du verkligen ta bort spoolfilen för denna tjänst och påtvinga ny hämtning av data?')">Ta bort spoolfil</button>
+						<% } %>
 					<% } else { %>
 						<button name="action" value="interrupt" onclick="javascript:return confirm('Vill du verkligen försöka stoppa denna tjänst nu?')">Stoppa körning</button>
 					<% } %>
@@ -114,9 +124,25 @@
 						</td>
 					</tr>
 					<tr>
+						<td>Första indexering:</td>
+						<td><%= firstIndexed %></td>
+					</tr>
+					<tr>
 						<td>Senaste skörd:</td>
 						<td><%= lastHarvest %></td>
 					</tr>
+					<%
+						if (spoolFile.exists()) {
+					%>
+					<tr>
+						<td>Spoolfil:</td>
+						<td><%= spoolFile.getAbsolutePath() %> (ca <%= (int) (spoolFile.length() / (1024 * 1024)) %>Mb)
+							<b>OBS! Kommer användas vid nästa körning om den ej tas bort</b>
+						</td>
+					</tr>
+					<%
+						}
+					%>
 					<%
 						if (serviceId != null) {
 							int repoCount = hrm.getCount(service);
@@ -174,4 +200,5 @@
 			</table>
 		</form>
   </body> 
-</html>
+
+<%@page import="java.io.File"%></html>
