@@ -90,10 +90,14 @@ public class HarvesterServlet extends HttpServlet {
 		}
 		hsm.destroy();
 		super.destroy();
+		instance = null;
+		// finalizer-hack för att göra det möjligt att redeploya webappen, annars
+		// hålls referencing-jar bla låst
+		// ev också IIORegistry.getDefaultInstance().deregisterAll();
+		System.runFinalization();
 		if (logger.isInfoEnabled()) {
 			logger.info("HarvesterServlet stoppad");
 		}
-		instance = null;
 	}
 
 	@Override
