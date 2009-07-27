@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.imageio.spi.IIORegistry;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletConfig;
@@ -92,8 +93,9 @@ public class HarvesterServlet extends HttpServlet {
 		super.destroy();
 		instance = null;
 		// finalizer-hack för att göra det möjligt att redeploya webappen, annars
-		// hålls referencing-jar bla låst
-		// ev också IIORegistry.getDefaultInstance().deregisterAll();
+		// hålls referencing-jar bla låst, kanske inte snällt om fler webappar kör
+		// i samma tomcat och imageio ligger utanför webappen i common/lib men...
+		IIORegistry.getDefaultInstance().deregisterAll();
 		System.runFinalization();
 		if (logger.isInfoEnabled()) {
 			logger.info("HarvesterServlet stoppad");
