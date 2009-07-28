@@ -77,10 +77,14 @@ fi
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/webapps/ksamsok.war
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/context.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/tomcat-users.xml
-# om man byter version på oracle-jar:en i projektet måste man byta här också
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-10.2.0.4.jar
+# oracle-drivrutiner för jdbc och spatialutökningar
+# obs, se till att ha samma matchningar här som i build.xml
+%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
+%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
 
 %changelog
+* Tue Jul 28 2009 ant
+- La till extra jar-filer för hantering av spatiala data
 * Fri Feb 13 2009 ant
 - Nya tjänsterelaterade index mm
 * Tue Feb 3 2009 ant

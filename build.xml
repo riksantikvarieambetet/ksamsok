@@ -164,8 +164,10 @@
 			</fileset>
 		</copy>
 		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/lib/">
-			<fileset dir="rpm">
+			<fileset dir="${project.src.lib.dir}">
+				<!-- obs, se till att ha samma matchningar här som i spec-filen -->
 				<include name="oracle-*"/>
+				<include name="ora10-*"/>
 			</fileset>
 		</copy>
 
