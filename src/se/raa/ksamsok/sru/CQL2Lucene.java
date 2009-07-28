@@ -145,6 +145,14 @@ public class CQL2Lucene {
 
 			if (!index.equals("")) {
 				String term = ctn.getTerm();
+				// result sets stöds ej
+				if (INDEX_CQL_RESULTSETID.equals(index)) {
+					throw new DiagnosticsException(50, "Result sets not supported");
+				}
+				// anchoring (position av värde i indexerat fält) stöds ej
+				if (term.indexOf('^') != -1) {
+					throw new DiagnosticsException(31, "Anchoring character not supported");
+				}
 				// hantera virtuellt index
 				if (ContentHelper.isSpatialVirtualIndex(index)) {
 					query = createSpatialQuery(index, ctn);
@@ -258,11 +266,6 @@ public class CQL2Lucene {
 
 		Query termQuery = null;
 
-		// result sets stöds ej
-		if (INDEX_CQL_RESULTSETID.equals(field)) {
-			throw new DiagnosticsException(50, "Result sets not supported");
-		}
-
 		/**
 		 * check to see if there are any spaces.  If there are spaces each
 		 * word must be broken into a single term search and then all queries
@@ -270,14 +273,14 @@ public class CQL2Lucene {
 		 */
 		// för ej analyserade fält vill vi tillåta mellanslag i termerna, typ "Stockholm 1:1"
 		if (value.indexOf(" ") == -1 || !ContentHelper.isAnalyzedIndex(field)) {
-			// no space found, just create a single term search
-			//todo case insensitivity?
+			// inga mellanslag, skapa en term query eller wildcard query
 			Term term;
-			if (value.indexOf("?") != -1 || value.indexOf("*")!=-1 ){
+			if (value.indexOf("?") != -1 || value.indexOf("*")!= -1){
 				if (ContentHelper.isToLowerCaseIndex(field)) {
 					// gör till gemener
 					value = value.toLowerCase();
-				} else if (ContentHelper.isISO8601DateYearIndex(field)) {
+				} else if (ContentHelper.isISO8601DateYearIndex(field) ||
+						ContentHelper.isSpatialCoordinateIndex(field)) {
 					// inget stöd för wildcards för dessa fält
 					throw new DiagnosticsException(28, "Masking character not supported for index", field);
 				}
@@ -298,34 +301,16 @@ public class CQL2Lucene {
 				 * <> uses = as its term query.
 				 * exact is a phrase query
 				 */
+				if (value.indexOf("?") != -1 || value.indexOf("*")!=-1 ) {
+					throw new DiagnosticsException(28, "Masking character not supported for phrase queries", field);
+				}
 				PhraseQuery phraseQuery = new PhraseQuery();
 				StringTokenizer tokenizer = new StringTokenizer(value, " ");
-				// använd svensk stamning, samma som för indexeringen
-				// beroende på fält/index om vi ska stamma eller ej
-				boolean isAnalyzedField = ContentHelper.isAnalyzedIndex(field);
-				boolean isLowerCaseField = ContentHelper.isToLowerCaseIndex(field);
-				boolean isISO8601DateYearField = ContentHelper.isISO8601DateYearIndex(field);
+				// använd svensk stamning för dessa analyserade index, samma som för indexeringen
 				while (tokenizer.hasMoreTokens()) {
 					String curValue = tokenizer.nextToken();
-					if (isAnalyzedField) {
-						// analysera sökvärdet pss som vid indexering
-						if (curValue.indexOf("?") < 0 && curValue.indexOf("*") < 0 ) {
-							// TODO: hur hantera wildcards i en sån här query?
-							curValue = analyzeIndexText(curValue);
-						}
-					} else if (isLowerCaseField) {
-						// gör till gemener
-						curValue = curValue.toLowerCase();
-					} else if (isISO8601DateYearField) {
-						// gör om år till för lucene tillfixad sträng så att interval mm stöds
-						try {
-							curValue = ContentHelper.transformNumberToLuceneString(parseYear(curValue));
-						} catch (Exception e) {
-							throw new DiagnosticsException(36,
-									"Term in invalid format for index or relation",
-									field + ": " + curValue);
-						}
-					}
+					// analysera sökvärdet pss som vid indexering
+					curValue = analyzeIndexText(curValue);
 					// ta bara med termen om det ej är ett stopp-ord
 					if (curValue != null) {
 						phraseQuery.add(new Term(field, curValue));
@@ -360,7 +345,9 @@ public class CQL2Lucene {
 					Query subSubQuery = createTermQuery(field, curValue, relation);
 					AndQuery((BooleanQuery) termQuery, subSubQuery);
 				}
-			} // TODO: else?
+			} else {
+				throw new DiagnosticsException(19, "Unsupported relation for phrase query", relation);
+			}
 
 		}
 
@@ -511,7 +498,6 @@ public class CQL2Lucene {
 				try {
 					ts.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					logger.warn("Fel vid stängning av tokenström vid analys av index-text", e);
 				}
 			}
