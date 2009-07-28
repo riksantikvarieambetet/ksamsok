@@ -41,15 +41,28 @@
 			function init(){
 				map = new OpenLayers.Map('map');
 				var ol_wms = new OpenLayers.Layer.WMS(
-					"OpenLayers WMS",
+					"MagnaCarta OpenLayers WMS",
 					"http://labs.metacarta.com/wms/vmap0",
 					{layers: 'basic'}
 				);
-
-				map.addLayers([ol_wms, markers]);
+				var jpl_wms = new OpenLayers.Layer.WMS( "NASA Global Mosaic",
+					"http://t1.hypercube.telascience.org/cgi-bin/landsat7", 
+					{layers: "landsat7"}
+				);
+				var osmLayer = new OpenLayers.Layer.WMS( "OpenStreetMap", 
+					[
+						"http://t1.hypercube.telascience.org/tiles?",
+						"http://t2.hypercube.telascience.org/tiles?",
+						"http://t3.hypercube.telascience.org/tiles?",
+						"http://t4.hypercube.telascience.org/tiles?"
+					], 
+					{layers: 'osm-4326', format: 'image/png' }
+				);
+				map.addLayers([ol_wms, jpl_wms, osmLayer, markers]);
 				map.addControl(new OpenLayers.Control.LayerSwitcher());
 				map.addControl(new OpenLayers.Control.MousePosition());
 				map.addControl(new OpenLayers.Control.Scale());
+				map.addControl(new OpenLayers.Control.ScaleLine());
 				map.zoomToMaxExtent();
 			}
 			var size = new OpenLayers.Size(10,17);
