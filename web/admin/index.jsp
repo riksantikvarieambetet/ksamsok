@@ -17,7 +17,7 @@
 	<body class="bgGrayUltraLight">
 		<br/>
 		<div class="bgBlackLight menu">
-			<a href="search.jsp">Sök</a>
+			<a href="map.jsp">Sök + karta</a>
 			<a href="harvestservices.jsp">Tjänster</a>
 			<a href="../sru">SRU-gränssnitt</a>
 		</div>
