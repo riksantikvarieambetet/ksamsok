@@ -25,8 +25,8 @@
             value="${project.name}.war"/>
 
         <!-- för rpm, öka vid ny version... -->
-		<property name="major.minor" 	value="0.1" />
-		<property name="release" 		value="6" />
+		<property name="major.minor" 	value="0.2" />
+		<property name="release" 		value="1" />
 
         <property name="javac.debug" value="true"/>
         <property name="javac.optimize" value="true"/>
