@@ -24,7 +24,7 @@
 		<hr/>
 		<div class="bgGrayLight">
 			<h4>
-				K-Samsök 0.1, gemensamt sökindex för olika källor.
+				K-Samsök 0.2, gemensamt sökindex för olika källor.
 			</h4>
 		</div>
 		<hr/>
@@ -57,7 +57,6 @@
 				Totalt finns det för närvarande <%= LuceneServlet.getInstance().getTotalCount() %> poster i indexet.
 			</p>
 		</div>
-		<!-- TODO: ta bort? -->
 		<hr/>
 		Enkla exempel med sru (i nytt fönster/flik):<br/>
 		<a target="_blank" href="../sru?operation=searchRetrieve&version=1.1&query=<%=ContentHelper.IX_TEXT%>%3Drunsten">Sökning på text=runsten</a>
