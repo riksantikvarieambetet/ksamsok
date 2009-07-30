@@ -1,6 +1,6 @@
 Enkelt harvest och content-repository
 
-Utvecklat med java 1.6 och tomcat 6.0.
+Utvecklat med java 1.6, tomcat 6.0 och FireFox (admingränssnittet fungerar mindre bra i IE).
 
 ** Installation
 
@@ -21,33 +21,37 @@ Jdbc-driver för rätt databastyp måste in i tomcat/lib. I och med införandet av i
 spatialdata följer hsqldb med i lib (den används av internt av geotools), men den bör/måste
 flyttas till tomcat/lib *om* det är den databastypen som också används för lagring av innehåll
 för att undvika klassladdarproblem. För Oracle behöver man tex jbdc-jar och även spatial-utökningar
-för att kunna lagra spatiala data (sdoapi, sdoutl och Oracles xmlparser).
+för att kunna lagra spatiala data (sdoapi, sdoutl och Oracles xmlparser). Javadatabasen
+Derby/JavaDB fungerar bättre än hsql fn med större datamängder. Varken hsql eller derby stödjer
+spatiala data men med klassen se.raa.ksamsok.spatial.VerbatimGMLWriter kan gml:en skrivas ner
+som en clob om man vill tex för debug, se nedan.
 
-* skapa tabeller enligt sql i sql/repo.sql för datakällan
+* Skapa tabeller enligt sql i sql/repo.sql för datakällan
 
-* peka ev ut var lucene ska lägga sitt index med javaflaggan -Dsamsok-lucene-index-dir=[sökväg till katalog]
- om ej pekas ut kommer indexet att läggas i /var/lucene-index/ksamsok.
+* Peka ev ut var lucene ska lägga sitt index med javaflaggan -Dsamsok-lucene-index-dir=[sökväg till katalog]
+ Om ej pekas ut kommer indexet att läggas i /var/lucene-index/ksamsok.
 
-* peka ev ut var filer som skördas ska läggas innan de behandlas -Dsamsok-harvest-spool-dir=[sökväg till katalog]
- en skörd hämtas först till en temporärfil och flyttas sen till spool-katalogen så att den kan
+* Peka ev ut var filer som skördas ska läggas innan de behandlas med flaggan
+ -Dsamsok-harvest-spool-dir=[sökväg till katalog]
+ En skörd hämtas först till en temporärfil och flyttas sen till spool-katalogen så att den kan
  återanvändas om jobbet går fel vid senare steg, tex lagring i databas
- om ej pekas ut kommer javas default-tempdir att användas
+ Om ej pekas ut kommer (default) tempdir att användas, typiskt tomcat/temp.
 
-* ange om inte datakällan stödjer spatialt data med -Dsamsok.spatial=false
- default är sant och en klass för att hantera spatialdata kommer att försöka härledas
+* Ange om inte datakällan stödjer spatialt data med -Dsamsok.spatial=false
+ Default är sant och en klass för att hantera spatialdata kommer att försöka härledas
  fram utfrån klassen på uppkopplingen - fn stöds bara oracle
 
-* ange ev egen klass för att hantera spatialt data med -Dsamsok.spatial.class=xx.yy.Z
+* Ange ev egen klass för att hantera spatialt data med -Dsamsok.spatial.class=xx.yy.Z
  klassen måste implementera interfacet se.raa.ksamsok.spatial.GMLDBWriter och ha en publik
- default-konstruktor
- främst för debug eller tredjeparts utv, har inget defaultvärde och bör normalt ej sättas
+ default-konstruktor.
+ Främst för debug eller tredjeparts utv, har inget defaultvärde och bör normalt ej sättas
 
-* kör "ant war" och kopiera war-fil till tomcat/webapps
+* Kör "ant war" och kopiera war-fil till tomcat/webapps (eller ant rpm för drift på raä)
 
 ** Användning
 
 Ett grundläggande (fult och ej stylat) gränssnitt finns för att hantera tjänster, uppdatera
-lucene-index och sökning.
+lucene-index och sökning. Det nås på http://[HOST][:PORT]/ksamsok/admin/
 
 Tjänster kan läggas upp i gränssnittet för skörd med http (OAI-PMH-[SAMSOK]) eller via en
 filläsning. En fil måste ha samma syntax som en hämtning mha OAIPMHHarvestJob.getRecords()
@@ -64,11 +68,28 @@ Stöd finns också för att köra en tjänst interaktivt, indexera om en tjänst (inne
 lucene-indexet för den tjänsten - förändrar ej det skördade datat) eller att indexera om alla tjänster.
 Indexoptimering kan också schemaläggas.
 
-Ett mycket simpelt sökgränssnitt finns vilket söker i fältet "text" (fritext) och visar
-träffarna som xml.
+Ett simpelt sökgränssnitt finns vilket söker i fältet "text" (fritext) och visar
+träffarna som xml och på karta om de har koordinater.
 
 Admin-delen av centralnoden skyddas och användare måste ha rollen "ksamsok" för att få
-använda den vilket måste sättas upp i tomcatkonf på vanligt sätt.
+använda den vilket måste sättas upp i tomcat-konf på vanligt sätt.
+
+SRU-gränssnittet nås genom URL:en http://[HOST][:PORT]/ksamsok/sru och i svaret från den URL:en
+finns info om vilka index som stödjs mm genom en "SRU explain".
+
+Uppslagning ("resolve") av URI/URL till html, museumdat och rdf stödjs också. Genom att anropa
+http://[HOST][:PORT]/ksamsok/[INSTITUTION]/[TJÄNST][/FORMAT]/[ID] kan man antingen i fallet
+rdf få innehållet direkt, eller i övriga bli skickad vidare mha en redirect till respektive
+institutions webbplats. Notera att enbart URI:s som börjar med http://kulturarvsdata.se
+stödjs och formatet på dessa måste vara som ovan. Exempelvis ger uppslagning av: 
+http://kulturarvsdata.se/raa/fmi/10009102180001 eller
+http://kulturarvsdata.se/raa/fmi/rdf/10009102180001 -> RDF
+och
+http://kulturarvsdata.se/raa/fmi/html/10009102180001 -> redir till Fornsök
+
+För test- och utvecklingsversioner (som ej ligger korrekt mappade på kulturarvsdata.se) kan man
+testa med:
+http://[HOST][:PORT]/ksamsok/raa/fmi/10009102180001 -> RDF osv
 
 * Modifierad jrdf-jar
 Nedanstående är (ful-)patchar som behövs för att teckenkodning ska fungera ok med
