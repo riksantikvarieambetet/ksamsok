@@ -72,8 +72,8 @@ public class ResolverServlet extends HttpServlet {
 	protected String[] checkAndForwardRequests(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
 		String path = req.getPathInfo();
-		// special då resolverservlet verkar "käka" upp default-sidehanteringen
-		if ("/admin/".equals(path)) {
+		// special då resolverservlet "käkar" upp default-sidehanteringen
+		if ("/admin/".equals(path) || "/".equals(path)) {
 			resp.sendRedirect("index.jsp");
 			return null;
 		}
