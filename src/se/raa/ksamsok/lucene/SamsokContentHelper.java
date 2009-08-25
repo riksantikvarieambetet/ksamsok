@@ -98,6 +98,7 @@ public class SamsokContentHelper extends ContentHelper {
 	private static final URI uri_rContextLabel = URI.create(uriPrefixKSamsok + "contextLabel");
 	private static final URI uri_rURL = URI.create(uriPrefixKSamsok + "url");
 	private static final URI uri_rMuseumdatURL = URI.create(uriPrefixKSamsok + "museumdatUrl");
+	private static final URI uri_rTheme = URI.create(uriPrefixKSamsok + "theme");
 
 	// relationer
 	private static final URI uri_rContainsInformationAbout = URI.create(uriPrefixKSamsok + "containsInformationAbout");
@@ -266,7 +267,8 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rContextLabel = elementFactory.createURIReference(uri_rContextLabel);
 			URIReference rURL = elementFactory.createURIReference(uri_rURL);
 			URIReference rMuseumdatURL = elementFactory.createURIReference(uri_rMuseumdatURL);
-
+			URIReference rTheme = elementFactory.createURIReference(uri_rTheme);
+			
 			// relationer
 			URIReference rContainsInformationAbout = elementFactory.createURIReference(uri_rContainsInformationAbout);
 			URIReference rContainsObject = elementFactory.createURIReference(uri_rContainsObject);
@@ -457,6 +459,9 @@ public class SamsokContentHelper extends ContentHelper {
 			// hämta ut mediaType (0n)
 			ip.setCurrent(IX_MEDIATYPE);
 			extractValue(graph, s, rMediaType, null, ip);
+			// hämta ut tema (0n)
+			ip.setCurrent(IX_THEME);
+			extractValue(graph, s, rTheme, null, ip);
 
 			// relationer, in i respektive index + i IX_RELURI
 			final String[] relIx = new String[] { null, IX_RELURI };

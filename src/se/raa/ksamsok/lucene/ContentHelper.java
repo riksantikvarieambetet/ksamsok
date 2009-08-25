@@ -77,7 +77,8 @@ public abstract class ContentHelper {
 	public static final String IX_ITEMCOLOR = "itemColor";
 	public static final String IX_ITEMNUMBER = "itemNumber";
 	public static final String IX_ITEMLICENSE = "itemLicense";
-
+	public static final String IX_THEME = "theme";
+	
 	// tider, platser, personer
 	//	Sammanhang enligt ändlig lista. Sammanhanget gäller för tider, platser och personer/organisationer. Listan på sammanhang hittar du här: http://kulturarvsdata.se/resurser/Context
 	public static final String IX_CONTEXTLABEL = "contextLabel";
@@ -196,7 +197,8 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet", IndexType.VERBATIM); // typ? uri -> verbatim, kod -> lowercase
 		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
-
+		addIndex(IX_THEME, "Tema [*]", IndexType.TOLOWERCASE);
+		
 		// plats
 		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.VERBATIM);
