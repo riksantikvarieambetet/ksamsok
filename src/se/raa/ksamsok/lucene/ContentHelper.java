@@ -197,7 +197,7 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet", IndexType.VERBATIM); // typ? uri -> verbatim, kod -> lowercase
 		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
-		addIndex(IX_THEME, "Tema [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_THEME, "Tema", IndexType.TOLOWERCASE);
 		
 		// plats
 		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE);
