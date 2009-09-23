@@ -265,8 +265,11 @@ public class OAIPMHHarvestJob extends HarvestJob {
     	// TODO: bättre konstanter/värden
     	//       skilj på connect/error?
     	//       olika värden per tjänst? smh/va är helt tillståndslösa, oiacat inte 
-    	final int maxTries = 3;
-    	final int waitSecs = 120;
+    	//final int maxTries = 3;
+    	//final int waitSecs = 120;
+		//provar nåt snällare för Tekniska Museets skull:
+    	final int maxTries = 5;
+    	final int waitSecs = 1000;
 		if (tryNum >= maxTries) {
 			throw new Exception("Problem att kontakta tjänsten, gav upp efter " + maxTries + " försök" + (resumptionToken != null ? " med token: " +
 					resumptionToken : ""), ioe);
@@ -276,7 +279,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		//       i så fall måste vi begränsa feltexten, se:
 		//       http://vsadilovskiy.wordpress.com/2007/10/19/ora-01461-can-bind-a-long-value-only-for-insert-into-a-long-column/
 		String msg = "Fick exception (" + ioe.getMessage() +
-			"), väntar " + waitSecs + "s och försöker igen";
+			"), väntar " + waitSecs + " sek och försöker igen";
 		logger.warn((service != null ? service.getId() + ": " : "" ) + msg);
 		if (ss != null) {
     		ss.setStatusTextAndLog(service, msg);
