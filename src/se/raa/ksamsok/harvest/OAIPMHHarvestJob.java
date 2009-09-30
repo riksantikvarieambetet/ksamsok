@@ -268,8 +268,8 @@ public class OAIPMHHarvestJob extends HarvestJob {
     	//final int maxTries = 3;
     	//final int waitSecs = 120;
 		//provar nåt snällare för Tekniska Museets skull:
-    	final int maxTries = 5;
-    	final int waitSecs = 1000;
+    	final int maxTries = 6;
+    	final int waitSecs = 100;
 		if (tryNum >= maxTries) {
 			throw new Exception("Problem att kontakta tjänsten, gav upp efter " + maxTries + " försök" + (resumptionToken != null ? " med token: " +
 					resumptionToken : ""), ioe);
