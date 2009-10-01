@@ -399,7 +399,7 @@ public class CQL2Lucene {
 			double[] point = { coordsAndDist[0], coordsAndDist[1] };
 			// och hämta distansen och konvertera den till miles för locallucenes DistanceQuery
 			double distInKm = coordsAndDist[2];
-			double distInMiles =  distInKm / 0.621371;
+			double distInMiles =  distInKm * 0.621371;
 			if (distInMiles < 1) {
 				// locallucene ger fel om distansvärdet är för litet så vi kontrollerar här först
 				throw new DiagnosticsException(36,
