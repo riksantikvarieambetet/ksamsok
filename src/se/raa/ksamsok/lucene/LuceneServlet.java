@@ -1,14 +1,22 @@
 package se.raa.ksamsok.lucene;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServlet;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
@@ -19,6 +27,10 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.NIOFSDirectory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * LuceneServlet, hanterar gränssnitt mot lucene
@@ -58,6 +70,7 @@ public class LuceneServlet extends HttpServlet {
 	protected boolean iwBorrowed = false;
 	protected boolean isDestroying = false;
 	private static LuceneServlet instance;
+	private List<String> indexList;
 
 	/**
 	 * Hämtar körande instans.
@@ -87,6 +100,12 @@ public class LuceneServlet extends HttpServlet {
 				throw new ServletException("Problem med tilldelad katalog för lucene-index: " + dir +
 						", kontrollera skrivrättigheter och att katalogen finns");
 			}
+			
+			/* tillagt av Henrik Hjalmarsson
+			 * Initierar index listan
+			 */
+			initIndexList();
+			
 			// TODO: NIOFSDirectory tydligen långsam/trasig på win pga en sun-bug
 			// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6265734 
 			// https://issues.apache.org/jira/browse/LUCENE-753
@@ -111,11 +130,39 @@ public class LuceneServlet extends HttpServlet {
 			instance = this;
 		} catch (Throwable t) {
 			logger.error("Fel vid init av lucene-index", t);
+			logger.error(t.getMessage());
 			throw new UnavailableException("Fel vid init av lucene-index");
 		}
 		if (logger.isInfoEnabled()) {
 			logger.info("LuceneServlet startad");
 		}
+	}
+
+	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
+	
+	private void initIndexList()
+		throws SAXException, IOException, ParserConfigurationException
+	{
+		this.indexList = new ArrayList<String>();
+		String fileName = PATH + "index.xml";
+		DataInputStream input = new DataInputStream(
+				LuceneServlet.class.getResourceAsStream(fileName));
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document xmlDocument = builder.parse(input);
+		xmlDocument.getDocumentElement().normalize();
+		
+		NodeList indexList = xmlDocument.getElementsByTagName("index");
+		for(int i = 0; i < indexList.getLength(); i++)
+		{
+			Node node = indexList.item(i);
+			this.indexList.add(node.getTextContent());
+		}
+	}
+	
+	public List<String> getIndexList()
+	{
+		return this.indexList;
 	}
 
 	@Override

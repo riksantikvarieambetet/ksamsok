@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<indexNames>
+	<index>serviceName</index>
+	<index>serviceOrganization</index>
+	<index>collection</index>
+	<index>subject</index>
+	<index>mediaType</index>
+	<index>dataQuality</index>
+	<index>itemType</index>
+	<index>itemMotiveWord</index>
+	<index>itemMaterial</index>
+	<index>itemTechnique</index>
+	<index>contextType</index>
+	<index>fromPeriodName</index>
+	<index>toPeriodName</index>
+	<index>countryName</index>
+	<index>countyName</index>
+	<index>provinceName</index>
+	<index>municipalityName</index>
+	<index>parishName</index>
+	<index>firstName</index>
+	<index>organization</index>
+	<index>title</index>
+	<index>gender</index>
+</indexNames>
