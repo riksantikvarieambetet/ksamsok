@@ -74,4 +74,12 @@
 		<description>Administratörer, ksamsök</description>
 		<role-name>ksamsok</role-name>
 	</security-role>
+	<servlet>
+		<servlet-name>API</servlet-name>
+		<servlet-class>se.raa.ksamsok.api.APIServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>API</servlet-name>
+		<url-pattern>/api</url-pattern>
+	</servlet-mapping>
 </web-app>
