@@ -80,12 +80,22 @@ public class CQL2Lucene {
 		Query query = null;
 
 		if(node instanceof CQLBooleanNode) {
+			// i sru har operatorerna samma precedens och evalueras från vänster till höger
+			// men precedensen kan ändras med ()-grupperingar
+			// 
+			// tex (a>1 and b<2) or (c>1 and d<2) blir fel utan ny fråga (BooleanQuery) - det
+			// blir "and" mellan parenteserna i den resulterande lucene-frågan om inte "genvägen"
+			// utan en ny fråga kommenteras bort
+
+			// TODO: ta bort bortkommenterad kod och förbättra kommentaren ovan
+
 			CQLBooleanNode cbn=(CQLBooleanNode)node;
 
 			Query left = makeQuery(cbn.left);
 			Query right = makeQuery(cbn.right, left);
 
 			if(node instanceof CQLAndNode) {
+				/*
 				if (left instanceof BooleanQuery) {
 					query = left;
 					if (logger.isDebugEnabled()) {
@@ -93,16 +103,17 @@ public class CQL2Lucene {
 					}
 					AndQuery((BooleanQuery) left, right);
 				} else {
+				*/
 					query = new BooleanQuery();
 					if (logger.isDebugEnabled()) {
 						logger.debug("  Anding left and right in new query");
 					}
 					AndQuery((BooleanQuery) query, left);
 					AndQuery((BooleanQuery) query, right);
-				}
+				//}
 
 			} else if(node instanceof CQLNotNode) {
-
+				/*
 				if (left instanceof BooleanQuery) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("  Notting left and right");
@@ -110,15 +121,17 @@ public class CQL2Lucene {
 					query = left;
 					NotQuery((BooleanQuery) left, right);
 				} else {
+				*/
 					query = new BooleanQuery();
 					if (logger.isDebugEnabled()) {
 						logger.debug("  Notting left and right in new query");
 					}
 					AndQuery((BooleanQuery) query, left);
 					NotQuery((BooleanQuery) query, right);
-				}
+				//}
 
 			} else if(node instanceof CQLOrNode) {
+				/*
 				if (left instanceof BooleanQuery) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("  Or'ing left and right");
@@ -126,13 +139,14 @@ public class CQL2Lucene {
 					query = left;
 					OrQuery((BooleanQuery) left, right);
 				} else {
+				*/
 					if (logger.isDebugEnabled()) {
 						logger.debug("  Or'ing left and right in new query");
 					}
 					query = new BooleanQuery();
 					OrQuery((BooleanQuery) query, left);
 					OrQuery((BooleanQuery) query, right);
-				}
+				//}
 			} else {
 				throw new RuntimeException("Unknown boolean");
 			}
@@ -189,15 +203,17 @@ public class CQL2Lucene {
 						// first term in query create an empty Boolean query to NOT
 						query = new BooleanQuery();
 					} else {
+						/* se precedenskommentar ovan
 						if (leftQuery instanceof BooleanQuery) {
 							// left query is already a BooleanQuery use it
 							query = leftQuery;
 						} else {
 							// left query was not a boolean, create a boolean query
 							// and AND the left query to it
+						 */
 							query = new BooleanQuery();
 							AndQuery((BooleanQuery)query, leftQuery);
-						}
+						//}
 					}
 					//create a term query for the term then NOT it to the boolean query
 					Query termQuery = createTermQuery(index,term, relation);
