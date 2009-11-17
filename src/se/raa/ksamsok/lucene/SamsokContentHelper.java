@@ -157,7 +157,10 @@ public class SamsokContentHelper extends ContentHelper {
 	private static final URI uri_rEventName = URI.create(uriPrefixKSamsok + "eventName");
 	private static final URI uri_rEventAuth = URI.create(uriPrefixKSamsok + "eventAuth");
 	//private static final URI uri_rTimeText = URI.create(uriPrefixKSamsok + "timeText");
-	
+
+	// övriga
+	private static final URI uri_rThumbnail = URI.create(uriPrefixKSamsok + "thumbnail");
+
 	// geo
 	private static final String aukt_country_pre = uriPrefix + "resurser/aukt/geo/country#";
 	private static final String aukt_county_pre = uriPrefix + "resurser/aukt/geo/county#";
@@ -326,6 +329,9 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rEventAuth = elementFactory.createURIReference(uri_rEventAuth);
 			//URIReference rTimeText = elementFactory.createURIReference(uri_rTimeText);
 
+			// övriga
+			URIReference rThumbnail = elementFactory.createURIReference(uri_rThumbnail);
+
 			String pres = null;
 			SubjectNode s = null;
 			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
@@ -362,6 +368,9 @@ public class SamsokContentHelper extends ContentHelper {
 				}
 				luceneDoc.add(new Field(I_IX_MUSEUMDAT_URL, url, Field.Store.YES, Field.Index.NOT_ANALYZED));
 			}
+			// lägg till specialindex för om tumnagel existerar eller ej (j/n), IndexType.TOLOWERCASE
+			boolean thumbnailExists = extractSingleValue(graph, s, rThumbnail, null) != null;
+			luceneDoc.add(new Field(IX_THUMBNAILEXISTS, thumbnailExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
 
 			StringBuffer allText = new StringBuffer();
 			StringBuffer placeText = new StringBuffer();

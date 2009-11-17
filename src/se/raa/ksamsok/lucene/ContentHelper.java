@@ -156,6 +156,9 @@ public abstract class ContentHelper {
 	public static final String RT90_3021 = "RT90";
 	public static final String WGS84_4326 = "WGS84";
 
+	// övriga specialindex
+	public static final String IX_THUMBNAILEXISTS = "thumbnailExists";
+
 	// alla index
 	private static final HashMap<String,Index> indices = new LinkedHashMap<String,Index>();
 	// publika index
@@ -285,6 +288,9 @@ public abstract class ContentHelper {
 				"obs att detta datum är ungefärligt då det beror på skördfrekvens för " +
 				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
 				IX_CREATEDDATE + ")", IndexType.VERBATIM);
+
+		// övriga
+		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);
