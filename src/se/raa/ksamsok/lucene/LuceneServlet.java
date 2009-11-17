@@ -2,8 +2,6 @@ package se.raa.ksamsok.lucene;
 
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +103,7 @@ public class LuceneServlet extends HttpServlet {
 			 * Initierar index listan
 			 */
 			initIndexList();
-			
+
 			// TODO: NIOFSDirectory tydligen långsam/trasig på win pga en sun-bug
 			// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6265734 
 			// https://issues.apache.org/jira/browse/LUCENE-753
@@ -139,7 +137,7 @@ public class LuceneServlet extends HttpServlet {
 	}
 
 	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
-	
+
 	private void initIndexList()
 		throws SAXException, IOException, ParserConfigurationException
 	{
@@ -151,7 +149,7 @@ public class LuceneServlet extends HttpServlet {
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document xmlDocument = builder.parse(input);
 		xmlDocument.getDocumentElement().normalize();
-		
+
 		NodeList indexList = xmlDocument.getElementsByTagName("index");
 		for(int i = 0; i < indexList.getLength(); i++)
 		{
