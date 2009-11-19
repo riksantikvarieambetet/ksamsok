@@ -99,16 +99,6 @@ public class CQL2Lucene
 
 			if(node instanceof CQLAndNode) 
 			{
-				if (left instanceof BooleanQuery) 
-				{
-					query = left;
-					if (logger.isDebugEnabled()) 
-					{
-						logger.debug("  Anding left and right");
-					}
-					AndQuery((BooleanQuery) left, right);
-				} else 
-				{
 					query = new BooleanQuery();
 					if (logger.isDebugEnabled()) 
 					{
@@ -116,20 +106,9 @@ public class CQL2Lucene
 					}
 					AndQuery((BooleanQuery) query, left);
 					AndQuery((BooleanQuery) query, right);
-				}
 
 			} else if(node instanceof CQLNotNode) 
 			{
-
-				if (left instanceof BooleanQuery) 
-				{
-					if (logger.isDebugEnabled()) 
-					{
-						logger.debug("  Notting left and right");
-					}
-					query = left;
-					NotQuery((BooleanQuery) left, right);
-				} else {
 					query = new BooleanQuery();
 					if (logger.isDebugEnabled()) 
 					{
@@ -137,20 +116,9 @@ public class CQL2Lucene
 					}
 					AndQuery((BooleanQuery) query, left);
 					NotQuery((BooleanQuery) query, right);
-				}
 
 			} else if(node instanceof CQLOrNode) 
 			{
-				if (left instanceof BooleanQuery) 
-				{
-					if (logger.isDebugEnabled()) 
-					{
-						logger.debug("  Or'ing left and right");
-					}
-					query = left;
-					OrQuery((BooleanQuery) left, right);
-				} else 
-				{
 					if (logger.isDebugEnabled()) 
 					{
 						logger.debug("  Or'ing left and right in new query");
@@ -158,7 +126,6 @@ public class CQL2Lucene
 					query = new BooleanQuery();
 					OrQuery((BooleanQuery) query, left);
 					OrQuery((BooleanQuery) query, right);
-				}
 			} else 
 			{
 				throw new BadParameterException("okänd boolesk operation",
@@ -240,18 +207,8 @@ public class CQL2Lucene
 						query = new BooleanQuery();
 					} else 
 					{
-						if (leftQuery instanceof BooleanQuery) 
-						{
-							// left query is already a BooleanQuery use it
-							query = leftQuery;
-						} else 
-						{
-							// left query was not a boolean, create a
-							// boolean query
-							// and AND the left query to it
 							query = new BooleanQuery();
 							AndQuery((BooleanQuery)query, leftQuery);
-						}
 					}
 					//create a term query for the term then NOT it to the
 					// boolean query
