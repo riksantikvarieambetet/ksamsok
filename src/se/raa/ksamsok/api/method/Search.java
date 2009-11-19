@@ -38,6 +38,8 @@ public class Search implements APIMethod
 	private int hitsPerPage;
 	private int startRecord;
 	private String sort = null;
+	private boolean sortDesc = false;
+	private String recordSchema = null;
 
 	/** standardvärdet för antalet träffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 50;
@@ -53,6 +55,18 @@ public class Search implements APIMethod
 	public static final String START_RECORD = "startRecord";
 	/** parameternamn för sort */
 	public static final String SORT = "sort";
+	/** parameternamn för sort configuration */
+	public static final String SORT_CONFIG = "sortConfig";
+	/** parametervärde för descending sort */
+	public static final String SORT_DESC = "desc";
+	/** parametervärde för ascending sort */
+	public static final String SORT_ASC = "asc";
+	/** record shema för presentations data */
+	public static final String NS_SAMSOK_PRES = "http://kulturarvsdata.se/presentation#";
+	/** parameternamn för record schema */
+	public static final String RECORD_SCHEMA = "recordSchema";
+	
+	public static final String RECORD_SCHEMA_BASE = "http://kulturarvsdata.se/";
 	
 	private static final Logger logger = Logger.getLogger(
 			"se.raa.ksamsok.api.Search");
@@ -93,11 +107,25 @@ public class Search implements APIMethod
 	{
 		sort = field;
 	}
+	
+	public void sortDesc(boolean b)
+	{
+		sortDesc = b;
+	}
+	
+	public void setRecordSchema(String recordSchema)
+	{
+		this.recordSchema = recordSchema;
+	}
 
 	@Override
 	public void performMethod()
 		throws BadParameterException, DiagnosticException
 	{	
+		if(recordSchema != null)
+		{
+			recordSchema = RECORD_SCHEMA_BASE + recordSchema + "#";
+		}
 		Query query = null;
 		
 		query = createQuery();
@@ -130,7 +158,7 @@ public class Search implements APIMethod
 				hits = searcher.search(query, nDocs == 0 ? 1 : nDocs);
 			}else
 			{
-				Sort s = new Sort(new SortField(sort, true));
+				Sort s = new Sort(new SortField(sort, sortDesc));
 				hits = searcher.search(query, null, nDocs == 0 ? 1 : nDocs, s);
 			}
 			numberOfDocs = hits.totalHits;
@@ -206,17 +234,22 @@ public class Search implements APIMethod
 				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." +
 						ContentHelper.IX_REC_IDENTIFIER);
 				String content = null;
-				
-				//hämtade också denna från SRUServlet
-				byte[] pres = doc.getBinaryValue(ContentHelper.I_IX_PRES);
-				if (pres != null) {
-					content = new String(pres, "UTF-8");
-				} else {
-					content = null;
-					logger.warn("Hittade inte presentationsdata för " + uri);
+
+				if (NS_SAMSOK_PRES.equals(recordSchema)) 
+				{
+					byte[] pres = doc.getBinaryValue(ContentHelper.I_IX_PRES);
+					if (pres != null) 
+					{
+						content = new String(pres, "UTF-8");
+					} else 
+					{
+						content = null;
+						logger.warn("Hittade inte presentationsdata för " + uri);
+					}
+				} else 
+				{
+					content = hrm.getXMLData(uri);
 				}
-				
-				content = hrm.getXMLData(uri);
 				content = content.replace(
 						"<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
 				writer.println("<record>");

@@ -298,8 +298,22 @@ public class APIMethodFactory
 		m = new Search(query, hitsPerPage, startRecord, writer);
 		String sort = params.get(Search.SORT);
 		if(sort != null)
-		{
+		{	
 			m.sortBy(sort);
+			String sortConfig = params.get(Search.SORT_CONFIG);
+			if(sortConfig != null)
+			{
+				if(sortConfig.equalsIgnoreCase(Search.SORT_DESC))
+				{
+					m.sortDesc(true);
+				}
+			}
+		}
+		
+		String recordSchema = params.get(Search.RECORD_SCHEMA);
+		if(recordSchema != null)
+		{
+			m.setRecordSchema(recordSchema);
 		}
 		return m;
 	}
