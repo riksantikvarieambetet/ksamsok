@@ -8,10 +8,13 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.CachingWrapperFilter;
+import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.QueryWrapperFilter;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
 import org.z3950.zing.cql.CQLNode;
@@ -20,7 +23,6 @@ import org.z3950.zing.cql.CQLParser;
 
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
 import se.raa.ksamsok.lucene.LuceneServlet;
 
@@ -90,6 +92,9 @@ public class AllIndexUniqueValueCount implements APIMethod
 			List<String> indexList, Query q1)
 		throws DiagnosticException
 	{
+		int numq = 0;
+		// använd frågan som ett filter och cacha upp filterresultatet
+		Filter qwf = new CachingWrapperFilter(new QueryWrapperFilter(q1));
 		try
 		{
 			for(int i = 0; i < indexList.size(); i++)
@@ -100,15 +105,13 @@ public class AllIndexUniqueValueCount implements APIMethod
 				Query rq = searcher.rewrite(q);
 				Set<Term> terms = new HashSet<Term>();
 				rq.extractTerms(terms);
+				++numq; // inte en ren fråga, men borde räknas ändå
 				int counter = 0;
 				for(Term t : terms)
 				{
-					Query q2 = StaticMethods.analyseQuery(t.field(),
-							t.text());
-					BooleanQuery bq = new BooleanQuery();
-					bq.add(q1, BooleanClause.Occur.MUST);
-					bq.add(q2, BooleanClause.Occur.MUST);
-					TopDocs topDocs = searcher.search(bq, 1);
+					Query q2 = new TermQuery(t);
+					TopDocs topDocs = searcher.search(q2, qwf, 1);
+					++numq;
 					if(topDocs.totalHits > 0)
 					{
 						counter++;
@@ -124,6 +127,9 @@ public class AllIndexUniqueValueCount implements APIMethod
 			throw new DiagnosticException("Oväntat IO fel uppstod",
 					"AllIndexUniqueValueCount.doAllIndexUniqueValueCount",
 					e.getMessage(), true);
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("Ställde totalt " + numq + " frågor");
 		}
 	}
 
