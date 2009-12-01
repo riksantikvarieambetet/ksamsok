@@ -65,7 +65,7 @@ public class Search implements APIMethod
 	public static final String NS_SAMSOK_PRES = "http://kulturarvsdata.se/presentation#";
 	/** parameternamn för record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
-	
+	/** bas URL till record schema */
 	public static final String RECORD_SCHEMA_BASE = "http://kulturarvsdata.se/";
 	
 	private static final Logger logger = Logger.getLogger(
@@ -103,16 +103,28 @@ public class Search implements APIMethod
 		}
 	}
 	
+	/**
+	 * Anger vilket index resultatet skall sorteras efter
+	 * @param field
+	 */
 	public void sortBy(String field)
 	{
 		sort = field;
 	}
 	
+	/**
+	 * Anger om resultatet skall sorteras descending eller inte
+	 * @param b
+	 */
 	public void sortDesc(boolean b)
 	{
 		sortDesc = b;
 	}
 	
+	/**
+	 * Anger vilket record schema som skall användas
+	 * @param recordSchema
+	 */
 	public void setRecordSchema(String recordSchema)
 	{
 		this.recordSchema = recordSchema;
@@ -231,6 +243,7 @@ public class Search implements APIMethod
 			{
 				Document doc = searcher.doc(hits.scoreDocs[i].doc,
 						fieldSelector);
+				double score = hits.scoreDocs[i].score;
 				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." +
 						ContentHelper.IX_REC_IDENTIFIER);
 				String content = null;
@@ -254,6 +267,9 @@ public class Search implements APIMethod
 						"<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
 				writer.println("<record>");
 				writer.println(content);
+				writer.println(
+						"<rel:score xmlns:rel=\"info:srw/extension/2/relevancy-1.0\">"
+						+ score + "</rel:score>");
 				writer.println("</record>");
 			}
 		}catch(UnsupportedEncodingException e)

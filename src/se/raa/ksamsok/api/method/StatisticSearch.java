@@ -61,7 +61,6 @@ public class StatisticSearch extends Statistic
 		List<QueryContent> queryList = null;
 		try
 		{
-			BooleanQuery.setMaxClauseCount(10000);
 			//bygger term map
 			termMap = buildTermMap(searcher);
 			//gör kartesisk produkt av alla värden i term mappen

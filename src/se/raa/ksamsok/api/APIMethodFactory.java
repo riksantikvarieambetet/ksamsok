@@ -9,6 +9,7 @@ import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
+import se.raa.ksamsok.api.method.Facet;
 import se.raa.ksamsok.api.method.Search;
 import se.raa.ksamsok.api.method.Statistic;
 import se.raa.ksamsok.api.method.StatisticSearch;
@@ -57,7 +58,10 @@ public class APIMethodFactory
 			m = getStatisticSearchObject(params, writer);
 		}else if(method.equals(AllIndexUniqueValueCount.METHOD_NAME))
 		{
-			m = getAllIndexUniqueValueCount(params, writer);
+			m = getAllIndexUniqueValueCountObject(params, writer);
+		}else if(method.equals(Facet.METHOD_NAME))
+		{
+			m = getFacetObject(params, writer);
 		}
 		else
 		{
@@ -69,7 +73,65 @@ public class APIMethodFactory
 		return m;
 	}
 
-	private static APIMethod getAllIndexUniqueValueCount(Map<String,
+	/**
+	 * skapar ett objekt av typen Facet
+	 * @param params
+	 * @param writer
+	 * @return
+	 * @throws MissingParameterException
+	 * @throws BadParameterException
+	 */
+	private static APIMethod getFacetObject(Map<String, String> params,
+			PrintWriter writer) 
+		throws MissingParameterException, BadParameterException
+	{
+		Facet m = null;
+		String queryString = params.get(Facet.QUERY_PARAMS);
+		String indexString = params.get(Facet.INDEX_PARAMETER);
+		if(queryString == null || queryString.equals(""))
+		{
+			throw new MissingParameterException("Parametern " + Facet.QUERY_PARAMS +
+					" saknas eller är tom", "APIMethodFactory.getFacetObject", null,
+					false);
+		}
+		if(indexString == null || indexString.equals(""))
+		{
+			throw new MissingParameterException("Parametern " + Facet.INDEX_PARAMETER +
+					" saknas eller är tom", "APIMethodFactory.getFacetObject", null,
+					false);
+		}
+		StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
+		HashMap<String,String> indexMap = new HashMap<String,String>();
+		while(indexTokenizer.hasMoreTokens())
+		{
+			String index = indexTokenizer.nextToken();
+			indexMap.put(index, "*");
+		}
+		m = new Facet(indexMap, writer, queryString);
+		String removeBelow = params.get(Facet.REMOVE_BELOW);
+		if(removeBelow != null && !removeBelow.equals(""))
+		{
+			try
+			{
+				int rb = Integer.parseInt(removeBelow);
+				m.setRemoveBelow(rb);
+			}catch(NumberFormatException e)
+			{
+				throw new BadParameterException("parametern ", Facet.REMOVE_BELOW +
+						" måste vara ett numeriskt värde", null, false);
+			}
+		}
+		return m;
+	}
+
+	/**
+	 * skapar ett ojekt av typen AllIndexUniqueValueCount
+	 * @param params
+	 * @param writer
+	 * @return
+	 * @throws MissingParameterException
+	 */
+	private static APIMethod getAllIndexUniqueValueCountObject(Map<String,
 			String> params, PrintWriter writer)
 		throws MissingParameterException
 	{

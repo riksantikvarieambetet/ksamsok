@@ -72,7 +72,6 @@ public class Statistic implements APIMethod
 		try
 		{
 			searcher = LuceneServlet.getInstance().borrowIndexSearcher();
-			BooleanQuery.setMaxClauseCount(10000);
 			//en mängd med mängder med mängder!
 			termMap = buildTermMap(searcher);
 			//gör en kartesisk produkt på de värden i termMap
@@ -207,6 +206,7 @@ public class Statistic implements APIMethod
 		Query query;
 		String indexValue;
 		HashMap<String, Set<Term>> termMap = new HashMap<String, Set<Term>>();
+		BooleanQuery.setMaxClauseCount(10000);
 		for(String index : indexMap.keySet())
 		{
 			try
