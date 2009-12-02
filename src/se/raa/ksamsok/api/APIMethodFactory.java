@@ -117,8 +117,9 @@ public class APIMethodFactory
 				m.setRemoveBelow(rb);
 			}catch(NumberFormatException e)
 			{
-				throw new BadParameterException("parametern ", Facet.REMOVE_BELOW +
-						" måste vara ett numeriskt värde", null, false);
+				throw new BadParameterException("parametern " + Facet.REMOVE_BELOW +
+						" måste vara ett numeriskt värde",
+						"APIMethodFactory.getFacetObject", null, false);
 			}
 		}
 		return m;
