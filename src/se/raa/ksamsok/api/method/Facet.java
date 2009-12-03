@@ -9,10 +9,11 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.CachingWrapperFilter;
+import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.QueryWrapperFilter;
 import org.apache.lucene.search.TopDocs;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
@@ -105,19 +106,18 @@ public class Facet extends StatisticSearch
 	{
 		try
 		{
+			// använd frågan som ett filter och cacha upp filterresultatet
+			Filter qwf = new CachingWrapperFilter(new QueryWrapperFilter(filterQuery));
 			for(int i = 0; i < queryContentList.size(); i++)
 			{	
 				QueryContent queryContent = queryContentList.get(i);
 				Query query = queryContent.getQuery();
-				BooleanQuery booleanQuery = new BooleanQuery();
-				booleanQuery.add(query, BooleanClause.Occur.MUST);
-				booleanQuery.add(filterQuery, BooleanClause.Occur.MUST);
 				if(logger.isDebugEnabled())
 				{
 					logger.debug("about to make " + i + " queries");
 					logger.debug(query);
 				}
-				TopDocs topDocs = searcher.search(booleanQuery, 1);
+				TopDocs topDocs = searcher.search(query, qwf, 1);
 				if(topDocs.totalHits < removeBelow)
 				{
 					queryContentList.remove(i);

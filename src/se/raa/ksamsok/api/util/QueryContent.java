@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 import se.raa.ksamsok.api.exception.DiagnosticException;
 
@@ -86,11 +88,16 @@ public class QueryContent
 	public Query getQuery()
 		throws DiagnosticException
 	{
+		// om bara en term, gör ingen boolean query
+		if (terms.size() == 1) {
+			String index = terms.keySet().iterator().next();
+			return new TermQuery(new Term(index, terms.get(index)));
+		}
 		BooleanQuery query = new BooleanQuery();
 		for(String index : terms.keySet())
 		{
 			String value = terms.get(index);
-			Query q = StaticMethods.analyseQuery(index, value);
+			Query q = new TermQuery(new Term(index, value));
 			query.add(q, BooleanClause.Occur.MUST);
 		}
 		return query;
