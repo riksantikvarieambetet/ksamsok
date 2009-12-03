@@ -62,11 +62,13 @@ public class Search implements APIMethod
 	/** parametervärde för ascending sort */
 	public static final String SORT_ASC = "asc";
 	/** record shema för presentations data */
-	public static final String NS_SAMSOK_PRES = "http://kulturarvsdata.se/presentation#";
+	public static final String NS_SAMSOK_PRES =
+		"http://kulturarvsdata.se/presentation#";
 	/** parameternamn för record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
-	public static final String RECORD_SCHEMA_BASE = "http://kulturarvsdata.se/";
+	public static final String RECORD_SCHEMA_BASE =
+		"http://kulturarvsdata.se/";
 	
 	private static final Logger logger = Logger.getLogger(
 			"se.raa.ksamsok.api.Search");
@@ -191,7 +193,7 @@ public class Search implements APIMethod
 		{
 			throw new DiagnosticException("oväntat IO fel uppstod. Var god" +
 					" försök igen", "Search.performMethod",
-					e.getStackTrace().toString(), true);
+					e.getMessage(), true);
 		}finally
 		{
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
@@ -202,9 +204,7 @@ public class Search implements APIMethod
 	 * skriver ut nedre del av XML svar
 	 */
 	private void writeFot()
-	{
-		writer.println("</records>");
-		
+	{	
 		writer.println("<echo>");
 		writer.println("<startRecord>" + startRecord + "</startRecord>");
 		writer.println("<hitsPerPage>" + hitsPerPage + "</hitsPerPage>");
@@ -257,7 +257,8 @@ public class Search implements APIMethod
 					} else 
 					{
 						content = null;
-						logger.warn("Hittade inte presentationsdata för " + uri);
+						logger.warn("Hittade inte presentationsdata för " +
+								uri);
 					}
 				} else 
 				{
@@ -268,7 +269,8 @@ public class Search implements APIMethod
 				writer.println("<record>");
 				writer.println(content);
 				writer.println(
-						"<rel:score xmlns:rel=\"info:srw/extension/2/relevancy-1.0\">"
+						"<rel:score xmlns:rel=\"info:srw/extension/2/" +
+						"relevancy-1.0\">"
 						+ score + "</rel:score>");
 				writer.println("</record>");
 			}
@@ -278,19 +280,21 @@ public class Search implements APIMethod
 		}catch(CorruptIndexException e)
 		{
 			throw new DiagnosticException("Oväntat index fel uppstod. Var " +
-					"god försök igen", "Search.writeRecords", e.getMessage()
-					+ "\n" + e.getStackTrace().toString(), true);
+					"god försök igen", "Search.writeRecords", e.getMessage(),
+					true);
 		}catch(IOException e)
 		{
 			throw new DiagnosticException("Oväntat IO fel uppstod. Var god" +
-					" försök igen", "Search.writeRecods", e.getMessage() +
-					"\n" + e.getStackTrace().toString(), true);
+					" försök igen", "Search.writeRecods", e.getMessage(),
+					true);
 		}catch(Exception e)
 		{
 			throw new DiagnosticException("Fel uppstod när data skulle " +
 					"hämtas från databasen. Var god försök senare",
-					"Search.writeRecords", e.getMessage() + "\n" +
-					e.getStackTrace().toString(), true);
+					"Search.writeRecords", e.getMessage(), true);
+		}finally
+		{
+			writer.println("</records>");
 		}
 	}
 
@@ -310,13 +314,13 @@ public class Search implements APIMethod
 		}catch(IOException e)
 		{
 			throw new DiagnosticException("Oväntat IO fel uppstod. Var god" +
-					" försök igen", "Search.createQuery", e.getMessage() +
-					"\n" + e.getStackTrace().toString(), true);
+					" försök igen", "Search.createQuery", e.getMessage(),
+					true);
 		}catch(CQLParseException e)
 		{
 			throw new DiagnosticException("Oväntat parser fel uppstod. Var" +
-					" god försök igen", "Search.createQuery", e.getMessage()
-					+ "\n" + e.getStackTrace().toString(), true);
+					" god försök igen", "Search.createQuery", e.getMessage(),
+					true);
 		}
 		return query;
 	}
