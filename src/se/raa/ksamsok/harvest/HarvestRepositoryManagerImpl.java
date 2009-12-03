@@ -41,7 +41,8 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		this.spoolDir = spoolDir;
 	}
 
-	public boolean storeHarvest(HarvestService service, ServiceMetadata sm, File xmlFile, Timestamp ts) throws Exception {
+	public boolean storeHarvest(HarvestService service, ServiceMetadata sm,
+			File xmlFile, Timestamp ts) throws Exception {
 		Connection c = null;
 		String serviceId = null;
 		OAIPMHHandler h = null;
@@ -267,6 +268,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			}
 		} catch (Exception e) {
 			logger.error("Fel vid hämtning xmldata för uri " + uri, e);
+			logger.error(e.getMessage());
 			throw e;
 		} finally {
 			closeDBResources(rs, pst, c);
