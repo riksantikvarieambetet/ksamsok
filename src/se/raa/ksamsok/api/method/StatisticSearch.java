@@ -9,8 +9,10 @@ import java.util.Set;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.CachingWrapperFilter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.QueryWrapperFilter;
 import org.apache.lucene.search.TopDocs;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
@@ -113,6 +115,8 @@ public class StatisticSearch extends Statistic
 		{
 			CQLNode node = parser.parse(queryString);
 			Query q2 = CQL2Lucene.makeQuery(node);
+			CachingWrapperFilter qwf = 
+				new CachingWrapperFilter(new QueryWrapperFilter(q2));
 			for(int i = 0; i < queryList.size(); i++)
 			{
 				QueryContent content = queryList.get(i);
@@ -121,10 +125,7 @@ public class StatisticSearch extends Statistic
 				Query q = CQL2Lucene.makeQuery(node);*/
 				Query q1 = content.getQuery();
 				
-				BooleanQuery q = new BooleanQuery();
-				q.add(q1, BooleanClause.Occur.MUST);
-				q.add(q2, BooleanClause.Occur.MUST);
-				TopDocs topDocs = searcher.search(q, 1);
+				TopDocs topDocs = searcher.search(q1, qwf, 1);
 				if(topDocs.totalHits >= removeBelow)
 				{
 					content.setHits(topDocs.totalHits);
