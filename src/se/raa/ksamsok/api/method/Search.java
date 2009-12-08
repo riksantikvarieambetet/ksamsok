@@ -160,8 +160,7 @@ public class Search implements APIMethod
 		int numberOfDocs = 0;
 		
 		
-		HarvestRepositoryManager hrm = 
-			HarvesterServlet.getInstance().getHarvestRepositoryManager();
+		
 		try
 		{
 			searcher = LuceneServlet.getInstance().borrowIndexSearcher();
@@ -179,8 +178,7 @@ public class Search implements APIMethod
 			
 			writeHead(numberOfDocs);
 			
-			writeRecords(searcher, fieldSelector, hits, numberOfDocs, hrm,
-					nDocs);
+			writeRecords(searcher, fieldSelector, hits, numberOfDocs, nDocs);
 			
 			writeFot();
 			
@@ -229,16 +227,17 @@ public class Search implements APIMethod
 	 * @param fieldSelector
 	 * @param hits
 	 * @param numberOfDocs
-	 * @param hrm
 	 * @param nDocs
 	 */
 	private void writeRecords(IndexSearcher searcher,
 			final MapFieldSelector fieldSelector, TopDocs hits,
-			int numberOfDocs, HarvestRepositoryManager hrm, int nDocs)
+			int numberOfDocs, int nDocs)
 		throws DiagnosticException
 	{
 		try
 		{
+			HarvestRepositoryManager hrm = 
+				HarvesterServlet.getInstance().getHarvestRepositoryManager();
 			for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++)
 			{
 				Document doc = searcher.doc(hits.scoreDocs[i].doc,
@@ -318,9 +317,10 @@ public class Search implements APIMethod
 					true);
 		}catch(CQLParseException e)
 		{
-			throw new DiagnosticException("Oväntat parser fel uppstod. Var" +
-					" god försök igen", "Search.createQuery", e.getMessage(),
-					true);
+			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen på " +
+					"att query strängen inte följer CQL syntax. Var god kontrollera " +
+					"söksträngen eller kontakta system administratör för söksystemet du " +
+					"använder", "Search.createQuery", e.getMessage(), false);
 		}
 		return query;
 	}
