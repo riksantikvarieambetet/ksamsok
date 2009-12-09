@@ -463,6 +463,20 @@ public abstract class ContentHelper {
 	private static void addIndex(String indexName, String title, IndexType indexType, boolean isPublic) {
 		indices.put(indexName, new Index(indexName, title, indexType, isPublic));
 	}
+	
+	/**
+	 * Kollar om inskickat index existerar
+	 * @param indexName
+	 * @return
+	 */
+	public static boolean indexExists(String indexName)
+	{
+		Index index = indices.get(indexName);
+		if(index == null)
+			return false;
+		else
+			return true;
+	}
 
 	/**
 	 * Hämtar lista med alla publika index.
