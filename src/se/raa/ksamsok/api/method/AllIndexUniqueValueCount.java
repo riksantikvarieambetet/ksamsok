@@ -3,12 +3,11 @@ package se.raa.ksamsok.api.method;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.CachingWrapperFilter;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
@@ -31,18 +30,13 @@ import se.raa.ksamsok.lucene.LuceneServlet;
  * och hur många unika värden dessa index har som matchar givet query.
  * @author Henrik Hjalmarsson
  */
-public class AllIndexUniqueValueCount implements APIMethod
-{
-	private String queryString;
-	private PrintWriter writer;
-	
+public class AllIndexUniqueValueCount extends Facet
+{	
 	private static final Logger logger = Logger.getLogger(
 			"se.raa.ksamsok.api.method.AllIndexUniqueValueCount");
 	
 	/** metodens namn */
 	public static final String METHOD_NAME = "allIndexUniqueValueCount";
-	/** query parameterns namn */
-	public static final String QUERY_PARAMETER = "query";
 	
 	/**
 	 * skapar ett objekt av AllIndexUniqueValueCount från given query sträng
@@ -50,10 +44,10 @@ public class AllIndexUniqueValueCount implements APIMethod
 	 * @param queryString
 	 * @param writer
 	 */
-	public AllIndexUniqueValueCount(String queryString, PrintWriter writer)
+	public AllIndexUniqueValueCount(String queryString, PrintWriter writer,
+			Map<String,String> indexMap)
 	{
-		this.queryString = queryString;
-		this.writer = writer;
+		super(indexMap, writer, queryString);
 	}
 	
 	@Override
@@ -64,14 +58,16 @@ public class AllIndexUniqueValueCount implements APIMethod
 			LuceneServlet.getInstance().borrowIndexSearcher();
 		try
 		{
-			BooleanQuery.setMaxClauseCount(10000);
-			List<String> indexList =
-				LuceneServlet.getInstance().getIndexList();
+			if(indexMap == null)
+			{
+				indexMap = LuceneServlet.getInstance().getIndexMap();
+			}
+			
 			
 			CQLParser parser = new CQLParser();
 			CQLNode node = parser.parse(queryString);
 			Query q1 = CQL2Lucene.makeQuery(node);
-			doAllIndexUniqueValueCount(searcher, indexList, q1);
+			doAllIndexUniqueValueCount(searcher, indexMap, q1);
 		} catch (IOException e)
 		{
 			throw new DiagnosticException("oväntat IO fel uppstod",
@@ -86,10 +82,10 @@ public class AllIndexUniqueValueCount implements APIMethod
 		{
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
-	}
+	} 
 
 	private void doAllIndexUniqueValueCount(IndexSearcher searcher,
-			List<String> indexList, Query q1)
+			Map<String,String> indexMap, Query q1)
 		throws DiagnosticException
 	{
 		int numq = 0;
@@ -97,20 +93,19 @@ public class AllIndexUniqueValueCount implements APIMethod
 		Filter qwf = new CachingWrapperFilter(new QueryWrapperFilter(q1));
 		try
 		{
-			for(int i = 0; i < indexList.size(); i++)
+			for(String index : indexMap.keySet())
 			{
-				String index = indexList.get(i);
 				Term term = new Term(index, "*");
 				Query q = new WildcardQuery(term);
-				Query rq = searcher.rewrite(q);
-				Set<Term> terms = new HashSet<Term>();
-				rq.extractTerms(terms);
+				q = searcher.rewrite(q);
+				Set<Term> termSet = new HashSet<Term>();
+				q.extractTerms(termSet);
 				++numq; // inte en ren fråga, men borde räknas ändå
 				int counter = 0;
-				for(Term t : terms)
+				for(Term t : termSet)
 				{
-					Query q2 = new TermQuery(t);
-					TopDocs topDocs = searcher.search(q2, qwf, 1);
+					TermQuery query = new TermQuery(t);
+					TopDocs topDocs = searcher.search(query, qwf, 1);
 					++numq;
 					if(topDocs.totalHits > 0)
 					{

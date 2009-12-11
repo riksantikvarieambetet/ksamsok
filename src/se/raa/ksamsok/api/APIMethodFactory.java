@@ -1,7 +1,9 @@
 package se.raa.ksamsok.api;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -11,6 +13,7 @@ import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
 import se.raa.ksamsok.api.method.Facet;
 import se.raa.ksamsok.api.method.Search;
+import se.raa.ksamsok.api.method.SearchHelp;
 import se.raa.ksamsok.api.method.Statistic;
 import se.raa.ksamsok.api.method.StatisticSearch;
 
@@ -62,6 +65,9 @@ public class APIMethodFactory
 		}else if(method.equals(Facet.METHOD_NAME))
 		{
 			m = getFacetObject(params, writer);
+		}else if(method.equals(SearchHelp.METHOD_NAME))
+		{
+			m = getSearchHelpObject(params, writer);
 		}
 		else
 		{
@@ -70,6 +76,64 @@ public class APIMethodFactory
 					"felaktig metod", false);
 		}
 		
+		return m;
+	}
+
+	/**
+	 * skapar ett objekt av SearchHelp
+	 * @param params
+	 * @param writer
+	 * @return SearchHelp objekt
+	 * @throws MissingParameterException
+	 * @throws BadParameterException
+	 */
+	private static APIMethod getSearchHelpObject(Map<String, String> params,
+			PrintWriter writer) throws MissingParameterException, BadParameterException
+	{
+		SearchHelp m = null;
+		String indexString = params.get(SearchHelp.INDEX_PARAMETER);
+		List<String> indexList = new ArrayList<String>();
+		if(indexString != null && indexString.trim().length() > 0)
+		{
+			StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
+			while(indexTokenizer.hasMoreTokens())
+			{
+				indexList.add(indexTokenizer.nextToken());
+			}
+		}else
+		{
+			throw new MissingParameterException("parametern index saknas eller är tom.",
+					"APIMethodFactory.getSearchHelpObject", null, false);
+		}
+		
+		String prefix = params.get(SearchHelp.PREFIX_PARAMETER);
+		if(prefix == null)
+		{
+			prefix = "*";
+		}else if(!prefix.endsWith("*"))
+		{
+			prefix += "*";
+		}
+		
+		String maxValueCountString = params.get(SearchHelp.MAX_VALUE_COUNT_PARAMETER);
+		int maxValueCount;
+		if(maxValueCountString == null)
+		{
+			maxValueCount = SearchHelp.DEFAULT_MAX_VALUE_COUNT;
+		}else
+		{
+			try
+			{
+				maxValueCount = Integer.parseInt(maxValueCountString);
+			}catch(NumberFormatException e)
+			{
+				throw new BadParameterException("parametern " +
+						SearchHelp.MAX_VALUE_COUNT_PARAMETER + " måste vara ett " +
+								"numeriskt värde",
+								"APIMethodFactory.getSearchHelpObject", null, false);
+			}
+		}
+		m = new SearchHelp(writer, indexList, prefix, maxValueCount);
 		return m;
 	}
 
@@ -138,18 +202,28 @@ public class APIMethodFactory
 	{
 		AllIndexUniqueValueCount m = null;
 		String queryString = params.get(
-				AllIndexUniqueValueCount.QUERY_PARAMETER);
-		if(queryString != null && !queryString.equals(""))
-		{
-			m = new AllIndexUniqueValueCount(queryString, writer);
-		}else
+				AllIndexUniqueValueCount.QUERY_PARAMS);
+		if(queryString == null || queryString.equals(""))
 		{
 			throw new MissingParameterException("Parametern " +
-					AllIndexUniqueValueCount.QUERY_PARAMETER + " saknas eller " +
+					AllIndexUniqueValueCount.QUERY_PARAMS + " saknas eller " +
 							"innehåller inget query",
 							"APIMethodFactory.getAllIndexUniqueValueCount",
 							null, false);
 		}
+		String indexString = params.get(AllIndexUniqueValueCount.INDEX_PARAMETER);
+		HashMap<String,String> indexMap = null;
+		if(indexString != null && indexString.trim().length() > 0)
+		{
+			indexMap = new HashMap<String,String>();
+			StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
+			while(indexTokenizer.hasMoreTokens())
+			{
+				indexMap.put(indexTokenizer.nextToken(), "*");
+			}
+		}
+		
+		m = new AllIndexUniqueValueCount(queryString, writer, indexMap);
 		return m;
 	}
 
@@ -247,10 +321,10 @@ public class APIMethodFactory
 	{
 		Statistic m;
 		String indexString = params.get(Statistic.INDEX_PARAMETER);
-		if(indexString == null)
+		if(indexString == null || indexString.trim().length() < 1)
 		{
 			throw new MissingParameterException("parametern " + 
-					Statistic.INDEX_PARAMETER + " saknas",
+					Statistic.INDEX_PARAMETER + " saknas eller är tom",
 					"APIMethodFactory.getStatisticObject", "index parameter" +
 							" saknas", false);
 		}
@@ -311,16 +385,10 @@ public class APIMethodFactory
 	{
 		Search m;
 		String query = params.get(Search.SEARCH_PARAMS);
-		if(query == null)
+		if(query == null || query.trim().length() < 1)
 		{
 			throw new MissingParameterException("parametern " + 
-					Search.SEARCH_PARAMS + " saknas",
-					"APIMethodFactory.getSearchObject", "query saknas",
-					false);
-		}else if(query.equals(""))
-		{
-			throw new MissingParameterException("parametern " + 
-					Search.SEARCH_PARAMS + " är tom",
+					Search.SEARCH_PARAMS + " saknas eller är tom",
 					"APIMethodFactory.getSearchObject", "query saknas",
 					false);
 		}
