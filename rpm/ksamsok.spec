@@ -25,12 +25,12 @@ mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 
-install -m755 $RPM_SOURCE_DIR/ksamsok/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
+install -m755 $RPM_SOURCE_DIR/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 
-install -m755 $RPM_SOURCE_DIR/ksamsok/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
-install -m755 $RPM_SOURCE_DIR/ksamsok/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
-install -m755 $RPM_SOURCE_DIR/ksamsok/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-install -m755 $RPM_SOURCE_DIR/ksamsok/ora10-*.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+install -m755 $RPM_SOURCE_DIR/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+install -m755 $RPM_SOURCE_DIR/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+install -m755 $RPM_SOURCE_DIR/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+install -m755 $RPM_SOURCE_DIR/ora10-*.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
