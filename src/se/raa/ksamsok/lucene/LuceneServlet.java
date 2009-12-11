@@ -68,7 +68,7 @@ public class LuceneServlet extends HttpServlet {
 	protected boolean iwBorrowed = false;
 	protected boolean isDestroying = false;
 	private static LuceneServlet instance;
-	private List<String> indexList;
+	private Map<String,String> indexMap;
 
 	/**
 	 * Hämtar körande instans.
@@ -102,7 +102,7 @@ public class LuceneServlet extends HttpServlet {
 			/* tillagt av Henrik Hjalmarsson
 			 * Initierar index listan
 			 */
-			initIndexList();
+			initIndexMap();
 
 			// TODO: NIOFSDirectory tydligen långsam/trasig på win pga en sun-bug
 			// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6265734 
@@ -138,10 +138,10 @@ public class LuceneServlet extends HttpServlet {
 
 	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
 
-	private void initIndexList()
+	private void initIndexMap()
 		throws SAXException, IOException, ParserConfigurationException
 	{
-		this.indexList = new ArrayList<String>();
+		this.indexMap = new HashMap<String,String>();
 		String fileName = PATH + "index.xml";
 		DataInputStream input = new DataInputStream(
 				LuceneServlet.class.getResourceAsStream(fileName));
@@ -154,13 +154,13 @@ public class LuceneServlet extends HttpServlet {
 		for(int i = 0; i < indexList.getLength(); i++)
 		{
 			Node node = indexList.item(i);
-			this.indexList.add(node.getTextContent());
+			this.indexMap.put(node.getTextContent(),"*");
 		}
 	}
 	
-	public List<String> getIndexList()
+	public Map<String,String> getIndexMap()
 	{
-		return this.indexList;
+		return this.indexMap;
 	}
 
 	@Override
