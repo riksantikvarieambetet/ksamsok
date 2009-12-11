@@ -1,16 +1,17 @@
-%define ver @@KSAMSOKVERSION@@
-%define rel @@KSAMSOKRELEASE@@
+%define ver 1.0.0
+%define rel 3
 
 Summary: Raä K-Samsök, centralnod
-Name: raa-ksamsok-8080
+Name: raa-ksamsok_app
 Version: %{ver}
 Release: %{rel}
-Packager: ant build
-Vendor: Riksantikvarieämbetet 
+Packager: Borje Lewin <borje.lewin@raa.com>
+Vendor: Raa 
 URL: http://www.raa.se
 License: (C) 2009 RAÄ 
 Group: System Environment/Daemons
 BuildArchitectures: noarch
+BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 
 Requires: raa-tomcat8080 >= 6.0.18
 
@@ -18,59 +19,39 @@ Requires: raa-tomcat8080 >= 6.0.18
 Raä K-Samsok, centralnod
 
 %install
+rm -rf $RPM_BUILD_ROOT
+
+mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
+mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+
+install -m755 $RPM_SOURCE_DIR/ksamsok/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
+
+install -m755 $RPM_SOURCE_DIR/ksamsok/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+install -m755 $RPM_SOURCE_DIR/ksamsok/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+install -m755 $RPM_SOURCE_DIR/ksamsok/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+install -m755 $RPM_SOURCE_DIR/ksamsok/ora10-*.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %pre
 # stoppa tomcat
 /sbin/service tomcat8080.init stop
 sleep 5
-# kopiera undan orginalen vid ny install
-if [ "$1" -eq 1 ]; then
-  if [ -f /usr/local/tomcat8080/conf/context.xml ]; then
-    cp -p /usr/local/tomcat8080/conf/context.xml /usr/local/tomcat8080/conf/context.xml.bkup.ksamsok
-  fi
-  if [ -f /usr/local/tomcat8080/conf/tomcat-users.xml ]; then
-    cp -p /usr/local/tomcat8080/conf/tomcat-users.xml /usr/local/tomcat8080/conf/tomcat-users.xml.bkup.ksamsok
-  fi
-fi
-# ta bort en tidigare uppackad webapp om vi uppgraderar
-if [ "$1" -ge 2 ]; then
-  rm -rf /usr/local/tomcat8080/webapps/ksamsok
-fi
+rm -rf /usr/local/tomcat8080/webapps/ksamsok
 
 %post
 # skapa indexkatalogen och sätt rättigheter
 mkdir -p -m755 /var/lucene-index/ksamsok
 chown tomcat:nobody /var/lucene-index/ksamsok
-# disable och sen enable av tomcat i relevanta runlevels
-# taget från Peters exempel, kanske inte behövs då tomcat-rpm:en egentligen borde göra detta(?)
-/sbin/chkconfig tomcat8080.init off
-/sbin/chkconfig tomcat8080.init on
-# starta eller starta om tomcat
-/sbin/service tomcat8080.init restart
+/sbin/service tomcat8080.init start
 
 %preun
-# stoppa tomcat om vi avinstallerar allt
-if [ "$1" -eq 0 ]; then
-  /sbin/service tomcat8080.init stop
-  sleep 5
-fi
+
 
 %postun
-# återställ orginalen, ta bort kopiorna och den uppackade webappen om vi avinstallerar allt
-if [ "$1" -eq 0 ]; then
-  if [ -f /usr/local/tomcat8080/conf/context.xml.bkup.ksamsok ]; then
-    cp -p /usr/local/tomcat8080/conf/context.xml.bkup.ksamsok /usr/local/tomcat8080/conf/context.xml
-    rm /usr/local/tomcat8080/conf/context.xml.bkup.ksamsok
-  fi
-  if [ -f /usr/local/tomcat8080/conf/tomcat-users.xml.bkup.ksamsok ]; then
-    cp -p /usr/local/tomcat8080/conf/tomcat-users.xml.bkup.ksamsok /usr/local/tomcat8080/conf/tomcat-users.xml
-    rm /usr/local/tomcat8080/conf/tomcat-users.xml.bkup.ksamsok
-  fi
-  rm -rf /usr/local/tomcat8080/webapps/ksamsok
-  # starta tomcat igen (borde kanske inte starta igen?)
-  /sbin/service tomcat8080.init start
-  sleep 5
-fi
+rm -rf /usr/local/tomcat8080/webapps/ksamsok
 
 %files
 %defattr(-,tomcat,nobody)
@@ -83,6 +64,8 @@ fi
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
 
 %changelog
+* Fri Dec 11 2009 ant
+- Uppdaterat till nya RPM-metodiken
 * Tue Jul 28 2009 ant
 - La till extra jar-filer för hantering av spatiala data
 * Fri Feb 13 2009 ant

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="ksamsok" basedir="." default="war">
+<project name="ksamsok" basedir="." default="RAA-RPM">
 
     <description>
         Ant-byggfil, ksamsok.
@@ -138,7 +138,7 @@
         </javadoc>
     </target>
 
-	<target name="rpm" depends="war" description="Skapa rpm för raä:s driftmiljö">
+	<target name="RAA-RPM" depends="war" description="Skapa rpm för raä:s driftmiljö">
 
 		<!-- skapa RPM-struktur -->
 		<mkdir dir="${project.build.dir}/rpm/RPMS" />
@@ -149,8 +149,7 @@
 		<mkdir dir="${project.build.dir}/rpm/INSTALL" />
 
 		<copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec" />
-		<replace file="${project.build.dir}/rpm/SPECS/ksamsok.spec" token="@@KSAMSOKVERSION@@" value="${major.minor}" />
-		<replace file="${project.build.dir}/rpm/SPECS/ksamsok.spec" token="@@KSAMSOKRELEASE@@" value="${release}" />
+
 		<!-- kopiera in så som det ska se ut sen efter installation -->
 		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/webapps/">
 			<fileset dir="${project.build.dir}/war">
