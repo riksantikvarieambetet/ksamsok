@@ -22,4 +22,5 @@
 	<index>organization</index>
 	<index>title</index>
 	<index>gender</index>
+	<index>thumbnailExists</index>
 </indexNames>
