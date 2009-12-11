@@ -159,13 +159,13 @@
 				<include name="ksamsok.war"/>
 			</fileset>
 		</copy>
-		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/conf/">
+		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="rpm">
 				<include name="context.xml"/>
 				<include name="tomcat-users.xml"/>
 			</fileset>
 		</copy>
-		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/lib/">
+		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="${project.src.lib.dir}">
 				<!-- obs, se till att ha samma matchningar här som i spec-filen -->
 				<include name="oracle-*"/>
