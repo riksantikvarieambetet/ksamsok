@@ -75,9 +75,11 @@ public class AllIndexUniqueValueCount extends Facet
 					true);
 		} catch (CQLParseException e)
 		{
-			throw new DiagnosticException("Oväntat parser fel uppstod",
-					"AllIndexUniqueValueCount.performMethod", e.getMessage(),
-					true);
+			throw new DiagnosticException("Oväntat parser fel uppstod. Detta beror " +
+					"troligen på att CQL syntax ej följs. Var god kontrollera query " +
+					"sträng eller kontakta systemadministratör för söksystemet du " +
+					"använder",	"AllIndexUniqueValueCount.performMethod", 
+					e.getMessage(),	true);
 		}finally
 		{
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
