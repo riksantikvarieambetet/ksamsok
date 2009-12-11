@@ -15,19 +15,22 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.search.BooleanQuery.TooManyClauses;
+
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.QueryContent;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
+import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 
 /**
  * söka statistik
  * @author Henrik Hjalmarsson
  */
-public class Statistic implements APIMethod 
+public class Statistic implements APIMethod
 {
 	/** namnet på metoden */
 	public static final String METHOD_NAME = "statistic";
@@ -199,9 +202,10 @@ public class Statistic implements APIMethod
 	 * @param searcher som används för att söka i index
 	 * @param indexMap med index och sökvärden
 	 * @return Map<String,Set<Term>> med index och dess termer
+	 * @throws BadParameterException 
 	 */
 	protected Map<String, Set<Term>> buildTermMap(IndexSearcher searcher)
-		throws DiagnosticException
+		throws DiagnosticException, BadParameterException
 	{
 		Query query;
 		String indexValue;
@@ -212,6 +216,11 @@ public class Statistic implements APIMethod
 			try
 			{
 				indexValue = CQL2Lucene.translateIndexName(index);
+				if(!ContentHelper.indexExists(indexValue))
+				{
+					throw new BadParameterException("Indexet " + index + " existerar inte",
+							"Statistic.buildTermMap", null, false);
+				}
 				String value = indexMap.get(index);
 				Term term = new Term(indexValue,value);
 				query = new WildcardQuery(term);
@@ -219,7 +228,13 @@ public class Statistic implements APIMethod
 				Query tempQuery = searcher.rewrite(query);
 				tempQuery.extractTerms(extractedTerms);
 				termMap.put(indexValue, extractedTerms);
-			}catch(IOException e)
+			}catch(TooManyClauses e)
+			{
+				throw new BadParameterException("indexet " + index + " har för många unika" +
+						" värden för att utföra denna operation", "Statistic.buildTermMap",
+						null, false);
+			}
+			catch(IOException e)
 			{
 				throw new DiagnosticException("Oväntat IO fel uppstod. Var" +
 						" god försök igen", "Statistic.buildTermMap",
