@@ -173,21 +173,22 @@
 			</fileset>
 		</copy>
 
-		<!--
-			rpm-task:en funkar bara bra med ant 1.7 (dock otestat :) ) och på linux med rpmbuild installerat
-			kommandot ska motsvara: (OBS att det ska vara 2x '-' överallt i argumenten
-			istf bara ett som nu, men pga att detta är en xml-kommentar funkar det ej att skriva två '-')
-
-			rpmbuild -bb -buildroot=${project.build.dir}/rpm/INSTALL -clean -rmsource -rmspec -define _topdir${project.build.dir}/rpm ${project.build.dir}/rpm/SPECS/ksamsok.spec
-
-			vilket man kan köra manuellt om man byter ut sökvägarna förstås
-		 -->
-		<rpm specfile="ksamsok.spec" topDir="${project.build.dir}/rpm" command="--bb --buildroot=${project.build.dir}/rpm/INSTALL" cleanbuilddir="true" removesource="true" removespec="true"/>
-
-		<!-- kopiera till rpm-dist, onödigt kanske men... -->
-		<mkdir dir="${project.build.dir}/rpm-dist"/>
-		<copy todir="${project.build.dir}/rpm-dist" file="${project.build.dir}/rpm/RPMS/noarch/raa-ksamsok-8080-${major.minor}-${release}.noarch.rpm" />
-
+		<!-- Skapa själva rpm filen -->
+			    	<echo message="${project.build.dir}"/>
+					<rpm
+					        specFile="ksamsok.spec"
+					        topDir="${project.build.dir}/rpm"
+					        cleanBuildDir="true"
+					        failOnError="true"/>
+			    	
+			    	
+			    	<!-- Lägg upp rpm-filen i ${project.build.rpm.dir} -->
+			    	<copy todir="${project.build.dir}/rpm">
+			    		<fileset dir="${project.build.dir}/rpm/RPMS/noarch">
+			    	    	<include name="*.rpm"/>
+			    	    </fileset>
+			    	</copy>
+			    	
 	</target>
 
 </project>
