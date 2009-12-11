@@ -62,10 +62,13 @@
         <javac srcdir="${project.src.dir}"
             destdir="${project.build.dir}"
             classpathref="project.classpath"
-            debug="${javac.debug}" optimize="${javac.optimize}">
+            debug="${javac.debug}" 
+            optimize="${javac.optimize}"
+            encoding="UTF-8">
             <patternset>
                 <include name="**/*.java"/>
             </patternset>
+
         </javac>
     </target>
 
