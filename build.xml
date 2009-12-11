@@ -151,7 +151,7 @@
 		<copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec" />
 
 		<!-- kopiera in så som det ska se ut sen efter installation -->
-		<copy todir="${project.build.dir}/rpm/INSTALL/usr/local/tomcat8080/webapps/">
+		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="${project.build.dir}/war">
 				<include name="ksamsok.war"/>
 			</fileset>
