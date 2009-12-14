@@ -64,7 +64,7 @@
             classpathref="project.classpath"
             debug="${javac.debug}" 
             optimize="${javac.optimize}"
-            encoding="UTF-8">
+            encoding="ISO-8859-1">
             <patternset>
                 <include name="**/*.java"/>
             </patternset>
