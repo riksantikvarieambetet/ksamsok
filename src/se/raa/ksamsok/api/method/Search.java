@@ -88,7 +88,7 @@ public class Search implements APIMethod
 		this.queryString = queryString;
 		this.writer = writer;
 		//kontrollerar att hitsPerPage och startRecord har tillåtna värden
-		if(hitsPerPage < 1)
+		if(hitsPerPage < 1 || hitsPerPage > 500)
 		{
 			this.hitsPerPage = DEFAULT_HITS_PER_PAGE;
 		}else
@@ -171,6 +171,11 @@ public class Search implements APIMethod
 				hits = searcher.search(query, nDocs == 0 ? 1 : nDocs);
 			}else
 			{
+				if(!ContentHelper.indexExists(sort))
+				{
+					throw new BadParameterException("sorterings indexet " + sort +
+							" finns inte.", "Search.performMethod", null, false);
+				}
 				Sort s = new Sort(new SortField(sort, sortDesc));
 				hits = searcher.search(query, null, nDocs == 0 ? 1 : nDocs, s);
 			}

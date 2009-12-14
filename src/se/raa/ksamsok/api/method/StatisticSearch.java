@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.CachingWrapperFilter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -138,16 +136,16 @@ public class StatisticSearch extends Statistic
 			}
 		}catch(CQLParseException e)
 		{
-			throw new DiagnosticException("Oväntat perser fel uppstod." +
-					" Var god försök igen",
-					"StatisticSearch.doStatisticSearch", e.getMessage() +
-					"\n" + e.getStackTrace().toString(), true);
+			throw new DiagnosticException("Oväntat perser fel uppstod. Detta beror " +
+					"troligen på att CQL syntax ej följs. Var god kontrollera query " +
+					"sträng eller kontakta system administratör för sök systemet du " +
+					"använder.", "StatisticSearch.doStatisticSearch", e.getMessage(),
+					true);
 		}catch(IOException e)
 		{
 			throw new DiagnosticException("Oväntat IO fel uppstod. Var" +
-					" god försök igen",
-					"StatisticSearch.doStatisticSearch", e.getMessage() +
-					"\n" + e.getStackTrace().toString(), true);
+					" god försök igen",	"StatisticSearch.doStatisticSearch",
+					e.getMessage(), true);
 		}
 	}
 }

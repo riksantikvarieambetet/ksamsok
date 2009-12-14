@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.api.exception.APIException;
+import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.lucene.ContentHelper;
 
@@ -42,20 +44,20 @@ public class APIServlet extends HttpServlet
 		{
 			//skriver ut XML header
 			writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			//skriver ut root tag och versionsnummer
+			writer.println("<result>");
+			writer.println("<version>" + APIMethod.API_VERSION + "</version>");
 			//hämtar parametrar i UTF-8 format
 			reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 			
 			//skriver ut stylesheet header om stylesheet finns
 			String stylesheet = reqParams.get("stylesheet");
+			
 			if (stylesheet != null && stylesheet.trim().length() > 0) 
 			{
 				writer.println("<?xml-stylesheet type=\"text/xsl\" href=\""
 						+ stylesheet.replace("\"", "&quot;") + "\"?>");
 			}
-			
-			//skriver ut root tag och versions nummer
-			writer.println("<result>");
-			writer.println("<version>" + APIMethod.API_VERSION + "</version>");
 			
 			//hämtar API metod
 			method = APIMethodFactory.getAPIMethod(reqParams, writer);

@@ -39,6 +39,8 @@ public class Statistic implements APIMethod
 	/** namn på parameter för att ta bort nollor i svars XML */
 	public static final String REMOVE_BELOW = "removeBelow";
 	
+	private static final int MAX_CARTESIAN_COUNT = 20000;
+	
 	//set med index som skall kollas
 	protected Map<String,String> indexMap;
 	//writer som används för att skriva ut svaren
@@ -77,6 +79,12 @@ public class Statistic implements APIMethod
 			searcher = LuceneServlet.getInstance().borrowIndexSearcher();
 			//en mängd med mängder med mängder!
 			termMap = buildTermMap(searcher);
+			if(getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT)
+			{
+				throw new BadParameterException("den kartesiska produkten av " +
+						"inskickade index blir för stor för att utföra denna " +
+						"operation.", "Statistic.performMethod", null, false);
+			}
 			//gör en kartesisk produkt på de värden i termMap
 			List<QueryContent> queryResults = cartesian(termMap);
 			//utför själva sökningen
@@ -142,6 +150,21 @@ public class Statistic implements APIMethod
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * Kollar hur stor den kartesiska produkten kommer bli
+	 * @param data
+	 * @return
+	 */
+	protected int getCartesianCount(Map<String,Set<Term>> data)
+	{
+		int count = 1;
+		for(String index : data.keySet())
+		{
+			count *= data.get(index).size();
+		}
+		return count;
 	}
 	
 	/**

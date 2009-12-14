@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.CachingWrapperFilter;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
@@ -23,6 +24,7 @@ import org.z3950.zing.cql.CQLParser;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
+import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 
 /**
@@ -88,15 +90,24 @@ public class AllIndexUniqueValueCount extends Facet
 
 	private void doAllIndexUniqueValueCount(IndexSearcher searcher,
 			Map<String,String> indexMap, Query q1)
-		throws DiagnosticException
+		throws DiagnosticException, BadParameterException
 	{
 		int numq = 0;
 		// använd frågan som ett filter och cacha upp filterresultatet
 		Filter qwf = new CachingWrapperFilter(new QueryWrapperFilter(q1));
+		String indexName = null;
 		try
 		{
 			for(String index : indexMap.keySet())
 			{
+				indexName = index;
+				if(!ContentHelper.indexExists(index))
+				{
+					throw new BadParameterException("Indexet " + index + " existerar " +
+							"inte.",
+							"AllIndexUniqueValueCount.doAllindexUniqueValueCount", null,
+							false);
+				}
 				Term term = new Term(index, "*");
 				Query q = new WildcardQuery(term);
 				q = searcher.rewrite(q);
@@ -119,7 +130,13 @@ public class AllIndexUniqueValueCount extends Facet
 					writeResult(index,counter);
 				}
 			}
-		}catch(IOException e)
+		}catch(BooleanQuery.TooManyClauses e)
+		{
+			throw new BadParameterException("indexet " + indexName + " har för många " +
+					"unika värden",
+					"AllIndexUniqueValueCount.doAllIndexUniqueValueCount", null, false);
+		}
+		catch(IOException e)
 		{
 			throw new DiagnosticException("Oväntat IO fel uppstod",
 					"AllIndexUniqueValueCount.doAllIndexUniqueValueCount",

@@ -69,8 +69,10 @@ public class Facet extends StatisticSearch
 			writeFot();
 		} catch (CQLParseException e)
 		{
-			throw new DiagnosticException("Oväntat parser fel uppstod. Kontrollera " +
-					"query sträng", "Facet.performMethod", null, false);
+			throw new DiagnosticException("Oväntat parser fel uppstod detta beror troligen" +
+					" på att query strängen inte följer CQL syntax. Var god kontrollera " +
+					"query strängen eller kontakta system administratör för systemet du " +
+					"använder dig av.", "Facet.performMethod", null, false);
 		} catch (IOException e)
 		{
 			throw new DiagnosticException("Oväntat IO fel. var god försök igen",
