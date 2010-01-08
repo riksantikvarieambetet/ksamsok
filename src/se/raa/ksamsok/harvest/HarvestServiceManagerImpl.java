@@ -52,7 +52,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		try {
 			c = ds.getConnection();
 		} catch (Throwable t) {
-			logger.error("Fel på datasource, kan inte få en connection", t);
+			logger.error("Error in datasource, can not retrieve connection", t);
 		} finally {
 			if (c != null) {
 				c.close();
@@ -96,14 +96,14 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				Step s = ss.getStep(service);
 				if (s != Step.IDLE) {
 					if (logger.isDebugEnabled()) {
-						logger.debug("Destroy, begär att körande jobb för " + service.getId() +
-								" ska avbrytas i steg " + s);
+						logger.debug("Destroy, request abort of running job for " + service.getId() +
+								" in step " + s);
 					}
 					ss.requestInterrupt(service);
 				}
 			}
 		} catch (Exception e) {
-			logger.error("Fel vid hämtning av tjänster att avbryta", e);
+			logger.error("Error when fetching services to abort", e);
 		}
 		if (scheduler != null) {
 			try {
@@ -116,12 +116,12 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 						Job j = jce.getJobInstance();
 						if (j instanceof InterruptableJob) {
 							if (logger.isInfoEnabled()) {
-								logger.info("Destroy, avbryter körande jobb (quartz): " + jce.getJobDetail().getName());
+								logger.info("Destroy, aborting job (quartz): " + jce.getJobDetail().getName());
 							}
 							((InterruptableJob) j).interrupt();
 						} else {
 							if (logger.isInfoEnabled()) {
-								logger.info("Destroy, körande jobb ej avbrytbart: " + jce.getJobDetail().getName());
+								logger.info("Destroy, job cannot be aborted: " + jce.getJobDetail().getName());
 							}
 						}
 					}
@@ -129,11 +129,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					scheduler.shutdown(true);
 				}
 			} catch (SchedulerException se) {
-				logger.error("Fel vid shutdown av scheduler", se);
+				logger.error("Error at scheduler shutdown", se);
 			}
 		}
 		if (logger.isDebugEnabled()) {
-			logger.debug("Destroy, klart");
+			logger.debug("Destroy, done");
 		}
 	}
 
@@ -157,16 +157,16 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);
 			if (logger.isInfoEnabled()) {
-				logger.info("Skapade ny tjänst med id " + service.getId());
+				logger.info("Created new service with ID: " + service.getId());
 			}
 			try {
 				scheduleJob(service);
 			} catch (Exception e) {
-				logger.warn("Problem att schedulera jobb för tjänst " + service.getId(), e);
+				logger.warn("Problem to schedule job for service: " + service.getId(), e);
 			}
 	    } catch (Exception e) {
 	    	DBBasedManagerImpl.rollback(c);
-	    	logger.error("Fel vid skapande av ny tjänst med id " + service.getId(), e);
+	    	logger.error("Error when creating new service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
 	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
@@ -268,7 +268,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	public void updateService(HarvestService service) throws Exception {
 		HarvestService dbService = getService(service.getId());
 		if (dbService == null) {
-			throw new RuntimeException("Hittade inte service med id: " + service.getId());
+			throw new RuntimeException("Could not find service with ID: " + service.getId());
 		}
 	    Connection c = null;
 	    PreparedStatement  pst = null;
@@ -297,7 +297,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);
 			if (logger.isInfoEnabled()) {
-				logger.info("Uppdaterade tjänst med id " + service.getId());
+				logger.info("Updated service with ID: " + service.getId());
 			}
 			String dbCron = dbService.getCronString() + "";
 			String newCron = service.getCronString() + "";
@@ -306,24 +306,24 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			// bara om de diffar
 			if (!dbCron.equals(newCron) || !dbType.equals(newType)) {
 				if (logger.isInfoEnabled()) {
-					logger.info("Cronsträng eller typ ändrad för tjänst med id " + service.getId());
+					logger.info("Cron string or type changed for service with ID: " + service.getId());
 				}
 				try {
 					unScheduleJob(service.getId());
 				} catch (Exception e) {
-					logger.warn("Problem att avschedulera jobb för tjänst med id = " +
+					logger.warn("Problem when unscheduling job for service with ID: " +
 							service.getId(), e);
 				}
 				try {
 					scheduleJob(service);
 				} catch (Exception e) {
-					logger.warn("Problem att schedulera jobb för tjänst med id = " +
+					logger.warn("Problem when scheduling job for service with ID: " +
 							service.getId(), e);
 				}
 			}			
 	    } catch (Exception e) {
 	    	DBBasedManagerImpl.rollback(c);
-	    	logger.error("Fel vid uppdatering av tjänst med id " + service.getId(), e);
+	    	logger.error("Error when updating service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
 	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
@@ -333,7 +333,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	public void updateServiceDate(HarvestService service, Date date) throws Exception {
 		HarvestService dbService = getService(service.getId());
 		if (dbService == null) {
-			throw new RuntimeException("Hittade inte service med id: " + service.getId());
+			throw new RuntimeException("Could not find service with ID: " + service.getId());
 		}
 	    Connection c = null;
 	    PreparedStatement pst = null;
@@ -348,11 +348,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);
 			if (logger.isInfoEnabled()) {
-				logger.info("Uppdaterade datum för tjänst med id " + service.getId());
+				logger.info("Updated date for service with ID: " + service.getId());
 			}
 	    } catch (Exception e) {
 	    	DBBasedManagerImpl.rollback(c);
-	    	logger.error("Fel vid uppdatering av datum för tjänst med id " + service.getId(), e);
+	    	logger.error("Error when updating date for service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
 	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
@@ -363,7 +363,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	public void storeFirstIndexDateIfNotSet(HarvestService service) throws Exception {
 		HarvestService dbService = getService(service.getId());
 		if (dbService == null) {
-			throw new RuntimeException("Hittade inte service med id: " + service.getId());
+			throw new RuntimeException("Could not find service with ID: " + service.getId());
 		}
 		// har vi ett datum behöver vi inte göra nåt
 		if (dbService.getFirstIndexDate() != null) {
@@ -382,12 +382,12 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);
 			if (logger.isInfoEnabled()) {
-				logger.info("Uppdaterade första indexeringsdatum för tjänst med id " +
+				logger.info("Updated first indexing date for service with ID: " +
 						service.getId());
 			}
 	    } catch (Exception e) {
 	    	DBBasedManagerImpl.rollback(c);
-	    	logger.error("Fel vid uppdatering av första indexeringsdatum för tjänst med id " +
+	    	logger.error("Error when updating först indexing date for service with ID: " +
 	    			service.getId(), e);
 	    	throw e;
 	    } finally {
@@ -405,19 +405,19 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);
 			if (logger.isInfoEnabled()) {
-				logger.info("Tog bort tjänst med id: " + service.getId());
+				logger.info("Removed service with ID: " + service.getId());
 			}
 			try {
 				unScheduleJob(service.getId());
 			} catch (Exception e) {
-				logger.warn("Problem att avschedulera jobb för tjänst med id = " +
+				logger.warn("Problem when unscheduling job for service with ID: " +
 						service.getId(), e);
 			}
 			// rensa data i repo (rdf + ev spatialt data)
 			hrm.deleteData(service);
 	    } catch (Exception e) {
 	    	DBBasedManagerImpl.rollback(c);
-	    	logger.error("Fel vid borttagning av tjänst med id " + service.getId(), e);
+	    	logger.error("Error when removing service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
 	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
@@ -462,13 +462,13 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				jd = scheduler.getJobDetail(service.getId(), JOBGROUP_HARVESTERS);
 			} catch (Exception ignore) {}
 			if (jd == null) {
-				return "Jobb saknas! cronsträng ok?";
+				return "Missing job! Is cron string correct?";
 			}
 			try {
 				t = (CronTrigger) scheduler.getTrigger(service.getId() + TRIGGER_SUFFIX, null);
 			} catch (Exception ignore) {}
 			if (t == null) {
-				return "Ej schedulerat";
+				return "Not scheduled";
 			}
 		}
 		// hämta info om ev fel vid senaste körning
@@ -482,15 +482,15 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			List<JobExecutionContext> running = scheduler.getCurrentlyExecutingJobs();
 			for (JobExecutionContext jce: running) {
 				if (service.getId().equals(jce.getJobDetail().getName())) {
-					isRunning = "Kör sen " + ContentHelper.formatDate(jce.getFireTime(), true) + " - ";
+					isRunning = "Running since " + ContentHelper.formatDate(jce.getFireTime(), true) + " - ";
 					break;
 				}
 			}
 		} catch (SchedulerException e) {
-			logger.warn("Fel vid hämtning av körande jobb", e);
+			logger.warn("Error when fetching running job", e);
 		}
 		if (t != null && !t.getCronExpression().equals(service.getCronString())) {
-			return isRunning + "Ej samma körschema!";
+			return isRunning + "Not the same execution schema!";
 		}
 		status = ss.getStatusText(service);
 		if (status == null) {
@@ -525,7 +525,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				}
 			}
 		} catch (SchedulerException e) {
-			logger.warn("Fel vid hämtning av körande jobb", e);
+			logger.warn("Error when fetching running job", e);
 		}
 		return isRunning;
 	}
@@ -547,7 +547,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			clazz = LuceneOptimizeJob.class;
 			//jobGroup = JOBGROUP_LUCENE;
 		} else {
-			logger.error("Kunde inte skapa jobdetail för " + service);
+			logger.error("Could not create job detail for " + service);
 			return null;
 		}
 		return new JobDetail(service.getId(), jobGroup, clazz);
