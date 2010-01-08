@@ -1,5 +1,5 @@
 %define ver 1.0.0
-%define rel 10
+%define rel 11
 
 Summary: Raä K-Samsök, centralnod
 Name: raa-ksamsok_app
