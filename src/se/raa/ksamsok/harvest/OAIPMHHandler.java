@@ -115,7 +115,7 @@ public class OAIPMHHandler extends DefaultHandler {
 				String status = attributes.getValue("", "status");
 				if ("deleted".equals(status)) {
 					if (!sm.canSendDeletes()) {
-						throw new SAXException("Tjänsten ska inte klara av deletes men har skickat en!");
+						throw new SAXException("Service is nt supposed to handle deletes but did in fact send one!");
 					}
 					deleteRecord = true;
 				}
@@ -214,7 +214,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			break;
 		case NORMAL:
 			if ("error".equals(name)) {
-				throw new SAXException("Fel i anrop, code=" + errorCode + ", text: " + buf.toString().trim());
+				throw new SAXException("Error in request, code=" + errorCode + ", text: " + buf.toString().trim());
 			}
 			// återställ char-buff
 			buf.setLength(0);
@@ -248,7 +248,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			int num = pst.executeUpdate();
 			numDeletedXact += num;
 			if (logger.isDebugEnabled()) {
-				logger.debug("** Tog bort " + num + " poster för tjänst: " + service.getId());
+				logger.debug("** Removed " + num + " records for service: " + service.getId());
 			}
 			commitIfLimitReached();
 		} finally {
@@ -263,7 +263,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	 */
 	protected void deleteRecord(String oaiURI) throws Exception {
 		if (logger.isDebugEnabled()) {
-			logger.debug("* Tar bort oaiURI=" + oaiURI + " från tjänst med id: " + service.getId());
+			logger.debug("* Removing oaiURI=" + oaiURI + " from service with ID: " + service.getId());
 		}
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -287,8 +287,8 @@ public class OAIPMHHandler extends DefaultHandler {
 			int num = pst.executeUpdate();
 			numDeletedXact += num;
 			if (logger.isDebugEnabled()) {
-				logger.debug("* Tog bort " + num + " st oaiURI=" + oaiURI +
-						" från tjänst med id: " + service.getId());
+				logger.debug("* Removed " + num + " number of oaiURI=" + oaiURI +
+						" from service with ID: " + service.getId());
 			}
 			commitIfLimitReached();
 		} finally {
@@ -309,8 +309,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	protected void insertRecord(String oaiURI, String uri, String xmlContent,
 			GMLInfoHolder gmlInfoHolder) throws Exception {
 		if (logger.isDebugEnabled()) {
-			logger.debug("* Stoppar in data för oaiURI=" + oaiURI + ", uri=" +
-					uri + " för tjänst med id: " + service.getId());
+			logger.debug("* Entering data for oaiURI=" + oaiURI + ", uri=" +
+					uri + " for service with ID: " + service.getId());
 		}
 		PreparedStatement pst = null;
 		try {
@@ -329,8 +329,8 @@ public class OAIPMHHandler extends DefaultHandler {
 			}
 			++numInsertedXact;
 			if (logger.isDebugEnabled()) {
-				logger.debug("* Stoppade in data för oaiURI=" + oaiURI + ", uri=" +
-						uri + " för tjänst med id: " + service.getId());
+				logger.debug("* Entered data for oaiURI=" + oaiURI + ", uri=" +
+						uri + " for service with ID: " + service.getId());
 			}
 			commitIfLimitReached();
 		} finally {
@@ -350,8 +350,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	protected void updateRecord(String oaiURI, String uri, String xmlContent,
 			GMLInfoHolder gmlInfoHolder) throws Exception {
 		if (logger.isDebugEnabled()) {
-			logger.debug("* Uppdaterar data för oaiURI=" + oaiURI + ", uri=" +
-					uri + " för tjänst med id: " + service.getId());
+			logger.debug("* Updated data for oaiURI=" + oaiURI + ", uri=" +
+					uri + " for service with ID: " + service.getId());
 		}
 		PreparedStatement pst = null;
 		try {
@@ -370,8 +370,8 @@ public class OAIPMHHandler extends DefaultHandler {
 			}
 			++numUpdatedXact;
 			if (logger.isDebugEnabled()) {
-				logger.debug("* Uppdaterade data för oaiURI=" + oaiURI + ", uri=" +
-						uri + " för tjänst med id: " + service.getId());
+				logger.debug("* Updated data for oaiURI=" + oaiURI + ", uri=" +
+						uri + " for service with ID: " + service.getId());
 			}
 			commitIfLimitReached();
 		} finally {
@@ -417,8 +417,8 @@ public class OAIPMHHandler extends DefaultHandler {
 				DBBasedManagerImpl.closeDBResources(rs, pst, null);
 			}
 		} catch (Exception e) {
-			logger.error("Fel vid lagring av " + (uri != null ? uri : oaiURI), e);
-			throw new Exception("Fel vid lagring av " + (uri != null ? uri : oaiURI) +
+			logger.error("Error when storing " + (uri != null ? uri : oaiURI), e);
+			throw new Exception("Error when storing " + (uri != null ? uri : oaiURI) +
 					": " + e.getMessage());
 		}
 	}
@@ -449,9 +449,9 @@ public class OAIPMHHandler extends DefaultHandler {
 		numUpdatedXact = 0;
 		numDeletedXact = 0;
 
-		String msg = "Har committat (i/u/d " + numInserted +
+		String msg = "Committed (i/u/d " + numInserted +
 			"/" + numUpdated + "/" + numDeleted + ") " +
-			(numInserted + numUpdated + numDeleted) + " förändringar i databasen";
+			(numInserted + numUpdated + numDeleted) + " database changes";
 		ss.setStatusText(service, msg);
 		if (logger.isDebugEnabled()) {
 			logger.debug(msg);

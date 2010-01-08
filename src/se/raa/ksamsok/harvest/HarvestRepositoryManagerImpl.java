@@ -62,33 +62,33 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 			// flagga för att något har uppdaterats
 			updated = (h.getDeleted() > 0 || h.getInserted() > 0 || h.getUpdated() > 0);
-			ss.setStatusTextAndLog(service, "Lagrade skörd (i/u/d " + h.getInserted() +
+			ss.setStatusTextAndLog(service, "Stored harvest (i/u/d " + h.getInserted() +
 					"/" + h.getUpdated() + "/" + h.getDeleted() + ")");
 		} catch (Throwable e) {
 			rollback(c);
 			if (h != null) {
-				ss.setStatusTextAndLog(service, "Lagrade del av skörd innan fel (i/u/d " +
+				ss.setStatusTextAndLog(service, "Stored part of harvest before error (i/u/d " +
 						h.getInserted() + "/" + h.getUpdated() + "/" + h.getDeleted() + ")");
 			}
-			logger.error(serviceId + ", fel vid lagring av skörd: " + e.getMessage());
+			logger.error(serviceId + ", error when storing harvest: " + e.getMessage());
 			throw new Exception(e);
 		} finally {
 			closeDBResources(null, null, c);
 			if (logger.isInfoEnabled() && h != null) {
 				logger.info(serviceId +
-						" (committade), bort: " + h.getDeleted() +
-						", nya: " + h.getInserted() +
-						", ändrade: " + h.getUpdated());
+						" (committed), deleted: " + h.getDeleted() +
+						", new: " + h.getInserted() +
+						", changed: " + h.getUpdated());
 			}
 		}
 		// rapportera eventuella problemmeddelanden
 		Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
 		if (problemMessages != null && problemMessages.size() > 0) {
-			ss.setStatusTextAndLog(service, "OBS! Fick följande problem vid lagring av skörd");
-			logger.warn(serviceId + ", fick följande problem vid lagring av skörd: ");
+			ss.setStatusTextAndLog(service, "Note! Problem when storing harvest");
+			logger.warn(serviceId + ", got the following error when storing the harvest: ");
 			for (String uri: problemMessages.keySet()) {
-				ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " ggr");
-				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " ggr");
+				ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
+				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
 			}
 		}
 		return updated;
@@ -110,7 +110,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				long start = System.currentTimeMillis();
 				int count = getCount(service, ts);
 				if (logger.isInfoEnabled()) {
-					logger.info(service.getId() + ", uppdaterar index (" + count + " poster) - start");
+					logger.info(service.getId() + ", updating index (" + count + " records) - start");
 				}
 				serviceId = service.getId();
 				c = ds.getConnection();
@@ -151,14 +151,14 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						long deltaMillis = System.currentTimeMillis() - start;
 			            long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(
 			            		deltaMillis, i, count);
-						ss.setStatusText(service, "Har uppdaterat " + i + "/" + count +
-								" poster i indexet" +
-		            			(aproxMillisLeft >= 0 ? " (beräknad återstående tid: " +
+						ss.setStatusText(service, "Updated " + i + "/" + count +
+								" records in the index" +
+		            			(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
 		            					ContentHelper.formatRunTime(aproxMillisLeft) + ")": ""));
 						if (logger.isDebugEnabled()) {
-							logger.debug(service.getId() + ", har uppdaterat " +
-									i + "/" + count + " poster i lucene" +
-			            			(aproxMillisLeft >= 0 ? " (beräknad återstående tid: " +
+							logger.debug(service.getId() + ", has updated " +
+									i + "/" + count + " records in lucene" +
+			            			(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
 			            					ContentHelper.formatRunTime(aproxMillisLeft) + ")": ""));
 						}
 					}
@@ -168,15 +168,15 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				long durationMillis = (System.currentTimeMillis() - start);
 				String runTime = ContentHelper.formatRunTime(durationMillis);
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
-				ss.setStatusTextAndLog(service, "Uppdaterade index, " + i + " poster (" + 
-						(ts == null ? "bort + insert" : "updatering") + "), tid: " +
+				ss.setStatusTextAndLog(service, "Updated index, " + i + " records (" + 
+						(ts == null ? "delete + insert" : "updated") + "), time: " +
 						runTime + " (" + speed + ")");
 				if (logger.isInfoEnabled()) {
 					logger.info(service.getId() +
-							", uppdaterade index - klart, " + (ts == null ?
-									"tog först bort alla och la sen till " :
-									"uppdaterade ") + i +
-							" poster i lucene-indexet, tid: " +
+							", updated index - done, " + (ts == null ?
+									"first removed and then inserted " :
+									"updated ") + i +
+							" records in the lucene index, time: " +
 							runTime + " (" + speed + ")");
 				}
 			} catch (Exception e) {
@@ -184,10 +184,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					try {
 						iw.rollback();
 					} catch (Exception e2) {
-						logger.warn("Fel vid abort för lucene-index", e2);
+						logger.warn("Error when aborting for lucene index", e2);
 					}
 				}
-				logger.error(serviceId + ", fel vid uppdatering av lucene-index", e);
+				logger.error(serviceId + ", error when updating lucene index", e);
 				throw e;
 			} finally {
 				closeDBResources(rs, pst, c);
@@ -196,11 +196,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			// rapportera eventuella problemmeddelanden
 			Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
 			if (problemMessages != null && problemMessages.size() > 0) {
-				ss.setStatusTextAndLog(service, "OBS! Fick följande problem vid indexering");
-				logger.warn(serviceId + ", fick följande problem vid indexering: ");
+				ss.setStatusTextAndLog(service, "Note! Problem when indexing ");
+				logger.warn(serviceId + ", got following problem when indexing: ");
 				for (String uri: problemMessages.keySet()) {
-					ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " ggr");
-					logger.warn("  " + uri + " - " + problemMessages.get(uri) + " ggr");
+					ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
+					logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
 				}
 			}
 		}
@@ -233,7 +233,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				iw.commit();
 				refreshIndex = true;
 				if (logger.isInfoEnabled()) {
-					logger.info("Tog bort alla poster för " + serviceId);
+					logger.info("Removed all records for " + serviceId);
 				}
 			} catch (Exception e) {
 				rollback(c);
@@ -241,10 +241,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					try {
 						iw.rollback();
 					} catch (Exception e2) {
-						logger.warn("Fel vid abort för lucene-index", e2);
+						logger.warn("Error when aborting for lucene index", e2);
 					}
 				}
-				logger.error(serviceId + ", fel vid delete", e);
+				logger.error(serviceId + ", error at delete", e);
 				throw e;
 			} finally {
 				closeDBResources(null, pst, c);
@@ -267,7 +267,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				xmlContent = rs.getString("xmldata");
 			}
 		} catch (Exception e) {
-			logger.error("Fel vid hämtning xmldata för uri " + uri, e);
+			logger.error("Error when fetching xml data for uri " + uri, e);
 			logger.error(e.getMessage());
 			throw e;
 		} finally {
@@ -312,7 +312,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				count = rs.getInt(1);
 			}
 		} catch (Exception e) {
-			logger.error(serviceId + ", fel vid hämtning av antal poster", e);
+			logger.error(serviceId + ", error when fetching number of records", e);
 			throw e;
 		} finally {
 			closeDBResources(rs, pst, c);

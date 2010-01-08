@@ -158,27 +158,27 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			ss = getStatusService(ctx);
 			String serviceId = jd.getName();
 			if (logger.isInfoEnabled()) {
-				logger.info("Kör jobb för " + serviceId);
+				logger.info("Running job for " + serviceId);
 			}
 			service = hsm.getService(serviceId);
 			if (service == null) {
-				throw new JobExecutionException("Hittade inte tjänsten med id: " + serviceId);
+				throw new JobExecutionException("Could not find service with ID: " + serviceId);
 			}
 			// specialfall för indexering från repo
 			if (ss.getStartStep(service) == Step.INDEX) {
 				ss.initStatus(service, "Init");
-				ss.setStatusTextAndLog(service, "Uppdaterar lucene-index från repository");
+				ss.setStatusTextAndLog(service, "Updating lucene index from repository");
 				ss.setStep(service, Step.INDEX);
 				hrm.updateLuceneIndex(service, null);
 				hsm.storeFirstIndexDateIfNotSet(service);
 				long durationMillis = System.currentTimeMillis() - start;
-				ss.setStatusTextAndLog(service, "Ok, körtid " + ContentHelper.formatRunTime(durationMillis));
+				ss.setStatusTextAndLog(service, "Ok, job time: " + ContentHelper.formatRunTime(durationMillis));
 				ss.setStep(service, Step.IDLE);
 				return;
 			}
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.FETCH);
-			ss.setStatusTextAndLog(service, "Gör Identify");
+			ss.setStatusTextAndLog(service, "Performing Identify");
 
 			ServiceMetadata sm = performIdentify(service);
 
@@ -187,7 +187,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			// kolla om vi har en hämtad fil som vi kan använda
 			if (!spoolFile.exists()) {
 				// ingen tidigare hämtning att använda
-				ss.setStatusTextAndLog(service, "Hämtar metadataformat");
+				ss.setStatusTextAndLog(service, "Fetching metadata format");
 				List<ServiceFormat> formats = performGetFormats(service);
 				String f = getMetadataFormat();
 				ServiceFormat format = null;
@@ -198,7 +198,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 					}
 				}
 				if (format == null) {
-					throw new Exception("Önskat format (" + f + ") stöds ej av tjänsten");
+					throw new Exception("Requested format (" + f + ") not supported");
 				}
 
 				// kolla om vi ska avbryta
@@ -208,7 +208,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				String setSpec = service.getHarvestSetSpec();
 				if (setSpec != null) {
 					boolean setSpecSupported = false;
-					ss.setStatusTextAndLog(service, "Kontrollerar angivet set " + setSpec);
+					ss.setStatusTextAndLog(service, "Checking specified set: " + setSpec);
 					List<String> setSpecs = performGetSets(service);
 					for (String fetchedSetSpec: setSpecs) {
 						if (setSpec.equals(fetchedSetSpec)) {
@@ -217,7 +217,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 						}
 					}
 					if (!setSpecSupported) {
-						throw new Exception("Tjänsten stödjer ej önskat set (" + setSpec + "), " + setSpecs);
+						throw new Exception("Specified set not supported: (" + setSpec + "), " + setSpecs);
 					}
 				}
 
@@ -227,22 +227,22 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				// skapa tempfil
 				temp = File.createTempFile(jd.getName().substring(0, Math.min(4, serviceId.length())), null);
 				// hämta data till tempfilen
-				ss.setStatusTextAndLog(service, "Hämtar data till tempfil");
+				ss.setStatusTextAndLog(service, "Fetching data to temp file");
 				numRecords = performGetRecords(service, sm, format, temp, ss);
 				if (numRecords != 0) {
 					if (logger.isDebugEnabled()) {
-						logger.debug(serviceId + ", Hämtade " + numRecords + " poster");
+						logger.debug(serviceId + ", Fetched " + numRecords + " records");
 					}
-					ss.setStatusTextAndLog(service, "Flyttar tempfil till spool");
+					ss.setStatusTextAndLog(service, "Moving temp file to spool");
 					if (!temp.renameTo(spoolFile)) {
-						throw new Exception("Kunde inte flytta temp-fil till spoolfil, " +
+						throw new Exception("Could not move temp file to spool file, " +
 								temp + " -> " + spoolFile);
 					}
 				}
 			} else {
-				ss.setStatusTextAndLog(service, "Använder tidigare hämtad fil från spool");
+				ss.setStatusTextAndLog(service, "Using existing file from spool");
 				if (logger.isDebugEnabled()) {
-					logger.debug(serviceId + ", använder tidigare hämtad fil från spool: " + spoolFile.getName());
+					logger.debug(serviceId + ", using existing file from spool: " + spoolFile.getName());
 				}
 			}
 			// om vi har records och en spool-fil ska vi bearbeta den
@@ -252,23 +252,23 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 
 				long fsizeMb = spoolFile.length() / (1024 * 1024);
 				// lagra skörd i repot
-				ss.setStatusTextAndLog(service, "Lagrar data i repot (" + numRecords + " records, ca " +
+				ss.setStatusTextAndLog(service, "Storing data in repos (" + numRecords + " records, appr " +
 						fsizeMb + "MB)");
 				if (logger.isDebugEnabled()) {
-					logger.debug(serviceId + ", lagrar data i repot (" + numRecords + " records, ca " +
+					logger.debug(serviceId + ", storing data in repos (" + numRecords + " records, appr " +
 						fsizeMb + "MB)");
 				}
 				ss.setStep(service, Step.STORE);
 				boolean changed = hrm.storeHarvest(service, sm, spoolFile, nowTs);
 				if (logger.isDebugEnabled()) {
-					logger.debug(serviceId + ", Lagrade poster");
+					logger.debug(serviceId + ", stored records");
 				}
 
 				// arkivera fulla skördar
 				// TODO: arkiveringskatalog? tråd? delta-skördar?
 				if (!sm.handlesPersistentDeletes() || service.getLastHarvestDate() == null) {
 					// "full skörd", arkivera
-					ss.setStatusTextAndLog(service, "Arkiverar full skörd");
+					ss.setStatusTextAndLog(service, "Archiving full harvest");
 					OutputStream os = null;
 					InputStream is = null;
 					File of = new File(spoolFile.getAbsolutePath() + ".gz");
@@ -286,12 +286,12 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 						closeStream(is);
 						closeStream(os);
 					}
-					ss.setStatusTextAndLog(service, "Arkiverade full skörd till gzip (" + (of.length() / (1024*1024)) + " MB)");
+					ss.setStatusTextAndLog(service, "Archived full harvest to gzip (" + (of.length() / (1024*1024)) + " MB)");
 				}
 				// ta bort spool-filen då vi är klara med innehållet
 				if (!spoolFile.delete()) {
-					logger.error(serviceId + ", Lyckades inte ta bort spool-fil");
-					ss.setStatusTextAndLog(service, "OBS! Lyckades inte ta bort spoolfil");
+					logger.error(serviceId + ", could not remove spool file");
+					ss.setStatusTextAndLog(service, "Note: Could not remove spool file");
 				}
 
 				// TODO: är detta rätt datum/tid att sätta även om vi har återupptagit
@@ -314,7 +314,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 
 				// uppdatera lucene-index för servicen
 				if (changed) {
-					ss.setStatusTextAndLog(service, "Uppdaterar lucene-index" +
+					ss.setStatusTextAndLog(service, "Updating lucene index" +
 							(lastSuccessfulHarvestTs != null ?
 									" > " + lastSuccessfulHarvestTs : ""));
 					ss.setStep(service, Step.INDEX);
@@ -322,27 +322,27 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 					hsm.storeFirstIndexDateIfNotSet(service);
 				} else {
 					if (logger.isInfoEnabled()) {
-						logger.info(serviceId + ", ingen index-uppdatering nödvändig");
+						logger.info(serviceId + ", no index update needed");
 					}
 				}
 				if (logger.isInfoEnabled()) {
-					logger.info(serviceId + ", skördad");
+					logger.info(serviceId + ", harvested");
 				}
 			} else {
 				if (logger.isInfoEnabled()) {
-					logger.info(serviceId + ", skörd gav inga poster");
+					logger.info(serviceId + ", harvest resulted in no records");
 				}
 				// uppdatera med senaste skördetid
 				hsm.updateServiceDate(service, now);
 			}
 			long durationMillis = System.currentTimeMillis() - start;
-			ss.setStatusTextAndLog(service, "Ok, körtid " +
+			ss.setStatusTextAndLog(service, "Ok, job time: " +
 					ContentHelper.formatRunTime(durationMillis) + ", " + numRecords + " records");
 			ss.setStep(service, Step.IDLE);
 
 			if (logger.isDebugEnabled()) {
 				List<String> log = ss.getStatusLog(service);
-				logger.debug(serviceId + ": ----- logsammanfattning -----");
+				logger.debug(serviceId + ": ----- log summary -----");
 				for (String logMsg: log) {
 					logger.debug(serviceId + ": " + logMsg);
 				}
@@ -354,17 +354,17 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				errMsg = e.toString();
 			}
 			if (ss != null) {
-				reportError(service, "Fel vid jobbkörning i steg " + ss.getStep(service), e);
+				reportError(service, "Error in job step: " + ss.getStep(service), e);
 				ss.setErrorTextAndLog(service, errMsg);
 				ss.setStep(service, Step.IDLE);
 			} else {
-				logger.error("Ingen statusservice att rapportera fel till!");
-				reportError(service, "Fel vid jobbkörning", e);
+				logger.error("No status service to report error to!");
+				reportError(service, "Error in job execution", e);
 			}
 		} finally {
 			if (temp != null && temp.exists()) {
 				if (!temp.delete()) {
-					logger.warn("Kunde inte ta bort temp-fil: " + temp.getAbsolutePath());
+					logger.warn("Could not remove temp file: " + temp.getAbsolutePath());
 				}
 			}
 		}
@@ -379,7 +379,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	 */
 	protected void checkInterrupt(StatusService ss, HarvestService service) throws Exception {
 		if (interrupted) {
-			throw new Exception("Jobb avbrutet på begäran");
+			throw new Exception("Job disrupted on request");
 		}
 		if (ss != null) {
 			ss.checkInterrupt(service);

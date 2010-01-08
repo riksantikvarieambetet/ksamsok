@@ -69,20 +69,20 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			throws Exception {
 		Identify identify = new Identify(service.getHarvestURL());
 		if (!"2.0".equals(identify.getProtocolVersion())) {
-			throw new Exception("Stödjer ej 2.0 utan " + identify.getProtocolVersion());
+			throw new Exception("Service does not specify 2.0 but " + identify.getProtocolVersion());
 		}
 		String granularity = identify.getSingleString("/oai20:OAI-PMH/oai20:Identify/oai20:granularity");
 		if (granularity == null) {
-			throw new Exception("Hittade inte granularity");
+			throw new Exception("Could not find granularity");
 		}
 		String deletedRecord = identify.getSingleString("/oai20:OAI-PMH/oai20:Identify/oai20:deletedRecord");
 		if (deletedRecord == null) {
-			throw new Exception("Hittade inte deletedRecord");
+			throw new Exception("Could not find deletedRecord");
 		}
 		if (service.getAlwaysHarvestEverything()) {
 			deletedRecord = ServiceMetadata.D_TRANSIENT;
 			if (logger.isInfoEnabled()) {
-				logger.info(service.getId() + ", Påtvingar deletedRecord=" + deletedRecord);
+				logger.info(service.getId() + ", Forcing deletedRecord=" + deletedRecord);
 			}
 		}
 		if (logger.isInfoEnabled()) {
@@ -96,7 +96,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	protected int performGetRecords(HarvestService service, ServiceMetadata sm, ServiceFormat f,
 			File storeTo, StatusService ss) throws Exception {
 		if (logger.isDebugEnabled()) {
-			logger.debug(service.getId() + " - Hämtar " + service.getHarvestURL() + ", senaste hämtning: " + service.getLastHarvestDate());
+			logger.debug(service.getId() + " - Fetching " + service.getHarvestURL() + ", latest fetch: " + service.getLastHarvestDate());
 		}
 		OutputStream os = null;
 		try {
@@ -113,7 +113,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				String fromDateStr = df.format(service.getLastHarvestDate());
 				fromDate = URLEncoder.encode(fromDateStr, "UTF-8");
 				if (ss != null) {
-					ss.setStatusTextAndLog(service, "Hämtar ändringar sen senaste skörden (" +
+					ss.setStatusTextAndLog(service, "Fetching changes since latest harvest (" +
 							fromDateStr + ")");
 				}
 			}
@@ -202,7 +202,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
             				"/oai20:OAI-PMH/oai20:ListRecords/oai20:resumptionToken/@completeListSize"));
             	} catch (Exception e) {
             		if (logger != null && logger.isDebugEnabled()) {
-            			logger.debug("Fel vid hämtande av completeListSize", e);
+            			logger.debug("Error when fetching completeListSize", e);
             		}
             	}
             }
@@ -215,18 +215,18 @@ public class OAIPMHHarvestJob extends HarvestJob {
 
             if (logger != null && logger.isDebugEnabled()) {
             	logger.debug((service != null ? service.getId() + ": " : "" ) +
-            			"hämtat " + c + (completeListSize > 0 ? "/" + completeListSize : "")
-            			+ " records hittills på " + ContentHelper.formatRunTime(deltaMillis) +
-            			(aproxMillisLeft >= 0 ? " (beräknad återstående tid: " +
+            			"fetched " + c + (completeListSize > 0 ? "/" + completeListSize : "")
+            			+ " records so far in " + ContentHelper.formatRunTime(deltaMillis) +
+            			(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
             					ContentHelper.formatRunTime(aproxMillisLeft) + ")": "") +
             			", resumptionToken: " + resumptionToken);
             }
 			if (ss != null) {
 
 				// vi uppdaterar bara status här, logg är inte intressant för dessa
-				ss.setStatusText(service, "Hämtar data till tempfil (hämtat " + c +
+				ss.setStatusText(service, "Fetching data to temp file (fetched " + c +
 						(completeListSize > 0 ? "/" + completeListSize : "") + " records)" +
-						(aproxMillisLeft >= 0 ? ", beräknad återstående tid: " +
+						(aproxMillisLeft >= 0 ? ", estimated time remaining: " +
 								ContentHelper.formatRunTime(aproxMillisLeft) : ""));
 			}
             if (resumptionToken == null || resumptionToken.length() == 0) {
@@ -247,7 +247,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
         os.write("</harvest>\n".getBytes("UTF-8"));
         os.flush();
     	long durationMillis = System.currentTimeMillis() - start;
-    	String msg = "Hämtade " + c + " records, tid: " +
+    	String msg = "Fetched " + c + " records, time: " +
     		ContentHelper.formatRunTime(durationMillis) +
     		" (" + ContentHelper.formatSpeedPerSec(c, durationMillis) + ")";
     	if (ss != null) {
@@ -271,15 +271,15 @@ public class OAIPMHHarvestJob extends HarvestJob {
     	final int maxTries = 6;
     	final int waitSecs = 100;
 		if (tryNum >= maxTries) {
-			throw new Exception("Problem att kontakta tjänsten, gav upp efter " + maxTries + " försök" + (resumptionToken != null ? " med token: " +
+			throw new Exception("Problem when contacting the service, surrendered after " + maxTries + " tries" + (resumptionToken != null ? " with token: " +
 					resumptionToken : ""), ioe);
 		}
 		// TODO: kan message vara så pass stor så att 4k-gränsen överskrids och ger nedanstående databasfel?
 		//       java.sql.SQLException: ORA-01461: can bind a LONG value only for insert into a LONG column
 		//       i så fall måste vi begränsa feltexten, se:
 		//       http://vsadilovskiy.wordpress.com/2007/10/19/ora-01461-can-bind-a-long-value-only-for-insert-into-a-long-column/
-		String msg = "Fick exception (" + ioe.getMessage() +
-			"), väntar " + waitSecs + " sek och försöker igen";
+		String msg = "Exception (" + ioe.getMessage() +
+			"), waiting " + waitSecs + " seconds and trying again";
 		logger.warn((service != null ? service.getId() + ": " : "" ) + msg);
 		if (ss != null) {
     		ss.setStatusTextAndLog(service, msg);
@@ -372,7 +372,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			}
 		}
 		long durationMillis = System.currentTimeMillis() - start;
-		System.out.println("Tid: " + ContentHelper.formatRunTime(durationMillis));
+		System.out.println("Time: " + ContentHelper.formatRunTime(durationMillis));
 	}
 
 }
