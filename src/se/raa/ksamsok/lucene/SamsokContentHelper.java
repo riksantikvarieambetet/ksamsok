@@ -708,7 +708,7 @@ public class SamsokContentHelper extends ContentHelper {
 			// nedan följer fritextfält - ska analyseras
 
 			// lägg in "allt" i det stora fritextfältet och indexera
-			allText.append(itemText).append(" ").append(placeText).append(" ").append(actorText).append(" ").append(timeText);
+			allText.append(" ").append(itemText).append(" ").append(placeText).append(" ").append(actorText).append(" ").append(timeText);
 			luceneDoc.add(new Field(IX_TEXT, allText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
 			// fritext för objekt
 			luceneDoc.add(new Field(IX_ITEM, itemText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
