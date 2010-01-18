@@ -47,27 +47,27 @@ public class LuceneReindexAllJob extends HarvestJob {
 			ss = getStatusService(ctx);
 			String serviceId = jd.getName();
 			if (logger.isInfoEnabled()) {
-				logger.info("Kör jobb för att indexera om lucene-index från repo(" + serviceId + ")");
+				logger.info("Running job to reindex lucene index from repo(" + serviceId + ")");
 			}
 			service = new HarvestServiceImpl();
 			service.setId(serviceId);
-			service.setName("Temp-jobb för Lucene-indexering");
+			service.setName("Temp job for Lucene indexing");
 
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.INDEX);
 			List<HarvestService> services = hsm.getServices();
-			ss.setStatusTextAndLog(service, "Startar omindexering av " + services.size() + " tjänster");
+			ss.setStatusTextAndLog(service, "Starting to reindex " + services.size() + " services");
 			long start = System.currentTimeMillis();
 			for (HarvestService reindexMe: services) {
 				if (ss.getStep(reindexMe) != Step.IDLE || hsm.isRunning(reindexMe)) {
-					ss.setStatusTextAndLog(service, "Tjänsten " + reindexMe.getId() + " kör, hoppar över den");
+					ss.setStatusTextAndLog(service, "The service " + reindexMe.getId() + " is running, so we skip it");
 					continue;
 				}
-				ss.setStatusTextAndLog(service, "Startar indexering av tjänst " + reindexMe.getId());
+				ss.setStatusTextAndLog(service, "Starting to index service " + reindexMe.getId());
 				long serviceStart = System.currentTimeMillis();
 				// "initiera jobb" och kör ungefär som i HarvestJob för reindex
 				ss.initStatus(reindexMe, "Init");
-				ss.setStatusTextAndLog(reindexMe, "Uppdaterar lucene-index från repository (körs av " + service.getId() + ")");
+				ss.setStatusTextAndLog(reindexMe, "Updating lucene index from repository (by " + service.getId() + ")");
 				try {
 					ss.setStep(reindexMe, Step.INDEX);
 					hrm.updateLuceneIndex(reindexMe, null, service);
@@ -83,20 +83,20 @@ public class LuceneReindexAllJob extends HarvestJob {
 					ss.setStep(reindexMe, Step.IDLE);
 				}
 				long durationMillis = System.currentTimeMillis() - serviceStart;
-				ss.setStatusTextAndLog(reindexMe, "Ok, körtid " + ContentHelper.formatRunTime(durationMillis));
+				ss.setStatusTextAndLog(reindexMe, "Ok, job time " + ContentHelper.formatRunTime(durationMillis));
 
 				// kontrollera om reindexall-jobbet ska avbrytas
 				ss.checkInterrupt(service);
-				ss.setStatusTextAndLog(service, "Indexerade tjänst " + reindexMe.getId() +
-						", tid: " + ContentHelper.formatRunTime(durationMillis));
+				ss.setStatusTextAndLog(service, "Done indexing service " + reindexMe.getId() +
+						", time: " + ContentHelper.formatRunTime(durationMillis));
 			}
 			long durationMillis = System.currentTimeMillis() - start;
-			ss.setStatusTextAndLog(service, "Omindexering genomförd, tid: " +
+			ss.setStatusTextAndLog(service, "Reindexing done, time: " +
 					ContentHelper.formatRunTime(durationMillis));
 			ss.setStep(service, Step.IDLE);
 			if (logger.isDebugEnabled()) {
 				List<String> log = ss.getStatusLog(service);
-				logger.debug(serviceId + ": ----- logsammanfattning -----");
+				logger.debug(serviceId + ": ----- log summary -----");
 				for (String logMsg: log) {
 					logger.debug(serviceId + ": " + logMsg);
 				}
@@ -108,12 +108,12 @@ public class LuceneReindexAllJob extends HarvestJob {
 				errMsg = e.toString();
 			}
 			if (ss != null) {
-				reportError(service, "Fel vid jobbkörning i steg " + ss.getStep(service), e);
+				reportError(service, "Error when running job in step " + ss.getStep(service), e);
 				ss.setErrorTextAndLog(service, errMsg);
 				ss.setStep(service, Step.IDLE);
 			} else {
-				logger.error("Ingen statusservice att rapportera fel till!");
-				reportError(service, "Fel vid jobbkörning", e);
+				logger.error("No status service to report errors against!");
+				reportError(service, "Error when running job", e);
 			}
 		}
 	}

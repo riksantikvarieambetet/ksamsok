@@ -47,22 +47,22 @@ public class LuceneOptimizeJob extends HarvestJob {
 			ss = getStatusService(ctx);
 			String serviceId = jd.getName();
 			if (logger.isInfoEnabled()) {
-				logger.info("Kör jobb för att optimera lucene-index (" + serviceId + ")");
+				logger.info("Running job to optimize lucene index (" + serviceId + ")");
 			}
 			service = hsm.getService(serviceId);
 			boolean hasService = (service != null);
 			if (!hasService) {
 				service = new HarvestServiceImpl();
 				service.setId(serviceId);
-				service.setName("Temp-jobb för Lucene-optimering");
+				service.setName("Temp job for Lucene optimization");
 			}
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.INDEX);
-			ss.setStatusTextAndLog(service, "Startar index-optimering");
+			ss.setStatusTextAndLog(service, "Starting index optimization");
 			long start = System.currentTimeMillis();
 			LuceneServlet.getInstance().optimizeLuceneIndex();
 			long durationMillis = System.currentTimeMillis() - start;
-			ss.setStatusTextAndLog(service, "Index-optimering genomförd på " +
+			ss.setStatusTextAndLog(service, "Index optimization performed in " +
 					ContentHelper.formatRunTime(durationMillis));
 			ss.setStep(service, Step.IDLE);
 			// uppdatera bara om vi har en tjänst med inskickat id, annars är det en engångskörning
@@ -71,7 +71,7 @@ public class LuceneOptimizeJob extends HarvestJob {
 			}
 			if (logger.isDebugEnabled()) {
 				List<String> log = ss.getStatusLog(service);
-				logger.debug(serviceId + ": ----- logsammanfattning -----");
+				logger.debug(serviceId + ": ----- log summary -----");
 				for (String logMsg: log) {
 					logger.debug(serviceId + ": " + logMsg);
 				}
@@ -83,12 +83,12 @@ public class LuceneOptimizeJob extends HarvestJob {
 				errMsg = e.toString();
 			}
 			if (ss != null) {
-				reportError(service, "Fel vid jobbkörning i steg " + ss.getStep(service), e);
+				reportError(service, "Error when running job i step " + ss.getStep(service), e);
 				ss.setErrorTextAndLog(service, errMsg);
 				ss.setStep(service, Step.IDLE);
 			} else {
-				logger.error("Ingen statusservice att rapportera fel till!");
-				reportError(service, "Fel vid jobbkörning", e);
+				logger.error("No status service to report errors towards!");
+				reportError(service, "Error when running job", e);
 			}
 		}
 	}

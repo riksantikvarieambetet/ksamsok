@@ -37,8 +37,8 @@ public class StatusServiceImpl implements StatusService {
 	public void checkInterrupt(HarvestService service) {
 		String iDate = interrupts.remove(service.getId());
 		if (iDate != null) {
-			throw new RuntimeException("Jobb avbrutet " + iDate + " i steg " +
-					steps.get(service.getId()) + " på begäran");
+			throw new RuntimeException("Job aborted " + iDate + " in step " +
+					steps.get(service.getId()) + " at request");
 		}
 	}
 
@@ -76,7 +76,7 @@ public class StatusServiceImpl implements StatusService {
 	}
 
 	public void requestInterrupt(HarvestService service) {
-		setStatusTextAndLog(service, "* Avbrottsbegäran mottogs");
+		setStatusTextAndLog(service, "* Request for abortion received");
 		interrupts.put(service.getId(), ContentHelper.formatDate(new Date(), true));
 	}
 
@@ -156,7 +156,7 @@ public class StatusServiceImpl implements StatusService {
 			}
 		} catch (Exception e) {
 			Logger.getLogger(this.getClass()).error(
-					"Fel vid hämtning av gamla logmeddelanden för tjänst " + service.getId(), e);
+					"Error when fetching old log messages for service " + service.getId(), e);
 			DBBasedManagerImpl.rollback(c);
 		} finally {
 			DBBasedManagerImpl.closeDBResources(rs, pst, c);
@@ -185,7 +185,7 @@ public class StatusServiceImpl implements StatusService {
 			c.commit();
 		} catch (Exception e) {
 			Logger.getLogger(this.getClass()).error(
-					"Fel vid lagring av logmeddelande för tjänst " + service.getId() +
+					"Error when storing log messages for service " + service.getId() +
 					": " + message, e);
 			DBBasedManagerImpl.rollback(c);
 		} finally {
@@ -205,7 +205,7 @@ public class StatusServiceImpl implements StatusService {
 			c.commit();
 		} catch (Exception e) {
 			Logger.getLogger(this.getClass()).error(
-					"Fel vid resning av logmeddelanden för tjänst " + service.getId(), e);
+					"Error when purging log messages for service " + service.getId(), e);
 			DBBasedManagerImpl.rollback(c);
 		} finally {
 			DBBasedManagerImpl.closeDBResources(null, pst, c);
