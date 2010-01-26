@@ -68,6 +68,7 @@ public abstract class ContentHelper {
 	public static final String IX_ITEMNAME = "itemName";
 	public static final String IX_ITEMSPECIFICATION = "itemSpecification";
 	public static final String IX_ITEMTITLE = "itemTitle";
+	public static final String IX_ITEMLABEL = "itemLabel";
 	public static final String IX_ITEMDESCRIPTION = "itemDescription";
 	public static final String IX_ITEMKEYWORD = "itemKeyWord";
 	public static final String IX_ITEMMOTIVEWORD = "itemMotiveWord";
@@ -78,7 +79,7 @@ public abstract class ContentHelper {
 	public static final String IX_ITEMNUMBER = "itemNumber";
 	public static final String IX_ITEMLICENSE = "itemLicense";
 	public static final String IX_THEME = "theme";
-	
+
 	// tider, platser, personer
 	//	Sammanhang enligt ändlig lista. Sammanhanget gäller för tider, platser och personer/organisationer. Listan på sammanhang hittar du här: http://kulturarvsdata.se/resurser/Context
 	public static final String IX_CONTEXTLABEL = "contextLabel";
@@ -158,6 +159,8 @@ public abstract class ContentHelper {
 
 	// övriga specialindex
 	public static final String IX_THUMBNAILEXISTS = "thumbnailExists";
+	public static final String IX_GEODATAEXISTS = "geoDataExists";
+	public static final String IX_TIMEINFOEXISTS = "timeInfoExists";
 
 	// alla index
 	private static final HashMap<String,Index> indices = new LinkedHashMap<String,Index>();
@@ -189,6 +192,7 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMNAME, "Objektets huvudsakliga benämning eller sakord", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMSPECIFICATION, "Modellbeteckning eller liknande", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMTITLE, "Titel eller verksnamn", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMLABEL, "Huvudsaklig beskrivning av objektet - klassifikation, sakord el dyl", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMDESCRIPTION, "Fritext i beskrivningsfält", IndexType.ANALYZED);
 		addIndex(IX_ITEMKEYWORD, "Nyckelord", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMMOTIVEWORD, "Ord som förekommer som beskrivning av ett motiv i ett bild- eller målningsobjekt", IndexType.TOLOWERCASE);
@@ -285,12 +289,14 @@ public abstract class ContentHelper {
 		addIndex(IX_SAMEAS, "Samma som (uri)", IndexType.VERBATIM);
 		addIndex(IX_VISUALIZES, "Visualiserar objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_ADDEDTOINDEXDATE, "Datum posten lades till i indexet (yyyy-mm-dd) - " + 
-				"obs att detta datum är ungefärligt då det beror på skördfrekvens för " +
+				"obs att detta datum är ungefärligt då det beror på skördefrekvens för " +
 				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
 				IX_CREATEDDATE + ")", IndexType.VERBATIM);
 
 		// övriga
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
+		addIndex(IX_GEODATAEXISTS, "Om objektet har spatial data (j/n)", IndexType.TOLOWERCASE);
+		addIndex(IX_TIMEINFOEXISTS, "Om objektet har tidsangivelse (i " + IX_FROMTIME + "/" + IX_TOTIME + ") (j/n)", IndexType.TOLOWERCASE);
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);

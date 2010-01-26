@@ -69,6 +69,7 @@ public class SamsokContentHelper extends ContentHelper {
 	private static final URI uri_rCreatedDate = URI.create(uriPrefixKSamsok + "createdDate");
 	private static final URI uri_rLastChangedDate = URI.create(uriPrefixKSamsok + "lastChangedDate");
 	private static final URI uri_rItemTitle = URI.create(uriPrefixKSamsok + "itemTitle");
+	private static final URI uri_rItemLabel = URI.create(uriPrefixKSamsok + "itemLabel");
 	private static final URI uri_rItemType = URI.create(uriPrefixKSamsok + "itemType");
 	private static final URI uri_rItemClass = URI.create(uriPrefixKSamsok + "itemClass");
 	private static final URI uri_rItemClassName = URI.create(uriPrefixKSamsok + "itemClassName");
@@ -139,6 +140,7 @@ public class SamsokContentHelper extends ContentHelper {
 	// vem-kontext
 	private static final URI uri_rFirstName = URI.create("http://xmlns.com/foaf/0.1/#firstName");
 	private static final URI uri_rSurname = URI.create("http://xmlns.com/foaf/0.1/#surname");
+	private static final URI uri_rFullName = URI.create("http://xmlns.com/foaf/0.1/#fullName");
 	private static final URI uri_rName = URI.create("http://xmlns.com/foaf/0.1/#name");
 	private static final URI uri_rGender = URI.create("http://xmlns.com/foaf/0.1/#gender");
 	private static final URI uri_rOrganization = URI.create("http://xmlns.com/foaf/0.1/#organization");
@@ -241,6 +243,7 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rCreatedDate = elementFactory.createURIReference(uri_rCreatedDate);
 			URIReference rLastChangedDate = elementFactory.createURIReference(uri_rLastChangedDate);
 			URIReference rItemTitle = elementFactory.createURIReference(uri_rItemTitle);
+			URIReference rItemLabel = elementFactory.createURIReference(uri_rItemLabel);
 			URIReference rItemType = elementFactory.createURIReference(uri_rItemType);
 			URIReference rItemClass = elementFactory.createURIReference(uri_rItemClass);
 			URIReference rItemClassName = elementFactory.createURIReference(uri_rItemClassName);
@@ -310,6 +313,7 @@ public class SamsokContentHelper extends ContentHelper {
 			// vem
 			URIReference rFirstName = elementFactory.createURIReference(uri_rFirstName);
 			URIReference rSurname = elementFactory.createURIReference(uri_rSurname);
+			URIReference rFullName = elementFactory.createURIReference(uri_rFullName);;
 			URIReference rName = elementFactory.createURIReference(uri_rName);
 			URIReference rGender = elementFactory.createURIReference(uri_rGender);
 			URIReference rTitle = elementFactory.createURIReference(uri_rTitle);
@@ -371,6 +375,9 @@ public class SamsokContentHelper extends ContentHelper {
 			// lägg till specialindex för om tumnagel existerar eller ej (j/n), IndexType.TOLOWERCASE
 			boolean thumbnailExists = extractSingleValue(graph, s, rThumbnail, null) != null;
 			luceneDoc.add(new Field(IX_THUMBNAILEXISTS, thumbnailExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
+			// specialindex som indikerar om spatial- respektive tidsdata finns
+			boolean geoDataExists = false;
+			boolean timeInfoExists = false;
 
 			StringBuffer allText = new StringBuffer();
 			StringBuffer placeText = new StringBuffer();
@@ -413,6 +420,9 @@ public class SamsokContentHelper extends ContentHelper {
 			// hämta ut itemTitle (0m)
 			ip.setCurrent(IX_ITEMTITLE, Field.Store.YES);
 			appendToTextBuffer(itemText, extractValue(graph, s, rItemTitle, null, ip));
+			// hämta ut itemLabel (11)
+			ip.setCurrent(IX_ITEMLABEL);
+			extractSingleValue(graph, s, rItemLabel, ip);
 			// hämta ut itemType (1)
 			ip.setCurrent(IX_ITEMTYPE);
 			extractSingleValue(graph, s, rItemType, ip);
@@ -638,8 +648,12 @@ public class SamsokContentHelper extends ContentHelper {
 					String lastName = extractSingleValue(graph, cS, rSurname, ip);
 					appendToTextBuffer(actorText, lastName);
 
-					// om vi har ett förnamn och ett efternamn så lägger vi in det i IX_FULLNAME
-					if (firstName != null && lastName != null) {
+					ip.setCurrent(IX_FULLNAME, contextType);
+					String fullName = extractSingleValue(graph, cS, rFullName, ip);
+					appendToTextBuffer(actorText, fullName);
+
+					// om vi inte har fått ett fullName men har ett förnamn och ett efternamn så lägger vi in det i IX_FULLNAME
+					if (fullName == null && firstName != null && lastName != null) {
 						ip.setCurrent(IX_FULLNAME, contextType);
 						ip.addToDoc(firstName + " " + lastName);
 					}
@@ -668,10 +682,17 @@ public class SamsokContentHelper extends ContentHelper {
 					// time
 
 					ip.setCurrent(IX_FROMTIME, contextType);
-					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rFromTime, ip));
+					String fromTime = extractSingleValue(graph, cS, rFromTime, ip);
+					appendToTextBuffer(timeText, fromTime);
 
+					String toTime = extractSingleValue(graph, cS, rToTime, ip);
 					ip.setCurrent(IX_TOTIME, contextType);
-					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rToTime, ip));
+					appendToTextBuffer(timeText, toTime);
+
+					// flagga att det finns tiddata
+					if (fromTime != null || toTime != null) {
+						timeInfoExists = true;
+					}
 
 					ip.setCurrent(IX_FROMPERIODNAME, contextType);
 					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rFromPeriodName, ip));
@@ -740,6 +761,9 @@ public class SamsokContentHelper extends ContentHelper {
 
 			// lagra den första geometrins centroid
 			if (gmlGeometries.size() > 0) {
+				// flagga att det finns geodata
+				geoDataExists = true;
+
 				String gml = gmlGeometries.getFirst();
 				if (gmlGeometries.size() > 1 && logger.isInfoEnabled()) {
 					logger.info("Hämtade " + gmlGeometries.size() +
@@ -762,6 +786,10 @@ public class SamsokContentHelper extends ContentHelper {
 							": " + e.getMessage());
 				}
 			}
+
+			// lägg in specialindex
+			luceneDoc.add(new Field(IX_GEODATAEXISTS, geoDataExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
+			luceneDoc.add(new Field(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
 
 			// TODO: ska detta lagras av lucene, vi kan annars hämta det från db
 			//       ska det lagras av lucene måste vi helst här se till att det lagras utan
