@@ -101,6 +101,9 @@ public class SamsokContentHelper extends ContentHelper {
 	private static final URI uri_rMuseumdatURL = URI.create(uriPrefixKSamsok + "museumdatUrl");
 	private static final URI uri_rTheme = URI.create(uriPrefixKSamsok + "theme");
 
+	// special
+	private static final URI uri_rItemForIndexing = URI.create(uriPrefixKSamsok + "itemForIndexing");
+
 	// relationer
 	private static final URI uri_rContainsInformationAbout = URI.create(uriPrefixKSamsok + "containsInformationAbout");
 	private static final URI uri_rContainsObject = URI.create(uriPrefixKSamsok + "containsObject");
@@ -274,7 +277,10 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rURL = elementFactory.createURIReference(uri_rURL);
 			URIReference rMuseumdatURL = elementFactory.createURIReference(uri_rMuseumdatURL);
 			URIReference rTheme = elementFactory.createURIReference(uri_rTheme);
-			
+
+			// special
+			URIReference rItemForIndexing = elementFactory.createURIReference(uri_rItemForIndexing);
+
 			// relationer
 			URIReference rContainsInformationAbout = elementFactory.createURIReference(uri_rContainsInformationAbout);
 			URIReference rContainsObject = elementFactory.createURIReference(uri_rContainsObject);
@@ -347,6 +353,12 @@ public class SamsokContentHelper extends ContentHelper {
 			if (s == null) {
 				logger.error("Hittade ingen entity i rdf-grafen:\n" + graph);
 				throw new Exception("Hittade ingen entity i rdf-grafen");
+			}
+
+			// kolla om denna post inte ska indexeras och returnera i så fall null
+			String itemForIndexing = extractSingleValue(graph, s, rItemForIndexing, null);
+			if ("n".equals(itemForIndexing)) {
+				return null;
 			}
 
 			identifier = s.toString();
@@ -795,6 +807,8 @@ public class SamsokContentHelper extends ContentHelper {
 			//       ska det lagras av lucene måste vi helst här se till att det lagras utan
 			//       xml-deklaration pss som för pres ovan
 			//       lagras det i db kan data och index vara i flux...
+			//       notera att efter införandet av itemForIndexing kan innehållet inte lagras här utan
+			//       att förändra hur den flaggan hanteras
 			//luceneDoc.add(new Field(I_IX_RDF, xmlContent, Field.Store.COMPRESS, Field.Index.NO));
 		} catch (Exception e) {
 			// TODO: kasta exception/räkna felen/annat?

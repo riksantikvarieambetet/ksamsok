@@ -12,6 +12,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 
@@ -132,6 +133,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				String uri;
 				String xmlContent;
 				int i = 0;
+				int nonI = 0;
 				ContentHelper helper = getContentHelper(service);
 				ContentHelper.initProblemMessages();
 				while (rs.next()) {
@@ -141,7 +143,13 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						iw.deleteDocuments(new Term(ContentHelper.IX_ITEMID, uri));
 					}
 					xmlContent = rs.getString("xmldata");
-					iw.addDocument(helper.createLuceneDocument(service, xmlContent));
+					Document doc = helper.createLuceneDocument(service, xmlContent);
+					if (doc == null) {
+						// inget dokument betyder att tjänsten har skickat itemForIndexing=n
+						++nonI;
+						continue;
+					}
+					iw.addDocument(doc);
 					++i;
 					if (i % 1000 == 0) { // TODO: konstant?
 						ss.checkInterrupt(service);
@@ -169,8 +177,9 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				String runTime = ContentHelper.formatRunTime(durationMillis);
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
 				ss.setStatusTextAndLog(service, "Updated index, " + i + " records (" + 
-						(ts == null ? "delete + insert" : "updated") + "), time: " +
-						runTime + " (" + speed + ")");
+						(ts == null ? "delete + insert" : "updated") +
+						(nonI > 0 ? ", itemForIndexing=n: " + nonI : "") +
+						"), time: " + runTime + " (" + speed + ")");
 				if (logger.isInfoEnabled()) {
 					logger.info(service.getId() +
 							", updated index - done, " + (ts == null ?

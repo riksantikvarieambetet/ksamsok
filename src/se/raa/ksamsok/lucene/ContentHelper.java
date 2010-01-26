@@ -348,11 +348,12 @@ public abstract class ContentHelper {
 
 	/**
 	 * Skapar ett lucene-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster
-	 * är xml-innehållet en post med k-samsöks-xml (rdf).
+	 * är xml-innehållet en post med k-samsöks-xml (rdf). Om metoden ger null har tjänsten
+	 * begärt att posten bara ska lagras och inte indexeras.
 	 * 
 	 * @param service tjänst
 	 * @param xmlContent xml-innehåll
-	 * @return ett lucene-dokument
+	 * @return ett lucene-dokument, eller null om inte posten ska indexeras
 	 * @throws Exception vid problem
 	 */
 	public abstract Document createLuceneDocument(HarvestService service, String xmlContent) throws Exception;
