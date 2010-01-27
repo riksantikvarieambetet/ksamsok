@@ -1,5 +1,5 @@
 %define ver 1.0.0
-%define rel 13
+%define rel 14
 
 Summary: Raä K-Samsök, centralnod
 Name: raa-ksamsok_app
@@ -10,7 +10,7 @@ Vendor: Raa
 URL: http://www.raa.se
 License: (C) 2009 RAÄ 
 Group: System Environment/Daemons
-BuildArchitectures: noarch
+# provar att kommentera bort BuildArchitectures: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 
 Requires: raa-tomcat8080 >= 6.0.18
