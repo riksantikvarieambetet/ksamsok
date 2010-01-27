@@ -184,7 +184,7 @@
 			    	
 			    	<!-- Lägg upp rpm-filen i ${project.build.rpm.dir} -->
 			    	<copy todir="${project.build.dir}/rpm">
-			    		<fileset dir="${project.build.dir}/rpm/RPMS/noarch">
+			    		<fileset dir="${project.build.dir}/rpm/RPMS/x86_64">
 			    	    	<include name="*.rpm"/>
 			    	    </fileset>
 			    	</copy>
