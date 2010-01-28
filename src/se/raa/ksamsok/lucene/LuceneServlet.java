@@ -3,9 +3,7 @@ package se.raa.ksamsok.lucene;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
