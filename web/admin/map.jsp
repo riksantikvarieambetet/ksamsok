@@ -81,9 +81,9 @@
 					map.zoomToMaxExtent();
 				}
 			}
-			var size = new OpenLayers.Size(10,17);
+			var size = new OpenLayers.Size(14,14);
 			var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-			var icon = new OpenLayers.Icon('http://kulturarvsdata.se/resurser/bilder/globe.png',size,offset);
+			var icon = new OpenLayers.Icon('http://kulturarvsdata.se/bilder/globe.png',size,offset);
 
 			function addMarker(lon, lat, text, uri) {
 				var m = new OpenLayers.Marker(new OpenLayers.LonLat(lon, lat), icon.clone());
