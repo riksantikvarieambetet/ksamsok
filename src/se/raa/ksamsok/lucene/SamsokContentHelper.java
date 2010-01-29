@@ -165,6 +165,9 @@ public class SamsokContentHelper extends ContentHelper {
 
 	// övriga
 	private static final URI uri_rThumbnail = URI.create(uriPrefixKSamsok + "thumbnail");
+	private static final URI uri_rImage = URI.create(uriPrefixKSamsok + "image");
+	private static final URI uri_rMediaLicense = URI.create(uriPrefixKSamsok + "mediaLicense");
+	private static final URI uri_rMediaMotiveWord = URI.create(uriPrefixKSamsok + "mediaMotiveWord");
 
 	// geo
 	private static final String aukt_country_pre = uriPrefix + "resurser/aukt/geo/country#";
@@ -341,6 +344,9 @@ public class SamsokContentHelper extends ContentHelper {
 
 			// övriga
 			URIReference rThumbnail = elementFactory.createURIReference(uri_rThumbnail);
+			URIReference rImage = elementFactory.createURIReference(uri_rImage);
+			URIReference rMediaLicense = elementFactory.createURIReference(uri_rMediaLicense);
+			URIReference rMediaMotiveWord = elementFactory.createURIReference(uri_rMediaMotiveWord);
 
 			String pres = null;
 			SubjectNode s = null;
@@ -735,6 +741,17 @@ public class SamsokContentHelper extends ContentHelper {
 
 				} else {
 					logger.warn("context borde vara en blank-nod? Ingen context-info utläst");
+				}
+			}
+
+			// läs in värden från Image-noder
+			for (Triple triple: graph.find(s, rImage, AnyObjectNode.ANY_OBJECT_NODE)) {
+				if (triple.getObject() instanceof SubjectNode) {
+					SubjectNode cS = (SubjectNode) triple.getObject();
+					ip.setCurrent(IX_MEDIALICENSE);
+					extractValue(graph, cS, rMediaLicense, null, ip);
+					ip.setCurrent(IX_MEDIAMOTIVEWORD);
+					appendToTextBuffer(itemText, extractValue(graph, cS, rMediaMotiveWord, null, ip));
 				}
 			}
 

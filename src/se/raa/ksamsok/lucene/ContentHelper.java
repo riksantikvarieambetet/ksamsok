@@ -148,6 +148,10 @@ public abstract class ContentHelper {
 	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
 	public static final String IX_VISUALIZES = "visualizes";
 
+	// media-index
+	public static final String IX_MEDIALICENSE = "mediaLicense";
+	public static final String IX_MEDIAMOTIVEWORD = "mediaMotiveWord";
+
 	// spatiala specialindex
 	public static final String IX_BOUNDING_BOX = "boundingBox";
 	public static final String IX_POINT_DISTANCE = "pointDistance";
@@ -292,6 +296,10 @@ public abstract class ContentHelper {
 				"obs att detta datum är ungefärligt då det beror på skördefrekvens för " +
 				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
 				IX_CREATEDDATE + ")", IndexType.VERBATIM);
+
+		// media
+		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media", IndexType.TOLOWERCASE);
+		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED);
 
 		// övriga
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
