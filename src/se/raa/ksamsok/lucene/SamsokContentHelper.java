@@ -481,8 +481,8 @@ public class SamsokContentHelper extends ContentHelper {
 			ip.setCurrent(IX_ITEMDESCRIPTION); // fritext
 			appendToTextBuffer(itemText, extractValue(graph, s, rItemDescription, r__Desc, ip));
 			// hämta ut itemLicense (01)
-			ip.setCurrent(IX_ITEMLICENSE);
-			extractSingleValue(graph, s, rItemLicense, ip); // in i fritext om licens är kod?
+			ip.setCurrent(IX_ITEMLICENSE, false); // uri, ingen uppslagning fn
+			extractSingleValue(graph, s, rItemLicense, ip);
 			// TODO: subject inte rätt, är bara en uri-pekare nu(?)
 			// hämta ut subject (0m)
 			ip.setCurrent(IX_SUBJECT);
@@ -748,7 +748,7 @@ public class SamsokContentHelper extends ContentHelper {
 			for (Triple triple: graph.find(s, rImage, AnyObjectNode.ANY_OBJECT_NODE)) {
 				if (triple.getObject() instanceof SubjectNode) {
 					SubjectNode cS = (SubjectNode) triple.getObject();
-					ip.setCurrent(IX_MEDIALICENSE);
+					ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
 					extractValue(graph, cS, rMediaLicense, null, ip);
 					ip.setCurrent(IX_MEDIAMOTIVEWORD);
 					appendToTextBuffer(itemText, extractValue(graph, cS, rMediaMotiveWord, null, ip));
@@ -1203,6 +1203,17 @@ public class SamsokContentHelper extends ContentHelper {
 		 */
 		void setCurrent(String indexName, Field.Store store) {
 			setCurrent(indexName, store, true);
+		}
+
+		/**
+		 * Sätter vilket index vi jobbar med fn och om uri-värden ska slås upp. Värdet
+		 * lagras ej (Field.Store.NO).
+		 * 
+		 * @param indexName indexnamn
+		 * @param lookupURI om urivärde ska slås upp
+		 */
+		void setCurrent(String indexName, boolean lookupURI) {
+			setCurrent(indexName, Field.Store.NO, lookupURI);
 		}
 
 		/**

@@ -205,7 +205,7 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMSTYLE, "Stil som präglar objektet", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMCOLOR, "Färg som präglar objektet", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMNUMBER, "Inventarienummer eller annan identifikation av objektet", IndexType.VERBATIM);
-		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet", IndexType.VERBATIM); // typ? uri -> verbatim, kod -> lowercase
+		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet (uri)", IndexType.VERBATIM); // typ? uri -> verbatim, kod -> lowercase
 		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_THEME, "Tema", IndexType.TOLOWERCASE);
@@ -298,7 +298,7 @@ public abstract class ContentHelper {
 				IX_CREATEDDATE + ")", IndexType.VERBATIM);
 
 		// media
-		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media", IndexType.TOLOWERCASE);
+		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.VERBATIM);
 		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED);
 
 		// övriga
