@@ -501,7 +501,12 @@ public class SRUServlet extends HttpServlet {
 				CQL2Lucene.dumpQueryTree(rootNode);
 				Query q = CQL2Lucene.makeQuery(rootNode);
 				int nDocs = first_record - 1 + num_hits_per_page;
-				hits = s.search(q, nDocs == 0 ? 1 : nDocs);
+				if (q != null) {
+					hits = s.search(q, nDocs == 0 ? 1 : nDocs);
+				} else {
+					// ingen query men inget fel, ge då 0 träffar
+					hits = new TopDocs(0, null, 0);
+				}
 				if (hits.totalHits > 0 && hits.totalHits < first_record) {
 					diagnostics(writer, 61, "First record position out of range", true);
 					return;

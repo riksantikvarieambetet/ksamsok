@@ -66,6 +66,8 @@ public class CQL2Lucene
 	private static final String INDEX_CQL_SERVERCHOICE = "cql.serverChoice";
 	private static final String INDEX_CQL_RESULTSETID = "cql.resultSetId";
 
+	private static final Query NO_MATCH_DUMMY_QUERY = new TermQuery(new Term("dumdummy", "dummy"));
+
 	/**
 	 * Skapar en lucene-query utifrån en CQL-nod.
 	 * 
@@ -285,6 +287,23 @@ public class CQL2Lucene
 	 */
 	public static Query createTermQuery(String field, String value,
 			String relation)
+		throws DiagnosticException {
+		// detta api ska alltid vara lenient map stoppord enl önskemål från kringla
+		return createTermQuery(field, value, relation, true);
+	}
+
+	/**
+	 * Skapar en term-query utifrån inskickade värden.
+	 * 
+	 * @param field index
+	 * @param value värde
+	 * @param relation relation
+	 * @param lenientOnStopwords om stoppord ej ska kasta fel
+	 * @return lucene-query eller null
+	 * @throws Exception
+	 */
+	public static Query createTermQuery(String field, String value,
+			String relation, boolean lenientOnStopwords)
 		throws DiagnosticException
 	{
 		Query termQuery = null;
@@ -320,9 +339,13 @@ public class CQL2Lucene
 			} else 
 			{
 				// fixa ev till värdet beroende på index
-				value = transformValueForField(field, value);
-				term = new Term(field, value);
-				termQuery = new TermQuery(term);
+				value = transformValueForField(field, value, lenientOnStopwords);
+				if (value != null) {
+					term = new Term(field, value);
+					termQuery = new TermQuery(term);
+				} else {
+					termQuery = NO_MATCH_DUMMY_QUERY;
+				}
 			}
 		} else 
 		{
@@ -348,12 +371,16 @@ public class CQL2Lucene
 				Term[] t = phraseQuery.getTerms();
 				if (t == null || t.length == 0) 
 				{
-					throw new DiagnosticException("fel i query sträng",
-							"CQL2Lucene.createTermQuery", "endast stopp " +
-									"ord: " + field, true);
+					if (!lenientOnStopwords) {
+						throw new DiagnosticException("fel i query sträng",
+								"CQL2Lucene.createTermQuery", "endast stopp " +
+										"ord: " + field, true);
+					} else {
+						termQuery = NO_MATCH_DUMMY_QUERY;
+					}
+				} else {
+					termQuery = phraseQuery;
 				}
-				termQuery = phraseQuery;
-
 			} else if(relation.equals("any")) 
 			{
 				/**
@@ -365,8 +392,10 @@ public class CQL2Lucene
 				{
 					String curValue = tokenizer.nextToken();
 					Query subSubQuery = createTermQuery(field, curValue,
-							relation);
-					OrQuery((BooleanQuery) termQuery, subSubQuery);
+							relation, true);
+					if (subSubQuery != NO_MATCH_DUMMY_QUERY) {
+						OrQuery((BooleanQuery) termQuery, subSubQuery);
+					}
 				}
 
 			} else if (relation.equals("all")) 
@@ -380,8 +409,10 @@ public class CQL2Lucene
 				{
 					String curValue = tokenizer.nextToken();
 					Query subSubQuery = createTermQuery(field, curValue,
-							relation);
-					AndQuery((BooleanQuery) termQuery, subSubQuery);
+							relation, true);
+					if (subSubQuery != NO_MATCH_DUMMY_QUERY) {
+						AndQuery((BooleanQuery) termQuery, subSubQuery);
+					}
 				}
 			} else 
 			{
@@ -597,6 +628,12 @@ public class CQL2Lucene
 
 	// "översätter" ev värde beroende på indextyp
 	public static String transformValueForField(String field, String value)
+		throws DiagnosticException {
+		return transformValueForField(field, value, false);
+	}
+
+	// "översätter" ev värde beroende på indextyp
+	public static String transformValueForField(String field, String value, boolean lenientOnStopwords)
 		throws DiagnosticException 
 	{
 		// använd svensk stamning, samma som för indexeringen
@@ -604,11 +641,11 @@ public class CQL2Lucene
 		if (ContentHelper.isAnalyzedIndex(field)) 
 		{
 			String analyzedValue = analyzeIndexText(value);
-			if (analyzedValue == null)
+			if (!lenientOnStopwords && analyzedValue == null)
 			{
 				throw new DiagnosticException("felaktigt värde",
 						"CQL2Lucene.transformValueForField", "term " +
-								"innehåller endast stopp ord: " + value,
+								"innehåller endast stoppord: " + value,
 								true);
 			}
 			value = analyzedValue;

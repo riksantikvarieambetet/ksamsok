@@ -221,11 +221,11 @@ public class CQL2Lucene {
 
 				} else if (relation.equals("any")) {
 					//implicit or
-					query = createTermQuery(index,term, relation);
+					query = createTermQuery(index,term, relation, true);
 
 				} else if (relation.equals("all")) {
 					//implicit and
-					query = createTermQuery(index,term, relation);
+					query = createTermQuery(index,term, relation, true);
 				} else if (relation.equals("exact")) {
 					/**
 					 * implicit and.  this query will only return accurate
@@ -279,6 +279,20 @@ public class CQL2Lucene {
 	 * @throws Exception
 	 */
 	public static Query createTermQuery(String field, String value, String relation) throws Exception {
+		return createTermQuery(field, value, relation, false);
+	}
+
+	/**
+	 * Skapar en term-query utifrån inskickade värden.
+	 * 
+	 * @param field index
+	 * @param value värde
+	 * @param relation relation
+	 * @param lenientOnStopwords om stoppord ska ge fel eller ej
+	 * @return lucene-query eller null
+	 * @throws Exception
+	 */
+	public static Query createTermQuery(String field, String value, String relation, boolean lenientOnStopwords) throws Exception {
 
 		Query termQuery = null;
 
@@ -304,9 +318,11 @@ public class CQL2Lucene {
 				termQuery = new WildcardQuery(term);
 			} else {
 				// fixa ev till värdet beroende på index
-				value = transformValueForField(field, value);
-				term = new Term(field, value);
-				termQuery = new TermQuery(term);
+				value = transformValueForField(field, value, lenientOnStopwords);
+				if (value != null) {
+					term = new Term(field, value);
+					termQuery = new TermQuery(term);
+				}
 			}
 		} else {
 			// space found, iterate through the terms to create a multiterm search
@@ -334,7 +350,11 @@ public class CQL2Lucene {
 				}
 				Term[] t = phraseQuery.getTerms();
 				if (t == null || t.length == 0) {
-					throw new DiagnosticsException(35, "Term contains only stopwords", value);
+					if (!lenientOnStopwords) {
+						throw new DiagnosticsException(35, "Term contains only stopwords", value);
+					} else {
+						phraseQuery = null;
+					}
 				}
 				termQuery = phraseQuery;
 
@@ -346,8 +366,10 @@ public class CQL2Lucene {
 				StringTokenizer tokenizer = new StringTokenizer(value, " ");
 				while (tokenizer.hasMoreTokens()) {
 					String curValue = tokenizer.nextToken();
-					Query subSubQuery = createTermQuery(field, curValue, relation);
-					OrQuery((BooleanQuery) termQuery, subSubQuery);
+					Query subSubQuery = createTermQuery(field, curValue, relation, true);
+					if (subSubQuery != null) {
+						OrQuery((BooleanQuery) termQuery, subSubQuery);
+					}
 				}
 
 			} else if (relation.equals("all")) {
@@ -358,8 +380,10 @@ public class CQL2Lucene {
 				StringTokenizer tokenizer = new StringTokenizer(value, " ");
 				while (tokenizer.hasMoreTokens()) {
 					String curValue = tokenizer.nextToken();
-					Query subSubQuery = createTermQuery(field, curValue, relation);
-					AndQuery((BooleanQuery) termQuery, subSubQuery);
+					Query subSubQuery = createTermQuery(field, curValue, relation, true);
+					if (subSubQuery != null) {
+						AndQuery((BooleanQuery) termQuery, subSubQuery);
+					}
 				}
 			} else {
 				throw new DiagnosticsException(19, "Unsupported relation for phrase query", relation);
@@ -523,11 +547,16 @@ public class CQL2Lucene {
 
 	// "översätter" ev värde beroende på indextyp
 	private static String transformValueForField(String field, String value) throws DiagnosticsException {
+		return transformValueForField(field, value, false);
+	}
+
+	// "översätter" ev värde beroende på indextyp
+	private static String transformValueForField(String field, String value, boolean lenientOnStopwords) throws DiagnosticsException {
 		// använd svensk stamning, samma som för indexeringen
 		// beroende på fält/index om vi ska stamma eller ej
 		if (ContentHelper.isAnalyzedIndex(field)) {
 			String analyzedValue = analyzeIndexText(value);
-			if (analyzedValue == null) {
+			if (!lenientOnStopwords && analyzedValue == null) {
 				throw new DiagnosticsException(35, "Term contains only stopwords", value);
 			}
 			value = analyzedValue;
