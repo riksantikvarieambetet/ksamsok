@@ -11,7 +11,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XMLHandler extends DefaultHandler
 {
 	private RssObject data;
-	private String tempValue;
+	private StringBuffer tempValue;
 	private boolean store;
 	private String imageType;
 	
@@ -41,21 +41,21 @@ public class XMLHandler extends DefaultHandler
 		{
 			if(qName.equalsIgnoreCase("pres:representation"))
 			{
-				data.setLink(tempValue);
+				data.setLink(tempValue.toString());
 			}else if(qName.equalsIgnoreCase("pres:itemLabel"))
 			{
-				data.setTitle(tempValue);
+				data.setTitle(tempValue.toString());
 			}else if(qName.equalsIgnoreCase("pres:description"))
 			{
-				data.setDescription(tempValue);
+				data.setDescription(tempValue.toString());
 			}else if(qName.equalsIgnoreCase("pres:src"))
 			{	
 				if(imageType.equalsIgnoreCase("thumbnail"))
 				{
-					data.setThumbnailUrl(tempValue);
+					data.setThumbnailUrl(tempValue.toString());
 				}else if(imageType.equalsIgnoreCase("lowres"))
 				{
-					data.setImageUrl(tempValue);
+					data.setImageUrl(tempValue.toString());
 				}
 			}
 		}
@@ -66,7 +66,7 @@ public class XMLHandler extends DefaultHandler
 			Attributes attributes) throws SAXException
 	{
 		//reset
-		tempValue = "";
+		tempValue = new StringBuffer();
 		store = false;
 		imageType = "";
 		
@@ -93,6 +93,6 @@ public class XMLHandler extends DefaultHandler
 	public void characters(char[] ch, int start, int length)
 			throws SAXException
 	{
-		tempValue = new String(ch, start, length);
+		tempValue.append(new String(ch, start, length));
 	}
 }
