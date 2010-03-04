@@ -3,6 +3,7 @@ package se.raa.ksamsok.api.util;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
@@ -46,35 +47,50 @@ public class StaticMethods
 		return escape;
 	}
 	
+	/**
+	 * analyserar ett query
+	 * @param field
+	 * @param value
+	 * @return
+	 * @throws DiagnosticException
+	 */
 	public static Query analyseQuery(String field, String value)
 		throws DiagnosticException
-	{
-		
-		if(value.indexOf(" ") != -1 && ContentHelper.isAnalyzedIndex(field))
-		{
+	{	
+		if(value.indexOf(" ") != -1 && ContentHelper.isAnalyzedIndex(field)) {
 			PhraseQuery phraseQuery = new PhraseQuery();
 			StringTokenizer tokenizer = new StringTokenizer(value, " ");
 			// använd svensk stamning för dessa analyserade index, samma 
 			// som för indexeringen
-			while (tokenizer.hasMoreTokens()) 
-			{
+			while (tokenizer.hasMoreTokens()) {
 				String curValue = tokenizer.nextToken();
 				// analysera sökvärdet pss som vid indexering
 				curValue = CQL2Lucene.analyzeIndexText(curValue);
 				// ta bara med termen om det ej är ett stopp-ord
-				if (curValue != null) 
-				{
+				if (curValue != null) {
 					phraseQuery.add(new Term(field, curValue));
 				}
 			}
 			logger.info(phraseQuery);
 			return phraseQuery;
-		}else
-		{
+		}else {
 			value = CQL2Lucene.transformValueForField(field, value);
 			Term term = new Term(field, value);
 			TermQuery termQuery = new TermQuery(term);
 			return termQuery;
 		}
+	}
+	
+	/**
+	 * encodar en url
+	 * @param url
+	 * @return
+	 */
+	public static String encode(String url) 
+	{
+		String result = "" + url;
+		result = StringUtils.replace(result, " ", "%20");
+		result = StringUtils.replace(result, "&", "%26");
+		return result;
 	}
 }

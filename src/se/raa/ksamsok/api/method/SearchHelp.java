@@ -13,6 +13,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.WildcardQuery;
 
+import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
 import se.raa.ksamsok.lucene.LuceneServlet;
@@ -55,48 +56,46 @@ public class SearchHelp implements APIMethod
 		this.indexList = indexList;
 	}
 	
+	protected void doSearchHelp(int i, IndexSearcher searcher, List<String> termList) 
+		throws BooleanQuery.TooManyClauses, IOException
+	{
+		String index = indexList.get(i);
+		index = CQL2Lucene.translateIndexName(index);
+		Term term = new Term(index, prefix);
+		Query query = new WildcardQuery(term);
+		query = searcher.rewrite(query);
+		Set<Term> termSet = new HashSet<Term>();
+		query.extractTerms(termSet);
+		int counter = 1;
+		for(Term t : termSet) {
+			if(counter > maxValueCount) {
+				break;
+			}
+			termList.add(t.text());
+			counter++;
+		}
+	}
+	
 	@Override
 	public void performMethod()
 	{
 		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher();
-		try
-		{
+		try {
 			List<String> termList = new ArrayList<String>();
-			for(int i = 0; i < indexList.size(); i++)
-			{
-				try
-				{
-					String index = indexList.get(i);
-					index = CQL2Lucene.translateIndexName(index);
-					Term term = new Term(index, prefix);
-					Query query = new WildcardQuery(term);
-					query = searcher.rewrite(query);
-					Set<Term> termSet = new HashSet<Term>();
-					query.extractTerms(termSet);
-					int counter = 1;
-					for(Term t : termSet)
-					{
-						if(counter > maxValueCount)
-						{
-							break;
-						}
-						termList.add(t.text());
-						counter++;
-					}
-				}catch(BooleanQuery.TooManyClauses e)
-				{
+			for(int i = 0; i < indexList.size(); i++) {
+				try {
+					doSearchHelp(i, searcher, termList);
+				}catch(BooleanQuery.TooManyClauses e) {
 					continue;
 				}
 			}
 			writeHead(termList);
 			writeResult(termList);
 			writeFot();
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			// TODO fix
 			e.printStackTrace();
-		}finally
-		{
+		}finally {
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
 	}
@@ -107,6 +106,8 @@ public class SearchHelp implements APIMethod
 	 */
 	protected void writeHead(List<String> termList)
 	{
+		StartEndWriter.writeStart(writer);
+		StartEndWriter.hasHead(true);
 		writer.println("<numberOfTerms>" + termList.size() + "</numberOfTerms>");
 		writer.println("<terms>");
 	}
@@ -120,8 +121,7 @@ public class SearchHelp implements APIMethod
 		for(int i = 0; i < termList.size(); i++)
 		{
 			writer.println("<term>");
-			writer.println("<value>" + StaticMethods.xmlEscape(termList.get(i)) +
-					"</value>");
+			writer.println("<value>" + StaticMethods.xmlEscape(termList.get(i)) + "</value>");
 			writer.println("</term>");
 		}
 	}
@@ -141,5 +141,7 @@ public class SearchHelp implements APIMethod
 		writer.println("<maxValueCount>" + maxValueCount  + "</maxValueCount>");
 		writer.println("<prefix>" + StaticMethods.xmlEscape(prefix) + "</prefix>");
 		writer.println("</echo>");
+		StartEndWriter.writeEnd(writer);
+		StartEndWriter.hasFoot(true);
 	}
 }

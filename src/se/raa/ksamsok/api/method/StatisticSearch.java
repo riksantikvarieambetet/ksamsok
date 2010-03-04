@@ -20,6 +20,7 @@ import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.QueryContent;
+import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
 import se.raa.ksamsok.lucene.LuceneServlet;
@@ -53,14 +54,12 @@ public class StatisticSearch extends Statistic
 	@Override
 	public void performMethod() 
 		throws DiagnosticException, MissingParameterException,
-		BadParameterException
+			BadParameterException
 	{
-		IndexSearcher searcher =
-			LuceneServlet.getInstance().borrowIndexSearcher();
+		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher();
 		Map<String,Set<Term>> termMap = null;
 		List<QueryContent> queryList = null;
-		try
-		{
+		try {
 			//bygger term map
 			termMap = buildTermMap(searcher);
 			//gör kartesisk produkt av alla värden i term mappen
@@ -71,15 +70,9 @@ public class StatisticSearch extends Statistic
 			writeHead(queryList);
 			writeResult(queryList);
 			writeFot();
-			
-		}catch(OutOfMemoryError e)
-		{
-			throw new BadParameterException("de inskickade index värdena " +
-					"gav upphov till att för många värden hittades och " +
-					"denna sökning gick ej att utföra",
-					"StatisticSearch.performMethod", null, false);
-		}finally
-		{
+		}catch(OutOfMemoryError e) {
+			throw new BadParameterException("de inskickade index värdena gav upphov till att för många värden hittades och denna sökning gick ej att utföra", "StatisticSearch.performMethod", null, false);
+		}finally {
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
 	}
@@ -97,6 +90,8 @@ public class StatisticSearch extends Statistic
 		writer.println("<query>" + StaticMethods.xmlEscape(queryString) +
 				"</query>");
 		writer.println("</echo>");
+		StartEndWriter.writeEnd(writer);
+		StartEndWriter.hasFoot(true);
 	}
 
 	/**
@@ -109,43 +104,26 @@ public class StatisticSearch extends Statistic
 		throws BadParameterException, DiagnosticException
 	{
 		CQLParser parser = new CQLParser();
-		try
-		{
+		try {
 			CQLNode node = parser.parse(queryString);
 			Query q2 = CQL2Lucene.makeQuery(node);
-			CachingWrapperFilter qwf = 
-				new CachingWrapperFilter(new QueryWrapperFilter(q2));
-			for(int i = 0; i < queryList.size(); i++)
-			{
+			CachingWrapperFilter qwf = new CachingWrapperFilter(new QueryWrapperFilter(q2));
+			for(int i = 0; i < queryList.size(); i++) {
 				QueryContent content = queryList.get(i);
-				/*CQLNode node = parser.parse(content.getQueryString(
-						queryString));
-				Query q = CQL2Lucene.makeQuery(node);*/
 				Query q1 = content.getQuery();
-				
 				TopDocs topDocs = searcher.search(q1, qwf, 1);
-				if(topDocs.totalHits >= removeBelow)
-				{
+				if(topDocs.totalHits >= removeBelow) {
 					content.setHits(topDocs.totalHits);
 					queryList.set(i, content);
-				}else
-				{
+				}else {
 					queryList.remove(i);
 					i--;
 				}
 			}
-		}catch(CQLParseException e)
-		{
-			throw new DiagnosticException("Oväntat perser fel uppstod. Detta beror " +
-					"troligen på att CQL syntax ej följs. Var god kontrollera query " +
-					"sträng eller kontakta system administratör för sök systemet du " +
-					"använder.", "StatisticSearch.doStatisticSearch", e.getMessage(),
-					true);
-		}catch(IOException e)
-		{
-			throw new DiagnosticException("Oväntat IO fel uppstod. Var" +
-					" god försök igen",	"StatisticSearch.doStatisticSearch",
-					e.getMessage(), true);
+		}catch(CQLParseException e) {
+			throw new DiagnosticException("Oväntat perser fel uppstod. Detta beror troligen på att CQL syntax ej följs. Var god kontrollera query sträng eller kontakta system administratör för sök systemet du använder.", "StatisticSearch.doStatisticSearch", e.getMessage(), true);
+		}catch(IOException e) {
+			throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "StatisticSearch.doStatisticSearch", e.getMessage(), true);
 		}
 	}
 }

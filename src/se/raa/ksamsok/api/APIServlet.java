@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.api.exception.APIException;
 import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
@@ -31,60 +32,32 @@ public class APIServlet extends HttpServlet
 			throws ServletException, IOException 
 	{
 		//sätter contentType och character encoding
+		StartEndWriter.reset();
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
 		Map<String,String> reqParams = null;
 		APIMethod method = null;
 		PrintWriter writer = resp.getWriter();
-		
-		
-		try 
-		{
+		try {
 			reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-			//skriver ut XML header
-			writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			//skriver ut stylesheet header om stylesheet finns
-			String stylesheet = reqParams.get("stylesheet");
-			if (stylesheet != null && stylesheet.trim().length() > 0) 
-			{	
-				writer.println("<?xml-stylesheet type=\"text/xsl\" href=\""
-						+ stylesheet.replace("\"", "&quot;") + "\"?>");
-			}
-			//skriver ut root tag och versionsnummer
-			writer.println("<result>");
-			writer.println("<version>" + APIMethod.API_VERSION + "</version>");
-			//hämtar parametrar i UTF-8 format
-			
-			
-			
-			
-			//hämtar API metod
 			method = APIMethodFactory.getAPIMethod(reqParams, writer);
-			
-			//utför API metod
 			method.performMethod();
-		} catch (APIException e) 
-		{
+		} catch (APIException e) {
 			Diagnostic(writer , e);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			logger.error(e.getMessage());
-		}finally
-		{
-			//avslutar root tag även om exception fångas
-			writer.println("</result>");
 		}
 	}
 
-	/*
-	 * skriver ut error tag om fel uppstår
+	/**
+	 * skriver ut felmeddelanden
+	 * @param writer
+	 * @param e
 	 */
 	private void Diagnostic(PrintWriter writer, APIException e)
 	{
 		logger.error(e.getClassName() + "\n" + e.getDetails());
-		writer.println("<error>");
-		writer.println(e.getMessage());
-		writer.println("</error>");
+		StartEndWriter.writeError(writer, e);
 	}
 
 	@Override

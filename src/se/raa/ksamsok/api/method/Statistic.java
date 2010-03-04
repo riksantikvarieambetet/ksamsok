@@ -21,6 +21,7 @@ import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.QueryContent;
+import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -74,16 +75,12 @@ public class Statistic implements APIMethod
 	{
 		IndexSearcher searcher = null;
 		Map<String, Set<Term>> termMap = null;
-		try
-		{
+		try {
 			searcher = LuceneServlet.getInstance().borrowIndexSearcher();
 			//en mängd med mängder med mängder!
 			termMap = buildTermMap(searcher);
-			if(getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT)
-			{
-				throw new BadParameterException("den kartesiska produkten av " +
-						"inskickade index blir för stor för att utföra denna " +
-						"operation.", "Statistic.performMethod", null, false);
+			if(getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT) {
+				throw new BadParameterException("den kartesiska produkten av inskickade index blir för stor för att utföra denna operation.", "Statistic.performMethod", null, false);
 			}
 			//gör en kartesisk produkt på de värden i termMap
 			List<QueryContent> queryResults = cartesian(termMap);
@@ -92,15 +89,9 @@ public class Statistic implements APIMethod
 			writeHead(queryResults);
 			writeResult(queryResults);
 			writeFot();
-			
-		}catch(OutOfMemoryError e)
-		{
-			throw new BadParameterException("de inskickade index värdena " +
-					"gav upphov till att för många värden hittades och " +
-					"denna sökning gick ej att utföra",
-					"Statistic.performMethod", null, false);
-		}finally
-		{
+		}catch(OutOfMemoryError e) {
+			throw new BadParameterException("de inskickade index värdena gav upphov till att för många värden hittades och denna sökning gick ej att utföra", "Statistic.performMethod", null, false);
+		}finally {
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
 	}
@@ -117,37 +108,44 @@ public class Statistic implements APIMethod
 		String index1 = null;
 		String index2 = null;
 		List<QueryContent> result = null;
-		for(String index : data.keySet())
-		{
-			if(index1 == null)
-			{//körs första varvet
+		//lite special cases ifall den bara gick 0 eller 1 varv
+		for(String index : data.keySet()) {
+			if(index1 == null) {//körs första varvet
 				index1 = index;
 				continue;
-			}else if(index2 == null)
-			{//körs andra varvet
+			}else if(index2 == null) {//körs andra varvet
 				index2 = index;
 				result = cartesian(index1, index2, data.get(index1),
 						data.get(index2));
 				continue;
-			}else
-			{//körs resten av varven
+			}else {//körs resten av varven
 				index1 = index;
 				result = cartesian(index1, data.get(index1), result);
-			}
-		}//lite special cases ifall den bara gick 0 eller 1 varv
-		if(index1 == null && index2 == null)
+			}		
+		}
+		if(index1 == null && index2 == null) {
+			throw new MissingParameterException("minst ett index behövs för denna operation", "Statistic.cartesian", null, false);
+		}else if(index1 != null && index2 == null) {
+			result = cartesianWithOneIndex(data, index1);
+		}
+		return result;
+	}
+	
+	/**
+	 * körs om endast ett index finns
+	 * @param data
+	 * @param index1
+	 * @return
+	 */
+	private static List<QueryContent> cartesianWithOneIndex(
+			Map<String,Set<Term>> data, String index1)
+	{
+		List<QueryContent> result = new ArrayList<QueryContent>();
+		for(Term term : data.get(index1))
 		{
-			throw new MissingParameterException("minst ett index behövs för" +
-					" denna operation", "Statistic.cartesian", null, false);
-		}else if(index1 != null && index2 == null)
-		{
-			result = new ArrayList<QueryContent>();
-			for(Term term : data.get(index1))
-			{
-				QueryContent content = new QueryContent();
-				content.addTerm(index1, term.text());
-				result.add(content);
-			}
+			QueryContent content = new QueryContent();
+			content.addTerm(index1, term.text());
+			result.add(content);
 		}
 		return result;
 	}
@@ -234,15 +232,11 @@ public class Statistic implements APIMethod
 		String indexValue;
 		HashMap<String, Set<Term>> termMap = new HashMap<String, Set<Term>>();
 		BooleanQuery.setMaxClauseCount(10000);
-		for(String index : indexMap.keySet())
-		{
-			try
-			{
+		for(String index : indexMap.keySet()) {
+			try {
 				indexValue = CQL2Lucene.translateIndexName(index);
-				if(!ContentHelper.indexExists(indexValue))
-				{
-					throw new BadParameterException("Indexet " + index + " existerar inte",
-							"Statistic.buildTermMap", null, false);
+				if(!ContentHelper.indexExists(indexValue)) {
+					throw new BadParameterException("Indexet " + index + " existerar inte", "Statistic.buildTermMap", null, false);
 				}
 				String value = indexMap.get(index);
 				Term term = new Term(indexValue,value);
@@ -251,18 +245,11 @@ public class Statistic implements APIMethod
 				Query tempQuery = searcher.rewrite(query);
 				tempQuery.extractTerms(extractedTerms);
 				termMap.put(indexValue, extractedTerms);
-			}catch(TooManyClauses e)
-			{
-				throw new BadParameterException("indexet " + index + " har för många unika" +
-						" värden för att utföra denna operation", "Statistic.buildTermMap",
-						null, false);
+			}catch(TooManyClauses e) {
+				throw new BadParameterException("indexet " + index + " har för många unika värden för att utföra denna operation", "Statistic.buildTermMap", null, false);
 			}
-			catch(IOException e)
-			{
-				throw new DiagnosticException("Oväntat IO fel uppstod. Var" +
-						" god försök igen", "Statistic.buildTermMap",
-						e.getMessage() + "\n" + e.getStackTrace().toString(),
-						true);
+			catch(IOException e) {
+				throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Statistic.buildTermMap", e.getMessage(), true);
 			}
 		}
 		return termMap;
@@ -275,12 +262,12 @@ public class Statistic implements APIMethod
 	{
 		writer.println("<echo>");
 		writer.println("<method>" + Statistic.METHOD_NAME + "</method>");
-		for(String index : indexMap.keySet())
-		{
-			writer.println("<index>" + index + "=" + indexMap.get(index) +
-					"</index>");
+		for(String index : indexMap.keySet()) {
+			writer.println("<index>" + index + "=" + indexMap.get(index) + "</index>");
 		}
 		writer.println("</echo>");
+		StartEndWriter.writeEnd(writer);
+		StartEndWriter.hasFoot(true);
 	}
 
 	/**
@@ -319,6 +306,8 @@ public class Statistic implements APIMethod
 	 */
 	protected void writeHead(List<QueryContent> queryResults)
 	{
+		StartEndWriter.writeStart(writer);
+		StartEndWriter.hasHead(true);
 		//skriver ut hur många värden det blev
 		writer.println("<numberOfTerms>" + queryResults.size() +
 				"</numberOfTerms>");
@@ -331,42 +320,24 @@ public class Statistic implements APIMethod
 	 * @throws DiagnosticException
 	 * @throws BadParameterException
 	 */
-	protected void doStatistic(IndexSearcher searcher,
+	protected void doStatistic(IndexSearcher searcher,	
 			List<QueryContent> queryResults)
 		throws DiagnosticException, BadParameterException
 	{
-		for(int i = 0; i < queryResults.size(); i++)
-		{
-			try
-			{
+		for(int i = 0; i < queryResults.size(); i++) {
+			try {
 				QueryContent content = queryResults.get(i);
-				//String queryString = content.getQueryString();
-				//CQLParser parser = new CQLParser();
-				//CQLNode node = parser.parse(queryString);
-				//Query q = CQL2Lucene.makeQuery(node);
 				Query q = content.getQuery();
 				TopDocs topDocs = searcher.search(q, 1);
-				if(topDocs.totalHits >= removeBelow)
-				{
+				if(topDocs.totalHits >= removeBelow) {
 					content.setHits(topDocs.totalHits);
 					queryResults.set(i, content);
-				}else
-				{
+				}else {
 					queryResults.remove(i);
 					i--;
 				}
-			}/* catch (CQLParseException e)
-			{
-				throw new DiagnosticException("Oväntat parser fel uppstod." +
-						" Var god försök igen", "Statistic.doStatistic",
-						e.getMessage() + "\n" + e.getStackTrace().toString(),
-						true);
-			}*/catch(IOException e)
-			{
-				throw new DiagnosticException("Oväntat IO fel uppstod. Var" +
-						" god försök igen", "Statistic.doStatistic",
-						e.getMessage() + "\n" + e.getStackTrace().toString(),
-						true);
+			}catch(IOException e) {
+				throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Statistic.doStatistic", e.getMessage(), true);
 			}
 		}
 	}

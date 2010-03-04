@@ -75,7 +75,6 @@ public class QueryContent
 	{
 		Set<String> indexSet = terms.keySet();
 		String queryString = "";
-
 		for(String index : indexSet)
 		{//TODO tror denna skall fungera för alla värden
 			String term = StaticMethods.escape(terms.get(index));
@@ -85,6 +84,12 @@ public class QueryContent
 		return queryString;
 	}
 	
+	/**
+	 * returnerar ett query byggt av innehållet av detta
+	 * QueryContent
+	 * @return
+	 * @throws DiagnosticException
+	 */
 	public Query getQuery()
 		throws DiagnosticException
 	{
