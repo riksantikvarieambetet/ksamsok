@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<institutions>
+	<institution id="vgm">
+		<name>Västergötlands museum</name>
+		<description/>
+	</institution>
+	<institution id="nomu">
+		<name>Nordiska museet</name>
+		<description/>
+	</institution>
+	<institution id="arme">
+		<name>Armémuseum</name>
+		<description/>
+	</institution>
+	<institution id="smha">
+		<name>Sveriges Militärhistoriska arv</name>
+		<description/>
+	</institution>
+	<institution id="upmu">
+		<name>Upplandsmuseet</name>
+		<description/>
+	</institution>
+	<institution id="bm">
+		<name>Bohusläns museum</name>
+		<description/>
+	</institution>
+	<institution id="bhm">
+		<name>Bohusläns museum</name>
+		<description/>
+	</institution>
+	<institution id="gnm">
+		<name>Göteborgs naturhistoriska museum</name>
+		<description/>
+	</institution>
+	<institution id="klvm">
+		<name>Kulturlagret/Vänersborgs museum</name>
+		<description/>
+	</institution>
+	<institution id="dfh">
+		<name>Dalslands fornminnes- och hembygdsförbund</name>
+		<description/>
+	</institution>
+	<institution id="arkm">
+		<name>Arkitekturmuseet</name>
+		<description/>
+	</institution>
+	<institution id="vasa">
+		<name>Vasamuseet</name>
+		<description/>
+	</institution>
+	<institution id="tm">
+		<name>Tekniska museet</name>
+		<description/>
+	</institution>
+	<institution id="tekm">
+		<name>Tekniska museet</name>
+		<description/>
+	</institution>
+	<institution id="shm">
+		<name>Statens historiska museum</name>
+		<description/>
+	</institution>
+	<institution id="raä">
+		<name>Riksantikvarieämbetet</name>
+		<description/>
+	</institution>
+	<institution id="smvk-vkm">
+		<name>Världskulturmuseet</name>
+		<description/>
+	</institution>
+	<institution id="smvk-em">
+		<name>Etnografiska museet</name>
+		<description/>
+	</institution>
+	<institution id="smvk-mm">
+		<name>Medelhavsmuseet</name>
+		<description/>
+	</institution>
+	<institution id="smvk-öm">
+		<name>Östasiatiska museet</name>
+		<description/>
+	</institution>
+</institutions>

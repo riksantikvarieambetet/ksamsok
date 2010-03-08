@@ -12,6 +12,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
 import se.raa.ksamsok.api.method.Facet;
+import se.raa.ksamsok.api.method.GetServiceOrganization;
 import se.raa.ksamsok.api.method.RSS;
 import se.raa.ksamsok.api.method.Search;
 import se.raa.ksamsok.api.method.SearchHelp;
@@ -77,10 +78,19 @@ public class APIMethodFactory
 			m = getSearchHelpObject(params, writer);
 		}else if(method.equals(RSS.METHOD_NAME)) {
 			m = getRSSObject(params, writer);
-		}else
-		{
+		}else if(method.equals(GetServiceOrganization.METHOD_NAME)) {
+			m = getGetServiceOrganizationsObject(writer, params);
+		}else {
 			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod", "felaktig metod", false);
 		}
+		return m;
+	}
+	
+	private static APIMethod getGetServiceOrganizationsObject(PrintWriter writer, Map<String,String> params)
+	{
+		GetServiceOrganization m = null;
+		String value = params.get(GetServiceOrganization.VALUE);
+		m = new GetServiceOrganization(writer, value);
 		return m;
 	}
 

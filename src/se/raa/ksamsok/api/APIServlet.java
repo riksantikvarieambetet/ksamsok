@@ -46,6 +46,7 @@ public class APIServlet extends HttpServlet
 			Diagnostic(writer , e);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
