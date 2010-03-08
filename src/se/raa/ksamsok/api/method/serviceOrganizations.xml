@@ -50,6 +50,7 @@
 	</institution>
 	<institution id="tekm">
 		<name>Tekniska museet</name>
+		<nameEng>National Museum of Science and Technology</nameEng>
 		<description/>
 	</institution>
 	<institution id="shm">
@@ -58,14 +59,17 @@
 	</institution>
 	<institution id="raä">
 		<name>Riksantikvarieämbetet</name>
+		<nameEng>Swedish National Heritage Board</nameEng>
 		<description/>
 	</institution>
 	<institution id="smvk-vkm">
 		<name>Världskulturmuseet</name>
+		<nameEng>The Museum of World Culture</nameEng>
 		<description/>
 	</institution>
 	<institution id="smvk-em">
 		<name>Etnografiska museet</name>
+		<nameEng>The Museum of Ethnography</nameEng>
 		<description/>
 	</institution>
 	<institution id="smvk-mm">

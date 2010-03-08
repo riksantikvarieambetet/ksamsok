@@ -231,6 +231,7 @@ public class RSS extends Search
 		feed.setTitle("K-samsök sökresultat");
 		feed.setLink(getFeedLinkProperty());
 		feed.setDescription("Sök resultat av en sökning mod K-samsök API");
+		
 		return feed;
 	}
 	
@@ -324,7 +325,7 @@ public class RSS extends Search
 	 */
 	protected String getFeedLinkProperty()
 	{
-		String link = "http://www.kulturarvsdata.se/ksamsok/api?method=rss&query=" + queryString + "&hitsPerPage=" + hitsPerPage + "&startRecord=" + startRecord;
+		String link = "http://www.kulturarvsdata.se";
 		return link;
 	}
 }
