@@ -48,10 +48,6 @@
 		<name>Vasamuseet</name>
 		<description/>
 	</institution>
-	<institution id="tm">
-		<name>Tekniska museet</name>
-		<description/>
-	</institution>
 	<institution id="tekm">
 		<name>Tekniska museet</name>
 		<description/>
