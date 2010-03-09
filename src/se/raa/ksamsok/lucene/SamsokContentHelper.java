@@ -703,8 +703,8 @@ public class SamsokContentHelper extends ContentHelper {
 					String fromTime = extractSingleValue(graph, cS, rFromTime, ip);
 					appendToTextBuffer(timeText, fromTime);
 
-					String toTime = extractSingleValue(graph, cS, rToTime, ip);
 					ip.setCurrent(IX_TOTIME, contextType);
+					String toTime = extractSingleValue(graph, cS, rToTime, ip);
 					appendToTextBuffer(timeText, toTime);
 
 					// flagga att det finns tiddata
