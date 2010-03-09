@@ -40,6 +40,7 @@ public class APIServlet extends HttpServlet
 		PrintWriter writer = resp.getWriter();
 		try {
 			reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+			StartEndWriter.setStylesheet(reqParams.get("stylesheet"));
 			method = APIMethodFactory.getAPIMethod(reqParams, writer);
 			method.performMethod();
 		} catch (APIException e) {

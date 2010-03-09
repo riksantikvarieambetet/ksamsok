@@ -40,6 +40,7 @@ public class StartEndWriter
 	{
 		head = false;
 		foot = false;
+		stylesheet = null;
 	}
 	
 	/**
@@ -76,7 +77,7 @@ public class StartEndWriter
 	public static void writeStart(PrintWriter writer)
 	{
 		writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		if (stylesheet != null && stylesheet.trim().length() > 0) 
+		if (stylesheet != null && stylesheet.trim().length() > 0)
 		{	
 			writer.println("<?xml-stylesheet type=\"text/xsl\" href=\""
 					+ stylesheet.replace("\"", "&quot;") + "\"?>");
