@@ -5,7 +5,10 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,14 +22,20 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
+import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import org.z3950.zing.cql.CQLNode;
+import org.z3950.zing.cql.CQLParseException;
+import org.z3950.zing.cql.CQLParser;
 
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.util.RssObject;
 import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.api.util.XMLHandler;
+import se.raa.ksamsok.api.util.parser.CQL2Lucene;
+import se.raa.ksamsok.harvest.HarvestRepositoryManager;
+import se.raa.ksamsok.harvest.HarvesterServlet;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 
@@ -50,14 +59,29 @@ import com.sun.syndication.io.SyndFeedOutput;
  * från K-samsök
  * @author Henrik Hjalmarsson
  */
-public class RSS extends Search
+public class RSS extends DefaultHandler implements APIMethod
 {
 	/** metodens namn */
 	public static final String METHOD_NAME = "rss";
+	public static final String QUERY = "query";
+	public static final String HITS_PER_PAGE = "hitsPerPage";
+	public static final String START_RECORD = "startRecord";
+	public static final int DEFAULT_HITS_PER_PAGE = 100;
+	public static final int DEFAULT_START_RECORD = 1;
 	
 	//RSS feed typ
 	private static final String RSS_2_0 = "rss_2.0";
 	private static final SAXParserFactory spf = SAXParserFactory.newInstance();
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv",	"SE"));
+	
+	private String queryString;
+	private int hitsPerPage;
+	private int startRecord;
+	private PrintWriter writer;
+	private StringBuffer tempValue;
+	private RssObject data;
+	private boolean store;
+	private String imageType;
 	
 	/**
 	 * Skapar ett objekt av RSS
@@ -69,7 +93,18 @@ public class RSS extends Search
 	public RSS(String queryString, int hitsPerPage, int startRecord,
 			PrintWriter writer)
 	{
-		super(queryString, hitsPerPage, startRecord, writer);
+		this.queryString = queryString;
+		this.writer = writer;
+		if(startRecord < 1) {
+			this.startRecord = DEFAULT_START_RECORD;
+		}else {
+			this.startRecord = startRecord;
+		}
+		if(hitsPerPage > 500 || hitsPerPage < 1) {
+			this.hitsPerPage = DEFAULT_HITS_PER_PAGE;
+		}else {
+			this.hitsPerPage = hitsPerPage;
+		}
 	}
 
 	@Override
@@ -125,6 +160,22 @@ public class RSS extends Search
 		output.output(feed, writer);
 	}
 	
+	private Query createQuery() 
+		throws DiagnosticException, BadParameterException
+	{
+		Query q = null;
+		try {
+			CQLParser parser = new CQLParser();
+			CQLNode rootNode = parser.parse(queryString);
+			q = CQL2Lucene.makeQuery(rootNode);
+		} catch (CQLParseException e) {
+			throw new DiagnosticException("Parser fel. Kontrollera query sträng", "RSS.createQuery", null, false);
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO fel. Försök igen", "RSS.createQuery", e.getMessage(), true);
+		}
+		return q;
+	}
+	
 	/**
 	 * returnerar en lista med RSS feed entries
 	 * @param numberOfDocs 
@@ -148,19 +199,17 @@ public class RSS extends Search
 			DiagnosticException
 	{
 		List<SyndEntry> entries = new Vector<SyndEntry>();
+		HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
 		for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++)
 		{
 			Document doc = searcher.doc(hits.scoreDocs[i].doc,
 					fieldSelector);
+			String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
 			String content = null;
-			//Hämtar bara XML datan TODO ska man hämta hela RDF?
-			byte[] pres = doc.getBinaryValue(ContentHelper.I_IX_PRES);
-			if (pres != null) 
-			{
-				content = new String(pres, "UTF-8");
-			}else 
-			{
-				content = null;
+			try {
+				content = hrm.getXMLData(uri);
+			} catch (Exception e) {
+				throw new DiagnosticException("Fel vid hämtning av data från databasen", "RSS.getEntries", e.getMessage(), true);
 			}
 			entries.add(getEntry(content));
 		}
@@ -182,11 +231,9 @@ public class RSS extends Search
 			DiagnosticException
 	{
 		SAXParser parser = spf.newSAXParser();
-		RssObject data = new RssObject();
-		XMLHandler handler = new XMLHandler(data);
-		parser.parse(new InputSource(new StringReader(content)), handler);
+		data = new RssObject();
+		parser.parse(new InputSource(new StringReader(content)), this);
 		SyndEntry entry = new SyndEntryImpl();
-		data = handler.getData();
 		entry.setTitle(data.getTitle());
 		entry.setLink(data.getLink());
 		SyndContent syndContent = new SyndContentImpl();
@@ -195,10 +242,12 @@ public class RSS extends Search
 		entry.setDescription(syndContent);
 		String thumb = data.getThumbnailUrl();
 		String image = data.getImageUrl();
-		if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) 
-		{
+		if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) {
 			entry.getModules().add(getMediaModule(thumb, image));
 		}
+		try {
+			entry.setPublishedDate(sdf.parse(data.getPublishDate()));
+		} catch (Exception ignore) {}
 		return entry;
 	}
 	
@@ -251,7 +300,7 @@ public class RSS extends Search
 		MediaEntryModuleImpl mediaModule = new MediaEntryModuleImpl();
 		try 
 		{	
-			mediaModule.setMetadata(getThumbnail(thumb, mediaModule));
+			mediaModule.setMetadata(getMetadata(thumb, mediaModule));
 			mediaModule.setMediaContents(getImage(image));
 		} catch (URISyntaxException e)
 		{
@@ -283,21 +332,34 @@ public class RSS extends Search
 	 * @param mediaModule MediaModule som används
 	 * @return Metadata objekt med tumnagel
 	 * @throws URISyntaxException
+	 * @throws DiagnosticException 
 	 */
-	protected Metadata getThumbnail(String thumb, 
+	protected Metadata getMetadata(String thumb, 
 			MediaEntryModule mediaModule) 
-		throws URISyntaxException
+		throws URISyntaxException, DiagnosticException
 	{
-		Thumbnail thumbnail = new Thumbnail(new URI(thumb));
-		Thumbnail[] thumbnails = new Thumbnail[1];
-		thumbnails[0] = thumbnail;
 		Metadata metadata = mediaModule.getMetadata();
-		if (metadata == null) 
+		if (metadata == null)
 		{
 			metadata = new Metadata();
 		}
-		metadata.setThumbnail(thumbnails);
+		metadata.setKeywords(data.getKeywordsAsArray());
+		metadata.setThumbnail(getThumbnail(thumb));
 		return metadata;
+	}
+	
+	private Thumbnail[] getThumbnail(String thumb) 
+		throws DiagnosticException
+	{
+		Thumbnail thumbnail = null;
+		try {
+			thumbnail = new Thumbnail(new URI(thumb));
+		} catch (URISyntaxException e) {
+			throw new DiagnosticException("Nånting blev fel", "RSS.getThumbnail", e.getMessage(), true);
+		}
+		Thumbnail[] thumbnails = new Thumbnail[1];
+		thumbnails[0] = thumbnail;
+		return thumbnails;
 	}
 	
 	/**
@@ -327,5 +389,159 @@ public class RSS extends Search
 	{
 		String link = "http://www.kulturarvsdata.se";
 		return link;
+	}
+	
+	public void endElement(String uri, String localName, String qName)
+		throws SAXException
+	{
+		if(store)
+		{
+			if(qName.equalsIgnoreCase("pres:representation"))
+			{
+				data.setLink(tempValue.toString());
+			}else if(qName.equalsIgnoreCase("pres:itemLabel"))
+			{
+				data.setTitle(tempValue.toString());
+			}else if(qName.equalsIgnoreCase("pres:description"))
+			{
+				data.setDescription(tempValue.toString());
+			}else if(qName.equalsIgnoreCase("pres:src"))
+			{	
+				if(imageType.equalsIgnoreCase("thumbnail"))
+				{
+					data.setThumbnailUrl(tempValue.toString());
+				}else if(imageType.equalsIgnoreCase("lowres"))
+				{
+					data.setImageUrl(tempValue.toString());
+				}
+			}else if(qName.equalsIgnoreCase("ns5:itemKeyWord")) {
+				data.addKeyWord(tempValue.toString());
+			}else if(qName.equalsIgnoreCase("ns5:buildDate")) {
+				data.setPublishDate(tempValue.toString());
+			}
+		}
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String qName,
+			Attributes attributes) throws SAXException
+	{
+		//reset
+		tempValue = new StringBuffer();
+		store = false;
+		imageType = "";
+		if(qName.equalsIgnoreCase("pres:representation")) {
+			if(attributes.getValue("format") != null && attributes.getValue("format").equalsIgnoreCase("HTML")) {
+				store = true;
+			}
+		}else if(qName.equalsIgnoreCase("pres:description")) {
+			store = true;
+		}else if(qName.equalsIgnoreCase("pres:itemLabel")) {
+			store = true;
+		}else if(qName.equalsIgnoreCase("pres:src") && (attributes.getValue("type").equalsIgnoreCase("thumbnail") || attributes.getValue("type").equalsIgnoreCase("lowres"))) {
+			store = true;
+			imageType = attributes.getValue("type");
+		}else if(qName.equalsIgnoreCase("ns5:itemKeyWord")) {
+			store = true;
+		}else if(qName.equalsIgnoreCase("ns5:buildDate")) {
+			store = true;
+		}
+	}
+	
+	@Override
+	public void characters(char[] ch, int start, int length)
+		throws SAXException
+	{
+		tempValue.append(new String(ch, start, length));
+	}
+	
+	public class RssObject
+	{
+		private String title;
+		private String link;
+		private String description;
+		private String thumbnailUrl;
+		private String imageUrl;
+		private List<String> keyWords;
+		private String publishDate;
+		
+		public RssObject()
+		{
+			keyWords = new Vector<String>();
+		}
+		
+		public String[] getKeywordsAsArray()
+		{
+			String[] result = new String[keyWords.size()];
+			for(int i = 0; i < keyWords.size(); i++) {
+				result[i] = keyWords.get(i);
+			}
+			return result;
+		}
+
+		public void addKeyWord(String keyWord)
+		{
+			keyWords.add(keyWord);
+		}
+
+		public String getPublishDate()
+		{
+			return publishDate;
+		}
+
+		public void setPublishDate(String publishDate)
+		{
+			this.publishDate = publishDate;
+		}
+
+		public void setThumbnailUrl(String url)
+		{
+			thumbnailUrl = url;
+		}
+		
+		public String getThumbnailUrl()
+		{
+			return thumbnailUrl;
+		}
+		
+		public void setImageUrl(String url)
+		{
+			imageUrl = url;
+		}
+		
+		public String getImageUrl()
+		{
+			return imageUrl;
+		}
+		
+		public void setTitle(String title)
+		{
+			this.title = title;
+		}
+		
+		public String getTitle()
+		{
+			return title;
+		}
+		
+		public void setLink(String link)
+		{
+			this.link = link;
+		}
+		
+		public String getLink()
+		{
+			return link;
+		}
+		
+		public void setDescription(String description)
+		{
+			this.description = description;
+		}
+		
+		public String getDescription()
+		{
+			return description;
+		}
 	}
 }

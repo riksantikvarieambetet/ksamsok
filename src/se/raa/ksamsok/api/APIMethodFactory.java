@@ -107,7 +107,7 @@ public class APIMethodFactory
 		throws MissingParameterException, BadParameterException
 	{
 		RSS m = null;
-		String queryString = getQueryString(params.get(RSS.SEARCH_PARAMS));
+		String queryString = getQueryString(params.get(RSS.QUERY));
 		int hitsPerPage = getHitsPerPage(params.get(RSS.HITS_PER_PAGE));
 		int startRecord = getStartRecord(params.get(RSS.START_RECORD));
 		m = new RSS(queryString, hitsPerPage, startRecord, writer);
