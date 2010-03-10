@@ -1,5 +1,5 @@
 %define ver 1.0.0
-%define rel 19
+%define rel 20
 
 Summary: Raä K-Samsök, centralnod
 Name: raa-ksamsok_app
@@ -24,6 +24,7 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
 
 install -m755 $RPM_SOURCE_DIR/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 
@@ -32,6 +33,7 @@ install -m755 $RPM_SOURCE_DIR/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8
 install -m755 $RPM_SOURCE_DIR/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 install -m755 $RPM_SOURCE_DIR/ora10-sdoapi.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 install -m755 $RPM_SOURCE_DIR/ora10-sdoutl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+install -m755 $RPM_SOURCE_DIR/catalina.sh $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
 install -m755 $RPM_SOURCE_DIR/ora10-xmlparserv2-noservices.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 
 %clean
