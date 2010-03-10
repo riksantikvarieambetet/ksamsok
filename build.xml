@@ -45,6 +45,7 @@
         <patternset id="conf.files">
             <include name="**/*.properties"/>
             <include name="**/*.xml"/>
+        	<include name="**/*.sh"/>
             <include name="**/*.dtd"/>
             <!--  snowball/lucene, stopp-ordsfiler -->
             <include name="**/*_stop.txt"/>
