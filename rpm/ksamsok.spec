@@ -1,5 +1,5 @@
 %define ver 1.0.0
-%define rel 20
+%define rel 21
 
 Summary: Raä K-Samsök, centralnod
 Name: raa-ksamsok_app
@@ -62,6 +62,7 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/webapps/ksamsok.war
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/context.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/tomcat-users.xml
+%attr(0644,tomcat,nobody) /usr/local/tomcat8080/bin/catalina.sh
 # oracle-drivrutiner för jdbc och spatialutökningar
 # obs, se till att ha samma matchningar här som i build.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
