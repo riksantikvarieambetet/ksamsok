@@ -288,7 +288,7 @@ public class GMLUtil {
 		}
 		if (o instanceof String) {
 			CoordinateReferenceSystem crs = CRS.decode((String) o);
-			if (o == null) {
+			if (crs == null) {
 				throw new Exception("Fick ingen koordinatsystem-info vid avkodning av uttolkat " +
 						"srsName: " + o);
 			}
