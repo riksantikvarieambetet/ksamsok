@@ -371,11 +371,12 @@ public class APIMethodFactory
 	}
 
 	/**
-	 * returnerar en index map med varierande värden
-	 * @param indexString
-	 * @param value
-	 * @return
-	 * @throws MissingParameterException
+	 * Returnerar en index-map där indexen får samma värde, det som är inskickat i value.
+	 *
+	 * @param indexString sträng med indexnamn separerade av {@linkplain #DELIMITER}
+	 * @param value värde för index
+	 * @return index-map med indexnamn som nyckel och inskickat värde som värde, aldrig null men kan vara tom
+	 * @throws MissingParameterException om index-strängen är null eller "tom".
 	 */
 	private static Map<String,String> getIndexMapSingleValue(String indexString,
 			String value) 
