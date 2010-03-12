@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.snowball.SnowballAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.solr.util.NumberUtils;
 
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.spatial.GMLInfoHolder;
@@ -480,17 +481,29 @@ public abstract class ContentHelper {
 	}
 	
 	/**
-	 * Kollar om inskickat index existerar
-	 * @param indexName
-	 * @return
+	 * Kollar om inskickat index existerar. Om indexet är ett "kontext-index", dvs
+	 * om det är på formen "[kontexttyp]_[indexnamn] kontrolleras endast att
+	 * indexnamn är ok då dessa index är dynamiska och inget register finns för att
+	 * kontrollera dessa.
+	 * 
+	 * @param indexName index att kontrollera
+	 * @return sant om indexet finns eller om indexet är ett kontext-index och dess
+	 * suffix är ett giltigt index
 	 */
-	public static boolean indexExists(String indexName)
-	{
-		Index index = indices.get(indexName);
-		if(index == null)
+	public static boolean indexExists(String indexName) {
+		if (indexName == null) {
 			return false;
-		else
-			return true;
+		}
+		String indexNameToCheck = indexName;
+		if (indexName.indexOf("_") > 0) {
+			String[] parts = indexName.split("\\_");
+			if (parts != null && parts.length == 2) {
+				indexNameToCheck = parts[1];
+			} else {
+				return false;
+			}
+		}
+		return indices.containsKey(indexNameToCheck);
 	}
 
 	/**
@@ -770,6 +783,28 @@ public abstract class ContentHelper {
 		long f = Double.doubleToRawLongBits(val);
 	    if (f<0) f ^= 0x7fffffffffffffffL;
 	    return transformNumberToLuceneString(f);
+	}
+
+	/**
+	 * Gör om invärdet till en long för visning
+	 * @param stringVal värde som en lucene-sträng
+	 * @return värde i sifferform
+	 */
+	public static long transformLuceneStringToLong(String stringVal) {
+		// TODO: se todo i metod ovan
+		return NumberUtils.SortableStr2long(stringVal, 0, 5);
+	}
+
+	/**
+	 * Gör om invärdet till en double för visning
+	 * @param stringVal värde som en lucene-sträng
+	 * @return värde i sifferform
+	 */
+	public static double transformLuceneStringToDouble(String stringVal) {
+		// TODO: se todo i metod ovan
+		long f =  NumberUtils.SortableStr2long(stringVal, 0, 6);
+		if (f<0) f ^= 0x7fffffffffffffffL;
+		return Double.longBitsToDouble(f);
 	}
 
 	// 

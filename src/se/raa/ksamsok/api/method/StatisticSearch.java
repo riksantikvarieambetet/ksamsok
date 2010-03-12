@@ -23,6 +23,7 @@ import se.raa.ksamsok.api.util.QueryContent;
 import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
+import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 
 /**
@@ -62,6 +63,10 @@ public class StatisticSearch extends Statistic
 		try {
 			//bygger term map
 			termMap = buildTermMap(searcher);
+			// tillåt bara viss storlek
+			if (getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT) {
+				throw new BadParameterException("den kartesiska produkten av inskickade index blir för stor för att utföra denna operation.", "Statistic.performMethod", null, false);
+			}
 			//gör kartesisk produkt av alla värden i term mappen
 			queryList = cartesian(termMap);
 			//utför sökningen
@@ -114,6 +119,14 @@ public class StatisticSearch extends Statistic
 				TopDocs topDocs = searcher.search(q1, qwf, 1);
 				if(topDocs.totalHits >= removeBelow) {
 					content.setHits(topDocs.totalHits);
+					Map<String, String> termMap = content.getTermMap();
+					// gå igenom indexen för att se om värdena behöver översättas för att kunna visas
+					for (Map.Entry<String, String> indexTerm: termMap.entrySet()) {
+						if (ContentHelper.isISO8601DateYearIndex(indexTerm.getKey())) {
+							long year = ContentHelper.transformLuceneStringToLong(indexTerm.getValue());
+							indexTerm.setValue(Long.toString(year));
+						}
+					}
 					queryList.set(i, content);
 				}else {
 					queryList.remove(i);

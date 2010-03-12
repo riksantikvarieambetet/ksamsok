@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TermEnum;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -39,8 +40,8 @@ public class Statistic implements APIMethod
 	public static final String INDEX_PARAMETER = "index";
 	/** namn på parameter för att ta bort nollor i svars XML */
 	public static final String REMOVE_BELOW = "removeBelow";
-	
-	private static final int MAX_CARTESIAN_COUNT = 20000;
+	/** max antal kombinationer av indexvärden */
+	protected static final int MAX_CARTESIAN_COUNT = 20000;
 	
 	//set med index som skall kollas
 	protected Map<String,String> indexMap;
@@ -231,19 +232,49 @@ public class Statistic implements APIMethod
 		Query query;
 		String indexValue;
 		HashMap<String, Set<Term>> termMap = new HashMap<String, Set<Term>>();
+		// TODO: den här ska sättas en gång per jvm och ska sättas innan lucene-klasserna används,
+		//       helst kanske via -D-parameter
 		BooleanQuery.setMaxClauseCount(10000);
+
 		for(String index : indexMap.keySet()) {
 			try {
 				indexValue = CQL2Lucene.translateIndexName(index);
 				if(!ContentHelper.indexExists(indexValue)) {
 					throw new BadParameterException("Indexet " + index + " existerar inte", "Statistic.buildTermMap", null, false);
 				}
-				String value = indexMap.get(index);
-				Term term = new Term(indexValue,value);
-				query = new WildcardQuery(term);
 				HashSet<Term> extractedTerms = new HashSet<Term>();
-				Query tempQuery = searcher.rewrite(query);
-				tempQuery.extractTerms(extractedTerms);
+				String value = indexMap.get(index);
+				if ("*".equals(value)) {
+					// TODO: göra liknande om inte värdet är *, prefix borde vara ganska lätt om inte annat - behov?
+					TermEnum tenum = null;
+					try {
+						tenum = searcher.getIndexReader().terms(new Term(index));
+						Term t;
+						// hmm, inte som andra enumerations, här börjar den direkt utan att man
+						// ska anropa next först..
+						// TODO: undra vad som händer i ett tomt index.. hoppas nullkontrollen är ok?
+						do {
+							t = tenum.term();
+							if (t == null || !t.field().equals(index)) {
+								break;
+							}
+							// snabbfiltrering, finns det inte ens tillräckligt många träffar
+							// totalt så finns det ju inte sen i sökningen heller
+							if (tenum.docFreq() >= removeBelow) {
+								extractedTerms.add(t);
+							}
+						} while (tenum.next());
+					} finally {
+						if (tenum != null) {
+							tenum.close();
+						}
+					}
+				} else {
+					Term term = new Term(indexValue,value);
+					query = new WildcardQuery(term);
+					Query tempQuery = searcher.rewrite(query);
+					tempQuery.extractTerms(extractedTerms);
+				}
 				termMap.put(indexValue, extractedTerms);
 			}catch(TooManyClauses e) {
 				throw new BadParameterException("indexet " + index + " har för många unika värden för att utföra denna operation", "Statistic.buildTermMap", null, false);
@@ -283,18 +314,18 @@ public class Statistic implements APIMethod
 			for(String index : queryContent.getTermMap().keySet())
 			{
 				writer.println("<indexFields>");
-				writer.println("<index>");
-				writer.println(index);
+				writer.print("<index>");
+				writer.print(index);
 				writer.println("</index>");
-				writer.println("<value>");
+				writer.print("<value>");
 				//xmlEscape snodde jag ur SRUServlet
-				writer.println(StaticMethods.xmlEscape(
+				writer.print(StaticMethods.xmlEscape(
 						queryContent.getTermMap().get(index)));
 				writer.println("</value>");
 				writer.println("</indexFields>");
 			}
-			writer.println("<records>");
-			writer.println(queryContent.getHits());
+			writer.print("<records>");
+			writer.print(queryContent.getHits());
 			writer.println("</records>");
 			writer.println("</term>");
 		}
