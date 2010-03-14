@@ -216,9 +216,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	}
 
 	public void removeLuceneIndex(HarvestService service) throws Exception {
-		Connection c = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
 		IndexWriter iw = null;
 		String serviceId = null;
 		boolean refreshIndex = false;
@@ -230,11 +227,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					logger.info(service.getId() + ", removing index (" + count + " records) - start");
 				}
 				serviceId = service.getId();
-				c = ds.getConnection();
-				String sql = "select xmldata from content where serviceId = ?";
-				pst = c.prepareStatement(sql);
-				pst.setString(1, serviceId);
-				rs = pst.executeQuery();
 				iw = LuceneServlet.getInstance().borrowIndexWriter();
 				iw.deleteDocuments(new Term(ContentHelper.I_IX_SERVICE, serviceId));
 
@@ -262,7 +254,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				logger.error(serviceId + ", error when updating lucene index", e);
 				throw e;
 			} finally {
-				closeDBResources(rs, pst, c);
 				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
 			}
 			// rapportera eventuella problemmeddelanden
