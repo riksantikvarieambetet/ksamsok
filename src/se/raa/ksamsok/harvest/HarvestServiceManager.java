@@ -101,6 +101,14 @@ public interface HarvestServiceManager {
 	void triggerReindex(HarvestService service) throws Exception;
 
 	/**
+	 * Triggar igång en avindexering, dvs gömmer tjänsten utan att tömma repositoryt.
+	 * 
+	 * @param service tjänst
+	 * @throws Exception
+	 */
+	void triggerRemoveindex(HarvestService service) throws Exception;
+
+	/**
 	 * Triggar igång omindexering av alla tjänster.
 	 * 
 	 * @throws Exception

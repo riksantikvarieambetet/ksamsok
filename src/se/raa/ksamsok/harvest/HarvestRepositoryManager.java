@@ -42,6 +42,14 @@ public interface HarvestRepositoryManager {
 	void updateLuceneIndex(HarvestService service, Timestamp ts, HarvestService enclosingService) throws Exception;
 
 	/**
+	 * Tar bort lucene-index för en tjänst (gömmer tjänsten).
+	 * 
+	 * @param service tjänst
+	 * @throws Exception
+	 */
+	void removeLuceneIndex(HarvestService service) throws Exception;
+	
+	/**
 	 * Tar bort all data i repositoryt för en tjänst.
 	 * 
 	 * @param service tjänst

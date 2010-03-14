@@ -176,6 +176,17 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				ss.setStep(service, Step.IDLE);
 				return;
 			}
+			if (ss.getStartStep(service) == Step.EMPTYINDEX) {
+				ss.initStatus(service, "Init");
+				ss.setStatusTextAndLog(service, "Removing lucene index for service with ID: " + serviceId);
+				ss.setStep(service, Step.EMPTYINDEX);
+				hrm.removeLuceneIndex(service);
+				//hsm.storeFirstIndexDateIfNotSet(service);
+				long durationMillis = System.currentTimeMillis() - start;
+				ss.setStatusTextAndLog(service, "Ok, job time: " + ContentHelper.formatRunTime(durationMillis));
+				ss.setStep(service, Step.IDLE);
+				return;
+			}
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.FETCH);
 			ss.setStatusTextAndLog(service, "Performing Identify");

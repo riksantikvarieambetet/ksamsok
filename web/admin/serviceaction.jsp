@@ -52,6 +52,8 @@
    		hsm.interruptHarvest(service);
    	} else if ("reindex".equals(action)) {
    		hsm.triggerReindex(service);
+   	} else if ("emptyindex".equals(action)) {
+   		hsm.triggerRemoveindex(service);
    	} else if ("reindexall".equals(action)) {
    		hsm.triggerReindexAll();
    		redirTo = "indexservices.jsp";

@@ -244,6 +244,10 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		triggerJob(service, Step.INDEX);
 	}
 
+	public void triggerRemoveindex(HarvestService service) throws Exception {
+		triggerJob(service, Step.EMPTYINDEX);
+	}
+
 	public void triggerReindexAll() throws Exception {
 		JobDetail jd = new JobDetail(SERVICE_LUCENE_REINDEX, JOBGROUP_HARVESTERS, LuceneReindexAllJob.class);
 		scheduler.scheduleJob(jd, new SimpleTrigger(SERVICE_LUCENE_REINDEX + TRIGGER_SUFFIX, null));

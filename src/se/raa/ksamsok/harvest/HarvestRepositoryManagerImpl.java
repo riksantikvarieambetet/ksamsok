@@ -215,6 +215,69 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		}
 	}
 
+	public void removeLuceneIndex(HarvestService service) throws Exception {
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		IndexWriter iw = null;
+		String serviceId = null;
+		boolean refreshIndex = false;
+		synchronized (LuceneServlet.IW_SYNC) { // en i taget som får köra index-write
+			try {
+				long start = System.currentTimeMillis();
+				int count = getCount(service);
+				if (logger.isInfoEnabled()) {
+					logger.info(service.getId() + ", removing index (" + count + " records) - start");
+				}
+				serviceId = service.getId();
+				c = ds.getConnection();
+				String sql = "select xmldata from content where serviceId = ?";
+				pst = c.prepareStatement(sql);
+				pst.setString(1, serviceId);
+				rs = pst.executeQuery();
+				iw = LuceneServlet.getInstance().borrowIndexWriter();
+				iw.deleteDocuments(new Term(ContentHelper.I_IX_SERVICE, serviceId));
+
+				iw.commit();
+				refreshIndex = true;
+				long durationMillis = (System.currentTimeMillis() - start);
+				String runTime = ContentHelper.formatRunTime(durationMillis);
+				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
+				ss.setStatusTextAndLog(service, "Removed index, " + count + " records" + 
+						", time: " + runTime + " (" + speed + ")");
+				if (logger.isInfoEnabled()) {
+					logger.info(service.getId() +
+							", removed index - done, " + "removed " + count +
+							" records in the lucene index, time: " +
+							runTime + " (" + speed + ")");
+				}
+			} catch (Exception e) {
+				if (iw != null) {
+					try {
+						iw.rollback();
+					} catch (Exception e2) {
+						logger.warn("Error when aborting for lucene index", e2);
+					}
+				}
+				logger.error(serviceId + ", error when updating lucene index", e);
+				throw e;
+			} finally {
+				closeDBResources(rs, pst, c);
+				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
+			}
+			// rapportera eventuella problemmeddelanden
+			Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
+			if (problemMessages != null && problemMessages.size() > 0) {
+				ss.setStatusTextAndLog(service, "Note! Problem when removing index ");
+				logger.warn(serviceId + ", got following problem when removing index: ");
+				for (String uri: problemMessages.keySet()) {
+					ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
+					logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
+				}
+			}
+		}
+	}
+
 
 	public void deleteData(HarvestService service) throws Exception {
 		Connection c = null;
