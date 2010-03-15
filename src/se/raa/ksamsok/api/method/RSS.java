@@ -61,7 +61,7 @@ import com.sun.syndication.io.SyndFeedOutput;
  */
 public class RSS extends DefaultHandler implements APIMethod
 {
-	/** metodens namn */
+	// publika värden
 	public static final String METHOD_NAME = "rss";
 	public static final String QUERY = "query";
 	public static final String HITS_PER_PAGE = "hitsPerPage";
@@ -69,11 +69,12 @@ public class RSS extends DefaultHandler implements APIMethod
 	public static final int DEFAULT_HITS_PER_PAGE = 100;
 	public static final int DEFAULT_START_RECORD = 1;
 	
-	//RSS feed typ
+	// privata statiska variabler
 	private static final String RSS_2_0 = "rss_2.0";
 	private static final SAXParserFactory spf = SAXParserFactory.newInstance();
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv",	"SE"));
 	
+	//privata variabler
 	private String queryString;
 	private int hitsPerPage;
 	private int startRecord;
@@ -95,7 +96,7 @@ public class RSS extends DefaultHandler implements APIMethod
 	{
 		this.queryString = queryString;
 		this.writer = writer;
-		if(startRecord < 1) {
+		if(startRecord < 1) { 
 			this.startRecord = DEFAULT_START_RECORD;
 		}else {
 			this.startRecord = startRecord;
@@ -112,23 +113,9 @@ public class RSS extends DefaultHandler implements APIMethod
 			DiagnosticException
 	{
 		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher();
-		try
-		{
+		try {
 			doSearch(searcher);
-		} catch (IOException e)
-		{
-			
-		} catch (ParserConfigurationException e)
-		{
-			throw new DiagnosticException("Oväntat Parser fel uppstod", "se.raa.ksamsok.api.method.RSS.performMethod()", e.getMessage(), true);
-		} catch (SAXException e)
-		{
-			throw new DiagnosticException("Oväntat SAX parser fel", "se.raa.ksamsok.api.method.RSS.performMethod()", e.getMessage(), true);
-		} catch (FeedException e)
-		{
-			throw new DiagnosticException("Oväntat RSS feed fel uppstod", "se.raa.ksamsok.api.method.RSS.performMethod()", e.getMessage(), true);
-		}finally
-		{
+		}finally {
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
 	}
@@ -144,20 +131,46 @@ public class RSS extends DefaultHandler implements APIMethod
 	 * @throws FeedException
 	 */
 	protected void doSearch(IndexSearcher searcher) 
-		throws DiagnosticException, BadParameterException, IOException, 
-			ParserConfigurationException, SAXException, FeedException
+		throws DiagnosticException, BadParameterException
 	{
-		Query q = createQuery();
-		SyndFeed feed = getFeed();
-		final MapFieldSelector fieldSelector = getFieldSelector();
-		TopDocs hits = null;
-		int numberOfDocs = 0;
-		int nDocs = startRecord - 1 + hitsPerPage;
-		hits = searcher.search(q, nDocs == 0 ? 1 : nDocs);
-		numberOfDocs = hits.totalHits;
-		feed.setEntries(getEntries(numberOfDocs, nDocs, searcher, hits, fieldSelector));
-		SyndFeedOutput output = new SyndFeedOutput();
-		output.output(feed, writer);
+		try {
+			Query q = createQuery();
+			final MapFieldSelector fieldSelector = getFieldSelector();
+			int nDocs = startRecord - 1 + hitsPerPage;
+			TopDocs hits = searcher.search(q, nDocs == 0 ? 1 : nDocs);
+			int numberOfDocs = hits.totalHits;
+			doSyndFeed(numberOfDocs, nDocs, searcher, hits, fieldSelector);
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO fel", "RSS.doSearch", e.getMessage(), true);
+		}
+	}
+	
+	/**
+	 * skapar och skriver en RSS feed
+	 * @param numberOfDocs
+	 * @param nDocs
+	 * @param searcher
+	 * @param hits
+	 * @param fieldSelector
+	 * @throws DiagnosticException
+	 */
+	private void doSyndFeed(int numberOfDocs, int nDocs, 
+			IndexSearcher searcher, TopDocs hits, 
+			MapFieldSelector fieldSelector) 
+		throws DiagnosticException 
+	{
+		try {
+			SyndFeed feed = getFeed();
+			feed.setEntries(getEntries(numberOfDocs, nDocs, searcher, hits, fieldSelector));
+			SyndFeedOutput output = new SyndFeedOutput();
+			output.output(feed, writer);
+		} catch (CorruptIndexException e) {
+			throw new DiagnosticException("Nånting gick fel : /", "RSS.doSyndFeed", e.getMessage(), true);
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO fel", "RSS.doSyndFeed", e.getMessage(), true);
+		} catch (FeedException e) {
+			throw new DiagnosticException("Något gick fel : /", "RSS.doSyndFeed", e.getMessage(), true);
+		}
 	}
 	
 	private Query createQuery() 
@@ -194,24 +207,29 @@ public class RSS extends DefaultHandler implements APIMethod
 	protected List<SyndEntry> getEntries(int numberOfDocs, int nDocs, 
 			IndexSearcher searcher, TopDocs hits, 
 			MapFieldSelector fieldSelector) 
-		throws CorruptIndexException, IOException, 
-			ParserConfigurationException, SAXException, 
-			DiagnosticException
+		throws DiagnosticException
 	{
 		List<SyndEntry> entries = new Vector<SyndEntry>();
 		HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
-		for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++)
-		{
-			Document doc = searcher.doc(hits.scoreDocs[i].doc,
-					fieldSelector);
-			String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
-			String content = null;
-			try {
+		try {
+			for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++) {
+				Document doc = searcher.doc(hits.scoreDocs[i].doc,
+						fieldSelector);
+				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
+				String content = null;
 				content = hrm.getXMLData(uri);
-			} catch (Exception e) {
-				throw new DiagnosticException("Fel vid hämtning av data från databasen", "RSS.getEntries", e.getMessage(), true);
+				entries.add(getEntry(content));
 			}
-			entries.add(getEntry(content));
+		}catch (ParserConfigurationException e) {
+			throw new DiagnosticException("Parser fel", "RSS.getEntries", e.getMessage(), true);
+		} catch (SAXException e) {
+			throw new DiagnosticException("SAX fel", "RSS.getEntries", e.getMessage(), true);
+		} catch (CorruptIndexException e) {
+			throw new DiagnosticException("Nånting gick fel : /", "RSS.getEntries", e.getMessage(), true);
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO fel", "RSS.getEntries", e.getMessage(), true);
+		} catch(Exception e) {
+			throw new DiagnosticException("Fel vid hämtning av data från databasen", "RSS.getEntries", e.getMessage(), true);
 		}
 		return entries;
 	}
@@ -227,27 +245,34 @@ public class RSS extends DefaultHandler implements APIMethod
 	 */
 	@SuppressWarnings("unchecked")
 	protected SyndEntry getEntry(String content) 
-		throws ParserConfigurationException, SAXException, IOException, 
-			DiagnosticException
+		throws DiagnosticException
 	{
-		SAXParser parser = spf.newSAXParser();
-		data = new RssObject();
-		parser.parse(new InputSource(new StringReader(content)), this);
 		SyndEntry entry = new SyndEntryImpl();
-		entry.setTitle(data.getTitle());
-		entry.setLink(data.getLink());
-		SyndContent syndContent = new SyndContentImpl();
-		syndContent.setType("text/plain");
-		syndContent.setValue(data.getDescription());
-		entry.setDescription(syndContent);
-		String thumb = data.getThumbnailUrl();
-		String image = data.getImageUrl();
-		if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) {
-			entry.getModules().add(getMediaModule(thumb, image));
-		}
 		try {
+			SAXParser parser = spf.newSAXParser();
+			data = new RssObject();
+			parser.parse(new InputSource(new StringReader(content)), this);
+			entry.setTitle(data.getTitle());
+			entry.setLink(data.getLink());
+			SyndContent syndContent = new SyndContentImpl();
+			syndContent.setType("text/plain");
+			syndContent.setValue(data.getDescription());
+			entry.setDescription(syndContent);
+			String thumb = data.getThumbnailUrl();
+			String image = data.getImageUrl();
+			if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) {
+				entry.getModules().add(getMediaModule(thumb, image));
+			}
 			entry.setPublishedDate(sdf.parse(data.getPublishDate()));
-		} catch (Exception ignore) {}
+		} catch (ParserConfigurationException e) {
+			throw new DiagnosticException("Parser fel", "RSS.getEntry", e.getMessage(), true);
+		} catch (SAXException e) {
+			throw new DiagnosticException("SAX fel", "RSS.getEntry", e.getMessage(), true);
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO fel", "RSS.getEntry", e.getMessage(), true);
+		} catch (ParseException e) {
+			throw new DiagnosticException("Parser fel", "RSS.getEntry", e.getMessage(), true);
+		} catch(Exception ignore) {}
 		return entry;
 	}
 	
