@@ -10,14 +10,17 @@
 	</institution>
 	<institution id="arme">
 		<name>Armémuseum</name>
+		<nameEng>Army Museum</nameEng>
 		<description/>
 	</institution>
 	<institution id="smha">
 		<name>Sveriges Militärhistoriska arv</name>
+		<nameEng>Swedish Military Heritage</nameEng>
 		<description/>
 	</institution>
 	<institution id="upmu">
 		<name>Upplandsmuseet</name>
+		<nameEng>The Uppland County Museum</nameEng>
 		<description/>
 	</institution>
 	<institution id="bm">
@@ -42,6 +45,7 @@
 	</institution>
 	<institution id="arkm">
 		<name>Arkitekturmuseet</name>
+		<nameEng>The Swedish Museum of Architecture</nameEng>
 		<description/>
 	</institution>
 	<institution id="vasa">
