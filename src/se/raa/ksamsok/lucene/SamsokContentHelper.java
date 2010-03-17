@@ -719,11 +719,11 @@ public class SamsokContentHelper extends ContentHelper {
 					//String aTimeValue="-2000"
 						
 					//Integer runner=start;
-					//medan runner++ <= stop
-						//String aTimeValue=snygg sträng t ex -500, lite trixande från runner-värdet
+					//medan runner+=10 <= stop
+						//aTimeValue=snygg sträng t ex -500, lite trixande från runner-värdet
 						//ip.setCurrent(IX_DECADE, contextType);
 						//ip.addToDoc(aTimeValue);
-						//Om jämnt århundrade:
+						//Om jämnt århundrade (men start- och stop-centuries ska ju med):
 							//ip.setCurrent(IX_CENTURY, contextType);
 							//ip.addToDoc(aTimeValue);
 						//slut på århundrade-slingan
