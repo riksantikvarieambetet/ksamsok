@@ -166,6 +166,8 @@ public abstract class ContentHelper {
 	public static final String IX_THUMBNAILEXISTS = "thumbnailExists";
 	public static final String IX_GEODATAEXISTS = "geoDataExists";
 	public static final String IX_TIMEINFOEXISTS = "timeInfoExists";
+	public static final String IX_CENTURY = "century";
+	public static final String IX_DECADE = "decade";
 
 	// alla index
 	private static final HashMap<String,Index> indices = new LinkedHashMap<String,Index>();
@@ -306,6 +308,8 @@ public abstract class ContentHelper {
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
 		addIndex(IX_GEODATAEXISTS, "Om objektet har spatial data (j/n)", IndexType.TOLOWERCASE);
 		addIndex(IX_TIMEINFOEXISTS, "Om objektet har tidsangivelse (i " + IX_FROMTIME + "/" + IX_TOTIME + ") (j/n)", IndexType.TOLOWERCASE);
+		addIndex(IX_CENTURY, "De århundraden som objektet omfattar", IndexType.VERBATIM);
+		addIndex(IX_DECADE, "De årtionden som objektet omfattar", IndexType.VERBATIM);
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);

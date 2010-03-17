@@ -711,7 +711,30 @@ public class SamsokContentHelper extends ContentHelper {
 					if (fromTime != null || toTime != null) {
 						timeInfoExists = true;
 					}
-
+					
+					//DECADE AND CENTURY BLOCK
+					if (timeInfoExists) //bara då vi ska skapa århundraden och årtionden
+					//start=senaste av -2000 och fromTime, om fromTime=null så används -2000
+					//stop= tidigaste av 2000 och toTime, om toTime=null så används 2000
+					//String aTimeValue="-2000"
+						
+					//Integer runner=start;
+					//medan runner++ <= stop
+						//String aTimeValue=snygg sträng t ex -500, lite trixande från runner-värdet
+						//ip.setCurrent(IX_DECADE, contextType);
+						//ip.addToDoc(aTimeValue);
+						//Om jämnt århundrade:
+							//ip.setCurrent(IX_CENTURY, contextType);
+							//ip.addToDoc(aTimeValue);
+						//slut på århundrade-slingan
+					//slut på slingan
+						
+					//Här är ett test som funkade:
+					//String aCentury="1800";
+					//ip.setCurrent(IX_CENTURY, contextType);
+					//ip.addToDoc(aCentury);
+					//slut på test som funkade.
+					
 					ip.setCurrent(IX_FROMPERIODNAME, contextType);
 					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rFromPeriodName, ip));
 
@@ -819,7 +842,7 @@ public class SamsokContentHelper extends ContentHelper {
 			// lägg in specialindex
 			luceneDoc.add(new Field(IX_GEODATAEXISTS, geoDataExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
 			luceneDoc.add(new Field(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
-
+			
 			// TODO: ska detta lagras av lucene, vi kan annars hämta det från db
 			//       ska det lagras av lucene måste vi helst här se till att det lagras utan
 			//       xml-deklaration pss som för pres ovan
