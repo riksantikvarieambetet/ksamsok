@@ -713,7 +713,7 @@ public class SamsokContentHelper extends ContentHelper {
 					}
 					
 					//DECADE AND CENTURY BLOCK
-					if (timeInfoExists) //bara då vi ska skapa århundraden och årtionden
+					//if (timeInfoExists) //bara då vi ska skapa århundraden och årtionden
 					//start=senaste av -2000 och fromTime, om fromTime=null så används -2000
 					//stop= tidigaste av 2000 och toTime, om toTime=null så används 2000
 					//String aTimeValue="-2000"
