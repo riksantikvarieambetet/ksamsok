@@ -49,8 +49,6 @@
    		hsm.createService(service);
    	} else if ("trigger".equals(action)) {
    		hsm.triggerHarvest(service);
-   		service.setAlwaysHarvestEverything(false);
-   		hsm.updateService(service);
    	} else if ("interrupt".equals(action)) {
    		hsm.interruptHarvest(service);
    	} else if ("reindex".equals(action)) {
