@@ -36,7 +36,7 @@
    		service.setHarvestSetSpec(StringUtils.trimToNull(request.getParameter("harvestSetSpec")));
    		service.setAlwaysHarvestEverything(Boolean.valueOf(request.getParameter("alwayseverything")));
    		hsm.updateService(service);
-   		redirTo = "editservice.jsp";
+   		redirTo = "editservice.jsp?serviceId=" + serviceId;
    	} else if ("new".equals(action)) {
    		service = hsm.newServiceInstance();
    		service.setId(serviceId);
