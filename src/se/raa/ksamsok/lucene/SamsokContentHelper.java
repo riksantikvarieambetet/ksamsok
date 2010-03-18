@@ -713,21 +713,36 @@ public class SamsokContentHelper extends ContentHelper {
 					}
 					
 					//DECADE AND CENTURY BLOCK
-					//if (timeInfoExists) //bara då vi ska skapa århundraden och årtionden
-					//start=senaste av -2000 och fromTime, om fromTime=null så används -2000
-					//stop= tidigaste av 2000 och toTime, om toTime=null så används 2000
-					//String aTimeValue="-2000"
-						
-					//Integer runner=start;
-					//medan runner+=10 <= stop
-						//aTimeValue=snygg sträng t ex -500, lite trixande från runner-värdet
-						//ip.setCurrent(IX_DECADE, contextType);
-						//ip.addToDoc(aTimeValue);
-						//Om jämnt århundrade (men start- och stop-centuries ska ju med):
-							//ip.setCurrent(IX_CENTURY, contextType);
-							//ip.addToDoc(aTimeValue);
-						//slut på århundrade-slingan
-					//slut på slingan
+					if (timeInfoExists) {
+						//bara då vi ska skapa århundraden och årtionden
+						Integer start=-2000,stop=2100;
+						//start=senaste av -2000 och fromTime, om fromTime=null så används -2000
+						//stop= tidigaste av 2100 och toTime, om toTime=null så används 2100
+						if (fromTime!=null) 
+							start=latest(fromTime, start);
+						if (toTime!=null) 
+							stop=earliest(toTime, stop);
+						Integer runner=start;	
+						String aTimeValue=decadeString(runner);
+						Boolean justStarted=true;
+						while (runner<=stop) {
+							aTimeValue=decadeString(runner);
+							ip.setCurrent(IX_DECADE, contextType);
+							ip.addToDoc(aTimeValue);
+							if (runner%100==0){
+								ip.setCurrent(IX_CENTURY, contextType);
+								ip.addToDoc(aTimeValue);
+								if (justStarted) justStarted=false;
+							}
+							else if (justStarted){
+								aTimeValue=centuryString(runner);
+								ip.setCurrent(IX_CENTURY, contextType);
+								ip.addToDoc(aTimeValue);
+								justStarted=false;}
+							runner+=10;
+						}
+
+					}	
 						
 					//Här är ett test som funkade:
 					//String aCentury="1800";
@@ -867,6 +882,28 @@ public class SamsokContentHelper extends ContentHelper {
 		return luceneDoc;
 	}
 
+	public Integer latest(String aString, Integer aInteger) {
+		Integer sLatest=Math.max(Integer.parseInt(aString),aInteger);
+		return sLatest;
+	}
+
+	public Integer earliest(String aString, Integer aInteger) {
+		Integer sEarliest=Math.min(Integer.parseInt(aString),aInteger);
+		return sEarliest;
+	}
+
+	public String decadeString(Integer aInteger) {
+		Integer decadeFloor=(aInteger/10)*10;
+		String aDecade=String.valueOf(decadeFloor);
+		return aDecade;
+	}
+
+	public String centuryString(Integer aInteger) {
+		Integer centuryFloor=(aInteger/100)*100;
+		String aCentury=String.valueOf(centuryFloor);
+		return aCentury;
+	}
+	
 	@Override
 	public String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception {
 		StringReader r = null;
