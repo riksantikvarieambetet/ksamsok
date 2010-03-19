@@ -36,6 +36,16 @@
         <servlet-name>Resolver</servlet-name>
         <servlet-class>se.raa.ksamsok.resolve.ResolverServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+    	<servlet-name>orgAdmin</servlet-name>
+    	<servlet-class>se.raa.ksamsok.organization.OrganizationServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>orgAdmin</servlet-name>
+    	<url-pattern>/admin/orgAdmin</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>SRU</servlet-name>
