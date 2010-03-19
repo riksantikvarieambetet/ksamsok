@@ -741,39 +741,32 @@ public class SamsokContentHelper extends ContentHelper {
 							
 						Integer runner=start;
 						Integer insideRunner=0;
-						String aTimeValue=decadeString(runner);
-						Boolean justStarted=true;
+						String dTimeValue=decadeString(runner);
+						String cTimeValue=centuryString(runner);
 
 						while (runner<=stop) {
-							aTimeValue=decadeString(runner);
+							dTimeValue=decadeString(runner);
 							ip.setCurrent(IX_DECADE, contextType);
-							ip.addToDoc(aTimeValue);
+							ip.addToDoc(dTimeValue);
 							if (insideRunner%100==0){
-								aTimeValue=centuryString(runner);
+								cTimeValue=centuryString(runner);
 								ip.setCurrent(IX_CENTURY, contextType);
-								ip.addToDoc(aTimeValue);
-								if (justStarted) justStarted=false;
+								ip.addToDoc(cTimeValue);
 							}
-							else if (justStarted){
-								aTimeValue=centuryString(runner);
-								ip.setCurrent(IX_CENTURY, contextType);
-								ip.addToDoc(aTimeValue);
-								justStarted=false;}
 							runner+=10;
 							insideRunner+=10;
 						}
-						if (runner-stop<10) {
-							//slutvillkorsjusteringar
-							aTimeValue=decadeString(stop);
+						//slutvillkorskontroller
+						if (!dTimeValue.equals(decadeString(stop))) {
+							dTimeValue=decadeString(stop);
 							ip.setCurrent(IX_DECADE, contextType);
-							ip.addToDoc(aTimeValue);
-							if (stop%100<10) {
-								aTimeValue=centuryString(stop);
-								ip.setCurrent(IX_CENTURY, contextType);
-								ip.addToDoc(aTimeValue);
-							}
+							ip.addToDoc(dTimeValue);
 						}
-
+						if (!cTimeValue.equals(centuryString(stop))) {
+							cTimeValue=centuryString(stop);
+							ip.setCurrent(IX_CENTURY, contextType);
+							ip.addToDoc(cTimeValue);
+						}
 					}	
 						
 					ip.setCurrent(IX_FROMPERIODNAME, contextType);
