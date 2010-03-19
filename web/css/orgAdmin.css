@@ -1,0 +1,52 @@
+@CHARSET "ISO-8859-1";
+
+body
+{
+	background-color: #ABABAB;
+}
+
+#page
+{
+	
+}
+
+.titel
+{
+	text-align: right;
+}
+
+.serviceTitel
+{
+	text-align: center;
+}
+
+#choseForm
+{
+	padding-bottom: 15px;
+	border-bottom: medium;
+	border-bottom-style: solid;
+	border-bottom-color: black;	
+}
+
+#infoForm
+{
+	padding-top: 5px;
+}
+
+#orgInfo
+{
+	float: left;
+}
+
+#serviceForm
+{
+	margin-left: 50%;
+	border-left: thin solid;
+	padding-left: 10px;
+	height: 800px;
+}
+
+#submit
+{
+	padding-top: 5px;
+}
