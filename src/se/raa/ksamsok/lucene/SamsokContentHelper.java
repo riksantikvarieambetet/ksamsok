@@ -179,6 +179,14 @@ public class SamsokContentHelper extends ContentHelper {
 	// context
 	private static final String context_pre = uriPrefix + "resurser/ContextType#";
 
+	// konstanter för century och decade
+	// från vilken tidpunkt ska vi skapa särskilda index för århundraden och årtionden
+	private static final Integer century_start=-2000;
+	// till vilken tidpunkt ska vi skapa särskilda index för århundraden och årtionden
+	private static final Integer century_stop=2010;
+	// sträng med årtal som måste vara före century_start
+	private static final String old_times="-9999";
+	
 	private DocumentBuilderFactory xmlFact;
 	private TransformerFactory xformerFact;
     // har en close() men den gör inget så vi skapar bara en instans
@@ -711,17 +719,26 @@ public class SamsokContentHelper extends ContentHelper {
 					if (fromTime != null || toTime != null) {
 						timeInfoExists = true;
 					}
-					
+
 					//DECADE AND CENTURY BLOCK
-					if (timeInfoExists) {
+					if (fromTime != null || toTime != null) {
 						//bara då vi ska skapa århundraden och årtionden
-						Integer start=-2000,stop=2100;
-						//start=senaste av -2000 och fromTime, om fromTime=null så används -2000
-						//stop= tidigaste av 2100 och toTime, om toTime=null så används 2100
-						if (fromTime!=null) 
-							start=latest(fromTime, start);
-						if (toTime!=null) 
-							stop=earliest(toTime, stop);
+						Integer start=century_start, stop=century_stop;
+						//start=senaste av -2000 och fromTime, om fromTime==null så används -2000
+						//stop= tidigaste av 2010 och toTime, om toTime==null så används 2010
+						String myFromTime = new String(fromTime);
+						String myToTime = new String(toTime);
+						//om bara ena värdet finns så är det en tidpunkt, inte ett tidsintervall
+						if (myFromTime==null) myFromTime=myToTime;
+						if (myToTime==null) myToTime=myFromTime;
+						//if (!myToTime.equals(myFromTime)) logger.error("to, from, myTo, myFrom: " + toTime +" "+ fromTime +" "+ myToTime +" "+ myFromTime);
+						
+						myFromTime=tidyTimeString(myFromTime);
+						start=latest(myFromTime, start);
+
+						myToTime=tidyTimeString(myToTime);
+						stop=earliest(myToTime, stop);
+							
 						Integer runner=start;	
 						String aTimeValue=decadeString(runner);
 						Boolean justStarted=true;
@@ -744,12 +761,6 @@ public class SamsokContentHelper extends ContentHelper {
 
 					}	
 						
-					//Här är ett test som funkade:
-					//String aCentury="1800";
-					//ip.setCurrent(IX_CENTURY, contextType);
-					//ip.addToDoc(aCentury);
-					//slut på test som funkade.
-					
 					ip.setCurrent(IX_FROMPERIODNAME, contextType);
 					appendToTextBuffer(timeText, extractSingleValue(graph, cS, rFromPeriodName, ip));
 
@@ -902,6 +913,28 @@ public class SamsokContentHelper extends ContentHelper {
 		Integer centuryFloor=(aInteger/100)*100;
 		String aCentury=String.valueOf(centuryFloor);
 		return aCentury;
+	}
+	
+	public String tidyTimeString(String aString) throws Exception {
+		String timeString=aString;
+		try {
+			if ((timeString.length()>5) && timeString.startsWith("-")) {
+				// troligen årtal före -10000
+				timeString=old_times;
+			}
+			//else if (timeString.indexOf("-"==5)) {
+			//	timeString=timeString.substring(0, 4);
+			// (innefattas av nästa case)
+			//}
+			else if (timeString.length()>4 && !timeString.startsWith("-")) {
+				timeString=timeString.substring(0, 4);
+			}
+		}
+		catch (Exception e) {
+			logger.error("Fel i tidyTimeString: " + timeString + " : " + e.getMessage());
+			throw e;
+		}
+		return timeString;
 	}
 	
 	@Override
