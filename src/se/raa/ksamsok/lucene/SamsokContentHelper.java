@@ -726,12 +726,12 @@ public class SamsokContentHelper extends ContentHelper {
 						Integer start=century_start, stop=century_stop;
 						//start=senaste av -2000 och fromTime, om fromTime==null så används -2000
 						//stop= tidigaste av 2010 och toTime, om toTime==null så används 2010
-						String myFromTime = new String(fromTime);
-						String myToTime = new String(toTime);
+						String myFromTime=null, myToTime=null;
+						if (fromTime!=null) myFromTime = new String(fromTime);
+						if (toTime!=null) myToTime = new String(toTime);
 						//om bara ena värdet finns så är det en tidpunkt, inte ett tidsintervall
 						if (myFromTime==null) myFromTime=myToTime;
 						if (myToTime==null) myToTime=myFromTime;
-						//if (!myToTime.equals(myFromTime)) logger.error("to, from, myTo, myFrom: " + toTime +" "+ fromTime +" "+ myToTime +" "+ myFromTime);
 						
 						myFromTime=tidyTimeString(myFromTime);
 						start=latest(myFromTime, start);
@@ -739,14 +739,17 @@ public class SamsokContentHelper extends ContentHelper {
 						myToTime=tidyTimeString(myToTime);
 						stop=earliest(myToTime, stop);
 							
-						Integer runner=start;	
+						Integer runner=start;
+						Integer insideRunner=0;
 						String aTimeValue=decadeString(runner);
 						Boolean justStarted=true;
+
 						while (runner<=stop) {
 							aTimeValue=decadeString(runner);
 							ip.setCurrent(IX_DECADE, contextType);
 							ip.addToDoc(aTimeValue);
-							if (runner%100==0){
+							if (insideRunner%100==0){
+								aTimeValue=centuryString(runner);
 								ip.setCurrent(IX_CENTURY, contextType);
 								ip.addToDoc(aTimeValue);
 								if (justStarted) justStarted=false;
@@ -757,6 +760,18 @@ public class SamsokContentHelper extends ContentHelper {
 								ip.addToDoc(aTimeValue);
 								justStarted=false;}
 							runner+=10;
+							insideRunner+=10;
+						}
+						if (runner-stop<10) {
+							//slutvillkorsjusteringar
+							aTimeValue=decadeString(stop);
+							ip.setCurrent(IX_DECADE, contextType);
+							ip.addToDoc(aTimeValue);
+							if (stop%100<10) {
+								aTimeValue=centuryString(stop);
+								ip.setCurrent(IX_CENTURY, contextType);
+								ip.addToDoc(aTimeValue);
+							}
 						}
 
 					}	
@@ -905,12 +920,14 @@ public class SamsokContentHelper extends ContentHelper {
 
 	public String decadeString(Integer aInteger) {
 		Integer decadeFloor=(aInteger/10)*10;
+		if (decadeFloor<0) decadeFloor-=10;
 		String aDecade=String.valueOf(decadeFloor);
 		return aDecade;
 	}
 
 	public String centuryString(Integer aInteger) {
 		Integer centuryFloor=(aInteger/100)*100;
+		if (centuryFloor<0) centuryFloor-=100;
 		String aCentury=String.valueOf(centuryFloor);
 		return aCentury;
 	}
