@@ -715,23 +715,30 @@ public class SamsokContentHelper extends ContentHelper {
 					String toTime = extractSingleValue(graph, cS, rToTime, ip);
 					appendToTextBuffer(timeText, toTime);
 
-					// flagga att det finns tiddata
+					if (fromTime!=null)
+						if (fromTime.startsWith("?")) fromTime=null;
+					if (toTime!=null)
+						if (toTime.startsWith("?")) toTime=null;
+					
+					// timeInfoExists, decade och century
 					if (fromTime != null || toTime != null) {
+						// bara då vi ska skapa århundraden och årtionden
+						// flagga först att det finns tiddata
 						timeInfoExists = true;
-					}
-
-					//DECADE AND CENTURY BLOCK
-					if (fromTime != null || toTime != null) {
-						//bara då vi ska skapa århundraden och årtionden
 						Integer start=century_start, stop=century_stop;
-						//start=senaste av -2000 och fromTime, om fromTime==null så används -2000
-						//stop= tidigaste av 2010 och toTime, om toTime==null så används 2010
+						// start=senaste av -2000 och fromTime, om fromTime==null så används -2000
+						// stop= tidigaste av 2010 och toTime, om toTime==null så används 2010
 						String myFromTime=null, myToTime=null;
 						if (fromTime!=null) myFromTime = new String(fromTime);
 						if (toTime!=null) myToTime = new String(toTime);
-						//om bara ena värdet finns så är det en tidpunkt, inte ett tidsintervall
-						if (myFromTime==null) myFromTime=myToTime;
-						if (myToTime==null) myToTime=myFromTime;
+
+						// om bara ena värdet finns så är det en tidpunkt, inte ett tidsintervall
+						if (myFromTime==null) {
+							myFromTime=myToTime;
+						}
+						if (myToTime==null) {
+							myToTime=myFromTime;
+						}
 						
 						myFromTime=tidyTimeString(myFromTime);
 						start=latest(myFromTime, start);
@@ -901,13 +908,25 @@ public class SamsokContentHelper extends ContentHelper {
 		return luceneDoc;
 	}
 
-	public Integer latest(String aString, Integer aInteger) {
-		Integer sLatest=Math.max(Integer.parseInt(aString),aInteger);
+	public Integer latest(String aString, Integer aInteger) throws Exception {
+		Integer sLatest=0;
+		try {
+			sLatest=Math.max(Integer.parseInt(aString),aInteger);
+		} catch (Exception e) {
+			logger.error("Fel i fromTime: " + aString + " längd: " + aString.length() + " : " + e.getMessage());
+			throw e;
+		}
 		return sLatest;
 	}
 
-	public Integer earliest(String aString, Integer aInteger) {
-		Integer sEarliest=Math.min(Integer.parseInt(aString),aInteger);
+	public Integer earliest(String aString, Integer aInteger) throws Exception {
+		Integer sEarliest=0;
+		try {
+			sEarliest=Math.min(Integer.parseInt(aString),aInteger);
+		} catch (Exception e) {
+			logger.error("Fel i toTime: " + aString + " längd: " + aString.length() + " : " + e.getMessage());
+			throw e;
+		}
 		return sEarliest;
 	}
 
