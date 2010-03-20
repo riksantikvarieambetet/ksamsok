@@ -764,12 +764,12 @@ public class SamsokContentHelper extends ContentHelper {
 							insideRunner+=10;
 						}
 						//slutvillkorskontroller
-						if (!dTimeValue.equals(decadeString(stop))) {
+						if (!dTimeValue.equals(decadeString(stop)) && stop>century_start) {
 							dTimeValue=decadeString(stop);
 							ip.setCurrent(IX_DECADE, contextType);
 							ip.addToDoc(dTimeValue);
 						}
-						if (!cTimeValue.equals(centuryString(stop))) {
+						if (!cTimeValue.equals(centuryString(stop)) && stop>century_start) {
 							cTimeValue=centuryString(stop);
 							ip.setCurrent(IX_CENTURY, contextType);
 							ip.addToDoc(cTimeValue);
