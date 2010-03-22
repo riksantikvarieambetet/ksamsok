@@ -40,7 +40,7 @@
 		<table>
 			<tr>
 				<td class="titel"><strong>Kortnamn:</strong></td>
-				<td><input name="kortnamn" type="text" value="<%=org.getKortNamn()%>" readonly="readonly"/></td>
+				<td><input name="kortnamn" type="text" value="<%=org.getKortnamn()%>" readonly="readonly"/></td>
 			</tr>
 			<tr>
 				<td class="titel"><strong>Namn p&aring; svenska:</strong></td>
@@ -72,11 +72,11 @@
 			</tr>
 			<tr>
 				<td class="titel"><strong>Kontaktperson:</strong></td>
-				<td><input name="kontaktperson" type="text" value="<%=org.getKontaktPerson() %>"/></td>
+				<td><input name="kontaktperson" type="text" value="<%=org.getKontaktperson()%>"/></td>
 			</tr>
 			<tr>
 				<td class="titel"><strong>E-post kontaktperson:</strong></td>
-				<td><input name="epostKontaktperson" type="text" value="<%=org.getEpostKontaktPerson() %>"/></td>
+				<td><input name="epostKontaktperson" type="text" value="<%=org.getEpostKontaktperson()%>"/></td>
 			</tr>
 			<tr>
 				<td class="titel"><strong>Websida:</strong></td>

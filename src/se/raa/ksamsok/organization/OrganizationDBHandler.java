@@ -25,7 +25,7 @@ public class OrganizationDBHandler extends DBBasedManagerImpl
 	 * Skapar en ny databashanterare
 	 * @param ds datakälls som skall användas
 	 */
-	protected OrganizationDBHandler(DataSource ds)
+	public OrganizationDBHandler(DataSource ds)
 	{
 		super(ds);
 	}
@@ -75,21 +75,22 @@ public class OrganizationDBHandler extends DBBasedManagerImpl
 			ps = c.prepareStatement(sql);
 			ps.setString(1, kortnamn);
 			rs = ps.executeQuery();
-			rs.next();
-			setOrgValues(org, rs);
-			sql = "SELECT name, beskrivning, kortnamn FROM harvestservices WHERE kortnamn= ?";
-			ps = c.prepareStatement(sql);
-			ps.setString(1, org.getKortNamn());
-			rs = ps.executeQuery();
-			List<Service> serviceList = new Vector<Service>();
-			while(rs.next()) {
-				Service s = new Service();
-				s.setNamn(rs.getString("name"));
-				s.setBeskrivning(rs.getString("beskrivning"));
-				s.setKortnamn(rs.getString("kortnamn"));
-				serviceList.add(s);
+			if(rs.next()) {
+				setOrgValues(org, rs);
+				sql = "SELECT name, beskrivning, kortnamn FROM harvestservices WHERE kortnamn= ?";
+				ps = c.prepareStatement(sql);
+				ps.setString(1, org.getKortnamn());
+				rs = ps.executeQuery();
+				List<Service> serviceList = new Vector<Service>();
+				while(rs.next()) {
+					Service s = new Service();
+					s.setNamn(rs.getString("name"));
+					s.setBeskrivning(rs.getString("beskrivning"));
+					s.setKortnamn(rs.getString("kortnamn"));
+					serviceList.add(s);
+				}
+				org.setServiceList(serviceList);
 			}
-			org.setServiceList(serviceList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -174,16 +175,26 @@ public class OrganizationDBHandler extends DBBasedManagerImpl
 			ps.setString(5, org.getAdress1());
 			ps.setString(6, org.getAdress2());
 			ps.setString(7, org.getPostadress());
-			ps.setString(8, org.getKontaktPerson());
-			ps.setString(9, org.getEpostKontaktPerson());
+			ps.setString(8, org.getKontaktperson());
+			ps.setString(9, org.getEpostKontaktperson());
 			ps.setString(10, org.getWebsida());
 			ps.setString(11, org.getWebsidaKS());
 			ps.setString(12, org.getLowressUrl());
 			ps.setString(13, org.getThumbnailUrl());
-			ps.setString(14, org.getKortNamn());
+			ps.setString(14, org.getKortnamn());
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return ps;
+	}
+	
+	public List<Organization> getAllOrganizations()
+	{
+		List<Organization> orgList = new Vector<Organization>();
+		Map<String,String> orgNameMap = getServiceOrganizationMap();
+		for(String orgShortName : orgNameMap.keySet()) {
+			orgList.add(getOrganization(orgShortName));
+		}
+		return orgList;
 	}
 }

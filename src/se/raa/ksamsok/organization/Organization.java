@@ -19,7 +19,7 @@ public class Organization
 	private String lowressUrl;
 	private String thumbnailUrl;
 	private List<Service> serviceList;
-	public String getKortNamn()
+	public String getKortnamn()
 	{
 		return kortNamn;
 	}
@@ -83,7 +83,7 @@ public class Organization
 	{
 		this.postadress = postadress;
 	}
-	public String getKontaktPerson()
+	public String getKontaktperson()
 	{
 		return kontaktPerson;
 	}
@@ -91,7 +91,7 @@ public class Organization
 	{
 		this.kontaktPerson = kontaktPerson;
 	}
-	public String getEpostKontaktPerson()
+	public String getEpostKontaktperson()
 	{
 		return epostKontaktPerson;
 	}
