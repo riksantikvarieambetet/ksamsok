@@ -68,6 +68,7 @@
             encoding="ISO-8859-1">
             <patternset>
                 <include name="**/*.java"/>
+            	<exclude name="**/*Test.java"/>
             </patternset>
 
         </javac>
