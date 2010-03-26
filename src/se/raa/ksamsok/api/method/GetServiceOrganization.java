@@ -14,7 +14,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.organization.Organization;
-import se.raa.ksamsok.organization.OrganizationDBHandler;
+import se.raa.ksamsok.organization.OrganizationDatabaseHandler;
 import se.raa.ksamsok.organization.Service;
 
 /**
@@ -60,7 +60,7 @@ public class GetServiceOrganization implements APIMethod
 		throws MissingParameterException, BadParameterException, 
 			DiagnosticException
 	{
-		OrganizationDBHandler organizationDatabaseHandler = new OrganizationDBHandler(ds);
+		OrganizationDatabaseHandler organizationDatabaseHandler = new OrganizationDatabaseHandler(ds);
 		StartEndWriter.writeStart(writer);
 		if(value.equals(ALL)) {
 			List<Organization> orgList = organizationDatabaseHandler.getAllOrganizations();

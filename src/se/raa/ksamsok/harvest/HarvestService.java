@@ -133,4 +133,16 @@ public interface HarvestService {
 	 * @param setSpec setnamn
 	 */
 	void setHarvestSetSpec(String setSpec);
+	
+	/**
+	 * Returnerar kortnamn som används för att koppla tjänst till organisation
+	 * @return
+	 */
+	String getShortName();
+	
+	/**
+	 * Sätter kortnamn för tjänst
+	 * @param shortName kortnamn
+	 */
+	void setShortName(String shortName);
 }

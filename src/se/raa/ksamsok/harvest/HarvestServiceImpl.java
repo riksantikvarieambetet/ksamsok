@@ -13,6 +13,7 @@ public class HarvestServiceImpl implements HarvestService {
 	Date lastHarvestDate;
 	Date firstIndexDate;
 	boolean alwaysHarvestEverything;
+	String shortName;
 
 	public HarvestServiceImpl() {}
 
@@ -86,6 +87,18 @@ public class HarvestServiceImpl implements HarvestService {
 
 	public void setAlwaysHarvestEverything(boolean alwaysHarvestEverything) {
 		this.alwaysHarvestEverything = alwaysHarvestEverything;
+	}
+
+	@Override
+	public String getShortName()
+	{
+		return shortName;
+	}
+
+	@Override
+	public void setShortName(String shortName)
+	{
+		this.shortName = shortName;
 	}
 
 }

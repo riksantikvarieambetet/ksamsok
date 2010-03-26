@@ -34,6 +34,7 @@
 		service.setId("tjänste-id");
 		service.setHarvestURL("http:// om OAI-PMH, file:/ om fil");
 		service.setAlwaysHarvestEverything(false);
+		service.setShortName("kortnamn");
 	}
 	Date lastHarvestDate = service.getLastHarvestDate();
 	String lastHarvest;
@@ -88,6 +89,10 @@
 					<tr>
 						<td><label for="name" class="bold">Namn:</label></td>
 						<td><input id="name" name="name" type="text" value="<%= service.getName() %>"/></td>
+					</tr>
+					<tr>
+						<td><label for="shortName" class="bold">Kortnamn:</label></td>
+						<td><input id="shortName" name="shortName" type="text" value="<%=service.getShortName() %>"/></td>
 					</tr>
 					<tr>
 						<td><label for="serviceType" class="bold">Tjänstetyp:</label></td>

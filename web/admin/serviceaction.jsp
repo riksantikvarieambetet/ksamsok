@@ -35,6 +35,7 @@
    		service.setHarvestURL(request.getParameter("harvestURL"));
    		service.setHarvestSetSpec(StringUtils.trimToNull(request.getParameter("harvestSetSpec")));
    		service.setAlwaysHarvestEverything(Boolean.valueOf(request.getParameter("alwayseverything")));
+   		service.setShortName(request.getParameter("shortName"));
    		hsm.updateService(service);
    		redirTo = "editservice.jsp?serviceId=" + serviceId;
    	} else if ("new".equals(action)) {
@@ -46,6 +47,7 @@
    		service.setHarvestURL(request.getParameter("harvestURL"));
    		service.setHarvestSetSpec(StringUtils.trimToNull(request.getParameter("harvestSetSpec")));
    		service.setAlwaysHarvestEverything(Boolean.valueOf(request.getParameter("alwayseverything")));
+   		service.setShortName(request.getParameter("shortName"));
    		hsm.createService(service);
    	} else if ("trigger".equals(action)) {
    		hsm.triggerHarvest(service);

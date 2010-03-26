@@ -24,6 +24,16 @@
         <servlet-name>SRU</servlet-name>
         <servlet-class>se.raa.ksamsok.sru.SRUServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+    	<servlet-name>externalOrgAdmin</servlet-name>
+    	<servlet-class>se.raa.ksamsok.organization.ExternalOrganizationServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>externalOrgAdmin</servlet-name>
+    	<url-pattern>/userAdmin/orgAdmin</url-pattern>
+    </servlet-mapping>
 
 	<!--
 		Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen

@@ -143,8 +143,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    try {
 	    	c = ds.getConnection();
 			pst = c.prepareStatement("insert into harvestservices " +
-					"(serviceId, name, cronstring, harvestURL, harvestSetSpec, serviceType, alwaysEverything) values " +
-					"(?, ?, ?, ?, ?, ?, ?)");
+					"(serviceId, name, cronstring, harvestURL, harvestSetSpec, serviceType, alwaysEverything, kortnamn) values " +
+					"(?, ?, ?, ?, ?, ?, ?, )");
 			int i = 0;
 			pst.setString(++i, service.getId());
 			pst.setString(++i, service.getName());
@@ -153,6 +153,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setString(++i, service.getHarvestSetSpec());
 			pst.setString(++i, service.getServiceType());
 			pst.setBoolean(++i, service.getAlwaysHarvestEverything());
+			pst.setString(++i, service.getShortName());
 
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);
@@ -224,6 +225,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		service.setCronString(rs.getString("cronstring"));
 		service.setHarvestURL(rs.getString("harvestURL"));
 		service.setHarvestSetSpec(rs.getString("harvestSetSpec"));
+		service.setShortName(rs.getString("kortnamn"));
 		Timestamp ts = rs.getTimestamp("lastHarvestDate");
 		if (ts != null) {
 			service.setLastHarvestDate(new Date(ts.getTime()));
@@ -285,7 +287,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					"harvestSetSpec = ?, " +
 					"serviceType = ?, " +
 					"lastHarvestDate = ?, " +
-					"alwaysEverything = ?" +
+					"alwaysEverything = ?, " +
+					"kortnamn = ?" +
 					"where serviceId = ?");
 			int i = 0;
 			pst.setString(++i, service.getName());
@@ -296,7 +299,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			Timestamp ts = service.getLastHarvestDate() == null ? null : new Timestamp(service.getLastHarvestDate().getTime());
 			pst.setTimestamp(++i, ts);
 			pst.setBoolean(++i, service.getAlwaysHarvestEverything());
-	
+			pst.setString(++i, service.getShortName());
 			pst.setString(++i, service.getId());
 			pst.executeUpdate();
 			DBBasedManagerImpl.commit(c);

@@ -14,6 +14,12 @@
 </head>
 <body>
 <div id="page">
+	<div id="head">
+		<form action="orgAdmin" accept-charset="UTF-8">
+			<input type="hidden" name="operation" value="passwordAdmin"/>
+			<input type="submit" value="Administrera l&ouml;senord"/>
+		</form>
+	</div>
 	<div id="choseForm">
 	<form action="orgAdmin" accept-charset="UTF-8">
 		<select name="orgChoice">

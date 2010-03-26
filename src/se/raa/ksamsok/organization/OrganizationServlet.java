@@ -3,6 +3,7 @@ package se.raa.ksamsok.organization;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -30,7 +31,7 @@ public class OrganizationServlet extends HttpServlet
 	private static final long serialVersionUID = 4513891675396512336L;
 	
 	private DataSource ds = null;
-	private OrganizationDBHandler odbh;
+	private OrganizationDatabaseHandler organizationDatabaseHandler;
 	
 	static final String DATASOURCE_NAME = "harvestdb";
 	
@@ -42,7 +43,7 @@ public class OrganizationServlet extends HttpServlet
 			Context ctx = new InitialContext();
 			Context envctx =  (Context) ctx.lookup("java:comp/env");
 			ds =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-			odbh = new OrganizationDBHandler(ds);
+			organizationDatabaseHandler = new OrganizationDatabaseHandler(ds);
 		}catch(NamingException e) {
 			e.printStackTrace();
 		}
@@ -54,13 +55,30 @@ public class OrganizationServlet extends HttpServlet
 	{
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
-		req.setAttribute("orgMap", odbh.getServiceOrganizationMap());
+		RequestDispatcher view = null;
+		view = req.getRequestDispatcher("serviceOrganizationAdmin.jsp");
+		String operation = req.getParameter("operation");
+		if(operation != null && operation.equals("passwordAdmin")) {
+			Map<String,String> passwordMap = organizationDatabaseHandler.getPasswords();
+			req.setAttribute("passwords", passwordMap);
+			view = req.getRequestDispatcher("passwordAdmin.jsp");
+		}else if(operation != null && operation.equals("updatePasswords")) {
+			Map<String,String[]> params = req.getParameterMap();
+			Map<String,String> passwordMap = new HashMap<String,String>();
+			for(Map.Entry<String, String[]> entry : params.entrySet()) {
+				if(StringUtils.startsWith(entry.getKey(), "org_") && !StringUtils.endsWith(entry.getKey(), "_pass")) {
+					passwordMap.put(params.get(entry.getKey())[0], params.get(entry.getKey() + "_pass")[0]);
+				}
+			}
+			organizationDatabaseHandler.setPassword(passwordMap);
+			req.setAttribute("passwords", organizationDatabaseHandler.getPasswords());
+			view = req.getRequestDispatcher("passwordAdmin.jsp");
+		}
+		req.setAttribute("orgMap", organizationDatabaseHandler.getServiceOrganizationMap());
 		String org = getParam(req.getParameter("orgChoice"));
 		if(org != null) {
-			req.setAttribute("orgData", odbh.getOrganization(org));
+			req.setAttribute("orgData", organizationDatabaseHandler.getOrganization(org));
 		}
-		
-		RequestDispatcher view = req.getRequestDispatcher("serviceOrganizationAdmin.jsp");
 		view.forward(req, resp);
 	}
 
@@ -90,7 +108,7 @@ public class OrganizationServlet extends HttpServlet
 			resp.setCharacterEncoding("UTF-8");
 			req.setCharacterEncoding("UTF-8");
 			Organization o = getOrganizationValues(req);
-			odbh.updateOrg(o);
+			organizationDatabaseHandler.updateOrg(o);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -104,7 +122,7 @@ public class OrganizationServlet extends HttpServlet
 	 * @return Organization böna med de data som skall uppdateras
 	 */
 	@SuppressWarnings("unchecked")
-	private Organization getOrganizationValues(HttpServletRequest req)
+	public static Organization getOrganizationValues(HttpServletRequest req)
 	{
 		Organization o = new Organization();
 		o.setKortNamn(req.getParameter("kortnamn"));

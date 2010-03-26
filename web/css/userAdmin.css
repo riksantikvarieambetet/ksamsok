@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+
+body
+{
+	background-color: #ABABAB;
+}
+
+#page
+{
+	margin: 0px 10px 0px 10px;
+}
+
+.title
+{
+	font-weight: bold;
+	text-align: right;
+}
+
+p
+{
+	font: bold medium fantasy;
+}
+
+#head
+{
+	padding-bottom: 10px;
+	border-bottom: solid medium black;
+}
+
+#content
+{
+
+}
+
+#left
+{
+	float: left;
+}
+
+#right
+{
+	margin-left: 50%;
+	padding-left: 10px;
+	border-left: thin solid black;
+}
+
+th
+{
+	text-align: left;
+}
