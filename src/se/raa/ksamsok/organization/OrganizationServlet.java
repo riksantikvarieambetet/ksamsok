@@ -30,7 +30,7 @@ public class OrganizationServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 4513891675396512336L;
 	
-	private DataSource ds = null;
+	private static DataSource ds = null;
 	private OrganizationDatabaseHandler organizationDatabaseHandler;
 	
 	static final String DATASOURCE_NAME = "harvestdb";
@@ -47,6 +47,20 @@ public class OrganizationServlet extends HttpServlet
 		}catch(NamingException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static DataSource getDataSource()
+	{
+		try {
+			if(ds == null) {
+				Context ctx = new InitialContext();
+				Context envctx =  (Context) ctx.lookup("java:comp/env");
+				ds =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
+			}
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}
+		return ds;
 	}
 
 	@Override

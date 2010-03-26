@@ -6,6 +6,10 @@
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
 <%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
+<%@page import="se.raa.ksamsok.organization.OrganizationDatabaseHandler" %>
+<%@page import="se.raa.ksamsok.organization.OrganizationServlet" %>
+<%@page import="java.util.Map" %>
+
 <%
 	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
 	HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
@@ -91,18 +95,32 @@
 						<td><input id="name" name="name" type="text" value="<%= service.getName() %>"/></td>
 					</tr>
 					<tr>
-						<td><label for="shortName" class="bold">Kortnamn:</label></td>
-						<td><input id="shortName" name="shortName" type="text" value="<%=service.getShortName() %>"/></td>
+						<td><label for="shortName" class="bold">Tillhörande institution:</label></td>
+						<td>
+							<select id="shortName" name="shortName">
+								<%OrganizationDatabaseHandler organizationDatabaseHandler = new OrganizationDatabaseHandler(OrganizationServlet.getDataSource()); 
+								if(organizationDatabaseHandler != null) {
+									Map<String,String> orgMap = organizationDatabaseHandler.getServiceOrganizationMap();
+									for(Map.Entry<String,String> entry : orgMap.entrySet()) {
+										if(entry.getKey().equals(service.getShortName())) {
+										%>
+											<option value="<%=entry.getKey() %>" selected="selected"><%=entry.getValue() %></option>
+										<%
+										}else {
+										%>
+											<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
+										<%
+										}
+									}
+								}%>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td><label for="serviceType" class="bold">Tjänstetyp:</label></td>
 						<td>
 						<% String selected = "selected=\"selected\""; %>
 							<select id="serviceType" name="serviceType">
-								<!-- TODO: ta bort
-								<option value="OAI-PMH" <%= (service.getServiceType() == null || "OAI-PMH".equals(service.getServiceType()) ? selected : "") %>>OAI-PMH skörd Dublin Core</option>
-								<option value="SIMPLE" <%=("SIMPLE".equals(service.getServiceType()) ? selected : "")%>>Från fil Dublin Core (OAI-PMH-format)</option>
-								-->
 								<option value="OAI-PMH-SAMSOK" <%= ("OAI-PMH-SAMSOK".equals(service.getServiceType()) ? selected : "") %>>OAI-PMH skörd k-samsöksformat</option>
 								<option value="SIMPLE-SAMSOK" <%=("SIMPLE-SAMSOK".equals(service.getServiceType()) ? selected : "")%>>Från fil k-samsök (OAI-PMH-format)</option>
 							</select>
