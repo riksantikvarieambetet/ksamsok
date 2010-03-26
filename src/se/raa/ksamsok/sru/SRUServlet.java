@@ -25,6 +25,8 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.search.BooleanQuery.TooManyClauses;
@@ -430,6 +432,10 @@ public class SRUServlet extends HttpServlet {
 		String maximum_records = reqParams.get("maximumRecords");
 		String record_schema = reqParams.get("recordSchema");
 		String record_packing = reqParams.get("recordPacking");
+
+		// specialfall tills vidare för sortering istället för att införa
+		// generell sortering då detta är enklare
+		boolean europeanaSort = "true".equals(reqParams.get("x-europeana-sort"));
 		/*
 		String record_xpath = request.getParameter("recordXPath");
 		String result_set_ttl = request.getParameter("resultSetTTL");
@@ -502,7 +508,17 @@ public class SRUServlet extends HttpServlet {
 				Query q = CQL2Lucene.makeQuery(rootNode);
 				int nDocs = first_record - 1 + num_hits_per_page;
 				if (q != null) {
-					hits = s.search(q, nDocs == 0 ? 1 : nDocs);
+					if (europeanaSort) {
+						// specialsortering för europeana på lucenes interna dokument-id för att
+						// alltid ha en konsekvent sorteringsordning - flera dokument kan ha samma
+						// score och då kan det vara odefinierat vilken av dem som kommer först
+						// vilket kan ge samma post om en sidobrytpunkt är just där.
+						// detta är special istället för att införa sortering generellt
+						hits = s.search(q, null, nDocs == 0 ? 1 : nDocs, new Sort(SortField.FIELD_DOC));
+					} else {
+						// måste ha minst en träff
+						hits = s.search(q, nDocs == 0 ? 1 : nDocs);
+					}
 				} else {
 					// ingen query men inget fel, ge då 0 träffar
 					hits = new TopDocs(0, null, 0);
