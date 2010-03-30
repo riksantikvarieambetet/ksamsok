@@ -181,7 +181,7 @@ public class SamsokContentHelper extends ContentHelper {
 
 	// konstanter för century och decade
 	// från vilken tidpunkt ska vi skapa särskilda index för århundraden och årtionden
-	private static final Integer century_start=-2000;
+	private static final Integer century_start=-1999;
 	// till vilken tidpunkt ska vi skapa särskilda index för århundraden och årtionden
 	private static final Integer century_stop=2010;
 	// sträng med årtal som måste vara före century_start
