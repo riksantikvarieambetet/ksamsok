@@ -173,6 +173,8 @@
 				<!-- obs, se till att ha samma matchningar här som i spec-filen -->
 				<include name="oracle-*"/>
 				<include name="ora10-*"/>
+				<include name="jstl.jar"/>
+				<include name="standard.jar"/>
 			</fileset>
 		</copy>
 

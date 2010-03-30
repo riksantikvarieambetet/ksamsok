@@ -1,5 +1,5 @@
 %define ver 1.0.0
-%define rel 29
+%define rel 30
 
 Summary: Raä K-Samsök, centralnod
 Name: raa-ksamsok_app
@@ -69,6 +69,8 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 # obs, se till att ha samma matchningar här som i build.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
+%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/standard.jar
+%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/jstl.jar
 
 %changelog
 * Fri Dec 11 2009 ant
