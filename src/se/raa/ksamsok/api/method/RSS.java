@@ -16,6 +16,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.MapFieldSelector;
 import org.apache.lucene.index.CorruptIndexException;
@@ -59,6 +60,7 @@ import com.sun.syndication.io.SyndFeedOutput;
  * från K-samsök
  * @author Henrik Hjalmarsson
  */
+@SuppressWarnings("unused")
 public class RSS extends DefaultHandler implements APIMethod
 {
 	// publika värden
@@ -74,6 +76,16 @@ public class RSS extends DefaultHandler implements APIMethod
 	private static final SAXParserFactory spf = SAXParserFactory.newInstance();
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv",	"SE"));
 	
+	// fält att hämta från lucene
+	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(
+			new String[] {
+					ContentHelper.I_IX_RDF,
+					ContentHelper.CONTEXT_SET_REC + "."
+							+ ContentHelper.IX_REC_IDENTIFIER });
+
+	private static final Logger logger = Logger.getLogger(
+	"se.raa.ksamsok.api.Search");
+
 	//privata variabler
 	private String queryString;
 	private int hitsPerPage;
@@ -135,11 +147,10 @@ public class RSS extends DefaultHandler implements APIMethod
 	{
 		try {
 			Query q = createQuery();
-			final MapFieldSelector fieldSelector = getFieldSelector();
 			int nDocs = startRecord - 1 + hitsPerPage;
 			TopDocs hits = searcher.search(q, nDocs == 0 ? 1 : nDocs);
 			int numberOfDocs = hits.totalHits;
-			doSyndFeed(numberOfDocs, nDocs, searcher, hits, fieldSelector);
+			doSyndFeed(numberOfDocs, nDocs, searcher, hits);
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO fel", "RSS.doSearch", e.getMessage(), true);
 		}
@@ -151,17 +162,15 @@ public class RSS extends DefaultHandler implements APIMethod
 	 * @param nDocs
 	 * @param searcher
 	 * @param hits
-	 * @param fieldSelector
 	 * @throws DiagnosticException
 	 */
 	private void doSyndFeed(int numberOfDocs, int nDocs, 
-			IndexSearcher searcher, TopDocs hits, 
-			MapFieldSelector fieldSelector) 
+			IndexSearcher searcher, TopDocs hits) 
 		throws DiagnosticException 
 	{
 		try {
 			SyndFeed feed = getFeed();
-			feed.setEntries(getEntries(numberOfDocs, nDocs, searcher, hits, fieldSelector));
+			feed.setEntries(getEntries(numberOfDocs, nDocs, searcher, hits));
 			SyndFeedOutput output = new SyndFeedOutput();
 			output.output(feed, writer);
 		} catch (CorruptIndexException e) {
@@ -195,7 +204,6 @@ public class RSS extends DefaultHandler implements APIMethod
 	 * @param nDocs
 	 * @param searcher
 	 * @param hits
-	 * @param fieldSelector
 	 * @param entries
 	 * @return
 	 * @throws CorruptIndexException
@@ -205,31 +213,35 @@ public class RSS extends DefaultHandler implements APIMethod
 	 * @throws DiagnosticException 
 	 */
 	protected List<SyndEntry> getEntries(int numberOfDocs, int nDocs, 
-			IndexSearcher searcher, TopDocs hits, 
-			MapFieldSelector fieldSelector) 
+			IndexSearcher searcher, TopDocs hits) 
 		throws DiagnosticException
 	{
 		List<SyndEntry> entries = new Vector<SyndEntry>();
-		HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
 		try {
 			for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++) {
-				Document doc = searcher.doc(hits.scoreDocs[i].doc,
-						fieldSelector);
-				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
 				String content = null;
-				content = hrm.getXMLData(uri);
-				entries.add(getEntry(content));
+				Document doc = searcher.doc(hits.scoreDocs[i].doc, RDF_FIELDS);
+				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
+				byte[] xmlData = doc.getBinaryValue(ContentHelper.I_IX_RDF);
+				if (xmlData != null) {
+					content = new String(xmlData, "UTF-8");
+				}
+				// TODO: NEK ta bort när allt är omindexerat
+				if (content == null) {
+					content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(uri);
+				}
+				if (content != null) {
+					entries.add(getEntry(content));	
+				} else {
+					logger.warn("Hittade inte rdf-data för " + uri);
+				}
 			}
-		}catch (ParserConfigurationException e) {
-			throw new DiagnosticException("Parser fel", "RSS.getEntries", e.getMessage(), true);
-		} catch (SAXException e) {
-			throw new DiagnosticException("SAX fel", "RSS.getEntries", e.getMessage(), true);
 		} catch (CorruptIndexException e) {
 			throw new DiagnosticException("Nånting gick fel : /", "RSS.getEntries", e.getMessage(), true);
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO fel", "RSS.getEntries", e.getMessage(), true);
 		} catch(Exception e) {
-			throw new DiagnosticException("Fel vid hämtning av data från databasen", "RSS.getEntries", e.getMessage(), true);
+			throw new DiagnosticException("Fel vid hämtning av data", "RSS.getEntries", e.getMessage(), true);
 		}
 		return entries;
 	}
@@ -263,7 +275,10 @@ public class RSS extends DefaultHandler implements APIMethod
 			if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) {
 				entry.getModules().add(getMediaModule(thumb, image));
 			}
-			entry.setPublishedDate(sdf.parse(data.getPublishDate()));
+			// SimpleDateFormat är ej trådsäker
+			synchronized (sdf) {
+				entry.setPublishedDate(sdf.parse(data.getPublishDate()));
+			}
 		} catch (ParserConfigurationException e) {
 			throw new DiagnosticException("Parser fel", "RSS.getEntry", e.getMessage(), true);
 		} catch (SAXException e) {
@@ -274,24 +289,6 @@ public class RSS extends DefaultHandler implements APIMethod
 			throw new DiagnosticException("Parser fel", "RSS.getEntry", e.getMessage(), true);
 		} catch(Exception ignore) {}
 		return entry;
-	}
-	
-	/**
-	 * skapar en MapFieldSelector
-	 * @return ett objekt av MapFieldSelector
-	 */
-	protected MapFieldSelector getFieldSelector()
-	{
-		final String[] fieldNames = 
-		{
-			ContentHelper.CONTEXT_SET_REC + "." +
-			ContentHelper.IX_REC_IDENTIFIER,
-			ContentHelper.I_IX_PRES, 
-			ContentHelper.I_IX_LON, 
-			ContentHelper.I_IX_LAT
-		};
-		
-		return new MapFieldSelector(fieldNames);
 	}
 	
 	/**

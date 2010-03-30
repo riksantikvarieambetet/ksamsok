@@ -10,7 +10,6 @@
 <%@page import="org.apache.lucene.search.TopDocs"%>
 <%@page import="org.apache.lucene.search.ScoreDoc"%>
 <%@page import="org.apache.solr.util.NumberUtils"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
 <%@page import="java.util.Map"%><html>
 	<head>
 		<title>Sök</title>
@@ -51,11 +50,9 @@
 	TopDocs hits = null;
 	String message = "";
 	IndexSearcher s = null;
-	HarvestRepositoryManager hrm = null;
 	if (query.length() > 0) {
 		try {
 			s = LuceneServlet.getInstance().borrowIndexSearcher();
-			hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
 			// fk. QueryParser är ej trådsäker
 			// vi analyzerar detta med en stemmer då vi vet att IX_TEXT analyseras vid indexering
 			// se ContentHelper.isAnalyzedIndex()
@@ -73,20 +70,23 @@
 				Document d = s.doc(sd.doc);
 				String ident = d.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
 				byte[] presBytes = d.getBinaryValue(ContentHelper.I_IX_PRES);
+				byte[] rdfBytes = d.getBinaryValue(ContentHelper.I_IX_RDF);
 				String lonLat = "kartdata saknas";
 				String lon = d.get(ContentHelper.I_IX_LON);
 				String lat = d.get(ContentHelper.I_IX_LAT);
 				if (lon != null && lat != null) {
 					lonLat = NumberUtils.SortableStr2double(lon) + " / " + NumberUtils.SortableStr2double(lat);
 				}
-				String pres = "inget innehåll";
+				String pres = "inget presentationsinnehåll";
 				if (presBytes != null) {
 					pres = new String(presBytes, "UTF-8");
 					// ful-escape-xml
 					pres = pres.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
 				}
-				String rdf = hrm.getXMLData(ident);
-				if (rdf != null) {
+				String rdf = "inget rdf-innehåll";
+				if (rdfBytes != null) {
+					rdf = new String(rdfBytes, "UTF-8");
+					// ful-escape-xml
 					rdf = rdf.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
 				}
 %>

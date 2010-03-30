@@ -45,6 +45,7 @@ import se.raa.ksamsok.lucene.ContentHelper.Index;
 /**
  * Servlet som svarar på sru-anrop och som söker i indexet.
  */
+@SuppressWarnings("unused")
 public class SRUServlet extends HttpServlet {
 
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.sru.SRUServlet");
@@ -492,16 +493,9 @@ public class SRUServlet extends HttpServlet {
 		TopDocs hits = null;
 		IndexSearcher s = null;
 		CQLParser cqlParser = new CQLParser();
-		// TODO: flytta ut som statiska
-		// TODO: bort med lon och lat då de bara används för debug
-		final String[] fieldNames = {
-				ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER,
-				ContentHelper.I_IX_PRES, ContentHelper.I_IX_LON, ContentHelper.I_IX_LAT};
-		final MapFieldSelector fieldSelector = new MapFieldSelector(fieldNames);
 
 		if (query != null && query.length() > 0) {
 			try {
-				HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
 				s = LuceneServlet.getInstance().borrowIndexSearcher();
 				CQLNode rootNode = cqlParser.parse(query);
 				CQL2Lucene.dumpQueryTree(rootNode);
@@ -531,11 +525,21 @@ public class SRUServlet extends HttpServlet {
 				numberOfRecordsWritten = true;
 				int last_record = 0;
 
+				// hämta rätt xml
+				String dataIndex = NS_SAMSOK_PRES.equals(record_schema) ? ContentHelper.I_IX_PRES : ContentHelper.I_IX_RDF;
+				// TODO: flytta ut som statiska
+				// TODO: bort med lon och lat då de bara används för debug
+				final String[] fieldNames = {
+						ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER,
+						dataIndex, ContentHelper.I_IX_LON, ContentHelper.I_IX_LAT};
+				final MapFieldSelector fieldSelector = new MapFieldSelector(fieldNames);
+
 				if (nDocs > 0 && hits.totalHits > 0 ) {
 					writer.println("  <srw:records>");
 					String content;
 					String uri;
-					for (int i=first_record - 1; i<hits.totalHits && i < first_record -1 + num_hits_per_page;i++) {
+					for (int i = first_record - 1; i < hits.totalHits && i < first_record -1 + num_hits_per_page; ++i) {
+						content = null; // rensa värde
 						// TODO: fler och bättre felkontroller
 						// TODO: stödja fler format?
 						ScoreDoc scoreDoc = hits.scoreDocs[i];
@@ -550,24 +554,15 @@ public class SRUServlet extends HttpServlet {
 									"lon=" + (lon != null ? NumberUtils.SortableStr2double(lon) : "??") +
 									" lat=" + (lat != null ? NumberUtils.SortableStr2double(lat) : "??"));
 						}
-						if (NS_SAMSOK_PRES.equals(record_schema)) {
-							byte[] pres = doc.getBinaryValue(ContentHelper.I_IX_PRES);
-							if (pres != null) {
-								content = new String(pres, "UTF-8");
-							} else {
-								content = null;
-								logger.warn("Hittade inte presentationsdata för " + uri);
-							}
-						} else {
-							// TODO: hämta från repo? eller från lucene?
-							//       fördelen med att hämta från lucene är att man kan se
-							//       alla records även om en harvest fn pågår
-							//       content = doc.get("xmlContent");
-							content = hrm.getXMLData(uri);
+						byte[] xmlData = doc.getBinaryValue(dataIndex);
+						if (xmlData != null) {
+							content = new String(xmlData, "UTF-8");
+						}
+						// TODO: NEK ta bort nedan när allt är omindexerat
+						if (content == null && ContentHelper.I_IX_RDF.equals(dataIndex)) {
+							content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(uri); 
 						}
 						if (content != null) {
-							// TODO: ta bort detta hack nu när allt ska vara lagrat utan xml-header
-							content = content.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
 
 							writer.println("  <srw:record>");
 							writer.println("     <srw:recordSchema>" + xmlEscape(record_schema) + "</srw:recordSchema>");
@@ -578,6 +573,7 @@ public class SRUServlet extends HttpServlet {
 							writer.println("     </srw:extraRecordData>");
 							writer.println("  </srw:record>");
 						} else {
+							logger.warn("Hittade inte xmldata (" + dataIndex + ") för " + uri);
 							// skriv ut en diagnostic-post istället
 							writer.println("  <srw:record>");
 							writer.println("     <srw:recordSchema>info:srw/schema/1/diagnostics-v1.1</srw:recordSchema>");

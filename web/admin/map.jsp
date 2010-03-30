@@ -10,7 +10,6 @@
 <%@page import="org.apache.lucene.search.TopDocs"%>
 <%@page import="org.apache.lucene.search.ScoreDoc"%>
 <%@page import="org.apache.solr.util.NumberUtils"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
 <%@page import="java.util.Map"%>
 <%@page import="org.apache.lucene.search.RangeFilter"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
@@ -170,11 +169,9 @@
 	TopDocs hits = null;
 	String message = "";
 	IndexSearcher s = null;
-	HarvestRepositoryManager hrm = null;
 	if (query.length() > 0 || useMapExtent || limitToService.length() > 0) {
 		try {
 			s = LuceneServlet.getInstance().borrowIndexSearcher();
-			hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
 			// fk. QueryParser är ej trådsäker
 			// vi analyzerar detta med en stemmer då vi vet att IX_TEXT analyseras vid indexering
 			// se ContentHelper.isAnalyzedIndex()
@@ -259,9 +256,13 @@
 				}
 				String rdf = null;
 				if (getRDF) {
-					rdf = hrm.getXMLData(ident);
-					if (rdf != null) {
+					byte[] rdfBytes = d.getBinaryValue(ContentHelper.I_IX_RDF);
+					if (rdfBytes != null) {
+						rdf = new String(rdfBytes, "UTF-8");
+						// ful-escape-xml
 						rdf = rdf.replaceAll("\\&","&amp;").replaceAll("<","&lt;");
+					} else {
+						rdf = "inget rdf-innehåll";
 					}
 				}
 				String htmlURL = d.get(ContentHelper.I_IX_HTML_URL);

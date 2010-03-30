@@ -370,6 +370,8 @@ public class SamsokContentHelper extends ContentHelper {
 			}
 
 			// kolla om denna post inte ska indexeras och returnera i så fall null
+			// notera att detta gör att inte posten indexeras alls vilket kräver ett
+			// specialfall i resolverservleten då den främst jobbar mot lucene-indexet
 			String itemForIndexing = extractSingleValue(graph, s, rItemForIndexing, null);
 			if ("n".equals(itemForIndexing)) {
 				return null;
@@ -883,14 +885,9 @@ public class SamsokContentHelper extends ContentHelper {
 			// lägg in specialindex
 			luceneDoc.add(new Field(IX_GEODATAEXISTS, geoDataExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
 			luceneDoc.add(new Field(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
-			
-			// TODO: ska detta lagras av lucene, vi kan annars hämta det från db
-			//       ska det lagras av lucene måste vi helst här se till att det lagras utan
-			//       xml-deklaration pss som för pres ovan
-			//       lagras det i db kan data och index vara i flux...
-			//       notera att efter införandet av itemForIndexing kan innehållet inte lagras här utan
-			//       att förändra hur den flaggan hanteras
-			//luceneDoc.add(new Field(I_IX_RDF, xmlContent, Field.Store.COMPRESS, Field.Index.NO));
+
+			// lagra rdf:en 
+			luceneDoc.add(new Field(I_IX_RDF, xmlContent.getBytes("UTF-8"), Field.Store.COMPRESS));
 		} catch (Exception e) {
 			// TODO: kasta exception/räkna felen/annat?
 			logger.error("Fel vid skapande av lucenedokument för " + identifier + ": " + e.getMessage());

@@ -39,12 +39,12 @@ public abstract class ContentHelper {
 	// systeminterna indexnamn
 
 	public static final String I_IX_PRES = "_pres";
+	public static final String I_IX_RDF = "_rdf";
 	public static final String I_IX_SERVICE = "_service";
 	public static final String I_IX_HTML_URL = "_htmlurl";
 	public static final String I_IX_MUSEUMDAT_URL = "_museumdaturl";
 	public static final String I_IX_LON = "_lon";
 	public static final String I_IX_LAT = "_lat";
-	//public static final String I_IX_RDF = "_rdf";
 	
 	// generella
 
@@ -313,6 +313,7 @@ public abstract class ContentHelper {
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);
+		addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
 		addIndex(I_IX_SERVICE, "tjänst", IndexType.VERBATIM, false);
 		addIndex(I_IX_HTML_URL, "html-representation, url", IndexType.VERBATIM, false);
 		addIndex(I_IX_MUSEUMDAT_URL, "museumdat-representation, url", IndexType.VERBATIM, false);

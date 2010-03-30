@@ -32,6 +32,7 @@ import se.raa.ksamsok.lucene.LuceneServlet;
  * Hanterar sökningar efter objekt
  * @author Henrik Hjalmarsson
  */
+@SuppressWarnings("unused")
 public class Search implements APIMethod
 {
 	protected String queryString = null;
@@ -73,6 +74,17 @@ public class Search implements APIMethod
 	
 	private static final Logger logger = Logger.getLogger(
 			"se.raa.ksamsok.api.Search");
+	// fält att hämta från lucene
+	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(
+			new String[] {
+					ContentHelper.I_IX_RDF,
+					ContentHelper.CONTEXT_SET_REC + "."
+							+ ContentHelper.IX_REC_IDENTIFIER });
+	private static final MapFieldSelector PRES_FIELDS = new MapFieldSelector(
+			new String[] {
+					ContentHelper.I_IX_PRES,
+					ContentHelper.CONTEXT_SET_REC + "."
+							+ ContentHelper.IX_REC_IDENTIFIER });
 	
 	/**
 	 * skapar ett Search objekt
@@ -135,27 +147,13 @@ public class Search implements APIMethod
 			recordSchema = RECORD_SCHEMA_BASE + recordSchema + "#";
 		}
 	}
-	
-	protected MapFieldSelector getFieldSelector()
-	{
-		final String[] fieldNames = 
-		{
-			ContentHelper.CONTEXT_SET_REC + "." +
-			ContentHelper.IX_REC_IDENTIFIER,
-			ContentHelper.I_IX_PRES, 
-			ContentHelper.I_IX_LON, 
-			ContentHelper.I_IX_LAT
-		};
-		return new MapFieldSelector(fieldNames);
-	}
 
 	@Override
 	public void performMethod()
 		throws BadParameterException, DiagnosticException
 	{	
 		Query query = createQuery();
-		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher();
-		final MapFieldSelector fieldSelector = getFieldSelector(); 
+		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher(); 
 		TopDocs hits = null;
 		int numberOfDocs = 0;
 		try { 
@@ -172,7 +170,7 @@ public class Search implements APIMethod
 			}
 			numberOfDocs = hits.totalHits;
 			writeHead(numberOfDocs);
-			writeRecords(searcher, fieldSelector, hits, numberOfDocs, nDocs);
+			writeRecords(searcher, hits, numberOfDocs, nDocs);
 			writeFot();
 		}catch(BooleanQuery.TooManyClauses e) {
 			throw new BadParameterException("query gav upphov till för många booleska operationer", "Search.performMethod", query.toString(), true);
@@ -217,7 +215,6 @@ public class Search implements APIMethod
 	 */
 	protected void writeContent(String content, double score)
 	{
-		content = content.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
 		writer.println("<record>");
 		writer.println(content);
 		writer.println("<rel:score xmlns:rel=\"info:srw/extension/2/relevancy-1.0\">" + score + "</rel:score>");
@@ -225,27 +222,26 @@ public class Search implements APIMethod
 	}
 	
 	/**
-	 * hämtar content
-	 * @param doc
-	 * @param uri
-	 * @param hrm
-	 * @return
-	 * @throws Exception
+	 * Hämtar xml-innehåll (fragment) från ett lucene-dokument som en sträng.
+	 * @param doc lucenedokument
+	 * @param uri postens uri (används bara för log)
+	 * @param xmlIndex index att hämta innehåll från
+	 * @return xml-fragment med antingen presentations-xml eller rdf; null om data saknas
+	 * @throws Exception vid teckenkodningsfel (bör ej inträffa) 
 	 */
-	protected String getContent(Document doc, String uri, HarvestRepositoryManager hrm) 
-		throws Exception
-	{
+	protected String getContent(Document doc, String uri, String xmlIndex) 
+		throws Exception {
 		String content = null;
-		if (NS_SAMSOK_PRES.equals(recordSchema)) {
-			byte[] pres = doc.getBinaryValue(ContentHelper.I_IX_PRES);
-			if (pres != null) {
-				content = new String(pres, "UTF-8");
-			} else {
-				content = null;
-				logger.warn("Hittade inte presentationsdata för " + uri);
-			}
-		} else {
-			content = hrm.getXMLData(uri);
+		byte[] xmlData = doc.getBinaryValue(xmlIndex);
+		if (xmlData != null) {
+			content = new String(xmlData, "UTF-8");
+		}
+		// TODO: NEK: ta bort när allt är omindexerat
+		if (content == null) {
+			content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(uri);
+		}
+		if (content == null) {
+			logger.warn("Hittade inte xml-data (" + xmlIndex + ") för " + uri);
 		}
 		return content;
 	}
@@ -258,18 +254,26 @@ public class Search implements APIMethod
 	 * @param numberOfDocs
 	 * @param nDocs
 	 */
-	private void writeRecords(IndexSearcher searcher, 
-			final MapFieldSelector fieldSelector, TopDocs hits, 
+	private void writeRecords(IndexSearcher searcher, TopDocs hits, 
 			int numberOfDocs, int nDocs)
 		throws DiagnosticException
 	{
 		try {
-			HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
+			final String xmlIndex;
+			final MapFieldSelector fieldSelector;
+			// ta fram rätt data
+			if (NS_SAMSOK_PRES.equals(recordSchema)) {
+				fieldSelector = PRES_FIELDS;
+				xmlIndex = ContentHelper.I_IX_PRES;
+			} else {
+				fieldSelector = RDF_FIELDS;
+				xmlIndex = ContentHelper.I_IX_RDF;
+			}
 			for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++) {
 				Document doc = searcher.doc(hits.scoreDocs[i].doc, fieldSelector);
 				double score = hits.scoreDocs[i].score;
 				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
-				writeContent(getContent(doc, uri, hrm), score);
+				writeContent(getContent(doc, uri, xmlIndex), score);
 			}
 		}catch(UnsupportedEncodingException e) 	{
 			//kan ej uppstå
@@ -278,7 +282,7 @@ public class Search implements APIMethod
 		}catch(IOException e) {
 			throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Search.writeRecods", e.getMessage(), true);
 		}catch(Exception e) {
-			throw new DiagnosticException("Fel uppstod när data skulle hämtas från databasen. Var god försök senare", "Search.writeRecords", e.getMessage(), true);
+			throw new DiagnosticException("Fel uppstod när data skulle hämtas. Var god försök senare", "Search.writeRecords", e.getMessage(), true);
 		}finally {
 			writer.println("</records>");
 		}

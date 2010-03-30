@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.MapFieldSelector;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -31,6 +32,15 @@ public class ResolverServlet extends HttpServlet {
 	private static final Logger logger = Logger.getLogger(ResolverServlet.class);
 	// urlar att redirecta till får inte starta med detta (gemener)
 	private static final String badURLPrefix = "http://kulturarvsdata.se/";
+
+	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(
+			new String[] { ContentHelper.I_IX_RDF });
+	private static final MapFieldSelector PRES_FIELDS = new MapFieldSelector(
+			new String[] { ContentHelper.I_IX_PRES });
+	private static final MapFieldSelector HTML_FIELDS = new MapFieldSelector(
+			new String[] { ContentHelper.I_IX_HTML_URL });
+	private static final MapFieldSelector MUSEUMDAT_FIELDS = new MapFieldSelector(
+			new String[] { ContentHelper.I_IX_MUSEUMDAT_URL });
 
 	/**
 	 * Enum för de olika formaten som stöds.
@@ -151,6 +161,7 @@ public class ResolverServlet extends HttpServlet {
 			PrintWriter writer;
 			String urli, urle;
 			String content = null;
+			byte[] xmlContent;
 			urli = "http://kulturarvsdata.se/" + path;
 			Query q = new TermQuery(new Term(ContentHelper.IX_ITEMID, urli));
 			if (logger.isDebugEnabled()) {
@@ -161,46 +172,73 @@ public class ResolverServlet extends HttpServlet {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Could not find record for q: " + q);
 				}
+				// specialfall för att hantera itemForIndexing=n, bara för rdf
+				// vid detta fall ligger rdf:en bara i databasen och inte i lucene
+				// men det är ett undantagsfall så vi provar alltid lucene först
+				if (format == Format.RDF) {
+					content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(urli);
+					if (content == null) {
+						logger.warn("Could not find rdf for record with uri: " + urli);
+						resp.sendError(404, "No rdf for record");
+						return;
+					}
+					resp.setContentType("application/rdf+xml; charset=UTF-8");
+					writer = resp.getWriter();
+					// xml-header
+					writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+					writer.println(content);
+					writer.flush();
+					return;
+				}
 				resp.sendError(404, "Could not find record for path");
 				return;
 			}
-			Document d = is.doc(hits.scoreDocs[0].doc);
+			Document d;
 			switch (format) {
 			case RDF:
-				resp.setContentType("application/rdf+xml; charset=UTF-8");
-				writer = resp.getWriter();
-				urli = d.get(ContentHelper.IX_ITEMID);
-				// xml-header
-				writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-				content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(urli);
+				d = is.doc(hits.scoreDocs[0].doc, RDF_FIELDS);
+				xmlContent = d.getBinaryValue(ContentHelper.I_IX_RDF);
+				if (xmlContent != null) {
+					content = new String(xmlContent, "UTF-8");
+				}
+				// TODO: NEK ta bort när allt är omindexerat
+				if (content == null) {
+					content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(urli);
+				}
 				if (content == null) {
 					logger.warn("Could not find rdf for record with uri: " + urli);
 					resp.sendError(404, "No rdf for record");
 					return;
 				}
+				resp.setContentType("application/rdf+xml; charset=UTF-8");
+				writer = resp.getWriter();
+				// xml-header
+				writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 				writer.println(content);
 				writer.flush();
 				break;
 
 			case XML:
-				resp.setContentType("text/xml; charset=UTF-8");
-				writer = resp.getWriter();
-				// xml-header
-				writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-				byte[] pres = d.getBinaryValue(ContentHelper.I_IX_PRES);
-				if (pres != null) {
-					content = new String(pres, "UTF-8");
+				d = is.doc(hits.scoreDocs[0].doc, PRES_FIELDS);
+				xmlContent = d.getBinaryValue(ContentHelper.I_IX_PRES);
+				if (xmlContent != null) {
+					content = new String(xmlContent, "UTF-8");
 				}
 				if (content == null) {
 					logger.warn("Could not find xml for record with uri: " + urli);
 					resp.sendError(404, "No presentation xml for record");
 					return;
 				}
+				resp.setContentType("text/xml; charset=UTF-8");
+				writer = resp.getWriter();
+				// xml-header
+				writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 				writer.println(content);
 				writer.flush();
 				break;
 
 			case HTML:
+				d = is.doc(hits.scoreDocs[0].doc, HTML_FIELDS);
 				urle = d.get(ContentHelper.I_IX_HTML_URL);
 				if (urle != null) {
 					if (urle.toLowerCase().startsWith(badURLPrefix)) {
@@ -219,6 +257,7 @@ public class ResolverServlet extends HttpServlet {
 				break;
 
 			case MUSEUMDAT:
+				d = is.doc(hits.scoreDocs[0].doc, MUSEUMDAT_FIELDS);
 				urle = d.get(ContentHelper.I_IX_MUSEUMDAT_URL);
 				if (urle != null) {
 					if (urle.toLowerCase().startsWith(badURLPrefix)) {
