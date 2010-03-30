@@ -308,8 +308,8 @@ public abstract class ContentHelper {
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
 		addIndex(IX_GEODATAEXISTS, "Om objektet har spatial data (j/n)", IndexType.TOLOWERCASE);
 		addIndex(IX_TIMEINFOEXISTS, "Om objektet har tidsangivelse (i " + IX_FROMTIME + "/" + IX_TOTIME + ") (j/n)", IndexType.TOLOWERCASE);
-		addIndex(IX_CENTURY, "De århundraden som objektet omfattar", IndexType.VERBATIM);
-		addIndex(IX_DECADE, "De årtionden som objektet omfattar", IndexType.VERBATIM);
+		addIndex(IX_CENTURY, "De århundraden som objektet omfattar", IndexType.ISO8601DATEYEAR);
+		addIndex(IX_DECADE, "De årtionden som objektet omfattar", IndexType.ISO8601DATEYEAR);
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);
