@@ -115,7 +115,7 @@ public class OAIPMHHandler extends DefaultHandler {
 				String status = attributes.getValue("", "status");
 				if ("deleted".equals(status)) {
 					if (!sm.canSendDeletes()) {
-						throw new SAXException("Service is nt supposed to handle deletes but did in fact send one!");
+						throw new SAXException("Service is not supposed to handle deletes but did in fact send one!");
 					}
 					deleteRecord = true;
 				}

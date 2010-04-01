@@ -89,7 +89,7 @@ public class LuceneServlet extends HttpServlet {
 		isDestroying = false;
 		iwBorrowed = false;
 		try {
-			// förskö hämta katalogvärde från systemproperties, ta LUCENE_DEFAULT annars
+			// försök hämta katalogvärde från systemproperties, ta LUCENE_DEFAULT annars
 			String dir = System.getProperty(D_LUCENE_INDEX_DIR, LUCENE_DEFAULT);
 			File fDir = new File(dir);
 			if (!fDir.exists() || !fDir.isDirectory() || !fDir.canWrite()) {
