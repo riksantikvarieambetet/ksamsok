@@ -15,7 +15,7 @@ public interface APIMethod
 	/** namnet på metod parametern */
 	public static final String METHOD = "method";
 	/** API nyckel parameter namn */
-	public static final String API_KEY_PARAM_NAME = "x-apikey";
+	public static final String API_KEY_PARAM_NAME = "x-api";
 	
 	/**
 	 * utför API metod
