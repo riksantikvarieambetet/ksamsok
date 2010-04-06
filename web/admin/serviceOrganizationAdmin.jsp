@@ -45,23 +45,23 @@
 		<input name="update" value="ja" type="hidden"/>
 		<table>
 			<tr>
-				<td class="titel"><strong>Kortnamn:</strong></td>
+				<td class="titel"><strong>F&ouml;rkortning f&ouml;r organisationen:</strong></td>
 				<td><input name="kortnamn" type="text" value="<%=org.getKortnamn()%>" readonly="readonly"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>Namn p&aring; svenska:</strong></td>
+				<td class="titel"><strong>Organisationens svenska namn:</strong></td>
 				<td><input name="namnSwe" type="text" value="<%=org.getNamnSwe()%>"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>Namn p&aring; engelska:</strong></td>
+				<td class="titel"><strong>Organisationens engelska namn:</strong></td>
 				<td><input name="namnEng" type="text" value="<%=org.getNamnEng()%>"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>Beskrivning p&aring; svenska:</strong></td>
+				<td class="titel"><strong>Beskrivning av organisationen p&aring; svenska:</strong></td>
 				<td><textarea cols="20" rows="5" name="beskrivSwe"><%=org.getBeskrivSwe()%></textarea></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>Beskrivning p&aring; engelska:</strong></td>
+				<td class="titel"><strong>Beskrivning av organisationen p&aring; engelska:</strong></td>
 				<td><textarea name="beskrivEng" rows="5" cols="20" ><%=org.getBeskrivEng()%></textarea></td>
 			</tr>
 			<tr>
@@ -77,7 +77,7 @@
 				<td><input name="postadress" type="text" value="<%=org.getPostadress() %>"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>Kontaktperson:</strong></td>
+				<td class="titel"><strong>Kontaktperson f&ouml;r leverans till K-Sams&ouml;k:</strong></td>
 				<td><input name="kontaktperson" type="text" value="<%=org.getKontaktperson()%>"/></td>
 			</tr>
 			<tr>
@@ -85,19 +85,19 @@
 				<td><input name="epostKontaktperson" type="text" value="<%=org.getEpostKontaktperson()%>"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>Websida:</strong></td>
+				<td class="titel"><strong>Organisationens webbplats:</strong></td>
 				<td><input name="websida" type="text" value="<%=org.getWebsida() %>"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>K-Samsök relaterad websida:</strong></td>
+				<td class="titel"><strong>K-Sams&ouml;krelaterad sida:</strong></td>
 				<td><input name="websidaKS" type="text" value="<%=org.getWebsidaKS() %>"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>L&aring;guppl&ouml;st bild:</strong></td>
+				<td class="titel"><strong>URL till l&aring;guppl&ouml;st bild:</strong></td>
 				<td><input name="lowressUrl" type="text" value="<%=org.getLowressUrl() %>"/></td>
 			</tr>
 			<tr>
-				<td class="titel"><strong>Tumnagel:</strong></td>
+				<td class="titel"><strong>URL till tummnagel:</strong></td>
 				<td><input name="thumbnailUrl" type="text" value="<%=org.getThumbnailUrl() %>"/></td>
 			</tr>
 			<tr class="submit">

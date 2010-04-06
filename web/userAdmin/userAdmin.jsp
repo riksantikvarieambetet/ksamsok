@@ -53,31 +53,31 @@
 					<div id="left">
 						<table>
 							<tr>
-								<td class="title">Kortnamn:</td>
+								<td class="title">F&ouml;rkortning f&ouml;r organisationen:</td>
 								<td>
 									<input type="text" name="kortnamn" value="${requestScope.orgData.kortnamn}" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Namn p&aring; svenska:</td>
+								<td class="title">Organisationens svenska namn:</td>
 								<td>
 									<input type="text" name="namnSwe" value="${requestScope.orgData.namnSwe }"/>
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Namn p&aring; engelska:</td>
+								<td class="title">Organisationens engelska namn:</td>
 								<td>
 									<input type="text" name="namnEng" value="${requestScope.orgData.namnEng }"/> 
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Beskrivning p&aring; svenska:</td>
+								<td class="title">Beskrivning av organisationen p&aring; svenska:</td>
 								<td>
 									<textarea name="beskrivSwe" rows="5" cols="20">${requestScope.orgData.beskrivSwe }</textarea>
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Beskrivning p&aring; engelska:</td>
+								<td class="title">Beskrivning av organisationen p&aring; engelska:</td>
 								<td>
 									<textarea name="beskrivEng" rows="5" cols="20">${requestScope.orgData.beskrivEng }</textarea>
 								</td>
@@ -101,7 +101,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Kontaktperson:</td>
+								<td class="title">Kontaktperson för leverans till K-Sams&ouml;k:</td>
 								<td>
 									<input type="text" name="kontaktperson" value="${requestScope.orgData.kontaktperson }"/>
 								</td>
@@ -113,25 +113,25 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Websida:</td>
+								<td class="title">Organisationens webbplats:</td>
 								<td>
 									<input type="text" name="websida" value="${requestScope.orgData.websida }"/>
 								</td>
 							</tr>
 							<tr>
-								<td class="title">K-Sams&ouml;k relaterad websida:</td>
+								<td class="title">K-Sams&ouml;krelaterad sida:</td>
 								<td>
 									<input type="text" name="websidaKS" value="${requestScope.orgData.websidaKS }"/>
 								</td>
 							</tr>
 							<tr>
-								<td class="title">L&aring;guppl&ouml;st bild URL:</td>
+								<td class="title">URL till l&aring;guppl&ouml;st bild (logoty el dyl):</td>
 								<td>
 									<input type="text" name="lowressUrl" value="${requestScope.orgData.lowressUrl }"/>
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Thumnagel URL:</td>
+								<td class="title">URL till tummnagel (logoty el dyl):</td>
 								<td>
 									<input type="text" name="thumbnailUrl" value="${requestScope.orgData.thumbnailUrl }"/>
 								</td>
