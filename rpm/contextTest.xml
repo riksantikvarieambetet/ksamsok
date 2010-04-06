@@ -21,7 +21,7 @@
     <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
     		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		maxActive="10" maxIdle="5" maxWait="-1"
-		username="KSAMSOK" password="ksamsok_1" driverClassName="oracle.jdbc.OracleDriver"
+		username="KSAMSOK" password="ksamsok" driverClassName="oracle.jdbc.OracleDriver"
 		url="jdbc:oracle:thin:@ux-ra-utvdb.raa.se:1521:UTV10"
 		testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
 		timeBetweenEvictionRunsMillis="300000"
