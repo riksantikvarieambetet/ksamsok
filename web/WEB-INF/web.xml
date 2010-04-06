@@ -34,6 +34,16 @@
     	<servlet-name>externalOrgAdmin</servlet-name>
     	<url-pattern>/userAdmin/orgAdmin</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+    	<servlet-name>statistic</servlet-name>
+    	<servlet-class>se.raa.ksamsok.statistic.StatisticServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>statistic</servlet-name>
+    	<url-pattern>/admin/statistic</url-pattern>
+    </servlet-mapping>
 
 	<!--
 		Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen

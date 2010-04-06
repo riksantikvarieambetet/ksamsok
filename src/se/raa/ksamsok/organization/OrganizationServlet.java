@@ -33,7 +33,7 @@ public class OrganizationServlet extends HttpServlet
 	private static DataSource ds = null;
 	private OrganizationDatabaseHandler organizationDatabaseHandler;
 	
-	static final String DATASOURCE_NAME = "harvestdb";
+	private static final String DATASOURCE_NAME = "harvestdb";
 	
 	@Override
 	public void init(ServletConfig conf) 
@@ -49,6 +49,10 @@ public class OrganizationServlet extends HttpServlet
 		}
 	}
 	
+	/**
+	 * Returnerar en DataSource
+	 * @return
+	 */
 	public static DataSource getDataSource()
 	{
 		try {
@@ -63,6 +67,7 @@ public class OrganizationServlet extends HttpServlet
 		return ds;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException

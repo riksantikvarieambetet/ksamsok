@@ -86,6 +86,12 @@ public class APIMethodFactory
 		return m;
 	}
 	
+	/**
+	 * Returnerar ett objekt av getServiceOrganization
+	 * @param writer skrivare som skall användas för att skriva resultatet
+	 * @param params in parametrar
+	 * @return getServiceOrganization Objekt
+	 */
 	private static APIMethod getGetServiceOrganizationsObject(PrintWriter writer, Map<String,String> params)
 	{
 		GetServiceOrganization m = null;
@@ -200,8 +206,13 @@ public class APIMethodFactory
 		return m;
 	}
 
-	/*
-	 * skapar ett Statistic objekt
+	/**
+	 * Skapar ett Statistic objekt
+	 * @param params inparametrar
+	 * @param writer skriver resultatet
+	 * @return Statistik objekt
+	 * @throws MissingParameterException
+	 * @throws BadParameterException
 	 */
 	private static APIMethod getStatisticObject(Map<String, String> params,
 			PrintWriter writer)
@@ -234,7 +245,7 @@ public class APIMethodFactory
 		//sätter valfria parametrar
 		int hitsPerPage = getHitsPerPage(params.get(Search.HITS_PER_PAGE));
 		int startRecord = getStartRecord(params.get(Search.START_RECORD));
-		m = new Search(query, hitsPerPage, startRecord, writer);
+		m = new Search(query, hitsPerPage, startRecord, writer, params.get(APIMethod.API_KEY_PARAM_NAME));
 		m.sortBy(params.get(Search.SORT));
 		m.sortDesc(getSortConfig(params.get(Search.SORT), params.get(Search.SORT_CONFIG)));
 		m.setRecordSchema(params.get(Search.RECORD_SCHEMA));

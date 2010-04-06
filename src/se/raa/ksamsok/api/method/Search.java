@@ -3,11 +3,14 @@ package se.raa.ksamsok.api.method;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.MapFieldSelector;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -23,6 +26,8 @@ import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
+import se.raa.ksamsok.api.util.statisticLogg.StatisticLoggData;
+import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.harvest.HarvesterServlet;
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -42,6 +47,7 @@ public class Search implements APIMethod
 	protected String sort = null;
 	protected boolean sortDesc = false;
 	protected String recordSchema = null;
+	private String APIKey;
 
 	/** standardvärdet för antalet träffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 50;
@@ -64,8 +70,7 @@ public class Search implements APIMethod
 	/** parametervärde för ascending sort */
 	public static final String SORT_ASC = "asc";
 	/** record shema för presentations data */
-	public static final String NS_SAMSOK_PRES =
-		"http://kulturarvsdata.se/presentation#";
+	public static final String NS_SAMSOK_PRES =	"http://kulturarvsdata.se/presentation#";
 	/** parameternamn för record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
@@ -94,8 +99,9 @@ public class Search implements APIMethod
 	 * @param writer skrivaren som skall användas för att skriva svaret
 	 */
 	public Search(String queryString, int hitsPerPage, int startRecord,
-				PrintWriter writer)
+				PrintWriter writer, String APIKey)
 	{
+		this.APIKey = APIKey;
 		this.queryString = queryString;
 		this.writer = writer;
 		//kontrollerar att hitsPerPage och startRecord har tillåtna värden
@@ -156,7 +162,8 @@ public class Search implements APIMethod
 		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher(); 
 		TopDocs hits = null;
 		int numberOfDocs = 0;
-		try { 
+		try {
+			loggData(query, searcher);
 			int nDocs = startRecord - 1 + hitsPerPage;
 			//här görs sökningen
 			if(sort == null) {
@@ -180,6 +187,34 @@ public class Search implements APIMethod
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
 	}
+	
+	/**
+	 * Loggar data för sökningen
+	 * @param query
+	 * @param searcher
+	 * @throws DiagnosticException
+	 */
+	private void loggData(Query query, IndexSearcher searcher)
+		throws DiagnosticException
+	{
+		try {
+			Query tempQuery = query.rewrite(searcher.getIndexReader());
+			Set<Term> termSet = new HashSet<Term>();
+			tempQuery.extractTerms(termSet);
+			for(Term t : termSet) {
+				if(t.field().equals("text")) {
+					StatisticLoggData data = new StatisticLoggData();
+					data.setParam(t.field());
+					data.setAPIKey(APIKey);
+					data.setQueryString(t.text());
+					StatisticLogger.addToQueue(data);
+					break;
+				}
+			}
+		}catch(IOException e) {
+			throw new DiagnosticException("Oväntat IO fel", "se.raa.ksamsok.api.method.Search", null, true);
+		}
+	}
 
 	/**
 	 * skriver ut nedre del av XML svar
@@ -189,8 +224,7 @@ public class Search implements APIMethod
 		writer.println("<echo>");
 		writer.println("<startRecord>" + startRecord + "</startRecord>");
 		writer.println("<hitsPerPage>" + hitsPerPage + "</hitsPerPage>");
-		writer.println("<query>" + StaticMethods.xmlEscape(queryString) +
-				"</query>");
+		writer.println("<query>" + StaticMethods.xmlEscape(queryString) + "</query>");
 		writer.println("</echo>");
 		StartEndWriter.writeEnd(writer);
 		StartEndWriter.hasFoot(true);

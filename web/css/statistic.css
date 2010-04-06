@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+body
+{
+	background-color: #ABABAB;
+}
+
+#page
+{
+	margin: 0px 10px 0px 10px;
+}
+
+#head
+{
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: medium solid black;
+}
+
+#overview
+{
+	
+}
+
+#hideable
+{
+	margin-top: 10px;
+}
+
+#toggle
+{
+	margin-bottom: 10px;
+	border: thin groove black;
+	padding: 5px;
+	background-color: gray;
+}
+
+#toggle:HOVER
+{
+	border: medium groove black;
+}
+
+label
+{
+	font-weight: bold;
+}
+
+table tr td th
+{
+	padding: 5px;
+	border-collapse: collapse;
+}
+
+tr td
+{
+	border: thin solid black;
+	border-collapse: collapse;
+}
+
+#statistic
+{
+}
+
