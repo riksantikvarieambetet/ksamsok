@@ -860,8 +860,8 @@ public class SamsokContentHelper extends ContentHelper {
 				geoDataExists = true;
 
 				String gml = gmlGeometries.getFirst();
-				if (gmlGeometries.size() > 1 && logger.isInfoEnabled()) {
-					logger.info("Hämtade " + gmlGeometries.size() +
+				if (gmlGeometries.size() > 1 && logger.isDebugEnabled()) {
+					logger.debug("Hämtade " + gmlGeometries.size() +
 							" geometrier för " + identifier + ", kommer bara " +
 							"att använda den första");
 				}
