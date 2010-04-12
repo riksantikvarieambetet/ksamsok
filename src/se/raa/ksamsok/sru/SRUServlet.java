@@ -2,6 +2,10 @@ package se.raa.ksamsok.sru;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -35,12 +40,17 @@ import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
+import org.z3950.zing.cql.MissingParameterException;
 
-import se.raa.ksamsok.harvest.HarvestRepositoryManager;
+import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.util.statisticLogg.StatisticLoggData;
+import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
+import se.raa.ksamsok.harvest.DBBasedManagerImpl;
 import se.raa.ksamsok.harvest.HarvesterServlet;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 import se.raa.ksamsok.lucene.ContentHelper.Index;
+import se.raa.ksamsok.organization.OrganizationServlet;
 
 /**
  * Servlet som svarar på sru-anrop och som söker i indexet.
@@ -68,6 +78,9 @@ public class SRUServlet extends HttpServlet {
 
 	private static final int DEFAULT_NUM_RECORDS = 10;
 	private static final int MAX_NUM_RECORDS = 500;
+	
+	private DataSource ds = null;
+	private Set<String> APIKeys;
 
 	// TODO: bättre datastruktur för att kunna använda i explain och överallt
 	private static final Map<String, String> knownSchemas = new HashMap<String, String>();
@@ -85,12 +98,59 @@ public class SRUServlet extends HttpServlet {
 			knownSchemas.put(NS_SAMSOK_PRES, NS_SAMSOK_PRES);
 			knownSchemas.put(PREFIX_NS_SAMSOK_PRES, NS_SAMSOK_PRES);
 		}
+		ds = OrganizationServlet.getDataSource();
+		createAPIKeySet();
+	}
+	
+	private void createAPIKeySet()
+	{
+		APIKeys = new HashSet<String>();
+		Connection c = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			c = ds.getConnection();
+			String sql = "SELECT apikey FROM apikeys";
+			ps = c.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				APIKeys.add(rs.getString("apikey"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBBasedManagerImpl.closeDBResources(rs, ps, c);
+		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		doGet(req, resp);
+	}
+	
+	private void storeOverviewStatistics(String APIKey)
+		throws MissingParameterException
+	{
+		if(APIKey != null && APIKeys.contains(APIKey)) {
+			Connection c = null;
+			PreparedStatement ps = null;
+			try {
+				c = ds.getConnection();
+				String sql = "UPDATE apikeys SET total=total+1 WHERE apikey=?";
+				ps = c.prepareStatement(sql);
+				ps.setString(1, APIKey);
+				ps.executeUpdate();
+				DBBasedManagerImpl.commit(c);
+			}catch(SQLException e) {
+				DBBasedManagerImpl.rollback(c);
+				e.printStackTrace();
+			}finally {
+				DBBasedManagerImpl.closeDBResources(null, ps, c);
+			}
+		}else {
+			throw new MissingParameterException("API nyckel saknas eller är ogiltig");
+		}
 	}
 
 	@Override
@@ -103,11 +163,18 @@ public class SRUServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new ServletException("Fel i query-sträng", e);
 		}
+		
 		String operation = reqParams.get("operation");
 		// tala om att det är xml vi skickar 
 		resp.setContentType("text/xml; charset=UTF-8");
 		XMLStreamWriter xmlsw = null;
 		PrintWriter writer = resp.getWriter();
+		try {
+			storeOverviewStatistics(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
+		}catch(MissingParameterException e) {
+			diagnostics(writer, 10, "Missing or invalid API key");
+			return;
+		}
 		try {
 			/* bort tills vidare
 			xmlsw = xmlof.createXMLStreamWriter(writer);
@@ -500,6 +567,21 @@ public class SRUServlet extends HttpServlet {
 				CQLNode rootNode = cqlParser.parse(query);
 				CQL2Lucene.dumpQueryTree(rootNode);
 				Query q = CQL2Lucene.makeQuery(rootNode);
+				
+				//lagrar statistik
+				Query tempQuery = q.rewrite(s.getIndexReader());
+				Set<Term> termSet = new HashSet<Term>();
+				tempQuery.extractTerms(termSet);
+				for(Term t : termSet) {
+					if(t.field().equals("text")) {
+						StatisticLoggData data = new StatisticLoggData();
+						data.setAPIKey(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
+						data.setParam(t.field());
+						data.setQueryString(t.text());
+						StatisticLogger.addToQueue(data);
+						break;
+					}
+				}
 				int nDocs = first_record - 1 + num_hits_per_page;
 				if (q != null) {
 					if (europeanaSort) {
