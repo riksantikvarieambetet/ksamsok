@@ -1,8 +1,6 @@
 package se.raa.ksamsok.organization;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
+
+import se.raa.ksamsok.api.util.StaticMethods;
 
 /**
  * Servlet som hanterar uppdateringar och visningar av information om
@@ -94,29 +94,11 @@ public class OrganizationServlet extends HttpServlet
 			view = req.getRequestDispatcher("passwordAdmin.jsp");
 		}
 		req.setAttribute("orgMap", organizationDatabaseHandler.getServiceOrganizationMap());
-		String org = getParam(req.getParameter("orgChoice"));
+		String org = StaticMethods.getParam(req.getParameter("orgChoice"));
 		if(org != null) {
 			req.setAttribute("orgData", organizationDatabaseHandler.getOrganization(org));
 		}
 		view.forward(req, resp);
-	}
-
-	/**
-	 * Hämtar ut parametrar med rätt teckenkodning
-	 * @param param parametern som skall hämtas ut
-	 * @return parametern i rätt teckenkodning
-	 */
-	private String getParam(String param)
-	{
-		try { //TODO vet inte om detta är ultimat, men det funkar ;)
-			if(param != null) {
-				param = URLDecoder.decode(param, "UTF-8");
-				param = new String(param.getBytes("ISO-8859-1"), "UTF-8");
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return param;
 	}
 
 	@Override

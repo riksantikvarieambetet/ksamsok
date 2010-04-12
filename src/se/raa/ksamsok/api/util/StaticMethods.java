@@ -1,5 +1,7 @@
 package se.raa.ksamsok.api.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -92,5 +94,23 @@ public class StaticMethods
 		result = StringUtils.replace(result, " ", "%20");
 		result = StringUtils.replace(result, "&", "%26");
 		return result;
+	}
+	
+	/**
+	 * Hämtar ut parametrar med rätt teckenkodning
+	 * @param param parametern som skall hämtas ut
+	 * @return parametern i rätt teckenkodning
+	 */
+	public static String getParam(String param)
+	{
+		try { //TODO vet inte om detta är ultimat, men det funkar ;)
+			if(param != null) {
+				param = URLDecoder.decode(param, "UTF-8");
+				param = new String(param.getBytes("ISO-8859-1"), "UTF-8");
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return param;
 	}
 }

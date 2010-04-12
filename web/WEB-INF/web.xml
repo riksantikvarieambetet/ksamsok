@@ -26,6 +26,16 @@
     </servlet>
     
     <servlet>
+    	<servlet-name>APIKey</servlet-name>
+    	<servlet-class>se.raa.ksamsok.apikey.APIKeyServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>APIKey</servlet-name>
+    	<url-pattern>/admin/apiKeyAdmin</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
     	<servlet-name>externalOrgAdmin</servlet-name>
     	<servlet-class>se.raa.ksamsok.organization.ExternalOrganizationServlet</servlet-class>
     </servlet>

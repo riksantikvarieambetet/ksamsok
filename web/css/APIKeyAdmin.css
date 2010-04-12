@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+body
+{
+	background-color: #ABABAB;
+}
+
+#page
+{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#head
+{
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: medium black solid;
+}
+
+#addKey
+{
+	padding: 5px;
+	border: solid thin black;
+	background-color: gray;
+	text-align: right;
+}
+
+#addKey:HOVER
+{
+	border: groove medium black;
+}
+
+#hideable
+{
+	margin: 10px 0px 10px 0px;
+}
+
+.title
+{
+	font-weight: bold;
+}
+
+#content
+{
+	margin: 10px 0px 10px 0px;
+}
