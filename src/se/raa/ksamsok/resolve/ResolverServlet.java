@@ -177,18 +177,15 @@ public class ResolverServlet extends HttpServlet {
 				// men det är ett undantagsfall så vi provar alltid lucene först
 				if (format == Format.RDF) {
 					content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(urli);
-					if (content == null) {
-						logger.warn("Could not find rdf for record with uri: " + urli);
-						resp.sendError(404, "No rdf for record");
+					if (content != null) {
+						resp.setContentType("application/rdf+xml; charset=UTF-8");
+						writer = resp.getWriter();
+						// xml-header
+						writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+						writer.println(content);
+						writer.flush();
 						return;
 					}
-					resp.setContentType("application/rdf+xml; charset=UTF-8");
-					writer = resp.getWriter();
-					// xml-header
-					writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-					writer.println(content);
-					writer.flush();
-					return;
 				}
 				resp.sendError(404, "Could not find record for path");
 				return;
