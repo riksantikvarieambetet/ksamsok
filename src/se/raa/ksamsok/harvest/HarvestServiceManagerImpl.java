@@ -156,7 +156,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setString(++i, service.getShortName());
 
 			pst.executeUpdate();
-			DBBasedManagerImpl.commit(c);
+			DBUtil.commit(c);
 			if (logger.isInfoEnabled()) {
 				logger.info("Created new service with ID: " + service.getId());
 			}
@@ -166,11 +166,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				logger.warn("Problem to schedule job for service: " + service.getId(), e);
 			}
 	    } catch (Exception e) {
-	    	DBBasedManagerImpl.rollback(c);
+	    	DBUtil.rollback(c);
 	    	logger.error("Error when creating new service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
-	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
+	    	DBUtil.closeDBResources(null, pst, c);
 	    }
 	}
 
@@ -188,7 +188,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				service = newServiceInstance(rs);
 			}
 	    } finally {
-	    	DBBasedManagerImpl.closeDBResources(rs, pst, c);
+	    	DBUtil.closeDBResources(rs, pst, c);
 	    }
 	    return service;
 	}
@@ -208,7 +208,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    		services.add(service);
 	    	}
 		} finally {
-			DBBasedManagerImpl.closeDBResources(rs, pst, c);
+			DBUtil.closeDBResources(rs, pst, c);
 		}
 		return services;
 	}
@@ -302,7 +302,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setString(++i, service.getShortName());
 			pst.setString(++i, service.getId());
 			pst.executeUpdate();
-			DBBasedManagerImpl.commit(c);
+			DBUtil.commit(c);
 			if (logger.isInfoEnabled()) {
 				logger.info("Updated service with ID: " + service.getId());
 			}
@@ -329,11 +329,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				}
 			}			
 	    } catch (Exception e) {
-	    	DBBasedManagerImpl.rollback(c);
+	    	DBUtil.rollback(c);
 	    	logger.error("Error when updating service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
-	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
+	    	DBUtil.closeDBResources(null, pst, c);
 	    }
 	}
 
@@ -353,16 +353,16 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setTimestamp(1, ts);
 			pst.setString(2, service.getId());
 			pst.executeUpdate();
-			DBBasedManagerImpl.commit(c);
+			DBUtil.commit(c);
 			if (logger.isInfoEnabled()) {
 				logger.info("Updated date for service with ID: " + service.getId());
 			}
 	    } catch (Exception e) {
-	    	DBBasedManagerImpl.rollback(c);
+	    	DBUtil.rollback(c);
 	    	logger.error("Error when updating date for service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
-	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
+	    	DBUtil.closeDBResources(null, pst, c);
 	    }
 	}
 
@@ -387,18 +387,18 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setTimestamp(1, ts);
 			pst.setString(2, service.getId());
 			pst.executeUpdate();
-			DBBasedManagerImpl.commit(c);
+			DBUtil.commit(c);
 			if (logger.isInfoEnabled()) {
 				logger.info("Updated first indexing date for service with ID: " +
 						service.getId());
 			}
 	    } catch (Exception e) {
-	    	DBBasedManagerImpl.rollback(c);
+	    	DBUtil.rollback(c);
 	    	logger.error("Error when updating först indexing date for service with ID: " +
 	    			service.getId(), e);
 	    	throw e;
 	    } finally {
-	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
+	    	DBUtil.closeDBResources(null, pst, c);
 	    }
 	}
 
@@ -410,7 +410,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst = c.prepareStatement("delete from harvestservices where serviceId = ?");
 			pst.setString(1, service.getId());
 			pst.executeUpdate();
-			DBBasedManagerImpl.commit(c);
+			DBUtil.commit(c);
 			if (logger.isInfoEnabled()) {
 				logger.info("Removed service with ID: " + service.getId());
 			}
@@ -423,11 +423,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			// rensa data i repo (rdf + ev spatialt data)
 			hrm.deleteData(service);
 	    } catch (Exception e) {
-	    	DBBasedManagerImpl.rollback(c);
+	    	DBUtil.rollback(c);
 	    	logger.error("Error when removing service with ID: " + service.getId(), e);
 	    	throw e;
 	    } finally {
-	    	DBBasedManagerImpl.closeDBResources(null, pst, c);
+	    	DBUtil.closeDBResources(null, pst, c);
 	    }
 	}
 

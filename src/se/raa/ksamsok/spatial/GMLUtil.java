@@ -149,6 +149,8 @@ public class GMLUtil {
 	 * en publik default-konstruktor).<br/>
 	 * Om man ej vill använda det spatiala stödet alls kan man stänga av det genom att
 	 * sätta flaggan -Dsamsok.spatial=false.
+	 * Den hämtade instansen initieras också (med init()) och innan den släpps till gc måste
+	 * destroy() anropas för att släppa hållna resurser.
 	 * 
 	 * @param serviceId tjänst
 	 * @param c databasuppkoppling
@@ -168,7 +170,14 @@ public class GMLUtil {
 							className + ")", t);
 				}
 				if (gmlDbWriter != null) {
-					gmlDbWriter.init(serviceId, c);
+					try {
+						gmlDbWriter.init(serviceId, c);
+					} catch (Throwable t) {
+						logger.error("Misslyckades att initiera instans av GMLDBWriter (" +
+								className + ")", t);
+						gmlDbWriter.destroy();
+						gmlDbWriter = null;
+					}
 				}
 			}
 		}

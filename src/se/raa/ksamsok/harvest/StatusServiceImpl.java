@@ -157,9 +157,9 @@ public class StatusServiceImpl implements StatusService {
 		} catch (Exception e) {
 			Logger.getLogger(this.getClass()).error(
 					"Error when fetching old log messages for service " + service.getId(), e);
-			DBBasedManagerImpl.rollback(c);
+			DBUtil.rollback(c);
 		} finally {
-			DBBasedManagerImpl.closeDBResources(rs, pst, c);
+			DBUtil.closeDBResources(rs, pst, c);
 		}
 		
 		if (statusLog == null) {
@@ -187,9 +187,9 @@ public class StatusServiceImpl implements StatusService {
 			Logger.getLogger(this.getClass()).error(
 					"Error when storing log messages for service " + service.getId() +
 					": " + message, e);
-			DBBasedManagerImpl.rollback(c);
+			DBUtil.rollback(c);
 		} finally {
-			DBBasedManagerImpl.closeDBResources(null, pst, c);
+			DBUtil.closeDBResources(null, pst, c);
 		}
 	}
 
@@ -206,9 +206,9 @@ public class StatusServiceImpl implements StatusService {
 		} catch (Exception e) {
 			Logger.getLogger(this.getClass()).error(
 					"Error when purging log messages for service " + service.getId(), e);
-			DBBasedManagerImpl.rollback(c);
+			DBUtil.rollback(c);
 		} finally {
-			DBBasedManagerImpl.closeDBResources(null, pst, c);
+			DBUtil.closeDBResources(null, pst, c);
 		}
 	}
 }

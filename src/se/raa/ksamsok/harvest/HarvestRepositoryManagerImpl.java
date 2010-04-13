@@ -54,44 +54,60 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			c = ds.getConnection();
 			SAXParser p = spf.newSAXParser();
 			h = new OAIPMHHandler(ss, service, getContentHelper(service), sm, c, ts);
-			// ta bort alla gamla poster om inte denna tjänst klarar persistenta deletes 
 			if (!sm.handlesPersistentDeletes()) {
+				// ta bort alla gamla poster om inte denna tjänst klarar persistenta deletes
+				// inget tas egentligen bort utan posternas status sätts till pending
 				h.deleteAllFromThisService();
+			} else {
+				// nollställ status för att bättre klara en inkrementell
+				// skörd efter en misslyckad full skörd
+				h.resetTmpStatus();
 			}
+			// gå igenom xml-filen och uppdatera databasen med filens poster
 			p.parse(xmlFile, h);
+			// gör utestående commit och uppdatera räknare inför statusuppdatering
 			h.commitAndUpdateCounters();
-
+			// uppdatera status och data för berörda poster samt nollställ temp-kolumner
+			// OBS att commit görs i anropet nedan nu när den gör batch-commits
+			h.updateTmpStatus();
 			// flagga för att något har uppdaterats
 			updated = (h.getDeleted() > 0 || h.getInserted() > 0 || h.getUpdated() > 0);
 			ss.setStatusTextAndLog(service, "Stored harvest (i/u/d " + h.getInserted() +
 					"/" + h.getUpdated() + "/" + h.getDeleted() + ")");
 		} catch (Throwable e) {
-			rollback(c);
+			DBUtil.rollback(c);
 			if (h != null) {
 				ss.setStatusTextAndLog(service, "Stored part of harvest before error (i/u/d " +
 						h.getInserted() + "/" + h.getUpdated() + "/" + h.getDeleted() + ")");
+				// försök återställ status för poster till normaltillstånd
+				// hängslen och livrem då status också sätts om i start av denna metod
+				try {
+					ss.setStatusText(service, "Attempting to reset status for records");
+					h.resetTmpStatus();
+				} catch (Throwable t) {
+					ss.setStatusTextAndLog(service, "An error occured while attempting to " +
+							"reset status after harvest storing failed: " +
+							t.getMessage());
+				}
 			}
 			logger.error(serviceId + ", error when storing harvest: " + e.getMessage());
 			throw new Exception(e);
 		} finally {
-			closeDBResources(null, null, c);
+			DBUtil.closeDBResources(null, null, c);
 			if (logger.isInfoEnabled() && h != null) {
 				logger.info(serviceId +
 						" (committed), deleted: " + h.getDeleted() +
 						", new: " + h.getInserted() +
 						", changed: " + h.getUpdated());
 			}
-		}
-		// rapportera eventuella problemmeddelanden
-		Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
-		if (problemMessages != null && problemMessages.size() > 0) {
-			ss.setStatusTextAndLog(service, "Note! Problem when storing harvest");
-			logger.warn(serviceId + ", got the following error when storing the harvest: ");
-			for (String uri: problemMessages.keySet()) {
-				ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
-				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
+			// frigör resurser såsom prepared statements etc
+			if (h != null) {
+				h.destroy();
 			}
 		}
+		// rapportera eventuella problemmeddelanden
+		reportAndClearProblemMessages(service, "storing harvest");
+
 		return updated;
 	}
 
@@ -115,9 +131,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				}
 				serviceId = service.getId();
 				c = ds.getConnection();
-				String sql = "select xmldata from content where serviceId = ?";
+				String sql;
 				if (ts != null) {
-					sql = "select uri, xmldata from content where serviceId = ? and changed > ?";
+					sql = "select uri, deleted, xmldata from content where serviceId = ? and changed > ?";
+				} else {
+					sql = "select xmldata from content where serviceId = ? and deleted is null";
 				}
 				pst = c.prepareStatement(sql);
 				pst.setString(1, serviceId);
@@ -141,6 +159,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					if (ts != null) {
 						uri = rs.getString("uri");
 						iw.deleteDocuments(new Term(ContentHelper.IX_ITEMID, uri));
+						if (rs.getTimestamp("deleted") != null) {
+							// om borttagen, gå till nästa
+							continue;
+						}
 					}
 					xmlContent = rs.getString("xmldata");
 					Document doc = helper.createLuceneDocument(service, xmlContent);
@@ -183,7 +205,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				if (logger.isInfoEnabled()) {
 					logger.info(service.getId() +
 							", updated index - done, " + (ts == null ?
-									"first removed and then inserted " :
+									"first removed all and then inserted " :
 									"updated ") + i +
 							" records in the lucene index, time: " +
 							runTime + " (" + speed + ")");
@@ -199,19 +221,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				logger.error(serviceId + ", error when updating lucene index", e);
 				throw e;
 			} finally {
-				closeDBResources(rs, pst, c);
+				DBUtil.closeDBResources(rs, pst, c);
 				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
 			}
 			// rapportera eventuella problemmeddelanden
-			Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
-			if (problemMessages != null && problemMessages.size() > 0) {
-				ss.setStatusTextAndLog(service, "Note! Problem when indexing ");
-				logger.warn(serviceId + ", got following problem when indexing: ");
-				for (String uri: problemMessages.keySet()) {
-					ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
-					logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
-				}
-			}
+			reportAndClearProblemMessages(service, "indexing");
 		}
 	}
 
@@ -256,16 +270,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			} finally {
 				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
 			}
-			// rapportera eventuella problemmeddelanden
-			Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
-			if (problemMessages != null && problemMessages.size() > 0) {
-				ss.setStatusTextAndLog(service, "Note! Problem when removing index ");
-				logger.warn(serviceId + ", got following problem when removing index: ");
-				for (String uri: problemMessages.keySet()) {
-					ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
-					logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
-				}
-			}
 		}
 	}
 
@@ -292,14 +296,14 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				iw = LuceneServlet.getInstance().borrowIndexWriter();
 				iw.deleteDocuments(new Term(ContentHelper.I_IX_SERVICE, serviceId));
 				iw.prepareCommit();
-				commit(c);
+				DBUtil.commit(c);
 				iw.commit();
 				refreshIndex = true;
 				if (logger.isInfoEnabled()) {
 					logger.info("Removed all records for " + serviceId);
 				}
 			} catch (Exception e) {
-				rollback(c);
+				DBUtil.rollback(c);
 				if (iw != null) {
 					try {
 						iw.rollback();
@@ -310,7 +314,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				logger.error(serviceId + ", error at delete", e);
 				throw e;
 			} finally {
-				closeDBResources(null, pst, c);
+				DBUtil.closeDBResources(null, pst, c);
 				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
 			}
 		}
@@ -323,7 +327,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
-			pst = c.prepareStatement("select xmldata from content where uri = ?");
+			pst = c.prepareStatement("select xmldata from content where uri = ? and deleted is null");
 			pst.setString(1, uri);
 			rs = pst.executeQuery();
 			if (rs.next()) {
@@ -334,7 +338,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			logger.error(e.getMessage());
 			throw e;
 		} finally {
-			closeDBResources(rs, pst, c);
+			DBUtil.closeDBResources(rs, pst, c);
 		}
 		return xmlContent;
 	}
@@ -361,7 +365,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		try {
 			serviceId = service.getId();
 			c = ds.getConnection();
-			String sql = "select count(*) from content where serviceId = ?";
+			String sql = "select count(*) from content where serviceId = ? and deleted is null";
 			if (ts != null) {
 				sql += " and changed > ?";
 			}
@@ -378,7 +382,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			logger.error(serviceId + ", error when fetching number of records", e);
 			throw e;
 		} finally {
-			closeDBResources(rs, pst, c);
+			DBUtil.closeDBResources(rs, pst, c);
 		}
 		return count;
 	}
@@ -386,6 +390,24 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	@Override
 	public File getSpoolFile(HarvestService service) {
 		return new File(spoolDir, service.getId() + "_.xml");
+	}
+
+	/**
+	 * Rensa och rapportera ev problemmeddelanden till statusservicen och logga. 
+	 * @param service tjänst
+	 * @param operation operation för loggmeddelande, kort format (eng)
+	 */
+	private void reportAndClearProblemMessages(HarvestService service, String operation) {
+		// rapportera eventuella problemmeddelanden
+		Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
+		if (problemMessages != null && problemMessages.size() > 0) {
+			ss.setStatusTextAndLog(service, "Note! Problem(s) when " + operation + " ");
+			logger.warn(service.getId() + ", got following problem(s) when " + operation + ": ");
+			for (String uri: problemMessages.keySet()) {
+				ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
+				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
+			}
+		}
 	}
 
 	/**

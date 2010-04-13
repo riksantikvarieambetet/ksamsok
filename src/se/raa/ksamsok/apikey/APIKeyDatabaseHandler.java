@@ -10,6 +10,7 @@ import java.util.Vector;
 import javax.sql.DataSource;
 
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.statistic.APIKey;
 
 public class APIKeyDatabaseHandler extends DBBasedManagerImpl
@@ -37,10 +38,10 @@ public class APIKeyDatabaseHandler extends DBBasedManagerImpl
 				APIKeys.add(key);
 			}
 		} catch (SQLException e) {
-			rollback(c);
+			DBUtil.rollback(c);
 			e.printStackTrace();
 		}finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return APIKeys;
 	}
@@ -59,12 +60,12 @@ public class APIKeyDatabaseHandler extends DBBasedManagerImpl
 			ps = c.prepareStatement(sql);
 			ps.setString(1, APIKey);
 			ps.executeUpdate();
-			commit(c);
+			DBUtil.commit(c);
 		}catch(SQLException e) {
-			rollback(c);
+			DBUtil.rollback(c);
 			e.printStackTrace();
 		}finally {
-			closeDBResources(null, ps, c);
+			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
 	
@@ -80,12 +81,12 @@ public class APIKeyDatabaseHandler extends DBBasedManagerImpl
 			ps.setString(++i, APIKey);
 			ps.setString(++i, owner);
 			ps.executeUpdate();
-			commit(c);
+			DBUtil.commit(c);
 		}catch(SQLException e) {
-			rollback(c);
+			DBUtil.rollback(c);
 			e.printStackTrace();
 		}finally {
-			closeDBResources(null, ps, c);
+			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
 }

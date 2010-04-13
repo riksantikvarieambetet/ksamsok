@@ -23,7 +23,7 @@ public class OracleGMLDBWriter extends AbstractGMLDBWriter {
 	}
 
 	@Override
-	public void init(String serviceId, Connection c) {
+	public void init(String serviceId, Connection c) throws Exception {
 		// måste vara en oracle-connection för att det ska funka med GML-klassen nedan
 		// hämta ut underliggande oracle-uppkopplingen med ett hack
 		if (c instanceof OracleConnection == false) {

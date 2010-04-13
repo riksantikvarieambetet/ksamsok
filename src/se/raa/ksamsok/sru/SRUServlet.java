@@ -46,6 +46,7 @@ import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.util.statisticLogg.StatisticLoggData;
 import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.harvest.HarvesterServlet;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
@@ -102,8 +103,7 @@ public class SRUServlet extends HttpServlet {
 		createAPIKeySet();
 	}
 	
-	private void createAPIKeySet()
-	{
+	private void createAPIKeySet() {
 		APIKeys = new HashSet<String>();
 		Connection c = null;
 		PreparedStatement ps = null;
@@ -113,13 +113,13 @@ public class SRUServlet extends HttpServlet {
 			String sql = "SELECT apikey FROM apikeys";
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				APIKeys.add(rs.getString("apikey"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			DBBasedManagerImpl.closeDBResources(rs, ps, c);
+		} finally {
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 	}
 
@@ -130,9 +130,8 @@ public class SRUServlet extends HttpServlet {
 	}
 	
 	private void storeOverviewStatistics(String APIKey)
-		throws MissingParameterException
-	{
-		if(APIKey != null && APIKeys.contains(APIKey)) {
+		throws MissingParameterException {
+		if (APIKey != null && APIKeys.contains(APIKey)) {
 			Connection c = null;
 			PreparedStatement ps = null;
 			try {
@@ -141,14 +140,14 @@ public class SRUServlet extends HttpServlet {
 				ps = c.prepareStatement(sql);
 				ps.setString(1, APIKey);
 				ps.executeUpdate();
-				DBBasedManagerImpl.commit(c);
-			}catch(SQLException e) {
-				DBBasedManagerImpl.rollback(c);
+				DBUtil.commit(c);
+			} catch(SQLException e) {
+				DBUtil.rollback(c);
 				e.printStackTrace();
-			}finally {
-				DBBasedManagerImpl.closeDBResources(null, ps, c);
+			} finally {
+				DBUtil.closeDBResources(null, ps, c);
 			}
-		}else {
+		} else {
 			throw new MissingParameterException("API nyckel saknas eller är ogiltig");
 		}
 	}
@@ -171,7 +170,7 @@ public class SRUServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		try {
 			storeOverviewStatistics(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
-		}catch(MissingParameterException e) {
+		} catch(MissingParameterException e) {
 			diagnostics(writer, 10, "Missing or invalid API key");
 			return;
 		}
@@ -572,8 +571,8 @@ public class SRUServlet extends HttpServlet {
 				Query tempQuery = q.rewrite(s.getIndexReader());
 				Set<Term> termSet = new HashSet<Term>();
 				tempQuery.extractTerms(termSet);
-				for(Term t : termSet) {
-					if(t.field().equals("text")) {
+				for (Term t : termSet) {
+					if (t.field().equals("text")) {
 						StatisticLoggData data = new StatisticLoggData();
 						data.setAPIKey(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
 						data.setParam(t.field());

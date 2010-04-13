@@ -24,13 +24,18 @@ uri varchar(1024),
 oaiuri varchar(1024),
 serviceId varchar(20),
 changed timestamp,
-xmldata clob
+xmldata clob,
+added timestamp,
+deleted timestamp,
+datestamp timestamp,
+status integer not null
 );
 
 alter table content add constraint pk_content primary key (uri) using index tablespace KSAMSOK_INDX;
 create index ix_content_serv_oai on content (serviceId, oaiURI) tablespace KSAMSOK_INDX;
 create index ix_content_serv on content (serviceId) tablespace KSAMSOK_INDX;
 create index ix_content_oai on content (oaiURI) tablespace KSAMSOK_INDX;
+create index ix_content_serv_status on content (serviceId, status) tablespace KSAMSOK_INDX;
 
 --drop table servicelog
 create table servicelog (

@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 
 /**
  * Tråd som ligger o körs i bakgrunden. Detta för att sökningar skall kunna komma in och 
@@ -101,12 +101,12 @@ public class StatisticLogger implements Runnable
 				}else {
 					insertStatistic(ps, c, data);
 				}
-				DBBasedManagerImpl.commit(c);
+				DBUtil.commit(c);
 			} catch (SQLException e) {
-				DBBasedManagerImpl.rollback(c);
+				DBUtil.rollback(c);
 				e.printStackTrace();
 			}finally {
-				DBBasedManagerImpl.closeDBResources(null, ps, c);
+				DBUtil.closeDBResources(null, ps, c);
 			}
 		}
 	}
@@ -175,7 +175,7 @@ public class StatisticLogger implements Runnable
 		ps.setString(++i, data.getQueryString());
 		ResultSet rs = ps.executeQuery();
 		boolean exists = rs.next();
-		DBBasedManagerImpl.closeDBResources(rs, null, null);
+		DBUtil.closeDBResources(rs, null, null);
 		return exists;
 	}
 	

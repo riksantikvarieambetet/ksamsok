@@ -12,6 +12,7 @@ import java.util.Vector;
 import javax.sql.DataSource;
 
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 
 /**
  * Klass för att hantera databas graj för att modda organisationers
@@ -52,7 +53,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			closeDBResources(rs, pst, c);
+			DBUtil.closeDBResources(rs, pst, c);
 		}
 		return map;
 	}
@@ -94,7 +95,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return org;
 	}
@@ -150,12 +151,12 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 				ps = c.prepareStatement(sql);
 				ps.executeUpdate();
 			}
-			commit(c);
+			DBUtil.commit(c);
 		} catch (SQLException e) {
-			rollback(c);
+			DBUtil.rollback(c);
 			e.printStackTrace();
 		}finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 	}
 	
@@ -229,7 +230,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return authentic;
 	}
@@ -257,7 +258,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return passwordMap;
 	}
@@ -280,11 +281,11 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 				ps.setString(2, entry.getKey());
 				ps.executeUpdate();
 			}
-			commit(c);
+			DBUtil.commit(c);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 	}
 }

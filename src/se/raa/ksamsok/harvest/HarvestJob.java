@@ -263,10 +263,10 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 
 				long fsizeMb = spoolFile.length() / (1024 * 1024);
 				// lagra skörd i repot
-				ss.setStatusTextAndLog(service, "Storing data in repos (" + numRecords + " records, appr " +
+				ss.setStatusTextAndLog(service, "Storing data in repo (" + numRecords + " records, appr " +
 						fsizeMb + "MB)");
 				if (logger.isDebugEnabled()) {
-					logger.debug(serviceId + ", storing data in repos (" + numRecords + " records, appr " +
+					logger.debug(serviceId + ", storing data in repo (" + numRecords + " records, appr " +
 						fsizeMb + "MB)");
 				}
 				ss.setStep(service, Step.STORE);

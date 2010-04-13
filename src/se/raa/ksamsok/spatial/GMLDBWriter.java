@@ -15,34 +15,44 @@ public interface GMLDBWriter {
 	 * Initierar instansen med värden för aktuell tjänst och databas.
 	 * @param serviceId id för tjänsten
 	 * @param c en uppkoppling mot databasen
+	 * @throws Exception vid problem
 	 */
-	void init(String serviceId, Connection c);
+	void init(String serviceId, Connection c) throws Exception;
+
+	/**
+	 * Frigör eventuella resurser instansen håller.
+	 */
+	void destroy();
 
 	/**
 	 * Anropas vid insert av post.
 	 * @param gmlInfoHolder gmldatahållare
+	 * @return antal inlagda geometrier
 	 * @throws Exception vid fel
 	 */
-	void insert(GMLInfoHolder gmlInfoHolder) throws Exception;
+	int insert(GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
 	 * Anropas vid update av post.
 	 * @param gmlInfoHolder gmldatahållare
+	 * @return antal ändringar (inlagda + borttagna)
 	 * @throws Exception vid fel
 	 */
-	void update(GMLInfoHolder gmlInfoHolder) throws Exception;
+	int update(GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
 	 * Anropas när en post tas bort.
-	 * @param oaiURI oaiURI
+	 * @param identifier uri
+	 * @return antal borttagna
 	 * @throws Exception vid fel
 	 */
-	void delete(String oaiURI) throws Exception;
+	int delete(String identifier) throws Exception;
 
 	/**
-	 * Anropas vid rensning av alla poster för denna tjänst.
-	 * @throws Exception vid fel
+	 * Anropas för att ta bort alla geometrier i databasen för tjänsten.
+	 * Används enbart i samband med rensning av repository för en tjänst.
+	 * @throws Exception
 	 */
-	void deleteAllForService() throws Exception;
+	int deleteAllForService() throws Exception;
 
 }

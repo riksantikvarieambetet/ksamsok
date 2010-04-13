@@ -3,7 +3,7 @@ package se.raa.ksamsok.spatial;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 
 /**
  * Basklass som kan användas för att implementera databasspecifika instanser av
@@ -13,75 +13,85 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 
 	protected String serviceId;
 	protected Connection c;
+	protected PreparedStatement deleteByUriPst;
+	protected PreparedStatement insertPst;
 
 	protected AbstractGMLDBWriter() {
 	}
 
 	@Override
-	public void init(String serviceId, Connection c) {
+	public void init(String serviceId, Connection c) throws Exception {
 		this.serviceId = serviceId;
 		this.c = c;
+		// förbered några frekvent använda databas-statements
+		this.insertPst = c.prepareStatement("insert into geometries " +
+				"(uri, serviceId, name, geometry) values (?, ? , ?, ?)");
+		this.deleteByUriPst = c.prepareStatement("delete from geometries where uri = ?");
 	}
 
 	@Override
-	public void insert(GMLInfoHolder gmlInfoHolder) throws Exception {
+	public void destroy() {
+		DBUtil.closeDBResources(null, deleteByUriPst, null);
+		DBUtil.closeDBResources(null, insertPst, null);
+		deleteByUriPst = null;
+		insertPst = null;
+		c = null;
+	}
+
+	@Override
+	public int insert(GMLInfoHolder gmlInfoHolder) throws Exception {
+		int inserted = 0;
 		if (gmlInfoHolder.hasGeometries()) {
-			PreparedStatement pst = null; 
-			try {
-				pst = c.prepareStatement("insert into geometries " +
-				"(uri, serviceId, name, geometry) values (?, ? , ?, ?)");
-				pst.setString(1, gmlInfoHolder.getIdentifier());
-				pst.setString(2, serviceId);
-				pst.setString(3, gmlInfoHolder.getName());
-				for (String gml: gmlInfoHolder.getGmlGeometries()) {
-					Object g = convertToNative(gml);
-					pst.setObject(4, g);
-					pst.executeUpdate();
-				}
-			} catch (Exception t) {
-				t.printStackTrace();
-				throw t;
-			} finally {
-				DBBasedManagerImpl.closeDBResources(null, pst, null);
+			//pst = c.prepareStatement("insert into geometries " +
+			//"(uri, serviceId, name, geometry) values (?, ? , ?, ?)");
+			insertPst.setString(1, gmlInfoHolder.getIdentifier());
+			insertPst.setString(2, serviceId);
+			insertPst.setString(3, gmlInfoHolder.getName());
+			for (String gml: gmlInfoHolder.getGmlGeometries()) {
+				Object g = convertToNative(gml);
+				insertPst.setObject(4, g);
+				inserted += insertPst.executeUpdate();
 			}
 		}
+		return inserted;
 	}
 
 	@Override
-	public void update(GMLInfoHolder gmlInfoHolder) throws Exception {
+	public int update(GMLInfoHolder gmlInfoHolder) throws Exception {
 		// ta bort alla och sen stoppa in nya - det kan vara fler/färre än innan så
 		// det är enklare att rensa och stoppa in på nytt än att försöka uppdatera
 		// befintliga tupler
-		delete(gmlInfoHolder.getIdentifier());
-		insert(gmlInfoHolder);
+		int updated = 0;
+		updated += delete(gmlInfoHolder.getIdentifier());
+		updated += insert(gmlInfoHolder);
+		return updated;
 	}
 
 	@Override
-	public void delete(String identifier) throws Exception {
+	public int delete(String identifier) throws Exception {
+		int deleted = 0;
 		if (identifier == null) {
-			return;
+			return deleted;
 		}
-		PreparedStatement pst = null; 
-		try {
-			// TODO: lägga på serviceId som villkor också?
-			pst = c.prepareStatement("delete from geometries where uri = ?");
-			pst.setString(1, identifier);
-			pst.executeUpdate();
-		} finally {
-			DBBasedManagerImpl.closeDBResources(null, pst, null);
-		}
+		// TODO: lägga på serviceId som villkor också?
+		//pst = c.prepareStatement("delete from geometries where uri = ?");
+		deleteByUriPst.setString(1, identifier);
+		deleted = deleteByUriPst.executeUpdate();
+		return deleted;
 	}
 
 	@Override
-	public void deleteAllForService() throws Exception {
-		PreparedStatement pst = null; 
+	public int deleteAllForService() throws Exception {
+		int deleted = 0;
+		PreparedStatement pst = null;
 		try {
 			pst = c.prepareStatement("delete from geometries where serviceId = ?");
 			pst.setString(1, serviceId);
-			pst.executeUpdate();
+			deleted = pst.executeUpdate();
 		} finally {
-			DBBasedManagerImpl.closeDBResources(null, pst, null);
+			DBUtil.closeDBResources(null, pst, null);
 		}
+		return deleted;
 	}
 
 	/**

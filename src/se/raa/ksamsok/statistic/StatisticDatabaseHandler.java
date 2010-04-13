@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 
 /**
  * Databashanterare som hanterar ändringar och tillägg i statistikdatabasen
@@ -73,7 +74,7 @@ public class StatisticDatabaseHandler extends DBBasedManagerImpl
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return statistics;
 	}
@@ -104,7 +105,7 @@ public class StatisticDatabaseHandler extends DBBasedManagerImpl
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return APIKeys;
 	}

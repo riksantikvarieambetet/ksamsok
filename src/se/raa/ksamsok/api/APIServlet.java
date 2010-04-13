@@ -27,7 +27,7 @@ import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
@@ -73,7 +73,7 @@ public class APIServlet extends HttpServlet
 			System.err.println(e.getSQLState());
 			e.printStackTrace();
 		}finally {
-			DBBasedManagerImpl.closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 	}
 
@@ -130,13 +130,13 @@ public class APIServlet extends HttpServlet
 			ps = c.prepareStatement(sql);
 			ps.setString(1, APIKey);
 			ps.executeUpdate();
-			DBBasedManagerImpl.commit(c);
+			DBUtil.commit(c);
 		}catch(SQLException e) {
 			logger.error("error. Doing rollback");
-			DBBasedManagerImpl.rollback(c);
+			DBUtil.rollback(c);
 			e.printStackTrace();
 		}finally {
-			DBBasedManagerImpl.closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 	}
 
