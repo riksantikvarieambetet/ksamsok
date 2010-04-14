@@ -117,6 +117,7 @@
 	<servlet>
 		<servlet-name>API</servlet-name>
 		<servlet-class>se.raa.ksamsok.api.APIServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>API</servlet-name>

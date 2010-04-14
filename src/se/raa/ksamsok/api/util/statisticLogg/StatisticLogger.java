@@ -24,6 +24,7 @@ import se.raa.ksamsok.harvest.DBUtil;
 public class StatisticLogger implements Runnable
 {
 	private static Queue<StatisticLoggData> loggInfo;
+	private static Object queueLock = new Object();
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.util.statisticLogg.StatisticLogger");
 	private static final String DATASOURCE_NAME = "harvestdb";
 	private static DataSource ds = null;
@@ -78,7 +79,9 @@ public class StatisticLogger implements Runnable
 	 */
 	private StatisticLoggData nextItem()
 	{
-		return loggInfo.poll();
+		synchronized(queueLock) {
+			return loggInfo.poll();
+		}
 	}
 	
 	/**
@@ -91,22 +94,10 @@ public class StatisticLogger implements Runnable
 			if(logger.isDebugEnabled()) {
 				logger.debug("storing Logg Data: apikey=" + data.getAPIKey() + "; param=" + data.getParam() + "; query string=" + data.getQueryString());
 			}
-			Connection c = null;
-			PreparedStatement ps = null;
-			try {
-				c = ds.getConnection();
-				
-				if(checkIfLoggEntryExists(ps, data, c)) {
-					updateStatistic(ps, c, data);
-				}else {
-					insertStatistic(ps, c, data);
-				}
-				DBUtil.commit(c);
-			} catch (SQLException e) {
-				DBUtil.rollback(c);
-				e.printStackTrace();
-			}finally {
-				DBUtil.closeDBResources(null, ps, c);
+			if(checkIfLoggEntryExists(data)) {
+				updateStatistic(data);
+			}else {
+				insertStatistic(data);
 			}
 		}
 	}
@@ -118,20 +109,30 @@ public class StatisticLogger implements Runnable
 	 * @param data
 	 * @throws SQLException
 	 */
-	private void insertStatistic(PreparedStatement ps, Connection c, StatisticLoggData data)
-		throws SQLException
+	private void insertStatistic(StatisticLoggData data)
 	{
 		if(logger.isDebugEnabled()) {
 			logger.debug("Inserting new Database row");
 		}
-		String sql = "INSERT INTO searches(apikey, searchstring, param, count) VALUES(?, ?, ?, ?)";
-		ps = c.prepareStatement(sql);
-		int i = 0;
-		ps.setString(++i, data.getAPIKey());
-		ps.setString(++i, data.getQueryString());
-		ps.setString(++i, data.getParam());
-		ps.setInt(++i, 1);
-		ps.executeUpdate();
+		Connection c = null;
+		PreparedStatement ps = null;
+		try {
+			c = ds.getConnection();
+			String sql = "INSERT INTO searches(apikey, searchstring, param, count) VALUES(?, ?, ?, ?)";
+			ps = c.prepareStatement(sql);
+			int i = 0;
+			ps.setString(++i, data.getAPIKey());
+			ps.setString(++i, data.getQueryString());
+			ps.setString(++i, data.getParam());
+			ps.setInt(++i, 1);
+			ps.executeUpdate();
+			DBUtil.commit(c);
+		}catch(SQLException e) {
+			DBUtil.rollback(c);
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeDBResources(null, ps, c);
+		}
 	}
 	
 	/**
@@ -141,41 +142,58 @@ public class StatisticLogger implements Runnable
 	 * @param data
 	 * @throws SQLException
 	 */
-	private void updateStatistic(PreparedStatement ps, Connection c, StatisticLoggData data)
-		throws SQLException
+	private void updateStatistic(StatisticLoggData data)
 	{
 		if(logger.isDebugEnabled()) {
 			logger.debug("Updating database row");
 		}
-		String sql = "UPDATE searches SET count=count+1 WHERE apikey=? AND param=? AND searchstring=?";
-		ps = c.prepareStatement(sql);
-		int i = 0;
-		ps.setString(++i, data.getAPIKey());
-		ps.setString(++i, data.getParam());
-		ps.setString(++i, data.getQueryString());
-		ps.executeUpdate();
+		Connection c = null;
+		PreparedStatement ps = null;
+		try {
+			c = ds.getConnection();
+			String sql = "UPDATE searches SET count=count+1 WHERE apikey=? AND param=? AND searchstring=?";
+			ps = c.prepareStatement(sql);
+			int i = 0;
+			ps.setString(++i, data.getAPIKey());
+			ps.setString(++i, data.getParam());
+			ps.setString(++i, data.getQueryString());
+			ps.executeUpdate();
+			DBUtil.commit(c);
+		}catch(SQLException e) {
+			DBUtil.rollback(c);
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeDBResources(null, ps, c);
+		}
 	}
 	
 	/**
 	 * Kollar om sökning har loggats tidigare
-	 * @param ps
 	 * @param data
-	 * @param c
 	 * @return True om identisk sökning finns loggad
 	 * @throws SQLException
 	 */
-	private boolean checkIfLoggEntryExists(PreparedStatement ps, StatisticLoggData data, Connection c)
-		throws SQLException
+	private boolean checkIfLoggEntryExists(StatisticLoggData data)
 	{
-		String sql = "SELECT param, searchstring, apikey FROM searches WHERE apikey=? AND param=? AND searchstring=?";
-		ps = c.prepareStatement(sql);
-		int i = 0;
-		ps.setString(++i, data.getAPIKey());
-		ps.setString(++i, data.getParam());
-		ps.setString(++i, data.getQueryString());
-		ResultSet rs = ps.executeQuery();
-		boolean exists = rs.next();
-		DBUtil.closeDBResources(rs, null, null);
+		Connection c = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Boolean exists = false;
+		try {
+			c = ds.getConnection();
+			String sql = "SELECT param, searchstring, apikey FROM searches WHERE apikey=? AND param=? AND searchstring=?";
+			ps = c.prepareStatement(sql);
+			int i = 0;
+			ps.setString(++i, data.getAPIKey());
+			ps.setString(++i, data.getParam());
+			ps.setString(++i, data.getQueryString());
+			rs = ps.executeQuery();
+			exists = rs.next();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeDBResources(rs, null, null);
+		}
 		return exists;
 	}
 	
@@ -189,7 +207,9 @@ public class StatisticLogger implements Runnable
 			if(logger.isDebugEnabled()) {
 				logger.debug("Data added to logg queue");
 			}
-			loggInfo.add(data);
+			synchronized(queueLock) {
+				loggInfo.add(data);
+			}
 		}
 	}
 }

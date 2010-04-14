@@ -9,8 +9,8 @@ import java.util.Vector;
 
 import javax.sql.DataSource;
 
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
 import se.raa.ksamsok.harvest.DBUtil;
+import se.raa.ksamsok.harvest.DBBasedManagerImpl;
 import se.raa.ksamsok.statistic.APIKey;
 
 public class APIKeyDatabaseHandler extends DBBasedManagerImpl
