@@ -192,7 +192,7 @@ public class StatisticLogger implements Runnable
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
-			DBUtil.closeDBResources(rs, null, null);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return exists;
 	}
