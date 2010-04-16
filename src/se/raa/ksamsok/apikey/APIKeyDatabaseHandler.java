@@ -56,6 +56,9 @@ public class APIKeyDatabaseHandler extends DBBasedManagerImpl
 			ps = c.prepareStatement(sql);
 			ps.setString(1, APIKey);
 			ps.executeUpdate();
+			// stäng då variabeln återanvänds
+			DBUtil.closeDBResources(null, ps, null);
+			ps = null;
 			sql = "DELETE FROM searches WHERE apikey=?";
 			ps = c.prepareStatement(sql);
 			ps.setString(1, APIKey);

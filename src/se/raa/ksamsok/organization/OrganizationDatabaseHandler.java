@@ -78,6 +78,10 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				setOrgValues(org, rs);
+				// stäng då variablerna återanvänds
+				DBUtil.closeDBResources(rs, ps, null);
+				rs = null;
+				ps = null;
 				sql = "SELECT name, beskrivning, kortnamn FROM harvestservices WHERE kortnamn= ?";
 				ps = c.prepareStatement(sql);
 				ps.setString(1, org.getKortnamn());
@@ -146,6 +150,9 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			ps.executeUpdate();
 			List<Service> serviceList = org.getServiceList();
 			for(int i = 0; serviceList != null && i < serviceList.size(); i++) {
+				// stäng då variabeln återanvänds
+				DBUtil.closeDBResources(null, ps, null);
+				ps = null;
 				Service s = serviceList.get(i);
 				sql = "UPDATE harvestServices SET beskrivning='" + s.getBeskrivning() + "' WHERE name='" + s.getNamn() + "'";
 				ps = c.prepareStatement(sql);
@@ -283,6 +290,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			}
 			DBUtil.commit(c);
 		} catch (SQLException e) {
+			DBUtil.rollback(c);
 			e.printStackTrace();
 		}finally {
 			DBUtil.closeDBResources(rs, ps, c);
