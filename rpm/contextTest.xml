@@ -17,7 +17,6 @@
 -->
 <!-- The contents of this file will be loaded for each web application -->
 <Context antiJARLocking="true">
-	<!-- TODO: rätt schema -->
     <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
     		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		maxActive="10" maxIdle="5" maxWait="-1"
@@ -25,6 +24,7 @@
 		url="jdbc:oracle:thin:@ux-ra-utvdb.raa.se:1521:UTV10"
 		testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
 		timeBetweenEvictionRunsMillis="300000"
+		validationQuery="select 1 from dual"
 		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
 		defaultAutoCommit="false" />
 
