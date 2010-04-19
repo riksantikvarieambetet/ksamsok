@@ -144,7 +144,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    	c = ds.getConnection();
 			pst = c.prepareStatement("insert into harvestservices " +
 					"(serviceId, name, cronstring, harvestURL, harvestSetSpec, serviceType, alwaysEverything, kortnamn) values " +
-					"(?, ?, ?, ?, ?, ?, ?, )");
+					"(?, ?, ?, ?, ?, ?, ?, ?)");
 			int i = 0;
 			pst.setString(++i, service.getId());
 			pst.setString(++i, service.getName());
