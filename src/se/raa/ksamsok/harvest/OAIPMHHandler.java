@@ -101,8 +101,10 @@ public class OAIPMHHandler extends DefaultHandler {
 		updatePst = null;
 		deleteUpdatePst = null;
 		insertPst = null;
-		gmlDBWriter.destroy();
-		gmlDBWriter = null;
+		if (gmlDBWriter != null) {
+			gmlDBWriter.destroy();
+			gmlDBWriter = null;
+		}
 	}
 
 	@Override
