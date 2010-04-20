@@ -481,19 +481,20 @@ public class OAIPMHHandler extends DefaultHandler {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Update status for service with ID: " + service.getId());
 		}
+		final int BATCH_SIZE = 500;
 		ss.setStatusText(service, "Attempting to update status and deleted column for pending records");
 		int updated = 0;
 		PreparedStatement updatePst = null;
 		PreparedStatement selPst = null;
 		ResultSet rs = null;
-		try {
+		try { 
 			// hämta kvarvarande poster under behandling och sätt deras deleted
 			// och ta bort deras geometrier i batchar
-			final int BATCH_SIZE = 500;
-			selPst = c.prepareStatement("select uri from content where serviceid = ? and status <> ? and rownum <= ?");
+			String sql = DBUtil.fetchFirst(c,
+					"select uri from content where serviceid = ? and status <> ?", BATCH_SIZE);
+			selPst = c.prepareStatement(sql);
 			selPst.setString(1, service.getId());
 			selPst.setInt(2, DBUtil.STATUS_NORMAL);
-			selPst.setInt(3, BATCH_SIZE);
 
 			// behåll deleted om värdet finns, även för datestamp tas värdet från deleted
 			updatePst = c.prepareStatement("update content set changed = ?, deleted = coalesce(deleted, ?), " +

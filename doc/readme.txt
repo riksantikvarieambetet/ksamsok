@@ -4,29 +4,40 @@ Utvecklat med java 1.6, tomcat 6.0 och FireFox (admingränssnittet fungerar mindr
 
 ** Installation
 
+Installeras normalt med rpm och då sker allt automatiskt och applikationen konfigureras
+till att gå mot driftdatabasen.
+Rpm skapas med: "ant clean RAA-RPM"
+
+** Manuell installation
+
 * konfigurera datakälla för applikationen jdbc/harvestdb
 
-Ex i context.xml för en hsqldb i fil-mode:
+För utv mot oracle, se rpm/contextTest.xml. För derby, ladda ner derby från http://db.apache.org/derby/
+och starta en nätverksserver (eller ändra i exempel nedan till fil) och kopiera in derbyclient.jar till
+tomcat/lib. Att köra med nätverksserver gör det enklare att hantera databasen och att titta på
+datat medan applikationen kör.
+De två databaser som stöds fn är oracle och derby.
+
+Ex i context.xml för en derby i network-mode:
     <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
     		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		maxActive="10" maxIdle="5" maxWait="-1"
-		username="sa" password="" driverClassName="org.hsqldb.jdbcDriver"
-		url="jdbc:hsqldb:file:d:/temp/harvestdb"
+		username="ksamsok" password="ksamsok" driverClassName="org.apache.derby.jdbc.ClientDriver"
+		url="jdbc:derby://127.0.0.1:1527/ksamsok"
 		testOnBorrow="true" testOnReturn="false" testWhileIdle="true"
+		validationQuery="values(1)"
 		timeBetweenEvictionRunsMillis="300000"
 		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
 		defaultAutoCommit="false" />
 
-Jdbc-driver för rätt databastyp måste in i tomcat/lib. I och med införandet av indexering av
-spatialdata följer hsqldb med i lib (den används av internt av geotools), men den bör/måste
-flyttas till tomcat/lib *om* det är den databastypen som också används för lagring av innehåll
-för att undvika klassladdarproblem. För Oracle behöver man tex jbdc-jar och även spatial-utökningar
-för att kunna lagra spatiala data (sdoapi, sdoutl och Oracles xmlparser). Javadatabasen
-Derby/JavaDB fungerar bättre än hsql fn med större datamängder. Varken hsql eller derby stödjer
+Jdbc-driver för rätt databastyp måste in i tomcat/lib. För Oracle behöver man tex jbdc-jar och även spatial-utökningar
+för att kunna lagra spatiala data (sdoapi, sdoutl och Oracles xmlparser). Javadatabasen Derby/JavaDB stödjer inte
 spatiala data men med klassen se.raa.ksamsok.spatial.VerbatimGMLWriter kan gml:en skrivas ner
 som en clob om man vill tex för debug, se nedan.
 
-* Skapa tabeller enligt sql i sql/repo.sql för datakällan
+* Skapa tabeller enligt sql i sql/repo.sql för datakällan (för derby kan identity-kolumner användas
+  istället för sekvenser och för derby vill man också skicka med "create=true" i jdbc-url:en när man
+  kopplar upp sig med sitt sql-verktyg för att skapa databasen/schemat automatiskt)
 
 * Peka ev ut var lucene ska lägga sitt index med javaflaggan -Dsamsok-lucene-index-dir=[sökväg till katalog]
  Om ej pekas ut kommer indexet att läggas i /var/lucene-index/ksamsok.
@@ -37,14 +48,21 @@ som en clob om man vill tex för debug, se nedan.
  återanvändas om jobbet går fel vid senare steg, tex lagring i databas
  Om ej pekas ut kommer (default) tempdir att användas, typiskt tomcat/temp.
 
-* Ange om inte datakällan stödjer spatialt data med -Dsamsok.spatial=false
+* Ange om inte datakällan stödjer spatialt data (tex för derby) med -Dsamsok.spatial=false
  Default är sant och en klass för att hantera spatialdata kommer att försöka härledas
  fram utfrån klassen på uppkopplingen - fn stöds bara oracle
 
 * Ange ev egen klass för att hantera spatialt data med -Dsamsok.spatial.class=xx.yy.Z
  klassen måste implementera interfacet se.raa.ksamsok.spatial.GMLDBWriter och ha en publik
  default-konstruktor.
- Främst för debug eller tredjeparts utv, har inget defaultvärde och bör normalt ej sättas
+ Främst för debug eller tredjeparts utv, har inget defaultvärde och bör normalt ej sättas. Sätts
+ den måste databastabellerna stödja det den konfade klassen gör naturligtvis. Klassen
+ se.raa.ksamsok.spatial.VerbatimGMLWriter stödjer att geometriernas gml skrivs ner som en
+ clob i geometritabellen så om den klassen används måste databaskolumntypen för kolumnen
+ geometry vara clob.
+
+* Lägg in användare i tomcat med rollen ksamsok för att kunna köra admin-gränssnittet. Görs
+  enklast i tomcat-users.xml, se rpm/tomcat-users.xml.
 
 * Kör "ant war" och kopiera war-fil till tomcat/webapps (eller ant rpm för drift på raä)
 
@@ -53,14 +71,12 @@ som en clob om man vill tex för debug, se nedan.
 Ett grundläggande (fult och ej stylat) gränssnitt finns för att hantera tjänster, uppdatera
 lucene-index och sökning. Det nås på http://[HOST][:PORT]/ksamsok/admin/
 
-Tjänster kan läggas upp i gränssnittet för skörd med http (OAI-PMH-[SAMSOK]) eller via en
+Tjänster kan läggas upp i gränssnittet för skörd med http eller via en
 filläsning. En fil måste ha samma syntax som en hämtning mha OAIPMHHarvestJob.getRecords()
 vilket är den metod som också används för att göra en skörd via OAI-PMH.
 Ex
-	fos = new FileOutputStream(new File("d:/temp/kthdiva.xml"));
-	OAIPMHHarvestJob.getRecords("http://www.diva-portal.org/oai/kth/OAI", null, null, "oai_dc", null, fos);
-
-Tjänster som skördas med OAI-DC-schemat görs om till mycket enkel ksamsöks-xml.
+	fos = new FileOutputStream(new File("d:/temp/raa_fmi.xml"));
+	OAIPMHHarvestJob.getRecords("http://127.0.0.1:8080/oaicat-ksamsok/OAIHandler/fmi", null, null, "ksamsok-rdf", null, fos);
 
 Tjänsterna skördas enligt den periodicitet som anges i cron-strängen. Om kolumnen jobbstatus
 ej visar "OK" är det troligt att cron-strängen ej är korrekt.
@@ -91,7 +107,7 @@ För test- och utvecklingsversioner (som ej ligger korrekt mappade på kulturarvsd
 testa med:
 http://[HOST][:PORT]/ksamsok/raa/fmi/10009102180001 -> RDF osv
 
-* Modifierad jrdf-jar
+* Modifierad jrdf-jar (troligen löst med nyare version av jrdf, utvecklaren informerad)
 Nedanstående är (ful-)patchar som behövs för att teckenkodning ska fungera ok med
 parseType="Literal" för presentations-xml:en samt för att fixa ett namespace-problem
 där namespaces som användes i en literal fortsatte att skrivas ut felaktigt.

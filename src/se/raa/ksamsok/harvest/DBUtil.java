@@ -13,6 +13,10 @@ import org.apache.log4j.Logger;
 public class DBUtil {
 
 	private static final Logger logger = Logger.getLogger(DBUtil.class);
+	// stödda databastyper (nödvändigt då det är olika syntax för rownum/limit/offet etc)
+	private static enum DBType  { DERBY, ORACLE };
+	// instans för att komma ihåg vilken databastyp det var
+	private static DBType dbType = null;
 
 	/** Konstant för normalt värde för status på poster */
 	public static final int STATUS_NORMAL = 0;
@@ -71,4 +75,46 @@ public class DBUtil {
 		}
 	}
 
+	/**
+	 * Ger sql för att hämta de första fetchNum raderna av inskickad sql för den
+	 * databastyp som uppkopplingen stödjer.
+	 * @param c databasuppkoppling
+	 * @param sql sql
+	 * @param fetchNum antal rader att hämta
+	 * @return sql anpassad till aktuell databas
+	 */
+	public static String fetchFirst(Connection c, String sql, int fetchNum) {
+		switch (determineDBType(c)) {
+		case ORACLE:
+			return "select * from (" + sql + ") where rownum <= " + fetchNum;
+		case DERBY:
+			return sql + " FETCH FIRST " + fetchNum + " ROWS ONLY";
+			default:
+				logger.error("Unsupported database");
+				throw new RuntimeException("unsupported database");
+		}
+	}
+
+	// avgör och cachar upp databastyp för uppkopplingen, kastar runtime exception
+	// om databastypen inte gick att avgöra eller om den inte stöds
+	private static DBType determineDBType(Connection c) {
+		if (dbType == null) {
+			try {
+				String dbName = c.getMetaData().getDatabaseProductName();
+				if (dbName != null && dbName.toLowerCase().contains("derby")) {
+					dbType = DBType.DERBY;
+				} else if (dbName != null && dbName.toLowerCase().contains("oracle")) {
+					dbType = DBType.ORACLE;
+				}
+				if (dbType == null) {
+					throw new Exception("could not determine database from product name: " +
+							dbName);
+				}
+			} catch (Exception e) {
+				logger.error("There was a problem determining database type", e);
+				throw new RuntimeException("Unsupported database");
+			} 
+		}
+		return dbType;
+	}
 }
