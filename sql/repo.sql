@@ -1,7 +1,7 @@
 -- enkelt repository
 
 -- För oracle, data i default tablespace, index i "KSAMSOK_INDX"
--- för tex Derby eller postgresql krävs små ändringar
+-- för tex Derby eller postgresql krävs små ändringar (postgres stöds ej fn, se javakod)
 
 --drop table harvestservices
 create table harvestservices (
@@ -27,7 +27,7 @@ changed timestamp,
 xmldata clob,
 added timestamp,
 deleted timestamp,
-datestamp timestamp,
+datestamp timestamp not null,
 status integer not null
 );
 
@@ -36,6 +36,9 @@ create index ix_content_serv_oai on content (serviceId, oaiURI) tablespace KSAMS
 create index ix_content_serv on content (serviceId) tablespace KSAMSOK_INDX;
 create index ix_content_oai on content (oaiURI) tablespace KSAMSOK_INDX;
 create index ix_content_serv_status on content (serviceId, status) tablespace KSAMSOK_INDX;
+create index ix_content_uri_serv on content (uri, serviceId) tablespace KSAMSOK_INDX;
+create index ix_content_date on content (datestamp) tablespace KSAMSOK_INDX;
+create index ix_content_deleted on content (deleted, ' ') tablespace KSAMSOK_INDX;
 
 --drop table servicelog
 create table servicelog (
