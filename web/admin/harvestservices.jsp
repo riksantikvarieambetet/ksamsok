@@ -21,7 +21,7 @@
 		"<span style='font-size: 85%;'>(på spool: " + spoolDir.getAbsolutePath() + ")</span>";
 %>
 	<head>
-		<title>Tjänstelista<%= uidString %></title>
+		<title>Tjänstelista<%= uidString %></title>&nbsp;&nbsp;
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 	</head>
 	<body class="bgGrayUltraLight">

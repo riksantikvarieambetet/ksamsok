@@ -17,8 +17,11 @@
 	<body class="bgGrayUltraLight">
 		<br/>
 		<div class="bgBlackLight menu">
-			<a href="map.jsp">Sök + karta</a>
-			<a href="harvestservices.jsp">Tjänster</a>
+			<a href="map.jsp">Sök + karta</a>&nbsp;&nbsp;
+			<a href="harvestservices.jsp">Tjänster</a>&nbsp;&nbsp;
+			<a href="apiKeyAdmin">API-nycklar</a>&nbsp;&nbsp;
+			<a href="orgAdmin">Admin org</a>&nbsp;&nbsp;
+			<a href="statistic.jsp">Statistik</a>&nbsp;&nbsp;
 			<a href="../sru">SRU-gränssnitt</a>
 		</div>
 		<hr/>

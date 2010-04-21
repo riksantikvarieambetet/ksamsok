@@ -16,7 +16,7 @@
 	<body class="bgGrayUltraLight">
 		<br/>
 		<div class="bgBlackLight menu">
-			<a href="index.jsp">Startsida</a>
+			<a href="index.jsp">Startsida</a>&nbsp;&nbsp;
 			<a href="harvestservices.jsp">Tjänster</a>
 		</div>
 		<hr/>

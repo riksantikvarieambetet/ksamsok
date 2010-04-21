@@ -24,7 +24,7 @@ function hideShow()
 <body>
 <div id="page">
 	<div id="head">
-		<a href="index.jsp">Index</a>
+		<a href="../userAdmin/orgAdmin">Administrera organisation</a>
 	</div>
 	<div id="overview">
 		<label id="toggle" onclick="hideShow()">Dölj</label>

@@ -12,7 +12,7 @@
 <div id="page">
 	<div id="head">
 		<form action="orgAdmin" accept-charset="UTF-8">
-			<input type="submit" value="Administrera organisations information"/>
+			<input type="submit" value="Administrera organisationsinformation"/>
 		</form>
 	</div>
 	<div id="content">

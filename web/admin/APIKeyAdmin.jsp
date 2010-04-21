@@ -26,7 +26,7 @@ function hide()
 <body onload="hide()">
 <div id="page">
 	<div id="head">
-		<a href="index.jsp">Index</a>
+		<a href="index.jsp">Index</a>&nbsp;&nbsp;
 		<label id="addKey" onclick="showAddNewDiv()">L&auml;gg till nyckel</label>
 	</div>
 	<div id="hideable">
