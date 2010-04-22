@@ -27,6 +27,7 @@ import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
+import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.lucene.ContentHelper;
 
@@ -96,6 +97,7 @@ public class APIServlet extends HttpServlet
 		APIMethod method = null;
 		PrintWriter writer = resp.getWriter();
 		String APIKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
+		APIKey = StaticMethods.removeChar(APIKey, '"');
 		if(APIKey != null && APIKeys.contains(APIKey)) {
 			
 			try {
@@ -157,4 +159,5 @@ public class APIServlet extends HttpServlet
 	{
 		doGet(req, resp);
 	}
+	
 }

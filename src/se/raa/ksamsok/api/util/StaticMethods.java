@@ -113,4 +113,18 @@ public class StaticMethods
 		}
 		return param;
 	}
+
+	/**
+	 * Tar bort ett visst tecken ur en sträng, t ex citationstecken
+	 * @param s strängen som ska redigeras
+	 * @param c tecknet som ska tas bort
+	 * @return den nya strängen
+	 */
+	public static String removeChar(String s, char c) {
+		   String r = "";
+		   for (int i = 0; i < s.length(); i ++) {
+		      if (s.charAt(i) != c) r += s.charAt(i);
+		      }
+		   return r;
+		}
 }
