@@ -111,7 +111,7 @@ public class APIServlet extends HttpServlet
 				e.printStackTrace();
 			}
 		}else {
-			Diagnostic(writer, new DiagnosticException("API nyckel saknas", "APIServlet.doGet", null, false));
+			Diagnostic(writer, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
 		}
 	}
 	

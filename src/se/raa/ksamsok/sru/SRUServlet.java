@@ -148,7 +148,7 @@ public class SRUServlet extends HttpServlet {
 				DBUtil.closeDBResources(null, ps, c);
 			}
 		} else {
-			throw new MissingParameterException("API nyckel saknas eller är ogiltig");
+			throw new MissingParameterException("API-nyckel saknas eller är ogiltig");
 		}
 	}
 
