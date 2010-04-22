@@ -152,6 +152,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				String xmlContent;
 				int i = 0;
 				int nonI = 0;
+				int deleted = 0;
 				ContentHelper helper = getContentHelper(service);
 				ContentHelper.initProblemMessages();
 				while (rs.next()) {
@@ -160,6 +161,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						uri = rs.getString("uri");
 						iw.deleteDocuments(new Term(ContentHelper.IX_ITEMID, uri));
 						if (rs.getTimestamp("deleted") != null) {
+							++deleted;
 							// om borttagen, gå till nästa
 							continue;
 						}
@@ -181,13 +183,15 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						long deltaMillis = System.currentTimeMillis() - start;
 			            long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(
 			            		deltaMillis, i, count);
-						ss.setStatusText(service, "Updated " + i + "/" + count +
-								" records in the index" +
+						ss.setStatusText(service, "Updated " + i +
+								(ts != null ? " (and deleted " + deleted + ")" : "") +
+								" of " + count + " fetched records in the index" +
 		            			(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
 		            					ContentHelper.formatRunTime(aproxMillisLeft) + ")": ""));
 						if (logger.isDebugEnabled()) {
-							logger.debug(service.getId() + ", has updated " +
-									i + "/" + count + " records in lucene" +
+							logger.debug(service.getId() + ", has updated " + i +
+									(ts != null ? " (and deleted " + deleted + ")" : "") +
+									" of " + count + " fetched records in lucene" +
 			            			(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
 			            					ContentHelper.formatRunTime(aproxMillisLeft) + ")": ""));
 						}
@@ -199,14 +203,14 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				String runTime = ContentHelper.formatRunTime(durationMillis);
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
 				ss.setStatusTextAndLog(service, "Updated index, " + i + " records (" + 
-						(ts == null ? "delete + insert" : "updated") +
+						(ts == null ? "delete + insert" : "updated incl " + deleted + " deleted") +
 						(nonI > 0 ? ", itemForIndexing=n: " + nonI : "") +
 						"), time: " + runTime + " (" + speed + ")");
 				if (logger.isInfoEnabled()) {
 					logger.info(service.getId() +
 							", updated index - done, " + (ts == null ?
 									"first removed all and then inserted " :
-									"updated ") + i +
+									"updated incl " + deleted + " deleted ") + i +
 							" records in the lucene index, time: " +
 							runTime + " (" + speed + ")");
 				}
