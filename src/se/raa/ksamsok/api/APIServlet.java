@@ -97,7 +97,7 @@ public class APIServlet extends HttpServlet
 		APIMethod method = null;
 		PrintWriter writer = resp.getWriter();
 		String APIKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
-		APIKey = StaticMethods.removeChar(APIKey, '"');
+		if (APIKey != null) APIKey = StaticMethods.removeChar(APIKey, '"');
 		if(APIKey != null && APIKeys.contains(APIKey)) {
 			
 			try {
