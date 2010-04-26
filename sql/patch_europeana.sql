@@ -6,6 +6,7 @@ alter table content add (datestamp timestamp);
 alter table content add (status integer);
 
 create index ix_content_serv_status on content (serviceId, status) tablespace KSAMSOK_INDX;
+create index ix_content_serv_deleted on content (serviceId, deleted) tablespace KSAMSOK_INDX;
 create index ix_content_uri_serv on content (uri, serviceId) tablespace KSAMSOK_INDX;
 create index ix_content_date on content (datestamp) tablespace KSAMSOK_INDX;
 create index ix_content_deleted on content (deleted, ' ') tablespace KSAMSOK_INDX;
