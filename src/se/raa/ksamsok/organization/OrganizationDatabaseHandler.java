@@ -36,26 +36,29 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	 * @return Map med String,String. Key är kortnamn för organisation
 	 * och value är det svenska namnet för organisationen
 	 */
-	public Map<String,String> getServiceOrganizationMap()
+	public List<Organization> getServiceOrganizations()
 	{
-		Map<String,String> map = new HashMap<String,String>();
+		List<Organization> list = new Vector<Organization>();
 		Connection c = null;
-		PreparedStatement pst = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			String sql = "SELECT kortnamn, namnSwe FROM organisation";
 			c = ds.getConnection();
-			pst = c.prepareStatement(sql);
-			rs = pst.executeQuery();
+			ps = c.prepareStatement(sql);
+			rs = ps.executeQuery();
 			while(rs.next()) {
-				map.put(rs.getString("kortnamn"), rs.getString("namnSwe"));
+				Organization o = new Organization();
+				o.setKortNamn(rs.getString("kortnamn"));
+				o.setNamnSwe(rs.getString("namnSwe"));
+				list.add(o);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			DBUtil.closeDBResources(rs, pst, c);
+			DBUtil.closeDBResources(rs, ps, c);
 		}
-		return map;
+		return list;
 	}
 	
 	/**
@@ -202,12 +205,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	 */
 	public List<Organization> getAllOrganizations()
 	{
-		List<Organization> orgList = new Vector<Organization>();
-		Map<String,String> orgNameMap = getServiceOrganizationMap();
-		for(String orgShortName : orgNameMap.keySet()) {
-			orgList.add(getOrganization(orgShortName));
-		}
-		return orgList;
+		return getServiceOrganizations();
 	}
 	
 	/**
@@ -294,6 +292,33 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			e.printStackTrace();
 		}finally {
 			DBUtil.closeDBResources(rs, ps, c);
+		}
+	}
+	
+	/**
+	 * Lägger till en ny organisation i databasen
+	 * (Övrig info får fixas i efterhand)
+	 * @param kortnamn Kortnamnet för organisationen
+	 * @param namnSwe svenska namnet för organisationen
+	 */
+	public void addOrganization(String kortnamn, String namnSwe)
+	{
+		Connection c = null;
+		PreparedStatement ps = null;
+		try {
+			c = ds.getConnection();
+			String sql = "INSERT INTO organisation(kortnamn, namnswe) VALUES(?,?)";
+			ps = c.prepareStatement(sql);
+			int i = 0;
+			ps.setString(++i, kortnamn);
+			ps.setString(++i, namnSwe);
+			ps.executeUpdate();
+			DBUtil.commit(c);
+		}catch(SQLException e) {
+			DBUtil.rollback(c);
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
 }

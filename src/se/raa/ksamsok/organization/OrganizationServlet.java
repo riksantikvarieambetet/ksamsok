@@ -67,53 +67,40 @@ public class OrganizationServlet extends HttpServlet
 		return ds;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException
-	{
-		resp.setCharacterEncoding("UTF-8");
-		req.setCharacterEncoding("UTF-8");
-		RequestDispatcher view = null;
-		view = req.getRequestDispatcher("serviceOrganizationAdmin.jsp");
-		String operation = req.getParameter("operation");
-		if(operation != null && operation.equals("passwordAdmin")) {
-			Map<String,String> passwordMap = organizationDatabaseHandler.getPasswords();
-			req.setAttribute("passwords", passwordMap);
-			view = req.getRequestDispatcher("passwordAdmin.jsp");
-		}else if(operation != null && operation.equals("updatePasswords")) {
-			Map<String,String[]> params = req.getParameterMap();
-			Map<String,String> passwordMap = new HashMap<String,String>();
-			for(Map.Entry<String, String[]> entry : params.entrySet()) {
-				if(StringUtils.startsWith(entry.getKey(), "org_") && !StringUtils.endsWith(entry.getKey(), "_pass")) {
-					passwordMap.put(params.get(entry.getKey())[0], params.get(entry.getKey() + "_pass")[0]);
-				}
-			}
-			organizationDatabaseHandler.setPassword(passwordMap);
-			req.setAttribute("passwords", organizationDatabaseHandler.getPasswords());
-			view = req.getRequestDispatcher("passwordAdmin.jsp");
-		}
-		req.setAttribute("orgMap", organizationDatabaseHandler.getServiceOrganizationMap());
-		String org = StaticMethods.getParam(req.getParameter("orgChoice"));
-		if(org != null) {
-			req.setAttribute("orgData", organizationDatabaseHandler.getOrganization(org));
-		}
-		view.forward(req, resp);
-	}
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
-		try {
-			resp.setCharacterEncoding("UTF-8");
-			req.setCharacterEncoding("UTF-8");
-			Organization o = getOrganizationValues(req);
-			organizationDatabaseHandler.updateOrg(o);
-		} catch(Exception e) {
-			e.printStackTrace();
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		RequestDispatcher view = req.getRequestDispatcher("serviceOrganizationAdmin.jsp");
+		String operation = req.getParameter("operation");
+		if(operation != null) {
+			if(operation.equals("passwordAdmin")) {
+				req.setAttribute("passwords", organizationDatabaseHandler.getPasswords());
+				view = req.getRequestDispatcher("passwordAdmin.jsp");
+			}else if(operation.equals("addOrg")) {
+				String kortnamn = req.getParameter("kortnamn");
+				String namnSwe = req.getParameter("namnSwe");
+				organizationDatabaseHandler.addOrganization(kortnamn, namnSwe);
+			}else if(operation.equals("orgChoice")) {
+				String kortnamn = req.getParameter("orgChoice");
+				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(kortnamn));
+			}else if(operation.equals("update")) {
+				Organization org = getOrganizationValues(req);
+				organizationDatabaseHandler.updateOrg(org);
+				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(org.getKortnamn()));
+			}
 		}
-		doGet(req, resp);
+		req.setAttribute("orgList", organizationDatabaseHandler.getServiceOrganizations());
+		view.forward(req, resp);
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException
+	{
+		doPost(req, resp);
 	}
 	
 	/**

@@ -1,140 +1,151 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib uri = "http://java.sun.com/jstl/core" prefix = "c"%>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page import="se.raa.ksamsok.organization.Organization" %>
-<%@ page import="se.raa.ksamsok.organization.Service" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SericeOrganization Admin</title>
 <link media="all" rel="stylesheet" type="text/css" href="../css/orgAdmin.css"/>
+<script type="text/javascript">
+function showHide()
+{
+	if(document.getElementById("hideable").style.display == "none") {
+		document.getElementById("hideable").style.display = "";
+	}else {
+		document.getElementById("hideable").style.display = "none";
+	}
+}
+</script>
 </head>
 <body>
 <div id="page">
 	<div id="head">
-		<form action="orgAdmin" accept-charset="UTF-8">
+		<a href="index.jsp">Index</a>
+		<form action="orgAdmin" accept-charset="UTF-8" method="post">
 			<input type="hidden" name="operation" value="passwordAdmin"/>
-			<input type="submit" value="Administrera l&ouml;senord"/>
+			<input type="submit" value="Administrera Lösenord"/>
 		</form>
+		<button onclick="showHide()">Lägg till organisation</button>
 	</div>
-	<div id="choseForm">
-	<form action="orgAdmin" accept-charset="UTF-8">
-		<select name="orgChoice">
-			<%
-				Map<String,String> orgMap = (Map<String,String>) request.getAttribute("orgMap");
-				for(Map.Entry<String,String> entry : orgMap.entrySet()) {
-			%>
-				<option value="<%=entry.getKey()%>"><%=entry.getValue()%></option>
-			<%
-				}
-			%>
-		</select>
-		<input type="submit" value="V&auml;lj"/>
-	</form>
-	</div>
-	<%
-		Organization org = (Organization) request.getAttribute("orgData");
-		if(org != null) {
-	%>
-	<form action="orgAdmin" accept-charset="UTF-8" method="post">
-	<div id="infoForm">
-	<div id="orgInfo">
-		<input name="update" value="ja" type="hidden"/>
-		<table>
-			<tr>
-				<td class="titel"><strong>F&ouml;rkortning f&ouml;r organisationen:</strong></td>
-				<td><input name="kortnamn" type="text" value="<%=org.getKortnamn()%>" readonly="readonly"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>Organisationens svenska namn:</strong></td>
-				<td><input name="namnSwe" type="text" value="<%=org.getNamnSwe()%>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>Organisationens engelska namn:</strong></td>
-				<td><input name="namnEng" type="text" value="<%=org.getNamnEng()%>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>Beskrivning av organisationen p&aring; svenska:</strong></td>
-				<td><textarea cols="20" rows="5" name="beskrivSwe"><%=org.getBeskrivSwe()%></textarea></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>Beskrivning av organisationen p&aring; engelska:</strong></td>
-				<td><textarea name="beskrivEng" rows="5" cols="20" ><%=org.getBeskrivEng()%></textarea></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>adressf&auml;lt ett:</strong></td>
-				<td><input name="adress1" type="text" value="<%=org.getAdress1() %>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>adressf&auml;lt tv&aring;:</strong></td>
-				<td><input name="adress2" type="text" value="<%=org.getAdress2() %>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>Postadress:</strong></td>
-				<td><input name="postadress" type="text" value="<%=org.getPostadress() %>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>Kontaktperson f&ouml;r leverans till K-Sams&ouml;k:</strong></td>
-				<td><input name="kontaktperson" type="text" value="<%=org.getKontaktperson()%>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>E-post kontaktperson:</strong></td>
-				<td><input name="epostKontaktperson" type="text" value="<%=org.getEpostKontaktperson()%>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>Organisationens webbplats:</strong></td>
-				<td><input name="websida" type="text" value="<%=org.getWebsida() %>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>K-Sams&ouml;krelaterad sida:</strong></td>
-				<td><input name="websidaKS" type="text" value="<%=org.getWebsidaKS() %>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>URL till l&aring;guppl&ouml;st bild:</strong></td>
-				<td><input name="lowressUrl" type="text" value="<%=org.getLowressUrl() %>"/></td>
-			</tr>
-			<tr>
-				<td class="titel"><strong>URL till tummnagel:</strong></td>
-				<td><input name="thumbnailUrl" type="text" value="<%=org.getThumbnailUrl() %>"/></td>
-			</tr>
-			<tr class="submit">
-				<td></td>
-				<td><input type="submit" value="Spara" /></td>
-			</tr>
-		</table>
+	<div id="content">
+		<div id="hideable">
+			<form action="orgAdmin" accept-charset="UTF-8" method="post">
+				<input type="hidden" name="operation" value="addOrg"/>
+				<table>
+					<tr>
+						<td class="title">Kortnamn:</td>
+						<td><input type="text" name="kortnamn"/></td>
+					</tr>
+					<tr>
+						<td class="title">Namn p&aring; svenska</td>
+						<td><input type="text" namn="namnSwe"/></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Lägg till"/></td>
+					</tr>
+				</table>
+			</form>
 		</div>
-		<div id="serviceForm">
-		<table>
-			<tr>
-				<th colspan="2"><strong>Tj&auml;nster</strong></th>
-			</tr>
-			<%
-				List<Service> serviceList = org.getServiceList();
-				for(int i = 0; serviceList != null && i < serviceList.size(); i++) {
-					Service s = serviceList.get(i);
-			%>
-			<tr>
-				<td class="titel"><strong><%=s.getNamn() %> beskrivning:</strong></td>
-				<td>
-					<textarea name="<%="service_" + i %>" rows="5" cols="20"><%=s.getBeskrivning() %></textarea>
-					<input type="hidden" name="<%="service_" + i + "_name" %>" value="<%=s.getNamn() %>"/>
-				</td>
-			</tr>
-			<%
-				}
-			%>
-			
-			
-		</table>
+		<form action="orgAdmin" accept-charset="UTF-8" method="post">
+			<input type="hidden" name="operation" value="orgChoice"/>
+			<select name="orgChoice">
+				<c:forEach var="orgs" items="${requestScope.orgList}">
+					<option value="${orgs.kortnamn}">${orgs.namnSwe}</option>
+				</c:forEach>
+			</select>
+			<input type="submit" value="visa"/>
+		</form>
+		<c:if test="${!empty requestScope.orgInfo}">
+			<div id="orgInfo">
+				<form action="orgAdmin" accept-charset="UTF-8" method="post">
+					<input type="hidden" name="operation" value="update"/>
+					<div id="left">
+						<table>
+							<tr>
+								<td class="title">Kortnamn f&ouml;r organisation:</td>
+								<td><input type="text" name="kortnamn" value="${requestScope.orgInfo.kortnamn}" readonly="readonly"/></td>
+							</tr>
+							<tr>
+								<td class="title">Organisationens namn p&aring; svenska:</td>
+								<td><input type="text" name="namnSwe" value="${requestScope.orgInfo.namnSwe}"/></td>
+							</tr>
+							<tr>
+								<td class="title">Organisationens namn p&aring; engelska:</td>
+								<td><input type="text" name="namnEng" value="${requestScope.orgInfo.namnEng}"/></td>
+							</tr>
+							<tr>
+								<td class="title">Beskrivning av organisationen p&aring; svenska:</td>
+								<td><textarea cols="20" rows="5" name="beskrivSwe">${requestScope.orgInfo.beskrivSwe}</textarea></td>
+							</tr>
+							<tr>
+								<td class="title">Beksrivning av organisationen p&aring; engelska:</td>
+								<td><textarea cols="20" rows="5" name="beskrivEng">${requestScope.orgInfo.beskrivEng}</textarea></td>
+							</tr>
+							<tr>
+								<td class="title">Adressf&auml;lt 1:</td>
+								<td><input type="text" name="adress1" value="${requestScope.orgInfo.adress1}"/></td>
+							</tr>
+							<tr>
+								<td class="title">Adressf&auml;lt 2:</td>
+								<td><input type="text" name="adress" value="${requestScope.orgInfo.adress2}"/></td>
+							</tr>
+							<tr>
+								<td class="title">Postadress:</td>
+								<td><input type="text" name="postadress" value="${requestScope.orgInfo.postadress}"/></td>
+							</tr>
+							<tr>
+								<td class="title">Kontaktperson f&ouml;r organisationen:</td>
+								<td><input type="text" name="kontaktperson" value="${requestScope.orgInfo.kontaktperson}"/></td>
+							</tr>
+							<tr>
+								<td class="title">E-post till kontaktpersonen:</td>
+								<td><input type="text" name="epostKontaktperson" value="${requestScope.orgInfo.epostKontaktperson}"/></td>
+							</tr>
+							<tr>
+								<td class="title">Organisationens webbplats:</td>
+								<td><input type="text" name="websida" value="${requestScope.orgInfo.websida}"/></td>
+							</tr>
+							<tr>
+								<td class="title">K-sams&ouml;k relaterad sida:</td>
+								<td><input type="text" name="websidaKS" value="${requestScope.orgInfo.websidaKS}"/></td>
+							</tr>
+							<tr>
+								<td class="title">URL till l&aring;guppl&ouml;st bild:</td>
+								<td><input type="text" name="lowressUrl" value="${requestScope.orgInfo.lowressUrl}"/></td>
+							</tr>
+							<tr>
+								<td class="title">URL till tummnagel:</td>
+								<td><input type="text" name="thumbnailUrl" value="${requestScope.orgInfo.thumbnailUrl}"/></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="submit" value="Spara"/></td>
+							</tr>
+						</table>
+					</div>
+					<div id="right">
+						<table>
+							<tr>
+								<th colspan="2">Tj&auml;nster</th>
+							</tr>
+							<%int counter = 0; %>
+							<c:forEach var="s" items="${requestScope.orgInfo.serviceList}">
+								<tr>
+									<td class="title">${s.namn}:</td>
+									<td>
+										<textarea cols="20" rows="5" name="service_<%=counter %>">${s.beskrivning }</textarea>
+										<input type="hidden" name="service_<%=counter %>_name" value="${s.namn }"/>
+										<%counter++; %>
+									</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</form>
+			</div>
+		</c:if>
 	</div>
-	</div>
-	</form>
-	<%
-		}
-	%>
 </div>
 </body>
 </html>

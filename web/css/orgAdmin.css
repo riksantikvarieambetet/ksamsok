@@ -10,17 +10,12 @@ body
 	
 }
 
-.titel
+.title
 {
 	text-align: right;
 }
 
-.serviceTitel
-{
-	text-align: center;
-}
-
-#choseForm
+#head
 {
 	padding-bottom: 15px;
 	border-bottom: medium;
@@ -28,17 +23,17 @@ body
 	border-bottom-color: black;	
 }
 
-#infoForm
+#content
 {
 	padding-top: 5px;
 }
 
-#orgInfo
+#left
 {
 	float: left;
 }
 
-#serviceForm
+#right
 {
 	margin-left: 50%;
 	border-left: thin solid;
@@ -46,7 +41,7 @@ body
 	height: 800px;
 }
 
-#submit
+#hideable
 {
-	padding-top: 5px;
+	display: none;
 }
