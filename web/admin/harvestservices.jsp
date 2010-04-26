@@ -27,7 +27,7 @@
 	<body class="bgGrayUltraLight">
 		<br/>
 		<div class="bgBlackLight menu">
-			<a href="index.jsp">Startsida</a>
+			<a href="index.jsp">Startsida</a>&nbsp;&nbsp;
 			<a href="indexservices.jsp">Indexhantering</a>
 		</div>
 		<hr/>
