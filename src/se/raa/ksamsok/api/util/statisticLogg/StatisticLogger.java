@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
+import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.harvest.DBUtil;
 
 /**
@@ -90,6 +91,7 @@ public class StatisticLogger implements Runnable
 	 */
 	private void storeData(StatisticLoggData data)
 	{
+		data.setAPIKey(StaticMethods.removeChar(data.getAPIKey(), '"'));
 		if(data != null) {
 			if(logger.isDebugEnabled()) {
 				logger.debug("storing Logg Data: apikey=" + data.getAPIKey() + "; param=" + data.getParam() + "; query string=" + data.getQueryString());
