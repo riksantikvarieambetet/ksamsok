@@ -49,7 +49,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				Organization o = new Organization();
-				o.setKortNamn(rs.getString("kortnamn"));
+				o.setKortnamn(rs.getString("kortnamn"));
 				o.setNamnSwe(rs.getString("namnSwe"));
 				list.add(o);
 			}
@@ -116,7 +116,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	private Organization setOrgValues(Organization org, ResultSet rs)
 	{
 		try {
-			org.setKortNamn(rs.getString("kortnamn"));
+			org.setKortnamn(rs.getString("kortnamn"));
 			org.setNamnSwe(rs.getString("namnswe"));
 			org.setNamnEng(rs.getString("namneng"));
 			org.setBeskrivSwe(rs.getString("beskrivswe"));

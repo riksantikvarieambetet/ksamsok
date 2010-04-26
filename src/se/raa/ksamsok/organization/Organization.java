@@ -31,7 +31,7 @@ public class Organization implements Serializable
 	{
 		return kortNamn;
 	}
-	public void setKortNamn(String kortNamn)
+	public void setKortnamn(String kortNamn)
 	{
 		this.kortNamn = kortNamn;
 	}

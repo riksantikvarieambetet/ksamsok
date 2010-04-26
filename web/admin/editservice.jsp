@@ -8,7 +8,9 @@
 <%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
 <%@page import="se.raa.ksamsok.organization.OrganizationDatabaseHandler" %>
 <%@page import="se.raa.ksamsok.organization.OrganizationServlet" %>
+<%@page import="se.raa.ksamsok.organization.Organization" %>
 <%@page import="java.util.Map" %>
+<%@page import="java.util.List" %>
 
 <%
 	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
@@ -100,15 +102,15 @@
 							<select id="shortName" name="shortName">
 								<%OrganizationDatabaseHandler organizationDatabaseHandler = new OrganizationDatabaseHandler(OrganizationServlet.getDataSource()); 
 								if(organizationDatabaseHandler != null) {
-									Map<String,String> orgMap = organizationDatabaseHandler.getServiceOrganizationMap();
-									for(Map.Entry<String,String> entry : orgMap.entrySet()) {
-										if(entry.getKey().equals(service.getShortName())) {
+									List<Organization> orgList = organizationDatabaseHandler.getServiceOrganizations();
+									for(Organization org : orgList) {
+										if(org.getKortnamn().equals(service.getShortName())) {
 										%>
-											<option value="<%=entry.getKey() %>" selected="selected"><%=entry.getValue() %></option>
+											<option value="<%=org.getKortnamn() %>" selected="selected"><%=org.getNamnSwe() %></option>
 										<%
 										}else {
 										%>
-											<option value="<%=entry.getKey() %>"><%=entry.getValue() %></option>
+											<option value="<%=org.getKortnamn() %>"><%=org.getNamnSwe() %></option>
 										<%
 										}
 									}

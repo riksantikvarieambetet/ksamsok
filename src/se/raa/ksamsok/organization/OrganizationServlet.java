@@ -113,7 +113,7 @@ public class OrganizationServlet extends HttpServlet
 	public static Organization getOrganizationValues(HttpServletRequest req)
 	{
 		Organization o = new Organization();
-		o.setKortNamn(req.getParameter("kortnamn"));
+		o.setKortnamn(req.getParameter("kortnamn"));
 		o.setNamnSwe(req.getParameter("namnSwe"));
 		o.setNamnEng(req.getParameter("namnEng"));
 		o.setBeskrivSwe(req.getParameter("beskrivSwe"));
