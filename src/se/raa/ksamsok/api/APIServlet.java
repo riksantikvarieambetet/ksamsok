@@ -112,8 +112,10 @@ public class APIServlet extends HttpServlet
 				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
-		}else {
+		}else if (APIKey == null){
 			Diagnostic(writer, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
+		} else {
+			Diagnostic(writer, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 		}
 	}
 	
