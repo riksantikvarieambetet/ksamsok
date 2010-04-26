@@ -43,6 +43,7 @@ import org.z3950.zing.cql.CQLTermNode;
 import org.z3950.zing.cql.MissingParameterException;
 
 import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.statisticLogg.StatisticLoggData;
 import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
@@ -131,6 +132,7 @@ public class SRUServlet extends HttpServlet {
 	
 	private void storeOverviewStatistics(String APIKey)
 		throws MissingParameterException {
+		if (APIKey != null) APIKey = StaticMethods.removeChar(APIKey, '"');
 		if (APIKey != null && APIKeys.contains(APIKey)) {
 			Connection c = null;
 			PreparedStatement ps = null;
@@ -147,8 +149,10 @@ public class SRUServlet extends HttpServlet {
 			} finally {
 				DBUtil.closeDBResources(null, ps, c);
 			}
+		} else if (APIKey == null){
+			throw new MissingParameterException("API-nyckel saknas");
 		} else {
-			throw new MissingParameterException("API-nyckel saknas eller är ogiltig");
+			throw new MissingParameterException("Felaktig API-nyckel");
 		}
 	}
 
