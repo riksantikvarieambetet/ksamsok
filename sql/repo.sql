@@ -4,15 +4,48 @@
 -- för tex Derby eller postgresql krävs små ändringar (postgres stöds ej fn, se javakod)
 
 --drop table harvestservices
+
+CREATE TABLE apikeys {
+apikey varchar2(30) NOT NULL PRIMARY KEY,
+owner varchar2(100) NOT NULL,
+total INTEGER
+};
+
+CREATE TABLE searches {
+apikey varchar2(39) NOT NULL PRIMARY KEY,
+searchstring varchar2(100) NOT NULL PRIMARY KEY,
+param varchar2(30) NOT NULL PRIMARY KEY,
+count NUMBER
+};
+
+CREATE TABLE organisation {
+kortnamn varchar2(20) NOT NULL PRIMARY KEY,
+beskrivswe varchar2(2000),
+beskriveng varchar2(2000),
+adress1 varchar2(32),
+adress2 varchar2(32),
+postadress varchar2(32),
+kontaktperson varchar2(32),
+epostkontaktperson varchar2(256),
+websida varchar2(256),
+websidaks varchar2(256),
+lowressurl varchar2(256),
+thumbnailurl varchar2(256),
+namnswe varchar2(100),
+namneng varchar2(100),
+pass varchar2(30)
+};
+
 create table harvestservices (
-serviceId varchar(20),
-serviceType varchar(20),
-name varchar(200),
-harvestURL varchar(4000),
-harvestSetSpec varchar(50),
-cronstring varchar(50),
-lastHarvestDate timestamp,
-firstIndexDate timestamp,
+serviceId varchar2(20) NOT NULL,
+serviceType varchar2(20),
+name varchar2(200),
+harvestURL varchar2(4000),
+harvestSetSpec varchar2(50),
+cronstring varchar2(50),
+lastHarvestDate timestamp(6),
+firstIndexDate timestamp(6),
+kortnamn varchar2(20),
 alwayseverything integer -- boolean
 );
 
@@ -20,14 +53,14 @@ alter table harvestservices add constraint pk_harvestservices primary key (servi
 
 --drop table content
 create table content (
-uri varchar(1024),
-oaiuri varchar(1024),
-serviceId varchar(20),
-changed timestamp,
+uri varchar2(1024),
+oaiuri varchar2(1024),
+serviceId varchar2(20),
+changed timestamp(6),
 xmldata clob,
-added timestamp,
-deleted timestamp,
-datestamp timestamp not null,
+added timestamp(6),
+deleted timestamp(6),
+datestamp timestamp(6) not null,
 status integer not null
 );
 
@@ -40,15 +73,22 @@ create index ix_content_serv_deleted on content (serviceId, deleted) tablespace 
 create index ix_content_uri_serv on content (uri, serviceId) tablespace KSAMSOK_INDX;
 create index ix_content_date on content (datestamp) tablespace KSAMSOK_INDX;
 create index ix_content_deleted on content (deleted, ' ') tablespace KSAMSOK_INDX;
+CREATE INDEX ix_apikeys_apikey ON apikeys (apikey) tablespace KSAMSOK_INDEX;
+CREATE INDEX ix_organisation_kortnamn ON organisation (kortnamn) tablespace KSAMSOK_INDEX;
+CREATE INDEX ix_searches_pk ON searches (apikey, searchstring, param) tablespace KSAMSOK_INDEX;
+
+ALTER TABLE harvestservices ADD CONSTRAINT fk_organisation_kortnamn FOREIGN KEY(kortnamn) REFERENCES organisation(kortnamn);
+ALTER TABLE searches ADD CONSTRAINT fk_apikeys FOREIGN KEY(apikey) REFERENCES apikeys(apikey);
+
 
 --drop table servicelog
 create table servicelog (
 eventId integer not null,
-serviceId varchar(20),
+serviceId varchar2(20),
 eventType integer,
-eventStep varchar(20),
-eventTs timestamp,
-message varchar(4000)
+eventStep varchar2(20),
+eventTs timestamp(6),
+message varchar2(4000)
 );
 
 
@@ -67,9 +107,9 @@ END;
 -- spatiala data
 --drop table geometries
 create table geometries (
-uri varchar(1024) not null,
-serviceId varchar(20) not null,
-name varchar(1024),
+uri varchar2(1024) not null,
+serviceId varchar2(20) not null,
+name varchar2(1024),
 geometry "MDSYS"."SDO_GEOMETRY" NOT NULL
 );
 
