@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/Title#">
+	
+	<Title rdf:ID="disp">
+		<name>Disponent</name>
+		<description>Exempel på titel för en person, den fullständiga listan är inte framtagen än.</description>
+	</Title>
+
+
+</rdf:RDF>

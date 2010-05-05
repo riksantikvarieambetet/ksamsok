@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/License">
+	
+	<License rdf:ID="allrights">
+		<name>Alla rättigheter reserverade</name>
+		<description>Objektet är helt skyddat av upphovsrätt</description>
+		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
+	</License>
+	
+	<License rdf:ID="public">
+		<name>Allmänt tillgängligt</name>
+		<description>Objektet är allmänt tillgängligt utan restriktioner (motsvarande "public domain")</description>
+		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
+	</License>
+
+	<License rdf:ID="unknown">
+		<name>Okänd</name>
+		<description>Objektets upphovsrättsstatus är okänd</description>
+		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
+	</License>
+	
+	<License rdf:ID="orphan">
+		<name>Orphan</name>
+		<description>Upphovsman är okänd eller ej säkert fastställd</description>
+		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
+	</License>
+
+	<License rdf:ID="by">
+		<name>Creative Commons - Erkännande</name>
+		<description>Upphovsman ska anges vid användning</description>
+		<sameAs>http://creativecommons.org/licenses/by/2.5/</sameAs>
+	</License>
+
+	<License rdf:ID="by-nd">
+		<name>Creative Commons - Erkännande-Inga bearbetningar</name>
+		<description>Upphovsman ska anges vid användning, objektet får inte bearbetas</description>
+		<sameAs>http://creativecommons.org/licenses/by-nd/2.5/</sameAs>
+	</License>
+
+	<License rdf:ID="by-nc-nd">
+		<name>Creative Commons - Erkännande-Ickekommersiell-Inga bearbetningar</name>
+		<description>Upphovsman ska anges vid användning, ej kommersiell användning, objektet får inte bearbetas</description>
+		<sameAs>http://creativecommons.org/licenses/by-nc-nd/2.5/</sameAs>
+	</License>
+
+	<License rdf:ID="by-nc">
+		<name>Creative Commons - Erkännande-Ickekommersiell</name>
+		<description>Upphovsman ska anges vid användning, ej kommersiell användning</description>
+		<sameAs>http://creativecommons.org/licenses/by-nc/2.5/</sameAs>
+	</License>
+
+	<License rdf:ID="by-nc-sa">
+		<name>Creative Commons - Erkännande-Ickekommersiell-Dela Lika</name>
+		<description>Upphovsman ska anges vid användning, ej kommersiell användning, bearbetningar delas med samma villkor</description>
+		<sameAs>http://creativecommons.org/licenses/by-nc-sa/2.5/</sameAs>
+	</License>
+
+	<License rdf:ID="by-sa">
+		<name>Creative Commons - Erkännande-Dela Lika</name>
+		<description>Upphovsman ska anges vid användning, bearbetningar delas med samma villkor</description>
+		<sameAs>http://creativecommons.org/licenses/by-sa/2.5/</sameAs>
+	</License>
+
+</rdf:RDF>

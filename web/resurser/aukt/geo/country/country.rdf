@@ -1,0 +1,2468 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/aukt/geo/country#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#">
+	
+	<Country rdf:ID="ad">
+		<name>Andorra</name>
+		<name>Andorra@en</name>
+		<owl:sameAs>http://sws.geonames.org/3041565</owl:sameAs>
+		<alpha2>ad</alpha2>
+		<alpha3>and</alpha3>
+		<number>20</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ae">
+		<name>Förenade arabemiraten</name>
+		<name>United Arab Emirates@en</name>
+		<owl:sameAs>http://sws.geonames.org/290557</owl:sameAs>
+		<alpha2>ae</alpha2>
+		<alpha3>are</alpha3>
+		<number>784</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="af">
+		<name>Afghanistan</name>
+		<name>Afghanistan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1149361</owl:sameAs>
+		<alpha2>af</alpha2>
+		<alpha3>afg</alpha3>
+		<number>4</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ag">
+		<name>Antigua och Barbuda</name>
+		<name>Antigua and Barbuda@en</name>
+		<owl:sameAs>http://sws.geonames.org/3576396</owl:sameAs>
+		<alpha2>ag</alpha2>
+		<alpha3>atg</alpha3>
+		<number>28</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="ai">
+		<name>Anguilla</name>
+		<name>Anguilla@en</name>
+		<owl:sameAs>http://sws.geonames.org/3573511</owl:sameAs>
+		<alpha2>ai</alpha2>
+		<alpha3>aia</alpha3>
+		<number>660</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="al">
+		<name>Albanien</name>
+		<name>Albania@en</name>
+		<owl:sameAs>http://sws.geonames.org/783754</owl:sameAs>
+		<alpha2>al</alpha2>
+		<alpha3>alb</alpha3>
+		<number>8</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="am">
+		<name>Armenien</name>
+		<name>Armenia@en</name>
+		<owl:sameAs>http://sws.geonames.org/174982</owl:sameAs>
+		<alpha2>am</alpha2>
+		<alpha3>arm</alpha3>
+		<number>51</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="an">
+		<name>Nederländska Antillerna</name>
+		<name>Netherlands Antilles@en</name>
+		<owl:sameAs>http://sws.geonames.org/3513447</owl:sameAs>
+		<alpha2>an</alpha2>
+		<alpha3>ant</alpha3>
+		<number>530</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="ao">
+		<name>Angola</name>
+		<name>Angola@en</name>
+		<owl:sameAs>http://sws.geonames.org/3351879</owl:sameAs>
+		<alpha2>ao</alpha2>
+		<alpha3>ago</alpha3>
+		<number>24</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="aq">
+		<name>Antarktis</name>
+		<name>Antarctica@en</name>
+		<owl:sameAs>http://sws.geonames.org/6697173</owl:sameAs>
+		<alpha2>aq</alpha2>
+		<alpha3>ata</alpha3>
+		<number>10</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
+	</Country>
+
+	<Country rdf:ID="ar">
+		<name>Argentina</name>
+		<name>Argentina@en</name>
+		<owl:sameAs>http://sws.geonames.org/3865483</owl:sameAs>
+		<alpha2>ar</alpha2>
+		<alpha3>arg</alpha3>
+		<number>32</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="as">
+		<name>Amerikanska Samoa</name>
+		<name>American Samoa@en</name>
+		<owl:sameAs>http://sws.geonames.org/5880801</owl:sameAs>
+		<alpha2>as</alpha2>
+		<alpha3>asm</alpha3>
+		<number>16</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="at">
+		<name>Österrike</name>
+		<name>Austria@en</name>
+		<owl:sameAs>http://sws.geonames.org/2782113</owl:sameAs>
+		<alpha2>at</alpha2>
+		<alpha3>aut</alpha3>
+		<number>40</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="au">
+		<name>Australien</name>
+		<name>Australia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2077456</owl:sameAs>
+		<alpha2>au</alpha2>
+		<alpha3>aus</alpha3>
+		<number>36</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="aw">
+		<name>Aruba</name>
+		<name>Aruba@en</name>
+		<owl:sameAs>http://sws.geonames.org/3577279</owl:sameAs>
+		<alpha2>aw</alpha2>
+		<alpha3>abw</alpha3>
+		<number>533</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="ax">
+		<name>Åland</name>
+		<name>Aland Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/661882</owl:sameAs>
+		<alpha2>ax</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="az">
+		<name>Azerbajdzjan</name>
+		<name>Azerbaijan@en</name>
+		<owl:sameAs>http://sws.geonames.org/587116</owl:sameAs>
+		<alpha2>az</alpha2>
+		<alpha3>aze</alpha3>
+		<number>31</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ba">
+		<name>Bosnien-Hercegovina</name>
+		<name>Bosnia and Herzegovina@en</name>
+		<owl:sameAs>http://sws.geonames.org/3277605</owl:sameAs>
+		<alpha2>ba</alpha2>
+		<alpha3>bih</alpha3>
+		<number>70</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="bb">
+		<name>Barbados</name>
+		<name>Barbados@en</name>
+		<owl:sameAs>http://sws.geonames.org/3374084</owl:sameAs>
+		<alpha2>bb</alpha2>
+		<alpha3>brb</alpha3>
+		<number>52</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="bd">
+		<name>Bangladesh</name>
+		<name>Bangladesh@en</name>
+		<owl:sameAs>http://sws.geonames.org/1210997</owl:sameAs>
+		<alpha2>bd</alpha2>
+		<alpha3>bgd</alpha3>
+		<number>50</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="be">
+		<name>Belgien</name>
+		<name>Belgium@en</name>
+		<owl:sameAs>http://sws.geonames.org/2802361</owl:sameAs>
+		<alpha2>be</alpha2>
+		<alpha3>bel</alpha3>
+		<number>56</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="bf">
+		<name>Burkina Faso</name>
+		<name>Burkina Faso@en</name>
+		<owl:sameAs>http://sws.geonames.org/2361809</owl:sameAs>
+		<alpha2>bf</alpha2>
+		<alpha3>bfa</alpha3>
+		<number>854</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="bg">
+		<name>Bulgarien</name>
+		<name>Bulgaria@en</name>
+		<owl:sameAs>http://sws.geonames.org/732800</owl:sameAs>
+		<alpha2>bg</alpha2>
+		<alpha3>bgr</alpha3>
+		<number>100</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="bh">
+		<name>Bahrain</name>
+		<name>Bahrain@en</name>
+		<owl:sameAs>http://sws.geonames.org/290291</owl:sameAs>
+		<alpha2>bh</alpha2>
+		<alpha3>bhr</alpha3>
+		<number>48</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="bi">
+		<name>Burundi</name>
+		<name>Burundi@en</name>
+		<owl:sameAs>http://sws.geonames.org/433561</owl:sameAs>
+		<alpha2>bi</alpha2>
+		<alpha3>bdi</alpha3>
+		<number>108</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="bj">
+		<name>Benin</name>
+		<name>Benin@en</name>
+		<owl:sameAs>http://sws.geonames.org/2395170</owl:sameAs>
+		<alpha2>bj</alpha2>
+		<alpha3>ben</alpha3>
+		<number>204</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="bl">
+		<name>Saint Barthélemy</name>
+		<name>Saint Barthélemy@en</name>
+		<owl:sameAs>http://sws.geonames.org/3578476</owl:sameAs>
+		<alpha2>bl</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="bm">
+		<name>Bermuda</name>
+		<name>Bermuda@en</name>
+		<owl:sameAs>http://sws.geonames.org/3573345</owl:sameAs>
+		<alpha2>bm</alpha2>
+		<alpha3>bmu</alpha3>
+		<number>60</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="bn">
+		<name>Brunei</name>
+		<name>Brunei@en</name>
+		<owl:sameAs>http://sws.geonames.org/1820814</owl:sameAs>
+		<alpha2>bn</alpha2>
+		<alpha3>brn</alpha3>
+		<number>96</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="bo">
+		<name>Bolivia</name>
+		<name>Bolivia@en</name>
+		<owl:sameAs>http://sws.geonames.org/3923057</owl:sameAs>
+		<alpha2>bo</alpha2>
+		<alpha3>bol</alpha3>
+		<number>68</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="br">
+		<name>Brasilien</name>
+		<name>Brazil@en</name>
+		<owl:sameAs>http://sws.geonames.org/3469034</owl:sameAs>
+		<alpha2>br</alpha2>
+		<alpha3>bra</alpha3>
+		<number>76</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="bs">
+		<name>Bahamas</name>
+		<name>Bahamas@en</name>
+		<owl:sameAs>http://sws.geonames.org/3572887</owl:sameAs>
+		<alpha2>bs</alpha2>
+		<alpha3>bhs</alpha3>
+		<number>44</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="bt">
+		<name>Bhutan</name>
+		<name>Bhutan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1252634</owl:sameAs>
+		<alpha2>bt</alpha2>
+		<alpha3>btn</alpha3>
+		<number>64</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="bv">
+		<name>Bouvetön</name>
+		<name>Bouvet island@en</name>
+		<owl:sameAs>http://sws.geonames.org/3371123</owl:sameAs>
+		<alpha2>bv</alpha2>
+		<alpha3>bvt</alpha3>
+		<number>74</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
+	</Country>
+
+	<Country rdf:ID="bw">
+		<name>Botswana</name>
+		<name>Botswana@en</name>
+		<owl:sameAs>http://sws.geonames.org/933860</owl:sameAs>
+		<alpha2>bw</alpha2>
+		<alpha3>bwa</alpha3>
+		<number>72</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="by">
+		<name>Vitryssland</name>
+		<name>Belarus@en</name>
+		<owl:sameAs>http://sws.geonames.org/630336</owl:sameAs>
+		<alpha2>by</alpha2>
+		<alpha3>blr</alpha3>
+		<number>112</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="bz">
+		<name>Belize</name>
+		<name>Belize@en</name>
+		<owl:sameAs>http://sws.geonames.org/3582678</owl:sameAs>
+		<alpha2>bz</alpha2>
+		<alpha3>blz</alpha3>
+		<number>84</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="ca">
+		<name>Kanada</name>
+		<name>Canada@en</name>
+		<owl:sameAs>http://sws.geonames.org/6251999</owl:sameAs>
+		<alpha2>ca</alpha2>
+		<alpha3>can</alpha3>
+		<number>124</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="cc">
+		<name>Kokosöarna</name>
+		<name>Cocos Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/1547376</owl:sameAs>
+		<alpha2>cc</alpha2>
+		<alpha3>cck</alpha3>
+		<number>166</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="cd">
+		<name>Kongo-Brazzaville</name>
+		<name>Democratic Republic of the Congo@en</name>
+		<owl:sameAs>http://sws.geonames.org/203312</owl:sameAs>
+		<alpha2>cd</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="cf">
+		<name>Centralafrikanska republiken</name>
+		<name>Central African republic@en</name>
+		<owl:sameAs>http://sws.geonames.org/239880</owl:sameAs>
+		<alpha2>cf</alpha2>
+		<alpha3>caf</alpha3>
+		<number>140</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="cg">
+		<name>Kongo</name>
+		<name>Republic of the Congo@en</name>
+		<owl:sameAs>http://sws.geonames.org/2260494</owl:sameAs>
+		<alpha2>cg</alpha2>
+		<alpha3>cog</alpha3>
+		<number>178</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ch">
+		<name>Schweiz</name>
+		<name>Switzerland@en</name>
+		<owl:sameAs>http://sws.geonames.org/2658434</owl:sameAs>
+		<alpha2>ch</alpha2>
+		<alpha3>che</alpha3>
+		<number>756</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ci">
+		<name>Elfenbenskusten</name>
+		<name>Ivory Coast@en</name>
+		<owl:sameAs>http://sws.geonames.org/2287781</owl:sameAs>
+		<alpha2>ci</alpha2>
+		<alpha3>civ</alpha3>
+		<number>384</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ck">
+		<name>Cooköarna</name>
+		<name>Cook Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/1899402</owl:sameAs>
+		<alpha2>ck</alpha2>
+		<alpha3>cok</alpha3>
+		<number>184</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="cl">
+		<name>Chile</name>
+		<name>Chile@en</name>
+		<owl:sameAs>http://sws.geonames.org/3895114</owl:sameAs>
+		<alpha2>cl</alpha2>
+		<alpha3>chl</alpha3>
+		<number>152</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="cm">
+		<name>Kamerun</name>
+		<name>Cameroon@en</name>
+		<owl:sameAs>http://sws.geonames.org/2233387</owl:sameAs>
+		<alpha2>cm</alpha2>
+		<alpha3>cmr</alpha3>
+		<number>120</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="cn">
+		<name>Kina</name>
+		<name>China@en</name>
+		<owl:sameAs>http://sws.geonames.org/1814991</owl:sameAs>
+		<alpha2>cn</alpha2>
+		<alpha3>chn</alpha3>
+		<number>156</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="co">
+		<name>Colombia</name>
+		<name>Colombia@en</name>
+		<owl:sameAs>http://sws.geonames.org/3686110</owl:sameAs>
+		<alpha2>co</alpha2>
+		<alpha3>col</alpha3>
+		<number>170</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="cr">
+		<name>Costa Rica</name>
+		<name>Costa Rica@en</name>
+		<owl:sameAs>http://sws.geonames.org/3624060</owl:sameAs>
+		<alpha2>cr</alpha2>
+		<alpha3>cri</alpha3>
+		<number>188</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="cu">
+		<name>Kuba</name>
+		<name>Cuba@en</name>
+		<owl:sameAs>http://sws.geonames.org/3562981</owl:sameAs>
+		<alpha2>cu</alpha2>
+		<alpha3>cub</alpha3>
+		<number>192</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="cv">
+		<name>Kap Verde</name>
+		<name>Cape verde@en</name>
+		<owl:sameAs>http://sws.geonames.org/3374766</owl:sameAs>
+		<alpha2>cv</alpha2>
+		<alpha3>cpv</alpha3>
+		<number>132</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="cx">
+		<name>Julön</name>
+		<name>Christmas Island@en</name>
+		<owl:sameAs>http://sws.geonames.org/2078138</owl:sameAs>
+		<alpha2>cx</alpha2>
+		<alpha3>cxr</alpha3>
+		<number>162</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="cy">
+		<name>Cypern</name>
+		<name>Cyprus@en</name>
+		<owl:sameAs>http://sws.geonames.org/146669</owl:sameAs>
+		<alpha2>cy</alpha2>
+		<alpha3>cyp</alpha3>
+		<number>196</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="cz">
+		<name>Tjeckien</name>
+		<name>Czech Republic@en</name>
+		<owl:sameAs>http://sws.geonames.org/3077311</owl:sameAs>
+		<alpha2>cz</alpha2>
+		<alpha3>cze</alpha3>
+		<number>203</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="de">
+		<name>Tyskland</name>
+		<name>Germany@en</name>
+		<owl:sameAs>http://sws.geonames.org/2921044</owl:sameAs>
+		<alpha2>de</alpha2>
+		<alpha3>deu</alpha3>
+		<number>276</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="dj">
+		<name>Djibouti</name>
+		<name>Djibouti@en</name>
+		<owl:sameAs>http://sws.geonames.org/223816</owl:sameAs>
+		<alpha2>dj</alpha2>
+		<alpha3>dji</alpha3>
+		<number>262</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="dk">
+		<name>Danmark</name>
+		<name>Denmark@en</name>
+		<owl:sameAs>http://sws.geonames.org/2623032</owl:sameAs>
+		<alpha2>dk</alpha2>
+		<alpha3>dnk</alpha3>
+		<number>208</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="dm">
+		<name>Dominica</name>
+		<name>Dominica@en</name>
+		<owl:sameAs>http://sws.geonames.org/3575830</owl:sameAs>
+		<alpha2>dm</alpha2>
+		<alpha3>dma</alpha3>
+		<number>212</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="do">
+		<name>Dominikanska republiken</name>
+		<name>Dominican Republic@en</name>
+		<owl:sameAs>http://sws.geonames.org/3508796</owl:sameAs>
+		<alpha2>do</alpha2>
+		<alpha3>dom</alpha3>
+		<number>214</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="dz">
+		<name>Algeriet</name>
+		<name>Algeria@en</name>
+		<owl:sameAs>http://sws.geonames.org/2589581</owl:sameAs>
+		<alpha2>dz</alpha2>
+		<alpha3>dza</alpha3>
+		<number>12</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ec">
+		<name>Ecuador</name>
+		<name>Ecuador@en</name>
+		<owl:sameAs>http://sws.geonames.org/3658394</owl:sameAs>
+		<alpha2>ec</alpha2>
+		<alpha3>ecu</alpha3>
+		<number>218</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="ee">
+		<name>Estland</name>
+		<name>Estonia@en</name>
+		<owl:sameAs>http://sws.geonames.org/453733</owl:sameAs>
+		<alpha2>ee</alpha2>
+		<alpha3>est</alpha3>
+		<number>233</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="eg">
+		<name>Egypten</name>
+		<name>Egypt@en</name>
+		<owl:sameAs>http://sws.geonames.org/357994</owl:sameAs>
+		<alpha2>eg</alpha2>
+		<alpha3>egy</alpha3>
+		<number>818</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="eh">
+		<name>Västsahara</name>
+		<name>Western Sahara@en</name>
+		<owl:sameAs>http://sws.geonames.org/2461445</owl:sameAs>
+		<alpha2>eh</alpha2>
+		<alpha3>esh</alpha3>
+		<number>732</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="er">
+		<name>Eritrea</name>
+		<name>Eritrea@en</name>
+		<owl:sameAs>http://sws.geonames.org/338010</owl:sameAs>
+		<alpha2>er</alpha2>
+		<alpha3>eri</alpha3>
+		<number>232</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="es">
+		<name>Spanien</name>
+		<name>Spain@en</name>
+		<owl:sameAs>http://sws.geonames.org/2510769</owl:sameAs>
+		<alpha2>es</alpha2>
+		<alpha3>esp</alpha3>
+		<number>724</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="et">
+		<name>Etiopien</name>
+		<name>Ethiopia@en</name>
+		<owl:sameAs>http://sws.geonames.org/337996</owl:sameAs>
+		<alpha2>et</alpha2>
+		<alpha3>eth</alpha3>
+		<number>210</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="fi">
+		<name>Finland</name>
+		<name>Finland@en</name>
+		<owl:sameAs>http://sws.geonames.org/660013</owl:sameAs>
+		<alpha2>fi</alpha2>
+		<alpha3>fin</alpha3>
+		<number>246</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="fj">
+		<name>Fiji</name>
+		<name>Fiji@en</name>
+		<owl:sameAs>http://sws.geonames.org/2205218</owl:sameAs>
+		<alpha2>fj</alpha2>
+		<alpha3>fji</alpha3>
+		<number>242</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="fk">
+		<name>Falklandsöarna</name>
+		<name>Falkland Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/3474414</owl:sameAs>
+		<alpha2>fk</alpha2>
+		<alpha3>flk</alpha3>
+		<number>238</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="fm">
+		<name>Mikronesiens federerade stater</name>
+		<name>Micronesia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2081918</owl:sameAs>
+		<alpha2>fm</alpha2>
+		<alpha3>fsm</alpha3>
+		<number>583</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="fo">
+		<name>Färöarna</name>
+		<name>Faroe Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/2622320</owl:sameAs>
+		<alpha2>fo</alpha2>
+		<alpha3>fro</alpha3>
+		<number>234</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="fr">
+		<name>Frankrike</name>
+		<name>France@en</name>
+		<owl:sameAs>http://sws.geonames.org/3017382</owl:sameAs>
+		<alpha2>fr</alpha2>
+		<alpha3>fra</alpha3>
+		<number>250</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ga">
+		<name>Gabon</name>
+		<name>Gabon@en</name>
+		<owl:sameAs>http://sws.geonames.org/2400553</owl:sameAs>
+		<alpha2>ga</alpha2>
+		<alpha3>gab</alpha3>
+		<number>266</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="gb">
+		<name>Storbritannien</name>
+		<name>United Kingdom@en</name>
+		<owl:sameAs>http://sws.geonames.org/2635167</owl:sameAs>
+		<alpha2>gb</alpha2>
+		<alpha3>gbr</alpha3>
+		<number>826</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="gd">
+		<name>Grenada</name>
+		<name>Grenada@en</name>
+		<owl:sameAs>http://sws.geonames.org/3580239</owl:sameAs>
+		<alpha2>gd</alpha2>
+		<alpha3>grd</alpha3>
+		<number>308</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="ge">
+		<name>Georgien</name>
+		<name>Georgia@en</name>
+		<owl:sameAs>http://sws.geonames.org/614540</owl:sameAs>
+		<alpha2>ge</alpha2>
+		<alpha3>geo</alpha3>
+		<number>268</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="gf">
+		<name>Franska Guyana</name>
+		<name>French Guiana@en</name>
+		<owl:sameAs>http://sws.geonames.org/3381670</owl:sameAs>
+		<alpha2>gf</alpha2>
+		<alpha3>guf</alpha3>
+		<number>254</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="gg">
+		<name>Guernsey</name>
+		<name>Guernsey@en</name>
+		<owl:sameAs>http://sws.geonames.org/3042362</owl:sameAs>
+		<alpha2>gg</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="gh">
+		<name>Ghana</name>
+		<name>Ghana@en</name>
+		<owl:sameAs>http://sws.geonames.org/2300660</owl:sameAs>
+		<alpha2>gh</alpha2>
+		<alpha3>gha</alpha3>
+		<number>288</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="gi">
+		<name>Gibraltar</name>
+		<name>Gibraltar@en</name>
+		<owl:sameAs>http://sws.geonames.org/2411586</owl:sameAs>
+		<alpha2>gi</alpha2>
+		<alpha3>gib</alpha3>
+		<number>292</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="gl">
+		<name>Grönland</name>
+		<name>Greenland@en</name>
+		<owl:sameAs>http://sws.geonames.org/3425505</owl:sameAs>
+		<alpha2>gl</alpha2>
+		<alpha3>grl</alpha3>
+		<number>304</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="gm">
+		<name>Gambia</name>
+		<name>Gambia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2413451</owl:sameAs>
+		<alpha2>gm</alpha2>
+		<alpha3>gmb</alpha3>
+		<number>270</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="gn">
+		<name>Guinea</name>
+		<name>Guinea@en</name>
+		<owl:sameAs>http://sws.geonames.org/2420477</owl:sameAs>
+		<alpha2>gn</alpha2>
+		<alpha3>gin</alpha3>
+		<number>324</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="gp">
+		<name>Guadeloupe</name>
+		<name>Guadeloupe@en</name>
+		<owl:sameAs>http://sws.geonames.org/3579143</owl:sameAs>
+		<alpha2>gp</alpha2>
+		<alpha3>glp</alpha3>
+		<number>312</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="gq">
+		<name>Ekvatorialguinea</name>
+		<name>Equatorial Guinea@en</name>
+		<owl:sameAs>http://sws.geonames.org/2309096</owl:sameAs>
+		<alpha2>gq</alpha2>
+		<alpha3>gnq</alpha3>
+		<number>226</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="gr">
+		<name>Grekland</name>
+		<name>Greece@en</name>
+		<owl:sameAs>http://sws.geonames.org/390903</owl:sameAs>
+		<alpha2>gr</alpha2>
+		<alpha3>grc</alpha3>
+		<number>300</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="gs">
+		<name>Sydgeorgien och Sydsandwichöarna</name>
+		<name>South Georgia and the South Sandwich Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/3474415</owl:sameAs>
+		<alpha2>gs</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
+	</Country>
+
+	<Country rdf:ID="gt">
+		<name>Guatemala</name>
+		<name>Guatemala@en</name>
+		<owl:sameAs>http://sws.geonames.org/3595528</owl:sameAs>
+		<alpha2>gt</alpha2>
+		<alpha3>gtm</alpha3>
+		<number>320</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="gu">
+		<name>Guam</name>
+		<name>Guam@en</name>
+		<owl:sameAs>http://sws.geonames.org/4043988</owl:sameAs>
+		<alpha2>gu</alpha2>
+		<alpha3>gum</alpha3>
+		<number>316</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="gw">
+		<name>Guinea Bissau</name>
+		<name>Guinea-Bissau@en</name>
+		<owl:sameAs>http://sws.geonames.org/2372248</owl:sameAs>
+		<alpha2>gw</alpha2>
+		<alpha3>gnb</alpha3>
+		<number>624</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="gy">
+		<name>Guyana</name>
+		<name>Guyana@en</name>
+		<owl:sameAs>http://sws.geonames.org/3378535</owl:sameAs>
+		<alpha2>gy</alpha2>
+		<alpha3>guy</alpha3>
+		<number>328</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="hk">
+		<name>Hongkong</name>
+		<name>Hong Kong@en</name>
+		<owl:sameAs>http://sws.geonames.org/1819730</owl:sameAs>
+		<alpha2>hk</alpha2>
+		<alpha3>hkg</alpha3>
+		<number>344</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="hm">
+		<name>Heard- och McDonaldsöarna</name>
+		<name>Heard Island and Mcdonald Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/1547314</owl:sameAs>
+		<alpha2>hm</alpha2>
+		<alpha3>hmd</alpha3>
+		<number>334</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
+	</Country>
+
+	<Country rdf:ID="hn">
+		<name>Honduras</name>
+		<name>Honduras@en</name>
+		<owl:sameAs>http://sws.geonames.org/3608932</owl:sameAs>
+		<alpha2>hn</alpha2>
+		<alpha3>hnd</alpha3>
+		<number>340</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="hr">
+		<name>Kroatien</name>
+		<name>Croatia@en</name>
+		<owl:sameAs>http://sws.geonames.org/3202326</owl:sameAs>
+		<alpha2>hr</alpha2>
+		<alpha3>hrv</alpha3>
+		<number>191</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ht">
+		<name>Haiti</name>
+		<name>Haiti@en</name>
+		<owl:sameAs>http://sws.geonames.org/3723988</owl:sameAs>
+		<alpha2>ht</alpha2>
+		<alpha3>hti</alpha3>
+		<number>332</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="hu">
+		<name>Ungern</name>
+		<name>Hungary@en</name>
+		<owl:sameAs>http://sws.geonames.org/719819</owl:sameAs>
+		<alpha2>hu</alpha2>
+		<alpha3>hun</alpha3>
+		<number>348</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="id">
+		<name>Indonesien</name>
+		<name>Indonesia@en</name>
+		<owl:sameAs>http://sws.geonames.org/1643084</owl:sameAs>
+		<alpha2>id</alpha2>
+		<alpha3>idn</alpha3>
+		<number>360</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ie">
+		<name>Irland</name>
+		<name>Ireland@en</name>
+		<owl:sameAs>http://sws.geonames.org/2963597</owl:sameAs>
+		<alpha2>ie</alpha2>
+		<alpha3>irl</alpha3>
+		<number>372</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="il">
+		<name>Israel</name>
+		<name>Israel@en</name>
+		<owl:sameAs>http://sws.geonames.org/294640</owl:sameAs>
+		<alpha2>il</alpha2>
+		<alpha3>isr</alpha3>
+		<number>376</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="im">
+		<name>Isle of Man</name>
+		<name>Isle of Man@en</name>
+		<owl:sameAs>http://sws.geonames.org/3042225</owl:sameAs>
+		<alpha2>im</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="in">
+		<name>Indien</name>
+		<name>India@en</name>
+		<owl:sameAs>http://sws.geonames.org/1269750</owl:sameAs>
+		<alpha2>in</alpha2>
+		<alpha3>ind</alpha3>
+		<number>356</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="io">
+		<name>Brittiska territoriet i Indiska Oceanen</name>
+		<name>British Indian Ocean territory@en</name>
+		<owl:sameAs>http://sws.geonames.org/1282588</owl:sameAs>
+		<alpha2>io</alpha2>
+		<alpha3>iot</alpha3>
+		<number>86</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="iq">
+		<name>Irak</name>
+		<name>Iraq@en</name>
+		<owl:sameAs>http://sws.geonames.org/99237</owl:sameAs>
+		<alpha2>iq</alpha2>
+		<alpha3>irq</alpha3>
+		<number>368</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ir">
+		<name>Iran</name>
+		<name>Iran@en</name>
+		<owl:sameAs>http://sws.geonames.org/130758</owl:sameAs>
+		<alpha2>ir</alpha2>
+		<alpha3>irn</alpha3>
+		<number>364</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="is">
+		<name>Island</name>
+		<name>Iceland@en</name>
+		<owl:sameAs>http://sws.geonames.org/2629691</owl:sameAs>
+		<alpha2>is</alpha2>
+		<alpha3>isl</alpha3>
+		<number>352</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="it">
+		<name>Italien</name>
+		<name>Italy@en</name>
+		<owl:sameAs>http://sws.geonames.org/3175395</owl:sameAs>
+		<alpha2>it</alpha2>
+		<alpha3>ita</alpha3>
+		<number>380</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="je">
+		<name>Jersey</name>
+		<name>Jersey@en</name>
+		<owl:sameAs>http://sws.geonames.org/3042142</owl:sameAs>
+		<alpha2>je</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="jm">
+		<name>Jamaica</name>
+		<name>Jamaica@en</name>
+		<owl:sameAs>http://sws.geonames.org/3489940</owl:sameAs>
+		<alpha2>jm</alpha2>
+		<alpha3>jam</alpha3>
+		<number>388</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="jo">
+		<name>Jordanien</name>
+		<name>Jordan@en</name>
+		<owl:sameAs>http://sws.geonames.org/248816</owl:sameAs>
+		<alpha2>jo</alpha2>
+		<alpha3>jor</alpha3>
+		<number>400</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="jp">
+		<name>Japan</name>
+		<name>Japan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1861060</owl:sameAs>
+		<alpha2>jp</alpha2>
+		<alpha3>jpn</alpha3>
+		<number>392</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ke">
+		<name>Kenya</name>
+		<name>Kenya@en</name>
+		<owl:sameAs>http://sws.geonames.org/192950</owl:sameAs>
+		<alpha2>ke</alpha2>
+		<alpha3>ken</alpha3>
+		<number>404</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="kg">
+		<name>Kirgizistan</name>
+		<name>Kyrgyzstan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1527747</owl:sameAs>
+		<alpha2>kg</alpha2>
+		<alpha3>kgz</alpha3>
+		<number>417</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="kh">
+		<name>Kambodja</name>
+		<name>Cambodia@en</name>
+		<owl:sameAs>http://sws.geonames.org/1831722</owl:sameAs>
+		<alpha2>kh</alpha2>
+		<alpha3>khm</alpha3>
+		<number>116</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ki">
+		<name>Kiribati</name>
+		<name>Kiribati@en</name>
+		<owl:sameAs>http://sws.geonames.org/4030945</owl:sameAs>
+		<alpha2>ki</alpha2>
+		<alpha3>kir</alpha3>
+		<number>296</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="km">
+		<name>Comorerna</name>
+		<name>Comoros@en</name>
+		<owl:sameAs>http://sws.geonames.org/921929</owl:sameAs>
+		<alpha2>km</alpha2>
+		<alpha3>com</alpha3>
+		<number>174</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="kn">
+		<name>Saint Kitts och Nevis</name>
+		<name>Saint Kitts and Nevis@en</name>
+		<owl:sameAs>http://sws.geonames.org/3575174</owl:sameAs>
+		<alpha2>kn</alpha2>
+		<alpha3>kna</alpha3>
+		<number>659</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="kp">
+		<name>Nordkorea</name>
+		<name>North Korea@en</name>
+		<owl:sameAs>http://sws.geonames.org/1873107</owl:sameAs>
+		<alpha2>kp</alpha2>
+		<alpha3>prk</alpha3>
+		<number>408</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="kr">
+		<name>Sydkorea</name>
+		<name>South Korea@en</name>
+		<owl:sameAs>http://sws.geonames.org/1835841</owl:sameAs>
+		<alpha2>kr</alpha2>
+		<alpha3>kor</alpha3>
+		<number>410</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="kw">
+		<name>Kuwait</name>
+		<name>Kuwait@en</name>
+		<owl:sameAs>http://sws.geonames.org/285570</owl:sameAs>
+		<alpha2>kw</alpha2>
+		<alpha3>kwt</alpha3>
+		<number>414</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ky">
+		<name>Caymanöarna</name>
+		<name>Cayman Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/3580718</owl:sameAs>
+		<alpha2>ky</alpha2>
+		<alpha3>kym</alpha3>
+		<number>136</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="kz">
+		<name>Kazakstan</name>
+		<name>Kazakhstan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1522867</owl:sameAs>
+		<alpha2>kz</alpha2>
+		<alpha3>kaz</alpha3>
+		<number>398</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="la">
+		<name>Laos</name>
+		<name>Laos@en</name>
+		<owl:sameAs>http://sws.geonames.org/1655842</owl:sameAs>
+		<alpha2>la</alpha2>
+		<alpha3>lao</alpha3>
+		<number>418</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="lb">
+		<name>Libanon</name>
+		<name>Lebanon@en</name>
+		<owl:sameAs>http://sws.geonames.org/272103</owl:sameAs>
+		<alpha2>lb</alpha2>
+		<alpha3>lbn</alpha3>
+		<number>422</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="lc">
+		<name>Saint Lucia</name>
+		<name>Saint Lucia@en</name>
+		<owl:sameAs>http://sws.geonames.org/3576468</owl:sameAs>
+		<alpha2>lc</alpha2>
+		<alpha3>lca</alpha3>
+		<number>662</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="li">
+		<name>Liechtenstein</name>
+		<name>Liechtenstein@en</name>
+		<owl:sameAs>http://sws.geonames.org/3042058</owl:sameAs>
+		<alpha2>li</alpha2>
+		<alpha3>lie</alpha3>
+		<number>438</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="lk">
+		<name>Sri Lanka</name>
+		<name>Sri Lanka@en</name>
+		<owl:sameAs>http://sws.geonames.org/1227603</owl:sameAs>
+		<alpha2>lk</alpha2>
+		<alpha3>lka</alpha3>
+		<number>144</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="lr">
+		<name>Liberia</name>
+		<name>Liberia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2275384</owl:sameAs>
+		<alpha2>lr</alpha2>
+		<alpha3>lbr</alpha3>
+		<number>430</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ls">
+		<name>Lesotho</name>
+		<name>Lesotho@en</name>
+		<owl:sameAs>http://sws.geonames.org/932692</owl:sameAs>
+		<alpha2>ls</alpha2>
+		<alpha3>lso</alpha3>
+		<number>426</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="lt">
+		<name>Litauen</name>
+		<name>Lithuania@en</name>
+		<owl:sameAs>http://sws.geonames.org/597427</owl:sameAs>
+		<alpha2>lt</alpha2>
+		<alpha3>ltu</alpha3>
+		<number>440</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="lu">
+		<name>Luxemburg</name>
+		<name>Luxembourg@en</name>
+		<owl:sameAs>http://sws.geonames.org/2960313</owl:sameAs>
+		<alpha2>lu</alpha2>
+		<alpha3>lux</alpha3>
+		<number>442</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="lv">
+		<name>Lettland</name>
+		<name>Latvia@en</name>
+		<owl:sameAs>http://sws.geonames.org/458258</owl:sameAs>
+		<alpha2>lv</alpha2>
+		<alpha3>lva</alpha3>
+		<number>428</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ly">
+		<name>Libyen</name>
+		<name>Libya@en</name>
+		<owl:sameAs>http://sws.geonames.org/2215636</owl:sameAs>
+		<alpha2>ly</alpha2>
+		<alpha3>lby</alpha3>
+		<number>434</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ma">
+		<name>Marocko</name>
+		<name>Morocco@en</name>
+		<owl:sameAs>http://sws.geonames.org/2542007</owl:sameAs>
+		<alpha2>ma</alpha2>
+		<alpha3>mar</alpha3>
+		<number>504</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="mc">
+		<name>Monaco</name>
+		<name>Monaco@en</name>
+		<owl:sameAs>http://sws.geonames.org/2993457</owl:sameAs>
+		<alpha2>mc</alpha2>
+		<alpha3>mco</alpha3>
+		<number>492</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="md">
+		<name>Moldavien</name>
+		<name>Moldova@en</name>
+		<owl:sameAs>http://sws.geonames.org/617790</owl:sameAs>
+		<alpha2>md</alpha2>
+		<alpha3>mda</alpha3>
+		<number>498</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="me">
+		<name>Montenegro</name>
+		<name>Montenegro@en</name>
+		<owl:sameAs>http://sws.geonames.org/3194884</owl:sameAs>
+		<alpha2>me</alpha2>
+		<alpha3>mne</alpha3>
+		<number>499</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="mf">
+		<name>Saint Martin</name>
+		<name>Saint Martin@en</name>
+		<owl:sameAs>http://sws.geonames.org/3578421</owl:sameAs>
+		<alpha2>mf</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="mg">
+		<name>Madagaskar</name>
+		<name>Madagascar@en</name>
+		<owl:sameAs>http://sws.geonames.org/1062947</owl:sameAs>
+		<alpha2>mg</alpha2>
+		<alpha3>mdg</alpha3>
+		<number>450</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="mh">
+		<name>Marshallöarna</name>
+		<name>Marshall Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/2080185</owl:sameAs>
+		<alpha2>mh</alpha2>
+		<alpha3>mhl</alpha3>
+		<number>584</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="mk">
+		<name>Makedonien</name>
+		<name>Macedonia@en</name>
+		<owl:sameAs>http://sws.geonames.org/718075</owl:sameAs>
+		<alpha2>mk</alpha2>
+		<alpha3>mkd</alpha3>
+		<number>807</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ml">
+		<name>Mali</name>
+		<name>Mali@en</name>
+		<owl:sameAs>http://sws.geonames.org/2453866</owl:sameAs>
+		<alpha2>ml</alpha2>
+		<alpha3>mli</alpha3>
+		<number>466</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="mm">
+		<name>Burma (Myanmar)</name>
+		<name>Myanmar@en</name>
+		<owl:sameAs>http://sws.geonames.org/1327865</owl:sameAs>
+		<alpha2>mm</alpha2>
+		<alpha3>mmr</alpha3>
+		<number>104</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="mn">
+		<name>Mongoliet</name>
+		<name>Mongolia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2029969</owl:sameAs>
+		<alpha2>mn</alpha2>
+		<alpha3>mng</alpha3>
+		<number>496</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="mo">
+		<name>Macau</name>
+		<name>Macao@en</name>
+		<owl:sameAs>http://sws.geonames.org/1821275</owl:sameAs>
+		<alpha2>mo</alpha2>
+		<alpha3>mac</alpha3>
+		<number>446</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="mp">
+		<name>Nordmarianerna</name>
+		<name>Northern Mariana Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/4041467</owl:sameAs>
+		<alpha2>mp</alpha2>
+		<alpha3>mnp</alpha3>
+		<number>580</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="mq">
+		<name>Martinique</name>
+		<name>Martinique@en</name>
+		<owl:sameAs>http://sws.geonames.org/3570311</owl:sameAs>
+		<alpha2>mq</alpha2>
+		<alpha3>mtq</alpha3>
+		<number>474</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="mr">
+		<name>Mauretanien</name>
+		<name>Mauritania@en</name>
+		<owl:sameAs>http://sws.geonames.org/2378080</owl:sameAs>
+		<alpha2>mr</alpha2>
+		<alpha3>mrt</alpha3>
+		<number>478</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ms">
+		<name>Montserrat</name>
+		<name>Montserrat@en</name>
+		<owl:sameAs>http://sws.geonames.org/3578097</owl:sameAs>
+		<alpha2>ms</alpha2>
+		<alpha3>msr</alpha3>
+		<number>500</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="mt">
+		<name>Malta</name>
+		<name>Malta@en</name>
+		<owl:sameAs>http://sws.geonames.org/2562770</owl:sameAs>
+		<alpha2>mt</alpha2>
+		<alpha3>mlt</alpha3>
+		<number>470</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="mu">
+		<name>Mauritius</name>
+		<name>Mauritius@en</name>
+		<owl:sameAs>http://sws.geonames.org/934292</owl:sameAs>
+		<alpha2>mu</alpha2>
+		<alpha3>mus</alpha3>
+		<number>480</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="mv">
+		<name>Maldiverna</name>
+		<name>Maldives@en</name>
+		<owl:sameAs>http://sws.geonames.org/1282028</owl:sameAs>
+		<alpha2>mv</alpha2>
+		<alpha3>mdv</alpha3>
+		<number>462</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="mw">
+		<name>Malawi</name>
+		<name>Malawi@en</name>
+		<owl:sameAs>http://sws.geonames.org/927384</owl:sameAs>
+		<alpha2>mw</alpha2>
+		<alpha3>mwi</alpha3>
+		<number>454</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="mx">
+		<name>Mexiko</name>
+		<name>Mexico@en</name>
+		<owl:sameAs>http://sws.geonames.org/3996063</owl:sameAs>
+		<alpha2>mx</alpha2>
+		<alpha3>mex</alpha3>
+		<number>484</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="my">
+		<name>Malaysia</name>
+		<name>Malaysia@en</name>
+		<owl:sameAs>http://sws.geonames.org/1733045</owl:sameAs>
+		<alpha2>my</alpha2>
+		<alpha3>mys</alpha3>
+		<number>458</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="mz">
+		<name>Moçambique</name>
+		<name>Mozambique@en</name>
+		<owl:sameAs>http://sws.geonames.org/1036973</owl:sameAs>
+		<alpha2>mz</alpha2>
+		<alpha3>moz</alpha3>
+		<number>508</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="na">
+		<name>Namibia</name>
+		<name>Namibia@en</name>
+		<owl:sameAs>http://sws.geonames.org/3355338</owl:sameAs>
+		<alpha2>na</alpha2>
+		<alpha3>nam</alpha3>
+		<number>516</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="nc">
+		<name>Nya Kaledonien</name>
+		<name>New Caledonia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2139685</owl:sameAs>
+		<alpha2>nc</alpha2>
+		<alpha3>ncl</alpha3>
+		<number>540</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="ne">
+		<name>Niger</name>
+		<name>Niger@en</name>
+		<owl:sameAs>http://sws.geonames.org/2440476</owl:sameAs>
+		<alpha2>ne</alpha2>
+		<alpha3>ner</alpha3>
+		<number>562</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="nf">
+		<name>Norfolkön</name>
+		<name>Norfolk Island@en</name>
+		<owl:sameAs>http://sws.geonames.org/2155115</owl:sameAs>
+		<alpha2>nf</alpha2>
+		<alpha3>nfk</alpha3>
+		<number>574</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="ng">
+		<name>Nigeria</name>
+		<name>Nigeria@en</name>
+		<owl:sameAs>http://sws.geonames.org/2328926</owl:sameAs>
+		<alpha2>ng</alpha2>
+		<alpha3>nga</alpha3>
+		<number>566</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ni">
+		<name>Nicaragua</name>
+		<name>Nicaragua@en</name>
+		<owl:sameAs>http://sws.geonames.org/3617476</owl:sameAs>
+		<alpha2>ni</alpha2>
+		<alpha3>nic</alpha3>
+		<number>558</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="nl">
+		<name>Nederländerna</name>
+		<name>Netherlands@en</name>
+		<owl:sameAs>http://sws.geonames.org/2750405</owl:sameAs>
+		<alpha2>nl</alpha2>
+		<alpha3>nld</alpha3>
+		<number>528</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="no">
+		<name>Norge</name>
+		<name>Norway@en</name>
+		<owl:sameAs>http://sws.geonames.org/3144096</owl:sameAs>
+		<alpha2>no</alpha2>
+		<alpha3>nor</alpha3>
+		<number>578</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="np">
+		<name>Nepal</name>
+		<name>Nepal@en</name>
+		<owl:sameAs>http://sws.geonames.org/1282988</owl:sameAs>
+		<alpha2>np</alpha2>
+		<alpha3>npl</alpha3>
+		<number>524</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="nr">
+		<name>Nauru</name>
+		<name>Nauru@en</name>
+		<owl:sameAs>http://sws.geonames.org/2110425</owl:sameAs>
+		<alpha2>nr</alpha2>
+		<alpha3>nru</alpha3>
+		<number>520</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="nu">
+		<name>Niue</name>
+		<name>Niue@en</name>
+		<owl:sameAs>http://sws.geonames.org/4036232</owl:sameAs>
+		<alpha2>nu</alpha2>
+		<alpha3>niu</alpha3>
+		<number>570</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="nz">
+		<name>Nya Zeeland</name>
+		<name>New Zealand@en</name>
+		<owl:sameAs>http://sws.geonames.org/2186224</owl:sameAs>
+		<alpha2>nz</alpha2>
+		<alpha3>nzl</alpha3>
+		<number>554</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="om">
+		<name>Oman</name>
+		<name>Oman@en</name>
+		<owl:sameAs>http://sws.geonames.org/286963</owl:sameAs>
+		<alpha2>om</alpha2>
+		<alpha3>omn</alpha3>
+		<number>512</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="pa">
+		<name>Panama</name>
+		<name>Panama@en</name>
+		<owl:sameAs>http://sws.geonames.org/3703430</owl:sameAs>
+		<alpha2>pa</alpha2>
+		<alpha3>pan</alpha3>
+		<number>591</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="pe">
+		<name>Peru</name>
+		<name>Peru@en</name>
+		<owl:sameAs>http://sws.geonames.org/3932488</owl:sameAs>
+		<alpha2>pe</alpha2>
+		<alpha3>per</alpha3>
+		<number>604</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="pf">
+		<name>Franska Polynesien</name>
+		<name>French Polynesia@en</name>
+		<owl:sameAs>http://sws.geonames.org/4020092</owl:sameAs>
+		<alpha2>pf</alpha2>
+		<alpha3>pyf</alpha3>
+		<number>258</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="pg">
+		<name>Papua Nya Guinea</name>
+		<name>Papua New Guinea@en</name>
+		<owl:sameAs>http://sws.geonames.org/2088628</owl:sameAs>
+		<alpha2>pg</alpha2>
+		<alpha3>png</alpha3>
+		<number>598</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="ph">
+		<name>Filippinerna</name>
+		<name>Philippines@en</name>
+		<owl:sameAs>http://sws.geonames.org/1694008</owl:sameAs>
+		<alpha2>ph</alpha2>
+		<alpha3>phl</alpha3>
+		<number>608</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="pk">
+		<name>Pakistan</name>
+		<name>Pakistan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1168579</owl:sameAs>
+		<alpha2>pk</alpha2>
+		<alpha3>pak</alpha3>
+		<number>586</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="pl">
+		<name>Polen</name>
+		<name>Poland@en</name>
+		<owl:sameAs>http://sws.geonames.org/798544</owl:sameAs>
+		<alpha2>pl</alpha2>
+		<alpha3>pol</alpha3>
+		<number>616</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="pm">
+		<name>Saint Pierre och Miquelon</name>
+		<name>Saint Pierre and Miquelon@en</name>
+		<owl:sameAs>http://sws.geonames.org/3424932</owl:sameAs>
+		<alpha2>pm</alpha2>
+		<alpha3>spm</alpha3>
+		<number>666</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="pn">
+		<name>Pitcairn</name>
+		<name>Pitcairn@en</name>
+		<owl:sameAs>http://sws.geonames.org/4030699</owl:sameAs>
+		<alpha2>pn</alpha2>
+		<alpha3>pcn</alpha3>
+		<number>612</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="pr">
+		<name>Puerto Rico</name>
+		<name>Puerto Rico@en</name>
+		<owl:sameAs>http://sws.geonames.org/4566966</owl:sameAs>
+		<alpha2>pr</alpha2>
+		<alpha3>pri</alpha3>
+		<number>630</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="ps">
+		<name>Palestinska självstyret</name>
+		<name>Palestinian Territory@en</name>
+		<owl:sameAs>http://sws.geonames.org/6254930</owl:sameAs>
+		<alpha2>ps</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="pt">
+		<name>Portugal</name>
+		<name>Portugal@en</name>
+		<owl:sameAs>http://sws.geonames.org/2264397</owl:sameAs>
+		<alpha2>pt</alpha2>
+		<alpha3>prt</alpha3>
+		<number>620</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="pw">
+		<name>Palau</name>
+		<name>Palau@en</name>
+		<owl:sameAs>http://sws.geonames.org/1559582</owl:sameAs>
+		<alpha2>pw</alpha2>
+		<alpha3>plw</alpha3>
+		<number>585</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="py">
+		<name>Paraguay</name>
+		<name>Paraguay@en</name>
+		<owl:sameAs>http://sws.geonames.org/3437598</owl:sameAs>
+		<alpha2>py</alpha2>
+		<alpha3>pry</alpha3>
+		<number>600</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="qa">
+		<name>Qatar</name>
+		<name>Qatar@en</name>
+		<owl:sameAs>http://sws.geonames.org/289688</owl:sameAs>
+		<alpha2>qa</alpha2>
+		<alpha3>qat</alpha3>
+		<number>634</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="re">
+		<name>Reunion</name>
+		<name>Reunion@en</name>
+		<owl:sameAs>http://sws.geonames.org/935317</owl:sameAs>
+		<alpha2>re</alpha2>
+		<alpha3>reu</alpha3>
+		<number>638</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ro">
+		<name>Rumänien</name>
+		<name>Romania@en</name>
+		<owl:sameAs>http://sws.geonames.org/798549</owl:sameAs>
+		<alpha2>ro</alpha2>
+		<alpha3>rom</alpha3>
+		<number>642</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="rs">
+		<name>Serbien</name>
+		<name>Serbia@en</name>
+		<owl:sameAs>http://sws.geonames.org/6290252</owl:sameAs>
+		<alpha2>rs</alpha2>
+		<alpha3>srb</alpha3>
+		<number>688</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ru">
+		<name>Ryssland</name>
+		<name>Russia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2017370</owl:sameAs>
+		<alpha2>ru</alpha2>
+		<alpha3>rus</alpha3>
+		<number>643</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="rw">
+		<name>Rwanda</name>
+		<name>Rwanda@en</name>
+		<owl:sameAs>http://sws.geonames.org/49518</owl:sameAs>
+		<alpha2>rw</alpha2>
+		<alpha3>rwa</alpha3>
+		<number>646</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="sa">
+		<name>Saudiarabien</name>
+		<name>Saudi Arabia@en</name>
+		<owl:sameAs>http://sws.geonames.org/102358</owl:sameAs>
+		<alpha2>sa</alpha2>
+		<alpha3>sau</alpha3>
+		<number>682</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="sb">
+		<name>Salomonöarna</name>
+		<name>Solomon Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/2103350</owl:sameAs>
+		<alpha2>sb</alpha2>
+		<alpha3>slb</alpha3>
+		<number>90</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="sc">
+		<name>Seychellerna</name>
+		<name>Seychelles@en</name>
+		<owl:sameAs>http://sws.geonames.org/241170</owl:sameAs>
+		<alpha2>sc</alpha2>
+		<alpha3>syc</alpha3>
+		<number>690</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="sd">
+		<name>Sudan</name>
+		<name>Sudan@en</name>
+		<owl:sameAs>http://sws.geonames.org/366755</owl:sameAs>
+		<alpha2>sd</alpha2>
+		<alpha3>sdn</alpha3>
+		<number>736</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="se">
+		<name>Sverige</name>
+		<name>Sweden@en</name>
+		<owl:sameAs>http://sws.geonames.org/2661886</owl:sameAs>
+		<alpha2>se</alpha2>
+		<alpha3>swe</alpha3>
+		<number>752</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="sg">
+		<name>Singapore</name>
+		<name>Singapore@en</name>
+		<owl:sameAs>http://sws.geonames.org/1880251</owl:sameAs>
+		<alpha2>sg</alpha2>
+		<alpha3>sgp</alpha3>
+		<number>702</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="sh">
+		<name>Sankta Helena</name>
+		<name>Saint Helena@en</name>
+		<owl:sameAs>http://sws.geonames.org/3370751</owl:sameAs>
+		<alpha2>sh</alpha2>
+		<alpha3>shn</alpha3>
+		<number>654</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="si">
+		<name>Slovenien</name>
+		<name>Slovenia@en</name>
+		<owl:sameAs>http://sws.geonames.org/3190538</owl:sameAs>
+		<alpha2>si</alpha2>
+		<alpha3>svn</alpha3>
+		<number>705</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="sj">
+		<name>Svalbard och Jan Mayen</name>
+		<name>Svalbard and Jan Mayen@en</name>
+		<owl:sameAs>http://sws.geonames.org/607072</owl:sameAs>
+		<alpha2>sj</alpha2>
+		<alpha3>sjm</alpha3>
+		<number>744</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="sk">
+		<name>Slovakien</name>
+		<name>Slovakia@en</name>
+		<owl:sameAs>http://sws.geonames.org/3057568</owl:sameAs>
+		<alpha2>sk</alpha2>
+		<alpha3>svk</alpha3>
+		<number>703</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="sl">
+		<name>Sierra Leone</name>
+		<name>Sierra Leone@en</name>
+		<owl:sameAs>http://sws.geonames.org/2403846</owl:sameAs>
+		<alpha2>sl</alpha2>
+		<alpha3>sle</alpha3>
+		<number>694</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="sm">
+		<name>San Marino</name>
+		<name>San Marino@en</name>
+		<owl:sameAs>http://sws.geonames.org/3168068</owl:sameAs>
+		<alpha2>sm</alpha2>
+		<alpha3>smr</alpha3>
+		<number>674</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="sn">
+		<name>Senegal</name>
+		<name>Senegal@en</name>
+		<owl:sameAs>http://sws.geonames.org/2245662</owl:sameAs>
+		<alpha2>sn</alpha2>
+		<alpha3>sen</alpha3>
+		<number>686</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="so">
+		<name>Somalia</name>
+		<name>Somalia@en</name>
+		<owl:sameAs>http://sws.geonames.org/51537</owl:sameAs>
+		<alpha2>so</alpha2>
+		<alpha3>som</alpha3>
+		<number>706</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="sr">
+		<name>Surinam</name>
+		<name>Suriname@en</name>
+		<owl:sameAs>http://sws.geonames.org/3382998</owl:sameAs>
+		<alpha2>sr</alpha2>
+		<alpha3>sur</alpha3>
+		<number>740</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="st">
+		<name>São Tomé och Príncipe</name>
+		<name>Sao Tome and Principe@en</name>
+		<owl:sameAs>http://sws.geonames.org/2410758</owl:sameAs>
+		<alpha2>st</alpha2>
+		<alpha3>stp</alpha3>
+		<number>678</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="sv">
+		<name>El Salvador</name>
+		<name>El salvador@en</name>
+		<owl:sameAs>http://sws.geonames.org/3585968</owl:sameAs>
+		<alpha2>sv</alpha2>
+		<alpha3>slv</alpha3>
+		<number>222</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="sy">
+		<name>Syrien</name>
+		<name>Syria@en</name>
+		<owl:sameAs>http://sws.geonames.org/163843</owl:sameAs>
+		<alpha2>sy</alpha2>
+		<alpha3>syr</alpha3>
+		<number>760</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="sz">
+		<name>Swaziland</name>
+		<name>Swaziland@en</name>
+		<owl:sameAs>http://sws.geonames.org/934841</owl:sameAs>
+		<alpha2>sz</alpha2>
+		<alpha3>swz</alpha3>
+		<number>748</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="tc">
+		<name>Turks och Caicosöarna</name>
+		<name>Turks and Caicos Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/3576916</owl:sameAs>
+		<alpha2>tc</alpha2>
+		<alpha3>tca</alpha3>
+		<number>796</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="td">
+		<name>Tchad</name>
+		<name>Chad@en</name>
+		<owl:sameAs>http://sws.geonames.org/2434508</owl:sameAs>
+		<alpha2>td</alpha2>
+		<alpha3>tcd</alpha3>
+		<number>148</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="tf">
+		<name>Franska södra territorierna</name>
+		<name>French Southern Territories@en</name>
+		<owl:sameAs>http://sws.geonames.org/1546748</owl:sameAs>
+		<alpha2>tf</alpha2>
+		<alpha3>atf</alpha3>
+		<number>260</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
+	</Country>
+
+	<Country rdf:ID="tg">
+		<name>Togo</name>
+		<name>Togo@en</name>
+		<owl:sameAs>http://sws.geonames.org/2363686</owl:sameAs>
+		<alpha2>tg</alpha2>
+		<alpha3>tgo</alpha3>
+		<number>768</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="th">
+		<name>Thailand</name>
+		<name>Thailand@en</name>
+		<owl:sameAs>http://sws.geonames.org/1605651</owl:sameAs>
+		<alpha2>th</alpha2>
+		<alpha3>tha</alpha3>
+		<number>764</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="tj">
+		<name>Tadzjikistan</name>
+		<name>Tajikistan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1220409</owl:sameAs>
+		<alpha2>tj</alpha2>
+		<alpha3>tjk</alpha3>
+		<number>762</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="tk">
+		<name>Tokelau</name>
+		<name>Tokelau@en</name>
+		<owl:sameAs>http://sws.geonames.org/4031074</owl:sameAs>
+		<alpha2>tk</alpha2>
+		<alpha3>tkl</alpha3>
+		<number>772</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="tl">
+		<name>Östtimor</name>
+		<name>East Timor@en</name>
+		<owl:sameAs>http://sws.geonames.org/1966436</owl:sameAs>
+		<alpha2>tl</alpha2>
+		<alpha3></alpha3>
+		<number></number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="tm">
+		<name>Turkmenistan</name>
+		<name>Turkmenistan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1218197</owl:sameAs>
+		<alpha2>tm</alpha2>
+		<alpha3>tkm</alpha3>
+		<number>795</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="tn">
+		<name>Tunisien</name>
+		<name>Tunisia@en</name>
+		<owl:sameAs>http://sws.geonames.org/2464461</owl:sameAs>
+		<alpha2>tn</alpha2>
+		<alpha3>tun</alpha3>
+		<number>788</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="to">
+		<name>Tonga</name>
+		<name>Tonga@en</name>
+		<owl:sameAs>http://sws.geonames.org/4032283</owl:sameAs>
+		<alpha2>to</alpha2>
+		<alpha3>ton</alpha3>
+		<number>776</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="tr">
+		<name>Turkiet</name>
+		<name>Turkey@en</name>
+		<owl:sameAs>http://sws.geonames.org/298795</owl:sameAs>
+		<alpha2>tr</alpha2>
+		<alpha3>tur</alpha3>
+		<number>792</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="tt">
+		<name>Trinidad och Tobago</name>
+		<name>Trinidad and Tobago@en</name>
+		<owl:sameAs>http://sws.geonames.org/3573591</owl:sameAs>
+		<alpha2>tt</alpha2>
+		<alpha3>tto</alpha3>
+		<number>780</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="tv">
+		<name>Tuvalu</name>
+		<name>Tuvalu@en</name>
+		<owl:sameAs>http://sws.geonames.org/2110297</owl:sameAs>
+		<alpha2>tv</alpha2>
+		<alpha3>tuv</alpha3>
+		<number>798</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="tw">
+		<name>Taiwan</name>
+		<name>Taiwan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1668284</owl:sameAs>
+		<alpha2>tw</alpha2>
+		<alpha3>twn</alpha3>
+		<number>158</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="tz">
+		<name>Tanzania</name>
+		<name>Tanzania@en</name>
+		<owl:sameAs>http://sws.geonames.org/149590</owl:sameAs>
+		<alpha2>tz</alpha2>
+		<alpha3>tza</alpha3>
+		<number>834</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="ua">
+		<name>Ukraina</name>
+		<name>Ukraine@en</name>
+		<owl:sameAs>http://sws.geonames.org/690791</owl:sameAs>
+		<alpha2>ua</alpha2>
+		<alpha3>ukr</alpha3>
+		<number>804</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="ug">
+		<name>Uganda</name>
+		<name>Uganda@en</name>
+		<owl:sameAs>http://sws.geonames.org/226074</owl:sameAs>
+		<alpha2>ug</alpha2>
+		<alpha3>uga</alpha3>
+		<number>800</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="um">
+		<name>USA:s yttre öar</name>
+		<name>United States Minor Outlying Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/5854968</owl:sameAs>
+		<alpha2>um</alpha2>
+		<alpha3>umi</alpha3>
+		<number>581</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="us">
+		<name>USA</name>
+		<name>United States@en</name>
+		<owl:sameAs>http://sws.geonames.org/6252001</owl:sameAs>
+		<alpha2>us</alpha2>
+		<alpha3>usa</alpha3>
+		<number>840</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="uy">
+		<name>Uruguay</name>
+		<name>Uruguay@en</name>
+		<owl:sameAs>http://sws.geonames.org/3439705</owl:sameAs>
+		<alpha2>uy</alpha2>
+		<alpha3>ury</alpha3>
+		<number>858</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="uz">
+		<name>Uzbekistan</name>
+		<name>Uzbekistan@en</name>
+		<owl:sameAs>http://sws.geonames.org/1512440</owl:sameAs>
+		<alpha2>uz</alpha2>
+		<alpha3>uzb</alpha3>
+		<number>860</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="va">
+		<name>Vatikanstaten</name>
+		<name>Vatican@en</name>
+		<owl:sameAs>http://sws.geonames.org/3164670</owl:sameAs>
+		<alpha2>va</alpha2>
+		<alpha3>vat</alpha3>
+		<number>336</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+	</Country>
+
+	<Country rdf:ID="vc">
+		<name>Saint Vincent och Grenadinerna</name>
+		<name>Saint Vincent and the Grenadines@en</name>
+		<owl:sameAs>http://sws.geonames.org/3577815</owl:sameAs>
+		<alpha2>vc</alpha2>
+		<alpha3>vct</alpha3>
+		<number>670</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="ve">
+		<name>Venezuela</name>
+		<name>Venezuela@en</name>
+		<owl:sameAs>http://sws.geonames.org/3625428</owl:sameAs>
+		<alpha2>ve</alpha2>
+		<alpha3>ven</alpha3>
+		<number>862</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
+	</Country>
+
+	<Country rdf:ID="wf">
+		<name>Wallis- och Futunaöarna</name>
+		<name>Wallis and Futuna@en</name>
+		<owl:sameAs>http://sws.geonames.org/4034749</owl:sameAs>
+		<alpha2>wf</alpha2>
+		<alpha3>wlf</alpha3>
+		<number>876</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="vg">
+		<name>Brittiska Jungfruöarna</name>
+		<name>British Virgin Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/3577718</owl:sameAs>
+		<alpha2>vg</alpha2>
+		<alpha3>vgb</alpha3>
+		<number>92</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="vi">
+		<name>Jungfruöarna USA</name>
+		<name>U.S. Virgin Islands@en</name>
+		<owl:sameAs>http://sws.geonames.org/4796775</owl:sameAs>
+		<alpha2>vi</alpha2>
+		<alpha3>vir</alpha3>
+		<number>850</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+	</Country>
+
+	<Country rdf:ID="vn">
+		<name>Vietnam</name>
+		<name>Vietnam@en</name>
+		<owl:sameAs>http://sws.geonames.org/1562822</owl:sameAs>
+		<alpha2>vn</alpha2>
+		<alpha3>vnm</alpha3>
+		<number>704</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="ws">
+		<name>Samoa</name>
+		<name>Samoa@en</name>
+		<owl:sameAs>http://sws.geonames.org/4034894</owl:sameAs>
+		<alpha2>ws</alpha2>
+		<alpha3>wsm</alpha3>
+		<number>882</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="vu">
+		<name>Vanuatu</name>
+		<name>Vanuatu@en</name>
+		<owl:sameAs>http://sws.geonames.org/2134431</owl:sameAs>
+		<alpha2>vu</alpha2>
+		<alpha3>vut</alpha3>
+		<number>548</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+	</Country>
+
+	<Country rdf:ID="ye">
+		<name>Yemen</name>
+		<name>Yemen@en</name>
+		<owl:sameAs>http://sws.geonames.org/69543</owl:sameAs>
+		<alpha2>ye</alpha2>
+		<alpha3>yem</alpha3>
+		<number>887</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+	</Country>
+
+	<Country rdf:ID="yt">
+		<name>Mayotte</name>
+		<name>Mayotte@en</name>
+		<owl:sameAs>http://sws.geonames.org/1024031</owl:sameAs>
+		<alpha2>yt</alpha2>
+		<alpha3>myt</alpha3>
+		<number>175</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="za">
+		<name>Sydafrika</name>
+		<name>South Africa@en</name>
+		<owl:sameAs>http://sws.geonames.org/953987</owl:sameAs>
+		<alpha2>za</alpha2>
+		<alpha3>zaf</alpha3>
+		<number>710</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="zm">
+		<name>Zambia</name>
+		<name>Zambia@en</name>
+		<owl:sameAs>http://sws.geonames.org/895949</owl:sameAs>
+		<alpha2>zm</alpha2>
+		<alpha3>zmb</alpha3>
+		<number>894</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+	<Country rdf:ID="zw">
+		<name>Zimbabwe</name>
+		<name>Zimbabwe@en</name>
+		<owl:sameAs>http://sws.geonames.org/878675</owl:sameAs>
+		<alpha2>zw</alpha2>
+		<alpha3>zwe</alpha3>
+		<number>716</number>
+		<continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+	</Country>
+
+</rdf:RDF>

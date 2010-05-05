@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/schema/ksamsok-rdf#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/aukt/geo/county#">
+	
+	<County rdf:about="01">
+		<name>Stockholms län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="03">
+		<name>Uppsala län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="04">
+		<name>Södermanlands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="05">
+		<name>Östergötlands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="06">
+		<name>Jönköpings län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="07">
+		<name>Kronobergs län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="08">
+		<name>Kalmar län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="09">
+		<name>Gotlands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="10">
+		<name>Blekinge län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="12">
+		<name>Skåne län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="13">
+		<name>Hallands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="14">
+		<name>Västra Götalands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="17">
+		<name>Värmlands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="18">
+		<name>Örebro län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="19">
+		<name>Västmanlands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="20">
+		<name>Dalarnas län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="21">
+		<name>Gävleborgs län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="22">
+		<name>Västernorrlands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="23">
+		<name>Jämtlands län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="24">
+		<name>Västerbottens län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+	<County rdf:about="25">
+		<name>Norrbottens län</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</County>
+
+</rdf:RDF>

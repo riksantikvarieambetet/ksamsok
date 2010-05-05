@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/aukt/geo/continent#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#">
+
+	<Continent rdf:ID="sa">
+		<name>Sydamerika</name>
+		<name>South America@en</name>
+		<owl:sameAs>http://sws.geonames.org/6255150</owl:sameAs>
+	</Continent>
+
+	<Continent rdf:ID="an">
+		<name>Antarktis</name>
+		<name>Antarctica@en</name>
+		<owl:sameAs>http://sws.geonames.org/6255152</owl:sameAs>
+	</Continent>
+
+	<Continent rdf:ID="af">
+		<name>Afrika</name>
+		<name>Africa@en</name>
+		<owl:sameAs>http://sws.geonames.org/6255146</owl:sameAs>
+	</Continent>
+
+	<Continent rdf:ID="as">
+		<name>Asien</name>
+		<name>Asia@en</name>
+		<owl:sameAs>http://sws.geonames.org/6255147</owl:sameAs>
+	</Continent>
+
+	<Continent rdf:ID="na">
+		<name>Nordamerika</name>
+		<name>North America@en</name>
+		<owl:sameAs>http://sws.geonames.org/6255149</owl:sameAs>
+	</Continent>
+
+	<Continent rdf:ID="eu">
+		<name>Europa</name>
+		<name>Europe@en</name>
+		<owl:sameAs>http://sws.geonames.org/6255148</owl:sameAs>
+	</Continent>
+
+	<Continent rdf:ID="oc">
+		<name>Oceanien</name>
+		<name>Oceania@en</name>
+		<owl:sameAs>http://sws.geonames.org/6255151</owl:sameAs>
+	</Continent>
+
+</rdf:RDF>

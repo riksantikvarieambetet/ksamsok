@@ -1,0 +1,1457 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/schema/ksamsok-rdf#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/aukt/geo/municipality#">
+	
+	<Municipality rdf:about="0114">
+		<name>Upplands Väsby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0115">
+		<name>Vallentuna</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0117">
+		<name>Österåker</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0120">
+		<name>Värmdö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0123">
+		<name>Järfälla</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0125">
+		<name>Ekerö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0126">
+		<name>Huddinge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0127">
+		<name>Botkyrka</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0128">
+		<name>Salem</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0136">
+		<name>Haninge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0138">
+		<name>Tyresö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0139">
+		<name>Upplands-Bro</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0140">
+		<name>Nykvarn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0160">
+		<name>Täby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0162">
+		<name>Danderyd</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0163">
+		<name>Sollentuna</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0180">
+		<name>Stockholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0181">
+		<name>Södertälje</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0182">
+		<name>Nacka</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0183">
+		<name>Sundbyberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0184">
+		<name>Solna</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0186">
+		<name>Lidingö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0187">
+		<name>Vaxholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0188">
+		<name>Norrtälje</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0191">
+		<name>Sigtuna</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0192">
+		<name>Nynäshamn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
+	</Municipality>
+
+	<Municipality rdf:about="0305">
+		<name>Håbo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0319">
+		<name>Älvkarleby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0330">
+		<name>Knivsta</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0331">
+		<name>Heby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0360">
+		<name>Tierp</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0380">
+		<name>Uppsala</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0381">
+		<name>Enköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0382">
+		<name>Östhammar</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
+	</Municipality>
+
+	<Municipality rdf:about="0428">
+		<name>Vingåker</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0461">
+		<name>Gnesta</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0480">
+		<name>Nyköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0481">
+		<name>Oxelösund</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0482">
+		<name>Flen</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0483">
+		<name>Katrineholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0484">
+		<name>Eskilstuna</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0486">
+		<name>Strängnäs</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0488">
+		<name>Trosa</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
+	</Municipality>
+
+	<Municipality rdf:about="0509">
+		<name>Ödeshög</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0512">
+		<name>Ydre</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0513">
+		<name>Kinda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0560">
+		<name>Boxholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0561">
+		<name>Åtvidaberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0562">
+		<name>Finspång</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0563">
+		<name>Valdemarsvik</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0580">
+		<name>Linköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0581">
+		<name>Norrköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0582">
+		<name>Söderköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0583">
+		<name>Motala</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0584">
+		<name>Vadstena</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0586">
+		<name>Mjölby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
+	</Municipality>
+
+	<Municipality rdf:about="0604">
+		<name>Aneby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0617">
+		<name>Gnosjö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0642">
+		<name>Mullsjö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0643">
+		<name>Habo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0662">
+		<name>Gislaved</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0665">
+		<name>Vaggeryd</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0680">
+		<name>Jönköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0682">
+		<name>Nässjö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0683">
+		<name>Värnamo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0684">
+		<name>Sävsjö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0685">
+		<name>Vetlanda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0686">
+		<name>Eksjö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0687">
+		<name>Tranås</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
+	</Municipality>
+
+	<Municipality rdf:about="0760">
+		<name>Uppvidinge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0761">
+		<name>Lessebo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0763">
+		<name>Tingsryd</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0764">
+		<name>Alvesta</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0765">
+		<name>Älmhult</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0767">
+		<name>Markaryd</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0780">
+		<name>Växjö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0781">
+		<name>Ljungby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
+	</Municipality>
+
+	<Municipality rdf:about="0821">
+		<name>Högsby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0834">
+		<name>Torsås</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0840">
+		<name>Mörbylånga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0860">
+		<name>Hultsfred</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0861">
+		<name>Mönsterås</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0862">
+		<name>Emmaboda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0880">
+		<name>Kalmar</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0881">
+		<name>Nybro</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0882">
+		<name>Oskarshamn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0883">
+		<name>Västervik</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0884">
+		<name>Vimmerby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0885">
+		<name>Borgholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
+	</Municipality>
+
+	<Municipality rdf:about="0980">
+		<name>Gotland</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#09"/>
+	</Municipality>
+
+	<Municipality rdf:about="1060">
+		<name>Olofström</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
+	</Municipality>
+
+	<Municipality rdf:about="1080">
+		<name>Karlskrona</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
+	</Municipality>
+
+	<Municipality rdf:about="1081">
+		<name>Ronneby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
+	</Municipality>
+
+	<Municipality rdf:about="1082">
+		<name>Karlshamn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
+	</Municipality>
+
+	<Municipality rdf:about="1083">
+		<name>Sölvesborg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
+	</Municipality>
+
+	<Municipality rdf:about="1214">
+		<name>Svalöv</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1230">
+		<name>Staffanstorp</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1231">
+		<name>Burlöv</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1233">
+		<name>Vellinge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1256">
+		<name>Östra Göinge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1257">
+		<name>Örkelljunga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1260">
+		<name>Bjuv</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1261">
+		<name>Kävlinge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1262">
+		<name>Lomma</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1263">
+		<name>Svedala</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1264">
+		<name>Skurup</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1265">
+		<name>Sjöbo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1266">
+		<name>Hörby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1267">
+		<name>Höör</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1270">
+		<name>Tomelilla</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1272">
+		<name>Bromölla</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1273">
+		<name>Osby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1275">
+		<name>Perstorp</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1276">
+		<name>Klippan</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1277">
+		<name>Åstorp</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1278">
+		<name>Båstad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1280">
+		<name>Malmö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1281">
+		<name>Lund</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1282">
+		<name>Landskrona</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1283">
+		<name>Helsingborg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1284">
+		<name>Höganäs</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1285">
+		<name>Eslöv</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1286">
+		<name>Ystad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1287">
+		<name>Trelleborg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1290">
+		<name>Kristianstad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1291">
+		<name>Simrishamn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1292">
+		<name>Ängelholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1293">
+		<name>Hässleholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
+	</Municipality>
+
+	<Municipality rdf:about="1315">
+		<name>Hylte</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
+	</Municipality>
+
+	<Municipality rdf:about="1380">
+		<name>Halmstad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
+	</Municipality>
+
+	<Municipality rdf:about="1381">
+		<name>Laholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
+	</Municipality>
+
+	<Municipality rdf:about="1382">
+		<name>Falkenberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
+	</Municipality>
+
+	<Municipality rdf:about="1383">
+		<name>Varberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
+	</Municipality>
+
+	<Municipality rdf:about="1384">
+		<name>Kungsbacka</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
+	</Municipality>
+
+	<Municipality rdf:about="1401">
+		<name>Härryda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1402">
+		<name>Partille</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1407">
+		<name>Öckerö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1415">
+		<name>Stenungsund</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1419">
+		<name>Tjörn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1421">
+		<name>Orust</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1427">
+		<name>Sotenäs</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1430">
+		<name>Munkedal</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1435">
+		<name>Tanum</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1438">
+		<name>Dals-Ed</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1439">
+		<name>Färgelanda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1440">
+		<name>Ale</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1441">
+		<name>Lerum</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1442">
+		<name>Vårgårda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1443">
+		<name>Bollebygd</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1444">
+		<name>Grästorp</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1445">
+		<name>Essunga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1446">
+		<name>Karlsborg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1447">
+		<name>Gullspång</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1452">
+		<name>Tranemo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1460">
+		<name>Bengtsfors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1461">
+		<name>Mellerud</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1462">
+		<name>Lilla Edet</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1463">
+		<name>Mark</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1465">
+		<name>Svenljunga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1466">
+		<name>Herrljunga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1470">
+		<name>Vara</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1471">
+		<name>Götene</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1472">
+		<name>Tibro</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1473">
+		<name>Töreboda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1480">
+		<name>Göteborg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1481">
+		<name>Mölndal</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1482">
+		<name>Kungälv</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1484">
+		<name>Lysekil</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1485">
+		<name>Uddevalla</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1486">
+		<name>Strömstad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1487">
+		<name>Vänersborg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1488">
+		<name>Trollhättan</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1489">
+		<name>Alingsås</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1490">
+		<name>Borås</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1491">
+		<name>Ulricehamn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1492">
+		<name>Åmål</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1493">
+		<name>Mariestad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1494">
+		<name>Lidköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1495">
+		<name>Skara</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1496">
+		<name>Skövde</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1497">
+		<name>Hjo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1498">
+		<name>Tidaholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1499">
+		<name>Falköping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
+	</Municipality>
+
+	<Municipality rdf:about="1715">
+		<name>Kil</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1730">
+		<name>Eda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1737">
+		<name>Torsby</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1760">
+		<name>Storfors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1761">
+		<name>Hammarö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1762">
+		<name>Munkfors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1763">
+		<name>Forshaga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1764">
+		<name>Grums</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1765">
+		<name>Årjäng</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1766">
+		<name>Sunne</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1780">
+		<name>Karlstad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1781">
+		<name>Kristinehamn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1782">
+		<name>Filipstad</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1783">
+		<name>Hagfors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1784">
+		<name>Arvika</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1785">
+		<name>Säffle</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
+	</Municipality>
+
+	<Municipality rdf:about="1814">
+		<name>Lekeberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1860">
+		<name>Laxå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1861">
+		<name>Hallsberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1862">
+		<name>Degerfors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1863">
+		<name>Hällefors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1864">
+		<name>Ljusnarsberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1880">
+		<name>Örebro</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1881">
+		<name>Kumla</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1882">
+		<name>Askersund</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1883">
+		<name>Karlskoga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1884">
+		<name>Nora</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1885">
+		<name>Lindesberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
+	</Municipality>
+
+	<Municipality rdf:about="1904">
+		<name>Skinnskatteberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1907">
+		<name>Surahammar</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1960">
+		<name>Kungsör</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1961">
+		<name>Hallstahammar</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1962">
+		<name>Norberg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1980">
+		<name>Västerås</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1981">
+		<name>Sala</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1982">
+		<name>Fagersta</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1983">
+		<name>Köping</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="1984">
+		<name>Arboga</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
+	</Municipality>
+
+	<Municipality rdf:about="2021">
+		<name>Vansbro</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2023">
+		<name>Malung-Sälen</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2026">
+		<name>Gagnef</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2029">
+		<name>Leksand</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2031">
+		<name>Rättvik</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2034">
+		<name>Orsa</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2039">
+		<name>Älvdalen</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2061">
+		<name>Smedjebacken</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2062">
+		<name>Mora</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2080">
+		<name>Falun</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2081">
+		<name>Borlänge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2082">
+		<name>Säter</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2083">
+		<name>Hedemora</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2084">
+		<name>Avesta</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2085">
+		<name>Ludvika</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
+	</Municipality>
+
+	<Municipality rdf:about="2101">
+		<name>Ockelbo</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2104">
+		<name>Hofors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2121">
+		<name>Ovanåker</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2132">
+		<name>Nordanstig</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2161">
+		<name>Ljusdal</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2180">
+		<name>Gävle</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2181">
+		<name>Sandviken</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2182">
+		<name>Söderhamn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2183">
+		<name>Bollnäs</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2184">
+		<name>Hudiksvall</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
+	</Municipality>
+
+	<Municipality rdf:about="2260">
+		<name>Ånge</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
+	</Municipality>
+
+	<Municipality rdf:about="2262">
+		<name>Timrå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
+	</Municipality>
+
+	<Municipality rdf:about="2280">
+		<name>Härnösand</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
+	</Municipality>
+
+	<Municipality rdf:about="2281">
+		<name>Sundsvall</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
+	</Municipality>
+
+	<Municipality rdf:about="2282">
+		<name>Kramfors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
+	</Municipality>
+
+	<Municipality rdf:about="2283">
+		<name>Sollefteå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
+	</Municipality>
+
+	<Municipality rdf:about="2284">
+		<name>Örnsköldsvik</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
+	</Municipality>
+
+	<Municipality rdf:about="2303">
+		<name>Ragunda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2305">
+		<name>Bräcke</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2309">
+		<name>Krokom</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2313">
+		<name>Strömsund</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2321">
+		<name>Åre</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2326">
+		<name>Berg</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2361">
+		<name>Härjedalen</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2380">
+		<name>Östersund</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
+	</Municipality>
+
+	<Municipality rdf:about="2401">
+		<name>Nordmaling</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2403">
+		<name>Bjurholm</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2404">
+		<name>Vindeln</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2409">
+		<name>Robertsfors</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2417">
+		<name>Norsjö</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2418">
+		<name>Malå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2421">
+		<name>Storuman</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2422">
+		<name>Sorsele</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2425">
+		<name>Dorotea</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2460">
+		<name>Vännäs</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2462">
+		<name>Vilhelmina</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2463">
+		<name>Åsele</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2480">
+		<name>Umeå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2481">
+		<name>Lycksele</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2482">
+		<name>Skellefteå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
+	</Municipality>
+
+	<Municipality rdf:about="2505">
+		<name>Arvidsjaur</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2506">
+		<name>Arjeplog</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2510">
+		<name>Jokkmokk</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2513">
+		<name>Överkalix</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2514">
+		<name>Kalix</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2518">
+		<name>Övertorneå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2521">
+		<name>Pajala</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2523">
+		<name>Gällivare</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2560">
+		<name>Älvsbyn</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2580">
+		<name>Luleå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2581">
+		<name>Piteå</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2582">
+		<name>Boden</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2583">
+		<name>Haparanda</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+	<Municipality rdf:about="2584">
+		<name>Kiruna</name>
+		<county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
+	</Municipality>
+
+</rdf:RDF>

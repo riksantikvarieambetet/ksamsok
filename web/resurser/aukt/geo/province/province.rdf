@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/aukt/geo/province#">
+	
+	<Province rdf:ID="Bl">
+		<name>Blekinge</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Bo">
+		<name>Bohuslän</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Dr">
+		<name>Dalarna</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Ds">
+		<name>Dalsland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Go">
+		<name>Gotland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Gä">
+		<name>Gästrikland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Ha">
+		<name>Halland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Hs">
+		<name>Hälsingland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Hr">
+		<name>Härjedalen</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Jä">
+		<name>Jämtland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="La">
+		<name>Lappland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Me">
+		<name>Medelpad</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Nb">
+		<name>Norrbotten</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Nä">
+		<name>Närke</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Sk">
+		<name>Skåne</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Sm">
+		<name>Småland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Sö">
+		<name>Södermanland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Up">
+		<name>Uppland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Vr">
+		<name>Värmland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Vb">
+		<name>Västerbotten</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Vg">
+		<name>Västergötland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Vs">
+		<name>Västmanland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Ån">
+		<name>Ångermanland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Öl">
+		<name>Öland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+	<Province rdf:ID="Ög">
+		<name>Östergötland</name>
+		<country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+	</Province>
+</rdf:RDF>
