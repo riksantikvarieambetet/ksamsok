@@ -55,6 +55,9 @@ import se.raa.ksamsok.harvest.HarvesterServlet;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 
+import com.sun.syndication.feed.module.georss.GeoRSSModule;
+import com.sun.syndication.feed.module.georss.W3CGeoModuleImpl;
+import com.sun.syndication.feed.module.georss.geometries.Position;
 import com.sun.syndication.feed.module.mediarss.MediaEntryModule;
 import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl;
 import com.sun.syndication.feed.module.mediarss.types.MediaContent;
@@ -118,7 +121,7 @@ public class RSS implements APIMethod
 	private static final URI URI_PRESENTATION = URI.create(URI_PREFIX_KSAMSOK + "presentation");
 	private static final URI URI_ITEM_TITLE = URI.create(URI_PREFIX_KSAMSOK + "itemTitle");
 	private static final URI URI_ITEM_KEY_WORD = URI.create(URI_PREFIX_KSAMSOK + "itemKeyWord");
-	private static final URI URI_CREATED_DATE = URI.create(URI_PREFIX_KSAMSOK + "createdDate");
+	private static final URI URI_BUILD_DATE = URI.create(URI_PREFIX_KSAMSOK + "buildDate");
 	
 	/**
 	 * Skapar ett objekt av RSS
@@ -299,6 +302,12 @@ public class RSS implements APIMethod
 			entry.setDescription(syndContent);
 			String thumb = data.getThumbnailUrl();
 			String image = data.getImageUrl();
+			if(data.getCoords() != null) {
+				GeoRSSModule geoRssModule = getGeoRssModule(data.getCoords());
+				if(geoRssModule != null) {
+					entry.getModules().add(geoRssModule);
+				}
+			}
 			if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) {
 				entry.getModules().add(getMediaModule(thumb, image));
 			}
@@ -309,6 +318,21 @@ public class RSS implements APIMethod
 			}
 		} catch (ParseException ignore) {}
 		return entry;
+	}
+	
+	private GeoRSSModule getGeoRssModule(String coords)
+	{
+		GeoRSSModule m = new W3CGeoModuleImpl();
+		try {
+			String[] coordsSplit = coords.split(",");
+			double lon = Double.parseDouble(StringUtils.trim(coordsSplit[0]));
+			double lat = Double.parseDouble(StringUtils.trim(coordsSplit[1]));
+			m.setPosition(new Position(lat, lon));
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return m;
 	}
 	
 	/**
@@ -330,7 +354,7 @@ public class RSS implements APIMethod
 			URIReference rPresentation = elementFactory.createURIReference(URI_PRESENTATION);
 			URIReference rItemTitle = elementFactory.createURIReference(URI_ITEM_TITLE);
 			URIReference rItemKeyWord = elementFactory.createURIReference(URI_ITEM_KEY_WORD);
-			URIReference rCreatedDate = elementFactory.createURIReference(URI_CREATED_DATE);
+			URIReference rBuildDate = elementFactory.createURIReference(URI_BUILD_DATE);
 			SubjectNode s = getSubjectNode(graph, rRdfType, rKsamsokEntity);
 			data.setTitle(getValueFromGraph(graph, s, rItemTitle, null));
 			data = getDataFromPresentationBlock(getSingleValueFromGraph(graph, s, rPresentation), data);
@@ -342,7 +366,7 @@ public class RSS implements APIMethod
 			for(int i = 0; i < itemKeyWords.length; i ++) {
 				data.addKeyWord(itemKeyWords[i]);
 			}
-			data.setPublishDate(getSingleValueFromGraph(graph, s, rCreatedDate));
+			data.setPublishDate(getSingleValueFromGraph(graph, s, rBuildDate));
 		}catch (GraphElementFactoryException e) {
 			throw new DiagnosticException("Internt fel uppstod", "RSS.getData", e.getMessage(), true);
 		}
@@ -422,7 +446,11 @@ public class RSS implements APIMethod
 		for(int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
 			if(node.getNodeName().equals("pres:description")) {
-				data.setDescription(node.getTextContent());
+				if(data.getDescription() != null) {
+					data.setDescription(data.getDescription() + " " + node.getTextContent());
+				}else {
+					data.setDescription(node.getTextContent());
+				}
 			}else if(node.getNodeName().equals("pres:representations")) {
 				NodeList childNodes = node.getChildNodes();
 				for(int j = 0; j < childNodes.getLength(); j++) {
@@ -447,6 +475,9 @@ public class RSS implements APIMethod
 				if(StringUtils.trimToNull(data.getTitle()) == null) {
 					data.setTitle(node.getTextContent());
 				}
+			}else if(node.getNodeName().equals("georss:where")) {
+				Node child = node.getFirstChild().getFirstChild();
+				data.setCoords(StringUtils.trimToNull(child.getTextContent()));
 			}
 		}
 		return data;
@@ -688,6 +719,7 @@ public class RSS implements APIMethod
 		private String imageUrl;
 		private List<String> keyWords;
 		private String publishDate;
+		private String coords;
 		
 		public RssObject()
 		{
@@ -774,6 +806,16 @@ public class RSS implements APIMethod
 		public String getDescription()
 		{
 			return description;
+		}
+
+		public void setCoords(String coords)
+		{
+			this.coords = coords;
+		}
+
+		public String getCoords()
+		{
+			return coords;
 		}
 	}
 }
