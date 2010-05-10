@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -23,10 +23,26 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
-import org.xml.sax.Attributes;
+import org.jrdf.JRDFFactory;
+import org.jrdf.SortedMemoryJRDFFactory;
+import org.jrdf.collection.MemMapFactory;
+import org.jrdf.graph.AnyObjectNode;
+import org.jrdf.graph.AnySubjectNode;
+import org.jrdf.graph.Graph;
+import org.jrdf.graph.GraphElementFactory;
+import org.jrdf.graph.GraphElementFactoryException;
+import org.jrdf.graph.GraphException;
+import org.jrdf.graph.Literal;
+import org.jrdf.graph.PredicateNode;
+import org.jrdf.graph.SubjectNode;
+import org.jrdf.graph.Triple;
+import org.jrdf.graph.URIReference;
+import org.jrdf.parser.StatementHandlerException;
+import org.jrdf.parser.rdfxml.GraphRdfXmlParser;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
@@ -35,7 +51,6 @@ import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
-import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.harvest.HarvesterServlet;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
@@ -55,46 +70,55 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
 
+
+
 /**
  * Metod för att få tillbaka en mediaRSS feed på ett sökresultat
  * från K-samsök
  * @author Henrik Hjalmarsson
  */
-@SuppressWarnings("unused")
-public class RSS extends DefaultHandler implements APIMethod
+public class RSS implements APIMethod
 {
-	// publika värden
+	/** metodens namn */
 	public static final String METHOD_NAME = "rss";
+	/** namn på parametern för sök sträng */
 	public static final String QUERY = "query";
+	/** namn på parameter för att ange antal träffar per sida */
 	public static final String HITS_PER_PAGE = "hitsPerPage";
+	/** namn på parameter för att ange startplats i sökning */
 	public static final String START_RECORD = "startRecord";
+	/** standard värde för antal träffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 100;
+	/** standard värde för startplats i sökning */
 	public static final int DEFAULT_START_RECORD = 1;
 	
-	// privata statiska variabler
+	// rss version
 	private static final String RSS_2_0 = "rss_2.0";
-	private static final SAXParserFactory spf = SAXParserFactory.newInstance();
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv",	"SE"));
-	
 	// fält att hämta från lucene
-	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(
-			new String[] {
-					ContentHelper.I_IX_RDF,
-					ContentHelper.CONTEXT_SET_REC + "."
-							+ ContentHelper.IX_REC_IDENTIFIER });
-
-	private static final Logger logger = Logger.getLogger(
-	"se.raa.ksamsok.api.Search");
+	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(new String[] {ContentHelper.I_IX_RDF, ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER });
+	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.Search");
 
 	//privata variabler
 	private String queryString;
 	private int hitsPerPage;
 	private int startRecord;
 	private PrintWriter writer;
-	private StringBuffer tempValue;
 	private RssObject data;
-	private boolean store;
-	private String imageType;
+	
+	//fabriker
+	private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	private static final JRDFFactory jrdfFactory = SortedMemoryJRDFFactory.getFactory();
+	
+	//URIs för att navigera RDF
+	private static final String URI_PREFIX = "http://kulturarvsdata.se/";
+	private static final String URI_PREFIX_KSAMSOK = URI_PREFIX + "ksamsok#";
+	private static final URI URI_RDF_TYPE = URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+	private static final URI URI_KSAMSOK_ENTITY = URI.create(URI_PREFIX_KSAMSOK + "Entity");
+	private static final URI URI_PRESENTATION = URI.create(URI_PREFIX_KSAMSOK + "presentation");
+	private static final URI URI_ITEM_TITLE = URI.create(URI_PREFIX_KSAMSOK + "itemTitle");
+	private static final URI URI_ITEM_KEY_WORD = URI.create(URI_PREFIX_KSAMSOK + "itemKeyWord");
+	private static final URI URI_CREATED_DATE = URI.create(URI_PREFIX_KSAMSOK + "createdDate");
 	
 	/**
 	 * Skapar ett objekt av RSS
@@ -164,8 +188,7 @@ public class RSS extends DefaultHandler implements APIMethod
 	 * @param hits
 	 * @throws DiagnosticException
 	 */
-	private void doSyndFeed(int numberOfDocs, int nDocs, 
-			IndexSearcher searcher, TopDocs hits) 
+	private void doSyndFeed(int numberOfDocs, int nDocs, IndexSearcher searcher, TopDocs hits) 
 		throws DiagnosticException 
 	{
 		try {
@@ -182,6 +205,12 @@ public class RSS extends DefaultHandler implements APIMethod
 		}
 	}
 	
+	/**
+	 * Skapar query
+	 * @return Ett Lucene query
+	 * @throws DiagnosticException
+	 * @throws BadParameterException
+	 */
 	private Query createQuery() 
 		throws DiagnosticException, BadParameterException
 	{
@@ -261,9 +290,7 @@ public class RSS extends DefaultHandler implements APIMethod
 	{
 		SyndEntry entry = new SyndEntryImpl();
 		try {
-			SAXParser parser = spf.newSAXParser();
-			data = new RssObject();
-			parser.parse(new InputSource(new StringReader(content)), this);
+			data = getData(content);
 			entry.setTitle(data.getTitle());
 			entry.setLink(data.getLink());
 			SyndContent syndContent = new SyndContentImpl();
@@ -275,20 +302,257 @@ public class RSS extends DefaultHandler implements APIMethod
 			if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) {
 				entry.getModules().add(getMediaModule(thumb, image));
 			}
-			// SimpleDateFormat är ej trådsäker
 			synchronized (sdf) {
-				entry.setPublishedDate(sdf.parse(data.getPublishDate()));
+				if(data.getPublishDate() != null) {
+					entry.setPublishedDate(sdf.parse(data.getPublishDate()));
+				}
 			}
-		} catch (ParserConfigurationException e) {
-			throw new DiagnosticException("Parser fel", "RSS.getEntry", e.getMessage(), true);
-		} catch (SAXException e) {
-			throw new DiagnosticException("SAX fel", "RSS.getEntry", e.getMessage(), true);
-		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO fel", "RSS.getEntry", e.getMessage(), true);
-		} catch (ParseException e) {
-			throw new DiagnosticException("Parser fel", "RSS.getEntry", e.getMessage(), true);
-		} catch(Exception ignore) {}
+		} catch (ParseException ignore) {}
 		return entry;
+	}
+	
+	/**
+	 * Hämtar data från RDF dokument
+	 * @param content textsträng innehållande RDF data
+	 * @return ett Rssobjekt med data
+	 * @throws DiagnosticException - om fel uppstår vid hämtning av data 
+	 */
+	private RssObject getData(String content) 
+		throws DiagnosticException
+	{
+		RssObject data = new RssObject();
+		Graph graph = null;
+		try {
+			graph = getGraph(content);
+			GraphElementFactory elementFactory = graph.getElementFactory();
+			URIReference rRdfType = elementFactory.createURIReference(URI_RDF_TYPE);
+			URIReference rKsamsokEntity = elementFactory.createURIReference(URI_KSAMSOK_ENTITY);
+			URIReference rPresentation = elementFactory.createURIReference(URI_PRESENTATION);
+			URIReference rItemTitle = elementFactory.createURIReference(URI_ITEM_TITLE);
+			URIReference rItemKeyWord = elementFactory.createURIReference(URI_ITEM_KEY_WORD);
+			URIReference rCreatedDate = elementFactory.createURIReference(URI_CREATED_DATE);
+			SubjectNode s = getSubjectNode(graph, rRdfType, rKsamsokEntity);
+			data.setTitle(getValueFromGraph(graph, s, rItemTitle, null));
+			data = getDataFromPresentationBlock(getSingleValueFromGraph(graph, s, rPresentation), data);
+			String itemKeyWordsString = getValueFromGraph(graph, s, rItemKeyWord, null);
+			String[] itemKeyWords = new String[0];
+			if(itemKeyWordsString != null) {
+				itemKeyWords = itemKeyWordsString.split(" ");
+			}
+			for(int i = 0; i < itemKeyWords.length; i ++) {
+				data.addKeyWord(itemKeyWords[i]);
+			}
+			data.setPublishDate(getSingleValueFromGraph(graph, s, rCreatedDate));
+		}catch (GraphElementFactoryException e) {
+			throw new DiagnosticException("Internt fel uppstod", "RSS.getData", e.getMessage(), true);
+		}
+		return data;
+	}
+	
+	/**
+	 * Skapar en RDF graf från textsträng
+	 * @param content RDF data som textsträng
+	 * @return RDF graf
+	 * @throws DiagnosticException
+	 */
+	private Graph getGraph(String content) 
+		throws DiagnosticException
+	{
+		Graph g = null;
+		StringReader reader = null;
+		try {
+			reader = new StringReader(content);
+			g = jrdfFactory.getNewGraph();
+			GraphRdfXmlParser parser = new GraphRdfXmlParser(g, new MemMapFactory());
+			parser.parse(reader, "");
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO-fel uppstod", "RSS.getGraph", e.getMessage(), true);
+		} catch (org.jrdf.parser.ParseException e) {
+			throw new DiagnosticException("Oväntat parser fel uppstod", "RSS.getGraph", e.getMessage(), true);
+		} catch (StatementHandlerException e) {
+			throw new DiagnosticException("Internt fel uppstod", "RSS.getGraph", e.getMessage(), true);
+		}finally {
+			if(reader != null) {
+				reader.close();
+			}
+		}
+		return g;
+	}
+	
+	/**
+	 * returnerar root subject noden
+	 * @param graph - grafen som noden skall hämtas ur
+	 * @param rRdfType - URI referens till rdfType
+	 * @param rKsamsokEntity - URI referens till ksamsokEntity
+	 * @return en subject node
+	 * @throws DiagnosticException om något fel uppstår när subject noden skall hämtas ur grafen
+	 */
+	private SubjectNode getSubjectNode(Graph graph, URIReference rRdfType, URIReference rKsamsokEntity) 
+		throws DiagnosticException
+	{
+		SubjectNode s = null;
+		try {
+			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rRdfType, rKsamsokEntity)) {
+				if (s != null) {
+					throw new DiagnosticException("Ska bara finnas en entity i rdf-grafen", "se.raa.ksamsok.api.method.RSS.getSubjectNode", null, true);
+				}
+				s = triple.getSubject();
+			}
+			if (s == null) {
+				logger.error("Hittade ingen entity i rdf-grafen:\n" + graph);
+				throw new DiagnosticException("Hittade ingen entity i rdf-grafen", "se.raa.ksamsok.api.method.RSS.getSubjectNode", null, true);
+			}
+		}catch(GraphException e) {
+			throw new DiagnosticException("Internt fel uppstod", "se.raa.ksamsok.api.method.RSS.getSubjectNode", "Fel uppstod vid hantering av RDF graf", true);
+		}
+		return s;
+	}
+	
+	/**
+	 * hämtar data från presentationsblocket
+	 * @param presentationBlock presentationsblocket som textsträng
+	 * @param data Rss objektet som datan skall läggas i
+	 * @return RssObject med data
+	 */
+	private RssObject getDataFromPresentationBlock(String presentationBlock, RssObject data)
+		throws DiagnosticException
+	{
+		org.w3c.dom.Document doc = getDOMDocument(presentationBlock); 
+		NodeList nodeList = doc.getElementsByTagName("pres:item").item(0).getChildNodes();
+		for(int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
+			if(node.getNodeName().equals("pres:description")) {
+				data.setDescription(node.getTextContent());
+			}else if(node.getNodeName().equals("pres:representations")) {
+				NodeList childNodes = node.getChildNodes();
+				for(int j = 0; j < childNodes.getLength(); j++) {
+					Node child = childNodes.item(j);
+					if(child.getAttributes().getNamedItem("format").getTextContent().equals("HTML")) {
+						data.setLink(child.getTextContent());
+					}
+				}
+			}else if(node.getNodeName().equals("pres:image")) {
+				NodeList childNodes = node.getChildNodes();
+				for(int j = 0; j < childNodes.getLength(); j++) {
+					Node child = childNodes.item(j);
+					if(child.getNodeName().equals("pres:src")) {
+						if(child.getAttributes().getNamedItem("type").getTextContent().equals("lowres")) {
+							data.setImageUrl(child.getTextContent());
+						}else if(child.getAttributes().getNamedItem("type").getTextContent().equals("thumbnail")) {
+							data.setThumbnailUrl(child.getTextContent());
+						}
+					}
+				}
+			}else if(node.getNodeName().equals("pres:itemLabel")) {
+				if(StringUtils.trimToNull(data.getTitle()) == null) {
+					data.setTitle(node.getTextContent());
+				}
+			}
+		}
+		return data;
+	}
+	
+	/**
+	 * Skapar ett DOM document för presentationsblocket
+	 * @param presentationBlock - presentationsblocket som textsträng
+	 * @return
+	 * @throws DiagnosticException
+	 */
+	private org.w3c.dom.Document getDOMDocument(String presentationBlock)
+		throws DiagnosticException
+	{
+		StringReader reader = null;
+		org.w3c.dom.Document doc = null;
+		try {
+			reader = new StringReader(presentationBlock);
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			doc = builder.parse(new InputSource(reader));
+		} catch (ParserConfigurationException e) {
+			throw new DiagnosticException("Internt fel", "RSS.getDOMDocument", e.getMessage(), true);
+		} catch (SAXException e) {
+			throw new DiagnosticException("Internt fel", "RSS.getDOMDocument", e.getMessage(), true);
+		} catch (IOException e) {
+			throw new DiagnosticException("Internt fel", "RSS.getDOMDocument", e.getMessage(), true);
+		}finally {
+			if(reader != null) {
+				reader.close();
+			}
+		}
+		return doc;
+	}
+	
+	/**
+	 * Hämtar ett värde från RDF graf
+	 * @param g - grafen som värdet skall hämtas ur
+	 * @param sn - subject nod
+	 * @param pn - predicate nod
+	 * @return värde från graf som textsträng
+	 */
+	private String getSingleValueFromGraph(Graph g, SubjectNode sn, PredicateNode pn)
+		throws DiagnosticException
+	{
+		String value = null;
+		try {
+			for(Triple t : g.find(sn, pn, AnyObjectNode.ANY_OBJECT_NODE)) {
+				if (t.getObject() instanceof Literal) {
+					value = StringUtils.trimToNull(((Literal) t.getObject()).getValue().toString()) + " ";
+				}else if (t.getObject() instanceof URIReference) {
+					value = StringUtils.trimToNull( ((URIReference) t.getObject()).getURI().toString());
+				}
+			}
+		} catch (GraphException e) {
+			throw new DiagnosticException("Internt fel", "RSS.getSingleValueFromGraph", e.getMessage(), true);
+		}
+		return value;
+	}
+	
+	/**
+	 * Hämtar ett eller flera värden från given RDF graf
+	 * @param graph - RDF graf
+	 * @param s - subject nod
+	 * @param ref - URI referens till 
+	 * @param refRef - URI referens till eventuella subnoder
+	 * @return värden som textsträng
+	 */
+	private String getValueFromGraph(Graph graph, SubjectNode s, URIReference ref, URIReference refRef)
+		throws DiagnosticException
+	{
+		final String sep = " ";
+		StringBuffer buf = new StringBuffer();
+		String value = null;
+		try {
+			for (Triple t: graph.find(s, ref, AnyObjectNode.ANY_OBJECT_NODE)) {
+				if (t.getObject() instanceof Literal) {
+					Literal l = (Literal) t.getObject();
+					if (buf.length() > 0) {
+						buf.append(sep);
+					}
+					value = l.getValue().toString();
+					buf.append(value);
+				} else if (t.getObject() instanceof URIReference) {
+					value = StringUtils.trimToNull(((URIReference) t.getObject()).getURI().toString());
+					// lägg till i buffer bara om detta är en uri vi ska slå upp värde för
+					if (value != null) {
+						if (buf.length() > 0) {
+							buf.append(sep);
+						}
+						buf.append(value);
+					}
+				} else if (refRef != null && t.getObject() instanceof SubjectNode) {
+					SubjectNode resSub = (SubjectNode) t.getObject();
+					value = getSingleValueFromGraph(graph, resSub, refRef);
+					if (value != null) {
+						if (buf.length() > 0) {
+							buf.append(sep);
+						}
+						buf.append(value);
+					}
+				}
+			}
+		}catch(GraphException e) {
+			throw new DiagnosticException("Internt fel", "RSS.getValueFromGraph", e.getMessage(), true);
+		}
+		return buf.length() > 0 ? StringUtils.trimToNull(buf.toString()) : null;
 	}
 	
 	/**
@@ -313,8 +577,7 @@ public class RSS extends DefaultHandler implements APIMethod
 	 * @return Mediamodule med tumnagel och bild
 	 * @throws DiagnosticException 
 	 */
-	protected MediaEntryModule getMediaModule(String thumbnailUrl, 
-			String imageUrl) 
+	protected MediaEntryModule getMediaModule(String thumbnailUrl, String imageUrl) 
 		throws DiagnosticException
 	{
 		String thumb = StaticMethods.encode(thumbnailUrl);
@@ -356,8 +619,7 @@ public class RSS extends DefaultHandler implements APIMethod
 	 * @throws URISyntaxException
 	 * @throws DiagnosticException 
 	 */
-	protected Metadata getMetadata(String thumb, 
-			MediaEntryModule mediaModule) 
+	protected Metadata getMetadata(String thumb, MediaEntryModule mediaModule) 
 		throws URISyntaxException, DiagnosticException
 	{
 		Metadata metadata = mediaModule.getMetadata();
@@ -413,70 +675,10 @@ public class RSS extends DefaultHandler implements APIMethod
 		return link;
 	}
 	
-	public void endElement(String uri, String localName, String qName)
-		throws SAXException
-	{
-		if(store)
-		{
-			if(qName.equalsIgnoreCase("pres:representation"))
-			{
-				data.setLink(tempValue.toString());
-			}else if(qName.equalsIgnoreCase("pres:itemLabel"))
-			{
-				data.setTitle(tempValue.toString());
-			}else if(qName.equalsIgnoreCase("pres:description"))
-			{
-				data.setDescription(tempValue.toString());
-			}else if(qName.equalsIgnoreCase("pres:src"))
-			{	
-				if(imageType.equalsIgnoreCase("thumbnail"))
-				{
-					data.setThumbnailUrl(tempValue.toString());
-				}else if(imageType.equalsIgnoreCase("lowres"))
-				{
-					data.setImageUrl(tempValue.toString());
-				}
-			}else if(qName.equalsIgnoreCase("ns5:itemKeyWord")) {
-				data.addKeyWord(tempValue.toString());
-			}else if(qName.equalsIgnoreCase("ns5:buildDate")) {
-				data.setPublishDate(tempValue.toString());
-			}
-		}
-	}
-
-	@Override
-	public void startElement(String uri, String localName, String qName,
-			Attributes attributes) throws SAXException
-	{
-		//reset
-		tempValue = new StringBuffer();
-		store = false;
-		imageType = "";
-		if(qName.equalsIgnoreCase("pres:representation")) {
-			if(attributes.getValue("format") != null && attributes.getValue("format").equalsIgnoreCase("HTML")) {
-				store = true;
-			}
-		}else if(qName.equalsIgnoreCase("pres:description")) {
-			store = true;
-		}else if(qName.equalsIgnoreCase("pres:itemLabel")) {
-			store = true;
-		}else if(qName.equalsIgnoreCase("pres:src") && (attributes.getValue("type").equalsIgnoreCase("thumbnail") || attributes.getValue("type").equalsIgnoreCase("lowres"))) {
-			store = true;
-			imageType = attributes.getValue("type");
-		}else if(qName.equalsIgnoreCase("ns5:itemKeyWord")) {
-			store = true;
-		}else if(qName.equalsIgnoreCase("ns5:buildDate")) {
-			store = true;
-		}
-	}
-	
-	@Override
-	public void characters(char[] ch, int start, int length)
-		throws SAXException
-	{
-		tempValue.append(new String(ch, start, length));
-	}
-	
+	/**
+	 * Böna (typ) som håller data om en RSS entitet
+	 * @author Henrik Hjalmarsson
+	 */
 	public class RssObject
 	{
 		private String title;
@@ -492,6 +694,10 @@ public class RSS extends DefaultHandler implements APIMethod
 			keyWords = new Vector<String>();
 		}
 		
+		/**
+		 * returnerar listan med nyckelord som en array
+		 * @return
+		 */
 		public String[] getKeywordsAsArray()
 		{
 			String[] result = new String[keyWords.size()];
@@ -501,6 +707,10 @@ public class RSS extends DefaultHandler implements APIMethod
 			return result;
 		}
 
+		/**
+		 * Lägger till ett nyckelord till nyckelordslistan
+		 * @param keyWord
+		 */
 		public void addKeyWord(String keyWord)
 		{
 			keyWords.add(keyWord);
