@@ -21,12 +21,6 @@
 		<description>Objektets upphovsrättsstatus är okänd</description>
 		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
 	</License>
-	
-	<License rdf:ID="orphan">
-		<name>Orphan</name>
-		<description>Upphovsman är okänd eller ej säkert fastställd</description>
-		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
-	</License>
 
 	<License rdf:ID="by">
 		<name>Creative Commons - Erkännande</name>
