@@ -596,7 +596,7 @@ public class RSS implements APIMethod
 		feed.setFeedType(RSS_2_0);
 		feed.setTitle("K-samsök sökresultat");
 		feed.setLink(getFeedLinkProperty());
-		feed.setDescription("Sök resultat av en sökning mod K-samsök API");
+		feed.setDescription("Sökresultat av en sökning mot K-samsök API");
 		
 		return feed;
 	}
