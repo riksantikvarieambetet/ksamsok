@@ -5,11 +5,15 @@
 <%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
+<%@page import="java.util.Date" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Locale" %>
 <%@page import="java.io.File"%><html>
 	<body>
 		Jobbar...
 <%
 	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
+	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("sv", "SE"));
 	HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
    	String action = request.getParameter("action");
 	String serviceId = request.getParameter("serviceId");
@@ -36,6 +40,9 @@
    		service.setHarvestSetSpec(StringUtils.trimToNull(request.getParameter("harvestSetSpec")));
    		service.setAlwaysHarvestEverything(Boolean.valueOf(request.getParameter("alwayseverything")));
    		service.setShortName(request.getParameter("shortName"));
+   		try {
+   			service.setLastHarvestDate(sdf.parse(request.getParameter("harvestDate")));
+   		}catch(Exception ignore) {}
    		hsm.updateService(service);
    		redirTo = "editservice.jsp?serviceId=" + serviceId;
    	} else if ("new".equals(action)) {

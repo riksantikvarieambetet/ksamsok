@@ -141,6 +141,10 @@
 						<td><input id="harvestSetSpec" name="harvestSetSpec" type="text" value="<%= (service.getHarvestSetSpec() != null ? service.getHarvestSetSpec() : "" )%>"/></td>
 					</tr>
 					<tr>
+						<td><label for="harvestDate" class="bold">Skörde-datum</label></td>
+						<td><input type="text" name="harvestDate" value="<%=service.getLastHarvestDate()%>"/></td>
+					</tr>
+					<tr>
 						<td><label for="alwayseverything" class="bold">Skörda:</label></td>
 						<td>
 							<select id="alwayseverything" name="alwayseverything">
