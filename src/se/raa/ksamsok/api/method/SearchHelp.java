@@ -13,6 +13,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.WildcardQuery;
 
+import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Lucene;
@@ -78,6 +79,7 @@ public class SearchHelp implements APIMethod
 	
 	@Override
 	public void performMethod()
+		throws DiagnosticException
 	{
 		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher();
 		try {
@@ -93,8 +95,7 @@ public class SearchHelp implements APIMethod
 			writeResult(termList);
 			writeFot();
 		} catch (IOException e) {
-			// TODO fix
-			e.printStackTrace();
+			throw new DiagnosticException("Oväntat IO fel uppstod", "SearchHelp.performMethod", e.getMessage(), true);
 		}finally {
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}

@@ -2,10 +2,10 @@ package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
@@ -193,8 +193,6 @@ public class Facet extends StatisticSearch
 				logger.debug("about to make " + queryContentList.size() +
 						" queries filtered by " + filterQuery);
 			}
-			// TODO: datastrukturen/algoritmen bör kanske ändras här då det borde bli
-			//       en del onödigt kopierande inne i ArrayList när element tas bort
 			for (int i = 0; i < queryContentList.size(); i++) {	
 				QueryContent queryContent = queryContentList.get(i);
 				Query query = queryContent.getQuery();
@@ -229,7 +227,7 @@ public class Facet extends StatisticSearch
 	protected List<QueryContent> convertTermMapToQueryContentList(
 			Map<String,Set<Term>> termMap)
 	{
-		List<QueryContent> queryContentList =  new ArrayList<QueryContent>();
+		List<QueryContent> queryContentList =  new Vector<QueryContent>();
 		for(String index : termMap.keySet()) {
 			for(Term term: termMap.get(index)) {
 				QueryContent queryContent = new QueryContent();

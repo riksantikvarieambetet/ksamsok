@@ -76,7 +76,7 @@ public class QueryContent
 		Set<String> indexSet = terms.keySet();
 		String queryString = "";
 		for(String index : indexSet)
-		{//TODO tror denna skall fungera för alla värden
+		{
 			String term = StaticMethods.escape(terms.get(index));
 			queryString += index + "=\"" + term + "\" AND ";
 		}

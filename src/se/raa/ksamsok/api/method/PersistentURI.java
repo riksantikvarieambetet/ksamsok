@@ -6,6 +6,7 @@ import java.io.PrintWriter;
  * hämtar persistent URI från given URL
  * @author Henrik Hjalmarsson
  */
+@SuppressWarnings("unused")
 public class PersistentURI implements APIMethod 
 {
 	/** namn på metoden */

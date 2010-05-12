@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import se.raa.ksamsok.api.APIServlet;
 import se.raa.ksamsok.api.util.StaticMethods;
 
 public class APIKeyServlet extends HttpServlet
@@ -51,12 +52,14 @@ public class APIKeyServlet extends HttpServlet
 				String APIKey = req.getParameter("APIKey");
 				if(APIKey != null)	{
 					dbHandler.removeAPIKeys(APIKey);
+					APIServlet.reloadAPIKeys();
 				}
 			}else if(operation.equals("insert")) {
 				String APIKey = StaticMethods.getParam(req.getParameter("APIKey"));
 				String owner = StaticMethods.getParam(req.getParameter("owner"));
 				if(APIKey != null && owner != null) {
 					dbHandler.addNewAPIKey(APIKey, owner);
+					APIServlet.reloadAPIKeys();
 				}
 			}
 		}

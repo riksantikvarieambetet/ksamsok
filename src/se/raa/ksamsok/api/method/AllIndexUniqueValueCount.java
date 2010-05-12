@@ -35,8 +35,8 @@ import se.raa.ksamsok.lucene.LuceneServlet;
  */
 public class AllIndexUniqueValueCount extends Facet
 {	
-	private static final Logger logger = Logger.getLogger(
-			"se.raa.ksamsok.api.method.AllIndexUniqueValueCount");
+	@SuppressWarnings("unused")
+	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.method.AllIndexUniqueValueCount");
 	
 	/** metodens namn */
 	public static final String METHOD_NAME = "allIndexUniqueValueCount";

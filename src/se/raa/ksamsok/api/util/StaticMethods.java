@@ -73,7 +73,9 @@ public class StaticMethods
 					phraseQuery.add(new Term(field, curValue));
 				}
 			}
-			logger.info(phraseQuery);
+			if(logger.isDebugEnabled()) {
+				logger.debug(phraseQuery);
+			}
 			return phraseQuery;
 		}else {
 			value = CQL2Lucene.transformValueForField(field, value);
@@ -103,7 +105,7 @@ public class StaticMethods
 	 */
 	public static String getParam(String param)
 	{
-		try { //TODO vet inte om detta är ultimat, men det funkar ;)
+		try {//Vet inte om detta är ultimat. Men det tycks funka
 			if(param != null) {
 				param = URLDecoder.decode(param, "UTF-8");
 				param = new String(param.getBytes("ISO-8859-1"), "UTF-8");

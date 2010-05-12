@@ -41,7 +41,7 @@ public class APIServlet extends HttpServlet
 	//klass specifik logger
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.APIServlet");
 	private static DataSource ds = null; //Databas källa
-	private Set<String> APIKeys; //Set med de API nycklar som finns
+	private static Set<String> APIKeys; //Set med de API nycklar som finns
 	static final String DATASOURCE_NAME = "harvestdb";
 	private static final StatisticLogger statisticLogger = new StatisticLogger();
 	private static Thread loggerThread; //Loggar sökningar
@@ -52,29 +52,36 @@ public class APIServlet extends HttpServlet
 		super.init(config);
 		loggerThread = new Thread(statisticLogger);
 		loggerThread.start();
-		Connection c = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 		try {
 			Context ctx = new InitialContext();
 			Context envctx =  (Context) ctx.lookup("java:comp/env");
 			ds = (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-			APIKeys = new HashSet<String>();
-			c = ds.getConnection();
-			String sql = "SELECT apikey FROM apikeys";
-			ps = c.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				APIKeys.add(rs.getString("apikey"));
-			}
+			reloadAPIKeys();
 		}catch(NamingException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.err.println(e.getSQLState());
-			e.printStackTrace();
-		}finally {
-			DBUtil.closeDBResources(rs, ps, c);
+		}
+	}
+	
+	public static void reloadAPIKeys()
+	{
+		if(ds != null) {
+			Connection c  = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			APIKeys = new HashSet<String>();
+			try {
+				c = ds.getConnection();
+				String sql = "SELECT apikey FROM apikeys";
+				ps = c.prepareStatement(sql);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					APIKeys.add(rs.getString("apikey"));
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				DBUtil.closeDBResources(rs, ps, c);
+			}
 		}
 	}
 
@@ -151,7 +158,7 @@ public class APIServlet extends HttpServlet
 	 */
 	private void Diagnostic(PrintWriter writer, APIException e)
 	{
-		logger.error(e.getClassName() + "\n" + e.getDetails());
+		logger.error(e.getClassName() + " - " + e.getDetails());
 		StartEndWriter.writeError(writer, e);
 	}
 

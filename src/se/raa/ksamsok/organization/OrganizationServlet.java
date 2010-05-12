@@ -1,7 +1,6 @@
 package se.raa.ksamsok.organization;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -18,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
-
-import se.raa.ksamsok.api.util.StaticMethods;
 
 /**
  * Servlet som hanterar uppdateringar och visningar av information om
