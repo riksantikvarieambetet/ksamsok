@@ -163,7 +163,7 @@
 		</copy>
 		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="rpm">
-				<include name="context.xml"/>
+				<!-- <include name="context.xml"/>  -->
 				<include name="tomcat-users.xml"/>
 				<include name="catalina.sh"/>
 			</fileset>

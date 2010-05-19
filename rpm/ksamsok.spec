@@ -1,5 +1,5 @@
 %define ver 1.0.0
-%define rel 33
+%define rel 34
 
 Summary: Raä K-Samsök, centralnod
 Name: raa-ksamsok_app
@@ -28,7 +28,7 @@ mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
 
 install -m755 $RPM_SOURCE_DIR/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 
-install -m755 $RPM_SOURCE_DIR/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+# install -m755 $RPM_SOURCE_DIR/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
 install -m755 $RPM_SOURCE_DIR/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
 install -m755 $RPM_SOURCE_DIR/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 install -m755 $RPM_SOURCE_DIR/ora10-sdoapi.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
@@ -62,7 +62,7 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 %files
 %defattr(-,tomcat,nobody)
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/webapps/ksamsok.war
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/context.xml
+# %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/context.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/tomcat-users.xml
 %attr(0755,tomcat,nobody) /usr/local/tomcat8080/bin/catalina.sh
 # oracle-drivrutiner för jdbc och spatialutökningar
