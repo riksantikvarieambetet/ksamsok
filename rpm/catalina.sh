@@ -67,16 +67,16 @@
 #   CATALINA_PID    (Optional) Path of the file which should contains the pid
 #                   of catalina startup java process, when start (fork) is used
 #
-# $Id: catalina.sh,v 1.4 2010/04/22 09:27:56 bolew Exp $
+# $Id: catalina.sh,v 1.5 2010/05/19 05:52:55 bolew Exp $
 # -----------------------------------------------------------------------------
 
 #RAA Parametrar
-LANG=sv_SE.iso8859-1; export LANG
+LANG=en_US.utf-8; export LANG
 
 JRE_HOME=/usr/java/jre1.6.0; export JRE_HOME
 JAVA_OPTS="-server -Xmx1024m"
 unset CATALINA_HOME
-CATALINA_OPTS="-d64 -Dsun.net.client.defaultReadTimeout=5000000 -Dsun.net.client.defaultConnectTimeout=60000 -Dtbeller.locale=sv_SE -Duser.language=sv -Duser.country=SE -Djava.awt.headless=true -Dkms.ojb.lrucache.size=100000"
+CATALINA_OPTS="-d64 -Dsun.net.client.defaultReadTimeout=5000000 -Dsun.net.client.defaultConnectTimeout=60000 -Djava.awt.headless=true -Dkms.ojb.lrucache.size=100000"
 #END RAA Parametrar  
 
 # OS specific support.  $var _must_ be set to either true or false.
