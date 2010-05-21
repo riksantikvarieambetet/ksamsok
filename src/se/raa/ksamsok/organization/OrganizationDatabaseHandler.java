@@ -205,7 +205,27 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	 */
 	public List<Organization> getAllOrganizations()
 	{
-		return getServiceOrganizations();
+		Connection c = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Organization> orgList = new Vector<Organization>();
+		try {
+			c = ds.getConnection();
+			String sql = "SELECT * FROM organisation";
+			ps = c.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Organization org = new Organization();
+				org = setOrgValues(org, rs);
+				orgList.add(org);
+			}
+		}catch(SQLException e) {
+			DBUtil.rollback(c);
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeDBResources(rs, ps, c);
+		}
+		return orgList;
 	}
 	
 	/**
