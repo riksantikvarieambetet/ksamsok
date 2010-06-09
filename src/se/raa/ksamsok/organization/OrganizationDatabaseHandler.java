@@ -15,7 +15,7 @@ import se.raa.ksamsok.harvest.DBBasedManagerImpl;
 import se.raa.ksamsok.harvest.DBUtil;
 
 /**
- * Klass för att hantera databas graj för att modda organisationers
+ * Klass fÃ¶r att hantera databas graj fÃ¶r att modda organisationers
  * information
  * @author Henrik Hjalmarsson
  */
@@ -24,7 +24,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 
 	/**
 	 * Skapar en ny databashanterare
-	 * @param ds datakälls som skall användas
+	 * @param ds datakÃ¤lls som skall anvÃ¤ndas
 	 */
 	public OrganizationDatabaseHandler(DataSource ds)
 	{
@@ -33,8 +33,8 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	
 	/**
 	 * Returnerar en mapp med de organisationer som finns i databasen
-	 * @return Map med String,String. Key är kortnamn för organisation
-	 * och value är det svenska namnet för organisationen
+	 * @return Map med String,String. Key Ã¤r kortnamn fÃ¶r organisation
+	 * och value Ã¤r det svenska namnet fÃ¶r organisationen
 	 */
 	public List<Organization> getServiceOrganizations()
 	{
@@ -62,10 +62,10 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Returnerar en böna innehållande de värden som finns i databasen
-	 * för given organisation.
+	 * Returnerar en bÃ¶na innehÃ¥llande de vÃ¤rden som finns i databasen
+	 * fÃ¶r given organisation.
 	 * @param kortnamn organisationens kortnamn
-	 * @return Böna med organisations-data
+	 * @return BÃ¶na med organisations-data
 	 */
 	public Organization getOrganization(String kortnamn)
 	{	
@@ -81,7 +81,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				setOrgValues(org, rs);
-				// stäng då variablerna återanvänds
+				// stÃ¤ng dÃ¤ variablerna Ã¥teranvÃ¤nds
 				DBUtil.closeDBResources(rs, ps, null);
 				rs = null;
 				ps = null;
@@ -108,10 +108,10 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Sätter värden för organisations bönan
-	 * @param org organisations bönan
-	 * @param rs ResultSet från SQL query
-	 * @return Organisationsbönan med satta värden
+	 * SÃ¤tter vÃ¤rden fÃ¶r organisations bÃ¶nan
+	 * @param org organisations bÃ¶nan
+	 * @param rs ResultSet frÃ¥n SQL query
+	 * @return OrganisationsbÃ¶nan med satta vÃ¤rden
 	 */
 	private Organization setOrgValues(Organization org, ResultSet rs)
 	{
@@ -153,7 +153,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			ps.executeUpdate();
 			List<Service> serviceList = org.getServiceList();
 			for(int i = 0; serviceList != null && i < serviceList.size(); i++) {
-				// stäng då variabeln återanvänds
+				// stÃ¤ng dÃ¥ variabeln Ã¥teranvÃ¤nds
 				DBUtil.closeDBResources(null, ps, null);
 				ps = null;
 				Service s = serviceList.get(i);
@@ -171,10 +171,10 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Sätter Strängar i SQL satsen med rätta värden
-	 * @param ps PreparedStatment som innehåller query
+	 * SÃ¤tter StrÃ¤ngar i SQL satsen med rÃ¤tta vÃ¤rden
+	 * @param ps PreparedStatment som innehÃ¥ller query
 	 * @param org organisationens uppdaterade data
-	 * @return PreparedStatement med strängar satta
+	 * @return PreparedStatement med strÃ¤ngar satta
 	 */
 	private PreparedStatement setPsStrings(PreparedStatement ps, Organization org)
 	{
@@ -200,7 +200,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Returnerar alla organisationer i databasen i form av en lista med organisations-bönor
+	 * Returnerar alla organisationer i databasen i form av en lista med organisations-bÃ¶nor
 	 * @return Lista med organisationer i databasen
 	 */
 	public List<Organization> getAllOrganizations()
@@ -226,10 +226,10 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Kollar om given användare med lösenord stämmer.
+	 * Kollar om given anvÃ¤ndare med lÃ¶senord stÃ¤mmer.
 	 * @param kortnamn organisationen som skall autensieras
-	 * @param password lösenordet för organisationen
-	 * @return true om lösenord och kortnamn är korrekt. Annars false
+	 * @param password lÃ¶senordet fÃ¶r organisationen
+	 * @return true om lÃ¶senord och kortnamn Ã¤r korrekt. Annars false
 	 */
 	public boolean Authenticate(String kortnamn, String password)
 	{
@@ -258,8 +258,8 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Returnerar en Map med alla organisationskortnamn och deras lösen
-	 * @return Map med lösenord
+	 * Returnerar en Map med alla organisationskortnamn och deras lÃ¶sen
+	 * @return Map med lÃ¶senord
 	 */
 	public Map<String,String> getPasswords()
 	{
@@ -286,8 +286,8 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Ändrar lösenord för organisationer
-	 * @param passwordMap Map med användare och lösenord.
+	 * Ã¤ndrar lÃ¶senord fÃ¶r organisationer
+	 * @param passwordMap Map med anvÃ¤ndare och lÃ¶senord.
 	 */
 	public void setPassword(Map<String,String> passwordMap)
 	{
@@ -313,10 +313,10 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Lägger till en ny organisation i databasen
-	 * (Övrig info får fixas i efterhand)
-	 * @param kortnamn Kortnamnet för organisationen
-	 * @param namnSwe svenska namnet för organisationen
+	 * LÃ¤gger till en ny organisation i databasen
+	 * (Ã¶vrig info fÃ¶r fixas i efterhand)
+	 * @param kortnamn Kortnamnet fÃ¶r organisationen
+	 * @param namnSwe svenska namnet fÃ¶r organisationen
 	 */
 	public void addOrganization(String kortnamn, String namnSwe)
 	{
