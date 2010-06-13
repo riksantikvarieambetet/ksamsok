@@ -79,7 +79,7 @@ function showHide()
 								<td><textarea cols="20" rows="5" name="beskrivSwe">${requestScope.orgInfo.beskrivSwe}</textarea></td>
 							</tr>
 							<tr>
-								<td class="title">Beksrivning av organisationen p&aring; engelska:</td>
+								<td class="title">Beskrivning av organisationen p&aring; engelska:</td>
 								<td><textarea cols="20" rows="5" name="beskrivEng">${requestScope.orgInfo.beskrivEng}</textarea></td>
 							</tr>
 							<tr>
