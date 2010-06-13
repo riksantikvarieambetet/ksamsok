@@ -388,7 +388,7 @@ public class SamsokContentHelper extends ContentHelper {
 			String url = extractSingleValue(graph, s, rURL, null);
 			if (url != null) {
 				if (url.toLowerCase().startsWith(uriPrefix)) {
-					addProblemMessage("Html-url startar med " + uriPrefix);
+					addProblemMessage("HTML URL starts with " + uriPrefix);
 				}
 				luceneDoc.add(new Field(I_IX_HTML_URL, url, Field.Store.YES, Field.Index.NOT_ANALYZED));
 			}
@@ -396,7 +396,7 @@ public class SamsokContentHelper extends ContentHelper {
 			url = extractSingleValue(graph, s, rMuseumdatURL, null);
 			if (url != null) {
 				if (url.toLowerCase().startsWith(uriPrefix)) {
-					addProblemMessage("Museumdat-url startar med " + uriPrefix);
+					addProblemMessage("Museumdat URL starts with " + uriPrefix);
 				}
 				luceneDoc.add(new Field(I_IX_MUSEUMDAT_URL, url, Field.Store.YES, Field.Index.NOT_ANALYZED));
 			}
@@ -428,9 +428,9 @@ public class SamsokContentHelper extends ContentHelper {
 			if (createdDate != null) {
 				created = parseAndIndexISO8601DateAsDate(IX_CREATEDDATE, createdDate, ip);
 			} else {
-				addProblemMessage("Värde för '" + IX_CREATEDDATE +
+				addProblemMessage("Value for '" + IX_CREATEDDATE +
 						// troligen saknas det på alla så identifier inte med tillsvidare
-						"' saknas"); //  för " + identifier);
+						"' is missing"); //  för " + identifier);
 			}
 			// lite logik för att sätta datum då posten först lades till i indexet
 			Date addedToIndex = calculateAddedToIndex(service.getFirstIndexDate(), created);
@@ -877,7 +877,7 @@ public class SamsokContentHelper extends ContentHelper {
 								Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 					}
 				} catch (Exception e) {
-					addProblemMessage("Fel vid indexering av geometrier för " + identifier +
+					addProblemMessage("Error when indexing geometries for " + identifier +
 							": " + e.getMessage());
 				}
 			}
@@ -1034,7 +1034,7 @@ public class SamsokContentHelper extends ContentHelper {
 					//logger.error("Fel vid gmlhantering för " + identifier, e);
 					// rensa mängd med geometrier
 					gmlInfoHolder.setGmlGeometries(null);
-					addProblemMessage("Problem med gml för " + identifier + ": " + e.getMessage());
+					addProblemMessage("Problem with GML for " + identifier + ": " + e.getMessage());
 				}
 			}
 		} finally {
@@ -1139,7 +1139,7 @@ public class SamsokContentHelper extends ContentHelper {
 			} else if (isISO8601DateYearIndex(fieldName)) {
 				trimmedValue = parseYearFromISO8601DateAndTransform(trimmedValue);
 				if (trimmedValue == null) {
-					addProblemMessage("Kunde inte tolka datumvärde enligt iso8601 för fält: " +
+					addProblemMessage("Could not interpret date value according to ISO8601 for field: " +
 							fieldName + " (" + value + ")");
 				}
 			}
@@ -1202,8 +1202,8 @@ public class SamsokContentHelper extends ContentHelper {
 			ip.setCurrent(index);
 			ip.addToDoc(formatDate(date, false));
 		} else {
-			addProblemMessage("Kunde inte tolka '" + index +
-					"' som ISO8601: " + dateStr);
+			addProblemMessage("Could not interpret '" + index +
+					"' as ISO8601: " + dateStr);
 		}
 		return date;
 	}
@@ -1470,7 +1470,7 @@ public class SamsokContentHelper extends ContentHelper {
 			return value;
 		}
 		// lägg in i thread local som ett problem
-		addProblemMessage("Inget värde för " + uri);
+		addProblemMessage("No value for " + uri);
 		return null;
 	}
 
@@ -1489,7 +1489,7 @@ public class SamsokContentHelper extends ContentHelper {
 				try {
 					value = Long.valueOf(value).toString();
 				} catch (NumberFormatException nfe) {
-					addProblemMessage("Kunde inte tolka slutet av " + str + " (" + value + ") som en siffra");
+					addProblemMessage("Could not interpret the end of " + str + " (" + value + ") as a digit");
 				}
 			}
 		}
