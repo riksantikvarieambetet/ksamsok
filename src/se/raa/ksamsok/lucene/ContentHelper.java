@@ -688,7 +688,7 @@ public abstract class ContentHelper {
 	 */
 	public static void addProblemMessage(String message) {
 		final int maxSize = 200;
-		final String xMessage = "Fler felmeddelanden finns, visar bara max " + maxSize + " olika";
+		final String xMessage = "There are more error messages, just listing max " + maxSize + " different";
 		Map<String,Integer> map = problemMessages.get();
 		if (map != null) {
 			Integer c = map.get(message);
