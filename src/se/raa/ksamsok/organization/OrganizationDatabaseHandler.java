@@ -149,7 +149,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
-			String sql = "UPDATE organisation SET namnswe=?, namneng=?, beskrivswe=?, beskriveng=?, adress1=?, adress2=?, postadress=?, kontaktperson=?, epostkontaktperson=?, websida=?, websidaks=?, lowressurl=?, thumbnailurl=? serv_org=? WHERE kortnamn=?";
+			String sql = "UPDATE organisation SET namnswe=?, namneng=?, beskrivswe=?, beskriveng=?, adress1=?, adress2=?, postadress=?, kontaktperson=?, epostkontaktperson=?, websida=?, websidaks=?, lowressurl=?, thumbnailurl=?, serv_org=? WHERE kortnamn=?";
 			ps = c.prepareStatement(sql);
 			setPsStrings(ps, org);
 			ps.executeUpdate();
