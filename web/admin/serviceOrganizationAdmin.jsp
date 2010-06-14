@@ -11,7 +11,7 @@
 function showHide()
 {
 	if(document.getElementById("hideable").style.display == "none") {
-		document.getElementById("hideable").style.display = "";
+		document.getElementById("hideable").style.display = "block";
 	}else {
 		document.getElementById("hideable").style.display = "none";
 	}
@@ -29,7 +29,7 @@ function showHide()
 		<button onclick="showHide()">Lägg till organisation</button>
 	</div>
 	<div id="content">
-		<div id="hideable">
+		<div id="hideable" style="display: none;">
 			<form action="orgAdmin" accept-charset="UTF-8" method="post">
 				<input type="hidden" name="operation" value="addOrg"/>
 				<table>
