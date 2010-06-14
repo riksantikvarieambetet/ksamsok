@@ -34,6 +34,7 @@ thumbnailurl varchar2(256),
 namnswe varchar2(100),
 namneng varchar2(100),
 pass varchar2(30)
+serv_org varchar2(20)
 };
 
 create table harvestservices (
