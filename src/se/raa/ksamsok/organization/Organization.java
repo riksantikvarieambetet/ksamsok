@@ -12,6 +12,7 @@ public class Organization implements Serializable
 	private static final long serialVersionUID = -1535227615889403676L;
 	
 	private String kortNamn;
+	private String serv_org;
 	private String namnSwe;
 	private String namnEng;
 	private String beskrivSwe;
@@ -34,6 +35,15 @@ public class Organization implements Serializable
 	public void setKortnamn(String kortNamn)
 	{
 		this.kortNamn = kortNamn;
+	}
+	
+	public String getServ_org()
+	{
+		return serv_org;
+	}
+	public void setServ_org(String kortNamn)
+	{
+		this.serv_org = serv_org;
 	}
 	
 	public String getNamnSwe()

@@ -84,7 +84,7 @@ public class GetServiceOrganization implements APIMethod
 	private void writeInstitution(Organization org)
 	{
 		writer.println("<institution>");
-		writer.println("<kortnamn>" + StaticMethods.xmlEscape(org.getKortnamn() != null ? org.getKortnamn() : "") + "</kortnamn>");
+		writer.println("<kortnamn>" + StaticMethods.xmlEscape(org.getServ_org() != null ? org.getServ_org() : "") + "</kortnamn>");
 		writer.println("<namnswe>" + StaticMethods.xmlEscape(org.getNamnSwe() != null ? org.getNamnSwe() : "") + "</namnswe>");
 		writer.println("<namneng>" + StaticMethods.xmlEscape(org.getNamnEng() != null ? org.getNamnEng() : "") + "</namneng>");
 		writer.println("<beskrivswe>" + StaticMethods.xmlEscape(org.getBeskrivSwe() != null ? org.getBeskrivSwe() : "") + "</beskrivswe>");
