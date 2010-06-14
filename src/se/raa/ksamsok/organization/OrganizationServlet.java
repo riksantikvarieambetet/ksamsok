@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet som hanterar uppdateringar och visningar av information om
@@ -26,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 public class OrganizationServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 4513891675396512336L;
+	private static final Logger logger = Logger.getLogger(OrganizationServlet.class);
 	
 	private static DataSource ds = null;
 	private OrganizationDatabaseHandler organizationDatabaseHandler;
@@ -79,6 +81,7 @@ public class OrganizationServlet extends HttpServlet
 			}else if(operation.equals("addOrg")) {
 				String kortnamn = req.getParameter("kortnamn");
 				String namnSwe = req.getParameter("namnSwe");
+				logger.debug("added: " + kortnamn + " : " + namnSwe);
 				organizationDatabaseHandler.addOrganization(kortnamn, namnSwe);
 			}else if(operation.equals("orgChoice")) {
 				String kortnamn = req.getParameter("orgChoice");

@@ -39,7 +39,7 @@ function showHide()
 					</tr>
 					<tr>
 						<td class="title">Namn p&aring; svenska</td>
-						<td><input type="text" namn="namnSwe"/></td>
+						<td><input type="text" name="namnSwe"/></td>
 					</tr>
 					<tr>
 						<td colspan="2"><input type="submit" value="Lägg till"/></td>

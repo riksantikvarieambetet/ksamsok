@@ -82,7 +82,6 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				setOrgValues(org, rs);
-				// stäng då variablerna återanvänds
 				DBUtil.closeDBResources(rs, ps, null);
 				rs = null;
 				ps = null;
@@ -109,8 +108,8 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Sätter värden för organisations bönan
-	 * @param org organisations bönan
+	 * Sätter värden för organisationsbönan
+	 * @param org organisationsbönan
 	 * @param rs ResultSet från SQL query
 	 * @return Organisationsbönan med satta värden
 	 */
@@ -155,7 +154,6 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			ps.executeUpdate();
 			List<Service> serviceList = org.getServiceList();
 			for(int i = 0; serviceList != null && i < serviceList.size(); i++) {
-				// stäng då variabeln återanvänds
 				DBUtil.closeDBResources(null, ps, null);
 				ps = null;
 				Service s = serviceList.get(i);
@@ -203,7 +201,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Returnerar alla organisationer i databasen i form av en lista med organisations-bönor
+	 * Returnerar alla organisationer i databasen i form av en lista med organisationsbönor
 	 * @return Lista med organisationer i databasen
 	 */
 	public List<Organization> getAllOrganizations()
@@ -289,7 +287,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	}
 	
 	/**
-	 * Ändrar lösenord för organisationer
+	 * ändrar lösenord för organisationer
 	 * @param passwordMap Map med användare och lösenord.
 	 */
 	public void setPassword(Map<String,String> passwordMap)
@@ -305,6 +303,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 				ps.setString(1, entry.getValue());
 				ps.setString(2, entry.getKey());
 				ps.executeUpdate();
+				DBUtil.closeDBResources(null, ps, null);
 			}
 			DBUtil.commit(c);
 		} catch (SQLException e) {
@@ -317,7 +316,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	
 	/**
 	 * Lägger till en ny organisation i databasen
-	 * (Övrig info får fixas i efterhand)
+	 * (övrig info får fixas i efterhand)
 	 * @param kortnamn Kortnamnet för organisationen
 	 * @param namnSwe svenska namnet för organisationen
 	 */

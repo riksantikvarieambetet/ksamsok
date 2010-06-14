@@ -41,7 +41,7 @@ public class Organization implements Serializable
 	{
 		return serv_org;
 	}
-	public void setServ_org(String kortNamn)
+	public void setServ_org(String serv_org)
 	{
 		this.serv_org = serv_org;
 	}
