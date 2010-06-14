@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SericeOrganization Admin</title>
+<title>ServiceOrganization Admin</title>
 <link media="all" rel="stylesheet" type="text/css" href="../css/orgAdmin.css"/>
 <script type="text/javascript">
 function showHide()
