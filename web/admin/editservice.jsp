@@ -57,6 +57,7 @@
 		firstIndexed = ContentHelper.formatDate(firstIndexDate, true);
 	}
 	File spoolFile = hrm.getSpoolFile(service);
+	File zipfile = hrm.getZipFile(service);
 %>
 		<form action="serviceaction.jsp" method="post" accept-charset="iso-8859-1">
 			<br/>
@@ -68,13 +69,16 @@
 						<button name="action" value="trigger" onclick="javascript:return confirm('Vill du verkligen köra denna tjänst nu?')">Kör</button>
 						<% if (spoolFile.exists()) { %>
 							<button name="action" value="deletespool" onclick="javascript:return confirm('Vill du verkligen ta bort spoolfilen för denna tjänst och påtvinga ny hämtning av data?')">Ta bort spoolfil</button>
-						<% } %>
+						<% } %>	
+						<% if (zipfile.exists()) { %>
+							<button name="action" value="unziptospool" onclick="javascript:return confirm('Vill du packa upp zipfilen som spoolfil? den ersätter eventuell tidigare spoolfil')">GUnzip</button>
+						<% } %>											
 					<% } else { %>
 						<button name="action" value="interrupt" onclick="javascript:return confirm('Vill du verkligen försöka stoppa denna tjänst nu?')">Stoppa körning</button>
 					<% } %>
 					<button name="action" value="reindex" onclick="javascript:return confirm('Vill du verkligen uppdatera indexet för denna tjänst nu?')">Uppdatera index</button>
 					<button name="action" value="emptyindex" onclick="javascript:return confirm('Vill du verkligen ta bort indexet för denna tjänst nu?')">Ta bort index</button>
-					<button onclick="javascript:window.location='editservice.jsp?serviceId=<%=serviceId%>&showHistory=true'; return false;">Visa historik</button>
+					<button onclick="javascript:window.location='editservice.jsp?serviceId=<%=serviceId%>&showHistory=true'; return false;">Visa historik</button>			
 				<% } else { %>
 					<button name="action" value="new">Skapa</button>
 				<% } %>

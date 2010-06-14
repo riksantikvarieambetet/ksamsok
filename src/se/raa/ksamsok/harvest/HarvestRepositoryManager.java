@@ -81,4 +81,17 @@ public interface HarvestRepositoryManager {
 	 * @return spoolfil
 	 */
 	File getSpoolFile(HarvestService service);
+	
+	/**
+	 * Ger spoolfil för en tjänst.
+	 * @param service tjänst
+	 * @return spoolfil
+	 */
+	File getZipFile(HarvestService service);
+	
+	
+	/**
+	 * Packar upp gzipfil med tidigare skörd till spool-xml-dokument
+	 */
+	public void extractGZipToSpool(HarvestService service);
 }

@@ -95,6 +95,8 @@
    		if (spoolFile.exists()) {
    			spoolFile.delete();
    		}
+   	} else if ("unziptospool".equals(action)) {
+   		hrm.extractGZipToSpool(service);   		
    	} else {
    		throw new RuntimeException("Felaktig action: " + action);
    	}

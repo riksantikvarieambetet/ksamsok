@@ -1,11 +1,21 @@
 package se.raa.ksamsok.harvest;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import javax.sql.DataSource;
 import javax.xml.parsers.SAXParser;
@@ -394,6 +404,48 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	@Override
 	public File getSpoolFile(HarvestService service) {
 		return new File(spoolDir, service.getId() + "_.xml");
+	}
+	
+ 	public File getZipFile(HarvestService service){
+		return new File(getSpoolFile(service).getAbsolutePath() + ".gz");
+	}
+
+	public void extractGZipToSpool(HarvestService service){
+		OutputStream os = null;
+		InputStream is = null;
+		File outputFile = getSpoolFile(service);
+		File inputFile = getZipFile(service);
+		
+		byte[] buf = new byte[8192];
+		int c;
+		try {
+			is = new GZIPInputStream(new FileInputStream(inputFile));
+			os = new BufferedOutputStream( new FileOutputStream(outputFile));
+			while ((c = is.read(buf)) > 0) {
+				os.write(buf, 0, c);
+			}
+			os.flush();
+		}
+		catch(IOException e){
+			logger.error("error when unzipping harvest zip file", e);
+		}
+	 finally {
+			closeStream(is);
+			closeStream(os);
+		}
+	}
+	
+	/**
+	 * Hjälpmetod som stänger en ström.
+	 * 
+	 * @param stream ström
+	 */
+	protected void closeStream(Closeable stream) {
+		if (stream != null) {
+			try {
+				stream.close();
+			} catch (Exception ignore) {}
+		}
 	}
 
 	/**
