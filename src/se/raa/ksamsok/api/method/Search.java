@@ -34,7 +34,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.LuceneServlet;
 
 /**
- * Hanterar sï¿½kningar efter objekt
+ * Hanterar sökningar efter objekt
  * @author Henrik Hjalmarsson
  */
 @SuppressWarnings("unused")
@@ -49,29 +49,29 @@ public class Search implements APIMethod
 	protected String recordSchema = null;
 	private String APIKey;
 
-	/** standardvï¿½rdet fÃ¶r antalet trï¿½ffar per sida */
+	/** standardvärdet för antalet träffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 50;
-	/** standardvï¿½rdet fï¿½r startpositionen i sï¿½kningen */
+	/** standardvärdet för startpositionen i sökningen */
 	public static final int DEFAULT_START_RECORD = 1;
-	/** metodnamn som anges fï¿½r att anvï¿½nda denna klass */
+	/** metodnamn som anges för att använda denna klass */
 	public static final String METHOD_NAME = "search";
-	/** parameternamn dï¿½r sï¿½kparametrarna skall ligga nï¿½r en sï¿½kning gï¿½rs */
+	/** parameternamn där sökparametrarna skall ligga när en sökning görs */
 	public static final String SEARCH_PARAMS = "query";
-	/** parameternamnet som anges fï¿½r att vï¿½lja antalet trï¿½ffar per sida */
+	/** parameternamnet som anges för att välja antalet träffar per sida */
 	public static final String HITS_PER_PAGE = "hitsPerPage";
-	/** parameternamnet som anges fï¿½r att vï¿½lja startRecord */
+	/** parameternamnet som anges för att välja startRecord */
 	public static final String START_RECORD = "startRecord";
-	/** parameternamn fï¿½r sort */
+	/** parameternamn för sort */
 	public static final String SORT = "sort";
-	/** parameternamn fï¿½r sort configuration */
+	/** parameternamn för sort configuration */
 	public static final String SORT_CONFIG = "sortConfig";
-	/** parametervï¿½rde fï¿½r descending sort */
+	/** parametervärde för descending sort */
 	public static final String SORT_DESC = "desc";
-	/** parametervï¿½rde fï¿½r ascending sort */
+	/** parametervärde för ascending sort */
 	public static final String SORT_ASC = "asc";
-	/** record shema fï¿½r presentations data */
+	/** record shema för presentations data */
 	public static final String NS_SAMSOK_PRES =	"http://kulturarvsdata.se/presentation#";
-	/** parameternamn fï¿½r record schema */
+	/** parameternamn för record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
 	public static final String RECORD_SCHEMA_BASE =
@@ -79,7 +79,7 @@ public class Search implements APIMethod
 	
 	private static final Logger logger = Logger.getLogger(
 			"se.raa.ksamsok.api.Search");
-	// fï¿½lt att hï¿½mta frï¿½n lucene
+	// fält att hämta från lucene
 	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(
 			new String[] {
 					ContentHelper.I_IX_RDF,
@@ -93,10 +93,10 @@ public class Search implements APIMethod
 	
 	/**
 	 * skapar ett Search objekt
-	 * @param params sï¿½kparametrar
-	 * @param hitsPerPage trï¿½ffar som skall visas per sida
-	 * @param startRecord startposition i sï¿½kningen
-	 * @param writer skrivaren som skall anvï¿½ndas fï¿½r att skriva svaret
+	 * @param params sökparametrar
+	 * @param hitsPerPage träffar som skall visas per sida
+	 * @param startRecord startposition i sökningen
+	 * @param writer skrivaren som skall användas för att skriva svaret
 	 */
 	public Search(String queryString, int hitsPerPage, int startRecord,
 				PrintWriter writer, String APIKey)
@@ -104,7 +104,7 @@ public class Search implements APIMethod
 		this.APIKey = APIKey;
 		this.queryString = queryString;
 		this.writer = writer;
-		//kontrollerar att hitsPerPage och startRecord har tillï¿½tna vï¿½rden
+		//kontrollerar att hitsPerPage och startRecord har tillåtna värden
 		if(hitsPerPage < 1 || hitsPerPage > 500) {
 			this.hitsPerPage = DEFAULT_HITS_PER_PAGE;
 		}else {
@@ -136,7 +136,7 @@ public class Search implements APIMethod
 	}
 	
 	/**
-	 * Anger vilket record schema som skall anvï¿½ndas
+	 * Anger vilket record schema som skall användas
 	 * @param recordSchema
 	 */
 	public void setRecordSchema(String recordSchema)
@@ -145,7 +145,7 @@ public class Search implements APIMethod
 	}
 	
 	/**
-	 * sï¿½tter recordSchema
+	 * sätter recordSchema
 	 */
 	protected void setRecordSchema()
 	{
@@ -165,7 +165,7 @@ public class Search implements APIMethod
 		try {
 			loggData(query, searcher);
 			int nDocs = startRecord - 1 + hitsPerPage;
-			//hï¿½r gï¿½rs sï¿½kningen
+			//här görs sökningen
 			if(sort == null) {
 				hits = searcher.search(query, nDocs == 0 ? 1 : nDocs);
 			}else {
@@ -180,16 +180,16 @@ public class Search implements APIMethod
 			writeRecords(searcher, hits, numberOfDocs, nDocs);
 			writeFot();
 		}catch(BooleanQuery.TooManyClauses e) {
-			throw new BadParameterException("query gav upphov till fï¿½r mï¿½nga booleska operationer", "Search.performMethod", query.toString(), true);
+			throw new BadParameterException("query gav upphov till för många booleska operationer", "Search.performMethod", query.toString(), true);
 		}catch(IOException e) {
-			throw new DiagnosticException("ovï¿½ntat IO fel uppstod. Var god fï¿½rsï¿½k igen", "Search.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("oväntat IO fel uppstod. Var god försök igen", "Search.performMethod", e.getMessage(), true);
 		}finally {
 			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
 	}
 	
 	/**
-	 * Loggar data fï¿½r sï¿½kningen
+	 * Loggar data för sökningen
 	 * @param query
 	 * @param searcher
 	 * @throws DiagnosticException
@@ -212,7 +212,7 @@ public class Search implements APIMethod
 				}
 			}
 		}catch(IOException e) {
-			throw new DiagnosticException("Ovï¿½ntat IO fel", "se.raa.ksamsok.api.method.Search", null, true);
+			throw new DiagnosticException("Oväntat IO fel", "se.raa.ksamsok.api.method.Search", null, true);
 		}
 	}
 
@@ -231,7 +231,7 @@ public class Search implements APIMethod
 	}
 
 	/**
-	 * skriver ut ï¿½vre del av XML svar
+	 * skriver ut övre del av XML svar
 	 * @param numberOfDocs
 	 */
 	private void writeHead(int numberOfDocs)
@@ -256,12 +256,12 @@ public class Search implements APIMethod
 	}
 	
 	/**
-	 * Hï¿½mtar xml-innehï¿½ll (fragment) frï¿½n ett lucene-dokument som en strï¿½ng.
+	 * Hämtar xml-innehåll (fragment) från ett lucene-dokument som en sträng.
 	 * @param doc lucenedokument
-	 * @param uri postens uri (anvï¿½nds bara fï¿½r log)
-	 * @param xmlIndex index att hï¿½mta innehï¿½ll frï¿½n
+	 * @param uri postens uri (används bara för log)
+	 * @param xmlIndex index att hämta innehåll från
 	 * @return xml-fragment med antingen presentations-xml eller rdf; null om data saknas
-	 * @throws Exception vid teckenkodningsfel (bï¿½r ej intrï¿½ffa) 
+	 * @throws Exception vid teckenkodningsfel (bör ej inträffa) 
 	 */
 	protected String getContent(Document doc, String uri, String xmlIndex) 
 		throws Exception {
@@ -270,12 +270,12 @@ public class Search implements APIMethod
 		if (xmlData != null) {
 			content = new String(xmlData, "UTF-8");
 		}
-		// TODO: NEK: ta bort nï¿½r allt ï¿½r omindexerat
+		// TODO: NEK: ta bort när allt är omindexerat
 		if (content == null) {
 			content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(uri);
 		}
 		if (content == null) {
-			logger.warn("Hittade inte xml-data (" + xmlIndex + ") fï¿½r " + uri);
+			logger.warn("Hittade inte xml-data (" + xmlIndex + ") för " + uri);
 		}
 		return content;
 	}
@@ -295,7 +295,7 @@ public class Search implements APIMethod
 		try {
 			final String xmlIndex;
 			final MapFieldSelector fieldSelector;
-			// ta fram rÃ¤tt data
+			// ta fram rätt data
 			setRecordSchema();
 			if (NS_SAMSOK_PRES.equals(recordSchema)) {
 				fieldSelector = PRES_FIELDS;
@@ -311,13 +311,13 @@ public class Search implements APIMethod
 				writeContent(getContent(doc, uri, xmlIndex), score);
 			}
 		}catch(UnsupportedEncodingException e) 	{
-			//kan ej uppstï¿½
+			//kan ej uppstå
 		}catch(CorruptIndexException e) {
-			throw new DiagnosticException("Ovï¿½ntat index fel uppstod. Var god fï¿½rsï¿½k igen", "Search.writeRecords", e.getMessage(), true);
+			throw new DiagnosticException("Oväntat index fel uppstod. Var god försök igen", "Search.writeRecords", e.getMessage(), true);
 		}catch(IOException e) {
-			throw new DiagnosticException("Ovï¿½ntat IO fel uppstod. Var god fï¿½rsï¿½k igen", "Search.writeRecods", e.getMessage(), true);
+			throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Search.writeRecods", e.getMessage(), true);
 		}catch(Exception e) {
-			throw new DiagnosticException("Fel uppstod nï¿½r data skulle hï¿½mtas. Var god fï¿½rsï¿½k senare", "Search.writeRecords", e.getMessage(), true);
+			throw new DiagnosticException("Fel uppstod när data skulle hämtas. Var god försök senare", "Search.writeRecords", e.getMessage(), true);
 		}finally {
 			writer.println("</records>");
 		}
@@ -336,9 +336,9 @@ public class Search implements APIMethod
 			CQLNode rootNode = parser.parse(queryString);
 			query = CQL2Lucene.makeQuery(rootNode);
 		}catch(IOException e) {
-			throw new DiagnosticException("Ovï¿½ntat IO fel uppstod. Var god fï¿½rsï¿½k igen", "Search.createQuery", e.getMessage(), true);
+			throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Search.createQuery", e.getMessage(), true);
 		}catch(CQLParseException e) {
-			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen pï¿½ att query strï¿½ngen inte fï¿½ljer CQL syntax. Var god kontrollera sï¿½kstrï¿½ngen eller kontakta system administratï¿½r fï¿½r sï¿½ksystemet du anvï¿½nder", "Search.createQuery", e.getMessage(), false);
+			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen på att query strängen inte fäljer CQL syntax. Var god kontrollera söksträngen eller kontakta system administratör för söksystemet du använder", "Search.createQuery", e.getMessage(), false);
 		}
 		return query;
 	}
