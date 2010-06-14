@@ -53,12 +53,6 @@
 					<div id="left">
 						<table>
 							<tr>
-								<td class="title">F&ouml;rkortning f&ouml;r organisationen:</td>
-								<td>
-									<input type="text" name="kortnamn" value="${requestScope.orgData.kortnamn}" readonly="readonly"/>
-								</td>
-							</tr>
-							<tr>
 								<td class="title">Organisationens svenska namn:</td>
 								<td>
 									<input type="text" name="namnSwe" value="${requestScope.orgData.namnSwe }"/>

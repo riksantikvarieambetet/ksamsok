@@ -67,6 +67,10 @@ function showHide()
 								<td><input type="text" name="kortnamn" value="${requestScope.orgInfo.kortnamn}" readonly="readonly"/></td>
 							</tr>
 							<tr>
+								<td class="title">serviceOrganization i RDF:</td>
+								<td><input type="text" name="serv_org" value="${requestScope.orgInfo.serv_org}"/></td>
+							</tr>
+							<tr>
 								<td class="title">Organisationens namn p&aring; svenska:</td>
 								<td><input type="text" name="namnSwe" value="${requestScope.orgInfo.namnSwe}"/></td>
 							</tr>
