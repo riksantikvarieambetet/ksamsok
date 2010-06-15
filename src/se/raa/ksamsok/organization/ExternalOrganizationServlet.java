@@ -62,7 +62,7 @@ public class ExternalOrganizationServlet extends HttpServlet
 				String password = req.getParameter("password");
 				if(organizationDatabaseHandler.Authenticate(username, password)) {
 					req.getSession().setAttribute("isAuthenticated", "j");
-					req.setAttribute("orgData", organizationDatabaseHandler.getOrganization(username));
+					req.setAttribute("orgData", organizationDatabaseHandler.getOrganization(username, false));
 				}else {
 					req.getSession().setAttribute("isAuthenticated", "e");
 				}
@@ -71,7 +71,7 @@ public class ExternalOrganizationServlet extends HttpServlet
 			}else if(operation.equals("update")) {
 				Organization org = OrganizationServlet.getOrganizationValues(req);
 				organizationDatabaseHandler.updateOrg(org);
-				req.setAttribute("orgData", organizationDatabaseHandler.getOrganization(org.getKortnamn()));
+				req.setAttribute("orgData", organizationDatabaseHandler.getOrganization(org.getKortnamn(), false));
 			}else if(operation.equals("unAuthenticate")) {
 				req.getSession().removeAttribute("isAuthenticated");
 			}

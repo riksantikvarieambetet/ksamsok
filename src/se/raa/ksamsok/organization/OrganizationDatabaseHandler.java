@@ -68,7 +68,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	 * @param kortnamn organisationens kortnamn
 	 * @return Böna med organisations-data
 	 */
-	public Organization getOrganization(String kortnamn)
+	public Organization getOrganization(String kortnamn, boolean isServOrg)
 	{	
 		Connection c = null;
 		PreparedStatement ps = null;
@@ -76,6 +76,9 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 		Organization org = new Organization();
 		try {
 			String sql = "SELECT * FROM organisation WHERE kortnamn=?";
+			if (isServOrg) {
+				//sql = "SELECT * FROM organisation WHERE serv_org=?";
+			} 
 			c = ds.getConnection();
 			ps = c.prepareStatement(sql);
 			ps.setString(1, kortnamn);
@@ -216,7 +219,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				orgList.add(getOrganization(rs.getString("kortnamn")));
+				orgList.add(getOrganization(rs.getString("kortnamn"), false));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

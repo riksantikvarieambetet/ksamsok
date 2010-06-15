@@ -69,7 +69,7 @@ public class GetServiceOrganization implements APIMethod
 				writeInstitution(org);
 			}
 		}else {
-			Organization org = organizationDatabaseHandler.getOrganization(value);
+			Organization org = organizationDatabaseHandler.getOrganization(value, true);
 			if(org != null) {
 				writeInstitution(org);
 			}

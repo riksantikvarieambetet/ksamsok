@@ -85,11 +85,11 @@ public class OrganizationServlet extends HttpServlet
 				organizationDatabaseHandler.addOrganization(kortnamn, namnSwe);
 			}else if(operation.equals("orgChoice")) {
 				String kortnamn = req.getParameter("orgChoice");
-				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(kortnamn));
+				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(kortnamn, false));
 			}else if(operation.equals("update")) {
 				Organization org = getOrganizationValues(req);
 				organizationDatabaseHandler.updateOrg(org);
-				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(org.getKortnamn()));
+				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(org.getKortnamn(), false));
 			}
 		}
 		req.setAttribute("orgList", organizationDatabaseHandler.getServiceOrganizations());
