@@ -77,7 +77,7 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 		try {
 			String sql = "SELECT * FROM organisation WHERE kortnamn=?";
 			if (isServOrg) {
-				//sql = "SELECT * FROM organisation WHERE serv_org=?";
+				sql = "SELECT * FROM organisation WHERE serv_org=?";
 			} 
 			c = ds.getConnection();
 			ps = c.prepareStatement(sql);
