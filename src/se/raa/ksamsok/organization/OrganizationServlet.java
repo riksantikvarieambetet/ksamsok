@@ -90,6 +90,9 @@ public class OrganizationServlet extends HttpServlet
 				Organization org = getOrganizationValues(req);
 				organizationDatabaseHandler.updateOrg(org);
 				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(org.getKortnamn(), false));
+			}else if(operation.equals("remove")) {
+				String kortnamn = req.getParameter("kortnamn");
+				organizationDatabaseHandler.removeOrganization(kortnamn);
 			}
 		}
 		req.setAttribute("orgList", organizationDatabaseHandler.getServiceOrganizations());

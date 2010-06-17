@@ -344,4 +344,22 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
+
+	public void removeOrganization(String kortnamn)
+	{
+		Connection c = null;
+		PreparedStatement ps = null;
+		try {
+			c = ds.getConnection();
+			String sql = "delete from organisation where kortnamn=?";
+			ps = c.prepareStatement(sql);
+			ps.setString(1, kortnamn);
+			ps.executeUpdate();
+			DBUtil.commit(c);
+		}catch(SQLException e) {
+			DBUtil.rollback(c);
+		}finally {
+			DBUtil.closeDBResources(null, ps, c);
+		}
+	}
 }
