@@ -50,6 +50,7 @@
 			<div id="content">
 				<form action="orgAdmin" accept-charset="UTF-8" method="post">
 					<input type="hidden" name="operation" value="update"/>
+					<input type="hidden" name="kortnamn" value="${requestScope.orgData.kortnamn }"/>
 					<div id="left">
 						<table>
 							<tr>

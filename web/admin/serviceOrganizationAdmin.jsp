@@ -16,6 +16,19 @@ function showHide()
 		document.getElementById("hideable").style.display = "none";
 	}
 }
+
+function remove()
+{
+	try {
+		var r = confirm("Är du säker på att du vill ta bort organisationen?");
+		if(r==true) {
+			document.getElementById("operation").value = "remove";
+			document.getElementById("orgForm").submit();
+		}
+	}catch(err) {
+		alert(err);
+	}
+}
 </script>
 </head>
 <body>
@@ -58,8 +71,8 @@ function showHide()
 		</form>
 		<c:if test="${!empty requestScope.orgInfo}">
 			<div id="orgInfo">
-				<form action="orgAdmin" accept-charset="UTF-8" method="post">
-					<input type="hidden" name="operation" value="update"/>
+				<form id="orgForm" action="orgAdmin" accept-charset="UTF-8" method="post">
+					<input type="hidden" id="operation" name="operation" value="update"/>
 					<div id="left">
 						<table>
 							<tr>
@@ -124,7 +137,10 @@ function showHide()
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="submit" value="Spara"/></td>
+								<td>
+									<input type="submit" value="Spara"/>
+									<button id="removeButton" onclick="remove()">Ta bort</button>
+								</td>
 							</tr>
 						</table>
 					</div>
