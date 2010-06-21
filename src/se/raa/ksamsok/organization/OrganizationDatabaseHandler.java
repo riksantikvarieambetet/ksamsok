@@ -155,13 +155,15 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 			ps = c.prepareStatement(sql);
 			setPsStrings(ps, org);
 			ps.executeUpdate();
+			// stäng då ps återanvänds
+			DBUtil.closeDBResources(null, ps, null);
+			ps = null; 
+			ps = c.prepareStatement("UPDATE harvestServices SET beskrivning=? WHERE name=?");
 			List<Service> serviceList = org.getServiceList();
 			for(int i = 0; serviceList != null && i < serviceList.size(); i++) {
-				DBUtil.closeDBResources(null, ps, null);
-				ps = null;
 				Service s = serviceList.get(i);
-				sql = "UPDATE harvestServices SET beskrivning='" + s.getBeskrivning() + "' WHERE name='" + s.getNamn() + "'";
-				ps = c.prepareStatement(sql);
+				ps.setString(1, s.getBeskrivning());
+				ps.setString(2, s.getNamn());
 				ps.executeUpdate();
 			}
 			DBUtil.commit(c);
@@ -297,23 +299,21 @@ public class OrganizationDatabaseHandler extends DBBasedManagerImpl
 	{
 		Connection c = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
 			String sql = "UPDATE organisation SET pass=? WHERE kortnamn=?";
+			ps = c.prepareStatement(sql);
 			for(Map.Entry<String, String> entry : passwordMap.entrySet()) {
-				ps = c.prepareStatement(sql);
 				ps.setString(1, entry.getValue());
 				ps.setString(2, entry.getKey());
 				ps.executeUpdate();
-				DBUtil.closeDBResources(null, ps, null);
 			}
 			DBUtil.commit(c);
 		} catch (SQLException e) {
 			DBUtil.rollback(c);
 			e.printStackTrace();
 		}finally {
-			DBUtil.closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
 	
