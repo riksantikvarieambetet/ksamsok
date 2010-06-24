@@ -36,6 +36,16 @@
     </servlet-mapping>
     
     <servlet>
+    	<servlet-name>sitemap</servlet-name>
+    	<servlet-class>se.raa.ksamsok.sitemap.SitemapServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>sitemap</servlet-name>
+    	<url-pattern>/sitemap</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
     	<servlet-name>externalOrgAdmin</servlet-name>
     	<servlet-class>se.raa.ksamsok.organization.ExternalOrganizationServlet</servlet-class>
     </servlet>
