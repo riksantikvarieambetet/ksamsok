@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:geoF="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:owl="http://www.w3.org/2002/07/owl#" 
+	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:pres="http://kulturarvsdata.se/presentation#" 
+	xmlns:georss="http://www.georss.org/georss" 
+	xmlns:foaf="http://xmlns.com/foaf/0.1/#">
+  
+  <xs:import namespace="http://kulturarvsdata.se/ksamsok#" schemaLocation="ksamsok.xsd"/>
+  <xs:import namespace="http://kulturarvsdata.se/presentation#" schemaLocation="pres.xsd"/>
+  <xs:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
+  <xs:import namespace="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" schemaLocation="geoF.xsd"/>
+  <xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml.xsd"/>
+  <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/#" schemaLocation="foaf.xsd"/>
+  
+  <xs:element name="RDF">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="ksamsok:Entity"/>
+        <xs:element ref="ksamsok:Context" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:Image" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:ItemNumber" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:ItemName" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:ItemSpecification" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:ItemMaterial" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:ItemDescription" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:ItemMeasurement" minOccurs="0" maxOccurs="unbounded"/>
+        
+        <xs:element ref="rdf:Description" minOccurs="0" maxOccurs="unbounded" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:attribute name="about" type="xs:anyURI"/>
+  <xs:attribute name="nodeID" type="xs:string"/>
+  <xs:attribute name="parseType" type="xs:string"/> 
+  <xs:attribute name="resource" type="xs:anyURI"/>
+  
+  <!-- Sometimes description is used, and sometimes entity -->
+  <xs:element name="Description">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ksamsok:number"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="ksamsok:context" maxOccurs="unbounded" />
+          <xs:element ref="ksamsok:image"/>
+          <xs:element ref="ksamsok:itemDescription"/>
+          <xs:element ref="ksamsok:itemName"/>
+          <xs:element ref="ksamsok:itemNumber"/>
+        </xs:sequence>
+        <xs:choice minOccurs="0">
+          <xs:element ref="ksamsok:lowresSource"/>
+          <xs:sequence>
+            <xs:element ref="ksamsok:buildDate"/>
+            <xs:element ref="ksamsok:collection"/>
+            <xs:element ref="ksamsok:dataQuality"/>
+            <xs:element ref="ksamsok:itemType"/>
+            <xs:element ref="ksamsok:ksamsokVersion"/>
+            <xs:element ref="ksamsok:lastChangedDate"/>
+          </xs:sequence>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ksamsok:mediaType"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="ksamsok:thumbnailSource"/>
+          <xs:sequence>
+            <xs:element ref="ksamsok:presentation"/>
+            <xs:element ref="ksamsok:serviceName"/>
+            <xs:element ref="ksamsok:serviceOrganization"/>
+            <xs:element ref="ksamsok:subject"/>
+            <xs:element ref="ksamsok:thumbnail"/>
+            <xs:element ref="ksamsok:url"/>
+          </xs:sequence>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="ksamsok:desc"/>
+          <xs:element ref="ksamsok:name"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="ksamsok:type"/>
+        <xs:element minOccurs="0" ref="ksamsok:contextType"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="ksamsok:fromTime"/>
+          <xs:element ref="ksamsok:toTime"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="rdf:type"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="foaf:name"/>
+          <xs:element ref="foaf:title"/>
+        </xs:sequence>
+      </xs:sequence>
+      <xs:attribute name="about" form="qualified" type="xs:anyURI"/>
+      <xs:attribute ref="rdf:nodeID"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="type">
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+ 
+</xs:schema>

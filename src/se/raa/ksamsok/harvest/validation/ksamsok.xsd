@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" 
+	targetNamespace="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:geoF="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:owl="http://www.w3.org/2002/07/owl#" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:pres="http://kulturarvsdata.se/presentation#" 
+	xmlns:georss="http://www.georss.org/georss" 
+	xmlns:foaf="http://xmlns.com/foaf/0.1/#" >
+   
+  <xs:import namespace="http://kulturarvsdata.se/presentation#" schemaLocation="pres.xsd"/>
+  <xs:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
+  <xs:import namespace="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" schemaLocation="geoF.xsd"/>
+  <xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+  <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/#" schemaLocation="foaf.xsd"/>
+  
+  <!-- obs: maxOccurs="1" minOccurs="1" är defaultvärden -->
+  <!-- Entitys struktur --> 
+  <xs:element name="Entity">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="ksamsok:ksamsokVersion"/>
+        <xs:element ref="ksamsok:serviceName"/>
+        <xs:element ref="ksamsok:serviceOrganization"/>
+        <xs:element ref="ksamsok:buildDate"/>
+        <xs:element ref="ksamsok:itemForIndexing" minOccurs="0"/>
+        <xs:element ref="ksamsok:collection" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:theme" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:createdDate" minOccurs="0"/>
+        <xs:element ref="ksamsok:lastChangedDate" minOccurs="0"/>
+        <xs:element ref="ksamsok:url"/>
+        <xs:element ref="ksamsok:museumdatUrl" minOccurs="0"/>
+        <xs:element ref="ksamsok:thumbnail" minOccurs="0"/>
+        <xs:element ref="ksamsok:subject" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:mediaType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:dataQuality"/>
+        <xs:element ref="ksamsok:itemType"/>
+        <xs:element ref="ksamsok:itemClass" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemClassName" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemLicense"/>
+        <xs:element ref="ksamsok:itemLicenseUrl"/>
+        <xs:element ref="ksamsok:itemName" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:itemLabel"/>
+        <xs:element ref="ksamsok:itemSpecification" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:itemTitle" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemDescription" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:itemKeyWord" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemMotiveWord" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemMaterial" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemTechnique" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemStyle" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemColor" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemNumber" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemMeasurement" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:context" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:isRelatedTo" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:containsInformationAbout" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:containsObject" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:isPartOf" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:isFoundIn" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:hasBeenUsedIn" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:hasChild" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:hasParent" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:hasFind" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:hasImage" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:hasObjectExample" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:hasPart" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:isDescribedBy" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:visualizes" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:isVisualizedBy" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="owl:sameAs" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:image" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:presentation"/>
+      </xs:choice>
+      <xs:attribute ref="rdf:about" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Definition -->
+  <xs:element name="ksamsokVersion" type="xs:decimal"/> 
+  <xs:element name="serviceName" type="xs:string"/> 
+  <xs:element name="serviceOrganization" type="xs:string"/> 
+  <xs:element name="buildDate" type="ksamsok:ISO8601Date" /> 
+  <xs:element name="itemForIndexing" type="xs:string"/> 
+  <xs:element name="collection" type="xs:string"/> 
+   <xs:element name="theme"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="createdDate" type="ksamsok:ISO8601Date"/> 
+  <xs:element name="lastChangedDate" type="ksamsok:ISO8601Date"/> 
+  <xs:element name="url" type="xs:anyURI"/> 
+  <xs:element name="museumdatUrl" type="xs:anyURI"/> 
+  <xs:element name="thumbnail" type="xs:anyURI"/> 
+  <xs:element name="subject"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dataQuality"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemType"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemClass"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/> 
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemClassName" type="xs:string"/> 
+  <xs:element name="itemLicense"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/> 
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemLicenseUrl"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemName"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemLabel" type="xs:string"/> 
+  <xs:element name="itemSpecification"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemTitle" type="xs:string"/> 
+  <xs:element name="itemDescription"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemKeyWord" type="xs:string"/> 
+  <xs:element name="itemMotiveWord" type="xs:string"/> 
+  <xs:element name="itemMaterial"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/> 
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemTechnique" type="xs:string"/> 
+  <xs:element name="itemStyle" type="xs:string"/> 
+  <xs:element name="itemColor" type="xs:string"/> 
+  <xs:element name="itemNumber"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemMeasurement"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="context"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="isRelatedTo" type="xs:anyURI"/> 
+  <xs:element name="containsInformationAbout" type="xs:anyURI"/> 
+  <xs:element name="containsObject" type="xs:anyURI"/> 
+  <xs:element name="isPartOf" type="xs:anyURI"/> 
+  <xs:element name="isFoundIn" type="xs:anyURI"/> 
+  <xs:element name="hasBeenUsedIn" type="xs:anyURI"/> 
+  <xs:element name="hasChild" type="xs:anyURI"/> 
+  <xs:element name="hasParent" type="xs:anyURI"/> 
+  <xs:element name="hasFind" type="xs:anyURI"/> 
+  <xs:element name="hasImage" type="xs:anyURI"/> 
+  <xs:element name="hasObjectExample" type="xs:anyURI"/> 
+  <xs:element name="hasPart" type="xs:anyURI"/> 
+  <xs:element name="isDescribedBy" type="xs:anyURI"/> 
+  <xs:element name="visualizes" type="xs:anyURI"/> 
+  <xs:element name="isVisualizedBy" type="xs:anyURI"/> 
+  <xs:element name="image"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="presentation"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="pres:item"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:parseType" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Context" > 
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="ksamsok:contextType"/> 
+        <xs:element ref="ksamsok:contextLabel" minOccurs="0"/>
+        <xs:element ref="ksamsok:fromTime" minOccurs="0"/> 
+        <xs:element ref="ksamsok:toTime" minOccurs="0"/>
+        <xs:element ref="ksamsok:fromPeriodName" minOccurs="0"/>
+        <xs:element ref="ksamsok:toPeriodName" minOccurs="0"/>
+        <xs:element ref="ksamsok:fromPeriodId" minOccurs="0"/>
+        <xs:element ref="ksamsok:toPeriodId" minOccurs="0"/>
+        <xs:element ref="ksamsok:periodAuth" minOccurs="0"/> 
+        <xs:element ref="ksamsok:eventName" minOccurs="0"/> 
+        <xs:element ref="ksamsok:eventAuth" minOccurs="0"/> 
+        <xs:element ref="ksamsok:timeText" minOccurs="0"/> 
+        <xs:element ref="ksamsok:continentName" minOccurs="0"/> 
+        <xs:element ref="ksamsok:country" minOccurs="0"/> 
+        <xs:element ref="geoF:county" minOccurs="0"/> 
+        <xs:element ref="geoF:province" minOccurs="0"/> 
+        <xs:element ref="geoF:municipality" minOccurs="0"/> 
+        <xs:element ref="geoF:parish" minOccurs="0"/> 
+        <xs:element ref="ksamsok:countryName" minOccurs="0"/>
+        <xs:element ref="ksamsok:countyName" minOccurs="0"/>
+        <xs:element ref="ksamsok:provinceName" minOccurs="0"/>
+        <xs:element ref="ksamsok:municipalityName" minOccurs="0"/>
+        <xs:element ref="ksamsok:parishName" minOccurs="0"/>
+        <xs:element ref="ksamsok:placeName" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:cadastralUnit" minOccurs="0"/>
+        <xs:element ref="ksamsok:placeTermId" minOccurs="0"/>
+        <xs:element ref="ksamsok:placeTermAuth" minOccurs="0"/>
+        <xs:element ref="ksamsok:sweref99"/>
+        <xs:element ref="georss:where" minOccurs="0"/> 
+        <xs:element ref="foaf:firstName" minOccurs="0"/> 
+        <xs:element ref="foaf:surname" minOccurs="0"/> 
+        <xs:element ref="foaf:fullName" minOccurs="0"/> 
+        <xs:element ref="foaf:name" minOccurs="0"/> 
+        <xs:element ref="foaf:organization" minOccurs="0"/> 
+        <xs:element ref="foaf:gender" minOccurs="0"/> 
+        <xs:element ref="foaf:title" minOccurs="0"/> 
+        <xs:element ref="ksamsok:nameId" minOccurs="0"/>
+        <xs:element ref="ksamsok:nameAuth" minOccurs="0"/>
+      </xs:choice>
+      <xs:attribute ref="rdf:nodeID" use="required"/> 
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="contextType"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="contextLabel" type="xs:string"/> 
+  <!-- Möjligt att datum-elementen nedan inte borde vara strängar utan validers -->
+  <xs:element name="fromTime" type="xs:string"/> 
+  <xs:element name="toTime" type="xs:string"/> 
+  <xs:element name="fromPeriodName" type="xs:string"/> 
+  <xs:element name="toPeriodName" type="xs:string"/> 
+  <xs:element name="fromPeriodId" type="xs:string"/> 
+  <xs:element name="toPeriodId" type="xs:string"/> 
+  <xs:element name="periodAuth" type="xs:string"/> 
+  <xs:element name="eventName" type="xs:string"/> 
+  <xs:element name="eventAuth" type="xs:string"/> 
+  <xs:element name="timeText" type="xs:string"/> 
+  <xs:element name="continentName" type="xs:string"/> 
+  <xs:element name="country"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="countryName" type="xs:string"/> 
+  <xs:element name="countyName" type="xs:string"/> 
+  <xs:element name="provinceName" type="xs:string"/> 
+  <xs:element name="municipalityName" type="xs:string"/> 
+  <xs:element name="parishName" type="xs:string"/> 
+  <xs:element name="placeName" type="xs:string"/> 
+  <xs:element name="cadastralUnit" type="xs:string"/> 
+  <xs:element name="placeTermId" type="xs:string"/> 
+  <xs:element name="placeTermAuth" type="xs:string"/> 
+  <xs:element name="sweref99" type="xs:string"/> 
+  <xs:element name="nameId" type="xs:string"/> 
+  <xs:element name="nameAuth" type="xs:string"/> 
+  
+  <xs:element name="Image"> 
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="ksamsok:mediaType"/>
+        <xs:element ref="ksamsok:thumbnailSource"/>
+        <xs:element ref="ksamsok:lowresSource"/>
+        <xs:element ref="ksamsok:highresSource"/>
+        <xs:element ref="ksamsok:byline"/>
+        <xs:element ref="ksamsok:mediaMotiveWord" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:copyright"/>
+        <xs:element ref="ksamsok:mediaLicense"/>
+        <xs:element ref="ksamsok:mediaLicenseUrl"/>
+      </xs:choice>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="thumbnailSource" type="xs:anyURI"/>  
+  <xs:element name="lowresSource" type="xs:anyURI"/> 
+  <xs:element name="highresSource" type="xs:anyURI"/> 
+  <xs:element name="byline" type="xs:string"/> 
+  <xs:element name="mediaMotiveWord" type="xs:string"/> 
+  <xs:element name="copyright" type="xs:string"/> 
+  <xs:element name="mediaLicense"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mediaLicenseUrl"> 
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Fler entity-objekt.. -->
+  <xs:element name="ItemNumber"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:number"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="number" type="xs:string"/>
+  
+  <xs:element name="ItemName"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:name"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  
+  <xs:element name="ItemSpecification"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:spec"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="spec" type="xs:string"/>
+  
+  <xs:element name="ItemMaterial"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:material"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="material" type="xs:string"/>
+  
+  <xs:element name="ItemDescription"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:desc"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="desc" type="xs:string"/>
+  
+  <xs:element name="ItemMeasurement"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:value"/>
+        <xs:element ref="ksamsok:unit"/>
+        <xs:element ref="ksamsok:qualifier"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="value" type="xs:string"/>
+  <xs:element name="unit" type="xs:string"/>
+  <xs:element name="qualifier" type="xs:string"/>
+  
+  <!-- 
+  Det finns två mediaTypes inom ksamsok-namespacen.. en som 
+  ska ha ett attribut och en som ska ha inehåll mellan taggarna.
+  Så det fick bli så här.
+   -->
+  <xs:element name="mediaType"> 
+    <xs:complexType mixed="true">
+      <xs:attribute ref="rdf:resource" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="type" type="xs:string"/>
+  
+  <!-- Används där man vill ha datum med YYYY-MM-DD -->
+  <xs:simpleType name="ISO8601Date">
+    <xs:restriction base="xs:token">
+        <xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

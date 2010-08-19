@@ -51,6 +51,7 @@
             <include name="**/*_stop.txt"/>
             <!-- uri till namnuppslagning -->
             <include name="**/*.rdf"/>
+        	<include name="**/*.xsd"/>
         </patternset>
 
         <mkdir dir="${project.build.dir}"/>
@@ -82,6 +83,7 @@
 			update="false" duplicate="preserve" index="true">
 			<patternset>
 				<include name="**/*.class"/>
+				<include name="**/*.xsd"/>
 			</patternset>
 			<patternset refid="conf.files"/>
 		</jar>
