@@ -386,11 +386,7 @@
   <xs:element name="unit" type="xs:string"/>
   <xs:element name="qualifier" type="xs:string"/>
   
-  <!-- 
-  Det finns två mediaTypes inom ksamsok-namespacen.. en som 
-  ska ha ett attribut och en som ska ha inehåll mellan taggarna.
-  Så det fick bli så här.
-   -->
+
   <xs:element name="mediaType"> 
     <xs:complexType mixed="true">
       <xs:attribute ref="rdf:resource" use="optional"/>
