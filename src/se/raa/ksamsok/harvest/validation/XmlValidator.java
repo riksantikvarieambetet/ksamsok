@@ -22,7 +22,7 @@ import org.xml.sax.XMLReader;
  * http://mis.historiska.se/OAICat/SHM/art?verb=ListRecords&metadataPrefix=ksamsok-rdf
  * http://api.dimu.se/oaipmh/?verb=ListRecords&metadataPrefix=ksamsok-rdf
  * 
- * Jars modified to make the validation work:
+ * Jars added to make the validation work:
  * resolver.jar (new)
  * serializer.jar (new)
  * xercesImpl.jar (updated)
