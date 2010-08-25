@@ -32,8 +32,8 @@ import org.xml.sax.XMLReader;
 public class XmlValidator {
 	private static final String SCHEMA_LOCATION = "/" + XmlValidator.class.getPackage().getName().replace(".", "/") + "/oai.xsd";
 	
-	public List<Message> validate(String xml) 
-	{
+	public List<Message> validate(String xml) {
+		
 		ErrorHandlerImpl errorHandler = new ErrorHandlerImpl();
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -42,15 +42,10 @@ public class XmlValidator {
 	      
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			SAXParser parser = null;
-			try {
-				factory.setSchema(schemaFactory.newSchema(getClass().getResource(SCHEMA_LOCATION)));
-				parser = factory.newSAXParser();
-			}
-			catch (SAXException se) {
-				errorHandler.addMessage("Fel vid XSD parsing: ", se);
-				return errorHandler.getReport();
-			}
-	      
+			
+			factory.setSchema(schemaFactory.newSchema(getClass().getResource(SCHEMA_LOCATION)));
+			parser = factory.newSAXParser();
+	
 			XMLReader reader = parser.getXMLReader();
 			reader.setErrorHandler(errorHandler);
 			reader.parse(new InputSource(xml));	
@@ -62,7 +57,7 @@ public class XmlValidator {
 	    	 errorHandler.addMessage("IO-Problem: ", io);
 		 }
 		 catch (SAXException se){
-	    	 errorHandler.addMessage("SAXException: ", se);
+	    	 errorHandler.addMessage("Fel inläsning av xmlschema: ", se);
 		 }
 	    
 		 if(errorHandler.getReport().isEmpty()){
