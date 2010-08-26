@@ -28,7 +28,7 @@ xmlns:srw="http://www.loc.gov/zing/srw/">
 </style>
   </head>
   <body>
-  <center><div id="box1"><img src="http://kulturarvsdata.se/demo/ksmsok_logga.png" /><div id="red">Demo</div>
+  <center><div id="box1"><img src="../bilder/ksmsok_logga.png" /><div id="red">Demo</div>
   <h2>Kulturarvsdata</h2>
     <table border="0">
       <tr bgcolor="#ededed">

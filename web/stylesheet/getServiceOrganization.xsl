@@ -95,7 +95,7 @@ table
 </head>
 <body>
 <div id="box1">
-	<img src="http://kulturarvsdata.se/demo/ksmsok_logga.png" />
+	<img src="../bilder/ksmsok_logga.png" />
 	<div id="red">Demo</div>
   	<h2>Kulturarvsdata</h2>
   	<xsl:for-each select="//institution">
