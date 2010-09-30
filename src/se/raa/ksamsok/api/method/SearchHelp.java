@@ -3,14 +3,18 @@ package se.raa.ksamsok.api.method;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
 
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -29,6 +33,7 @@ public class SearchHelp implements APIMethod
 	private int maxValueCount;
 	private PrintWriter writer;
 	private List<String> indexList;
+	private static final Logger logg = Logger.getLogger(SearchHelp.class);
 	
 	/** metodens namn */
 	public static final String METHOD_NAME = "searchHelp";
@@ -67,8 +72,11 @@ public class SearchHelp implements APIMethod
 		query = searcher.rewrite(query);
 		Set<Term> termSet = new HashSet<Term>();
 		query.extractTerms(termSet);
+		
+		List<Term> sortedList = sort(termSet, searcher);
+		
 		int counter = 1;
-		for(Term t : termSet) {
+		for(Term t : sortedList) {
 			if(counter > maxValueCount) {
 				break;
 			}
@@ -76,6 +84,57 @@ public class SearchHelp implements APIMethod
 			counter++;
 		}
 	}
+	
+	/**
+	 * Sorts the term list depending on frequency of the term
+	 * @param termSet
+	 * @throws IOException 
+	 */
+	private List<Term> sort(Set<Term> termSet, IndexSearcher searcher) throws IOException {
+		List<SortableContainer> sortableList = new ArrayList<SortableContainer>();
+		for(Term t : termSet){
+			SortableContainer s = new SortableContainer();
+			s.term = t;
+			s.frequency = getTermHitCount(searcher, t);
+			sortableList.add(s);
+		}
+		
+		Collections.sort(sortableList);
+
+		List<Term> result = new ArrayList<Term>();
+		for(SortableContainer s: sortableList){
+			logg.debug(s.term.text() + " " + s.frequency);
+			result.add(s.term);
+		}
+		return result;
+	}
+	
+	/**
+	 * Inner class containing a term and its frequency
+	 * Maybe this class shouldnt be an inner class, but
+	 * it is for now
+	 * @author Martin Duveborg
+	 */
+	private class SortableContainer implements Comparable<SortableContainer>{
+		public Integer frequency;
+		public Term term;
+		public int compareTo(SortableContainer s){
+			if(frequency == null) return -1;							
+			// -1 makes it descend								
+			return frequency.compareTo(s.frequency) * -1;
+		}
+	}
+
+	/**
+	 * @param term the term searched for. For example "text:stockholm"
+	 * @return returns total hits for this term
+	 */
+	private int getTermHitCount(IndexSearcher searcher, Term term) throws IOException{
+		TopDocs topDocs = searcher.search(new TermQuery(term), 1);
+		return topDocs.totalHits;
+	}
+	
+	
 	
 	@Override
 	public void performMethod()
