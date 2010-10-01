@@ -18,6 +18,7 @@ import se.raa.ksamsok.api.method.Search;
 import se.raa.ksamsok.api.method.SearchHelp;
 import se.raa.ksamsok.api.method.Statistic;
 import se.raa.ksamsok.api.method.StatisticSearch;
+import se.raa.ksamsok.api.method.Stem;
 
 /**
  * Factory klass som bygger APIMethod objekt
@@ -80,12 +81,25 @@ public class APIMethodFactory
 			m = getRSSObject(params, writer);
 		}else if(method.equals(GetServiceOrganization.METHOD_NAME)) {
 			m = getGetServiceOrganizationsObject(writer, params);
+		}else if(method.equals(Stem.METHOD_NAME)) {
+			m = getStemObject(writer, params);
 		}else {
 			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod", "felaktig metod", false);
 		}
 		return m;
 	}
-	
+
+	/**
+	 * Returnerar ett objekt för att hantera api-metoden stem
+	 * @param writer skrivare som skall användas för att skriva resultatet
+	 * @param params inparametrar
+	 * @return api-objekt för ordstamning 
+	 */
+	private static APIMethod getStemObject(PrintWriter writer, Map<String,String> params)
+	{
+		return new Stem(writer, params);
+	}
+
 	/**
 	 * Returnerar ett objekt av getServiceOrganization
 	 * @param writer skrivare som skall användas för att skriva resultatet
