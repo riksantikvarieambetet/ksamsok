@@ -90,8 +90,8 @@ public class Stem implements APIMethod {
 	protected void writeResult(Set<String> stemList) {
 		for (String stem: stemList) {
 			writer.print("<stem>");
-			writer.println(StaticMethods.xmlEscape(stem));
-			writer.print("</stem>");
+			writer.print(StaticMethods.xmlEscape(stem));
+			writer.println("</stem>");
 		}
 	}
 	
