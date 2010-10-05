@@ -18,4 +18,4 @@ end;
 update content set idnum=idnum_increment.nextval;
 
 
-create unique index idnum_ix on ksamsok.content(idnum);
+create unique index idnum_ix on content(idnum) tablespace KSAMSOK_INDX;
