@@ -821,11 +821,12 @@ public class SamsokContentHelper extends ContentHelper {
 				}
 			}
 
-			// nedan följer fritextfält - ska analyseras
+			// nedan följer fritextfält - alla utom "strict" ska analyseras
 
 			// lägg in "allt" i det stora fritextfältet och indexera
 			allText.append(" ").append(itemText).append(" ").append(placeText).append(" ").append(actorText).append(" ").append(timeText);
 			luceneDoc.add(new Field(IX_TEXT, allText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
+			luceneDoc.add(new Field(IX_STRICT, allText.toString().trim(), Field.Store.NO, Field.Index.NOT_ANALYZED));
 			// fritext för objekt
 			luceneDoc.add(new Field(IX_ITEM, itemText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
 			// fritext för plats

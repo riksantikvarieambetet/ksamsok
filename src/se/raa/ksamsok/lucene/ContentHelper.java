@@ -29,7 +29,6 @@ import se.raa.ksamsok.spatial.GMLInfoHolder;
 public abstract class ContentHelper {
 
 	// diverse systemtermer
-
 	public static final String CONTEXT_SET_SAMSOK = "samsok";
 	public static final String CONTEXT_SET_SAMSOK_IDENTIFIER = "http://kulturarvsdata.se/resurser/contextSets/samsok/1.0/";
 	public static final String CONTEXT_SET_REC = "rec";
@@ -49,6 +48,7 @@ public abstract class ContentHelper {
 	// generella
 
 	public static final String IX_TEXT = "text"; // fritext för "alla" fält
+	public static final String IX_STRICT = "strict"; // fritext för "alla" fält, ostammat
 	public static final String IX_SERVICENAME = "serviceName";
 	public static final String IX_SERVICEORGANISATION = "serviceOrganization";
 	public static final String IX_CREATEDDATE = "createdDate";
@@ -186,6 +186,7 @@ public abstract class ContentHelper {
 		addIndex(IX_SERVICENAME, "Ursprungstjänst", IndexType.TOLOWERCASE);
 		addIndex(IX_SERVICEORGANISATION, "Ursprungsorganisation", IndexType.TOLOWERCASE);
 		addIndex(IX_TEXT, "Fritext, generellt", IndexType.ANALYZED);
+		addIndex(IX_STRICT, "Fritext, generellt - ostammat", IndexType.TOLOWERCASE);
 		addIndex(IX_SUBJECT, "Ämnesavgränsning", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE);
 		addIndex(IX_DATAQUALITY, "Beskrivningsnivå", IndexType.TOLOWERCASE); // uri (översatt)

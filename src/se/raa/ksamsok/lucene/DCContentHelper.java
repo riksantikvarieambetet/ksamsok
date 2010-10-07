@@ -63,6 +63,7 @@ public class DCContentHelper extends ContentHelper {
 				allText.append(desc).append(" ");
 			}
 			luceneDoc.add(new Field(IX_TEXT, allText.toString(), Field.Store.NO, Field.Index.ANALYZED));
+			luceneDoc.add(new Field(IX_STRICT, allText.toString(), Field.Store.NO, Field.Index.NOT_ANALYZED));
 
 			pres.append("</pres:item>");
 			// lagra ihopplockad presentation för detta format, inte rätt men...
