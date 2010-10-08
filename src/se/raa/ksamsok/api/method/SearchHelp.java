@@ -46,6 +46,8 @@ public class SearchHelp implements APIMethod
 	/** default värde för max value count */
 	public static final int DEFAULT_MAX_VALUE_COUNT = 3;
 	
+	private List<SortableContainer> sortedList;
+	
 	/**
 	 * skapar ett objekt av SearchHelp
 	 * @param writer
@@ -62,7 +64,7 @@ public class SearchHelp implements APIMethod
 		this.indexList = indexList;
 	}
 	
-	protected void doSearchHelp(int i, IndexSearcher searcher, List<String> termList) 
+	protected void doSearchHelp(int i, IndexSearcher searcher) 
 		throws BooleanQuery.TooManyClauses, IOException
 	{
 		String index = indexList.get(i);
@@ -73,16 +75,7 @@ public class SearchHelp implements APIMethod
 		Set<Term> termSet = new HashSet<Term>();
 		query.extractTerms(termSet);
 		
-		List<Term> sortedList = sort(termSet, searcher);
-		
-		int counter = 1;
-		for(Term t : sortedList) {
-			if(counter > maxValueCount) {
-				break;
-			}
-			termList.add(t.text());
-			counter++;
-		}
+		sortedList = sort(termSet, searcher);
 	}
 	
 	/**
@@ -90,7 +83,7 @@ public class SearchHelp implements APIMethod
 	 * @param termSet
 	 * @throws IOException 
 	 */
-	private List<Term> sort(Set<Term> termSet, IndexSearcher searcher) throws IOException {
+	private List<SortableContainer> sort(Set<Term> termSet, IndexSearcher searcher) throws IOException {
 		List<SortableContainer> sortableList = new ArrayList<SortableContainer>();
 		for(Term t : termSet){
 			SortableContainer s = new SortableContainer();
@@ -101,12 +94,8 @@ public class SearchHelp implements APIMethod
 		
 		Collections.sort(sortableList);
 
-		List<Term> result = new ArrayList<Term>();
-		for(SortableContainer s: sortableList){
-			logg.debug(s.term.text() + " " + s.frequency);
-			result.add(s.term);
-		}
-		return result;
+		
+		return sortableList;
 	}
 	
 	/**
@@ -142,16 +131,15 @@ public class SearchHelp implements APIMethod
 	{
 		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher();
 		try {
-			List<String> termList = new ArrayList<String>();
 			for(int i = 0; i < indexList.size(); i++) {
 				try {
-					doSearchHelp(i, searcher, termList);
+					doSearchHelp(i, searcher);
 				}catch(BooleanQuery.TooManyClauses e) {
 					continue;
 				}
 			}
-			writeHead(termList);
-			writeResult(termList);
+			writeHead();
+			writeResult();
 			writeFot();
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO fel uppstod", "SearchHelp.performMethod", e.getMessage(), true);
@@ -162,26 +150,25 @@ public class SearchHelp implements APIMethod
 	
 	/**
 	 * skriver ut början av svaret
-	 * @param termList
 	 */
-	protected void writeHead(List<String> termList)
+	protected void writeHead()
 	{
 		StartEndWriter.writeStart(writer);
 		StartEndWriter.hasHead(true);
-		writer.println("<numberOfTerms>" + termList.size() + "</numberOfTerms>");
+		writer.println("<numberOfTerms>" + sortedList.size() + "</numberOfTerms>");
 		writer.println("<terms>");
 	}
 	
 	/**
 	 * skriver ut resultatet av svaret
-	 * @param termList
 	 */
-	protected void writeResult(List<String> termList)
+	protected void writeResult()
 	{
-		for(int i = 0; i < termList.size(); i++)
+		for(int i = 0; i < sortedList.size(); i++)
 		{
 			writer.println("<term>");
-			writer.println("<value>" + StaticMethods.xmlEscape(termList.get(i)) + "</value>");
+			writer.println("<value>" + StaticMethods.xmlEscape(sortedList.get(i).term.text()) + "</value>");
+			writer.println("<count>" + sortedList.get(i).frequency + "</count>");
 			writer.println("</term>");
 		}
 	}
