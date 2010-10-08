@@ -2,6 +2,7 @@ package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -31,6 +32,7 @@ public class SearchHelp implements APIMethod
 {
 	private String prefix;
 	private int maxValueCount;
+	private int actualValueCount;
 	private PrintWriter writer;
 	private List<String> indexList;
 	private static final Logger logg = Logger.getLogger(SearchHelp.class);
@@ -76,6 +78,7 @@ public class SearchHelp implements APIMethod
 		query.extractTerms(termSet);
 		
 		sortedList = sort(termSet, searcher);
+		actualValueCount = Math.min(maxValueCount, sortedList.size());
 	}
 	
 	/**
@@ -94,7 +97,6 @@ public class SearchHelp implements APIMethod
 		
 		Collections.sort(sortableList);
 
-		
 		return sortableList;
 	}
 	
@@ -155,7 +157,7 @@ public class SearchHelp implements APIMethod
 	{
 		StartEndWriter.writeStart(writer);
 		StartEndWriter.hasHead(true);
-		writer.println("<numberOfTerms>" + sortedList.size() + "</numberOfTerms>");
+		writer.println("<numberOfTerms>" + actualValueCount + "</numberOfTerms>");
 		writer.println("<terms>");
 	}
 	
@@ -164,7 +166,7 @@ public class SearchHelp implements APIMethod
 	 */
 	protected void writeResult()
 	{
-		for(int i = 0; i < sortedList.size(); i++)
+		for(int i = 0; i < actualValueCount; i++)
 		{
 			writer.println("<term>");
 			writer.println("<value>" + StaticMethods.xmlEscape(sortedList.get(i).term.text()) + "</value>");
