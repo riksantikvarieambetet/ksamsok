@@ -338,6 +338,8 @@ public abstract class ContentHelper {
 	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
 
 	// analyserar-variabler
+	private static Analyzer simpleAnalyzer = null;
+	private static final Object simpleAnalyzerSync = new Object();
 	private static Analyzer sweAnalyzer = null;
 	private static final Object sweAnalyzerSync = new Object();
 	private static Analyzer engAnalyzer = null;
@@ -580,6 +582,22 @@ public abstract class ContentHelper {
 		public boolean isPublic() {
 			return isPublic;
 		}
+	}
+
+	/**
+	 * Hämtar analyserare för användning med lucene. 
+	 * Använder stopp-ord från swe_stop.txt,
+	 * men gör ingen stamning.
+	 * 
+	 * @return enkel analyserare
+	 */
+	public static final Analyzer getSimpleAnalyzer() {
+		synchronized (simpleAnalyzerSync) {
+			if (simpleAnalyzer == null) {
+				simpleAnalyzer = new TokenStopAnalyzer(readStopWordFile("swe_stop.txt"));
+			}
+		}
+		return simpleAnalyzer;
 	}
 
 	/**

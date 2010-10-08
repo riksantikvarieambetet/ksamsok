@@ -7,9 +7,11 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.vecmath.Point2d;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,6 +25,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.Token;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.joda.time.DateTime;
@@ -826,7 +831,26 @@ public class SamsokContentHelper extends ContentHelper {
 			// lägg in "allt" i det stora fritextfältet och indexera
 			allText.append(" ").append(itemText).append(" ").append(placeText).append(" ").append(actorText).append(" ").append(timeText);
 			luceneDoc.add(new Field(IX_TEXT, allText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
-			luceneDoc.add(new Field(IX_STRICT, allText.toString().trim(), Field.Store.NO, Field.Index.NOT_ANALYZED));
+			
+			// även "allt" i strikta indexet, men utan stamning
+			Analyzer a = ContentHelper.getSimpleAnalyzer();
+			TokenStream ts = null;
+			Set<String> words = new HashSet<String>();
+			try {
+				ts = a.tokenStream(null, new StringReader(allText.toString().trim()));
+				Token t = new Token();
+				while((t = ts.next(t)) != null) {
+					words.add(t.term());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			for (String word: words) {
+				luceneDoc.add(new Field(IX_STRICT, word, Field.Store.NO, Field.Index.NOT_ANALYZED));
+			}
+
+			//luceneDoc.add(new Field(IX_STRICT, allText.toString().trim(), Field.Store.NO, Field.Index.NOT_ANALYZED));
+			
 			// fritext för objekt
 			luceneDoc.add(new Field(IX_ITEM, itemText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
 			// fritext för plats
