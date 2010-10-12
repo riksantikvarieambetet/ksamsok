@@ -1060,9 +1060,10 @@ public class SamsokContentHelper extends ContentHelper {
 					// rensa mängd med geometrier
 					gmlInfoHolder.setGmlGeometries(null);
 					addProblemMessage("Problem with GML for " + identifier + ": " + e.getMessage());
+					
 				}
 			}
-		} finally {
+		}finally {
 			if (r != null) {
 				try {
 					r.close();

@@ -27,11 +27,24 @@ public class StatusServiceImpl implements StatusService {
 	Map<String, String> lastStarts = Collections.synchronizedMap(new HashMap<String, String>());
 	Map<String, Step> steps = Collections.synchronizedMap(new HashMap<String, Step>());
 	Map<String, Step> startSteps = Collections.synchronizedMap(new HashMap<String, Step>());
+	Map<String, Boolean> containsErrors = Collections.synchronizedMap(new HashMap<String,Boolean>());
 
 	DataSource ds;
 
 	StatusServiceImpl(DataSource ds) {
 		this.ds = ds;
+	}
+	
+	public void containsErrors(HarvestService service, boolean containError) {
+		containsErrors.put(service.getId(), containError);
+	}
+	
+	public boolean containsErrors(HarvestService service) {
+		Boolean containError = containsErrors.get(service.getId());
+		if(containError != null) {
+			return containError;
+		}
+		return false;
 	}
 
 	public void checkInterrupt(HarvestService service) {

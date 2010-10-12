@@ -12,6 +12,10 @@ public interface StatusService {
 	 */
 	public static enum Step { FETCH, STORE, EMPTYINDEX, INDEX, IDLE };
 
+	public void containsErrors(HarvestService service, boolean containError);
+	
+	public boolean containsErrors(HarvestService service);
+	
 	/**
 	 * Återställer status för tjänsten så att den är redo för en ny körning.
 	 * 

@@ -161,6 +161,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				logger.info("Running job for " + serviceId);
 			}
 			service = hsm.getService(serviceId);
+			ss.containsErrors(service, false);
 			if (service == null) {
 				throw new JobExecutionException("Could not find service with ID: " + serviceId);
 			}
@@ -318,7 +319,9 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 					}
 				}
 				// uppdatera senaste skörde datum/tid för servicen
-				hsm.updateServiceDate(service, nowTs);
+				if(!ss.containsErrors(service)) {
+					hsm.updateServiceDate(service, nowTs);
+				}
 
 				// kolla om vi ska avbryta
 				checkInterrupt(ss, service);
@@ -343,8 +346,10 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				if (logger.isInfoEnabled()) {
 					logger.info(serviceId + ", harvest resulted in no records");
 				}
-				// uppdatera med senaste skördetid
-				hsm.updateServiceDate(service, now);
+				if(!ss.containsErrors(service)) {
+					// uppdatera med senaste skördetid
+					hsm.updateServiceDate(service, now);
+				}
 			}
 			long durationMillis = System.currentTimeMillis() - start;
 			ss.setStatusTextAndLog(service, "Ok, job time: " +

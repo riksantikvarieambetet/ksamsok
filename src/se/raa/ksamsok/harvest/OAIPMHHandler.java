@@ -446,14 +446,19 @@ public class OAIPMHHandler extends DefaultHandler {
 		}
 		try {
 			uri = contentHelper.extractIdentifierAndGML(xmlContent, gmlih);
+			if(uri == null) {
+				return;
+			}
 			// gör update och om ingen post uppdaterades stoppa in en (istf för att kolla om post finns först)
 			if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih)) {
 				insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih);
 			}
 		} catch (Exception e) {
-			logger.error("Error when storing " + (uri != null ? uri : oaiURI), e);
-			throw new Exception("Error when storing " + (uri != null ? uri : oaiURI) +
-					": " + e.getMessage());
+			//logger.error("Error when storing " + (uri != null ? uri : oaiURI), e);
+			ss.setStatusText(service, "Error when storing " + (uri != null ? uri : oaiURI) + " --SKIPPING--");
+			ss.containsErrors(service, true);
+			logger.error("Error:159 problem when harvesting " + service.getName() + " record " + (uri != null ? uri : oaiURI));
+			return;
 		}
 	}
 
