@@ -15,6 +15,12 @@
 		<description>Objektet är allmänt tillgängligt utan restriktioner (motsvarande "public domain")</description>
 		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
 	</License>
+	
+	<License rdf:ID="pdmark">
+		<name>Public Domain Mark</name>
+		<description>Objektet får kopieras, användas, spridas och ändras utan restriktioner</description>
+		<sameAs>http://creativecommons.org/publicdomain/mark/1.0/</sameAs>
+	</License>
 
 	<License rdf:ID="unknown">
 		<name>Okänd</name>
