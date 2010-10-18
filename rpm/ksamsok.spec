@@ -1,5 +1,5 @@
 %define ver 1.0.0
-%define rel 39
+%define rel 40
 
 Summary: Raä K-Samsök, centralnod
 Name: raa-ksamsok_app
@@ -30,6 +30,7 @@ install -m755 $RPM_SOURCE_DIR/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/w
 
 # install -m755 $RPM_SOURCE_DIR/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
 install -m755 $RPM_SOURCE_DIR/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+install -m755 $RPM_SOURCE_DIR/postgresql-9.0-801.jdbc4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 install -m755 $RPM_SOURCE_DIR/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 install -m755 $RPM_SOURCE_DIR/ora10-sdoapi.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 install -m755 $RPM_SOURCE_DIR/ora10-sdoutl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
@@ -69,6 +70,7 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 # obs, se till att ha samma matchningar här som i build.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
+%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/postgresql-9.0-801.jdbc4.jar
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/standard.jar
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/jstl.jar
 
