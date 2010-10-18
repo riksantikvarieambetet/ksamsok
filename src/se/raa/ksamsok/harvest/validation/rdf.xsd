@@ -42,10 +42,18 @@
     </xs:complexType>
   </xs:element>
   
-  <xs:attribute name="about" type="xs:anyURI"/>
+  <xs:attribute name="about" type="rdf:startsWithHttp"/>
   <xs:attribute name="nodeID" type="xs:string"/>
   <xs:attribute name="parseType" type="xs:string"/> 
-  <xs:attribute name="resource" type="xs:anyURI"/>
+  
+  <xs:attribute name="resource" type="rdf:startsWithHttp"/>
+  
+  <!-- rdf:about and rdf:resource should always start with http -->
+  <xs:simpleType name="startsWithHttp">
+  	<xs:restriction base="xs:string">
+  		<xs:pattern value="[hH][tT]{2}[pP].+"></xs:pattern>
+  	</xs:restriction>
+  </xs:simpleType>
   
   <!-- Sometimes description is used, and sometimes entity -->
   <xs:element name="Description">
