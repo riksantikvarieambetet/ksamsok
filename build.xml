@@ -98,6 +98,7 @@
 			<lib dir="${project.src.lib.dir}">
 				<include name="*.jar" />
 				<exclude name="servlet-*.jar" />
+				<exclude name="postgresql-9.0-801.jdbc4.jar" />
 				<!-- oracle-filer måste läggas i tomcat/lib och kan ej vara med
 				      i war-filen pga diverse klassladdarproblem -->
 				<exclude name="ora10-*.jar" />
@@ -173,6 +174,7 @@
 		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="${project.src.lib.dir}">
 				<!-- obs, se till att ha samma matchningar här som i spec-filen -->
+				<include name="postgresql-9.0-801.jdbc4.jar"/>
 				<include name="oracle-*"/>
 				<include name="ora10-*"/>
 				<include name="jstl.jar"/>
