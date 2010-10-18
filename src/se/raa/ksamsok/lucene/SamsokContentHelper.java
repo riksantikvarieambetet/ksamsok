@@ -1,5 +1,6 @@
 package se.raa.ksamsok.lucene;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
@@ -40,11 +41,16 @@ import org.jrdf.graph.AnyObjectNode;
 import org.jrdf.graph.AnySubjectNode;
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
+import org.jrdf.graph.GraphElementFactoryException;
+import org.jrdf.graph.GraphException;
 import org.jrdf.graph.Literal;
+import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
+import org.jrdf.parser.ParseException;
+import org.jrdf.parser.StatementHandlerException;
 import org.jrdf.parser.rdfxml.GraphRdfXmlParser;
 import org.xml.sax.InputSource;
 
@@ -988,6 +994,57 @@ public class SamsokContentHelper extends ContentHelper {
 		return timeString;
 	}
 	
+	@Override
+	public String extractNativeURL(String xmlContent)
+	{
+		StringReader reader = null;
+		String url = null;
+		Graph graph = null;
+		try {
+			graph = jrdfFactory.getNewGraph();
+			GraphRdfXmlParser parser = new GraphRdfXmlParser(graph, new MemMapFactory());
+			reader = new StringReader(xmlContent);
+			parser.parse(reader, "");
+			
+			GraphElementFactory elementFactory = graph.getElementFactory();
+			URIReference samsokEntityReference = elementFactory.createURIReference(uri_samsokEntity);
+			URIReference urlReference = elementFactory.createURIReference(uri_rURL);
+			SubjectNode subjectNode = null;
+			ObjectNode objectNode = null;
+			for(Triple triple : graph.find(AnySubjectNode.ANY_SUBJECT_NODE, urlReference, AnyObjectNode.ANY_OBJECT_NODE)) {
+				//subjectNode = triple.getSubject();
+				//url = subjectNode.toString();
+				objectNode = triple.getObject();
+				url = objectNode.toString();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (StatementHandlerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GraphElementFactoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GraphException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (Exception ignore) {}
+			}
+			if (graph != null) {
+				graph.close();
+			}
+		}
+		return url;
+	}
+
 	@Override
 	public String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception {
 		StringReader r = null;

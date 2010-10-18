@@ -35,7 +35,7 @@ public class SearchHelp implements APIMethod
 	private int actualValueCount;
 	private PrintWriter writer;
 	private List<String> indexList;
-	private static final Logger logg = Logger.getLogger(SearchHelp.class);
+	private static final Logger logger = Logger.getLogger(SearchHelp.class);
 	
 	/** metodens namn */
 	public static final String METHOD_NAME = "searchHelp";

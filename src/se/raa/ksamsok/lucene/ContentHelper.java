@@ -362,6 +362,13 @@ public abstract class ContentHelper {
 	 * @throws Exception vid problem
 	 */
 	public abstract String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
+	
+	/**
+	 * Extraherar URL till målsidan
+	 * @param xmlContent xml-innehåll
+	 * @return URL till målsida
+	 */
+	public abstract String extractNativeURL(String xmlContent);
 
 	/**
 	 * Skapar ett lucene-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster

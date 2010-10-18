@@ -76,6 +76,17 @@ public class DCContentHelper extends ContentHelper {
 		}
 		return luceneDoc;
 	}
+	
+	
+
+	@Override
+	public String extractNativeURL(String xmlContent)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 	@Override
 	public String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) {

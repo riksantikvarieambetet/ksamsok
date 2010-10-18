@@ -42,7 +42,7 @@ public class SitemapBuilder
 		int offset = batch * batchSize;
 		try {
 			c = ds.getConnection();
-			String sql = "select uri, deleted, changed from content where idnum>=? and idnum<?";
+			String sql = "select nativeUrl, deleted, changed from content where idnum>=? and idnum<?";
 			ps = c.prepareStatement(sql);
 			ps.setInt(1, start);
 			ps.setInt(2, offset);
@@ -51,11 +51,10 @@ public class SitemapBuilder
 			writer.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 			while(rs.next()) {
 				Timestamp deleted = rs.getTimestamp("deleted");
-				if(deleted == null) {
-					String uri = getUri(rs.getString("uri"));
-					if(StringUtils.trimToNull(uri) == null) continue;
+				String nativeUrl = getUri(rs.getString("nativeUrl"));
+				if(deleted == null && nativeUrl != null) {
 					writer.println("<url>");
-					writer.println("<loc>" + uri + "</loc>");
+					writer.println("<loc><![CDATA[" + nativeUrl + "]]></loc>");
 					String date = getDate(rs.getTimestamp("changed"));
 					if(date != null) {
 						writer.println("<lastmod>" + date + "</lastmod>");
@@ -64,10 +63,10 @@ public class SitemapBuilder
 					writer.println("</url>");
 				}
 			}
-			writer.println("</urlset>");
 		}catch(SQLException e) {
 			logger.error(e.getMessage(), e);
 		}finally{
+			writer.println("</urlset>");
 			DBUtil.closeDBResources(rs, ps, c);
 		}
 	}
