@@ -56,13 +56,13 @@ kunde          | could
 något          | some etc
 från           | from, off
 ut             | out
-när            | when
+| när            | when
 efter          | after, behind
 upp            | up
-vi             | we
+| vi             | we
 dem            | them
-vara           | be
-vad            | what
+| vara           | be
+| vad            | what
 över           | over
 än             | than
 dig            | you
@@ -80,7 +80,7 @@ mycket         | much
 sedan          | since
 ju             | why
 denna          | this/that
-själv          | myself, yourself etc
+| själv          | myself, yourself etc
 detta          | this/that
 åt             | to
 utan           | without
