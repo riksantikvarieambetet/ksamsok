@@ -855,8 +855,6 @@ public class SamsokContentHelper extends ContentHelper {
 				luceneDoc.add(new Field(IX_STRICT, word, Field.Store.NO, Field.Index.NOT_ANALYZED));
 			}
 
-			//luceneDoc.add(new Field(IX_STRICT, allText.toString().trim(), Field.Store.NO, Field.Index.NOT_ANALYZED));
-			
 			// fritext för objekt
 			luceneDoc.add(new Field(IX_ITEM, itemText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
 			// fritext för plats
