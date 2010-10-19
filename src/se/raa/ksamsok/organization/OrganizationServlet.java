@@ -1,6 +1,7 @@
 package se.raa.ksamsok.organization;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -93,6 +94,14 @@ public class OrganizationServlet extends HttpServlet
 			}else if(operation.equals("remove")) {
 				String kortnamn = req.getParameter("kortnamn");
 				organizationDatabaseHandler.removeOrganization(kortnamn);
+			}else if(operation.equals("updatePasswords")){
+				Map<String, String> passwordMap = new HashMap<String, String>();
+				String[] passwords = req.getParameterValues("passwords");
+				String[] organizations = req.getParameterValues("organizations"); 
+				for(int i=0;i<organizations.length;i++){
+					passwordMap.put(organizations[i], passwords[i]);
+				}
+				organizationDatabaseHandler.setPassword(passwordMap);
 			}
 		}
 		req.setAttribute("orgList", organizationDatabaseHandler.getServiceOrganizations());

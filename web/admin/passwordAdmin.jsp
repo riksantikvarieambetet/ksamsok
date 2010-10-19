@@ -31,9 +31,9 @@
 				<tr>
 					<td class="title">
 						<strong><%=entry.getKey() %></strong>
-						<input type="hidden" name="<%="org_" + counter %>" value="<%=entry.getKey() %>"/>
+						<input type="hidden" name="organizations" value="<%=entry.getKey() %>"/>
 					</td>
-					<td><input type="text" name="<%="org_" + counter + "_pass" %>" value="<%=entry.getValue() %>"/></td>
+					<td><input type="text" name="passwords" value="<%=entry.getValue() %>"/></td>
 				</tr>
 				<%
 					counter++;
