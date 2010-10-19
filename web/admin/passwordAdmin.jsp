@@ -33,7 +33,7 @@
 						<strong><%=entry.getKey() %></strong>
 						<input type="hidden" name="organizations" value="<%=entry.getKey() %>"/>
 					</td>
-					<td><input type="text" name="passwords" value="<%=entry.getValue() %>"/></td>
+					<td><input type="text" name="passwords" value="<%=entry.getValue() == null ? "" : entry.getValue() %>"/></td>
 				</tr>
 				<%
 					counter++;
