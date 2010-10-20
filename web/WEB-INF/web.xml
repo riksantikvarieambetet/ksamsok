@@ -36,6 +36,16 @@
     </servlet-mapping>
     
     <servlet>
+    	<servlet-name>Manipulator</servlet-name>
+    	<servlet-class>se.raa.ksamsok.manipulator.ManipulatorServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>Manipulator</servlet-name>
+    	<url-pattern>/admin/manipulate</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
     	<servlet-name>sitemap</servlet-name>
     	<servlet-class>se.raa.ksamsok.sitemap.SitemapServlet</servlet-class>
     </servlet>

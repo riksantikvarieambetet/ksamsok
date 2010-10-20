@@ -993,8 +993,11 @@ public class SamsokContentHelper extends ContentHelper {
 	}
 	
 	@Override
-	public String extractNativeURL(String xmlContent)
+	public String extractNativeURL(String xmlContent) throws NullPointerException
 	{
+		if(xmlContent == null) {
+			throw new NullPointerException("xmlContent can not be null");
+		}
 		StringReader reader = null;
 		String url = null;
 		Graph graph = null;

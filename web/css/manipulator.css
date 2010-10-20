@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+body
+{
+	background-color: gray;
+}
+
+h3
+{
+	text: bold;
+	font-size: 15px;
+	padding: 2px 0px 2px 0px;
+	margin-bottom: 2px;
+}
+
+#page
+{
+	
+}
+
+#head
+{
+	border-bottom: thin black solid;
+	padding: 0% 5% 5px 5%
+}
+
+#indexLink a:HOVER
+{
+	background-color: red;
+}
+
+#operations
+{
+	margin-left: 5%;
+	margin-right: 5%;
+	padding: 5px 0% 5px 0%;
+}
+
+#statusArea
+{
+	margin: 10px 5% 0% 5%;
+	border: thin solid black;
+	background-color: white;
+}
+
+.statusObject
+{
+	border-bottom: thin black solid;
+	padding: 0px 10px 20px 10px;
+	margin: 0px 0px 0px 0px;
+}
+
+.status
+{
+	padding-left: 10px;
+	margin: 0px;
+	font-size: 12px;
+}
+
+#stopButton
+{
+	text-align: right;
+}
