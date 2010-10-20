@@ -21,7 +21,7 @@ public class ManipulatorServlet extends HttpServlet
 	
 	private DataSource ds = null;
 	static final String DATASOURCE_NAME = "harvestdb";
-	private Map<Thread, Manipulator> threadMap;
+	private static final Map<Thread, Manipulator> threadMap = new HashMap<Thread, Manipulator>();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -85,7 +85,6 @@ public class ManipulatorServlet extends HttpServlet
 		}catch(NamingException e) {
 			e.printStackTrace();
 		}
-		threadMap = new HashMap<Thread, Manipulator>();
 	}
 
 }
