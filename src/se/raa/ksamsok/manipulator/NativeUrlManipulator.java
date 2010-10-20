@@ -166,7 +166,8 @@ public class NativeUrlManipulator implements Manipulator
 		long elapsedTime = stopWatch.getElapsedTime();
 		long MillisecPerRecord = elapsedTime / currentRecord;
 		long calculatedTotalTime = MillisecPerRecord * totalNumberOfRecords;
-		String timeText = stopWatch.getTimeAsString(calculatedTotalTime / 1000);
+		long estimateTimeRemaining = calculatedTotalTime - elapsedTime;
+		String timeText = stopWatch.getTimeAsString(estimateTimeRemaining / 1000);
 		return timeText;
 	}
 	

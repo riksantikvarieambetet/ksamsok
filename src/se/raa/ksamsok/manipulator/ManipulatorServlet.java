@@ -28,7 +28,7 @@ public class ManipulatorServlet extends HttpServlet
 			throws ServletException, IOException
 	{	
 		String operation = req.getParameter("operation");
-		if(operation.equals("stop")) {
+		if("stop".equals(operation)) {
 			stopThreads();
 		}
 		req.setAttribute("manipulators", threadMap.values());
