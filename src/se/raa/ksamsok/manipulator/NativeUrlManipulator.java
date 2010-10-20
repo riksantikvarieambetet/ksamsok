@@ -59,7 +59,6 @@ public class NativeUrlManipulator implements Manipulator
 	@Override
 	public void run()
 	{
-		stopWatch.start();
 		isRunning = true;
 		if(logger.isDebugEnabled()) {
 			logger.debug("Running manipulate Native url");
@@ -81,6 +80,7 @@ public class NativeUrlManipulator implements Manipulator
 			}
 			totalNumberOfRecords = getTotalNumberOfRecords(c);
 			counting = false;
+			stopWatch.start();
 			String sql = "select uri, nativeUrl, xmlData from content where deleted is null";
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -153,7 +153,7 @@ public class NativeUrlManipulator implements Manipulator
 	public String getStatus()
 	{
 		if(counting) {
-			return "counting number of records. Elapsed time: " + stopWatch.getTimeAsString(stopWatch.getElapsedTimeSecs());
+			return "counting number of records.";
 		}
 		if(totalNumberOfRecords <= currentRecord) {
 			return "done. Total time elapsed: " + stopWatch.getTimeAsString(stopWatch.getElapsedTimeSecs());
@@ -163,11 +163,17 @@ public class NativeUrlManipulator implements Manipulator
 	
 	private String estimateRemainingTime()
 	{
-		long elapsedTime = stopWatch.getElapsedTime();
+		/*long elapsedTime = stopWatch.getElapsedTime();
 		long MillisecPerRecord = elapsedTime / currentRecord;
 		long calculatedTotalTime = MillisecPerRecord * totalNumberOfRecords;
 		long estimateTimeRemaining = calculatedTotalTime - elapsedTime;
 		String timeText = stopWatch.getTimeAsString(estimateTimeRemaining / 1000);
+		return timeText;*/
+		long elapsedTime = stopWatch.getElapsedTime();
+		long millisecPerRecord = elapsedTime / currentRecord;
+		long recordsRemaining = totalNumberOfRecords - currentRecord;
+		long estimatedTimeRemaining = recordsRemaining * millisecPerRecord;
+		String timeText = stopWatch.getTimeAsString(estimatedTimeRemaining / 1000);
 		return timeText;
 	}
 	
