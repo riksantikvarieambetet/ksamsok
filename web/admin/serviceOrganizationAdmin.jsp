@@ -105,7 +105,7 @@ function remove()
 							</tr>
 							<tr>
 								<td class="title">Adressf&auml;lt 2:</td>
-								<td><input type="text" name="adress" value="${requestScope.orgInfo.adress2}"/></td>
+								<td><input type="text" name="adress2" value="${requestScope.orgInfo.adress2}"/></td>
 							</tr>
 							<tr>
 								<td class="title">Postadress:</td>
