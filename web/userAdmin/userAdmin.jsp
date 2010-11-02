@@ -51,6 +51,7 @@
 				<form action="orgAdmin" accept-charset="UTF-8" method="post">
 					<input type="hidden" name="operation" value="update"/>
 					<input type="hidden" name="kortnamn" value="${requestScope.orgData.kortnamn }"/>
+					<input type="hidden" name="serv_org" value="${requestScope.orgData.serv_org }"/>
 					<div id="left">
 						<table>
 							<tr>
