@@ -15,13 +15,13 @@
 		<span id="indexLink">
 			<a href="index.jsp">Index</a>
 		</span>
-		<form action="manipulate"  method="get" id="stopButton">
+		<form action="manipulate"  method="post" id="stopButton">
 			<input type="hidden" name="operation" value="stop"/>
 			<input type="submit" value="Stop"/>
 		</form>
 	</div>
 	<div id="operations">
-		<form action="manipulate" method="get">
+		<form action="manipulate" method="post">
 			<input type="hidden" name="operation" value="nativeUrl"/>
 			<input type="submit" value="Native Url"/>
 		</form>

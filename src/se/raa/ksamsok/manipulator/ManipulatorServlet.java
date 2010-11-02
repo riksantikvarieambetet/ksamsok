@@ -24,9 +24,9 @@ public class ManipulatorServlet extends HttpServlet
 	private static final Map<Thread, Manipulator> threadMap = new HashMap<Thread, Manipulator>();
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
-	{	
+	{
 		String operation = req.getParameter("operation");
 		if("stop".equals(operation)) {
 			stopThreads();
@@ -54,6 +54,13 @@ public class ManipulatorServlet extends HttpServlet
 		}
 		RequestDispatcher view = req.getRequestDispatcher("manipulator.jsp");
 		view.forward(req, resp);
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException
+	{	
+		doPost(req, resp);
 	}
 
 	private void stopThreads()
