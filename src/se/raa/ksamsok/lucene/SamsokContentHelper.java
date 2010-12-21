@@ -1008,9 +1008,7 @@ public class SamsokContentHelper extends ContentHelper {
 			parser.parse(reader, "");
 			
 			GraphElementFactory elementFactory = graph.getElementFactory();
-			URIReference samsokEntityReference = elementFactory.createURIReference(uri_samsokEntity);
 			URIReference urlReference = elementFactory.createURIReference(uri_rURL);
-			SubjectNode subjectNode = null;
 			ObjectNode objectNode = null;
 			for(Triple triple : graph.find(AnySubjectNode.ANY_SUBJECT_NODE, urlReference, AnyObjectNode.ANY_OBJECT_NODE)) {
 				//subjectNode = triple.getSubject();
@@ -1042,6 +1040,9 @@ public class SamsokContentHelper extends ContentHelper {
 			if (graph != null) {
 				graph.close();
 			}
+		}
+		if(StringUtils.startsWith(url, "\"")) {
+			url = StringUtils.substring(url, 1, url.length() - 1);
 		}
 		return url;
 	}

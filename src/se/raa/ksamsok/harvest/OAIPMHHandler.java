@@ -82,12 +82,12 @@ public class OAIPMHHandler extends DefaultHandler {
 		// förbered några databas-statements som kommer användas frekvent
 		this.oai2uriPst = c.prepareStatement("select uri from content where oaiuri = ?");
 		this.updatePst = c.prepareStatement("update content set deleted = null, oaiuri = ?, " +
-				"serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ?, nativeurl = ? where uri = ?");
+				"serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ? where uri = ?");
 		// TODO: stoppa in xmldata = null nedan för att rensa onödigt gammalt postinnehåll
 		this.deleteUpdatePst = c.prepareStatement("update content set status = ?, " +
 				"changed = ?, deleted = ?, datestamp = ? where serviceId = ? and oaiuri = ?");
 		this.insertPst = c.prepareStatement("insert into content " +
-				"(uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status, nativeurl) " +
+				"(uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status) " +
 				"values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
 	}
@@ -357,7 +357,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @throws Exception
 	 */
 	protected void insertRecord(String oaiURI, String uri, String xmlContent,
-			Timestamp datestamp, GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
+			Timestamp datestamp, GMLInfoHolder gmlInfoHolder) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Entering data for oaiURI=" + oaiURI + ", uri=" +
 					uri + " for service with ID: " + service.getId());
@@ -373,7 +373,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		insertPst.setTimestamp(6, ts);
 		insertPst.setTimestamp(7, datestamp);
 		insertPst.setInt(8, DBUtil.STATUS_NORMAL);
-		insertPst.setString(9, nativeURL);
+		//insertPst.setString(9, nativeURL);
 		insertPst.executeUpdate();
 		// stoppa in ev spatialdata om vi har nåt
 		if (gmlDBWriter != null && gmlInfoHolder != null && gmlInfoHolder.hasGeometries()) {
@@ -398,7 +398,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @throws Exception
 	 */
 	protected boolean updateRecord(String oaiURI, String uri, String xmlContent,
-			Timestamp datestamp, GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
+			Timestamp datestamp, GMLInfoHolder gmlInfoHolder) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Updated data for oaiURI=" + oaiURI + ", uri=" +
 					uri + " for service with ID: " + service.getId());
@@ -411,8 +411,8 @@ public class OAIPMHHandler extends DefaultHandler {
 		updatePst.setTimestamp(4, datestamp);
 		updatePst.setCharacterStream(5, new StringReader(xmlContent), xmlContent.length());
 		updatePst.setInt(6, DBUtil.STATUS_NORMAL);
-		updatePst.setString(7, nativeURL);
-		updatePst.setString(8, uri);
+		//updatePst.setString(7, nativeURL);
+		updatePst.setString(7, uri);
 		boolean updated = updatePst.executeUpdate() > 0;
 		if (updated) {
 			// spara gml (obs, inget villkor på att det finns geometrier då det kanske
@@ -449,14 +449,21 @@ public class OAIPMHHandler extends DefaultHandler {
 		}
 		try {
 			uri = contentHelper.extractIdentifierAndGML(xmlContent, gmlih);
-			nativeURL = contentHelper.extractNativeURL(xmlContent);
+			//nativeURL = contentHelper.extractNativeURL(xmlContent);
+			/*if(!StringUtils.containsIgnoreCase(nativeURL, "raa.se")) { TODO fortsätt med detta när börje får svar.
+				RedirectChecker redirectChecker = new RedirectChecker(nativeURL);
+				if(isRedirected)
+			}*/
 			
 			if(uri == null) {
 				return;
 			}
 			// gör update och om ingen post uppdaterades stoppa in en (istf för att kolla om post finns först)
-			if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL)) {
+			/*if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL)) {
 				insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL);
+			}*/
+			if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih)) {
+				insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih);
 			}
 		} catch (Exception e) {
 			//logger.error("Error when storing " + (uri != null ? uri : oaiURI), e);

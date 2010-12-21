@@ -1,6 +1,7 @@
 package se.raa.ksamsok.sitemap;
 
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.harvest.DBUtil;
+import se.raa.ksamsok.util.RedirectChecker;
 
 public class SitemapBuilder
 {
@@ -42,7 +44,12 @@ public class SitemapBuilder
 		int offset = batch * batchSize;
 		try {
 			c = ds.getConnection();
-			String sql = "select nativeUrl, deleted, changed from content where idnum>=? and idnum<?";
+			String sql = "SELECT nativeUrl, changed " +
+						 "FROM content " +
+						 "WHERE idnum>=? " +
+						 	"AND idnum<? " +
+						 	"AND deleted IS NOT NULL " + 
+						 	"AND nativeurl IS NOT NULL";
 			ps = c.prepareStatement(sql);
 			ps.setInt(1, start);
 			ps.setInt(2, offset);
@@ -50,18 +57,16 @@ public class SitemapBuilder
 			writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			writer.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 			while(rs.next()) {
-				Timestamp deleted = rs.getTimestamp("deleted");
-				String nativeUrl = getUri(rs.getString("nativeUrl"));
-				if(deleted == null && nativeUrl != null) {
-					writer.println("<url>");
-					writer.println("<loc><![CDATA[" + nativeUrl + "]]></loc>");
-					String date = getDate(rs.getTimestamp("changed"));
-					if(date != null) {
-						writer.println("<lastmod>" + date + "</lastmod>");
-					}
-					writer.println("<changefreq>monthly</changefreq>");
-					writer.println("</url>");
+				String nativeUrl = rs.getString("nativeUrl");
+				writer.println("<url>");
+				writer.println("<loc><![CDATA[" + nativeUrl + "]]></loc>");
+				String date = getDate(rs.getTimestamp("changed"));
+				if(date != null) {
+					writer.println("<lastmod>" + date + "</lastmod>");
 				}
+				writer.println("<changefreq>monthly</changefreq>");
+				writer.println("</url>");
+				
 			}
 		}catch(SQLException e) {
 			logger.error(e.getMessage(), e);
@@ -82,6 +87,7 @@ public class SitemapBuilder
 		return date;
 	}
 	
+	@Deprecated
 	private String getUri(String uri)
 	{
 		int index = StringUtils.lastIndexOf(uri, "/");

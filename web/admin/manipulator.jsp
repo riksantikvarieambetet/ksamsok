@@ -24,6 +24,7 @@
 		<form action="manipulate" method="post">
 			<input type="hidden" name="operation" value="nativeUrl"/>
 			<input type="submit" value="Native Url"/>
+			<input type="checkbox" value="Manipulera endast tidigare omanipulerade poster" name="ignore"/>
 		</form>
 	</div>
 	<div id="statusArea">

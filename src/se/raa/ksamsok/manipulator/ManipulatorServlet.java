@@ -46,6 +46,10 @@ public class ManipulatorServlet extends HttpServlet
 				}
 				if(!proccessRunning) {
 					NativeUrlManipulator nativeUrlManipulator = new NativeUrlManipulator(ds);
+					String ignore = req.getParameter("ignore");
+					if(ignore != null) {
+						nativeUrlManipulator.setManipulateAllPosts(false);
+					}
 					Thread thread = new Thread(nativeUrlManipulator);
 					thread.start();
 					threadMap.put(thread, nativeUrlManipulator);

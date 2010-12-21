@@ -1,5 +1,7 @@
 package se.raa.ksamsok.manipulator;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,11 +9,13 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
+import se.raa.ksamsok.util.RedirectChecker;
 import se.raa.ksamsok.util.StopWatch;
 
 public class NativeUrlManipulator implements Manipulator
@@ -23,6 +27,7 @@ public class NativeUrlManipulator implements Manipulator
 	private StopWatch stopWatch;
 	private boolean closeByRequest;
 	private boolean isRunning;
+	private boolean manipulateAllPosts;
 	
 	private static final Logger logger = Logger.getLogger(NativeUrlManipulator.class);
 	private static final String NAME = "Native URL extract and insert";
@@ -36,6 +41,7 @@ public class NativeUrlManipulator implements Manipulator
 		stopWatch = new StopWatch();
 		closeByRequest = false;
 		isRunning = false;
+		manipulateAllPosts = true;
 	}
 	
 	@Override
@@ -60,11 +66,14 @@ public class NativeUrlManipulator implements Manipulator
 	public void run()
 	{
 		isRunning = true;
-		if(logger.isDebugEnabled()) {
-			logger.debug("Running manipulate Native url");
-		}
+		logger.info("Running manipulate Native url");
 		manipulate();
 		isRunning = false;
+	}
+	
+	public void setManipulateAllPosts(boolean manipulateAllPosts)
+	{
+		this.manipulateAllPosts = manipulateAllPosts;
 	}
 	
 	private void manipulate()
@@ -75,19 +84,16 @@ public class NativeUrlManipulator implements Manipulator
 		ContentHelper contentHelper = new SamsokContentHelper();
 		try {
 			c = ds.getConnection();
-			if(logger.isDebugEnabled()) {
-				logger.debug("Getting record count");
-			}
+			logger.info("Getting record count");
 			totalNumberOfRecords = getTotalNumberOfRecords(c);
 			counting = false;
 			stopWatch.start();
-			String sql = "select uri, nativeUrl, xmlData from content where deleted is null";
+			logger.info("fetching data");
+			String sql = getFetchDataSQL();
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();
-			if(logger.isDebugEnabled()) {
-				logger.debug("fetching data");
-			}
 			currentRecord = 1;
+			logger.info("manipulating database date");
 			while(rs.next()) {
 				if(closeByRequest) {
 					logger.info("closing nativeUrlManipulator by request");
@@ -98,10 +104,34 @@ public class NativeUrlManipulator implements Manipulator
 				String xmlContent = rs.getString("xmlData");
 				if(xmlContent != null) {
 					String nativeUrl = contentHelper.extractNativeURL(xmlContent);
+					try {
+						if(!StringUtils.containsIgnoreCase(nativeUrl, "raa.se")) {
+							RedirectChecker redirectChecker = new RedirectChecker(nativeUrl);
+							while(redirectChecker.isRedirected()) {
+								logger.info("URL: " + nativeUrl + " is redirected to: " + redirectChecker.getRedirectString());
+								redirectChecker.setURL(redirectChecker.getRedirect());
+								nativeUrl = redirectChecker.getRedirectString();
+								//setNativeUrlTooNull(c, uri);
+								//currentRecord++;
+								//continue;
+							}
+						}
+					}catch(MalformedURLException e) {
+						logger.error("The URL: " + nativeUrl + " is malformed | Object-URI: " + uri);
+						setNativeUrlTooNull(c, uri);
+						currentRecord++;
+						continue;
+					} catch (IOException e) {
+						logger.error(e.getMessage());
+						setNativeUrlTooNull(c, uri);
+						currentRecord++;
+						continue;
+					}
 					updateDB(c, uri, nativeUrl);
 					currentRecord++;
 				}
 			}
+			logger.info("Database updated");
 		} catch(NullPointerException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -112,13 +142,41 @@ public class NativeUrlManipulator implements Manipulator
 		}
 	}
 	
+	private String getFetchDataSQL()
+	{
+		String sql = null;
+		if(manipulateAllPosts) {
+			sql = "select uri, nativeUrl, xmlData from content where deleted is null";
+		}else {
+			sql = "SELECT uri, nativeUrl, xmlData FROM content WHERE deleted IS NULL AND nativeurl IS NULL";
+		}
+		return sql;
+	}
+	
+	private void setNativeUrlTooNull(Connection c, String uri)
+	{
+		PreparedStatement ps = null;
+		String sql = "UPDATE content SET nativeurl = NULL WHERE uri = ?";
+		try {
+			ps = c.prepareStatement(sql);
+			ps.setString(1, uri);
+			ps.executeUpdate();
+			DBUtil.commit(c);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			DBUtil.rollback(c);
+		}finally {
+			DBUtil.closeDBResources(null, ps, null);
+		}
+	}
+	
 	private int getTotalNumberOfRecords(Connection c)
 	{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			String sql = "select count(*) from content where deleted is null";
+			String sql = getRecordCountSQL();
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if(rs.next()) {
@@ -130,6 +188,17 @@ public class NativeUrlManipulator implements Manipulator
 			DBUtil.closeDBResources(rs, ps, null);
 		}
 		return count;
+	}
+	
+	private String getRecordCountSQL()
+	{
+		String sql = null;
+		if(manipulateAllPosts) {
+			sql = "select count(*) from content where deleted is null";
+		}else {
+			sql = "SELECT count(*) FROM content WHERE deleted IS NULL AND nativeurl IS NULL";
+		}
+		return sql;
 	}
 
 	private void updateDB(Connection c, String uri, String nativeUrl) {
