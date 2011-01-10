@@ -570,3 +570,25 @@ body
 {
 	padding: 2px;
 }
+
+.sortable
+{
+	background-image:url(../bilder/ascdesc.gif);
+	background-position:right center;
+	background-repeat:no-repeat;
+}
+
+.sortasc
+{
+	background-image:url(../bilder/asc.gif);
+	background-position:right center;
+	background-repeat:no-repeat;
+}
+
+.sortdesc
+{
+	background-image:url(../bilder/desc.gif);
+	background-position:right center;
+	background-repeat:no-repeat;
+}
+

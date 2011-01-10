@@ -52,13 +52,30 @@
 			<span class="paddingWideLeft">JVMInfo: <%=jvmInfo %></span>
 		</div>
 <%
+		String sortByParam = request.getParameter("sortby");
+		final String sort = sortByParam != null ? sortByParam : "name"; // name är default
+		final boolean sortDesc = "desc".equals(request.getParameter("sortdir"));
 		List<HarvestService> services = hsm.getServices();
 		Collections.sort(services, new Comparator<HarvestService>() {
 			public int compare(HarvestService o1, HarvestService o2) {
 				Step step1 = hsm.getJobStep(o1);
 				Step step2 = hsm.getJobStep(o2);
 				if (step1 == step2) {
-					return sweCol.compare(o1.getName(), o2.getName());
+					int result;
+					if ("id".equals(sort)) {
+						result = sweCol.compare(o1.getId(), o2.getId());
+					} else if ("date".equals(sort)) {
+						result = sweCol.compare(
+								o1.getLastHarvestDate() != null ? ContentHelper.formatDate(o1.getLastHarvestDate(), true) : "",
+								o2.getLastHarvestDate() != null ? ContentHelper.formatDate(o2.getLastHarvestDate(), true) : "");
+					} else {
+						// name är default
+						result = sweCol.compare(o1.getName(), o2.getName());
+					}
+					if (sortDesc) {
+						result = -result;
+					}
+					return result;
 				}
 				if (step1 == Step.IDLE) {
 					return 1;
@@ -81,16 +98,20 @@
 				return 1;
 			}
 		});
+		String newSortDir = sortDesc ? "asc" : "desc";
+		String idSortClass = "id".equals(sort) ? (sortDesc ? "sortdesc" : "sortasc") : "sortable";
+		String nameSortClass = "name".equals(sort) ? (sortDesc ? "sortdesc" : "sortasc") : "sortable";
+		String dateSortClass = "date".equals(sort) ? (sortDesc ? "sortdesc" : "sortasc") : "sortable";
 %>
 		<hr/>
 		<table id="servicetable">
 			<thead class="bgGrayLight">
 				<tr>
-					<th>Tjänst</th>
-					<th>Namn</th>
+					<th class="<%= idSortClass %>"><a href="?sortby=id&sortdir=<%= newSortDir %>">Tjänst</a></th>
+					<th class="<%= nameSortClass %>"><a href="?sortby=name&sortdir=<%= newSortDir %>">Name</a></th>
 					<th>Cron-schema</th>
 					<th>Skörde-URL</th>
-					<th>Senaste skörd</th>
+					<th class="<%= dateSortClass %>"><a href="?sortby=date&sortdir=<%= newSortDir %>">Senaste skörd</a></th>
 					<th>Skörda</th>
 					<th>Jobbstatus</th>
 				</tr>
