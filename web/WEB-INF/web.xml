@@ -5,19 +5,30 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>K-Samsök</display-name>
 
-	<!-- ladda lucene vid uppstart först -->
-    <servlet>
-        <servlet-name>Lucene</servlet-name>
-        <servlet-class>se.raa.ksamsok.lucene.LuceneServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-    </servlet>
+<!-- 
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+-->
+	<!-- init av spring, använder WEB-INF/applicationContext.xml som default, kan overridas med ovan-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
-	<!-- sen skördeservleten -->
+	<!-- ladda skördeservleten vid uppstart först -->
     <servlet>
         <servlet-name>Harvester</servlet-name>
         <servlet-class>se.raa.ksamsok.harvest.HarvesterServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
+		<load-on-startup>1</load-on-startup>
     </servlet>
+
+	<!-- och sen api-servleten -->
+	<servlet>
+		<servlet-name>API</servlet-name>
+		<servlet-class>se.raa.ksamsok.api.APIServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
 
 	<!-- resten laddas vid användning -->
     <servlet>
@@ -30,50 +41,27 @@
     	<servlet-class>se.raa.ksamsok.apikey.APIKeyServlet</servlet-class>
     </servlet>
     
-    <servlet-mapping>
-    	<servlet-name>APIKey</servlet-name>
-    	<url-pattern>/admin/apiKeyAdmin</url-pattern>
-    </servlet-mapping>
     
     <servlet>
     	<servlet-name>Manipulator</servlet-name>
     	<servlet-class>se.raa.ksamsok.manipulator.ManipulatorServlet</servlet-class>
     </servlet>
     
-    <servlet-mapping>
-    	<servlet-name>Manipulator</servlet-name>
-    	<url-pattern>/admin/manipulate</url-pattern>
-    </servlet-mapping>
     
     <servlet>
     	<servlet-name>sitemap</servlet-name>
     	<servlet-class>se.raa.ksamsok.sitemap.SitemapServlet</servlet-class>
     </servlet>
     
-    <servlet-mapping>
-    	<servlet-name>sitemap</servlet-name>
-    	<url-pattern>/sitemap</url-pattern>
-    </servlet-mapping>
-    
     <servlet>
     	<servlet-name>externalOrgAdmin</servlet-name>
     	<servlet-class>se.raa.ksamsok.organization.ExternalOrganizationServlet</servlet-class>
     </servlet>
     
-    <servlet-mapping>
-    	<servlet-name>externalOrgAdmin</servlet-name>
-    	<url-pattern>/userAdmin/orgAdmin</url-pattern>
-    </servlet-mapping>
-    
     <servlet>
     	<servlet-name>statistic</servlet-name>
     	<servlet-class>se.raa.ksamsok.statistic.StatisticServlet</servlet-class>
     </servlet>
-    
-    <servlet-mapping>
-    	<servlet-name>statistic</servlet-name>
-    	<url-pattern>/admin/statistic</url-pattern>
-    </servlet-mapping>
 
 	<!--
 		Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen
@@ -91,7 +79,37 @@
     	<servlet-name>orgAdmin</servlet-name>
     	<servlet-class>se.raa.ksamsok.organization.OrganizationServlet</servlet-class>
     </servlet>
-    
+
+	<servlet-mapping>
+		<servlet-name>API</servlet-name>
+		<url-pattern>/api</url-pattern>
+	</servlet-mapping>
+
+    <servlet-mapping>
+    	<servlet-name>APIKey</servlet-name>
+    	<url-pattern>/admin/apiKeyAdmin</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+    	<servlet-name>Manipulator</servlet-name>
+    	<url-pattern>/admin/manipulate</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+    	<servlet-name>sitemap</servlet-name>
+    	<url-pattern>/sitemap</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+    	<servlet-name>externalOrgAdmin</servlet-name>
+    	<url-pattern>/userAdmin/orgAdmin</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+    	<servlet-name>statistic</servlet-name>
+    	<url-pattern>/admin/statistic</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
     	<servlet-name>orgAdmin</servlet-name>
     	<url-pattern>/admin/orgAdmin</url-pattern>
@@ -124,7 +142,6 @@
 			<role-name>ksamsok</role-name>
 		</auth-constraint>
 	</security-constraint>
-
 	<login-config>
 		<auth-method>BASIC</auth-method>
 		<realm-name>K-Samsök, administration</realm-name>
@@ -134,13 +151,5 @@
 		<description>Administratörer, ksamsök</description>
 		<role-name>ksamsok</role-name>
 	</security-role>
-	<servlet>
-		<servlet-name>API</servlet-name>
-		<servlet-class>se.raa.ksamsok.api.APIServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>API</servlet-name>
-		<url-pattern>/api</url-pattern>
-	</servlet-mapping>
+
 </web-app>

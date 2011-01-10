@@ -66,6 +66,7 @@ public class SitemapIndexBuilder
 		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
+			// TODO: where deleted is null borde väl vara med här?
 			String sql = "select count(*) from content";
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();

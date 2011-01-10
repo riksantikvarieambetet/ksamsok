@@ -15,7 +15,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
  * Klass som kör omindexering av alla tjänster i form av en tjänst/cron-jobb. Obs att
  * denna inte kan/ska kunna scheduleras.
  */
-public class LuceneReindexAllJob extends HarvestJob {
+public class ReindexAllJob extends HarvestJob {
 
 	@Override
 	protected List<ServiceFormat> performGetFormats(HarvestService service)
@@ -47,11 +47,11 @@ public class LuceneReindexAllJob extends HarvestJob {
 			ss = getStatusService(ctx);
 			String serviceId = jd.getName();
 			if (logger.isInfoEnabled()) {
-				logger.info("Running job to reindex lucene index from repo(" + serviceId + ")");
+				logger.info("Running job to reindex from repo(" + serviceId + ")");
 			}
 			service = new HarvestServiceImpl();
 			service.setId(serviceId);
-			service.setName("Temp job for Lucene indexing");
+			service.setName("Temp job for reindexing");
 
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.INDEX);
@@ -67,10 +67,10 @@ public class LuceneReindexAllJob extends HarvestJob {
 				long serviceStart = System.currentTimeMillis();
 				// "initiera jobb" och kör ungefär som i HarvestJob för reindex
 				ss.initStatus(reindexMe, "Init");
-				ss.setStatusTextAndLog(reindexMe, "Updating lucene index from repository (by " + service.getId() + ")");
+				ss.setStatusTextAndLog(reindexMe, "Updating index from repository (by " + service.getId() + ")");
 				try {
 					ss.setStep(reindexMe, Step.INDEX);
-					hrm.updateLuceneIndex(reindexMe, null, service);
+					hrm.updateIndex(reindexMe, null, service);
 				} catch (Exception e) {
 					// sätta felet på aktuell tjänst och kasta vidare så att det också sätts på reindexall
 					String errMsg = e.getMessage();

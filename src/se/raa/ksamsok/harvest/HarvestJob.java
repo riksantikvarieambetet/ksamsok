@@ -140,7 +140,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 		// 6. om vi ska hämta ett visst set, hämta stödda sets och kontrollera (getSets)
 		// 7. hämta data till temp och flytta sen till spool-fil (getRecords)
 		// 8. gå igenom och lagra skörd i repo (lagra undan full skörd)
-		// 9. uppdatera lucene-index från repo
+		// 9. uppdatera solr-index från repo
 		// 10. klar
 		interrupted = false;
 		Date now = new Date();
@@ -168,9 +168,9 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			// specialfall för indexering från repo
 			if (ss.getStartStep(service) == Step.INDEX) {
 				ss.initStatus(service, "Init");
-				ss.setStatusTextAndLog(service, "Updating lucene index from repository");
+				ss.setStatusTextAndLog(service, "Updating index from repository");
 				ss.setStep(service, Step.INDEX);
-				hrm.updateLuceneIndex(service, null);
+				hrm.updateIndex(service, null);
 				hsm.storeFirstIndexDateIfNotSet(service);
 				long durationMillis = System.currentTimeMillis() - start;
 				ss.setStatusTextAndLog(service, "Ok, job time: " + ContentHelper.formatRunTime(durationMillis));
@@ -179,9 +179,9 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			}
 			if (ss.getStartStep(service) == Step.EMPTYINDEX) {
 				ss.initStatus(service, "Init");
-				ss.setStatusTextAndLog(service, "Removing lucene index for service with ID: " + serviceId);
+				ss.setStatusTextAndLog(service, "Removing index data for service with ID: " + serviceId);
 				ss.setStep(service, Step.EMPTYINDEX);
-				hrm.removeLuceneIndex(service);
+				hrm.deleteIndexData(service);
 				//hsm.storeFirstIndexDateIfNotSet(service);
 				long durationMillis = System.currentTimeMillis() - start;
 				ss.setStatusTextAndLog(service, "Ok, job time: " + ContentHelper.formatRunTime(durationMillis));
@@ -326,13 +326,13 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				// kolla om vi ska avbryta
 				checkInterrupt(ss, service);
 
-				// uppdatera lucene-index för servicen
+				// uppdatera index för tjänsten
 				if (changed) {
-					ss.setStatusTextAndLog(service, "Updating lucene index" +
+					ss.setStatusTextAndLog(service, "Updating index" +
 							(lastSuccessfulHarvestTs != null ?
 									" > " + lastSuccessfulHarvestTs : ""));
 					ss.setStep(service, Step.INDEX);
-					hrm.updateLuceneIndex(service, lastSuccessfulHarvestTs);
+					hrm.updateIndex(service, lastSuccessfulHarvestTs);
 					hsm.storeFirstIndexDateIfNotSet(service);
 				} else {
 					if (logger.isInfoEnabled()) {

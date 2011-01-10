@@ -1,13 +1,14 @@
-<%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvesterServlet"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestService"%>
+<%@page import="se.raa.ksamsok.api.util.Term"%>
+<%@page import="se.raa.ksamsok.solr.SearchService"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page contentType="text/html;charset=UTF-8" %>
 <%@page import="java.util.List"%>
-<%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
 <html>
 <%
-	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
+	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+	SearchService searchService = ctx.getBean(SearchService.class);
 %>
 	<head>
 		<title>K-Samsök</title>
@@ -22,19 +23,16 @@
 		<hr/>
 		<div>
 <%
-			List<HarvestService> services = hsm.getServices();
-			if (services.size() > 0) {
+			List<Term> organizations = searchService.terms(ContentHelper.IX_SERVICEORGANISATION, "", 0, -1);
+			if (organizations.size() > 0) {
 %>
-			<h5 class="marginBottomSmall">Indexerade källor</h5>
+			<h5 class="marginBottomSmall">Indexerade källorganisationer</h5>
 			<ul>
 <%
-				for (HarvestService service: services) {
-					// ta bara med de som har indexerats nån gång
-					if (service.getFirstIndexDate() != null) {
+				for (Term service: organizations) {
 %>
-				<li><%=service.getName() %></li>
+				<li><%= service.getValue() %> (<%= service.getCount() %>)</li>
 <%
-					}
 				}
 %>
 			</ul>
@@ -47,7 +45,7 @@
 %>
 			<br/>
 			<p>
-				Totalt finns det för närvarande <%= LuceneServlet.getInstance().getTotalCount() %> poster i indexet.
+				Totalt finns det för närvarande <%= searchService.getIndexCount(null) %> poster i indexet.
 			</p>
 		</div>
 		<hr/>

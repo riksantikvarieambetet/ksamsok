@@ -16,8 +16,9 @@ public interface HarvestServiceManager {
 	public static final String SS_KEY = "ss";
 
 	// namn på lucenespecifika interna tjänster (eg bara cronjobb)
-	public static final String SERVICE_LUCENE_OPTIMIZE = "_lucene_opt";
-	public static final String SERVICE_LUCENE_REINDEX = "_lucene_reindex";
+	// TODO: värdena kanske bör ändras då det är solr nu, men de ligger i db också
+	public static final String SERVICE_INDEX_OPTIMIZE = "_lucene_opt";
+	public static final String SERVICE_INDEX_REINDEX = "_lucene_reindex";
 
 	/**
 	 * Ger lista med alla användarskapade tjänster.

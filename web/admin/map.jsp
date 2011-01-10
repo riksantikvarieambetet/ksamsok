@@ -1,27 +1,18 @@
-<%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvesterServlet"%>
-<%@page import="org.apache.lucene.search.IndexSearcher"%>
-<%@page import="org.apache.lucene.queryParser.QueryParser"%>
-<%@page import="org.apache.lucene.search.Query"%>
-<%@page import="org.apache.lucene.document.Document"%>
-
-<%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
-<%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
-<%@page import="org.apache.lucene.search.TopDocs"%>
-<%@page import="org.apache.lucene.search.ScoreDoc"%>
-<%@page import="org.apache.solr.util.NumberUtils"%>
-<%@page import="java.util.Map"%>
-<%@page import="org.apache.lucene.search.RangeFilter"%>
+<%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
+<%@page import="se.raa.ksamsok.solr.SearchService"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
-<%@page import="org.apache.lucene.search.BooleanQuery"%>
-<%@page import="org.apache.lucene.search.BooleanClause"%>
-<%@page import="com.pjaol.search.geo.utils.BoundaryBoxFilter"%>
-<%@page import="org.apache.lucene.search.ConstantScoreQuery"%>
-<%@page import="com.pjaol.lucene.search.SerialChainFilter"%>
+<%@page import="org.apache.solr.common.SolrDocument"%>
+<%@page import="org.apache.solr.common.SolrDocumentList"%>
+<%@page import="org.apache.solr.client.solrj.response.QueryResponse"%>
+<%@page import="org.apache.solr.client.solrj.SolrResponse"%>
+<%@page import="org.apache.solr.client.solrj.util.ClientUtils"%>
+<%@page import="org.apache.solr.client.solrj.SolrQuery"%>
+<%@page contentType="text/html;charset=UTF-8" %>   
+<%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.StringTokenizer"%>
-<%@page import="org.apache.lucene.search.Filter"%>
-<%@page import="org.apache.lucene.search.TermQuery"%>
-<%@page import="org.apache.lucene.index.Term"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%><html>
 	<head>
 		<title>Sök</title>
@@ -118,10 +109,13 @@
 		</script>
 	</head>
 <%
+	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+	SearchService searchService = ctx.getBean(SearchService.class);
+	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
 	Map<String,String> params = ContentHelper.extractUTF8Params(request.getQueryString());
 	String query = StringUtils.trimToEmpty(params.get("query"));
 	boolean withCoordsOnly = Boolean.parseBoolean(params.get("withCoords"));
-	boolean getRDF = Boolean.parseBoolean(params.get("getRDF"));
+	boolean getRDF = true; //Boolean.parseBoolean(params.get("getRDF"));
 	boolean useMapExtent = Boolean.parseBoolean(params.get("useMapExtent"));
 	String searchExtent = StringUtils.trimToEmpty(params.get("searchExtent"));
 	String limitToService = StringUtils.trimToEmpty(params.get("serviceId"));
@@ -143,9 +137,11 @@
 				<hr/>
 				<input class="middle" type="checkbox" id="withCoords" name="withCoords" value="true" <%= withCoordsOnly ? "checked" : "" %> />
 				<label class="marginSmallLeft" for="withCoords">Enbart träffar med kartdata</label>
+				<!--
 				<br/>
 				<input class="middle" type="checkbox" id="getRDF" name="getRDF" value="true" <%= getRDF ? "checked" : "" %> />
 				<label class="marginSmallLeft" for="getRDF">Hämta träffarnas RDF</label>
+				-->
 				<br/>
 				<input class="middle" type="checkbox" id="useMapExtent" name="useMapExtent" value="true" <%= useMapExtent ? "checked" : "" %> />
 				<label class="marginSmallLeft" for="useMapExtent">Sök inom kartutsträckning</label>
@@ -155,7 +151,7 @@
 				<select class="marginSmallLeft" name="serviceId" id="serviceId">
 					<option value="">[ingen begränsning]</option>
 					<%
-						for (HarvestService s: HarvesterServlet.getInstance().getHarvestServiceManager().getServices()) {
+						for (HarvestService s: hsm.getServices()) {
 					%>
 					<option value="<%= s.getId() %>"<%= s.getId().equals(limitToService) ? " selected" : ""%>><%= s.getId() %> - <%= s.getName() %></option>
 					<%
@@ -166,23 +162,16 @@
 			</form>
 		</div>
 <%
-	TopDocs hits = null;
 	String message = "";
-	IndexSearcher s = null;
 	if (query.length() > 0 || useMapExtent || limitToService.length() > 0) {
 		try {
-			s = LuceneServlet.getInstance().borrowIndexSearcher();
-			// fk. QueryParser är ej trådsäker
-			// vi analyzerar detta med en stemmer då vi vet att IX_TEXT analyseras vid indexering
-			// se ContentHelper.isAnalyzedIndex()
-			Query q = null;
-			RangeFilter rf = null;
+			String qs = "";
+			SolrQuery q = new SolrQuery();
 			if (query.length() > 0) {
-				QueryParser p = new QueryParser(ContentHelper.IX_TEXT, ContentHelper.getSwedishAnalyzer());
-				q = p.parse(query);
+				qs = ClientUtils.escapeQueryChars(query);
 			}
 			if (withCoordsOnly) {
-				rf = new RangeFilter(ContentHelper.I_IX_LAT, NumberUtils.double2sortableStr(Double.NEGATIVE_INFINITY), null, true, false);
+				qs += " " + ContentHelper.IX_GEODATAEXISTS + ":j";
 			}
 			if (useMapExtent && searchExtent.length() > 0) {
 				double[] coords = new double[4];
@@ -191,59 +180,48 @@
 				while(tokenizer.hasMoreTokens()) {
 					coords[i++] = Double.parseDouble(tokenizer.nextToken().trim());
 				}
-				BoundaryBoxFilter lngFilter = new BoundaryBoxFilter(ContentHelper.I_IX_LON, NumberUtils.double2sortableStr(coords[0]), NumberUtils.double2sortableStr(coords[2]), true, true);
-				BoundaryBoxFilter latFilter = new BoundaryBoxFilter(ContentHelper.I_IX_LAT, NumberUtils.double2sortableStr(coords[1]), NumberUtils.double2sortableStr(coords[3]), true, true);
-				Query bboxq = new ConstantScoreQuery(new SerialChainFilter(new Filter[] {latFilter, lngFilter},
-	                     new int[] {SerialChainFilter.AND, SerialChainFilter.AND}));
-				if (q != null) {
-					BooleanQuery bq = new BooleanQuery();
-					bq.add(q, BooleanClause.Occur.MUST);
-					bq.add(bboxq, BooleanClause.Occur.MUST);
-					q = bq;
-				} else {
-					q = bboxq;
-				}
+				String fq = ContentHelper.I_IX_LON + ":[" + coords[0] + " TO " + coords[2] + "] ";
+				fq += ContentHelper.I_IX_LAT + ":[" + coords[1] + " TO " + coords[3] + "]";
+				q.setFilterQueries(fq);
 			}
 			if (limitToService.length() > 0) {
-				Query serviceq = new TermQuery(new Term(ContentHelper.I_IX_SERVICE, limitToService));
-				if (q != null) {
-					BooleanQuery bq = new BooleanQuery();
-					bq.add(q, BooleanClause.Occur.MUST);
-					bq.add(serviceq, BooleanClause.Occur.MUST);
-					q = bq;
-				} else {
-					q = serviceq;
-				}
+				qs += " " + ContentHelper.I_IX_SERVICE + ":" + ClientUtils.escapeQueryChars(limitToService);
 			}
+			
 			final int maxHits = 200;
-			hits = s.search(q, rf, maxHits);
+			q.setRows(maxHits);
+			if (qs.length() == 0) {
+				qs = "*";
+			}
+			q.setQuery(qs.trim());
+			q.setFields("* score");
+			QueryResponse qr = searchService.query(q);
+			SolrDocumentList hits = qr.getResults();
 			int i = 0;
-			int antal = hits.totalHits;
+			long antal = hits.getNumFound();
 %>
 			<h2 class="clear">Sökningen gav <%=antal%> träffar (visar max <%=maxHits%>, varav <span id="mapCount">0</span> på kartan)</h2>
 <%
-			for (ScoreDoc sd: hits.scoreDocs) {
+			for (SolrDocument sd: hits) {
 				++i;
-				Document d = s.doc(sd.doc);
-				String ident = d.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
-				String itemTitle = d.get(ContentHelper.IX_ITEMTITLE);
+				//Document d = s.doc(sd.doc);
+				String ident = (String) sd.getFieldValue(ContentHelper.IX_ITEMID); //.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
+				String itemTitle = (String) sd.getFieldValue(ContentHelper.IX_ITEMTITLE);
 				if (itemTitle == null) {
 					itemTitle = "titel saknas";
 				}
-				byte[] presBytes = d.getBinaryValue(ContentHelper.I_IX_PRES);
+				byte[] presBytes = (byte[]) sd.getFieldValue(ContentHelper.I_IX_PRES);
 				String lonLat = "kartdata saknas";
-				String lon = d.get(ContentHelper.I_IX_LON);
-				String lat = d.get(ContentHelper.I_IX_LAT);
+				Object lon = sd.getFieldValue(ContentHelper.I_IX_LON);
+				Object lat = sd.getFieldValue(ContentHelper.I_IX_LAT);
 				String zoomTo = "", zoomToTitle = "";
 				if (lon != null && lat != null) {
-					double lonDouble = NumberUtils.SortableStr2double(lon);
-					double latDouble = NumberUtils.SortableStr2double(lat);
-					lonLat = lonDouble + " / " + latDouble;
-					zoomTo = "zoomTo(" + lonDouble + "," + latDouble + ")";
+					lonLat = lon + " / " + lat;
+					zoomTo = "zoomTo(" + lon + "," + lat + ")";
 					zoomToTitle = "Klicka för att zooma in till";
 %>
 				<script type="text/javascript">
-					addMarker(<%=NumberUtils.SortableStr2double(lon)%>,<%=NumberUtils.SortableStr2double(lat)%>, '<%=itemTitle%>', '<%=ident%>');
+					addMarker(<%=lon%>,<%=lat%>, '<%=itemTitle%>', '<%=ident%>');
 					updateMapCount();
 				</script>
 <%
@@ -256,7 +234,7 @@
 				}
 				String rdf = null;
 				if (getRDF) {
-					byte[] rdfBytes = d.getBinaryValue(ContentHelper.I_IX_RDF);
+					byte[] rdfBytes = (byte[]) sd.getFieldValue(ContentHelper.I_IX_RDF);
 					if (rdfBytes != null) {
 						rdf = new String(rdfBytes, "UTF-8");
 						// ful-escape-xml
@@ -265,12 +243,12 @@
 						rdf = "inget rdf-innehåll";
 					}
 				}
-				String htmlURL = d.get(ContentHelper.I_IX_HTML_URL);
-				String museumdatURL = d.get(ContentHelper.I_IX_MUSEUMDAT_URL);
+				String htmlURL = (String) sd.getFieldValue(ContentHelper.I_IX_HTML_URL);
+				String museumdatURL = (String) sd.getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
 %>
 			<p>
-				<h4 class="bgGrayLight">träff <%= i %>/<%= antal %>, score: <%= sd.score %></h4>
-				<div><span class="bold">Källsystem</span> : <%= d.get(ContentHelper.I_IX_SERVICE) %></div>
+				<h4 class="bgGrayLight">träff <%= i %>/<%= antal %>, score: <%= sd.getFieldValue("score") %></h4>
+				<div><span class="bold">Källsystem</span> : <%= (String) sd.getFieldValue(ContentHelper.I_IX_SERVICE) %></div>
 				<div><span class="bold">URI</span> : <a href="<%= ident %>" target="_blank"><%= ident %></a> [
 					<% if (htmlURL != null) { %> <a href="<%= htmlURL %>" target="_blank">HTML</a><% } %>
 					<% if (museumdatURL != null) { %> <a href="<%= museumdatURL %>" target="_blank">MUSEUMDAT</a><% } %> ]
@@ -290,8 +268,6 @@
 %>
 			<h2 class="clear">Fel vid sökning: <%=e.getMessage()%></h2>
 <%
-		} finally {
-			LuceneServlet.getInstance().returnIndexSearcher(s);
 		}	
 	}
 %>

@@ -1,7 +1,5 @@
 package se.raa.ksamsok.lucene;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,14 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.snowball.SnowballAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.solr.util.NumberUtils;
+import org.apache.solr.common.SolrInputDocument;
 
+import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.spatial.GMLInfoHolder;
 
@@ -331,20 +326,7 @@ public abstract class ContentHelper {
 		}
 	}
 
-	// teckenkodning i stopp-ordsfiler
-	// (UTF-8 är egentligen bättre, men kan vara svårt att hantera i vissa texteditorer)
-	private static final String STOPWORD_FILE_ENCODING = "ISO-8859-1";
-	// "sökväg" i jar-filen
-	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
-
-	// analyserar-variabler
-	private static Analyzer simpleAnalyzer = null;
-	private static final Object simpleAnalyzerSync = new Object();
-	private static Analyzer sweAnalyzer = null;
-	private static final Object sweAnalyzerSync = new Object();
-	private static Analyzer engAnalyzer = null;
-	private static final Object engAnalyzerSync = new Object();
-
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(ContentHelper.class);
 
 	public ContentHelper() {
@@ -353,34 +335,27 @@ public abstract class ContentHelper {
 	// instansmetoder som måste implementeras i subklasser
 
 	/**
-	 * Extraherar identifierare ur xml-innehåll. För k-samsökstjänster ska identifieraren
+	 * Extraherar identifierare mm ur xml-innehåll. För k-samsökstjänster ska identifieraren
 	 * vara en URI och xml-innehållet är en post med k-samsöks-xml (rdf).
 	 * 
 	 * @param xmlContent xml-innehåll
 	 * @param gmlInfoHolder böna som fylls på med funna gml-geometrier mm om ej null
-	 * @return identifierare
+	 * @return värdeböna, aldrig null
 	 * @throws Exception vid problem
 	 */
-	public abstract String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
-	
-	/**
-	 * Extraherar URL till målsidan
-	 * @param xmlContent xml-innehåll
-	 * @return URL till målsida
-	 */
-	public abstract String extractNativeURL(String xmlContent);
+	public abstract ExtractedInfo extractInfo(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
-	 * Skapar ett lucene-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster
+	 * Skapar ett solr-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster
 	 * är xml-innehållet en post med k-samsöks-xml (rdf). Om metoden ger null har tjänsten
 	 * begärt att posten bara ska lagras och inte indexeras.
 	 * 
 	 * @param service tjänst
 	 * @param xmlContent xml-innehåll
-	 * @return ett lucene-dokument, eller null om inte posten ska indexeras
+	 * @return ett solr-dokument, eller null om inte posten ska indexeras
 	 * @throws Exception vid problem
 	 */
-	public abstract Document createLuceneDocument(HarvestService service, String xmlContent) throws Exception;
+	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent) throws Exception;
 
 	// statiska metoder
 
@@ -592,103 +567,6 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Hämtar analyserare för användning med lucene. 
-	 * Använder stopp-ord från swe_stop.txt,
-	 * men gör ingen stamning.
-	 * 
-	 * @return enkel analyserare
-	 */
-	public static final Analyzer getSimpleAnalyzer() {
-		synchronized (simpleAnalyzerSync) {
-			if (simpleAnalyzer == null) {
-				simpleAnalyzer = new TokenStopAnalyzer(readStopWordFile("swe_stop.txt"));
-			}
-		}
-		return simpleAnalyzer;
-	}
-
-	/**
-	 * Hämtar svensk snowball-analyserare för användning med lucene. Använder stopp-ord
-	 * från swe_stop.txt.
-	 * 
-	 * @return svensk analyserare
-	 */
-	public static final Analyzer getSwedishAnalyzer() {
-		synchronized (sweAnalyzerSync) {
-			if (sweAnalyzer == null) {
-				sweAnalyzer = new SnowballAnalyzer("Swedish", readStopWordFile("swe_stop.txt"));
-			}
-		}
-		return sweAnalyzer;
-	}
-
-	/**
-	 * Hämtar engelsk snowball-analyserare för användning med lucene. Använder stopp-ord
-	 * från eng_stop.txt. Används ej fn.
-	 * 
-	 * @return engelsk analyserare
-	 */
-	public static final Analyzer getEnglishAnalyzer() {
-		synchronized (engAnalyzerSync) {
-			if (engAnalyzer == null) {
-				engAnalyzer = new SnowballAnalyzer("English", readStopWordFile("eng_stop.txt"));
-			}
-		}
-		return engAnalyzer;
-	}
-
-	// läser in fil med stopp-ord från classpath
-	private static String[] readStopWordFile(String fileName) {
-		BufferedReader br = null;
-		String[] stopWords = {};
-		try {
-			// lägg på sökväg (detta paket)
-			fileName =  PATH + fileName;
-			br = new BufferedReader(new InputStreamReader(
-					ContentHelper.class.getResourceAsStream(fileName), STOPWORD_FILE_ENCODING));
-			ArrayList<String> words = new ArrayList<String>();
-			String line;
-			while ((line = br.readLine()) != null) {
-				// | är kommentarstecken i snowballs stopp-ordsfiler
-				int commentIndex = line.indexOf('|');
-				if (commentIndex >= 0) {
-					// hämta allt innan kommentaren
-					line = line.substring(0, commentIndex);
-				}
-				// trimma bort resterande mellanslag
-				line = StringUtils.trimToNull(line);
-				// resten ska vara ett ord
-				if (line != null) {
-					words.add(line);
-				}
-			}
-			if (words.size() > 0) {
-				if (logger.isInfoEnabled()) {
-					logger.info("Läste in " + words.size() + " stopp-ord från " + fileName);
-				}
-				if (logger.isDebugEnabled()) {
-					logger.debug(fileName + ": stopp-ord: " + words);
-				}
-				stopWords = new String[words.size()];
-				words.toArray(stopWords);
-			} else {
-				logger.warn("Inga stopp-ord funna i " + fileName);
-			}
-		} catch (Exception e) {
-			logger.error("Fel vid läsning av stopp-ordsfil: " + fileName + ", använder inga stopp-ord", e);
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (Exception ignore) {
-				}
-				br = null;
-			}
-		}
-		return stopWords;
-	}
-
-	/**
 	 * Initierar mappen med problemmeddelanden för denna tråd.
 	 */
 	public static void initProblemMessages() {
@@ -778,64 +656,6 @@ public abstract class ContentHelper {
 	 */
 	public static double getSpeedPerSec(long count, long durationMillis) {
 		return Math.round(10.0 * count / Math.max(durationMillis / 1000, 1)) / 10.0;
-	}
-
-	/**
-	 * Gör om invärdet till en sträng som kan sorteras och användas korrekt i
-	 * intervallsökningar i lucene. Algoritm lånad från solr:s NumberUtils (apache-licens).
-	 * 
-	 * @param val värde
-	 * @return strängrepresentation av värde
-	 */
-	public static String transformNumberToLuceneString(long val) {
-		// TODO: iom att locallucene måste ha NumberUtils kanske den ska användas här, dock
-		//       håller locallucene på att infogas i ett spatial-block i lucene/solr och
-		//       också på att byta algoritm
-		int offset = 0;
-		char[] out = new char[5];
-		val += Long.MIN_VALUE;
-	    out[offset++] = (char)(val >>>60);
-	    out[offset++] = (char)(val >>>45 & 0x7fff);
-	    out[offset++] = (char)(val >>>30 & 0x7fff);
-	    out[offset++] = (char)(val >>>15 & 0x7fff);
-	    out[offset] = (char)(val & 0x7fff);
-	    return new String(out,0,5);
-	}
-
-	/**
-	 * Gör om invärdet till en sträng som kan sorteras och användas korrekt i
-	 * intervallsökningar i lucene. Algoritm lånad från solr:s NumberUtils (apache-licens).
-	 * 
-	 * @param val värde
-	 * @return strängrepresentation av värde
-	 */
-	public static String transformNumberToLuceneString(double val) {
-		// TODO: se todo i metod ovan
-		long f = Double.doubleToRawLongBits(val);
-	    if (f<0) f ^= 0x7fffffffffffffffL;
-	    return transformNumberToLuceneString(f);
-	}
-
-	/**
-	 * Gör om invärdet till en long för visning
-	 * @param stringVal värde som en lucene-sträng
-	 * @return värde i sifferform
-	 */
-	public static long transformLuceneStringToLong(String stringVal) {
-		// TODO: se todo i metod ovan
-		return NumberUtils.SortableStr2long(stringVal, 0, 5);
-	}
-
-	/**
-	 * Gör om invärdet till en double för visning
-	 * @param stringVal värde som en lucene-sträng
-	 * @return värde i sifferform
-	 */
-	public static double transformLuceneStringToDouble(String stringVal) {
-		// TODO: se todo i metod ovan
-		long f =  NumberUtils.SortableStr2long(stringVal, 0, 6);
-		if (f<0) f ^= 0x7fffffffffffffffL;
-		return Double.longBitsToDouble(f);
 	}
 
 	// 

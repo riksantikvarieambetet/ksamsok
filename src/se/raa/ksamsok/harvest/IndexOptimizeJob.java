@@ -11,12 +11,11 @@ import org.quartz.JobExecutionException;
 
 import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
 
 /**
- * Klass som kör en optimering av lucene-index i form av en tjänst/cron-jobb.
+ * Klass som kör en optimering av index i form av en tjänst/cron-jobb.
  */
-public class LuceneOptimizeJob extends HarvestJob {
+public class IndexOptimizeJob extends HarvestJob {
 
 	@Override
 	protected List<ServiceFormat> performGetFormats(HarvestService service)
@@ -44,23 +43,24 @@ public class LuceneOptimizeJob extends HarvestJob {
 		try {
 			JobDetail jd = ctx.getJobDetail();
 			HarvestServiceManager hsm = getHarvestServiceManager(ctx);
+			HarvestRepositoryManager hrm = getHarvestRepositoryManager(ctx);
 			ss = getStatusService(ctx);
 			String serviceId = jd.getName();
 			if (logger.isInfoEnabled()) {
-				logger.info("Running job to optimize lucene index (" + serviceId + ")");
+				logger.info("Running job to optimize index (" + serviceId + ")");
 			}
 			service = hsm.getService(serviceId);
 			boolean hasService = (service != null);
 			if (!hasService) {
 				service = new HarvestServiceImpl();
 				service.setId(serviceId);
-				service.setName("Temp job for Lucene optimization");
+				service.setName("Temp job for index optimization");
 			}
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.INDEX);
 			ss.setStatusTextAndLog(service, "Starting index optimization");
 			long start = System.currentTimeMillis();
-			LuceneServlet.getInstance().optimizeLuceneIndex();
+			hrm.optimizeIndex();
 			long durationMillis = System.currentTimeMillis() - start;
 			ss.setStatusTextAndLog(service, "Index optimization performed in " +
 					ContentHelper.formatRunTime(durationMillis));

@@ -32,4 +32,16 @@ public class PersistentURI implements APIMethod
 	public void performMethod() 
 	{
 	}
+
+	@Override
+	public boolean isHeadWritten() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isFootWritten() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -3,18 +3,18 @@ package se.raa.ksamsok.statistic;
 import java.io.IOException;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * Servlet som hanterar anrop från Admin gränssnittet som hanterar visning av statistik
@@ -22,25 +22,19 @@ import org.apache.log4j.Logger;
  */
 public class StatisticServlet extends HttpServlet
 {
-	private static final long serialVersionUID = -1584680246222508094L;
+	private static final long serialVersionUID = 2L;
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.statistic.StatisticServlet");
-	private static final String DATASOURCE_NAME = "harvestdb";
 	
-	private DataSource ds = null;
-	private StatisticDatabaseHandler statisticDatabaseHandler = null;
+	@Autowired
+	private StatisticsManager statisticsManager;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException
 	{
 		super.init(config);
-		try {
-			Context ctx = new InitialContext();
-			Context envctx =  (Context) ctx.lookup("java:comp/env");
-			ds =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-			statisticDatabaseHandler = new StatisticDatabaseHandler(ds);
-		}catch(NamingException e) {
-			e.printStackTrace();
-		}
+		ServletContext servletContext = config.getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 	}
 
 	@Override
@@ -59,11 +53,11 @@ public class StatisticServlet extends HttpServlet
 				if(logger.isDebugEnabled()) {
 					logger.debug("APIKey:" + APIKey + " sortBy:" + sortBy + " sortConf:" + sortConf);
 				}
-				List<Statistic> statisticData = statisticDatabaseHandler.getStatistic(APIKey, sortBy, sortConf);
+				List<Statistic> statisticData = statisticsManager.getStatistic(APIKey, sortBy, sortConf);
 				req.setAttribute("statisticData", statisticData);
 			}
 		}
-		req.setAttribute("apikeys", statisticDatabaseHandler.getOverviewStatistics());
+		req.setAttribute("apikeys", statisticsManager.getOverviewStatistics());
 		view.forward(req, resp);
 	}
 }

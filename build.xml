@@ -89,9 +89,28 @@
 		</jar>
 	</target>
 
+	<target name="prepare-war-slave" if="ksamsok.slave">
+		<echo> Patchar katalogstruktur för replikeringsslav </echo>
+		<!-- bort med admin och skriv över konf-filer med "slav-versioner" -->
+		<delete dir="${project.build.dir}/web/userAdmin" verbose="true" />
+		<delete dir="${project.build.dir}/web/admin" verbose="true" />
+		<copy overwrite="true" file="${basedir}/web/WEB-INF/slave.web.xml" tofile="${project.build.dir}/web/WEB-INF/web.xml" verbose="true"/>
+		<copy overwrite="true" file="${basedir}/web/WEB-INF/slave.applicationContext.xml" tofile="${project.build.dir}/web/WEB-INF/applicationContext.xml" verbose="true"/>
+	</target>
+
+	<target name="prepare-war">
+		<!-- kopiera men ta inte med slavkonf, den kommer ev med i senare steg -->
+		<copy todir="${project.build.dir}/web">
+			<fileset dir="${basedir}/web">
+				<exclude name="WEB-INF/slave.web.xml" />
+				<exclude name="WEB-INF/slave.applicationContext.xml" />
+			</fileset>
+		</copy>
+	</target>
+
 	<!-- Bygger en WAR -->
-	<target name="war" depends="jar" description="Skapar en WAR för deployment.">
-		<war excludes="**/web.xml" basedir="${basedir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${basedir}/web/WEB-INF/web.xml">
+	<target name="war" depends="jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
+		<war excludes="**/web.xml" basedir="${project.build.dir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${project.build.dir}/web/WEB-INF/web.xml">
 			<lib dir="${project.build.dir}/lib">
 				<include name="${jar.name}" />
 			</lib>
@@ -146,7 +165,19 @@
         </javadoc>
     </target>
 
-	<target name="RAA-RPM" depends="war" description="Skapa rpm för raä:s driftmiljö">
+	<target name="master">
+		<!-- notera att denna bör vara samma som för ksamsok-solr då den här strängen används i paketdeps -->
+		<property name="ksamsok.replication.rpm.suffix" value="master" />
+	</target>
+
+	<target name="slave">
+		<!-- flagga att vi bygger en replikeringslav med bara api-funktioner, triggar specialhantering -->
+		<property name="ksamsok.slave" value="true" />
+		<!-- notera att denna bör vara samma som för ksamsok-solr då den här strängen används i paketdeps -->
+		<property name="ksamsok.replication.rpm.suffix" value="slave" />
+	</target>
+
+	<target name="base-RAA-RPM" depends="war">
 
 		<!-- skapa RPM-struktur -->
 		<mkdir dir="${project.build.dir}/rpm/RPMS" />
@@ -156,7 +187,11 @@
 		<mkdir dir="${project.build.dir}/rpm/SRPMS" />
 		<mkdir dir="${project.build.dir}/rpm/INSTALL" />
 
-		<copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec" />
+		<copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec">
+			<filterset>
+				<filter token="RPM_SUFFIX" value="${ksamsok.replication.rpm.suffix}"/>
+			</filterset>
+		</copy>
 
 		<!-- kopiera in så som det ska se ut sen efter installation -->
 		<copy todir="${project.build.dir}/rpm/SOURCES/">
@@ -198,6 +233,12 @@
 			    	    </fileset>
 			    	</copy>
 			    	
+	</target>
+
+	<target name="RAA-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	</target>
+
+	<target name="RAA-RPM-SLAVE" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
 	</target>
 
 </project>

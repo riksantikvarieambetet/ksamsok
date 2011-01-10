@@ -2,6 +2,7 @@ package se.raa.ksamsok.harvest;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.Map;
 
 /**
  * Tjänst som hanterar lagring i repository.
@@ -21,16 +22,16 @@ public interface HarvestRepositoryManager {
 	boolean storeHarvest(HarvestService service, ServiceMetadata sm, File xmlFile, Timestamp ts) throws Exception;
 
 	/**
-	 * Uppdaterar lucene-index med data från repositoryt.
+	 * Uppdaterar index med data från repositoryt.
 	 * 
 	 * @param service tjänst
 	 * @param ts timestamp att uppdatera från, eller null för allt
 	 * @throws Exception
 	 */
-	void updateLuceneIndex(HarvestService service, Timestamp ts) throws Exception;
+	void updateIndex(HarvestService service, Timestamp ts) throws Exception;
 
 	/**
-	 * Uppdaterar lucene-index med data från repositoryt. Om enclosingService
+	 * Uppdaterar index med data från repositoryt. Om enclosingService
 	 * är skilt från null kommer dess avbrottsstatus att kontrolleras samtidigt
 	 * som tjänstens.
 	 * 
@@ -39,15 +40,15 @@ public interface HarvestRepositoryManager {
 	 * @param enclosingService tjänst som styr körningen
 	 * @throws Exception
 	 */
-	void updateLuceneIndex(HarvestService service, Timestamp ts, HarvestService enclosingService) throws Exception;
+	void updateIndex(HarvestService service, Timestamp ts, HarvestService enclosingService) throws Exception;
 
 	/**
-	 * Tar bort lucene-index för en tjänst (gömmer tjänsten).
+	 * Tar bort index-data för en tjänst (gömmer tjänsten).
 	 * 
 	 * @param service tjänst
 	 * @throws Exception
 	 */
-	void removeLuceneIndex(HarvestService service) throws Exception;
+	void deleteIndexData(HarvestService service) throws Exception;
 	
 	/**
 	 * Tar bort all data i repositoryt för en tjänst.
@@ -76,6 +77,14 @@ public interface HarvestRepositoryManager {
 	int getCount(HarvestService service) throws Exception;
 
 	/**
+	 * Ger antal poster i repositoryt per tjänst.
+	 * 
+	 * @return antal poster per tjänst nycklade på tjänste-id
+	 * @throws Exception
+	 */
+	Map<String, Integer> getCounts() throws Exception;
+
+	/**
 	 * Ger spoolfil för en tjänst.
 	 * @param service tjänst
 	 * @return spoolfil
@@ -94,4 +103,23 @@ public interface HarvestRepositoryManager {
 	 * Packar upp gzipfil med tidigare skörd till spool-xml-dokument
 	 */
 	public void extractGZipToSpool(HarvestService service);
+
+	/**
+	 *  Kör optimering av indexet.
+	 * @throws Exception vid fel
+	 */
+	void optimizeIndex() throws Exception;
+
+	/**
+	 * Rensar indexet - OBS mycket bättre att stoppa tomcat och rensa indexkatalogen.
+	 * 
+	 * @throws Exception
+	 */
+	void clearIndex() throws Exception;
+
+	/**
+	 * Ger spoolkatalogen.
+	 * @return spoolkatalogen
+	 */
+	File getSpoolDir();
 }

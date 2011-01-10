@@ -2,72 +2,53 @@ package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringReader;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.Token;
-import org.apache.lucene.analysis.TokenStream;
 
+import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
  * Uför ordstammning av inskickad sträng och ger tillbaka en lista med unika ordstammar.
  */
-public class Stem implements APIMethod {
+public class Stem extends AbstractAPIMethod {
 
 	public static final String METHOD_NAME = "stem";
 	public static final String PARAM_WORDS = "words";
-	private static final Logger logg = Logger.getLogger(Stem.class);
+	//private static final Logger logg = Logger.getLogger(Stem.class);
 
-	private PrintWriter writer;
 	private String words;
+	private Set<String> stems;
 
-	public Stem(PrintWriter writer, Map<String, String> params) {
-		this.writer = writer;
-		this.words = StringUtils.trimToNull(params.get(PARAM_WORDS));
+	public Stem(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
+		super(serviceProvider, writer, params);
+		stems = Collections.emptySet();
 	}
 
 	@Override
-	public void performMethod() throws MissingParameterException,
-			BadParameterException, DiagnosticException {
+	protected void extractParameters() throws MissingParameterException,
+			BadParameterException {
+		this.words = StringUtils.trimToNull(params.get(PARAM_WORDS));
 		if (words == null) {
 			throw new MissingParameterException("Missing or empty parameter (" + PARAM_WORDS + ")",
 					getClass().getName(), "Parameter " + PARAM_WORDS + " is required", false);
 		}
-		Analyzer a = ContentHelper.getSwedishAnalyzer();
-		TokenStream ts = null;
-		Set<String> stems = new HashSet<String>();
+	}
+
+	@Override
+	protected void performMethodLogic() throws DiagnosticException {
 		try {
-			ts = a.tokenStream(null, new StringReader(words));
-			Token t = new Token();
-			while((t = ts.next(t)) != null) {
-				stems.add(t.term());
-			}
-			writeHead(stems);
-			writeResult(stems);
-			writeFot();
+			stems = serviceProvider.getSearchService().analyze(words);
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO-fel uppstod", "Stem.performMethod", e.getMessage(), true);
 		} catch (Exception e) {
 			throw new DiagnosticException("Oväntat fel uppstod vid ordstammning", "Stem.performMethod", e.getMessage(), true);
-		} finally {
-			if (ts != null) {
-				try {
-					ts.close();
-				} catch (IOException e) {
-					logg.warn("Fel vid stängning av tokenström vid analys av index-text", e);
-				}
-			}
 		}
 	}
 
@@ -75,11 +56,9 @@ public class Stem implements APIMethod {
 	 * Skriver ut början av svaret
 	 * @param stemList
 	 */
-	protected void writeHead(Set<String> stemList){
-		StartEndWriter.writeStart(writer);
-		// TODO: detta är inte trådsäkert! gör dock likadant som överallt annars tills vidare
-		StartEndWriter.hasHead(true);
-		writer.println("<numberOfStems>" + stemList.size() + "</numberOfStems>");
+	@Override
+	protected void writeHeadExtra(){
+		writer.println("<numberOfStems>" + stems.size() + "</numberOfStems>");
 		writer.println("<stems>");
 	}
 	
@@ -87,8 +66,9 @@ public class Stem implements APIMethod {
 	 * skriver ut resultatet av svaret
 	 * @param termList
 	 */
-	protected void writeResult(Set<String> stemList) {
-		for (String stem: stemList) {
+	@Override
+	protected void writeResult() {
+		for (String stem: stems) {
 			writer.print("<stem>");
 			writer.print(StaticMethods.xmlEscape(stem));
 			writer.println("</stem>");
@@ -98,15 +78,13 @@ public class Stem implements APIMethod {
 	/**
 	 * Skriver ut foten av svaret
 	 */
-	protected void writeFot() {
+	@Override
+	protected void writeFootExtra() {
 		writer.println("</stems>");
 		writer.println("<echo>");
 		writer.println("<method>" + METHOD_NAME + "</method>");
 		writer.println("<words>" + StaticMethods.xmlEscape(words) + "</words>");
 		writer.println("</echo>");
-		StartEndWriter.writeEnd(writer);
-		// TODO: detta är inte trådsäkert! gör dock likadant som överallt annars tills vidare
-		StartEndWriter.hasFoot(true);
 	}
 
 }

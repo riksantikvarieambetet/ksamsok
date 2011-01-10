@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,12 +18,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.MapFieldSelector;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TopDocs;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.jrdf.JRDFFactory;
 import org.jrdf.SortedMemoryJRDFFactory;
 import org.jrdf.collection.MemMapFactory;
@@ -47,13 +47,12 @@ import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
 
+import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.api.util.parser.CQL2Lucene;
-import se.raa.ksamsok.harvest.HarvesterServlet;
+import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
 
 import com.sun.syndication.feed.module.georss.GeoRSSModule;
 import com.sun.syndication.feed.module.georss.W3CGeoModuleImpl;
@@ -73,44 +72,24 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
 
-
-
 /**
  * Metod för att få tillbaka en mediaRSS feed på ett sökresultat
  * från K-samsök
  * @author Henrik Hjalmarsson
  */
-public class RSS implements APIMethod
-{
+public class RSS extends AbstractSearchMethod {
 	/** metodens namn */
 	public static final String METHOD_NAME = "rss";
-	/** namn på parametern för sök sträng */
-	public static final String QUERY = "query";
-	/** namn på parameter för att ange antal träffar per sida */
-	public static final String HITS_PER_PAGE = "hitsPerPage";
-	/** namn på parameter för att ange startplats i sökning */
-	public static final String START_RECORD = "startRecord";
 	/** standard värde för antal träffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 100;
-	/** standard värde för startplats i sökning */
-	public static final int DEFAULT_START_RECORD = 1;
 	
 	// rss version
 	private static final String RSS_2_0 = "rss_2.0";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv",	"SE"));
-	// fält att hämta från lucene
-	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(new String[] {ContentHelper.I_IX_RDF, ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER });
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.Search");
-
-	//privata variabler
-	private String queryString;
-	private int hitsPerPage;
-	private int startRecord;
-	private PrintWriter writer;
-	private RssObject data;
+	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.RSS");
 	
 	//fabriker
-	private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	private static final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 	private static final JRDFFactory jrdfFactory = SortedMemoryJRDFFactory.getFactory();
 	
 	//URIs för att navigera RDF
@@ -122,7 +101,7 @@ public class RSS implements APIMethod
 	private static final URI URI_ITEM_TITLE = URI.create(URI_PREFIX_KSAMSOK + "itemTitle");
 	private static final URI URI_ITEM_KEY_WORD = URI.create(URI_PREFIX_KSAMSOK + "itemKeyWord");
 	private static final URI URI_BUILD_DATE = URI.create(URI_PREFIX_KSAMSOK + "buildDate");
-	
+
 	/**
 	 * Skapar ett objekt av RSS
 	 * @param queryString CQL query sträng för att söka mot indexet
@@ -130,98 +109,72 @@ public class RSS implements APIMethod
 	 * @param startRecord vart i resultatet sökningen skall starta
 	 * @param writer används för att skriva svaret
 	 */
-	public RSS(String queryString, int hitsPerPage, int startRecord,
-			PrintWriter writer)
-	{
-		this.queryString = queryString;
-		this.writer = writer;
-		if(startRecord < 1) { 
-			this.startRecord = DEFAULT_START_RECORD;
-		}else {
-			this.startRecord = startRecord;
-		}
-		if(hitsPerPage > 500 || hitsPerPage < 1) {
-			this.hitsPerPage = DEFAULT_HITS_PER_PAGE;
-		}else {
-			this.hitsPerPage = hitsPerPage;
-		}
+	public RSS(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
+		super(serviceProvider, writer, params);
 	}
 
 	@Override
-	public void performMethod() throws BadParameterException,
-			DiagnosticException
-	{
-		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher();
-		try {
-			doSearch(searcher);
-		}finally {
-			LuceneServlet.getInstance().returnIndexSearcher(searcher);
-		}
+	protected int getDefaultHitsPerPage() {
+		return DEFAULT_HITS_PER_PAGE;
 	}
-	
-	/**
-	 * utför sökning och skriver svaret
-	 * @param searcher IndexSearcher för att söka i index
-	 * @throws DiagnosticException
-	 * @throws BadParameterException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws FeedException
-	 */
-	protected void doSearch(IndexSearcher searcher) 
-		throws DiagnosticException, BadParameterException
-	{
+
+	@Override
+	protected void performMethodLogic() throws DiagnosticException {
 		try {
-			Query q = createQuery();
-			int nDocs = startRecord - 1 + hitsPerPage;
-			TopDocs hits = searcher.search(q, nDocs == 0 ? 1 : nDocs);
-			int numberOfDocs = hits.totalHits;
-			doSyndFeed(numberOfDocs, nDocs, searcher, hits);
-		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO fel", "RSS.doSearch", e.getMessage(), true);
+			SolrQuery q = createQuery();
+			q.setRows(hitsPerPage);
+			// start är 0-baserad
+			q.setStart(startRecord - 1);
+			// fält att hämta
+			q.addField(ContentHelper.IX_ITEMID);
+			q.addField(ContentHelper.I_IX_RDF);
+			QueryResponse qr = serviceProvider.getSearchService().query(q);
+			hitList = qr.getResults();
+		} catch (SolrServerException e) {
+			throw new DiagnosticException("Oväntat IO-fel", "RSS.doSearch", e.getMessage(), true);
+		} catch (BadParameterException e) {
+			throw new DiagnosticException("Oväntat parserfel uppstod", "RSS.doSearch", e.getMessage(), true);
 		}
+
 	}
-	
-	/**
-	 * skapar och skriver en RSS feed
-	 * @param numberOfDocs
-	 * @param nDocs
-	 * @param searcher
-	 * @param hits
-	 * @throws DiagnosticException
-	 */
-	private void doSyndFeed(int numberOfDocs, int nDocs, IndexSearcher searcher, TopDocs hits) 
-		throws DiagnosticException 
-	{
+
+	@Override
+	protected void writeHead() {
+		// vi gör inget här
+	}
+
+	@Override
+	protected void writeFoot() {
+		// vi gör inget här
+	}
+
+	@Override
+	protected void writeResult() throws DiagnosticException {
 		try {
 			SyndFeed feed = getFeed();
-			feed.setEntries(getEntries(numberOfDocs, nDocs, searcher, hits));
+			feed.setEntries(getEntries(hitList));
 			SyndFeedOutput output = new SyndFeedOutput();
 			output.output(feed, writer);
-		} catch (CorruptIndexException e) {
-			throw new DiagnosticException("Nånting gick fel : /", "RSS.doSyndFeed", e.getMessage(), true);
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO fel", "RSS.doSyndFeed", e.getMessage(), true);
 		} catch (FeedException e) {
 			throw new DiagnosticException("Något gick fel : /", "RSS.doSyndFeed", e.getMessage(), true);
 		}
 	}
-	
+
 	/**
 	 * Skapar query
 	 * @return Ett Lucene query
 	 * @throws DiagnosticException
 	 * @throws BadParameterException
 	 */
-	private Query createQuery() 
-		throws DiagnosticException, BadParameterException
-	{
-		Query q = null;
+	private SolrQuery createQuery() throws DiagnosticException, BadParameterException {
+		SolrQuery q = new SolrQuery();
 		try {
 			CQLParser parser = new CQLParser();
 			CQLNode rootNode = parser.parse(queryString);
-			q = CQL2Lucene.makeQuery(rootNode);
+			String qs = CQL2Solr.makeQuery(rootNode);
+			q.setQuery(qs);
 		} catch (CQLParseException e) {
 			throw new DiagnosticException("Parser fel. Kontrollera query sträng", "RSS.createQuery", null, false);
 		} catch (IOException e) {
@@ -238,29 +191,22 @@ public class RSS implements APIMethod
 	 * @param hits
 	 * @param entries
 	 * @return
-	 * @throws CorruptIndexException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
 	 * @throws DiagnosticException 
 	 */
-	protected List<SyndEntry> getEntries(int numberOfDocs, int nDocs, 
-			IndexSearcher searcher, TopDocs hits) 
-		throws DiagnosticException
-	{
+	protected List<SyndEntry> getEntries(SolrDocumentList hits)
+		throws DiagnosticException {
 		List<SyndEntry> entries = new Vector<SyndEntry>();
 		try {
-			for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++) {
+			for (SolrDocument d: hits) {
+				String uri = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
 				String content = null;
-				Document doc = searcher.doc(hits.scoreDocs[i].doc, RDF_FIELDS);
-				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
-				byte[] xmlData = doc.getBinaryValue(ContentHelper.I_IX_RDF);
+				byte[] xmlData = (byte[]) d.getFieldValue(ContentHelper.I_IX_RDF);
 				if (xmlData != null) {
 					content = new String(xmlData, "UTF-8");
 				}
 				// TODO: NEK ta bort när allt är omindexerat
 				if (content == null) {
-					content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(uri);
+					content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
 				}
 				if (content != null) {
 					entries.add(getEntry(content));	
@@ -268,8 +214,6 @@ public class RSS implements APIMethod
 					logger.warn("Hittade inte rdf-data för " + uri);
 				}
 			}
-		} catch (CorruptIndexException e) {
-			throw new DiagnosticException("Nånting gick fel : /", "RSS.getEntries", e.getMessage(), true);
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO fel", "RSS.getEntries", e.getMessage(), true);
 		} catch(Exception e) {
@@ -282,18 +226,13 @@ public class RSS implements APIMethod
 	 * skapar ett entry till RSS feed
 	 * @param content XML data som en sträng
 	 * @return ett entry med data från XML sträng
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
 	 * @throws DiagnosticException 
 	 */
 	@SuppressWarnings("unchecked")
-	protected SyndEntry getEntry(String content) 
-		throws DiagnosticException
-	{
+	protected SyndEntry getEntry(String content) throws DiagnosticException {
 		SyndEntry entry = new SyndEntryImpl();
 		try {
-			data = getData(content);
+			RssObject data = getData(content);
 			entry.setTitle(data.getTitle());
 			entry.setLink(data.getLink());
 			SyndContent syndContent = new SyndContentImpl();
@@ -302,14 +241,14 @@ public class RSS implements APIMethod
 			entry.setDescription(syndContent);
 			String thumb = data.getThumbnailUrl();
 			String image = data.getImageUrl();
-			if(data.getCoords() != null) {
+			if (data.getCoords() != null) {
 				GeoRSSModule geoRssModule = getGeoRssModule(data.getCoords());
 				if(geoRssModule != null) {
 					entry.getModules().add(geoRssModule);
 				}
 			}
 			if (!StringUtils.isEmpty(thumb) && !StringUtils.isEmpty(image)) {
-				entry.getModules().add(getMediaModule(thumb, image));
+				entry.getModules().add(getMediaModule(data, thumb, image));
 			}
 			synchronized (sdf) {
 				if(data.getPublishDate() != null) {
@@ -496,7 +435,7 @@ public class RSS implements APIMethod
 		org.w3c.dom.Document doc = null;
 		try {
 			reader = new StringReader(presentationBlock);
-			DocumentBuilder builder = factory.newDocumentBuilder();
+			DocumentBuilder builder = domFactory.newDocumentBuilder();
 			doc = builder.parse(new InputSource(reader));
 		} catch (ParserConfigurationException e) {
 			throw new DiagnosticException("Internt fel", "RSS.getDOMDocument", e.getMessage(), true);
@@ -603,12 +542,13 @@ public class RSS implements APIMethod
 	
 	/**
 	 * Skapar och sätter värden för en media module om bilder finns
+	 * @param data rss-objekt
 	 * @param thumbnailUrl
 	 * @param imageUrl
 	 * @return Mediamodule med tumnagel och bild
 	 * @throws DiagnosticException 
 	 */
-	protected MediaEntryModule getMediaModule(String thumbnailUrl, String imageUrl) 
+	protected MediaEntryModule getMediaModule(RssObject data, String thumbnailUrl, String imageUrl) 
 		throws DiagnosticException
 	{
 		String thumb = StaticMethods.encode(thumbnailUrl);
@@ -616,7 +556,7 @@ public class RSS implements APIMethod
 		MediaEntryModuleImpl mediaModule = new MediaEntryModuleImpl();
 		try 
 		{	
-			mediaModule.setMetadata(getMetadata(thumb, mediaModule));
+			mediaModule.setMetadata(getMetadata(data, thumb, mediaModule));
 			mediaModule.setMediaContents(getImage(image));
 		} catch (URISyntaxException e)
 		{
@@ -644,13 +584,14 @@ public class RSS implements APIMethod
 	
 	/**
 	 * returnerar ett Metadata objekt med URL till en tumnagel bild
+	 * @param data rss-objekt
 	 * @param thumb URL till tumnagel
 	 * @param mediaModule MediaModule som används
 	 * @return Metadata objekt med tumnagel
 	 * @throws URISyntaxException
 	 * @throws DiagnosticException 
 	 */
-	protected Metadata getMetadata(String thumb, MediaEntryModule mediaModule) 
+	protected Metadata getMetadata(RssObject data, String thumb, MediaEntryModule mediaModule) 
 		throws URISyntaxException, DiagnosticException
 	{
 		Metadata metadata = mediaModule.getMetadata();

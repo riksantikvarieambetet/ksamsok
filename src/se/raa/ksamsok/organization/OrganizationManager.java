@@ -19,14 +19,14 @@ import se.raa.ksamsok.harvest.DBUtil;
  * information
  * @author Henrik Hjalmarsson
  */
-public class OrganizationDatabaseHandler extends DBBasedManagerImpl
+public class OrganizationManager extends DBBasedManagerImpl
 {
 
 	/**
 	 * Skapar en ny databashanterare
 	 * @param ds datakälla som skall användas
 	 */
-	public OrganizationDatabaseHandler(DataSource ds)
+	public OrganizationManager(DataSource ds)
 	{
 		super(ds);
 	}

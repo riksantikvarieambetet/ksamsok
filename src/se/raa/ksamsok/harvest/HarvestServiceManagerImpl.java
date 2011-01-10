@@ -33,6 +33,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	private static final String JOBGROUP_HARVESTERS = "harvesters";
 	private static final String TRIGGER_SUFFIX = "-trigger";
+	private static final String OPTIMIZE_TYPE = "_LUCENE_OPTIMIZE"; // TODO: ligger i db så kan inte bara ändras till solr
 
 	protected Scheduler scheduler;
 	protected HarvestRepositoryManager hrm;
@@ -45,8 +46,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	protected void init() throws Exception {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Init, start");
+		if (logger.isInfoEnabled()) {
+			logger.info("Startar HarvestServiceManager");
 		}
 		Connection c = null;
 		try {
@@ -70,26 +71,26 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			scheduleJob(service);
 		}
 		// skapa "tjänst" om den inte finns
-		HarvestService luceneOptimizeService = getService(SERVICE_LUCENE_OPTIMIZE);
-		if (luceneOptimizeService != null) {
-			scheduleJob(luceneOptimizeService);
+		HarvestService indexOptimizeService = getService(SERVICE_INDEX_OPTIMIZE);
+		if (indexOptimizeService != null) {
+			scheduleJob(indexOptimizeService);
 		} else {
 			HarvestService service = newServiceInstance();
-			service.setId(SERVICE_LUCENE_OPTIMIZE);
-			service.setServiceType("_LUCENE_OPTIMIZE");
-			service.setName("Lucene index optimizer");
+			service.setId(SERVICE_INDEX_OPTIMIZE);
+			service.setServiceType(OPTIMIZE_TYPE);
+			service.setName("Index optimizer");
 			service.setCronString("0 30 6 * * ? 2049");
 			createService(service);
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Init, klart");
+		if (logger.isInfoEnabled()) {
+			logger.info("HarvestServiceManager startad");
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	protected void destroy() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Destroy, start");
+		if (logger.isInfoEnabled()) {
+			logger.info("Stoppar HarvestServiceManager");
 		}
 		try {
 			for (HarvestService service: getServices()) {
@@ -132,8 +133,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				logger.error("Error at scheduler shutdown", se);
 			}
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Destroy, done");
+		if (logger.isInfoEnabled()) {
+			logger.info("HarvestServiceManager stoppad");
 		}
 	}
 
@@ -201,7 +202,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    try {
 	    	c = ds.getConnection();
 	    	pst = c.prepareStatement("select * from harvestservices where serviceId <> '" +
-	    			SERVICE_LUCENE_OPTIMIZE + "' order by name");
+	    			SERVICE_INDEX_OPTIMIZE + "' order by name");
 	    	rs = pst.executeQuery();
 	    	while (rs.next()) {
 	    		HarvestService service = newServiceInstance(rs);
@@ -251,8 +252,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	public void triggerReindexAll() throws Exception {
-		JobDetail jd = new JobDetail(SERVICE_LUCENE_REINDEX, JOBGROUP_HARVESTERS, LuceneReindexAllJob.class);
-		scheduler.scheduleJob(jd, new SimpleTrigger(SERVICE_LUCENE_REINDEX + TRIGGER_SUFFIX, null));
+		JobDetail jd = new JobDetail(SERVICE_INDEX_REINDEX, JOBGROUP_HARVESTERS, ReindexAllJob.class);
+		scheduler.scheduleJob(jd, new SimpleTrigger(SERVICE_INDEX_REINDEX + TRIGGER_SUFFIX, null));
 	}
 
 	public boolean interruptHarvest(HarvestService service) throws Exception {
@@ -263,7 +264,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	public boolean interruptReindexAll() throws Exception {
 		HarvestService service = newServiceInstance();
-		service.setId(SERVICE_LUCENE_REINDEX);
+		service.setId(SERVICE_INDEX_REINDEX);
 		return interruptHarvest(service);
 	}
 
@@ -463,7 +464,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	@SuppressWarnings("unchecked")
 	public String getJobStatus(HarvestService service) {
 		CronTrigger t = null;
-		if (!SERVICE_LUCENE_REINDEX.equals(service.getId())) {
+		if (!SERVICE_INDEX_REINDEX.equals(service.getId())) {
 			JobDetail jd = null;
 			try {
 				jd = scheduler.getJobDetail(service.getId(), JOBGROUP_HARVESTERS);
@@ -550,8 +551,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			clazz = SamsokSimpleHarvestJob.class;
 		} else if ("OAI-PMH-SAMSOK".equalsIgnoreCase(type)) {
 			clazz = SamsokOAIPMHHarvestJob.class;
-		} else if ("_LUCENE_OPTIMIZE".equalsIgnoreCase(type)) {
-			clazz = LuceneOptimizeJob.class;
+		} else if (OPTIMIZE_TYPE.equalsIgnoreCase(type)) {
+			clazz = IndexOptimizeJob.class;
 			//jobGroup = JOBGROUP_LUCENE;
 		} else {
 			logger.error("Could not create job detail for " + service);

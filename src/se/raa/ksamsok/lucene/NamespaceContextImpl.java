@@ -28,7 +28,7 @@ public class NamespaceContextImpl implements NamespaceContext {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes" })
 	public Iterator getPrefixes(String namespaceURI) {
 		// EJ IMPLEMENTERAD (används dock ej i vårt fall)
 		return null;

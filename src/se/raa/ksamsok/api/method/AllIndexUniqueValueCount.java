@@ -1,175 +1,158 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.CachingWrapperFilter;
-import org.apache.lucene.search.Filter;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.QueryWrapperFilter;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.WildcardQuery;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
 
+import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.util.StartEndWriter;
-import se.raa.ksamsok.api.util.parser.CQL2Lucene;
+import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
 
 /**
  * Utför metoden allIndexUniqueValue count som returnerar en lista över index
  * och hur många unika värden dessa index har som matchar givet query.
  * @author Henrik Hjalmarsson
  */
-public class AllIndexUniqueValueCount extends Facet
-{	
-	@SuppressWarnings("unused")
+public class AllIndexUniqueValueCount extends AbstractAPIMethod {
+
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.method.AllIndexUniqueValueCount");
-	
+
 	/** metodens namn */
 	public static final String METHOD_NAME = "allIndexUniqueValueCount";
-	
+	/** namnet på parametern som håller medskickade index */
+	public static final String INDEX_PARAMETER = "index";
+	/** parameternamn där query skickas in */
+	public static final String QUERY_PARAMS = "query";
+
+
+	private static final Map<String, String> defaultIndexMap;
+
+	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
+
+	static {
+		// kopierat från LuceneServlet
+		Map<String, String> im = new HashMap<String, String>();
+		try {
+			String fileName = PATH + "index.xml";
+			DataInputStream input = new DataInputStream(ContentHelper.class.getResourceAsStream(fileName));
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document xmlDocument = builder.parse(input);
+			xmlDocument.getDocumentElement().normalize();
+			NodeList indexList = xmlDocument.getElementsByTagName("index");
+			for(int i = 0; i < indexList.getLength(); i++) {
+				Node node = indexList.item(i);
+				im.put(node.getTextContent(),"*");
+			}
+		} catch (Exception e) {
+			logger.error("Fel vid inläsning av default-index", e);
+		}
+		defaultIndexMap = Collections.unmodifiableMap(im);
+	}
+
+	protected Map<String,String> indexMap;
+	protected String queryString;
+
+	protected List<FacetField> facetFields = Collections.emptyList();
+
 	/**
 	 * skapar ett objekt av AllIndexUniqueValueCount från given query sträng
 	 * och writer som skall skriva resultatet.
 	 * @param queryString
 	 * @param writer
 	 */
-	public AllIndexUniqueValueCount(String queryString, PrintWriter writer,
-			Map<String,String> indexMap)
-	{
-		super(indexMap, writer, queryString);
-	}
-	
-	@Override
-	public void performMethod()
-		throws DiagnosticException, BadParameterException
-	{
-		IndexSearcher searcher = 
-			LuceneServlet.getInstance().borrowIndexSearcher();
-		try {
-			if(indexMap == null) {
-				indexMap = LuceneServlet.getInstance().getIndexMap();
-			}
-			CQLParser parser = new CQLParser();
-			CQLNode node = parser.parse(queryString);
-			Query q1 = CQL2Lucene.makeQuery(node);
-			doAllIndexUniqueValueCount(searcher, indexMap, q1);
-		} catch (IOException e) {
-			throw new DiagnosticException("oväntat IO fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
-		} catch (CQLParseException e) {
-			throw new DiagnosticException("Oväntat parser fel uppstod. Detta beror troligen på att CQL syntax ej följs. Var god kontrollera query sträng eller kontakta systemadministratör för söksystemet du använder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
-		}finally {
-			LuceneServlet.getInstance().returnIndexSearcher(searcher);
-		}
-	} 
-	
-	private void checkIfIndexExists(String index) 
-		throws BadParameterException
-	{
-		if(!ContentHelper.indexExists(index)) {
-			throw new BadParameterException("Indexet " + index + " existerar inte.", "AllIndexUniqueValueCount.doAllindexUniqueValueCount", null, false);
-		}
-	}
-	
-	private Query getQuery(IndexSearcher searcher, String index) 
-		throws BadParameterException, IOException
-	{
-		checkIfIndexExists(index);
-		Term term = new Term(index, "*");
-		Query q = new WildcardQuery(term);
-		return searcher.rewrite(q);
-	}
-	
-	private void writeHead()
-	{
-		StartEndWriter.writeStart(writer);
-		StartEndWriter.hasHead(true);
-	}
-	
-	private void writeFoot()
-	{
-		StartEndWriter.writeEnd(writer);
-		StartEndWriter.hasFoot(true);
-	}
-	
-	private int incrimentIfRecordsExists(IndexSearcher searcher, 
-			int counter, Term term, Filter qwf) 
-		throws IOException
-	{
-		TermQuery query = new TermQuery(term);
-		TopDocs topDocs = searcher.search(query, qwf, 1);
-		if(topDocs.totalHits > 0) {
-			counter++;
-		}
-		return counter;
+	public AllIndexUniqueValueCount(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
+		super(serviceProvider, writer, params);
 	}
 
-	/**
-	 * utför allIndexUniqueValueCount
-	 * @param searcher
-	 * @param indexMap
-	 * @param q1
-	 * @throws DiagnosticException
-	 * @throws BadParameterException
-	 */
-	private void doAllIndexUniqueValueCount(IndexSearcher searcher,
-			Map<String,String> indexMap, Query q1)
-		throws DiagnosticException, BadParameterException
-	{
-		int numq = 0;
-		// använd frågan som ett filter och cacha upp filterresultatet
-		Filter qwf = new CachingWrapperFilter(new QueryWrapperFilter(q1));
-		String indexName = null;
-		try {
-			writeHead();
-			for(String index : indexMap.keySet()) {
-				indexName = index;
-				Query q = getQuery(searcher, index);
-				Set<Term> termSet = new HashSet<Term>();
-				q.extractTerms(termSet);
-				++numq; // inte en ren fråga, men borde räknas ändå
-				int counter = 0;
-				for(Term t : termSet) {
-					++numq;
-					counter = incrimentIfRecordsExists(searcher, counter, t, qwf);
-				}
-				if(counter > 0) {
-					writeResult(index,counter);
-				}
-			}
-			writeFoot();
-		}catch(BooleanQuery.TooManyClauses e) {
-			throw new BadParameterException("indexet " + indexName + " har för många unika värden", "AllIndexUniqueValueCount.doAllIndexUniqueValueCount", null, false);
+	@Override
+	protected void extractParameters() throws MissingParameterException,
+			BadParameterException {
+		queryString = getQueryString(params.get(QUERY_PARAMS));
+		String indexString = params.get(INDEX_PARAMETER);
+		if (indexString != null) {
+			indexMap = getIndexMapSingleValue(indexString, "*");
 		}
-		catch(IOException e) {
-			throw new DiagnosticException("Oväntat IO fel uppstod", "AllIndexUniqueValueCount.doAllIndexUniqueValueCount", e.getMessage(), true);
+		if (indexMap == null) {
+			indexMap = defaultIndexMap;
+		} else {
+			for (Entry<String, String> indexEntry: indexMap.entrySet()) {
+				checkIfIndexExists(indexEntry.getKey());
+			}
+		}
+
+	}
+	@Override
+	protected void performMethodLogic() throws DiagnosticException {
+		try {
+			SolrQuery query = new SolrQuery();
+			CQLParser parser = new CQLParser();
+			CQLNode node = parser.parse(queryString);
+			String solrQueryString = CQL2Solr.makeQuery(node);
+
+			query.setQuery(solrQueryString);
+			query.setFacet(true);
+			query.setFacetMinCount(1);
+			query.setRows(0);
+			for (Entry<String, String> entry: indexMap.entrySet()) {
+				query.addFacetField(entry.getKey());
+			}
+			QueryResponse qr = serviceProvider.getSearchService().query(query);
+			facetFields = qr.getFacetFields();
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
+		} catch (SolrServerException e) {
+			throw new DiagnosticException("Oväntat fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
+		} catch (CQLParseException e) {
+			throw new DiagnosticException("Oväntat parserfel uppstod. Detta beror troligen på att CQL syntax ej följs. Var god kontrollera query sträng eller kontakta systemadministratör för söksystemet du använder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
+		} catch (BadParameterException e) {
+			throw new DiagnosticException("Oväntat parserfel uppstod. Detta beror troligen på att CQL syntax ej följs. Var god kontrollera query sträng eller kontakta systemadministratör för söksystemet du använder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
+		}
+	} 
+
+	private void checkIfIndexExists(String index) throws BadParameterException {
+		if (!ContentHelper.indexExists(index)) {
+			throw new BadParameterException("Indexet " + index + " existerar inte.", "AllIndexUniqueValueCount.doAllindexUniqueValueCount", null, false);
 		}
 	}
 
 	/**
 	 * skriver ut resultatet
-	 * @param index
-	 * @param count
 	 */
-	private void writeResult(String index, int count)
-	{
-		writer.println("<index>");
-		writer.println("<name>" + index + "</name>");
-		writer.println("<uniqueValues>" + count + "</uniqueValues>");
-		writer.println("</index>");
-		
+	@Override
+	protected void writeResult() {
+		for (FacetField ff: facetFields) {
+			int vc = ff.getValueCount();
+			if (vc > 0) {
+				writer.println("<index>");
+				writer.println("<name>" + ff.getName() + "</name>");
+				writer.println("<uniqueValues>" + vc + "</uniqueValues>");
+				writer.println("</index>");
+			}
+		}
+
 	}
 }

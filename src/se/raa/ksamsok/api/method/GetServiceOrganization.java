@@ -1,88 +1,76 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
+import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.organization.Organization;
-import se.raa.ksamsok.organization.OrganizationDatabaseHandler;
 import se.raa.ksamsok.organization.Service;
 
 /**
  * Metod som hämtar information om institutioner och deras tjänster 
  * @author Henrik Hjalmarsson
  */
-public class GetServiceOrganization implements APIMethod
-{
+public class GetServiceOrganization extends AbstractAPIMethod {
 	/** Metodens namn */
 	public static final String METHOD_NAME = "getServiceOrganization";
 	/** namn på parametern som håller institutions kortnamn */
 	public static final String VALUE = "value";
-	
+
 	//privata statiska
 	private static final String ALL = "all";
-	private static final String DATASOURCE_NAME = "harvestdb";
-	
+
 	//privata variabler
-	private PrintWriter writer;
 	private String value;
-	private DataSource ds = null;
-	
+	protected List<Organization> orgList = Collections.emptyList();
+
 	/**
 	 * Skapar ett objekt av GetServiceOrganization
 	 * @param writer Skrivaren som används för att skriva resultatet
 	 * @param value kortnamn på organisationen som skall hämtas data om
 	 */
-	public GetServiceOrganization(PrintWriter writer, String value)
-	{
-		this.writer = writer;
-		this.value = value;
-		try {
-			Context ctx = new InitialContext();
-			Context envctx =  (Context) ctx.lookup("java:comp/env");
-			ds =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-		}catch(NamingException e) {
-			e.printStackTrace();
-		}
+	public GetServiceOrganization(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
+		super(serviceProvider, writer, params);
 	}
-	
+
 	@Override
-	public void performMethod() 
-		throws MissingParameterException, BadParameterException, 
-			DiagnosticException
-	{
-		OrganizationDatabaseHandler organizationDatabaseHandler = new OrganizationDatabaseHandler(ds);
-		StartEndWriter.writeStart(writer);
-		if(value.equals(ALL)) {
-			List<Organization> orgList = organizationDatabaseHandler.getAllOrganizations();
-			for(int i = 0; i < orgList.size(); i++) {
-				Organization org = orgList.get(i);
-				writeInstitution(org);
-			}
-		}else {
-			Organization org = organizationDatabaseHandler.getOrganization(value, true);
-			if(org != null) {
-				writeInstitution(org);
+	protected void extractParameters() throws MissingParameterException,
+			BadParameterException {
+		value = params.get(GetServiceOrganization.VALUE);
+	}
+
+	@Override
+	protected void performMethodLogic() throws DiagnosticException {
+		if (value.equals(ALL)) {
+			orgList = serviceProvider.getOrganizationManager().getAllOrganizations();
+		} else {
+			Organization org = serviceProvider.getOrganizationManager().getOrganization(value, true);
+			if (org != null) {
+				orgList = new ArrayList<Organization>();
+				orgList.add(org);
 			}
 		}
-		StartEndWriter.writeEnd(writer);
 	}
-	
+
+	@Override
+	protected void writeResult() {
+		for (Organization org: orgList) {
+			writeInstitution(org);
+		}
+	}
+
 	/**
 	 * Skriver ut xml data om en institution
 	 * @param org organisationen som skall skrivas ut
 	 */
-	private void writeInstitution(Organization org)
-	{
+	protected void writeInstitution(Organization org) {
 		writer.println("<institution>");
 		writer.println("<kortnamn>" + StaticMethods.xmlEscape(org.getServ_org() != null ? org.getServ_org() : "") + "</kortnamn>");
 		writer.println("<namnswe>" + StaticMethods.xmlEscape(org.getNamnSwe() != null ? org.getNamnSwe() : "") + "</namnswe>");
@@ -99,7 +87,7 @@ public class GetServiceOrganization implements APIMethod
 		writer.println("<lowressurl>" + StaticMethods.xmlEscape(org.getLowressUrl() != null ? org.getLowressUrl() : "") + "</lowressurl>");
 		writer.println("<thumbnailurl>" + StaticMethods.xmlEscape(org.getThumbnailUrl() != null ? org.getThumbnailUrl() : "") + "</thumbnailurl>");
 		writer.println("<services>");
-		for(int i = 0; org.getServiceList() != null && i < org.getServiceList().size(); i++) {
+		for (int i = 0; org.getServiceList() != null && i < org.getServiceList().size(); i++) {
 			Service service = org.getServiceList().get(i);
 			writer.println("<service>");
 			writer.println("<namn>" + StaticMethods.xmlEscape(service.getNamn() != null ? service.getNamn() : "") + "</namn>");

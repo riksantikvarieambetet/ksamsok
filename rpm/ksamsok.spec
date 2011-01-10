@@ -1,8 +1,8 @@
 %define ver 1.0.1
-%define rel 01
+%define rel 02
 
-Summary: Raä K-Samsök, centralnod
-Name: raa-ksamsok_app
+Summary: Raä K-Samsök, centralnod (@RPM_SUFFIX@)
+Name: raa-ksamsok_app_@RPM_SUFFIX@
 Version: %{ver}
 Release: %{rel}
 Packager: Borje Lewin <borje.lewin@raa.com>
@@ -13,10 +13,10 @@ Group: System Environment/Daemons
 # provar att kommentera bort BuildArchitectures: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 
-Requires: raa-tomcat8080 >= 6.0.18
+Requires: raa-tomcat8080 >= 6.0.18, raa-ksamsok_solr_@RPM_SUFFIX@ >= 1.0.0
 
 %description
-Raä K-Samsok, centralnod
+Raä K-Samsok, centralnod (@RPM_SUFFIX@)
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -49,9 +49,6 @@ sleep 5
 rm -rf /usr/local/tomcat8080/webapps/ksamsok
 
 %post
-# skapa indexkatalogen och sätt rättigheter
-mkdir -p -m755 /var/lucene-index/ksamsok
-chown tomcat:nobody /var/lucene-index/ksamsok
 /sbin/service tomcat8080.init start
 
 %preun
@@ -75,6 +72,10 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/jstl.jar
 
 %changelog
+* Mon Dec 6 2010 ant
+- Master/slave
+* Wed Dec 1 2010 ant
+- Beroende på ksamok-solr och bort med lucenes indexkatalog
 * Fri Dec 11 2009 ant
 - Uppdaterat till nya RPM-metodiken
 * Tue Jul 28 2009 ant

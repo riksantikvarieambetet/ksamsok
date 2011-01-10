@@ -2,65 +2,38 @@ package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.MapFieldSelector;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
-import org.apache.lucene.search.TopDocs;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
+import org.z3950.zing.cql.CQLTermNode;
 
+import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.util.StartEndWriter;
+import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.api.util.parser.CQL2Lucene;
-import se.raa.ksamsok.api.util.statisticLogg.StatisticLoggData;
-import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
-import se.raa.ksamsok.harvest.HarvestRepositoryManager;
-import se.raa.ksamsok.harvest.HarvesterServlet;
+import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
+import se.raa.ksamsok.statistic.StatisticLoggData;
 
 /**
  * Hanterar sökningar efter objekt
  * @author Henrik Hjalmarsson
  */
-@SuppressWarnings("unused")
-public class Search implements APIMethod
-{
-	protected String queryString = null;
-	protected PrintWriter writer = null;
-	protected int hitsPerPage;
-	protected int startRecord;
-	protected String sort = null;
-	protected boolean sortDesc = false;
-	protected String recordSchema = null;
-	private String APIKey;
-
+public class Search extends AbstractSearchMethod {
 	/** standardvärdet för antalet träffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 50;
-	/** standardvärdet för startpositionen i sökningen */
-	public static final int DEFAULT_START_RECORD = 1;
 	/** metodnamn som anges för att använda denna klass */
 	public static final String METHOD_NAME = "search";
-	/** parameternamn där sökparametrarna skall ligga när en sökning görs */
-	public static final String SEARCH_PARAMS = "query";
-	/** parameternamnet som anges för att välja antalet träffar per sida */
-	public static final String HITS_PER_PAGE = "hitsPerPage";
-	/** parameternamnet som anges för att välja startRecord */
-	public static final String START_RECORD = "startRecord";
 	/** parameternamn för sort */
 	public static final String SORT = "sort";
 	/** parameternamn för sort configuration */
@@ -74,23 +47,16 @@ public class Search implements APIMethod
 	/** parameternamn för record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
-	public static final String RECORD_SCHEMA_BASE =
-		"http://kulturarvsdata.se/";
+	public static final String RECORD_SCHEMA_BASE = "http://kulturarvsdata.se/";
 	
-	private static final Logger logger = Logger.getLogger(
-			"se.raa.ksamsok.api.Search");
-	// fält att hämta från lucene
-	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(
-			new String[] {
-					ContentHelper.I_IX_RDF,
-					ContentHelper.CONTEXT_SET_REC + "."
-							+ ContentHelper.IX_REC_IDENTIFIER });
-	private static final MapFieldSelector PRES_FIELDS = new MapFieldSelector(
-			new String[] {
-					ContentHelper.I_IX_PRES,
-					ContentHelper.CONTEXT_SET_REC + "."
-							+ ContentHelper.IX_REC_IDENTIFIER });
-	
+	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.Search");
+
+	protected String sort = null;
+	protected boolean sortDesc = false;
+	protected String recordSchema = null;
+	protected String apiKey;
+	protected String binDataField = null;
+
 	/**
 	 * skapar ett Search objekt
 	 * @param params sökparametrar
@@ -98,157 +64,106 @@ public class Search implements APIMethod
 	 * @param startRecord startposition i sökningen
 	 * @param writer skrivaren som skall användas för att skriva svaret
 	 */
-	public Search(String queryString, int hitsPerPage, int startRecord,
-				PrintWriter writer, String APIKey)
-	{
-		this.APIKey = APIKey;
-		this.queryString = queryString;
-		this.writer = writer;
-		//kontrollerar att hitsPerPage och startRecord har tillåtna värden
-		if(hitsPerPage < 1 || hitsPerPage > 500) {
-			this.hitsPerPage = DEFAULT_HITS_PER_PAGE;
-		}else {
-			this.hitsPerPage = hitsPerPage;
-		}
-		if(startRecord < 1) {
-			this.startRecord = DEFAULT_START_RECORD;
-		}else {
-			this.startRecord = startRecord;
-		}
-	}
-	
-	/**
-	 * Anger vilket index resultatet skall sorteras efter
-	 * @param field
-	 */
-	public void sortBy(String field)
-	{
-		sort = field;
-	}
-	
-	/**
-	 * Anger om resultatet skall sorteras descending eller inte
-	 * @param b
-	 */
-	public void sortDesc(boolean b)
-	{
-		sortDesc = b;
-	}
-	
-	/**
-	 * Anger vilket record schema som skall användas
-	 * @param recordSchema
-	 */
-	public void setRecordSchema(String recordSchema)
-	{
-		this.recordSchema = recordSchema;
-	}
-	
-	/**
-	 * sätter recordSchema
-	 */
-	protected void setRecordSchema()
-	{
-		if(recordSchema != null) {
-			recordSchema = RECORD_SCHEMA_BASE + recordSchema + "#";
-		}
+	public Search(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
+		super(serviceProvider, writer, params);
 	}
 
 	@Override
-	public void performMethod()
-		throws BadParameterException, DiagnosticException
-	{	
-		Query query = createQuery();
-		IndexSearcher searcher = LuceneServlet.getInstance().borrowIndexSearcher(); 
-		TopDocs hits = null;
-		int numberOfDocs = 0;
-		try {
-			loggData(query, searcher);
-			int nDocs = startRecord - 1 + hitsPerPage;
-			//här görs sökningen
-			if(sort == null) {
-				hits = searcher.search(query, nDocs == 0 ? 1 : nDocs);
-			}else {
-				if(!ContentHelper.indexExists(sort)) {
-					throw new BadParameterException("sorterings indexet " + sort + " finns inte.", "Search.performMethod", null, false);
-				}
-				Sort s = new Sort(new SortField(sort, sortDesc));
-				hits = searcher.search(query, null, nDocs == 0 ? 1 : nDocs, s);
+	protected void extractParameters() throws MissingParameterException,
+			BadParameterException {
+		super.extractParameters();
+		this.apiKey = params.get(APIMethod.API_KEY_PARAM_NAME);
+		sort = params.get(Search.SORT);
+		if (sort != null) {
+			if (!ContentHelper.indexExists(sort)) {
+				throw new BadParameterException("sorterings indexet " + sort + " finns inte.", "Search.performMethod", null, false);
 			}
-			numberOfDocs = hits.totalHits;
-			writeHead(numberOfDocs);
-			writeRecords(searcher, hits, numberOfDocs, nDocs);
-			writeFot();
-		}catch(BooleanQuery.TooManyClauses e) {
-			throw new BadParameterException("query gav upphov till för många booleska operationer", "Search.performMethod", query.toString(), true);
-		}catch(IOException e) {
-			throw new DiagnosticException("oväntat IO fel uppstod. Var god försök igen", "Search.performMethod", e.getMessage(), true);
-		}finally {
-			LuceneServlet.getInstance().returnIndexSearcher(searcher);
 		}
+		sortDesc = getSortConfig(params.get(Search.SORT), params.get(Search.SORT_CONFIG));
+		recordSchema = params.get(Search.RECORD_SCHEMA);
+		if (recordSchema != null) {
+			recordSchema = RECORD_SCHEMA_BASE + recordSchema + "#";
+		}
+		if (NS_SAMSOK_PRES.equals(recordSchema)) {
+			binDataField = ContentHelper.I_IX_PRES;
+		} else {
+			binDataField = ContentHelper.I_IX_RDF;
+		}
+
 	}
-	
-	/**
-	 * Loggar data för sökningen
-	 * @param query
-	 * @param searcher
-	 * @throws DiagnosticException
-	 */
-	private void loggData(Query query, IndexSearcher searcher)
-		throws DiagnosticException
-	{
+
+	@Override
+	protected int getDefaultHitsPerPage() {
+		return DEFAULT_HITS_PER_PAGE;
+	}
+
+	@Override
+	protected void performMethodLogic() throws DiagnosticException {
 		try {
-			Query tempQuery = query.rewrite(searcher.getIndexReader());
-			Set<Term> termSet = new HashSet<Term>();
-			tempQuery.extractTerms(termSet);
-			for(Term t : termSet) {
-				if(t.field().equals("text")) {
-					StatisticLoggData data = new StatisticLoggData();
-					data.setParam(t.field());
-					data.setAPIKey(APIKey);
-					data.setQueryString(t.text());
-					StatisticLogger.addToQueue(data);
-					break;
-				}
+			SolrQuery query = createQuery();
+			// start är 0-baserad
+			query.setStart(startRecord - 1);
+			query.setRows(hitsPerPage);
+			if (sort != null) {
+				query.addSortField(sort, sortDesc ? ORDER.desc : ORDER.asc);
 			}
-		}catch(IOException e) {
-			throw new DiagnosticException("Oväntat IO fel", "se.raa.ksamsok.api.method.Search", null, true);
+			query.addField(ContentHelper.IX_ITEMID);
+			query.addField("score"); // score är "solr-special" för uhm, score...
+			// ta fram rätt data
+			query.addField(binDataField);
+			QueryResponse qr = serviceProvider.getSearchService().query(query);
+			hitList = qr.getResults();
+		} catch(SolrServerException e) {
+			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.performMethod", e.getMessage(), true);
+		} catch (BadParameterException e) {
+			throw new DiagnosticException("Oväntat parserfel uppstod", "Search.performMethod", e.getMessage(), true);
 		}
 	}
 
 	/**
 	 * skriver ut nedre del av XML svar
 	 */
-	private void writeFot()
-	{	
+	@Override
+	protected void writeFootExtra() {	
 		writer.println("<echo>");
 		writer.println("<startRecord>" + startRecord + "</startRecord>");
 		writer.println("<hitsPerPage>" + hitsPerPage + "</hitsPerPage>");
 		writer.println("<query>" + StaticMethods.xmlEscape(queryString) + "</query>");
 		writer.println("</echo>");
-		StartEndWriter.writeEnd(writer);
-		StartEndWriter.hasFoot(true);
 	}
 
 	/**
 	 * skriver ut övre del av XML svar
 	 * @param numberOfDocs
 	 */
-	private void writeHead(int numberOfDocs)
-	{
-		StartEndWriter.writeStart(writer);
-		StartEndWriter.hasHead(true);
-		writer.println("<totalHits>" + numberOfDocs + "</totalHits>");
-		writer.println("<records>");
+	@Override
+	protected void writeHeadExtra() {
+		writer.println("<totalHits>" + hitList.getNumFound() + "</totalHits>");
 	}
-	
+
+	@Override
+	protected void writeResult() {
+		writer.println("<records>");
+		try {
+			for (SolrDocument d: hitList) {
+				Float score = (Float) d.getFieldValue("score");
+				String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
+				writeContent(getContent(d, ident), score);
+			}
+		} finally {
+			writer.println("</records>");
+		}
+	}
+
 	/**
 	 * skriver ut content
 	 * @param content
 	 * @param score
 	 */
-	protected void writeContent(String content, double score)
-	{
+	protected void writeContent(String content, double score) {
+		if (content == null) {
+			return;
+		}
 		writer.println("<record>");
 		writer.println(content);
 		writer.println("<rel:score xmlns:rel=\"info:srw/extension/2/relevancy-1.0\">" + score + "</rel:score>");
@@ -263,83 +178,89 @@ public class Search implements APIMethod
 	 * @return xml-fragment med antingen presentations-xml eller rdf; null om data saknas
 	 * @throws Exception vid teckenkodningsfel (bör ej inträffa) 
 	 */
-	protected String getContent(Document doc, String uri, String xmlIndex) 
-		throws Exception {
+	protected String getContent(SolrDocument doc, String uri) {
 		String content = null;
-		byte[] xmlData = doc.getBinaryValue(xmlIndex);
-		if (xmlData != null) {
-			content = new String(xmlData, "UTF-8");
-		}
-		// TODO: NEK: ta bort när allt är omindexerat
-		if (content == null) {
-			content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(uri);
-		}
-		if (content == null) {
-			logger.warn("Hittade inte xml-data (" + xmlIndex + ") för " + uri);
+		byte[] xmlData = (byte[]) doc.getFieldValue(binDataField);
+		try {
+			if (xmlData != null) {
+				content = new String(xmlData, "UTF-8");
+			}
+			// TODO: NEK: ta bort när allt är omindexerat
+			if (content == null) {
+				content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
+			}
+			if (content == null) {
+				logger.warn("Hittade inte xml-data (" + binDataField + ") för " + uri);
+			}
+		} catch (Exception e) {
+			logger.error("Fel vid hämtande av xml-data (" + binDataField + ") för " + uri);
 		}
 		return content;
-	}
-
-	/**
-	 * skriver ut resultat
-	 * @param searcher
-	 * @param fieldSelector
-	 * @param hits
-	 * @param numberOfDocs
-	 * @param nDocs
-	 */
-	private void writeRecords(IndexSearcher searcher, TopDocs hits, 
-			int numberOfDocs, int nDocs)
-		throws DiagnosticException
-	{
-		try {
-			final String xmlIndex;
-			final MapFieldSelector fieldSelector;
-			// ta fram rätt data
-			setRecordSchema();
-			if (NS_SAMSOK_PRES.equals(recordSchema)) {
-				fieldSelector = PRES_FIELDS;
-				xmlIndex = ContentHelper.I_IX_PRES;
-			} else {
-				fieldSelector = RDF_FIELDS;
-				xmlIndex = ContentHelper.I_IX_RDF;
-			}
-			for(int i = startRecord - 1;i < numberOfDocs && i < nDocs; i++) {
-				Document doc = searcher.doc(hits.scoreDocs[i].doc, fieldSelector);
-				double score = hits.scoreDocs[i].score;
-				String uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
-				writeContent(getContent(doc, uri, xmlIndex), score);
-			}
-		}catch(UnsupportedEncodingException e) 	{
-			//kan ej uppstå
-		}catch(CorruptIndexException e) {
-			throw new DiagnosticException("Oväntat index fel uppstod. Var god försök igen", "Search.writeRecords", e.getMessage(), true);
-		}catch(IOException e) {
-			throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Search.writeRecods", e.getMessage(), true);
-		}catch(Exception e) {
-			throw new DiagnosticException("Fel uppstod när data skulle hämtas. Var god försök senare", "Search.writeRecords", e.getMessage(), true);
-		}finally {
-			writer.println("</records>");
-		}
 	}
 
 	/**
 	 * Skapar ett query
 	 * @return query
 	 */
-	protected Query createQuery()
-		throws DiagnosticException, BadParameterException
-	{
-		Query query = null;
+	protected SolrQuery createQuery() throws DiagnosticException, BadParameterException {
+		SolrQuery query = null;
 		try {
 			CQLParser parser = new CQLParser();
 			CQLNode rootNode = parser.parse(queryString);
-			query = CQL2Lucene.makeQuery(rootNode);
-		}catch(IOException e) {
-			throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Search.createQuery", e.getMessage(), true);
-		}catch(CQLParseException e) {
-			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen på att query strängen inte fäljer CQL syntax. Var god kontrollera söksträngen eller kontakta system administratör för söksystemet du använder", "Search.createQuery", e.getMessage(), false);
+			String solrQueryString = CQL2Solr.makeQuery(rootNode);
+			if (solrQueryString != null) {
+				query = new SolrQuery(solrQueryString);
+				// logga sökdata
+				loggData(rootNode);
+			}
+		} catch (IOException e) {
+			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.createQuery", e.getMessage(), true);
+		} catch (CQLParseException e) {
+			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen på att query-strängen inte fäljer CQL syntax. Var god kontrollera söksträngen eller kontakta systemadministratör för söksystemet du använder", "Search.createQuery", e.getMessage(), false);
 		}
 		return query;
 	}
+
+	/**
+	 * returnerar true om sortConfig är satt till "desc"
+	 * @param sort
+	 * @param sortConfig
+	 * @return
+	 */
+	public boolean getSortConfig(String sort, String sortConfig) {
+		boolean sortDesc = false;
+		if (sort != null) {
+			if (sortConfig != null && sortConfig.equals(Search.SORT_DESC)) {
+				sortDesc = true;
+			}
+		}
+		return sortDesc;
+	}
+
+	/**
+	 * Loggar data för sökningen för indexet "text".
+	 * @param query cql
+	 * @throws DiagnosticException
+	 */
+	private void loggData(CQLNode query) throws DiagnosticException {
+		if (query == null) {
+			return;
+		}
+		if (query instanceof CQLBooleanNode) {
+			CQLBooleanNode bool = (CQLBooleanNode) query;
+			loggData(bool.left);
+			loggData(bool.right);
+		} else if (query instanceof CQLTermNode) {
+			CQLTermNode t = (CQLTermNode) query;
+			// bara för "text"
+			if (t.getIndex().equals(ContentHelper.IX_TEXT)) {
+				StatisticLoggData data = new StatisticLoggData();
+				data.setParam(t.getIndex());
+				data.setAPIKey(apiKey);
+				data.setQueryString(t.getTerm());
+				serviceProvider.getStatisticsManager().addToQueue(data);
+			}
+		}
+	}
+
 }

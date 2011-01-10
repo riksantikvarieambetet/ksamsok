@@ -2,57 +2,51 @@ package se.raa.ksamsok.sru;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.MapFieldSelector;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.WildcardQuery;
-import org.apache.lucene.search.BooleanQuery.TooManyClauses;
-import org.apache.solr.util.NumberUtils;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
 import org.z3950.zing.cql.MissingParameterException;
 
+import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.api.util.statisticLogg.StatisticLoggData;
-import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
-import se.raa.ksamsok.harvest.DBUtil;
-import se.raa.ksamsok.harvest.HarvesterServlet;
+import se.raa.ksamsok.api.util.Term;
+import se.raa.ksamsok.api.util.parser.CQL2Solr;
+import se.raa.ksamsok.apikey.APIKeyManager;
+import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
 import se.raa.ksamsok.lucene.ContentHelper.Index;
-import se.raa.ksamsok.organization.OrganizationServlet;
+import se.raa.ksamsok.solr.SearchService;
+import se.raa.ksamsok.statistic.StatisticLoggData;
+import se.raa.ksamsok.statistic.StatisticsManager;
 
 /**
  * Servlet som svarar på sru-anrop och som söker i indexet.
@@ -62,7 +56,7 @@ public class SRUServlet extends HttpServlet {
 
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.sru.SRUServlet");
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	// namespaces, prefix mm
 	public static final String NS_SRW = "http://www.loc.gov/zing/srw/";
@@ -80,12 +74,18 @@ public class SRUServlet extends HttpServlet {
 
 	private static final int DEFAULT_NUM_RECORDS = 10;
 	private static final int MAX_NUM_RECORDS = 500;
-	
-	private DataSource ds = null;
-	private Set<String> APIKeys;
 
 	// TODO: bättre datastruktur för att kunna använda i explain och överallt
 	private static final Map<String, String> knownSchemas = new HashMap<String, String>();
+
+	@Autowired
+	HarvestRepositoryManager hrm;
+	@Autowired
+	private APIKeyManager keyManager;
+	@Autowired
+	private SearchService searchService;
+	@Autowired
+	private StatisticsManager statisticsManager;
 
 	//private static final XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
 
@@ -100,28 +100,9 @@ public class SRUServlet extends HttpServlet {
 			knownSchemas.put(NS_SAMSOK_PRES, NS_SAMSOK_PRES);
 			knownSchemas.put(PREFIX_NS_SAMSOK_PRES, NS_SAMSOK_PRES);
 		}
-		ds = OrganizationServlet.getDataSource();
-		createAPIKeySet();
-	}
-	
-	private void createAPIKeySet() {
-		APIKeys = new HashSet<String>();
-		Connection c = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			c = ds.getConnection();
-			String sql = "SELECT apikey FROM apikeys";
-			ps = c.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				APIKeys.add(rs.getString("apikey"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.closeDBResources(rs, ps, c);
-		}
+		ServletContext servletContext = config.getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 	}
 
 	@Override
@@ -130,26 +111,11 @@ public class SRUServlet extends HttpServlet {
 		doGet(req, resp);
 	}
 	
-	private void storeOverviewStatistics(String APIKey)
-		throws MissingParameterException {
-		if (APIKey != null) APIKey = StaticMethods.removeChar(APIKey, '"');
-		if (APIKey != null && APIKeys.contains(APIKey)) {
-			Connection c = null;
-			PreparedStatement ps = null;
-			try {
-				c = ds.getConnection();
-				String sql = "UPDATE apikeys SET total=total+1 WHERE apikey=?";
-				ps = c.prepareStatement(sql);
-				ps.setString(1, APIKey);
-				ps.executeUpdate();
-				DBUtil.commit(c);
-			} catch(SQLException e) {
-				DBUtil.rollback(c);
-				e.printStackTrace();
-			} finally {
-				DBUtil.closeDBResources(null, ps, c);
-			}
-		} else if (APIKey == null){
+	private void storeOverviewStatistics(String apiKey) throws MissingParameterException {
+		if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
+		if (apiKey != null && keyManager.contains(apiKey)) {
+			keyManager.updateUsage(apiKey);
+		} else if (apiKey == null){
 			throw new MissingParameterException("API-nyckel saknas");
 		} else {
 			throw new MissingParameterException("Felaktig API-nyckel");
@@ -172,11 +138,14 @@ public class SRUServlet extends HttpServlet {
 		resp.setContentType("text/xml; charset=UTF-8");
 		XMLStreamWriter xmlsw = null;
 		PrintWriter writer = resp.getWriter();
-		try {
-			storeOverviewStatistics(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
-		} catch(MissingParameterException e) {
-			diagnostics(writer, 10, "Missing or invalid API key");
-			return;
+		// logga bara stats för icke-explain, dvs "riktig" användning
+		if (operation != null && !operation.equals("explain")) {
+			try {
+				storeOverviewStatistics(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
+			} catch (MissingParameterException e) {
+				diagnostics(writer, 10, "Missing or invalid API key");
+				return;
+			}
 		}
 		try {
 			/* bort tills vidare
@@ -298,29 +267,26 @@ public class SRUServlet extends HttpServlet {
 		writer.println("               " + ContentHelper.IX_CONTEXTTYPE + ") som enbart söker i data");
 		writer.println("               för det sammanhanget. De prefix som finns fn är [");
 		// hämta dynamiskt ut alla värden för contextType
-		IndexSearcher s = null;
-		String prefix = null;
+		List<Term> terms = Collections.emptyList();
 		try {
-			s = LuceneServlet.getInstance().borrowIndexSearcher();
-			Query q = new WildcardQuery(new Term(ContentHelper.IX_CONTEXTTYPE, "*"));
-			Set<Term> extractedTermSet = new HashSet<Term>();
-			q = s.rewrite(q);
-			q.extractTerms(extractedTermSet);
-			for (Term t: extractedTermSet) {
-				writer.println("               '" + t.text() + "'");
-				if (prefix == null) {
-					prefix = t.text();
-				}
+			terms = searchService.terms(ContentHelper.IX_CONTEXTTYPE, "", 1, -1);
+		} catch (SolrServerException e) {
+			logger.warn("Fel vid hämtande av kontext-typer", e);
+		}
+		String prefix = null;
+		for (Term t: terms) {
+			writer.println("               '" + t.getValue() + "'");
+			if (prefix == null) {
+				prefix = t.getValue();
 			}
-		} finally {
-			LuceneServlet.getInstance().returnIndexSearcher(s);
 		}
 		writer.println("               ]");
 		writer.println("               Pga av antalet prefixade individuella index listas de ej nedan.");
 		if (prefix != null) {
 			writer.println("               Exempel på prefixad sökning: " + prefix + "_" +
-					ContentHelper.IX_PARISHNAME + "=felestad");
+					ContentHelper.IX_PARISHNAME + "=felestad.");
 		}
+		writer.println("               För att söka behövs en api-nyckel (x-api=[nyckel]), se http://kulturarvsdata.se.");
 		writer.println("           </description>");
 		writer.println("        </databaseInfo>");
 
@@ -396,54 +362,37 @@ public class SRUServlet extends HttpServlet {
 			return;
 		}
 
-		IndexSearcher s = null;
 		CQLParser cqlParser = new CQLParser();
 		if (scanClause != null && scanClause.length() > 0) {
 			try {
-				s = LuceneServlet.getInstance().borrowIndexSearcher();
 				CQLNode rootNode = cqlParser.parse(scanClause);
 				if (!(rootNode instanceof CQLTermNode)) {
 					throw new DiagnosticsException(48, "Query feature unsupported",
 		        			"Scan query must be on the form: index relation term");
 				}
-				CQL2Lucene.dumpQueryTree(rootNode);
+				CQL2Solr.dumpQueryTree(rootNode);
 				CQLTermNode termNode = (CQLTermNode) rootNode;
 				// hämta ut relationen
 				String rel = termNode.getRelation().toCQL();
 				// kontrollera att relationen är giltig
-				final String[] validRels = { "=", "any" }; // "exact", "all" };
+				final String[] validRels = { "=" }; // bara "=" nu, "any" }; // "exact", "all" };
 				final List<String> validRelsList = Arrays.asList(validRels);
 				if (!validRelsList.contains(rel)) {
 					throw new DiagnosticsException(19, "Unsupported relation",
         			rel + " is unsupported for the scan operation");
 					
 				}
-				String index = CQL2Lucene.translateIndexName(termNode.getIndex());
+				String index = CQL2Solr.translateIndexName(termNode.getIndex());
 				if (ContentHelper.isSpatialVirtualIndex(index)) {
 					throw new DiagnosticsException(4, "Unsupported operation",
 							"scan not supported for index " + index);
 				}
-				Query q = CQL2Lucene.makeQuery(rootNode);
-				// TODO: är det här ok med alla relationstyper vi godkänner ovan?
-				//       för exact ska vi kanske returnera fältinnehållet?
-				//       typ:
-				//		TermDocs td = s.getIndexReader().termDocs(t);
-				//		final MapFieldSelector fieldSelector = new MapFieldSelector(new String[] { searchField });
-				//		while (td.next()) {
-				//			Document d = s.doc(td.doc(), fieldSelector);
-				//			Field field = d.getField(searchField); // kan bli null för ej lagrade fält
-				//			CQL2Lucene.countTerm(termMap, field.stringValue());
-				//		}
-				//		td.close();
-
-				Query rq = q.rewrite(s.getIndexReader());
-				Set<Term> extractedTermSet = new HashSet<Term>();
-				rq.extractTerms(extractedTermSet);
+				List<Term> terms = searchService.terms(index, termNode.getTerm(), 1, -1);
 				writer.println("  <srw:terms>");
-				for (Term t: extractedTermSet) {
+				for (Term t: terms) {
 			        writer.println("     <srw:term>");
-			        writer.println("        <srw:value>" + xmlEscape(t.text()) + "</srw:value>");
-			        writer.println("        <srw:numberOfRecords>" + s.docFreq(t) + "</srw:numberOfRecords>");
+			        writer.println("        <srw:value>" + xmlEscape(t.getValue()) + "</srw:value>");
+			        writer.println("        <srw:numberOfRecords>" + t.getCount() + "</srw:numberOfRecords>");
 			        writer.println("     </srw:term>");
 				}
 				writer.println("  </srw:terms>");
@@ -468,17 +417,9 @@ public class SRUServlet extends HttpServlet {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Diagnostic-fel i scan", de);
 				}
-			} catch (TooManyClauses e) {
-				// wildcard som ger för många or-villkor
-				diagnostics(writer, 38, "Too many boolean operators in query", String.valueOf(BooleanQuery.getMaxClauseCount()));
-				if (logger.isDebugEnabled()) {
-					logger.debug("Wildcard gav upphov till för många villkor i scan", e);
-				}
 			} catch (Exception e) {
 				logger.error("Fel vid scan", e);
 				diagnostics(writer,e);
-			} finally {
-				LuceneServlet.getInstance().returnIndexSearcher(s);
 			}
 		} else {
 			diagnostics(writer, 7, "Mandatory parameter not supplied", "scanClause");
@@ -560,31 +501,32 @@ public class SRUServlet extends HttpServlet {
 		}
 
 		boolean numberOfRecordsWritten = false;
-		TopDocs hits = null;
-		IndexSearcher s = null;
+		SolrDocumentList hits = null;
 		CQLParser cqlParser = new CQLParser();
 
 		if (query != null && query.length() > 0) {
 			try {
-				s = LuceneServlet.getInstance().borrowIndexSearcher();
 				CQLNode rootNode = cqlParser.parse(query);
-				CQL2Lucene.dumpQueryTree(rootNode);
-				Query q = CQL2Lucene.makeQuery(rootNode);
-				
-				//lagrar statistik
-				Query tempQuery = q.rewrite(s.getIndexReader());
-				Set<Term> termSet = new HashSet<Term>();
-				tempQuery.extractTerms(termSet);
-				for (Term t : termSet) {
-					if (t.field().equals("text")) {
-						StatisticLoggData data = new StatisticLoggData();
-						data.setAPIKey(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
-						data.setParam(t.field());
-						data.setQueryString(t.text());
-						StatisticLogger.addToQueue(data);
-						break;
-					}
+				CQL2Solr.dumpQueryTree(rootNode);
+				String qs = CQL2Solr.makeQuery(rootNode);
+				SolrQuery q = new SolrQuery(qs);
+
+				q.setStart(first_record - 1);
+				q.setRows(num_hits_per_page);
+
+				// hämta rätt xml
+				String dataIndex = NS_SAMSOK_PRES.equals(record_schema) ? ContentHelper.I_IX_PRES : ContentHelper.I_IX_RDF;
+				q.addField(dataIndex);
+				q.addField(ContentHelper.IX_ITEMID);
+				q.addField("score");
+				if (logger.isDebugEnabled()) {
+					q.addField(ContentHelper.I_IX_LON);
+					q.addField(ContentHelper.I_IX_LAT);
 				}
+
+				//lagrar statistik
+				loggData(rootNode, reqParams.get(APIMethod.API_KEY_PARAM_NAME));
+
 				int nDocs = first_record - 1 + num_hits_per_page;
 				if (q != null) {
 					if (europeanaSort) {
@@ -592,60 +534,47 @@ public class SRUServlet extends HttpServlet {
 						// alltid ha en konsekvent sorteringsordning - flera dokument kan ha samma
 						// score och då kan det vara odefinierat vilken av dem som kommer först
 						// vilket kan ge samma post om en sidobrytpunkt är just där.
-						// detta är special istället för att införa sortering generellt
-						hits = s.search(q, null, nDocs == 0 ? 1 : nDocs, new Sort(SortField.FIELD_DOC));
-					} else {
-						// måste ha minst en träff
-						hits = s.search(q, nDocs == 0 ? 1 : nDocs);
+						q.addSortField(ContentHelper.IX_ITEMID, ORDER.asc);
 					}
+					QueryResponse qr = searchService.query(q);
+					hits = qr.getResults();
 				} else {
 					// ingen query men inget fel, ge då 0 träffar
-					hits = new TopDocs(0, null, 0);
+					hits = new SolrDocumentList();
 				}
-				if (hits.totalHits > 0 && hits.totalHits < first_record) {
+				if (hits.getNumFound() > 0 && hits.getNumFound() < first_record) {
 					diagnostics(writer, 61, "First record position out of range", true);
 					return;
 				}
-				writer.println("  <srw:numberOfRecords>" + hits.totalHits + "</srw:numberOfRecords>");
+				writer.println("  <srw:numberOfRecords>" + hits.getNumFound() + "</srw:numberOfRecords>");
 				numberOfRecordsWritten = true;
 				int last_record = 0;
 
-				// hämta rätt xml
-				String dataIndex = NS_SAMSOK_PRES.equals(record_schema) ? ContentHelper.I_IX_PRES : ContentHelper.I_IX_RDF;
-				// TODO: flytta ut som statiska
-				// TODO: bort med lon och lat då de bara används för debug
-				final String[] fieldNames = {
-						ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER,
-						dataIndex, ContentHelper.I_IX_LON, ContentHelper.I_IX_LAT};
-				final MapFieldSelector fieldSelector = new MapFieldSelector(fieldNames);
-
-				if (nDocs > 0 && hits.totalHits > 0 ) {
+				if (nDocs > 0 && hits.getNumFound() > 0 ) {
 					writer.println("  <srw:records>");
 					String content;
 					String uri;
-					for (int i = first_record - 1; i < hits.totalHits && i < first_record -1 + num_hits_per_page; ++i) {
+					for (SolrDocument doc: hits) {
 						content = null; // rensa värde
 						// TODO: fler och bättre felkontroller
 						// TODO: stödja fler format?
-						ScoreDoc scoreDoc = hits.scoreDocs[i];
-						double score = scoreDoc.score;
-						Document doc = s.doc(scoreDoc.doc, fieldSelector);
-						uri = doc.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
+						double score = ((Number) doc.getFieldValue("score")).doubleValue();
+						uri = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 						// TODO: ta bort?
 						if (logger.isDebugEnabled()) {
-							String lon = doc.get(ContentHelper.I_IX_LON);
-							String lat = doc.get(ContentHelper.I_IX_LAT);
+							Number lon = (Number) doc.getFieldValue(ContentHelper.I_IX_LON);
+							Number lat = (Number) doc.getFieldValue(ContentHelper.I_IX_LAT);
 							logger.debug("hit - uri: " + uri + " -> " +
-									"lon=" + (lon != null ? NumberUtils.SortableStr2double(lon) : "??") +
-									" lat=" + (lat != null ? NumberUtils.SortableStr2double(lat) : "??"));
+									"lon=" + (lon != null ? lon.doubleValue() : "??") +
+									" lat=" + (lat != null ? lat.doubleValue() : "??"));
 						}
-						byte[] xmlData = doc.getBinaryValue(dataIndex);
+						byte[] xmlData = (byte[]) doc.getFieldValue(dataIndex);
 						if (xmlData != null) {
 							content = new String(xmlData, "UTF-8");
 						}
 						// TODO: NEK ta bort nedan när allt är omindexerat
 						if (content == null && ContentHelper.I_IX_RDF.equals(dataIndex)) {
-							content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(uri); 
+							content = hrm.getXMLData(uri); 
 						}
 						if (content != null) {
 
@@ -668,13 +597,13 @@ public class SRUServlet extends HttpServlet {
 							writer.println("     </srw:recordData>");
 							writer.println("  </srw:record>");
 						}
-						last_record = i + 1;
 					}
+					last_record = first_record - 1 + hits.size();
 					writer.println("  </srw:records>");
 				}
 
-				if (last_record < hits.totalHits && last_record > 0) {
-					writer.println("  <srw:nextRecordPosition>" + (last_record+1) + "</srw:nextRecordPosition>");
+				if (last_record < hits.getNumFound() && last_record > 0) {
+					writer.println("  <srw:nextRecordPosition>" + (last_record + 1) + "</srw:nextRecordPosition>");
 				}
 
 				writer.println("  <srw:echoedSearchRetrieveRequest>");
@@ -698,17 +627,9 @@ public class SRUServlet extends HttpServlet {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Diagnostic-fel i searchRetrieve", de);
 				}
-			} catch (TooManyClauses e) {
-				// wildcard som ger för många or-villkor
-				diagnostics(writer, 38, "Too many boolean operators in query", String.valueOf(BooleanQuery.getMaxClauseCount()), !numberOfRecordsWritten);
-				if (logger.isDebugEnabled()) {
-					logger.debug("Wildcard gav upphov till för många villkor i searchRetrieve", e);
-				}
 			} catch ( Exception e ) {
 				logger.error("Fel vid searchRetrieve", e);
 				diagnostics(writer,e, !numberOfRecordsWritten);
-			} finally {
-				LuceneServlet.getInstance().returnIndexSearcher(s);
 			}
 		} else {
 			diagnostics(writer, 7, "Mandatory parameter not supplied", "query", true);
@@ -780,6 +701,33 @@ public class SRUServlet extends HttpServlet {
 		writer.println("]]></message>");
 		writer.println("   </diagnostic>");
 		writer.println("</srw:diagnostics>");
+	}
+
+	/**
+	 * Loggar data för sökningen för indexet "text".
+	 * @param query cql
+	 * @param apiKey api-nyckel
+	 * @throws DiagnosticException
+	 */
+	private void loggData(CQLNode query, String apiKey) throws DiagnosticException {
+		if (query == null) {
+			return;
+		}
+		if (query instanceof CQLBooleanNode) {
+			CQLBooleanNode bool = (CQLBooleanNode) query;
+			loggData(bool.left, apiKey);
+			loggData(bool.right, apiKey);
+		} else if (query instanceof CQLTermNode) {
+			CQLTermNode t = (CQLTermNode) query;
+			// bara för "text"
+			if (t.getIndex().equals(ContentHelper.IX_TEXT)) {
+				StatisticLoggData data = new StatisticLoggData();
+				data.setParam(t.getIndex());
+				data.setAPIKey(apiKey);
+				data.setQueryString(t.getTerm());
+				statisticsManager.addToQueue(data);
+			}
+		}
 	}
 
 	// kontroll av sru-version

@@ -1,12 +1,14 @@
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvesterServlet"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="java.util.Date"%>
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
 <%@page import="java.util.List"%><html>
 <%
-	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
+	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
 	String uidString = " [" + request.getRemoteUser() + "]";
 %>
 	<head>
@@ -21,7 +23,7 @@
 		</div>
 		<hr/>
 <%
-		HarvestService service = hsm.getService(HarvestServiceManager.SERVICE_LUCENE_OPTIMIZE);
+		HarvestService service = hsm.getService(HarvestServiceManager.SERVICE_INDEX_OPTIMIZE);
 		if (service != null) {
 			String serviceId = service.getId();
 			String cronstring = service.getCronString();
@@ -105,7 +107,7 @@
 			<br/>
 <%
 		service = hsm.newServiceInstance();
-		service.setId(HarvestServiceManager.SERVICE_LUCENE_REINDEX);
+		service.setId(HarvestServiceManager.SERVICE_INDEX_REINDEX);
 		if (!hsm.isRunning(service)) {
 %>
 			<button onclick="if (confirm('Vill du verkligen uppdatera hela indexet från repot?')) javascript:window.location='serviceaction.jsp?action=reindexall'; return false;">Uppdatera hela indexet</button>

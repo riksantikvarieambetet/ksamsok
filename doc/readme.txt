@@ -7,6 +7,7 @@ Utvecklat med java 1.6, tomcat 6.0 och FireFox (admingränssnittet fungerar mindr
 Installeras normalt med rpm och då sker allt automatiskt och applikationen konfigureras
 till att gå mot driftdatabasen.
 Rpm skapas med: "ant clean RAA-RPM"
+Kräver en ksamsok-solr i samma webapp, se readme för det projektet.
 
 ** Manuell installation
 
@@ -38,9 +39,6 @@ som en clob om man vill tex för debug, se nedan.
 * Skapa tabeller enligt sql i sql/repo.sql för datakällan (för derby kan identity-kolumner användas
   istället för sekvenser och för derby vill man också skicka med "create=true" i jdbc-url:en när man
   kopplar upp sig med sitt sql-verktyg för att skapa databasen/schemat automatiskt)
-
-* Peka ev ut var lucene ska lägga sitt index med javaflaggan -Dsamsok-lucene-index-dir=[sökväg till katalog]
- Om ej pekas ut kommer indexet att läggas i /var/lucene-index/ksamsok.
 
 * Peka ev ut var filer som skördas ska läggas innan de behandlas med flaggan
  -Dsamsok-harvest-spool-dir=[sökväg till katalog]

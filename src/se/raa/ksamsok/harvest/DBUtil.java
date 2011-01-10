@@ -14,14 +14,21 @@ public class DBUtil {
 
 	private static final Logger logger = Logger.getLogger(DBUtil.class);
 	// stödda databastyper (nödvändigt då det är olika syntax för rownum/limit/offet etc)
-	private static enum DBType  { DERBY, ORACLE };
+	private static enum DBType  { DERBY, ORACLE, POSTGRES };
 	// instans för att komma ihåg vilken databastyp det var
-	private static DBType dbType = null;
+	private static volatile DBType dbType = null;
 
 	/** Konstant för normalt värde för status på poster */
 	public static final int STATUS_NORMAL = 0;
 	/** Konstant för att flagga att en post håller på att behandlas */
 	public static final int STATUS_PENDING = 1;
+
+	/** Fetchsize att använda på statements om man inte använder begränsande sql (limit/rownum etc)
+	 * Se även {@linkplain #fetchFirst(Connection, String, int)} för annat alternativ.
+	 * Oracle verkar ha ett default-värde (via row prefetching) på 10, för diskusion om detta se
+	 * http://download.oracle.com/docs/cd/B10501_01/java.920/a96654/oraperf.htm#1002425
+	 */
+	public static final int FETCH_SIZE = 100;
 
 	/**
 	 * Hjälpmetod som stänger databasresurser.
@@ -89,6 +96,8 @@ public class DBUtil {
 			return "select * from (" + sql + ") where rownum <= " + fetchNum;
 		case DERBY:
 			return sql + " FETCH FIRST " + fetchNum + " ROWS ONLY";
+		case POSTGRES:
+			return sql + " LIMIT "+ fetchNum;
 			default:
 				logger.error("Unsupported database");
 				throw new RuntimeException("unsupported database");
@@ -101,10 +110,14 @@ public class DBUtil {
 		if (dbType == null) {
 			try {
 				String dbName = c.getMetaData().getDatabaseProductName();
-				if (dbName != null && dbName.toLowerCase().contains("derby")) {
-					dbType = DBType.DERBY;
-				} else if (dbName != null && dbName.toLowerCase().contains("oracle")) {
-					dbType = DBType.ORACLE;
+				if (dbName != null) {
+					if (dbName.toLowerCase().contains("derby")) {
+						dbType = DBType.DERBY;
+					} else if (dbName.toLowerCase().contains("oracle")) {
+						dbType = DBType.ORACLE;
+					} else if (dbName.toLowerCase().contains("postgres")) {
+						dbType = DBType.POSTGRES;
+					}
 				}
 				if (dbType == null) {
 					throw new Exception("could not determine database from product name: " +

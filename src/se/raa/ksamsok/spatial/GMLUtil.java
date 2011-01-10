@@ -217,6 +217,8 @@ public class GMLUtil {
 				}
 				if (extractedClassName.toLowerCase().indexOf("oracle") >= 0) {
 					gmlDBWriterClassName = "se.raa.ksamsok.spatial.OracleGMLDBWriter";
+				} else if (extractedClassName.toLowerCase().indexOf("postgres") >= 0) {
+					gmlDBWriterClassName = "se.raa.ksamsok.spatial.PostgresGMLDBWriter";
 				} else {
 					logger.info("Ingen spatial-kapabel (och känd) databas används(?), " +
 							"connection-klass tolkades som " + extractedClassName);

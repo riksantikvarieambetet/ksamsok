@@ -1,15 +1,13 @@
-<%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvesterServlet"%>
-<%@page import="org.apache.lucene.search.IndexSearcher"%>
-<%@page import="org.apache.lucene.queryParser.QueryParser"%>
-<%@page import="org.apache.lucene.search.Query"%>
-<%@page import="org.apache.lucene.document.Document"%>
-
+<%@page import="se.raa.ksamsok.solr.SearchService"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="org.apache.solr.common.SolrDocument"%>
+<%@page import="org.apache.solr.common.SolrDocumentList"%>
+<%@page import="org.apache.solr.client.solrj.response.QueryResponse"%>
+<%@page import="org.apache.solr.client.solrj.util.ClientUtils"%>
+<%@page import="org.apache.solr.client.solrj.SolrQuery"%>
+<%@page contentType="text/html;charset=UTF-8" %>
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
-<%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
-<%@page import="org.apache.lucene.search.TopDocs"%>
-<%@page import="org.apache.lucene.search.ScoreDoc"%>
-<%@page import="org.apache.solr.util.NumberUtils"%>
 <%@page import="java.util.Map"%><html>
 	<head>
 		<title>Sök</title>
@@ -47,35 +45,33 @@
 		</form>
 		<hr/>
 <%
-	TopDocs hits = null;
+	final int maxHits = 200;
 	String message = "";
-	IndexSearcher s = null;
 	if (query.length() > 0) {
 		try {
-			s = LuceneServlet.getInstance().borrowIndexSearcher();
-			// fk. QueryParser är ej trådsäker
-			// vi analyzerar detta med en stemmer då vi vet att IX_TEXT analyseras vid indexering
-			// se ContentHelper.isAnalyzedIndex()
-			QueryParser p = new QueryParser(ContentHelper.IX_TEXT, ContentHelper.getSwedishAnalyzer());
-			Query q = p.parse(query);
-			final int maxHits = 200;
-			hits = s.search(q, maxHits);
+			SolrQuery q = new SolrQuery(ClientUtils.escapeQueryChars(query));
+			q.setRows(maxHits);
+			q.setFields("* score");
+			ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+			SearchService searchService = ctx.getBean(SearchService.class);
+			QueryResponse qr = searchService.query(q);
 			int i = 0;
-			int antal = hits.totalHits;
+			SolrDocumentList hits = qr.getResults();
+			long antal = hits.getNumFound();
 %>
 			<h2>Sökningen gav <%=antal%> träffar (visar max <%=maxHits%>)</h2>
 <%
-			for (ScoreDoc sd: hits.scoreDocs) {
+			for (SolrDocument sd: hits) {
 				++i;
-				Document d = s.doc(sd.doc);
-				String ident = d.get(ContentHelper.CONTEXT_SET_REC + "." + ContentHelper.IX_REC_IDENTIFIER);
-				byte[] presBytes = d.getBinaryValue(ContentHelper.I_IX_PRES);
-				byte[] rdfBytes = d.getBinaryValue(ContentHelper.I_IX_RDF);
+				String ident = (String) sd.getFieldValue(ContentHelper.IX_ITEMID);
+				byte[] presBytes = (byte[]) sd.getFieldValue(ContentHelper.I_IX_PRES);
+				byte[] rdfBytes = (byte[]) sd.getFieldValue(ContentHelper.I_IX_RDF);
 				String lonLat = "kartdata saknas";
-				String lon = d.get(ContentHelper.I_IX_LON);
-				String lat = d.get(ContentHelper.I_IX_LAT);
+				// TODO: number/double
+				Object lon = sd.getFieldValue(ContentHelper.I_IX_LON);
+				Object lat = sd.getFieldValue(ContentHelper.I_IX_LAT);
 				if (lon != null && lat != null) {
-					lonLat = NumberUtils.SortableStr2double(lon) + " / " + NumberUtils.SortableStr2double(lat);
+					lonLat = lon + " / " + lat;
 				}
 				String pres = "inget presentationsinnehåll";
 				if (presBytes != null) {
@@ -91,10 +87,10 @@
 				}
 %>
 			<p>
-				<h4 class="bgGrayLight">träff <%=i%>/<%=antal%>, score: <%=sd.score%></h4>
-				<div><span class="bold">Källsystem</span> : <%=d.get(ContentHelper.I_IX_SERVICE)%></div>
+				<h4 class="bgGrayLight">träff <%=i%>/<%=antal%>, score: <%= sd.getFieldValue("score") %></h4>
+				<div><span class="bold">Källsystem</span> : <%=sd.getFieldValue(ContentHelper.I_IX_SERVICE)%></div>
 				<div><span class="bold">URI</span> : <a href="<%=ident%>" target="_blank"><%=ident%></a> (nytt fönster/flik)</div>
-				<div><span class="bold">Titel</span> : <%=d.get(ContentHelper.IX_ITEMTITLE)%></div>
+				<div><span class="bold">Titel</span> : <%=sd.getFieldValue(ContentHelper.IX_ITEMTITLE)%></div>
 				<div><span class="bold">Lon/Lat</span> : <%=lonLat%></div>
 				<div><span onclick="toggle('pres_<%= i %>')"><b>Presentation</b> [visa/dölj]</span> : <span id="pres_<%= i %>" class="hide"><%=pres%></span></div>
 				<div><span onclick="toggle('rdf_<%= i %>')"><b>RDF</b> [visa/dölj]</span> : <span id="rdf_<%= i %>" class="hide"><%=rdf%></span></div>
@@ -107,8 +103,6 @@
 %>
 			<h2>Fel vid sökning: <%=e.getMessage()%></h2>
 <%
-		} finally {
-			LuceneServlet.getInstance().returnIndexSearcher(s);
 		}	
 	}
 %>

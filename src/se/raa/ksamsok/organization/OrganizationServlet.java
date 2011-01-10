@@ -6,115 +6,87 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * Servlet som hanterar uppdateringar och visningar av information om
  * organisationer anslutna till k-samsök
  * @author Henrik Hjalmarsson
  */
-public class OrganizationServlet extends HttpServlet
-{
-	private static final long serialVersionUID = 4513891675396512336L;
+public class OrganizationServlet extends HttpServlet {
+	private static final long serialVersionUID = 2L;
 	private static final Logger logger = Logger.getLogger(OrganizationServlet.class);
-	
-	private static DataSource ds = null;
-	private OrganizationDatabaseHandler organizationDatabaseHandler;
-	
-	private static final String DATASOURCE_NAME = "harvestdb";
-	
+
+	@Autowired
+	private OrganizationManager organizationManager;
+
 	@Override
-	public void init(ServletConfig conf) 
-		throws ServletException
-	{
-		try {
-			Context ctx = new InitialContext();
-			Context envctx =  (Context) ctx.lookup("java:comp/env");
-			ds =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-			organizationDatabaseHandler = new OrganizationDatabaseHandler(ds);
-		}catch(NamingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Returnerar en DataSource
-	 * @return
-	 */
-	public static DataSource getDataSource()
-	{
-		try {
-			if(ds == null) {
-				Context ctx = new InitialContext();
-				Context envctx =  (Context) ctx.lookup("java:comp/env");
-				ds =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-			}
-		}catch(NamingException e) {
-			e.printStackTrace();
-		}
-		return ds;
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		ServletContext servletContext = config.getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException
-	{
+			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		RequestDispatcher view = req.getRequestDispatcher("serviceOrganizationAdmin.jsp");
 		String operation = req.getParameter("operation");
-		if(operation != null) {
-			if(operation.equals("passwordAdmin")) {
-				req.setAttribute("passwords", organizationDatabaseHandler.getPasswords());
+		if (operation != null) {
+			if (operation.equals("passwordAdmin")) {
+				req.setAttribute("passwords", organizationManager.getPasswords());
 				view = req.getRequestDispatcher("passwordAdmin.jsp");
-			}else if(operation.equals("addOrg")) {
+			} else if (operation.equals("addOrg")) {
 				String kortnamn = req.getParameter("kortnamn");
 				String namnSwe = req.getParameter("namnSwe");
 				logger.debug("added: " + kortnamn + " : " + namnSwe);
-				organizationDatabaseHandler.addOrganization(kortnamn, namnSwe);
-			}else if(operation.equals("orgChoice")) {
+				organizationManager.addOrganization(kortnamn, namnSwe);
+			} else if (operation.equals("orgChoice")) {
 				String kortnamn = req.getParameter("orgChoice");
-				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(kortnamn, false));
-			}else if(operation.equals("update")) {
+				req.setAttribute("orgInfo", organizationManager.getOrganization(kortnamn, false));
+			} else if (operation.equals("update")) {
 				Organization org = getOrganizationValues(req);
-				organizationDatabaseHandler.updateOrg(org);
-				req.setAttribute("orgInfo", organizationDatabaseHandler.getOrganization(org.getKortnamn(), false));
-			}else if(operation.equals("remove")) {
+				organizationManager.updateOrg(org);
+				req.setAttribute("orgInfo", organizationManager.getOrganization(org.getKortnamn(), false));
+			} else if (operation.equals("remove")) {
 				String kortnamn = req.getParameter("kortnamn");
-				organizationDatabaseHandler.removeOrganization(kortnamn);
-			}else if(operation.equals("updatePasswords")){
+				organizationManager.removeOrganization(kortnamn);
+			} else if (operation.equals("updatePasswords")){
 				Map<String, String> passwordMap = new HashMap<String, String>();
 				String[] passwords = req.getParameterValues("passwords");
 				String[] organizations = req.getParameterValues("organizations"); 
-				for(int i=0;i<organizations.length;i++){
+				for (int i = 0; i < organizations.length; i++){
 					passwordMap.put(organizations[i], passwords[i]);
 				}
-				organizationDatabaseHandler.setPassword(passwordMap);
+				organizationManager.setPassword(passwordMap);
 			}
 		}
-		req.setAttribute("orgList", organizationDatabaseHandler.getServiceOrganizations());
+		req.setAttribute("orgList", organizationManager.getServiceOrganizations());
 		view.forward(req, resp);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException
-	{
+			throws ServletException, IOException {
 		doPost(req, resp);
 	}
-	
+
 	/**
 	 * Skapar och sätter de värden som fåtts in från request för
 	 * en organisation som skall uppdateras
@@ -122,8 +94,7 @@ public class OrganizationServlet extends HttpServlet
 	 * @return Organization böna med de data som skall uppdateras
 	 */
 	@SuppressWarnings("unchecked")
-	public static Organization getOrganizationValues(HttpServletRequest req)
-	{
+	public static Organization getOrganizationValues(HttpServletRequest req) {
 		Organization o = new Organization();
 		o.setKortnamn(req.getParameter("kortnamn"));
 		o.setServ_org(req.getParameter("serv_org"));
@@ -142,8 +113,8 @@ public class OrganizationServlet extends HttpServlet
 		o.setThumbnailUrl(req.getParameter("thumbnailUrl"));
 		Map<String,String[]> params = req.getParameterMap();
 		List<Service> serviceList = new Vector<Service>();
-		for(Map.Entry<String, String[]> entry : params.entrySet()) {
-			if(StringUtils.startsWith(entry.getKey(), "service") && !StringUtils.endsWith(entry.getKey(), "name")) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
+			if (StringUtils.startsWith(entry.getKey(), "service") && !StringUtils.endsWith(entry.getKey(), "name")) {
 				Service s = new Service();
 				s.setKortnamn(params.get("kortnamn")[0]);
 				s.setNamn(params.get(entry.getKey() + "_name")[0]);

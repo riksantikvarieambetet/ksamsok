@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.harvest.DBUtil;
+import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
 import se.raa.ksamsok.util.RedirectChecker;
@@ -91,6 +92,7 @@ public class NativeUrlManipulator implements Manipulator
 			logger.info("fetching data");
 			String sql = getFetchDataSQL();
 			ps = c.prepareStatement(sql);
+			ps.setFetchSize(DBUtil.FETCH_SIZE);
 			rs = ps.executeQuery();
 			currentRecord = 1;
 			logger.info("manipulating database date");
@@ -103,7 +105,8 @@ public class NativeUrlManipulator implements Manipulator
 				String uri = rs.getString("uri");
 				String xmlContent = rs.getString("xmlData");
 				if(xmlContent != null) {
-					String nativeUrl = contentHelper.extractNativeURL(xmlContent);
+					ExtractedInfo info = contentHelper.extractInfo(xmlContent, null);
+					String nativeUrl = info.getNativeURL();
 					try {
 						if(!StringUtils.containsIgnoreCase(nativeUrl, "raa.se")) {
 							RedirectChecker redirectChecker = new RedirectChecker(nativeUrl);
@@ -136,7 +139,9 @@ public class NativeUrlManipulator implements Manipulator
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 			stopWatch.stop();
 		}

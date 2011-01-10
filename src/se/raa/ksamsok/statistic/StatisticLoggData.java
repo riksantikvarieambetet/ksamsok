@@ -1,4 +1,4 @@
-package se.raa.ksamsok.api.util.statisticLogg;
+package se.raa.ksamsok.statistic;
 
 /**
  * Böna som håller data som skall loggas till statistik databasen

@@ -2,20 +2,11 @@ package se.raa.ksamsok.api.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.PhraseQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.util.parser.CQL2Lucene;
-import se.raa.ksamsok.lucene.ContentHelper;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 /**
  * innehåller statiska metoder som används av flera klasser i systemet
@@ -23,8 +14,8 @@ import se.raa.ksamsok.lucene.ContentHelper;
  */
 public class StaticMethods
 {
-	private static final Logger logger =
-		Logger.getLogger("se.raa.ksamsok.api.StaticMethods");
+	@SuppressWarnings("unused")
+	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.StaticMethods");
 	/**
 	 * används för att escapa special tecken i sökningar
 	 * @param s sträng med text
@@ -32,7 +23,7 @@ public class StaticMethods
 	 */
 	public static String escape(String s)
 	{
-		String escaped = QueryParser.escape(s);
+		String escaped = ClientUtils.escapeQueryChars(s);
 		return escaped;
 	}
 	
@@ -48,43 +39,7 @@ public class StaticMethods
 		escape = escape.replaceAll(">", "&gt;");
 		return escape;
 	}
-	
-	/**
-	 * analyserar ett query
-	 * @param field
-	 * @param value
-	 * @return
-	 * @throws DiagnosticException
-	 */
-	public static Query analyseQuery(String field, String value)
-		throws DiagnosticException
-	{	
-		if(value.indexOf(" ") != -1 && ContentHelper.isAnalyzedIndex(field)) {
-			PhraseQuery phraseQuery = new PhraseQuery();
-			StringTokenizer tokenizer = new StringTokenizer(value, " ");
-			// använd svensk stamning för dessa analyserade index, samma 
-			// som för indexeringen
-			while (tokenizer.hasMoreTokens()) {
-				String curValue = tokenizer.nextToken();
-				// analysera sökvärdet pss som vid indexering
-				curValue = CQL2Lucene.analyzeIndexText(curValue);
-				// ta bara med termen om det ej är ett stopp-ord
-				if (curValue != null) {
-					phraseQuery.add(new Term(field, curValue));
-				}
-			}
-			if(logger.isDebugEnabled()) {
-				logger.debug(phraseQuery);
-			}
-			return phraseQuery;
-		}else {
-			value = CQL2Lucene.transformValueForField(field, value);
-			Term term = new Term(field, value);
-			TermQuery termQuery = new TermQuery(term);
-			return termQuery;
-		}
-	}
-	
+
 	/**
 	 * encodar en url
 	 * @param url

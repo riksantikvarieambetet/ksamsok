@@ -2,152 +2,100 @@ package se.raa.ksamsok.api;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import se.raa.ksamsok.api.exception.APIException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.util.StartEndWriter;
-import se.raa.ksamsok.api.util.statisticLogg.StatisticLogger;
 import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.harvest.DBUtil;
+import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
  * Hanterar förfrågningar till K-samsöks API
  * @author Henrik Hjalmarsson
  */
-public class APIServlet extends HttpServlet
-{
-	private static final long serialVersionUID = -7746449046954514364L;
+public class APIServlet extends HttpServlet {
+	private static final long serialVersionUID = 2L;
 	//klass specifik logger
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.APIServlet");
-	private static DataSource ds = null; //Databas källa
-	private static Set<String> APIKeys; //Set med de API nycklar som finns
-	static final String DATASOURCE_NAME = "harvestdb";
-	private static final StatisticLogger statisticLogger = new StatisticLogger();
-	private static Thread loggerThread; //Loggar sökningar
+
+	@Autowired
+	private APIKeyManager keyManager;
+
+	// fabrik
+	private APIMethodFactory apiMethodFactory;
 	
 	@Override
-	public void init(ServletConfig config) throws ServletException
-	{
+	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		loggerThread = new Thread(statisticLogger);
-		loggerThread.start();
-		try {
-			Context ctx = new InitialContext();
-			Context envctx =  (Context) ctx.lookup("java:comp/env");
-			ds = (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-			reloadAPIKeys();
-		}catch(NamingException e) {
-			e.printStackTrace();
+		if (logger.isInfoEnabled()) {
+			logger.info("Startar APIServlet");
 		}
-	}
-	
-	public static void reloadAPIKeys()
-	{
-		if(ds != null) {
-			Connection c  = null;
-			PreparedStatement ps = null;
-			ResultSet rs = null;
-			APIKeys = new HashSet<String>();
-			try {
-				c = ds.getConnection();
-				String sql = "SELECT apikey FROM apikeys";
-				ps = c.prepareStatement(sql);
-				rs = ps.executeQuery();
-				while(rs.next()) {
-					APIKeys.add(rs.getString("apikey"));
-				}
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				DBUtil.closeDBResources(rs, ps, c);
-			}
+		apiMethodFactory = new APIMethodFactory();
+		ServletContext servletContext = config.getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		AutowireCapableBeanFactory awcb = ctx.getAutowireCapableBeanFactory();
+		awcb.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		awcb.autowireBeanProperties(apiMethodFactory, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		if (logger.isInfoEnabled()) {
+			logger.info("APIServlet startad");
 		}
 	}
 
 	@Override
-	public void destroy()
-	{
+	public void destroy() {
 		super.destroy();
-		loggerThread.interrupt(); //dödar logger tråden
+		if (logger.isInfoEnabled()) {
+			logger.info("Stoppar APIServlet");
+		}
+		if (logger.isInfoEnabled()) {
+			logger.info("APIServlet stoppad");
+		}
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException 
-	{	
+			throws ServletException, IOException {	
 		//sätter contentType och character encoding
-		StartEndWriter.reset();
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
 		Map<String,String> reqParams = null;
 		APIMethod method = null;
 		PrintWriter writer = resp.getWriter();
-		String APIKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
-		if (APIKey != null) APIKey = StaticMethods.removeChar(APIKey, '"');
-		if(APIKey != null && APIKeys.contains(APIKey)) {
-			
+		String stylesheet = null;
+		String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
+		if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
+		if (apiKey != null && keyManager.contains(apiKey)) {
 			try {
 				reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-				StartEndWriter.setStylesheet(reqParams.get("stylesheet"));
-				method = APIMethodFactory.getAPIMethod(reqParams, writer);
+				stylesheet = reqParams.get("stylesheet");
+				method = apiMethodFactory.getAPIMethod(reqParams, writer);
 				method.performMethod();
-				updateStatistics(APIKey);
+				keyManager.updateUsage(apiKey);
 			} catch (APIException e) {
-				Diagnostic(writer , e);
-			}catch (Exception e) {
-				logger.error(e.getMessage());
-				e.printStackTrace();
+				diagnostic(writer, method, stylesheet, e);
+			} catch (Exception e) {
+				logger.error("In doGet", e);
 			}
-		}else if (APIKey == null){
-			Diagnostic(writer, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
+		} else if (apiKey == null){
+			diagnostic(writer, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
 		} else {
-			Diagnostic(writer, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
-		}
-	}
-	
-	/**
-	 * Uppdaterar statistik databasen med +1 sökning från given API nyckel
-	 * @param APIKey där sökningen kommer ifrån
-	 */
-	private void updateStatistics(String APIKey)
-	{
-		Connection c = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			c = ds.getConnection();
-			String sql = "UPDATE apikeys SET total=total+1 WHERE apikey=?";
-			ps = c.prepareStatement(sql);
-			ps.setString(1, APIKey);
-			ps.executeUpdate();
-			DBUtil.commit(c);
-		}catch(SQLException e) {
-			logger.error("error. Doing rollback");
-			DBUtil.rollback(c);
-			e.printStackTrace();
-		}finally {
-			DBUtil.closeDBResources(rs, ps, c);
+			diagnostic(writer, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 		}
 	}
 
@@ -156,16 +104,21 @@ public class APIServlet extends HttpServlet
 	 * @param writer
 	 * @param e
 	 */
-	private void Diagnostic(PrintWriter writer, APIException e)
-	{
+	private void diagnostic(PrintWriter writer, APIMethod method, String stylesheet, APIException e) {
 		logger.error(e.getClassName() + " - " + e.getDetails());
-		StartEndWriter.writeError(writer, e);
+		// TODO: inte riktigt bra detta med header- och footer-kontrollerna men...
+		boolean writeHead = true;
+		boolean writeFoot = true;
+		if (method != null) {
+			writeHead = !method.isHeadWritten();
+			writeFoot = !method.isFootWritten();
+		}
+		StartEndWriter.writeError(writer, writeHead, writeFoot, stylesheet,	e);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException 
-	{
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 	

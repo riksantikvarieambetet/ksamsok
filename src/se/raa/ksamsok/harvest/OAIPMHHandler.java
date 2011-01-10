@@ -448,14 +448,11 @@ public class OAIPMHHandler extends DefaultHandler {
 			gmlih = new GMLInfoHolder();
 		}
 		try {
-			uri = contentHelper.extractIdentifierAndGML(xmlContent, gmlih);
-			//nativeURL = contentHelper.extractNativeURL(xmlContent);
-			/*if(!StringUtils.containsIgnoreCase(nativeURL, "raa.se")) { TODO fortsätt med detta när börje får svar.
-				RedirectChecker redirectChecker = new RedirectChecker(nativeURL);
-				if(isRedirected)
-			}*/
-			
-			if(uri == null) {
+			ExtractedInfo info = contentHelper.extractInfo(xmlContent, gmlih);
+			uri = info.getIdentifier();
+			nativeURL = info.getNativeURL();
+
+			if (uri == null) {
 				return;
 			}
 			// gör update och om ingen post uppdaterades stoppa in en (istf för att kolla om post finns först)

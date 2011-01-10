@@ -1,39 +1,33 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.StringTokenizer;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.index.TermEnum;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.WildcardQuery;
-import org.apache.lucene.search.BooleanQuery.TooManyClauses;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
 
+import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.QueryContent;
-import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.api.util.parser.CQL2Lucene;
+import se.raa.ksamsok.api.util.Term;
+import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
 
 /**
  * söka statistik
  * @author Henrik Hjalmarsson
  */
-public class Statistic implements APIMethod
-{
+public class Statistic extends AbstractAPIMethod {
 	/** namnet på metoden */
 	public static final String METHOD_NAME = "statistic";
 	/** namnet på parametern som håller medskickade index */
@@ -45,55 +39,65 @@ public class Statistic implements APIMethod
 	
 	//set med index som skall kollas
 	protected Map<String,String> indexMap;
-	//writer som används för att skriva ut svaren
-	protected PrintWriter writer;
 	protected int removeBelow = 0;
-	
+
+	protected List<QueryContent> queryResults;
+
 	/**
 	 * Skapar ett nytt statistic objekt
 	 * @param indexes de index som skall scannas
 	 * @param writer används för att skriva ut svaret
 	 */
-	public Statistic(Map<String,String> indexMap, PrintWriter writer)
-	{
-		this.indexMap = indexMap;
-		this.writer = writer;
+	public Statistic(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
+		super(serviceProvider, writer, params);
+		queryResults = Collections.emptyList();
 	}
-	
-	/**
-	 * anger om nollor skall tas bort i svars XML
-	 * @param p
-	 */
-	public void setRemoveBelow(int i)
-	{
-		removeBelow = i;
-	}
-	
+
 	@Override
-	public void performMethod()
-		throws BadParameterException, DiagnosticException,
-			MissingParameterException
-	{
-		IndexSearcher searcher = null;
-		Map<String, Set<Term>> termMap = null;
+	protected void extractParameters() throws MissingParameterException,
+			BadParameterException {
+		this.indexMap = extractIndexMap();
+		this.removeBelow = getRemoveBelow(params.get(REMOVE_BELOW));
+	}
+
+	protected Map<String, String> extractIndexMap() throws MissingParameterException, BadParameterException {
+		return getIndexMapDoubleValue(params.get(INDEX_PARAMETER));
+	}
+
+	@Override
+	protected void performMethodLogic() throws DiagnosticException {
+		Map<String, List<Term>> termMap = null;
 		try {
-			searcher = LuceneServlet.getInstance().borrowIndexSearcher();
-			//en mängd med mängder med mängder!
-			termMap = buildTermMap(searcher);
-			if(getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT) {
-				throw new BadParameterException("den kartesiska produkten av inskickade index blir för stor för att utföra denna operation.", "Statistic.performMethod", null, false);
+			// TODO: om bara ett index borde man kunna köra facet rakt av
+			SolrQuery query = new SolrQuery();
+			query.setQuery("*");
+			query.setRows(0);
+			// en mängd med mängder med mängder!
+			termMap = buildTermMap();
+			if (getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT) {
+				throw new BadParameterException("Den kartesiska produkten av inskickade index blir för stor för att utföra denna operation.", "Statistic.performMethod", null, false);
 			}
 			//gör en kartesisk produkt på de värden i termMap
-			List<QueryContent> queryResults = cartesian(termMap);
-			//utför själva sökningen
-			doStatistic(searcher, queryResults);
-			writeHead(queryResults);
-			writeResult(queryResults);
-			writeFot();
-		}catch(OutOfMemoryError e) {
-			throw new BadParameterException("de inskickade index värdena gav upphov till att för många värden hittades och denna sökning gick ej att utföra", "Statistic.performMethod", null, false);
-		}finally {
-			LuceneServlet.getInstance().returnIndexSearcher(searcher);
+			queryResults = cartesian(termMap);
+
+			for (int i = 0; i < queryResults.size(); i++) {
+				QueryContent content = queryResults.get(i);
+				String qs = content.getQueryString().replace("=", ":"); // TODO: bort nu?
+				query.setQuery(qs);
+				QueryResponse qr = serviceProvider.getSearchService().query(query);
+
+				if (qr.getResults().getNumFound() >= removeBelow) {
+					content.setHits((int) qr.getResults().getNumFound());
+					queryResults.set(i, content);
+				} else {
+					queryResults.remove(i);
+					i--;
+				}
+			}
+		} catch(OutOfMemoryError e) {
+			throw new DiagnosticException("De inskickade index värdena gav upphov till att för många värden hittades och denna sökning gick ej att utföra", "Statistic.performMethod", null, false);
+		} catch (Exception e) {
+			throw new DiagnosticException("Oväntat fel uppstod", "Statistic.performMethod", null, false);
 		}
 	}
 	
@@ -103,7 +107,7 @@ public class Statistic implements APIMethod
 	 * @return Kartesisk produkt av indata som en lista
 	 * @throws MissingParameterException
 	 */
-	protected static List<QueryContent> cartesian(Map<String,Set<Term>> data)
+	protected static List<QueryContent> cartesian(Map<String,List<Term>> data)
 		throws MissingParameterException
 	{
 		String index1 = null;
@@ -139,13 +143,13 @@ public class Statistic implements APIMethod
 	 * @return
 	 */
 	private static List<QueryContent> cartesianWithOneIndex(
-			Map<String,Set<Term>> data, String index1)
+			Map<String,List<Term>> data, String index1)
 	{
 		List<QueryContent> result = new ArrayList<QueryContent>();
 		for(Term term : data.get(index1))
 		{
 			QueryContent content = new QueryContent();
-			content.addTerm(index1, term.text());
+			content.addTerm(index1, term.getValue());
 			result.add(content);
 		}
 		return result;
@@ -156,7 +160,7 @@ public class Statistic implements APIMethod
 	 * @param data
 	 * @return
 	 */
-	protected int getCartesianCount(Map<String,Set<Term>> data)
+	protected int getCartesianCount(Map<String,List<Term>> data)
 	{
 		int count = 1;
 		for(String index : data.keySet())
@@ -173,7 +177,7 @@ public class Statistic implements APIMethod
 	 * @param list med värden
 	 * @return ny lista med kartesisk produkt av indata
 	 */
-	private static List<QueryContent> cartesian(String index, Set<Term> set,
+	private static List<QueryContent> cartesian(String index, List<Term> set,
 			List<QueryContent> list)
 	{
 		List<QueryContent> result = new ArrayList<QueryContent>();
@@ -187,7 +191,7 @@ public class Statistic implements APIMethod
 				{	
 					content.addTerm(index2, map.get(index2));
 				}
-				content.addTerm(index, term.text());
+				content.addTerm(index, term.getValue());
 				result.add(content);
 			}
 		}
@@ -203,7 +207,7 @@ public class Statistic implements APIMethod
 	 * @return lista med kartesisk produkt av de båda setten
 	 */
 	private static List<QueryContent> cartesian(String index1, String index2,
-			Set<Term> set1, Set<Term> set2)
+			List<Term> set1, List<Term> set2)
 	{
 		List<QueryContent> result = new ArrayList<QueryContent>();
 		for(Term term1 : set1)
@@ -211,8 +215,8 @@ public class Statistic implements APIMethod
 			for(Term term2 : set2)
 			{
 				QueryContent content = new QueryContent();
-				content.addTerm(index1, term1.text());
-				content.addTerm(index2, term2.text());
+				content.addTerm(index1, term1.getValue());
+				content.addTerm(index2, term2.getValue());
 				result.add(content);
 			}
 		}
@@ -226,93 +230,57 @@ public class Statistic implements APIMethod
 	 * @return Map<String,Set<Term>> med index och dess termer
 	 * @throws BadParameterException 
 	 */
-	protected Map<String, Set<Term>> buildTermMap(IndexSearcher searcher)
-		throws DiagnosticException, BadParameterException
-	{
-		Query query;
+	protected Map<String, List<Term>> buildTermMap() throws DiagnosticException,
+		BadParameterException {
 		String indexValue;
-		HashMap<String, Set<Term>> termMap = new HashMap<String, Set<Term>>();
-		// TODO: den här ska sättas en gång per jvm och ska sättas innan lucene-klasserna används,
-		//       helst kanske via -D-parameter
-		BooleanQuery.setMaxClauseCount(10000);
-
+		HashMap<String, List<Term>> termMap = new HashMap<String, List<Term>>();
 		for(String index : indexMap.keySet()) {
 			try {
-				indexValue = CQL2Lucene.translateIndexName(index);
-				if(!ContentHelper.indexExists(indexValue)) {
+				indexValue = CQL2Solr.translateIndexName(index);
+				if (!ContentHelper.indexExists(indexValue)) {
 					throw new BadParameterException("Indexet " + index + " existerar inte", "Statistic.buildTermMap", null, false);
 				}
-				HashSet<Term> extractedTerms = new HashSet<Term>();
+				List<Term> extractedTerms = new LinkedList<Term>();
 				String value = indexMap.get(index);
-				if ("*".equals(value)) {
-					// TODO: göra liknande om inte värdet är *, prefix borde vara ganska lätt om inte annat - behov?
-					TermEnum tenum = null;
-					try {
-						tenum = searcher.getIndexReader().terms(new Term(index));
-						Term t;
-						// hmm, inte som andra enumerations, här börjar den direkt utan att man
-						// ska anropa next först..
-						// TODO: undra vad som händer i ett tomt index.. hoppas nullkontrollen är ok?
-						do {
-							t = tenum.term();
-							if (t == null || !t.field().equals(index)) {
-								break;
-							}
-							// snabbfiltrering, finns det inte ens tillräckligt många träffar
-							// totalt så finns det ju inte sen i sökningen heller
-							if (tenum.docFreq() >= removeBelow) {
-								extractedTerms.add(t);
-							}
-						} while (tenum.next());
-					} finally {
-						if (tenum != null) {
-							tenum.close();
-						}
-					}
-				} else {
-					Term term = new Term(indexValue,value);
-					query = new WildcardQuery(term);
-					Query tempQuery = searcher.rewrite(query);
-					tempQuery.extractTerms(extractedTerms);
+				if (ContentHelper.isToLowerCaseIndex(indexValue) || ContentHelper.isAnalyzedIndex(indexValue)) {
+					value = value != null ? value.toLowerCase() : value;
 				}
+				// snabbfiltrering, finns det inte ens tillräckligt många träffar
+				// totalt så finns det ju inte sen i sökningen heller
+				List<Term> terms = serviceProvider.getSearchService().terms(indexValue, value, removeBelow, -1);
+				extractedTerms.addAll(terms);
 				termMap.put(indexValue, extractedTerms);
-			}catch(TooManyClauses e) {
-				throw new BadParameterException("indexet " + index + " har för många unika värden för att utföra denna operation", "Statistic.buildTermMap", null, false);
-			}
-			catch(IOException e) {
-				throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Statistic.buildTermMap", e.getMessage(), true);
+			} catch(SolrServerException e) {
+				throw new DiagnosticException("Oväntat fel uppstod. Var god försök igen", "Statistic.buildTermMap", e.getMessage(), true);
 			}
 		}
 		return termMap;
 	}
 
+
 	/**
 	 * skriver ut nedre delen av svars XML
 	 */
-	protected void writeFot()
-	{
+	@Override
+	protected void writeFootExtra() {
 		writer.println("<echo>");
 		writer.println("<method>" + Statistic.METHOD_NAME + "</method>");
 		for(String index : indexMap.keySet()) {
 			writer.println("<index>" + index + "=" + indexMap.get(index) + "</index>");
 		}
 		writer.println("</echo>");
-		StartEndWriter.writeEnd(writer);
-		StartEndWriter.hasFoot(true);
 	}
 
 	/**
 	 * skriver ut resultat
 	 * @param queryResults
 	 */
-	protected void writeResult(List<QueryContent> queryResults)
-	{
-		for(int i = 0; i < queryResults.size(); i++)
-		{
+	@Override
+	protected void writeResult() {
+		for(int i = 0; i < queryResults.size(); i++) {
 			QueryContent queryContent = queryResults.get(i);
 			writer.println("<term>");
-			for(String index : queryContent.getTermMap().keySet())
-			{
+			for(String index : queryContent.getTermMap().keySet()) {
 				writer.println("<indexFields>");
 				writer.print("<index>");
 				writer.print(index);
@@ -335,41 +303,62 @@ public class Statistic implements APIMethod
 	 * skriver ut övre del av svars XML
 	 * @param queryResults
 	 */
-	protected void writeHead(List<QueryContent> queryResults)
-	{
-		StartEndWriter.writeStart(writer);
-		StartEndWriter.hasHead(true);
+	@Override
+	protected void writeHeadExtra() {
 		//skriver ut hur många värden det blev
 		writer.println("<numberOfTerms>" + queryResults.size() +
 				"</numberOfTerms>");
 	}
 
 	/**
-	 * utför en sökning
-	 * @param searcher som används för sökning
-	 * @param queryResults lista med querys som skall göras
-	 * @throws DiagnosticException
+	 * returnerar remove Below
+	 * @param removeBelowString
+	 * @return
 	 * @throws BadParameterException
 	 */
-	protected void doStatistic(IndexSearcher searcher,	
-			List<QueryContent> queryResults)
-		throws DiagnosticException, BadParameterException
-	{
-		for(int i = 0; i < queryResults.size(); i++) {
+	public int getRemoveBelow(String removeBelowString) throws BadParameterException {
+		int removeBelow = 0;
+		if (removeBelowString != null) {
 			try {
-				QueryContent content = queryResults.get(i);
-				Query q = content.getQuery();
-				TopDocs topDocs = searcher.search(q, 1);
-				if(topDocs.totalHits >= removeBelow) {
-					content.setHits(topDocs.totalHits);
-					queryResults.set(i, content);
-				}else {
-					queryResults.remove(i);
-					i--;
-				}
-			}catch(IOException e) {
-				throw new DiagnosticException("Oväntat IO fel uppstod. Var god försök igen", "Statistic.doStatistic", e.getMessage(), true);
+				removeBelow = Integer.parseInt(removeBelowString);
+			} catch(NumberFormatException e) {
+				throw new BadParameterException("Parametern removeBelow måste innehålla ett numeriskt värde", "APIMethodFactory.getRemoveBelow", null, false);
 			}
 		}
+		return removeBelow;
+	}
+
+	/**
+	 * returnerar en index lista där alla har samma värde
+	 * @param indexString
+	 * @return
+	 * @throws MissingParameterException
+	 * @throws BadParameterException
+	 */
+	public Map<String,String> getIndexMapDoubleValue(String indexString) 
+		throws MissingParameterException, BadParameterException {	
+		if (indexString == null || indexString.trim().length() < 1) 	{
+			throw new MissingParameterException("parametern " + INDEX_PARAMETER + " saknas eller är tom", "APIMethodFactory.getStatisticSearchObject", "index parametern saknas", false);
+		}
+		StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
+		HashMap<String,String> indexMap = new HashMap<String,String>();
+		while (indexTokenizer.hasMoreTokens()) {
+			String[] tokens = indexTokenizer.nextToken().split("=");
+			String index = null;
+			String value = null;
+			if (tokens.length < 2) {
+				throw new BadParameterException("parametern " +  INDEX_PARAMETER + " är felskriven", "APIMethodFactory.getStatisticSearchObject", "syntax error i index parametern", false);
+			}
+			for (int i = 0; i < 2; i++) {
+				if (i == 0) {
+					index = tokens[i];
+				}
+				if (i == 1) {
+					value = tokens[i];
+				}
+			}
+			indexMap.put(index, value);
+		}
+		return indexMap;
 	}
 }

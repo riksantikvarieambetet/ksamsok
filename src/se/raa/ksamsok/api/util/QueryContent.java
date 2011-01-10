@@ -4,14 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-
-import se.raa.ksamsok.api.exception.DiagnosticException;
-
 /**
  * Klass som innehåller ett info om ett query
  * @author Henrik Hjalmarsson
@@ -78,36 +70,12 @@ public class QueryContent
 		for(String index : indexSet)
 		{
 			String term = StaticMethods.escape(terms.get(index));
-			queryString += index + "=\"" + term + "\" AND ";
+			queryString += index + ":\"" + term + "\" AND ";
 		}
 		queryString = queryString.substring(0, queryString.length() - 5);
 		return queryString;
 	}
-	
-	/**
-	 * returnerar ett query byggt av innehållet av detta
-	 * QueryContent
-	 * @return
-	 * @throws DiagnosticException
-	 */
-	public Query getQuery()
-		throws DiagnosticException
-	{
-		// om bara en term, gör ingen boolean query
-		if (terms.size() == 1) {
-			String index = terms.keySet().iterator().next();
-			return new TermQuery(new Term(index, terms.get(index)));
-		}
-		BooleanQuery query = new BooleanQuery();
-		for(String index : terms.keySet())
-		{
-			String value = terms.get(index);
-			Query q = new TermQuery(new Term(index, value));
-			query.add(q, BooleanClause.Occur.MUST);
-		}
-		return query;
-	}
-	
+
 	/**
 	 * skapar en query sträng av lagrade termer och given query sträng
 	 * @param query

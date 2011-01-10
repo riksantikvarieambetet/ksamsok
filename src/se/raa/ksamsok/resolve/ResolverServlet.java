@@ -4,23 +4,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.MapFieldSelector;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TopDocs;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrDocumentList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import se.raa.ksamsok.harvest.HarvesterServlet;
+import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
+import se.raa.ksamsok.solr.SearchService;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect 
@@ -33,14 +36,10 @@ public class ResolverServlet extends HttpServlet {
 	// urlar att redirecta till får inte starta med detta (gemener)
 	private static final String badURLPrefix = "http://kulturarvsdata.se/";
 
-	private static final MapFieldSelector RDF_FIELDS = new MapFieldSelector(
-			new String[] { ContentHelper.I_IX_RDF });
-	private static final MapFieldSelector PRES_FIELDS = new MapFieldSelector(
-			new String[] { ContentHelper.I_IX_PRES });
-	private static final MapFieldSelector HTML_FIELDS = new MapFieldSelector(
-			new String[] { ContentHelper.I_IX_HTML_URL });
-	private static final MapFieldSelector MUSEUMDAT_FIELDS = new MapFieldSelector(
-			new String[] { ContentHelper.I_IX_MUSEUMDAT_URL });
+	@Autowired
+	private SearchService searchService;
+	@Autowired
+	HarvestRepositoryManager hrm;
 
 	/**
 	 * Enum för de olika formaten som stöds.
@@ -68,6 +67,14 @@ public class ResolverServlet extends HttpServlet {
 			return format;
 		}
 	};
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		ServletContext servletContext = config.getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+	}
 
 	/**
 	 * Försöker kontrollera om requesten är något resolverservleten ska hantera. Om det inte
@@ -156,19 +163,36 @@ public class ResolverServlet extends HttpServlet {
 			format = Format.RDF;
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[2];
 		}
-		IndexSearcher is = LuceneServlet.getInstance().borrowIndexSearcher();
 		try {
 			PrintWriter writer;
 			String urli, urle;
 			String content = null;
 			byte[] xmlContent;
 			urli = "http://kulturarvsdata.se/" + path;
-			Query q = new TermQuery(new Term(ContentHelper.IX_ITEMID, urli));
+			SolrQuery q = new SolrQuery();
+			q.setQuery(ContentHelper.IX_ITEMID + ":" + ClientUtils.escapeQueryChars(urli));
+			q.setRows(1);
+			// hämta bara nödvändigt fält
+			switch (format) {
+			case RDF:
+				q.setFields(ContentHelper.I_IX_RDF);
+				break;
+			case XML:
+				q.setFields(ContentHelper.I_IX_PRES);
+				break;
+			case HTML:
+				q.setFields(ContentHelper.I_IX_HTML_URL);
+				break;
+			case MUSEUMDAT:
+				q.setFields(ContentHelper.I_IX_MUSEUMDAT_URL);
+				break;
+			}
 			if (logger.isDebugEnabled()) {
 				logger.debug("resolve of (" + format + ") uri: " + urli);
 			}
-			TopDocs hits = is.search(q, 1);
-			if (hits.totalHits != 1) {
+			QueryResponse response = searchService.query(q);
+			SolrDocumentList hits = response.getResults();
+			if (hits.getNumFound() != 1) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Could not find record for q: " + q);
 				}
@@ -176,7 +200,7 @@ public class ResolverServlet extends HttpServlet {
 				// vid detta fall ligger rdf:en bara i databasen och inte i lucene
 				// men det är ett undantagsfall så vi provar alltid lucene först
 				if (format == Format.RDF) {
-					content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(urli);
+					content = hrm.getXMLData(urli);
 					if (content != null) {
 						resp.setContentType("application/rdf+xml; charset=UTF-8");
 						writer = resp.getWriter();
@@ -190,17 +214,15 @@ public class ResolverServlet extends HttpServlet {
 				resp.sendError(404, "Could not find record for path");
 				return;
 			}
-			Document d;
 			switch (format) {
 			case RDF:
-				d = is.doc(hits.scoreDocs[0].doc, RDF_FIELDS);
-				xmlContent = d.getBinaryValue(ContentHelper.I_IX_RDF);
+				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
 				if (xmlContent != null) {
 					content = new String(xmlContent, "UTF-8");
 				}
 				// TODO: NEK ta bort när allt är omindexerat
 				if (content == null) {
-					content = HarvesterServlet.getInstance().getHarvestRepositoryManager().getXMLData(urli);
+					content = hrm.getXMLData(urli);
 				}
 				if (content == null) {
 					logger.warn("Could not find rdf for record with uri: " + urli);
@@ -216,8 +238,7 @@ public class ResolverServlet extends HttpServlet {
 				break;
 
 			case XML:
-				d = is.doc(hits.scoreDocs[0].doc, PRES_FIELDS);
-				xmlContent = d.getBinaryValue(ContentHelper.I_IX_PRES);
+				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
 				if (xmlContent != null) {
 					content = new String(xmlContent, "UTF-8");
 				}
@@ -235,8 +256,7 @@ public class ResolverServlet extends HttpServlet {
 				break;
 
 			case HTML:
-				d = is.doc(hits.scoreDocs[0].doc, HTML_FIELDS);
-				urle = d.get(ContentHelper.I_IX_HTML_URL);
+				urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
 				if (urle != null) {
 					if (urle.toLowerCase().startsWith(badURLPrefix)) {
 						logger.warn("HTML link is wrong, points to " + badURLPrefix +
@@ -254,8 +274,7 @@ public class ResolverServlet extends HttpServlet {
 				break;
 
 			case MUSEUMDAT:
-				d = is.doc(hits.scoreDocs[0].doc, MUSEUMDAT_FIELDS);
-				urle = d.get(ContentHelper.I_IX_MUSEUMDAT_URL);
+				urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
 				if (urle != null) {
 					if (urle.toLowerCase().startsWith(badURLPrefix)) {
 						logger.warn("Museumdat link is wrong, points to " + badURLPrefix +
@@ -280,8 +299,6 @@ public class ResolverServlet extends HttpServlet {
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
-		} finally {
-			LuceneServlet.getInstance().returnIndexSearcher(is);
 		}
 	}
 

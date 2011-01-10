@@ -1,6 +1,5 @@
 package se.raa.ksamsok.lucene;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
@@ -8,11 +7,9 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 import javax.vecmath.Point2d;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,11 +23,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.Token;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
+import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.util.Base64;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -41,22 +35,15 @@ import org.jrdf.graph.AnyObjectNode;
 import org.jrdf.graph.AnySubjectNode;
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.GraphElementFactoryException;
-import org.jrdf.graph.GraphException;
 import org.jrdf.graph.Literal;
-import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
-import org.jrdf.parser.ParseException;
-import org.jrdf.parser.StatementHandlerException;
 import org.jrdf.parser.rdfxml.GraphRdfXmlParser;
 import org.xml.sax.InputSource;
 
-import com.pjaol.search.geo.utils.projections.CartesianTierPlotter;
-import com.pjaol.search.geo.utils.projections.SinusoidalProjector;
-
+import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.spatial.GMLInfoHolder;
 import se.raa.ksamsok.spatial.GMLUtil;
@@ -209,8 +196,6 @@ public class SamsokContentHelper extends ContentHelper {
 
 	// map med uri -> värde för indexering
 	private static final Map<String,String> uriValues = new HashMap<String,String>();
-	// lista med cartesiantierplotterinstanser
-	private static final List<CartesianTierPlotter> ctps = new LinkedList<CartesianTierPlotter>();
 
 	static {
 		// läs in uri-värden för uppslagning
@@ -218,17 +203,6 @@ public class SamsokContentHelper extends ContentHelper {
 		readURIValueResource("subject.rdf", uri_r__Name);
 		readURIValueResource("dataquality.rdf", uri_r__Name);
 		readURIValueResource("contexttype.rdf", uri_rContextLabel);
-
-		// minska locallucenes loggning genom att skapa en dummy-föräldralogger och
-		// sätta mer restriktiv loggning för den för att slippa dess "debugmeddelanden"
-		// på info-kanalen
-		java.util.logging.Logger dummy = java.util.logging.Logger.getLogger("com.pjaol");
-		dummy.setLevel(java.util.logging.Level.WARNING);
-		// init av saker för locallucenes punkt + distans-sökning
-		SinusoidalProjector project = new SinusoidalProjector();
-		for (int i = 2; i <= 15; ++i){
-			ctps.add(new CartesianTierPlotter(i ,project ));
-		}
 	}
 
 	public SamsokContentHelper() {
@@ -238,8 +212,9 @@ public class SamsokContentHelper extends ContentHelper {
 	}
 
 	@Override
-	public Document createLuceneDocument(HarvestService service, String xmlContent) throws Exception {
-		Document luceneDoc = new Document();
+	public SolrInputDocument createSolrDocument(HarvestService service,
+				String xmlContent) throws Exception {
+		SolrInputDocument luceneDoc = new SolrInputDocument();
 		StringReader r = null;
 		Graph graph = null;
 		String identifier = null;
@@ -390,18 +365,18 @@ public class SamsokContentHelper extends ContentHelper {
 
 			identifier = s.toString();
 			// identifierare enligt http://www.loc.gov/standards/sru/march06-meeting/record-id.html
-			luceneDoc.add(new Field(IX_ITEMID, identifier, Field.Store.YES, Field.Index.NOT_ANALYZED));
+			luceneDoc.addField(IX_ITEMID, identifier);
 			// främst för sru 1.2
-			luceneDoc.add(new Field(CONTEXT_SET_REC + "." + IX_REC_IDENTIFIER, identifier, Field.Store.YES, Field.Index.NOT_ANALYZED));
+			//luceneDoc.addField(CONTEXT_SET_REC + "." + IX_REC_IDENTIFIER, identifier);
 			// tjänst
-			luceneDoc.add(new Field(I_IX_SERVICE, service.getId(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+			luceneDoc.addField(I_IX_SERVICE, service.getId());
 			// html-url
 			String url = extractSingleValue(graph, s, rURL, null);
 			if (url != null) {
 				if (url.toLowerCase().startsWith(uriPrefix)) {
 					addProblemMessage("HTML URL starts with " + uriPrefix);
 				}
-				luceneDoc.add(new Field(I_IX_HTML_URL, url, Field.Store.YES, Field.Index.NOT_ANALYZED));
+				luceneDoc.addField(I_IX_HTML_URL, url);
 			}
 			// museumdat-url
 			url = extractSingleValue(graph, s, rMuseumdatURL, null);
@@ -409,11 +384,11 @@ public class SamsokContentHelper extends ContentHelper {
 				if (url.toLowerCase().startsWith(uriPrefix)) {
 					addProblemMessage("Museumdat URL starts with " + uriPrefix);
 				}
-				luceneDoc.add(new Field(I_IX_MUSEUMDAT_URL, url, Field.Store.YES, Field.Index.NOT_ANALYZED));
+				luceneDoc.addField(I_IX_MUSEUMDAT_URL, url);
 			}
 			// lägg till specialindex för om tumnagel existerar eller ej (j/n), IndexType.TOLOWERCASE
 			boolean thumbnailExists = extractSingleValue(graph, s, rThumbnail, null) != null;
-			luceneDoc.add(new Field(IX_THUMBNAILEXISTS, thumbnailExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
+			luceneDoc.addField(IX_THUMBNAILEXISTS, thumbnailExists ? "j" : "n");
 			// specialindex som indikerar om spatial- respektive tidsdata finns
 			boolean geoDataExists = false;
 			boolean timeInfoExists = false;
@@ -457,7 +432,7 @@ public class SamsokContentHelper extends ContentHelper {
 				//		"' saknas för " + identifier);
 			}
 			// hämta ut itemTitle (0m)
-			ip.setCurrent(IX_ITEMTITLE, Field.Store.YES);
+			ip.setCurrent(IX_ITEMTITLE);
 			appendToTextBuffer(itemText, extractValue(graph, s, rItemTitle, null, ip));
 			// hämta ut itemLabel (11)
 			ip.setCurrent(IX_ITEMLABEL);
@@ -466,7 +441,7 @@ public class SamsokContentHelper extends ContentHelper {
 			ip.setCurrent(IX_ITEMTYPE);
 			extractSingleValue(graph, s, rItemType, ip);
 			// hämta ut itemClass (0m)
-			ip.setCurrent(IX_ITEMCLASS, Field.Store.NO, false); // slå inte upp uri
+			ip.setCurrent(IX_ITEMCLASS, false); // slå inte upp uri
 			extractValue(graph, s, rItemClass, null, ip);
 			// hämta ut itemClassName (0m)
 			ip.setCurrent(IX_ITEMCLASSNAME);
@@ -833,11 +808,12 @@ public class SamsokContentHelper extends ContentHelper {
 			}
 
 			// nedan följer fritextfält - alla utom "strict" ska analyseras
-
+/*
 			// lägg in "allt" i det stora fritextfältet och indexera
 			allText.append(" ").append(itemText).append(" ").append(placeText).append(" ").append(actorText).append(" ").append(timeText);
-			luceneDoc.add(new Field(IX_TEXT, allText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
-			
+			luceneDoc.addField(IX_TEXT, allText.toString().trim());
+
+
 			// även "allt" i strikta indexet, men utan stamning
 			Analyzer a = ContentHelper.getSimpleAnalyzer();
 			TokenStream ts = null;
@@ -855,8 +831,11 @@ public class SamsokContentHelper extends ContentHelper {
 				luceneDoc.add(new Field(IX_STRICT, word, Field.Store.NO, Field.Index.NOT_ANALYZED));
 			}
 
+
+			//luceneDoc.addField(IX_STRICT, allText.toString());
+
 			// fritext för objekt
-			luceneDoc.add(new Field(IX_ITEM, itemText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
+			luceneDoc.addField(new Field(IX_ITEM, itemText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
 			// fritext för plats
 			if (placeText.length() > 0) {
 				luceneDoc.add(new Field(IX_PLACE, placeText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
@@ -869,7 +848,7 @@ public class SamsokContentHelper extends ContentHelper {
 			if (timeText.length() > 0) {
 				luceneDoc.add(new Field(IX_TIME, timeText.toString().trim(), Field.Store.NO, Field.Index.ANALYZED));
 			}
-
+*/
 
 			// hämta ut presentationsblocket
 			pres = extractSingleValue(graph, s, rPres, null);
@@ -880,7 +859,8 @@ public class SamsokContentHelper extends ContentHelper {
 				// serialisera som ett xml-fragment, dvs utan xml-deklaration
 				pres = serializeDocumentAsFragment(doc);
 				// lagra binärt, kodat i UTF-8
-				luceneDoc.add(new Field(I_IX_PRES, pres.getBytes("UTF-8"), Field.Store.COMPRESS));
+				byte[] presBytes = pres.getBytes("UTF-8");
+				luceneDoc.addField(I_IX_PRES, Base64.byteArrayToBase64(presBytes, 0, presBytes.length));
 			}
 
 			// lagra den första geometrins centroid
@@ -896,15 +876,8 @@ public class SamsokContentHelper extends ContentHelper {
 				}
 				try {
 					Point2d p = GMLUtil.getLonLatCentroid(gml);
-					luceneDoc.add(new Field(I_IX_LON, transformNumberToLuceneString(p.x),Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
-					luceneDoc.add(new Field(I_IX_LAT, transformNumberToLuceneString(p.y),Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
-					int ctpsize = ctps.size();
-					for (int i = 0; i < ctpsize; i++){
-						CartesianTierPlotter ctp = ctps.get(i);
-						luceneDoc.add(new Field(ctp.getTierFieldName(),
-								transformNumberToLuceneString(ctp.getTierBoxId(p.y, p.x)),
-								Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
-					}
+					luceneDoc.addField(I_IX_LON, p.x);
+					luceneDoc.addField(I_IX_LAT, p.y);
 				} catch (Exception e) {
 					addProblemMessage("Error when indexing geometries for " + identifier +
 							": " + e.getMessage());
@@ -912,11 +885,12 @@ public class SamsokContentHelper extends ContentHelper {
 			}
 
 			// lägg in specialindex
-			luceneDoc.add(new Field(IX_GEODATAEXISTS, geoDataExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
-			luceneDoc.add(new Field(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n", Field.Store.NO, Field.Index.NOT_ANALYZED));
+			luceneDoc.addField(IX_GEODATAEXISTS, geoDataExists ? "j" : "n");
+			luceneDoc.addField(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n");
 
 			// lagra rdf:en 
-			luceneDoc.add(new Field(I_IX_RDF, xmlContent.getBytes("UTF-8"), Field.Store.COMPRESS));
+			byte[] rdfBytes = xmlContent.getBytes("UTF-8");
+			luceneDoc.addField(I_IX_RDF, Base64.byteArrayToBase64(rdfBytes, 0, rdfBytes.length));
 		} catch (Exception e) {
 			// TODO: kasta exception/räkna felen/annat?
 			logger.error("Fel vid skapande av lucenedokument för " + identifier + ": " + e.getMessage());
@@ -991,67 +965,14 @@ public class SamsokContentHelper extends ContentHelper {
 		}
 		return timeString;
 	}
-	
-	@Override
-	public String extractNativeURL(String xmlContent) throws NullPointerException
-	{
-		if(xmlContent == null) {
-			throw new NullPointerException("xmlContent can not be null");
-		}
-		StringReader reader = null;
-		String url = null;
-		Graph graph = null;
-		try {
-			graph = jrdfFactory.getNewGraph();
-			GraphRdfXmlParser parser = new GraphRdfXmlParser(graph, new MemMapFactory());
-			reader = new StringReader(xmlContent);
-			parser.parse(reader, "");
-			
-			GraphElementFactory elementFactory = graph.getElementFactory();
-			URIReference urlReference = elementFactory.createURIReference(uri_rURL);
-			ObjectNode objectNode = null;
-			for(Triple triple : graph.find(AnySubjectNode.ANY_SUBJECT_NODE, urlReference, AnyObjectNode.ANY_OBJECT_NODE)) {
-				//subjectNode = triple.getSubject();
-				//url = subjectNode.toString();
-				objectNode = triple.getObject();
-				url = objectNode.toString();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (StatementHandlerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GraphElementFactoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GraphException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (Exception ignore) {}
-			}
-			if (graph != null) {
-				graph.close();
-			}
-		}
-		if(StringUtils.startsWith(url, "\"")) {
-			url = StringUtils.substring(url, 1, url.length() - 1);
-		}
-		return url;
-	}
 
 	@Override
-	public String extractIdentifierAndGML(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception {
+	public ExtractedInfo extractInfo(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception {
 		StringReader r = null;
 		String identifier = null;
+		String htmlURL = null;
 		Graph graph = null;
+		ExtractedInfo info = new ExtractedInfo();
 		try {
 			graph = jrdfFactory.getNewGraph();
 			GraphRdfXmlParser parser = new GraphRdfXmlParser(graph, new MemMapFactory());
@@ -1061,6 +982,7 @@ public class SamsokContentHelper extends ContentHelper {
 			GraphElementFactory elementFactory = graph.getElementFactory();
 			URIReference rdfType = elementFactory.createURIReference(uri_rdfType);
 			URIReference samsokEntity = elementFactory.createURIReference(uri_samsokEntity);
+			URIReference rURL = elementFactory.createURIReference(uri_rURL);
 			SubjectNode s = null;
 			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
 				if (identifier != null) {
@@ -1068,11 +990,14 @@ public class SamsokContentHelper extends ContentHelper {
 				}
 				s = triple.getSubject();
 				identifier = s.toString();
+				htmlURL = extractSingleValue(graph, s, rURL, null);
 			}
 			if (identifier == null) {
 				logger.error("Kunde inte extrahera identifierare ur rdf-grafen:\n" + xmlContent);
 				throw new Exception("Kunde inte extrahera identifierare ur rdf-grafen");
 			}
+			info.setIdentifier(identifier);
+			info.setNativeURL(htmlURL);
 			if (gmlInfoHolder != null) {
 				try {
 					// sätt identifier först då den används för deletes etc även om det går
@@ -1122,7 +1047,7 @@ public class SamsokContentHelper extends ContentHelper {
 					
 				}
 			}
-		}finally {
+		} finally {
 			if (r != null) {
 				try {
 					r.close();
@@ -1132,7 +1057,7 @@ public class SamsokContentHelper extends ContentHelper {
 				graph.close();
 			}
 		}
-		return identifier;
+		return info;
 	}
 
 	// läser ut ett värde ur subjektnoden eller subjektnodens objektnod om denna är en subjektnod
@@ -1214,6 +1139,30 @@ public class SamsokContentHelper extends ContentHelper {
 		return value;
 	}
 
+	// lägger till ett index till solr-dokumentet
+	private static boolean addToDoc(SolrInputDocument luceneDoc, String fieldName, String value) {
+		String trimmedValue = StringUtils.trimToNull(value);
+		if (trimmedValue != null) {
+			/*
+			if (isToLowerCaseIndex(fieldName)) {
+				trimmedValue = trimmedValue.toLowerCase();
+			} else */
+			// TODO: göra detta på solr-sidan?
+			if (isISO8601DateYearIndex(fieldName)) {
+				trimmedValue = parseYearFromISO8601DateAndTransform(trimmedValue);
+				if (trimmedValue == null) {
+					addProblemMessage("Could not interpret date value according to ISO8601 for field: " +
+							fieldName + " (" + value + ")");
+				}
+			}
+			if (trimmedValue != null) {
+				luceneDoc.addField(fieldName, trimmedValue);
+			}
+		}
+		return trimmedValue != null;
+	}
+
+	/* TODO: bort när ovan är ok
 	// lägger till ett index till lucene-dokumentet
 	private static boolean addToDoc(Document luceneDoc, String fieldName, String value,
 			Field.Store storeFlag, Field.Index indexFlag) {
@@ -1234,6 +1183,7 @@ public class SamsokContentHelper extends ContentHelper {
 		}
 		return trimmedValue != null;
 	}
+	*/
 
 	private static String parseYearFromISO8601DateAndTransform(String value) {
 		String result = null;
@@ -1250,7 +1200,9 @@ public class SamsokContentHelper extends ContentHelper {
 					// obs - inget break
 				case 'E':
 				case 'e':
-					result = transformNumberToLuceneString(year);
+					// TODO: "numerfixen" görs numera på solr-sidan, ändra returtyp?
+					result = String.valueOf(year);
+					//result = transformNumberToLuceneString(year);
 					break;
 					default:
 						// måste vara f eller e för att sätta result
@@ -1258,7 +1210,9 @@ public class SamsokContentHelper extends ContentHelper {
 			} else {
 				DateTime dateTime = isoDateTimeFormatter.parseDateTime(value);
 				year = dateTime.getYear();
-				result = transformNumberToLuceneString(year);
+				// TODO: "numerfixen" görs numera på solr-sidan, ändra returtyp?
+				result = String.valueOf(year);
+				//result = transformNumberToLuceneString(year);
 			}
 			
 		} catch (Exception ignore) {
@@ -1347,12 +1301,10 @@ public class SamsokContentHelper extends ContentHelper {
 	 * lagras av lucene etc).
 	 */
 	private static class IndexProcessor {
-		final Document doc;
+		final SolrInputDocument doc;
 		String[] indexNames;
-		Field.Store[] stores;
-		Field.Index[] indices;
 		boolean lookupURI;
-		IndexProcessor(Document doc) {
+		IndexProcessor(SolrInputDocument doc) {
 			this.doc = doc;
 		}
 		
@@ -1365,11 +1317,7 @@ public class SamsokContentHelper extends ContentHelper {
 		 */
 		void setCurrent(String indexName, String contextPrefix) {
 			if (contextPrefix != null) {
-				Field.Index[] indices = new Field.Index[2];
-				indices[0] = isAnalyzedIndex(indexName) ? Field.Index.ANALYZED : Field.Index.NOT_ANALYZED;
-				indices[1] = indices[0];
-				setCurrent(new String[] {indexName, contextPrefix + "_" + indexName },
-						new Field.Store[] {Field.Store.NO, Field.Store.NO}, indices, true);
+				setCurrent(new String[] {indexName, contextPrefix + "_" + indexName }, true);
 			} else {
 				setCurrent(indexName);
 			}
@@ -1381,43 +1329,7 @@ public class SamsokContentHelper extends ContentHelper {
 		 * @param indexName indexnamn
 		 */
 		void setCurrent(String indexName) {
-			setCurrent(indexName, Field.Store.NO);
-		}
-
-		/**
-		 * Sätter vilket index vi jobbar med fn. Värdet kommer att läggas
-		 * in i alla angivna index.
-		 * 
-		 * @param indexNames indexnamns
-		 * @param lookupURI om uri-värde ska slås upp
-		 */
-		void setCurrent(String[] indexNames, boolean lookupURI) {
-			Field.Store[] stores = new Field.Store[indexNames.length];
-			for (int i = 0; i < indexNames.length; ++i) {
-				stores[i] = Field.Store.NO;
-			}
-			setCurrent(indexNames, stores, lookupURI);
-		}
-
-		/**
-		 * Sätter vilket index vi jobbar med fn och hur/om det ska lagras av lucene.
-		 * 
-		 * @param indexName indexnamn
-		 * @param store lucene-konstant för lagring
-		 */
-		void setCurrent(String indexName, Field.Store store) {
-			setCurrent(indexName, store, true);
-		}
-
-		/**
-		 * Sätter vilket index vi jobbar med fn och om uri-värden ska slås upp. Värdet
-		 * lagras ej (Field.Store.NO).
-		 * 
-		 * @param indexName indexnamn
-		 * @param lookupURI om urivärde ska slås upp
-		 */
-		void setCurrent(String indexName, boolean lookupURI) {
-			setCurrent(indexName, Field.Store.NO, lookupURI);
+			setCurrent(indexName, true);
 		}
 
 		/**
@@ -1425,27 +1337,10 @@ public class SamsokContentHelper extends ContentHelper {
 		 * om uri-värden ska slås upp.
 		 * 
 		 * @param indexName indexnamn
-		 * @param store lucene-konstant för lagring
 		 * @param lookupURI om urivärde ska slås upp
 		 */
-		void setCurrent(String indexName, Field.Store store, boolean lookupURI) {
-			setCurrent(new String[] {indexName }, new Field.Store[] { store }, lookupURI);
-		}
-
-		/**
-		 * Sätter vilka index vi jobbar med fn, hur/om dessa ska lagras av lucene och
-		 * om uri-värden ska slås upp.
-		 * 
-		 * @param indexNames indexnamn
-		 * @param stores lagringskonstanter
-		 * @param lookupURI om värden ska slås upp
-		 */
-		void setCurrent(String[] indexNames, Field.Store[] stores, boolean lookupURI) {
-			Field.Index[] indices = new Field.Index[indexNames.length];
-			for (int i = 0; i < indexNames.length; ++i) {
-				indices[i] = isAnalyzedIndex(indexNames[i]) ? Field.Index.ANALYZED : Field.Index.NOT_ANALYZED;
-			}
-			setCurrent(indexNames, stores, indices, lookupURI);
+		void setCurrent(String indexName, boolean lookupURI) {
+			setCurrent(new String[] {indexName }, lookupURI);
 		}
 
 		/**
@@ -1453,14 +1348,10 @@ public class SamsokContentHelper extends ContentHelper {
 		 * typ (lucene) av index dessa är och om uri-värden ska slås upp.
 		 * 
 		 * @param indexNames indexnamn
-		 * @param stores lagringskonstanter
-		 * @param indices lucene-indextyp
 		 * @param lookupURI om värden ska slås upp
 		 */
-		void setCurrent(String[] indexNames, Field.Store[] stores, Field.Index[] indices, boolean lookupURI) {
+		void setCurrent(String[] indexNames, boolean lookupURI) {
 			this.indexNames = indexNames;
-			this.stores = stores;
-			this.indices = indices;
 			this.lookupURI = lookupURI;
 		}
 
@@ -1471,7 +1362,7 @@ public class SamsokContentHelper extends ContentHelper {
 		 */
 		void addToDoc(String value) {
 			for (int i = 0; i < indexNames.length; ++i) {
-				SamsokContentHelper.addToDoc(doc, indexNames[i], value, stores[i], indices[i]);
+				SamsokContentHelper.addToDoc(doc, indexNames[i], value);
 			}
 		}
 
@@ -1619,35 +1510,4 @@ public class SamsokContentHelper extends ContentHelper {
 		return addedToIndex;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static void main(String[] args) {
-		SamsokContentHelper sch = new SamsokContentHelper();
-		HarvestService dummyService = new se.raa.ksamsok.harvest.HarvestServiceImpl();
-		dummyService.setId("dummy");
-		StringBuffer buf = new StringBuffer();
-		java.io.File f = new java.io.File("d:/temp/utvnod_en_post.rdf");
-		java.io.BufferedReader r = null;
-		try {
-			r = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(f), "UTF-8"));
-			String line;
-			while ((line = r.readLine()) != null) {
-				buf.append(line).append('\n');
-			}
-			String xmlContent = buf.toString();
-			Document d = sch.createLuceneDocument(dummyService, xmlContent);
-			java.util.List<Field> fields = d.getFields();
-			System.out.println("---- doc ----");
-			for (Field field: fields) {
-				System.out.println(field);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (r != null) {
-				try {
-					r.close();
-				} catch (Exception ignore) {}
-			}
-		}
-	}
 }

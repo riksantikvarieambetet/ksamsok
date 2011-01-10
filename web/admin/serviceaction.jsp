@@ -1,10 +1,10 @@
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvesterServlet"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
-<%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
 <%@page import="java.util.Date" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Locale" %>
@@ -12,9 +12,10 @@
 	<body>
 		Jobbar...
 <%
-	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
+	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
 	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("sv", "SE"));
-	HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
+	HarvestRepositoryManager hrm = ctx.getBean(HarvestRepositoryManager.class);
    	String action = request.getParameter("action");
 	String serviceId = request.getParameter("serviceId");
 	if (serviceId == null && !("reindexall".equals(action) ||
@@ -40,9 +41,12 @@
    		service.setHarvestSetSpec(StringUtils.trimToNull(request.getParameter("harvestSetSpec")));
    		service.setAlwaysHarvestEverything(Boolean.valueOf(request.getParameter("alwayseverything")));
    		service.setShortName(request.getParameter("shortName"));
-   		try {
-   			service.setLastHarvestDate(sdf.parse(request.getParameter("harvestDate")));
-   		}catch(Exception ignore) {}
+   		String harvestDate = StringUtils.trimToNull(request.getParameter("harvestDate"));
+   		if (harvestDate != null) {
+	   		try {
+	   			service.setLastHarvestDate(sdf.parse(harvestDate));
+	   		} catch (Exception ignore) {}
+   		}
    		hsm.updateService(service);
    		redirTo = "editservice.jsp?serviceId=" + serviceId;
    	} else if ("new".equals(action)) {
@@ -71,10 +75,10 @@
    		hsm.interruptReindexAll();
    		redirTo = "indexservices.jsp";
    	} else if ("clear".equals(action)) {
-   		LuceneServlet.getInstance().clearLuceneIndex();
+   		hrm.clearIndex();
    		redirTo = "indexservices.jsp";
    	} else if ("optimize".equals(action)) {
-   		service = hsm.getService(HarvestServiceManager.SERVICE_LUCENE_OPTIMIZE);
+   		service = hsm.getService(HarvestServiceManager.SERVICE_INDEX_OPTIMIZE);
    		if (service != null) {
    			hsm.triggerHarvest(service);
    		} else {
@@ -82,7 +86,7 @@
    		}
    		redirTo = "indexservices.jsp";
    	} else if ("updateoptimize".equals(action)) {
-   		service = hsm.getService(HarvestServiceManager.SERVICE_LUCENE_OPTIMIZE);
+   		service = hsm.getService(HarvestServiceManager.SERVICE_INDEX_OPTIMIZE);
    		if (service != null) {
    			service.setCronString(request.getParameter("cronstring"));
    			hsm.updateService(service);

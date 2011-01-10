@@ -1,20 +1,23 @@
+<%@page import="se.raa.ksamsok.solr.SearchService"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvesterServlet"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="java.util.Date"%>
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
-<%@page import="se.raa.ksamsok.lucene.LuceneServlet"%>
-<%@page import="se.raa.ksamsok.organization.OrganizationDatabaseHandler" %>
-<%@page import="se.raa.ksamsok.organization.OrganizationServlet" %>
+<%@page import="se.raa.ksamsok.organization.OrganizationManager" %>
 <%@page import="se.raa.ksamsok.organization.Organization" %>
 <%@page import="java.util.Map" %>
 <%@page import="java.util.List" %>
 
 <%
-	HarvestServiceManager hsm = HarvesterServlet.getInstance().getHarvestServiceManager();
-	HarvestRepositoryManager hrm = HarvesterServlet.getInstance().getHarvestRepositoryManager();
+	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
+	HarvestRepositoryManager hrm = ctx.getBean(HarvestRepositoryManager.class);
+	SearchService searchService = ctx.getBean(SearchService.class);
+	OrganizationManager om = ctx.getBean(OrganizationManager.class);
 	String serviceId = request.getParameter("serviceId");
 	String uidString = " [" + request.getRemoteUser() + "]";
 %>
@@ -104,21 +107,20 @@
 						<td><label for="shortName" class="bold">Tillhörande institution:</label></td>
 						<td>
 							<select id="shortName" name="shortName">
-								<%OrganizationDatabaseHandler organizationDatabaseHandler = new OrganizationDatabaseHandler(OrganizationServlet.getDataSource()); 
-								if(organizationDatabaseHandler != null) {
-									List<Organization> orgList = organizationDatabaseHandler.getServiceOrganizations();
-									for(Organization org : orgList) {
-										if(org.getKortnamn().equals(service.getShortName())) {
+								<%
+									List<Organization> orgList = om.getServiceOrganizations();
+									for (Organization org : orgList) {
+										if (org.getKortnamn().equals(service.getShortName())) {
 										%>
 											<option value="<%=org.getKortnamn() %>" selected="selected"><%=org.getNamnSwe() %></option>
 										<%
-										}else {
+										} else {
 										%>
 											<option value="<%=org.getKortnamn() %>"><%=org.getNamnSwe() %></option>
 										<%
 										}
 									}
-								}%>
+								%>
 							</select>
 						</td>
 					</tr>
@@ -144,10 +146,12 @@
 						<td><label for="harvestSetSpec" class="bold">Skörde-Set:</label></td>
 						<td><input id="harvestSetSpec" name="harvestSetSpec" type="text" value="<%= (service.getHarvestSetSpec() != null ? service.getHarvestSetSpec() : "" )%>"/></td>
 					</tr>
+					<% if (serviceId != null) { %>
 					<tr>
 						<td><label for="harvestDate" class="bold">Skörde-datum</label></td>
-						<td><input type="text" name="harvestDate" value="<%=service.getLastHarvestDate()%>"/></td>
+						<td><input type="text" name="harvestDate" value="<%= (service.getLastHarvestDate() != null ? ContentHelper.formatDate(service.getLastHarvestDate(), true) : "") %>"/></td>
 					</tr>
+					<% } %>
 					<tr>
 						<td><label for="alwayseverything" class="bold">Skörda:</label></td>
 						<td>
@@ -179,8 +183,8 @@
 					%>
 					<%
 						if (serviceId != null) {
-							int repoCount = hrm.getCount(service);
-							int indexCount = LuceneServlet.getInstance().getCount(serviceId);
+							long repoCount = hrm.getCount(service);
+							long indexCount = searchService.getIndexCount(service.getId());
 					%>
 					<tr>
 						<td>Antal poster i repo/index:</td>

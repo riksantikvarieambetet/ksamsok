@@ -1,6 +1,5 @@
 package se.raa.ksamsok.harvest;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -13,22 +12,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import javax.sql.DataSource;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.Term;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.common.SolrInputDocument;
 
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.DCContentHelper;
-import se.raa.ksamsok.lucene.LuceneServlet;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
 import se.raa.ksamsok.spatial.GMLDBWriter;
 import se.raa.ksamsok.spatial.GMLUtil;
@@ -37,21 +35,37 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.HarvestRepositoryManager");
 
+	/** parameter som pekar ut var hämtad xml ska mellanlagras, om ej satt används tempdir */
+	protected static final String D_HARVEST_SPOOL_DIR = "samsok-harvest-spool-dir";
+
+	private static final Object SYNC = new Object(); // används för att synka skrivningar till solr
+
 	private static final ContentHelper samsokContentHelper = new SamsokContentHelper();
-	private static final ContentHelper dcContentHelper = new DCContentHelper();
+
+	// antal solr-dokument som skickas per batch, för få -> mycket io, för många -> mycket minne
+	private static final int solrBatchSize = 50;
+	// statusrapportering sker efter uppdatering av detta antal objekt
+	private static final int statusReportBatchSize = 500;
 
 	private SAXParserFactory spf;
 	private StatusService ss;
 	private File spoolDir;
+	private SolrServer solr;
 
-	public HarvestRepositoryManagerImpl(DataSource ds, StatusService ss, File spoolDir) {
+	public HarvestRepositoryManagerImpl(DataSource ds, StatusService ss, SolrServer solr) {
 		super(ds);
 		spf = SAXParserFactory.newInstance();
 		spf.setNamespaceAware(true);
 		this.ss = ss;
-		this.spoolDir = spoolDir;
+		spoolDir = new File(System.getProperty(D_HARVEST_SPOOL_DIR,
+				System.getProperty("java.io.tmpdir")));
+		if (!spoolDir.exists() || !spoolDir.isDirectory() || !spoolDir.canWrite()) {
+			throw new RuntimeException("Kan inte läsa spoolkatalog: " + spoolDir);
+		}
+		this.solr = solr;
 	}
 
+	@Override
 	public boolean storeHarvest(HarvestService service, ServiceMetadata sm,
 			File xmlFile, Timestamp ts) throws Exception {
 		Connection c = null;
@@ -121,18 +135,18 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		return updated;
 	}
 
-	public void updateLuceneIndex(HarvestService service, Timestamp ts) throws Exception {
-		updateLuceneIndex(service, ts, null);
+	@Override
+	public void updateIndex(HarvestService service, Timestamp ts) throws Exception {
+		updateIndex(service, ts, null);
 	}
 
-	public void updateLuceneIndex(HarvestService service, Timestamp ts, HarvestService enclosingService) throws Exception {
+	@Override
+	public void updateIndex(HarvestService service, Timestamp ts, HarvestService enclosingService) throws Exception {
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		IndexWriter iw = null;
 		String serviceId = null;
-		boolean refreshIndex = false;
-		synchronized (LuceneServlet.IW_SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som får köra index-write
 			try {
 				long start = System.currentTimeMillis();
 				int count = getCount(service, ts);
@@ -152,10 +166,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				if (ts != null) {
 					pst.setTimestamp(2, ts);
 				}
+				pst.setFetchSize(DBUtil.FETCH_SIZE);
 				rs = pst.executeQuery();
-				iw = LuceneServlet.getInstance().borrowIndexWriter();
 				if (ts == null) {
-					iw.deleteDocuments(new Term(ContentHelper.I_IX_SERVICE, serviceId));
+					solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
 				}
 				//String oaiURI;
 				String uri;
@@ -165,11 +179,15 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				int deleted = 0;
 				ContentHelper helper = getContentHelper(service);
 				ContentHelper.initProblemMessages();
+				// TODO: man skulle kunna strömma allt i en enda request, men jag tror inte man
+				//       skulle tjäna så mycket på det
+				//       se http://wiki.apache.org/solr/Solrj#Streaming_documents_for_an_update
+				List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>(solrBatchSize);
 				while (rs.next()) {
 					//oaiURI = rs.getString("oaiuri");
 					if (ts != null) {
 						uri = rs.getString("uri");
-						iw.deleteDocuments(new Term(ContentHelper.IX_ITEMID, uri));
+						solr.deleteById(uri);
 						if (rs.getTimestamp("deleted") != null) {
 							++deleted;
 							// om borttagen, gå till nästa
@@ -177,15 +195,23 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						}
 					}
 					xmlContent = rs.getString("xmldata");
-					Document doc = helper.createLuceneDocument(service, xmlContent);
+					SolrInputDocument doc = helper.createSolrDocument(service, xmlContent);
 					if (doc == null) {
 						// inget dokument betyder att tjänsten har skickat itemForIndexing=n
 						++nonI;
 						continue;
 					}
-					iw.addDocument(doc);
+					docs.add(doc);
 					++i;
-					if (i % 1000 == 0) { // TODO: konstant?
+					if (i % solrBatchSize == 0) {
+						// skicka batchen
+						if (logger.isDebugEnabled()) {
+							logger.debug("Skickar " + docs.size() + " dokument");
+						}
+						solr.add(docs);
+						docs.clear();
+					}
+					if (i % statusReportBatchSize == 0) {
 						ss.checkInterrupt(service);
 						if (enclosingService != null) {
 							ss.checkInterrupt(enclosingService);
@@ -207,8 +233,15 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						}
 					}
 				}
-				iw.commit();
-				refreshIndex = true;
+				if (docs.size() > 0) {
+					// skicka sista del-batchen
+					if (logger.isDebugEnabled()) {
+						logger.debug("Skickar de sista " + docs.size() + " dokumenten");
+					}
+					solr.add(docs);
+					docs.clear();
+				}
+				solr.commit();
 				long durationMillis = (System.currentTimeMillis() - start);
 				String runTime = ContentHelper.formatRunTime(durationMillis);
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
@@ -221,33 +254,29 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 							", updated index - done, " + (ts == null ?
 									"first removed all and then inserted " :
 									"updated incl " + deleted + " deleted ") + i +
-							" records in the lucene index, time: " +
+							" records in the index, time: " +
 							runTime + " (" + speed + ")");
 				}
 			} catch (Exception e) {
-				if (iw != null) {
-					try {
-						iw.rollback();
-					} catch (Exception e2) {
-						logger.warn("Error when aborting for lucene index", e2);
-					}
+				try {
+					solr.rollback();
+				} catch (Exception e2) {
+					logger.warn("Error when aborting for index", e2);
 				}
-				logger.error(serviceId + ", error when updating lucene index", e);
+				logger.error(serviceId + ", error when updating index", e);
 				throw e;
 			} finally {
 				DBUtil.closeDBResources(rs, pst, c);
-				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
 			}
 			// rapportera eventuella problemmeddelanden
 			reportAndClearProblemMessages(service, "indexing");
 		}
 	}
 
-	public void removeLuceneIndex(HarvestService service) throws Exception {
-		IndexWriter iw = null;
+	@Override
+	public void deleteIndexData(HarvestService service) throws Exception {
 		String serviceId = null;
-		boolean refreshIndex = false;
-		synchronized (LuceneServlet.IW_SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som får köra index-write
 			try {
 				long start = System.currentTimeMillis();
 				int count = getCount(service);
@@ -255,11 +284,8 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					logger.info(service.getId() + ", removing index (" + count + " records) - start");
 				}
 				serviceId = service.getId();
-				iw = LuceneServlet.getInstance().borrowIndexWriter();
-				iw.deleteDocuments(new Term(ContentHelper.I_IX_SERVICE, serviceId));
-
-				iw.commit();
-				refreshIndex = true;
+				solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
+				solr.commit();
 				long durationMillis = (System.currentTimeMillis() - start);
 				String runTime = ContentHelper.formatRunTime(durationMillis);
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
@@ -268,33 +294,27 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				if (logger.isInfoEnabled()) {
 					logger.info(service.getId() +
 							", removed index - done, " + "removed " + count +
-							" records in the lucene index, time: " +
+							" records in the index, time: " +
 							runTime + " (" + speed + ")");
 				}
 			} catch (Exception e) {
-				if (iw != null) {
-					try {
-						iw.rollback();
-					} catch (Exception e2) {
-						logger.warn("Error when aborting for lucene index", e2);
-					}
+				try {
+					solr.rollback();
+				} catch (Exception e2) {
+					logger.warn("Error when aborting for index", e2);
 				}
-				logger.error(serviceId + ", error when updating lucene index", e);
+				logger.error(serviceId + ", error when updating index", e);
 				throw e;
-			} finally {
-				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
 			}
 		}
 	}
 
-
+	@Override
 	public void deleteData(HarvestService service) throws Exception {
 		Connection c = null;
 		PreparedStatement pst = null;
-		IndexWriter iw = null;
 		String serviceId = null;
-		boolean refreshIndex = false;
-		synchronized (LuceneServlet.IW_SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som får köra index-write
 			try {
 				serviceId = service.getId();
 				c = ds.getConnection();
@@ -307,33 +327,29 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				if (gmlDBWriter != null) {
 					gmlDBWriter.deleteAllForService();
 				}
-				iw = LuceneServlet.getInstance().borrowIndexWriter();
-				iw.deleteDocuments(new Term(ContentHelper.I_IX_SERVICE, serviceId));
-				iw.prepareCommit();
+				solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
+				// commit först för db då den är troligast att den smäller och sen solr
 				DBUtil.commit(c);
-				iw.commit();
-				refreshIndex = true;
+				solr.commit();
 				if (logger.isInfoEnabled()) {
 					logger.info("Removed all records for " + serviceId);
 				}
 			} catch (Exception e) {
 				DBUtil.rollback(c);
-				if (iw != null) {
-					try {
-						iw.rollback();
-					} catch (Exception e2) {
-						logger.warn("Error when aborting for lucene index", e2);
-					}
+				try {
+					solr.rollback();
+				} catch (Exception e2) {
+					logger.warn("Error when aborting for index", e2);
 				}
 				logger.error(serviceId + ", error at delete", e);
 				throw e;
 			} finally {
 				DBUtil.closeDBResources(null, pst, c);
-				LuceneServlet.getInstance().returnIndexWriter(iw, refreshIndex);
 			}
 		}
 	}
 
+	@Override
 	public String getXMLData(String uri) throws Exception {
 		String xmlContent = null;
 		Connection c = null;
@@ -357,6 +373,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		return xmlContent;
 	}
 
+	@Override
 	public int getCount(HarvestService service) throws Exception {
 		return getCount(service, null);
 	}
@@ -402,14 +419,59 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	}
 
 	@Override
+	public Map<String, Integer> getCounts() throws Exception {
+		Map<String, Integer> countMap = new HashMap<String, Integer>();
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String serviceId = null;
+		int count = 0;
+		try {
+			c = ds.getConnection();
+			// lite special istället för group by för att få db-index att vara med och slippa full table scan...
+			String sql = "select s.serviceId, (select count(*) from content where serviceId = s.serviceId and deleted is null) c from harvestservices s";
+			pst = c.prepareStatement(sql);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				serviceId = rs.getString(1);
+				count = rs.getInt(2);
+				countMap.put(serviceId, count);
+			}
+		} catch (Exception e) {
+			logger.error(serviceId + ", error when fetching number of records", e);
+			throw e;
+		} finally {
+			DBUtil.closeDBResources(rs, pst, c);
+		}
+		return countMap;
+	}
+
+	@Override
+	public void optimizeIndex() throws Exception {
+		synchronized (SYNC) { // en i taget som får köra index-write
+			solr.optimize();
+		}
+	}
+
+	@Override
+	public void clearIndex() throws Exception {
+		synchronized (SYNC) { // en i taget som får köra index-write
+			solr.deleteByQuery("*:*");
+			solr.commit();
+		}
+	}
+
+	@Override
 	public File getSpoolFile(HarvestService service) {
 		return new File(spoolDir, service.getId() + "_.xml");
 	}
-	
+
+	@Override
  	public File getZipFile(HarvestService service){
 		return new File(getSpoolFile(service).getAbsolutePath() + ".gz");
 	}
 
+	@Override
 	public void extractGZipToSpool(HarvestService service){
 		OutputStream os = null;
 		InputStream is = null;
@@ -477,7 +539,13 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		if (service.getServiceType().endsWith("-SAMSOK")) {
 			return samsokContentHelper;
 		}
-		return dcContentHelper;
+		logger.warn("ContentHelper för tjänst kunde ej bestämmas, npe inkommande?");
+		return null;
+	}
+
+	@Override
+	public File getSpoolDir() {
+		return spoolDir;
 	}
 
 }

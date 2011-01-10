@@ -24,8 +24,7 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 		this.serviceId = serviceId;
 		this.c = c;
 		// förbered några frekvent använda databas-statements
-		this.insertPst = c.prepareStatement("insert into geometries " +
-				"(uri, serviceId, name, geometry) values (?, ? , ?, ?)");
+		this.insertPst = prepareInsert();
 		this.deleteByUriPst = c.prepareStatement("delete from geometries where uri = ?");
 	}
 
@@ -36,6 +35,16 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 		deleteByUriPst = null;
 		insertPst = null;
 		c = null;
+	}
+
+	/**
+	 * Skapar prepared statement att använda för denna writer.
+	 * @return prepared statement
+	 * @throws Exception vid fel
+	 */
+	protected PreparedStatement prepareInsert() throws Exception {
+		return c.prepareStatement("insert into geometries " +
+			"(uri, serviceId, name, geometry) values (?, ? , ?, ?)");
 	}
 
 	@Override
