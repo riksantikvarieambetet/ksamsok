@@ -6,7 +6,7 @@ Utvecklat med java 1.6, tomcat 6.0 och FireFox (admingränssnittet fungerar mindr
 
 Installeras normalt med rpm och då sker allt automatiskt och applikationen konfigureras
 till att gå mot driftdatabasen.
-Rpm skapas med: "ant clean RAA-RPM"
+Rpm skapas med: "ant RAA-RPM"
 Kräver en ksamsok-solr i samma webapp, se readme för det projektet.
 
 ** Manuell installation
