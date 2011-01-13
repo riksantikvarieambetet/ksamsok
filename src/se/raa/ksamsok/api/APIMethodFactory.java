@@ -10,6 +10,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
 import se.raa.ksamsok.api.method.Facet;
+import se.raa.ksamsok.api.method.GetRelations;
 import se.raa.ksamsok.api.method.GetServiceOrganization;
 import se.raa.ksamsok.api.method.RSS;
 import se.raa.ksamsok.api.method.Search;
@@ -92,6 +93,8 @@ public class APIMethodFactory implements APIServiceProvider {
 			m = new GetServiceOrganization(this, writer, params);
 		} else if (method.equals(Stem.METHOD_NAME)) {
 			m = new Stem(this, writer, params);
+		} else if (method.equals(GetRelations.METHOD_NAME)) {
+			m = new GetRelations(this, writer, params);
 		} else {
 			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod", "felaktig metod", false);
 		}

@@ -39,6 +39,7 @@ public abstract class ContentHelper {
 	public static final String I_IX_MUSEUMDAT_URL = "_museumdaturl";
 	public static final String I_IX_LON = "_lon";
 	public static final String I_IX_LAT = "_lat";
+	public static final String I_IX_RELATIONS = "_relations";
 	
 	// generella
 
@@ -314,7 +315,8 @@ public abstract class ContentHelper {
 		addIndex(I_IX_HTML_URL, "html-representation, url", IndexType.VERBATIM, false);
 		addIndex(I_IX_MUSEUMDAT_URL, "museumdat-representation, url", IndexType.VERBATIM, false);
 		addIndex(I_IX_LON, "longitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
-		addIndex(I_IX_LAT, "lattitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
+		addIndex(I_IX_LAT, "latitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
+		addIndex(I_IX_RELATIONS, "relationer", IndexType.VERBATIM, false);
 		addIndex(CONTEXT_SET_REC + "." + IX_REC_IDENTIFIER, "identifierare", IndexType.VERBATIM, false);
 		//addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
 

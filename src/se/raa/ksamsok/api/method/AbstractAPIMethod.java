@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
+
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -144,4 +146,22 @@ public abstract class AbstractAPIMethod implements APIMethod {
 		return indexMap;
 	}
 
+	protected String getMandatoryParameterValue(String key, String infoClassName, String infoDetails,
+			boolean logIfMissing) throws MissingParameterException {
+		return getParameterValue(key, true, infoClassName, infoDetails, logIfMissing);
+	}
+	protected String getOptionalParameterValue(String key, String infoClassName, String infoDetails,
+			boolean logIfMissing) throws MissingParameterException {
+		return getParameterValue(key, false, infoClassName, infoDetails, logIfMissing);
+	}
+
+	protected String getParameterValue(String key, boolean isMandatory, String infoClassName, String infoDetails,
+			boolean logIfMissing) throws MissingParameterException {
+		String value = StringUtils.trimToNull(params.get(key));
+		if (isMandatory && value == null) {
+			throw new MissingParameterException("Parametern " + key + " saknas eller är tom",
+					infoClassName, infoDetails, logIfMissing);
+		}
+		return value;
+	}
 }

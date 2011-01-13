@@ -5,9 +5,11 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.vecmath.Point2d;
@@ -496,72 +498,73 @@ public class SamsokContentHelper extends ContentHelper {
 			ip.setCurrent(IX_THEME);
 			extractValue(graph, s, rTheme, null, ip);
 
+			List<String> relations = new ArrayList<String>();
 			// relationer, in i respektive index + i IX_RELURI
 			final String[] relIx = new String[] { null, IX_RELURI };
 			// hämta ut containsInformationAbout (0n)
 			relIx[0] = IX_CONTAINSINFORMATIONABOUT;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rContainsInformationAbout, null, ip);
+			extractValue(graph, s, rContainsInformationAbout, null, ip, relations);
 			// hämta ut containsObject (0n)
 			relIx[0] = IX_CONTAINSOBJECT;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rContainsObject, null, ip);
+			extractValue(graph, s, rContainsObject, null, ip, relations);
 			// hämta ut hasBeenUsedIn (0n)
 			relIx[0] = IX_HASBEENUSEDIN;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rHasBeenUsedIn, null, ip);
+			extractValue(graph, s, rHasBeenUsedIn, null, ip, relations);
 			// hämta ut hasChild (0n)
 			relIx[0] = IX_HASCHILD;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rHasChild, null, ip);
+			extractValue(graph, s, rHasChild, null, ip, relations);
 			// hämta ut hasFind (0n)
 			relIx[0] = IX_HASFIND;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rHasFind, null, ip);
+			extractValue(graph, s, rHasFind, null, ip, relations);
 			// hämta ut hasImage (0n)
 			relIx[0] = IX_HASIMAGE;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rHasImage, null, ip);
+			extractValue(graph, s, rHasImage, null, ip, relations);
 			// hämta ut hasObjectExample (0n)
 			relIx[0] = IX_HASOBJECTEXAMPLE;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rHasObjectExample, null, ip);
+			extractValue(graph, s, rHasObjectExample, null, ip, relations);
 			// hämta ut hasParent (0n)
 			relIx[0] = IX_HASPARENT;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rHasParent, null, ip);
+			extractValue(graph, s, rHasParent, null, ip, relations);
 			// hämta ut hasPart (0n)
 			relIx[0] = IX_HASPART;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rHasPart, null, ip);
+			extractValue(graph, s, rHasPart, null, ip, relations);
 			// hämta ut isDescribedBy (0n)
 			relIx[0] = IX_ISDESCRIBEDBY;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rIsDescribedBy, null, ip);
+			extractValue(graph, s, rIsDescribedBy, null, ip, relations);
 			// hämta ut isFoundIn (0n)
 			relIx[0] = IX_ISFOUNDIN;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rIsFoundIn, null, ip);
+			extractValue(graph, s, rIsFoundIn, null, ip, relations);
 			// hämta ut isPartOf (0n)
 			relIx[0] = IX_ISPARTOF;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rIsPartOf, null, ip);
+			extractValue(graph, s, rIsPartOf, null, ip, relations);
 			// hämta ut isRelatedTo (0n)
 			relIx[0] = IX_ISRELATEDTO;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rIsRelatedTo, null, ip);
+			extractValue(graph, s, rIsRelatedTo, null, ip, relations);
 			// hämta ut isVisualizedBy (0n)
 			relIx[0] = IX_ISVISUALIZEDBY;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rIsVisualizedBy, null, ip);
+			extractValue(graph, s, rIsVisualizedBy, null, ip, relations);
 			// hämta ut sameAs (0n)
 			relIx[0] = IX_SAMEAS;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rSameAs, null, ip);
+			extractValue(graph, s, rSameAs, null, ip, relations);
 			// hämta ut visualizes (0n)
 			relIx[0] = IX_VISUALIZES;
 			ip.setCurrent(relIx, false);
-			extractValue(graph, s, rVisualizes, null, ip);
+			extractValue(graph, s, rVisualizes, null, ip, relations);
 
 			LinkedList<String> gmlGeometries = new LinkedList<String>();
 
@@ -884,6 +887,13 @@ public class SamsokContentHelper extends ContentHelper {
 				}
 			}
 
+			// lägg in relationer i specialstruktur/index (typ|uri)
+			if (relations.size() > 0) {
+				for (String value: relations) {
+					luceneDoc.addField(I_IX_RELATIONS, value);
+				}
+			}
+
 			// lägg in specialindex
 			luceneDoc.addField(IX_GEODATAEXISTS, geoDataExists ? "j" : "n");
 			luceneDoc.addField(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n");
@@ -1063,9 +1073,15 @@ public class SamsokContentHelper extends ContentHelper {
 	// läser ut ett värde ur subjektnoden eller subjektnodens objektnod om denna är en subjektnod
 	// och lägger till värdet mha indexprocessorn
 	private String extractValue(Graph graph, SubjectNode s, URIReference ref, URIReference refRef, IndexProcessor ip) throws Exception {
+		return extractValue(graph, s, ref, refRef, ip, null);
+	}
+
+	// läser ut ett värde ur subjektnoden eller subjektnodens objektnod om denna är en subjektnod
+	// och lägger till värdet mha indexprocessorn och ev specialhanterar relationer
+	private String extractValue(Graph graph, SubjectNode s, URIReference ref, URIReference refRef, IndexProcessor ip, List<String> relations) throws Exception {
 		final String sep = " ";
 		StringBuffer buf = new StringBuffer();
-		String value;
+		String value = null;
 		for (Triple t: graph.find(s, ref, AnyObjectNode.ANY_OBJECT_NODE)) {
 			if (t.getObject() instanceof Literal) {
 				Literal l = (Literal) t.getObject();
@@ -1099,6 +1115,20 @@ public class SamsokContentHelper extends ContentHelper {
 					buf.append(value);
 				}
 			}
+			if (value != null && relations != null) {
+				// specialhantering av relationer
+				String relationType;
+				if (uri_rSameAs.equals(ref.getURI())) {
+					relationType = "sameAs";
+				} else {
+					relationType = StringUtils.substringAfter(ref.getURI().toString(), uriPrefixKSamsok);
+					if (relationType == null) {
+						throw new Exception("Okänd relation? Börjar ej med känt prefix: " + ref.getURI().toString());
+					}
+				}
+				relations.add(relationType + "|" + value);
+			}
+			value = null;
 		}
 		return buf.length() > 0 ? StringUtils.trimToNull(buf.toString()) : null;
 	}
