@@ -1,3 +1,4 @@
+<%@page import="java.net.URL"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Comparator"%>
@@ -19,6 +20,14 @@
 	SearchService searchService = ctx.getBean(SearchService.class);
 	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
 	HarvestRepositoryManager hrm = ctx.getBean(HarvestRepositoryManager.class);
+	// funkar bara ok i drift om man går mot www.kulturarvsdata.se så länge som proxyHost
+	//  inte är satt till utsidans hostnamn då solr inte är (eller ska vara i alla fall!) synligt utåt
+	URL solrURL = new URL(searchService.getSolrURL());
+	if ("127.0.0.1".equals(solrURL.getHost())) {
+		solrURL = new URL(solrURL.toString().replaceFirst("127\\.0\\.0\\.1", request.getServerName()));
+	} else if ("localhost".equals(solrURL.getHost())) {
+		solrURL = new URL(solrURL.toString().replaceFirst("localhost", request.getServerName()));
+	}
 %>
 	<head>
 		<title>Översikt</title>
@@ -33,7 +42,7 @@
 			<a href="orgAdmin">Admin org</a>&nbsp;&nbsp;
 			<a href="statistic">Statistik</a>&nbsp;&nbsp;
 			<a href="../sru">SRU-gränssnitt</a>
-			<a href="<%=searchService.getSolrURL() %>/admin/">Solr-admin</a>
+			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
 			<span class="servername"><%=request.getServerName() %></span>
 		</div>
 		<hr/>

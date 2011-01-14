@@ -1,3 +1,4 @@
+<%@page import="java.net.URL"%>
 <%@page import="se.raa.ksamsok.solr.SearchService"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.Collator"%>
@@ -33,6 +34,14 @@
 	String jvmInfo = procs + " processorer/kärnor, minne - ledigt: " + freeMem + "Mb allokerat: " +
 		totalMem + "Mb max: " + maxMem + "Mb, disk - ledigt " + freeDisk + "Mb " +
 		"<span style='font-size: 85%;'>(på spool: " + spoolDir.getAbsolutePath() + ")</span>";
+	// funkar bara ok i drift om man går mot www.kulturarvsdata.se så länge som proxyHost
+	//  inte är satt till utsidans hostnamn då solr inte är (eller ska vara i alla fall!) synligt utåt
+	URL solrURL = new URL(searchService.getSolrURL());
+	if ("127.0.0.1".equals(solrURL.getHost())) {
+		solrURL = new URL(solrURL.toString().replaceFirst("127\\.0\\.0\\.1", request.getServerName()));
+	} else if ("localhost".equals(solrURL.getHost())) {
+		solrURL = new URL(solrURL.toString().replaceFirst("localhost", request.getServerName()));
+	}
 %>
 	<head>
 		<title>Tjänstelista<%= uidString %></title>&nbsp;&nbsp;
@@ -43,7 +52,7 @@
 		<div class="bgBlackLight menu">
 			<a href="index.jsp">Startsida</a>&nbsp;&nbsp;
 			<a href="indexservices.jsp">Indexhantering</a>
-			<a href="<%=searchService.getSolrURL() %>/admin/">Solr-admin</a>
+			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
 			<span class="servername"><%=request.getServerName() %></span>
 		</div>
 		<hr/>
