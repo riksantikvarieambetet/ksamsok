@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.z3950.zing.cql.CQLAndNode;
 import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
@@ -185,6 +186,9 @@ public class CQL2Solr {
 	public static String createTermQuery(String field, String value, String relation) throws DiagnosticException {
 		String termQuery = null;
 
+		// TODO: se över denna logik (och kommentarer mm) lite, känns som om den kan förenklas
+		//       en hel del nu när ingen analys av värden mm sker på klientsidan
+
 		/**
 		 * check to see if there are any spaces.  If there are spaces each
 		 * word must be broken into a single term search and then all queries
@@ -196,38 +200,28 @@ public class CQL2Solr {
 			// inga mellanslag, skapa en term query eller wildcard query
 			//Term term;
 			if (value.indexOf("?") != -1 || value.indexOf("*")!= -1) {
-				if (ContentHelper.isToLowerCaseIndex(field)) {
-					// gör till gemener
-					value = value.toLowerCase();
-				} else if (ContentHelper.isISO8601DateYearIndex(field) ||
+				if (ContentHelper.isISO8601DateYearIndex(field) ||
 						ContentHelper.isSpatialCoordinateIndex(field)) {
 					// inget stöd för wildcards för dessa fält
-					throw new DiagnosticException("Wildcard tecken stöds ej" +
+					throw new DiagnosticException("Wildcardtecken stöds ej" +
 							" för index: " + field,
 							"CQL2Solr.createTermQuery", null, true);
 				}
+				// gör till gemener
+				value = value.toLowerCase();
 				//term = new Term(field, value);
-				termQuery = field + ":" + value; //new WildcardQuery(term);
+				termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
 			} else {
 				// fixa ev till värdet beroende på index
 				value = transformValueForField(field, value);
-				/*
-				if (value != null) {
-					term = new Term(field, value);
-					termQuery = new TermQuery(term);
-				} else {
-					termQuery = NO_MATCH_DUMMY_QUERY;
-				}
-				*/
-				// TODO: mellanslag?
-				termQuery = field + ":" + value;
+				termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
 			}
 		} else {
 			// space found, iterate through the terms to create a multiterm 
 			//search
 			if (relation == null || relation.equals("=") ||
 					relation.equals("<>") || relation.equals("exact")) {
-				termQuery = field + ":\"" + value + "\"";
+				termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
 				if (relation != null && relation.equals("<>")) {
 					termQuery = "NOT " + termQuery;
 				}
@@ -425,6 +419,27 @@ public class CQL2Solr {
 			}
 		}
 		return value;
+	}
+
+	// skapar en sökterm av indexnamn, värde och info om det är en exakt matchning som avses
+	private static String createEscapedTermQuery(String indexName, String value, boolean isExact) {
+		// TODO: verkar rätt för de flesta fall, men stämmer det för alla? flytta in termöversättning
+		//       och indexkontroll map wildcard mm hit också?
+		String termQuery;
+		if (!isExact) {
+			// OBS är det ett wildcard med måste det alltid göras till gemener pga hur de hanteras i solr
+			if (value.indexOf("?") != -1 || value.indexOf("*")!= -1 || ContentHelper.isToLowerCaseIndex(indexName)) {
+				value = value.toLowerCase();
+			}
+			// gör escape av hela värdet och sen "unescape" på ev wildcards
+			value = ClientUtils.escapeQueryChars(value).replace("\\*", "*").replace("\\?", "?");
+			// sätt ihop
+			termQuery = indexName + ":" + value;
+		} else {
+			// sätt ihop och använd quotes för en exakt matchning
+			termQuery = indexName + ":\"" + value + "\"";
+		}
+		return termQuery;
 	}
 
 	private static double[] parseDoubleValues(String value, int expected) {
