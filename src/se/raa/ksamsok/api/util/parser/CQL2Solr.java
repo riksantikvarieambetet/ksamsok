@@ -198,29 +198,13 @@ public class CQL2Solr {
 		// typ "Stockholm 1:1"
 		if (value.indexOf(" ") == -1 ||	!ContentHelper.isAnalyzedIndex(field)) {
 			// inga mellanslag, skapa en term query eller wildcard query
-			//Term term;
-			if (value.indexOf("?") != -1 || value.indexOf("*")!= -1) {
-				if (ContentHelper.isISO8601DateYearIndex(field) ||
-						ContentHelper.isSpatialCoordinateIndex(field)) {
-					// inget stöd för wildcards för dessa fält
-					throw new DiagnosticException("Wildcardtecken stöds ej" +
-							" för index: " + field,
-							"CQL2Solr.createTermQuery", null, true);
-				}
-				// gör till gemener
-				value = value.toLowerCase();
-				//term = new Term(field, value);
-				termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
-			} else {
-				// fixa ev till värdet beroende på index
-				value = transformValueForField(field, value);
-				termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
-			}
+			termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
 		} else {
 			// space found, iterate through the terms to create a multiterm 
 			//search
 			if (relation == null || relation.equals("=") ||
 					relation.equals("<>") || relation.equals("exact")) {
+				// för dessa relationer/operatorer, gör vanlig fråga även med mellanslag
 				termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
 				if (relation != null && relation.equals("<>")) {
 					termQuery = "NOT " + termQuery;
@@ -403,7 +387,7 @@ public class CQL2Solr {
 	// "översätter" ev värde beroende på indextyp
 	public static String transformValueForField(String field, String value)
 		throws DiagnosticException {
-		if (ContentHelper.isToLowerCaseIndex(field)) {
+		if (ContentHelper.isToLowerCaseIndex(field) || ContentHelper.isAnalyzedIndex(field)) {
 			value = value.toLowerCase();
 		} else if (ContentHelper.isISO8601DateYearIndex(field)) {
 			// TODO: behövs detta?
@@ -422,14 +406,20 @@ public class CQL2Solr {
 	}
 
 	// skapar en sökterm av indexnamn, värde och info om det är en exakt matchning som avses
-	private static String createEscapedTermQuery(String indexName, String value, boolean isExact) {
-		// TODO: verkar rätt för de flesta fall, men stämmer det för alla? flytta in termöversättning
-		//       och indexkontroll map wildcard mm hit också?
+	private static String createEscapedTermQuery(String indexName, String value, boolean isExact) throws DiagnosticException {
 		String termQuery;
 		if (!isExact) {
-			// OBS är det ett wildcard med måste det alltid göras till gemener pga hur de hanteras i solr
-			if (value.indexOf("?") != -1 || value.indexOf("*")!= -1 || ContentHelper.isToLowerCaseIndex(indexName)) {
-				value = value.toLowerCase();
+			if (value.indexOf("?") != -1 || value.indexOf("*") != -1) {
+				if (ContentHelper.isISO8601DateYearIndex(indexName) ||
+						ContentHelper.isSpatialCoordinateIndex(indexName)) {
+					// inget stöd för wildcards för dessa fält
+					throw new DiagnosticException("Wildcardtecken stöds ej" +
+							" för index: " + indexName,
+							"CQL2Solr.createTermQuery", null, true);
+				}
+				// notera att är det ett wildcard med passerar frågan inte nån analyzer så då måste
+				// värdet vara som det är i indexet, dvs omgjort till lowercase för lowercase + analyserade index tex
+				value = transformValueForField(indexName, value);
 			}
 			// gör escape av hela värdet och sen "unescape" på ev wildcards
 			value = ClientUtils.escapeQueryChars(value).replace("\\*", "*").replace("\\?", "?");
