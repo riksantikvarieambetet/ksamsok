@@ -186,12 +186,12 @@ public abstract class ContentHelper {
 		addIndex(IX_SUBJECT, "Ämnesavgränsning", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE);
 		addIndex(IX_DATAQUALITY, "Beskrivningsnivå", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.VERBATIM); // uri // TODO: detta stämmer ej(?)
+		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.TOLOWERCASE); // uri // TODO: detta stämmer ej(?)
 
 		// objekt
 		addIndex(IX_ITEM, "Fritext i entitetsfält", IndexType.ANALYZED);
 		addIndex(IX_ITEMTYPE, "Typ av objekt", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_ITEMCLASS, "Objektets klass, kategorisering eller klassifikation", IndexType.VERBATIM); // uri
+		addIndex(IX_ITEMCLASS, "Objektets klass, kategorisering eller klassifikation", IndexType.TOLOWERCASE); // uri
 		addIndex(IX_ITEMCLASSNAME, "Klass eller kategori, om det inte finns en klassificeringsresurs", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMNAME, "Objektets huvudsakliga benämning eller sakord", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMSPECIFICATION, "Modellbeteckning eller liknande", IndexType.TOLOWERCASE);
@@ -204,17 +204,17 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMTECHNIQUE, "Teknik för att producera objektet", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMSTYLE, "Stil som präglar objektet", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMCOLOR, "Färg som präglar objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMNUMBER, "Inventarienummer eller annan identifikation av objektet", IndexType.VERBATIM);
-		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet (uri)", IndexType.VERBATIM); // typ? uri -> verbatim, kod -> lowercase
+		addIndex(IX_ITEMNUMBER, "Inventarienummer eller annan identifikation av objektet", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet (uri)", IndexType.TOLOWERCASE); // typ? uri -> verbatim, kod -> lowercase
 		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_THEME, "Tema", IndexType.TOLOWERCASE);
 		
 		// plats
 		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.VERBATIM);
-		addIndex(IX_PLACETERMID, "Plats-ID hos auktoritet [*]", IndexType.VERBATIM);
-		addIndex(IX_PLACETERMAUTH, "Auktoritet för plats-ID [*]", IndexType.VERBATIM);
+		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_PLACETERMID, "Plats-ID hos auktoritet [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_PLACETERMAUTH, "Auktoritet för plats-ID [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_CONTINENTNAME, "Kontinent [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_COUNTRYNAME, "Land, namn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_COUNTYNAME, "Län, namn [*]", IndexType.TOLOWERCASE);
@@ -253,8 +253,8 @@ public abstract class ContentHelper {
 		addIndex(IX_FULLNAME, "Fullständigt namn ([förnamn] [efternamn]) [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_ORGANIZATION, "Organisation [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_TITLE, "Titel (person) [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.VERBATIM);
-		addIndex(IX_NAMEAUTH, "Auktoritet för namn [*]", IndexType.VERBATIM);
+		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_NAMEAUTH, "Auktoritet för namn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_ACTOR, "Vem - Fritext i person- och organisationsdata", IndexType.ANALYZED);
 
 		// tid
@@ -262,11 +262,11 @@ public abstract class ContentHelper {
 		addIndex(IX_TOTIME, "Tidpunkt eller slut på tidsintervall (årtal enligt ISO 8601) [*]", IndexType.ISO8601DATEYEAR);
 		addIndex(IX_FROMPERIODNAME, "Tidpunkt eller start på tidsintervall, namn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_TOPERIODNAME, "Tidpunkt eller slut på tidsintervall, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_FROMPERIODID, "Tidpunkt eller start på tidsintervall, kod [*]", IndexType.VERBATIM);
-		addIndex(IX_TOPERIODID, "Tidpunkt eller slut på tidsintervall, kod [*]", IndexType.VERBATIM);
-		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.VERBATIM);
+		addIndex(IX_FROMPERIODID, "Tidpunkt eller start på tidsintervall, kod [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_TOPERIODID, "Tidpunkt eller slut på tidsintervall, kod [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_EVENTNAME, "Namn på en händelse [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.VERBATIM);
+		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.TOLOWERCASE);
 		//addIndex(IX_TIMETEXT, "Annan tidsuppgift [*]", IndexType.ANALYZED);
 		addIndex(IX_TIME, "När - Fritext i tidsdata", IndexType.ANALYZED);
 
@@ -298,7 +298,7 @@ public abstract class ContentHelper {
 				IX_CREATEDDATE + ")", IndexType.VERBATIM);
 
 		// media
-		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.VERBATIM);
+		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.TOLOWERCASE);
 		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED);
 
 		// övriga
