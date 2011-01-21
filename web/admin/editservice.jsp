@@ -192,7 +192,7 @@
 						<%
 							if (repoCount != indexCount) { 
 						%>
-							<b>OBS! Skillnad mellan repo och index</b>
+							<b>OBS! Skillnad mellan repo och index (kan bero på itemForIndexing=n, se historik/logg)</b>
 						<%
 							}
 						%>
