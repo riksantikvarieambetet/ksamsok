@@ -161,7 +161,6 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				logger.info("Running job for " + serviceId);
 			}
 			service = hsm.getService(serviceId);
-			ss.containsErrors(service, false);
 			if (service == null) {
 				throw new JobExecutionException("Could not find service with ID: " + serviceId);
 			}
@@ -319,8 +318,11 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 					}
 				}
 				// uppdatera senaste skörde datum/tid för servicen
-				if(!ss.containsErrors(service)) {
+				if (!ss.containsRDFErrors(service)) {
 					hsm.updateServiceDate(service, nowTs);
+				} else {
+					ss.setStatusTextAndLog(service, "NOTE: the data contained some unparsable rdf " +
+							"(see log) so the last harvest date has NOT been updated - this problem needs to be fixed");
 				}
 
 				// kolla om vi ska avbryta
@@ -346,9 +348,12 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				if (logger.isInfoEnabled()) {
 					logger.info(serviceId + ", harvest resulted in no records");
 				}
-				if(!ss.containsErrors(service)) {
-					// uppdatera med senaste skördetid
+				// uppdatera med senaste skördetid
+				if (!ss.containsRDFErrors(service)) {
 					hsm.updateServiceDate(service, now);
+				} else {
+					ss.setStatusTextAndLog(service, "NOTE: the data contained some unparsable rdf " +
+							"(see log) so the last harvest date has NOT been updated - this problem needs to be fixed");
 				}
 			}
 			long durationMillis = System.currentTimeMillis() - start;

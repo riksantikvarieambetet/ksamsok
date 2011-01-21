@@ -27,31 +27,19 @@ public class StatusServiceImpl implements StatusService {
 	Map<String, String> lastStarts = Collections.synchronizedMap(new HashMap<String, String>());
 	Map<String, Step> steps = Collections.synchronizedMap(new HashMap<String, Step>());
 	Map<String, Step> startSteps = Collections.synchronizedMap(new HashMap<String, Step>());
-	Map<String, Boolean> containsErrors = Collections.synchronizedMap(new HashMap<String,Boolean>());
+	Map<String, Boolean> rdfErrors = Collections.synchronizedMap(new HashMap<String,Boolean>());
 
 	DataSource ds;
 
 	StatusServiceImpl(DataSource ds) {
 		this.ds = ds;
 	}
-	
-	public void containsErrors(HarvestService service, boolean containError) {
-		containsErrors.put(service.getId(), containError);
-	}
-	
-	public boolean containsErrors(HarvestService service) {
-		Boolean containError = containsErrors.get(service.getId());
-		if(containError != null) {
-			return containError;
-		}
-		return false;
-	}
 
 	public void checkInterrupt(HarvestService service) {
 		String iDate = interrupts.remove(service.getId());
 		if (iDate != null) {
 			throw new RuntimeException("Job aborted " + iDate + " in step " +
-					steps.get(service.getId()) + " at request");
+					steps.get(service.getId()) + " by user request");
 		}
 	}
 
@@ -84,6 +72,7 @@ public class StatusServiceImpl implements StatusService {
 		startSteps.remove(service.getId());
 		Date nowDate = new Date();
 		lastStarts.put(service.getId(), ContentHelper.formatDate(nowDate, true));
+		rdfErrors.remove(service.getId());
 		cleanDb(service, nowDate);
 		setStatusTextAndLog(service, "------ " + message + " ------");
 	}
@@ -146,6 +135,18 @@ public class StatusServiceImpl implements StatusService {
 
 	public void setStartStep(HarvestService service, Step step) {
 		startSteps.put(service.getId(), step);
+	}
+
+	public void signalRDFError(HarvestService service) {
+		rdfErrors.put(service.getId(), true);
+	}
+
+	public boolean containsRDFErrors(HarvestService service) {
+		Boolean containError = rdfErrors.get(service.getId());
+		if (containError != null) {
+			return containError;
+		}
+		return false;
 	}
 
 	public List<String> getStatusLogHistory(HarvestService service) {

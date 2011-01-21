@@ -82,12 +82,12 @@ public class OAIPMHHandler extends DefaultHandler {
 		// förbered några databas-statements som kommer användas frekvent
 		this.oai2uriPst = c.prepareStatement("select uri from content where oaiuri = ?");
 		this.updatePst = c.prepareStatement("update content set deleted = null, oaiuri = ?, " +
-				"serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ? where uri = ?");
-		// TODO: stoppa in xmldata = null nedan för att rensa onödigt gammalt postinnehåll
+				"serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ?, nativeURL = ? where uri = ?");
+		// TODO: stoppa in xmldata = null nedan för att rensa onödigt gammalt postinnehåll?
 		this.deleteUpdatePst = c.prepareStatement("update content set status = ?, " +
 				"changed = ?, deleted = ?, datestamp = ? where serviceId = ? and oaiuri = ?");
 		this.insertPst = c.prepareStatement("insert into content " +
-				"(uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status) " +
+				"(uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status, nativeURL) " +
 				"values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
 	}
@@ -313,6 +313,10 @@ public class OAIPMHHandler extends DefaultHandler {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Removing oaiURI=" + oaiURI + " from service with ID: " + service.getId());
 		}
+
+		// OBS att antalet parametrar etc *måste* stämma med det statement som används
+		// och som skapas och förbereds i konstruktorn!
+
 		ResultSet rs = null;
 		try {
 			// bort med ev spatialt data
@@ -354,17 +358,22 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param xmlContent xml-innehåll
 	 * @param datestamp postens ändringsdatum (från oai-huvudet)
 	 * @param gmlInfoHolder hållare för geometrier mm
+	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
 	protected void insertRecord(String oaiURI, String uri, String xmlContent,
-			Timestamp datestamp, GMLInfoHolder gmlInfoHolder) throws Exception {
+			Timestamp datestamp, GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Entering data for oaiURI=" + oaiURI + ", uri=" +
 					uri + " for service with ID: " + service.getId());
 		}
+
+		// OBS att antalet parametrar etc *måste* stämma med det statement som används
+		// och som skapas och förbereds i konstruktorn!
+
 		// insert into content
-		//     (uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status)
-		//     values (?, ?, ?, ?, ?, ?, ?, ?)
+		//     (uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status, nativeURL)
+		//     values (?, ?, ?, ?, ?, ?, ?, ?, ?)
 		insertPst.setString(1, uri);
 		insertPst.setString(2, oaiURI);
 		insertPst.setString(3, service.getId());
@@ -373,7 +382,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		insertPst.setTimestamp(6, ts);
 		insertPst.setTimestamp(7, datestamp);
 		insertPst.setInt(8, DBUtil.STATUS_NORMAL);
-		//insertPst.setString(9, nativeURL);
+		insertPst.setString(9, nativeURL);
 		insertPst.executeUpdate();
 		// stoppa in ev spatialdata om vi har nåt
 		if (gmlDBWriter != null && gmlInfoHolder != null && gmlInfoHolder.hasGeometries()) {
@@ -395,24 +404,29 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param xmlContent xml-innehåll
 	 * @param datestamp postens ändringsdatum (från oai-huvudet)
 	 * @param gmlInfoHolder hållare för geometrier mm
+	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
 	protected boolean updateRecord(String oaiURI, String uri, String xmlContent,
-			Timestamp datestamp, GMLInfoHolder gmlInfoHolder) throws Exception {
+			Timestamp datestamp, GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("* Updated data for oaiURI=" + oaiURI + ", uri=" +
 					uri + " for service with ID: " + service.getId());
 		}
+
+		// OBS att antalet parametrar etc *måste* stämma med det statement som används
+		// och som skapas och förbereds i konstruktorn!
+
 		// update content set oaiuri = ?, deleted = null,
-		// serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ? where uri = ?
+		// serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ?, nativeURL = ? where uri = ?
 		updatePst.setString(1, oaiURI);
 		updatePst.setString(2, service.getId());
 		updatePst.setTimestamp(3, ts);
 		updatePst.setTimestamp(4, datestamp);
 		updatePst.setCharacterStream(5, new StringReader(xmlContent), xmlContent.length());
 		updatePst.setInt(6, DBUtil.STATUS_NORMAL);
-		//updatePst.setString(7, nativeURL);
-		updatePst.setString(7, uri);
+		updatePst.setString(7, nativeURL);
+		updatePst.setString(8, uri);
 		boolean updated = updatePst.executeUpdate() > 0;
 		if (updated) {
 			// spara gml (obs, inget villkor på att det finns geometrier då det kanske
@@ -451,23 +465,21 @@ public class OAIPMHHandler extends DefaultHandler {
 			ExtractedInfo info = contentHelper.extractInfo(xmlContent, gmlih);
 			uri = info.getIdentifier();
 			nativeURL = info.getNativeURL();
-
-			if (uri == null) {
-				return;
-			}
-			// gör update och om ingen post uppdaterades stoppa in en (istf för att kolla om post finns först)
-			/*if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL)) {
-				insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL);
-			}*/
-			if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih)) {
-				insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih);
-			}
 		} catch (Exception e) {
-			//logger.error("Error when storing " + (uri != null ? uri : oaiURI), e);
-			ss.setStatusText(service, "Error when storing " + (uri != null ? uri : oaiURI) + " " + e.getMessage() + " --SKIPPING--");
-			ss.containsErrors(service, true);
-			logger.error("Error:159 problem when Storing " + service.getName() + " record " + (uri != null ? uri : oaiURI) + " " + e.getMessage());
+			ContentHelper.addProblemMessage("Problem parsing rdf and/or extracting info for record " +
+					oaiURI + " --SKIPPING--");
+			ss.signalRDFError(service);
 			return;
+		}
+		// bör/ska inte hända, men...
+		if (uri == null) {
+			ContentHelper.addProblemMessage("No uri found for " + oaiURI + " --SKIPPING--");
+			return;
+		}
+
+		// gör update och om ingen post uppdaterades stoppa in en (istf för att kolla om post finns först)
+		if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL)) {
+			insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL);
 		}
 	}
 

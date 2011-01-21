@@ -11,10 +11,6 @@ public interface StatusService {
 	 * Enum för de olika steg en tjänst kan befinna sig i.
 	 */
 	public static enum Step { FETCH, STORE, EMPTYINDEX, INDEX, IDLE };
-
-	public void containsErrors(HarvestService service, boolean containError);
-	
-	public boolean containsErrors(HarvestService service);
 	
 	/**
 	 * Återställer status för tjänsten så att den är redo för en ny körning.
@@ -136,4 +132,18 @@ public interface StatusService {
 	 * @param step steg
 	 */
 	void setStartStep(HarvestService service, Step step);
+
+	/**
+	 * Sätter flagga som talar om att det finns rdf-parsningsfel
+	 * @param service tjänst
+	 */
+	void signalRDFError(HarvestService service);
+	
+	/**
+	 * Ger sant om det finns rdf-parsningsfel för tjänsten
+	 * @param service tjänst
+	 * @return om rdf-parsningsfel har upptäckts
+	 */
+	boolean containsRDFErrors(HarvestService service);
+
 }
