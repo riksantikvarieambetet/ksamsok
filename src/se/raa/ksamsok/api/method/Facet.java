@@ -3,6 +3,7 @@ package se.raa.ksamsok.api.method;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -62,13 +63,19 @@ public class Facet extends StatisticSearch {
 				query.addFacetField(entry.getKey());
 			}
 			QueryResponse qr = serviceProvider.getSearchService().query(query);
-			queryResults = new LinkedList<QueryContent>();
-			for (FacetField ff: qr.getFacetFields()) {
-				for (Count value: ff.getValues()) {
-					QueryContent qc = new QueryContent();
-					qc.addTerm(ff.getName(), value.getName());
-					qc.setHits((int) value.getCount()); // TODO: int/long
-					queryResults.add(qc);
+			List<FacetField> facetFields = qr.getFacetFields();
+			if (facetFields != null && facetFields.size() > 0) {
+				queryResults = new LinkedList<QueryContent>();
+				for (FacetField ff: facetFields) {
+					List<Count> facetValues = ff.getValues();
+					if (facetValues != null && facetValues.size() > 0) {
+						for (Count value: facetValues) {
+							QueryContent qc = new QueryContent();
+							qc.addTerm(ff.getName(), value.getName());
+							qc.setHits((int) value.getCount()); // TODO: int/long
+							queryResults.add(qc);
+						}
+					}
 				}
 			}
 		} catch (CQLParseException e) {
