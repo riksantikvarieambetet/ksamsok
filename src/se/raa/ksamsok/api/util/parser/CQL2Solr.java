@@ -34,8 +34,6 @@ public class CQL2Solr {
 	private static final String INDEX_CQL_SERVERCHOICE = "cql.serverChoice";
 	private static final String INDEX_CQL_RESULTSETID = "cql.resultSetId";
 
-	//private static final Query NO_MATCH_DUMMY_QUERY = new TermQuery(new Term("dumdummy", "dummy"));
-
 	/**
 	 * Skapar en query utifrån en CQL-nod.
 	 * 
@@ -87,7 +85,7 @@ public class CQL2Solr {
 				String term = ctn.getTerm();
 				// result sets stöds ej
 				if (INDEX_CQL_RESULTSETID.equals(index)) {
-					throw new DiagnosticException("Resultat sett stöds ej",
+					throw new DiagnosticException("Resultsets stöds ej",
 							"CQL2Solr.makeQuery", "unsupported", false);
 				}
 				// anchoring (position av värde i indexerat fält) stöds ej
@@ -185,96 +183,45 @@ public class CQL2Solr {
 	 */
 	public static String createTermQuery(String field, String value, String relation) throws DiagnosticException {
 		String termQuery = null;
-
-		// TODO: se över denna logik (och kommentarer mm) lite, känns som om den kan förenklas
-		//       en hel del nu när ingen analys av värden mm sker på klientsidan
-
-		/**
-		 * check to see if there are any spaces.  If there are spaces each
-		 * word must be broken into a single term search and then all queries
-		 * must be combined using an and.
-		 */
-		// för ej analyserade fält vill vi tillåta mellanslag i termerna, 
-		// typ "Stockholm 1:1"
-		if (value.indexOf(" ") == -1 ||	!ContentHelper.isAnalyzedIndex(field)) {
-			// inga mellanslag, skapa en term query eller wildcard query
+		// vi tillåter mellanslag i termerna, typ "Stockholm 1:1"
+		if (relation == null || relation.equals("=") ||
+				relation.equals("<>") || relation.equals("exact")) {
+			// för dessa relationer/operatorer, gör vanlig fråga även med mellanslag och låt solr hantera det
 			termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
-		} else {
-			// space found, iterate through the terms to create a multiterm 
-			//search
-			if (relation == null || relation.equals("=") ||
-					relation.equals("<>") || relation.equals("exact")) {
-				// för dessa relationer/operatorer, gör vanlig fråga även med mellanslag
-				termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
-				if (relation != null && relation.equals("<>")) {
-					termQuery = "NOT " + termQuery;
+		} else if (relation.equals("any")) {
+			/**
+			 * any is an implicit OR
+			 */
+			StringTokenizer tokenizer = new StringTokenizer(value, " ");
+			if (tokenizer.hasMoreTokens()) {
+				String curValue = tokenizer.nextToken();
+				termQuery = "(" + createTermQuery(field, curValue, "=");
+				while (tokenizer.hasMoreTokens()) {
+					curValue = tokenizer.nextToken();
+					termQuery += " OR " + createTermQuery(field, curValue, "=");
 				}
-				/**
-				 * default is =, all terms must be next to eachother.
-				 * <> uses = as its term query.
-				 * exact is a phrase query
-				 */
-				/*
-				if (value.indexOf("?") != -1 || value.indexOf("*")!=-1 ) {
-					throw new DiagnosticException("Wildcard tecken stöds ej" +
-							" för detta query", "CQL2Solr.createTermQuery",
-							"wildcard tecken stöds ej:" + field, true);
-				}
-				PhraseQuery phraseQuery =
-					(PhraseQuery) StaticMethods.analyseQuery(field,
-						value);
-				Term[] t = phraseQuery.getTerms();
-				if (t == null || t.length == 0) 
-				{
-					if (!lenientOnStopwords) {
-						throw new DiagnosticException("fel i query sträng",
-								"CQL2Solr.createTermQuery", "endast stopp " +
-										"ord: " + field, true);
-					} else {
-						termQuery = NO_MATCH_DUMMY_QUERY;
-					}
-				} else {
-					termQuery = phraseQuery;
-				}
-				*/
-			} else if (relation.equals("any")) {
-				/**
-				 * any is an implicit OR
-				 */
-				
-				StringTokenizer tokenizer = new StringTokenizer(value, " ");
-				if (tokenizer.hasMoreTokens()) {
-					String curValue = tokenizer.nextToken();
-					termQuery = "(" + createTermQuery(field, curValue, relation);
-					while (tokenizer.hasMoreTokens()) {
-						curValue = tokenizer.nextToken();
-						termQuery += " OR " + createTermQuery(field, curValue, relation);
-					}
-					termQuery += ")";
-				}
-			} else if (relation.equals("all")) {
-				/**
-				 * any is an implicit AND
-				 */
-				StringTokenizer tokenizer = new StringTokenizer(value, " ");
-				if (tokenizer.hasMoreTokens()) {
-					String curValue = tokenizer.nextToken();
-					termQuery = "(" + createTermQuery(field, curValue, relation);
-					while (tokenizer.hasMoreTokens()) {
-						curValue = tokenizer.nextToken();
-						termQuery += " AND " + createTermQuery(field, curValue, relation);
-					}
-					termQuery += ")";
-				}
-			} else {
-				throw new DiagnosticException("relationen " + relation +
-						" stöds ej", "CQL2Solr.createTermQuery",
-						"relationen " + relation + " stöds ej för phrase" +
-								" query", true);
+				termQuery += ")";
 			}
-
+		} else if (relation.equals("all")) {
+			/**
+			 * all is an implicit AND
+			 */
+			StringTokenizer tokenizer = new StringTokenizer(value, " ");
+			if (tokenizer.hasMoreTokens()) {
+				String curValue = tokenizer.nextToken();
+				termQuery = "(" + createTermQuery(field, curValue, "=");
+				while (tokenizer.hasMoreTokens()) {
+					curValue = tokenizer.nextToken();
+					termQuery += " AND " + createTermQuery(field, curValue, "=");
+				}
+				termQuery += ")";
+			}
+		} else {
+			throw new DiagnosticException("relationen " + relation +
+					" stöds ej", "CQL2Solr.createTermQuery",
+					"relationen " + relation + " stöds ej för phrase" +
+							" query", true);
 		}
-
 		return termQuery;
 	}
 
