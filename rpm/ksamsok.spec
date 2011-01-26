@@ -14,6 +14,7 @@ Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 
 Requires: raa-tomcat8080 >= 6.0.18, raa-ksamsok_solr_@RPM_SUFFIX@ >= 1.0.0
+Provides: raa-ksamsok_app
 
 %description
 Raä K-Samsok, centralnod (@RPM_SUFFIX@)
