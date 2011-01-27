@@ -1,7 +1,6 @@
 package se.raa.ksamsok.sitemap;
 
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,13 +9,13 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.harvest.DBUtil;
-import se.raa.ksamsok.util.RedirectChecker;
 
 public class SitemapBuilder
 {
@@ -27,12 +26,14 @@ public class SitemapBuilder
 	private DataSource ds;
 	private int batch;
 	private int batchSize = SitemapIndexBuilder.BATCH_SIZE;
+	private HttpServletRequest request;
 	
-	public SitemapBuilder(PrintWriter writer, DataSource ds, int batch) 
+	public SitemapBuilder(PrintWriter writer, DataSource ds, int batch, HttpServletRequest request) 
 	{
 		this.writer = writer;
 		this.ds = ds;
 		this.batch = batch;
+		this.request = request;
 	}
 	
 	public void writeSitemap()
@@ -40,18 +41,18 @@ public class SitemapBuilder
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int start = (batch * batchSize) - batchSize;
-		int offset = batch * batchSize;
+		int offset = (batch - 1) * batchSize;
 		try {
 			c = ds.getConnection();
 			String sql = "SELECT nativeUrl, changed " +
 						 "FROM content " +
-						 "WHERE idnum>=? " +
-						 	"AND idnum<? " +
-						 	"AND deleted IS NOT NULL " + 
-						 	"AND nativeurl IS NOT NULL";
+						 "WHERE deleted IS NULL " + 
+						 	 SitemapIndexBuilder.getFilterSitemapUrlsQuery( request ) +
+						 	"LIMIT ? " +
+						 	"OFFSET ?";
+			
 			ps = c.prepareStatement(sql);
-			ps.setInt(1, start);
+			ps.setInt(1, batchSize);
 			ps.setInt(2, offset);
 			rs = ps.executeQuery();
 			writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -59,6 +60,9 @@ public class SitemapBuilder
 			while(rs.next()) {
 				String nativeUrl = rs.getString("nativeUrl");
 				writer.println("<url>");
+				// some urls contains " at start and end for some reason
+				//TODO remove when fixed
+				nativeUrl = nativeUrl.replaceAll("\"", "");
 				writer.println("<loc><![CDATA[" + nativeUrl + "]]></loc>");
 				String date = getDate(rs.getTimestamp("changed"));
 				if(date != null) {

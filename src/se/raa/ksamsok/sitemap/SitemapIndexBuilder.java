@@ -1,14 +1,24 @@
 package se.raa.ksamsok.sitemap;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
+
+
 
 import se.raa.ksamsok.harvest.DBUtil;
 
@@ -17,15 +27,65 @@ public class SitemapIndexBuilder
 	private static final Logger logger = Logger.getLogger(SitemapIndexBuilder.class);
 	private PrintWriter writer;
 	private DataSource ds;
+	private HttpServletRequest request;
 	
 	public static final int BATCH_SIZE = 40000;
 	
+
 	private static final String SITEMAP_URL = "http://kulturarvsdata.se/sitemap?batch=";
 	
-	public SitemapIndexBuilder(PrintWriter writer, DataSource ds)
+	/**
+	 * You can only index domains you "own". So we only index some domains for now
+	 * we can probably confim ownership of more domains later on
+	 * http://www.google.com/support/webmasters/bin/answer.py?answer=75712
+	 * 
+	 * nativeUrls containing one of these will be shown in the sitemap
+	 */
+	private static List<String> getFilteredUrls(HttpServletRequest request){
+		List<String> result = new ArrayList<String>();
+		Properties p = new Properties();
+		try {
+			InputStream stream = new FileInputStream(
+					request.getSession().getServletContext().getRealPath("/WEB-INF/sitemap.properties") );
+			p.load(stream);
+		} catch (IOException e) {
+			logger.error("Check that sitemap.properties exists in WEB-INF", e);
+		}
+
+		String[] urlArray = ((String) p.get("sitemap.filtered.urls")).split(",");
+		for(String url : urlArray){
+			result.add(url.trim());
+		}
+		return result;
+	}
+	
+	/**
+	 * Added at the end of a sqlquery to filter some domains
+	 */
+	public static String getFilterSitemapUrlsQuery(HttpServletRequest request){
+		String result = "";
+		List<String> urls = getFilteredUrls(request);
+		if(!CollectionUtils.isEmpty(urls)){
+			result = " AND (";
+			boolean firstLoop = true;
+			for(String url : urls){
+				if(!firstLoop){
+					result += " OR ";
+				} else {
+					firstLoop = false;
+				}
+				result += "nativeurl LIKE '%" + url + "%'";
+			}
+			result += ")";
+		}
+		return result;
+	}
+	
+	public SitemapIndexBuilder(PrintWriter writer, DataSource ds, HttpServletRequest request)
 	{
 		this.writer = writer;
 		this.ds = ds;
+		this.request = request;
 	}
 	
 	public void writeSitemapIndex()
@@ -67,7 +127,11 @@ public class SitemapIndexBuilder
 		try {
 			c = ds.getConnection();
 			// TODO: where deleted is null borde väl vara med här?
-			String sql = "select count(*) from content";
+			// svar: ja google tycker inte om tomma batchar, så testar så här, //martin
+			String sql = "select count(*) from content " +
+					"WHERE deleted IS NULL " +
+					getFilterSitemapUrlsQuery(request);
+			
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if(rs.next()) {

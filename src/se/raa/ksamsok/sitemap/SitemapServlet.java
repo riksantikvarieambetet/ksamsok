@@ -33,10 +33,10 @@ public class SitemapServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		if (batch != null) {
 			int batchNumber = Integer.parseInt(batch);
-			SitemapBuilder sitemapBuilder = new SitemapBuilder(writer, ds, batchNumber);
+			SitemapBuilder sitemapBuilder = new SitemapBuilder(writer, ds, batchNumber, req);
 			sitemapBuilder.writeSitemap();
 		} else {
-			SitemapIndexBuilder sitemapIndexBuilder = new SitemapIndexBuilder(writer, ds);
+			SitemapIndexBuilder sitemapIndexBuilder = new SitemapIndexBuilder(writer, ds, req);
 			sitemapIndexBuilder.writeSitemapIndex();
 		}
 	}
@@ -48,4 +48,6 @@ public class SitemapServlet extends HttpServlet {
 		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 	}
+	
+	
 }
