@@ -1,5 +1,5 @@
 %define ver 1.0.1
-%define rel 11
+%define rel 12
 
 Summary: Raä K-Samsök, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@
@@ -14,7 +14,7 @@ Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 
 Requires: raa-tomcat8080 >= 6.0.18, raa-ksamsok_solr_@RPM_SUFFIX@ >= 1.0.0
-Provides: raa-ksamsok_app
+Provides: raa-ksamsok_applic
 
 %description
 Raä K-Samsok, centralnod (@RPM_SUFFIX@)

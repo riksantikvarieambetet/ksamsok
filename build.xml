@@ -5,13 +5,13 @@
         Ant-byggfil, ksamsok.
     </description>
 
-    <target name="init">
+	<property name="project.build.dir" value="${basedir}/build"/>
+	
+    <target name="init" depends="clean">
         <tstamp/>
         <property environment="env"/>
 
         <property file="local.properties"/>
-
-        <property name="project.build.dir" value="${basedir}/build"/>
 
         <property name="project.name" value="ksamsok"/>
         <property name="project.version" value="${DSTAMP}"/>
@@ -140,8 +140,8 @@
         <antcall target="conf-copy"/>
     </target>
 
-    <target name="clean" depends="init"
-        description="Tar bort build-katalogen.">
+    <target name="clean" description="Tar bort build-katalogen.">
+    	<mkdir dir="${project.build.dir}"/>
         <delete includeemptydirs="true" >
             <fileset dir="${project.build.dir}">
                 <patternset>
