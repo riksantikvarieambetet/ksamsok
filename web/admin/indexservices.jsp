@@ -19,7 +19,8 @@
 		<br/>
 		<div class="bgBlackLight menu">
 			<a href="index.jsp">Startsida</a>&nbsp;&nbsp;
-			<a href="harvestservices.jsp">Tjänster</a>
+			<a href="harvestservices.jsp">Tjänster</a>&nbsp;&nbsp;
+			<a href="problemlog.jsp">Problemlogg</a>
 		</div>
 		<hr/>
 <%

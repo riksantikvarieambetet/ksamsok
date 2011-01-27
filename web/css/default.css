@@ -566,7 +566,12 @@ body
 	font-weight: bold;
 }
 
-#servicetable td,th
+#problemlog th
+{
+	padding: 2px 20px 2px 2px;
+}
+
+#servicetable td, #servicetable th, #problemlog td
 {
 	padding: 2px;
 }

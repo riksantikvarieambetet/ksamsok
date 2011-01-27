@@ -38,6 +38,7 @@
 		<div class="bgBlackLight menu">
 			<a href="map.jsp">Sök + karta</a>&nbsp;&nbsp;
 			<a href="harvestservices.jsp">Tjänster</a>&nbsp;&nbsp;
+			<a href="problemlog.jsp">Problemlogg</a>&nbsp;&nbsp;
 			<a href="apiKeyAdmin">API-nycklar</a>&nbsp;&nbsp;
 			<a href="orgAdmin">Admin org</a>&nbsp;&nbsp;
 			<a href="statistic">Statistik</a>&nbsp;&nbsp;

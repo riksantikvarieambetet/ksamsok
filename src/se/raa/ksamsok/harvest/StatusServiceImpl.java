@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import org.apache.log4j.Logger;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 public class StatusServiceImpl implements StatusService {
+
 
 	Map<String, String> statusTexts = Collections.synchronizedMap(new HashMap<String, String>());
 	Map<String, String> errorTexts = Collections.synchronizedMap(new HashMap<String, String>());
@@ -88,6 +90,10 @@ public class StatusServiceImpl implements StatusService {
 	}
 
 	public void setStatusTextAndLog(HarvestService service, String message) {
+		setStatusTextAndLog(service, message, LogEvent.EVENT_INFO);
+	}
+
+	protected void setStatusTextAndLog(HarvestService service, String message, int eventType) {
 		Date nowDate = new Date();
 		String now = ContentHelper.formatDate(nowDate, true);
 		statusTexts.put(service.getId(), message + " (" + now + ")");
@@ -97,7 +103,11 @@ public class StatusServiceImpl implements StatusService {
 			statusLogs.put(service.getId(), statusLog);
 		}
 		statusLog.add(now + ": " + message);
-		log2Db(service, 0, nowDate, message);
+		log2Db(service, eventType, nowDate, message);
+	}
+
+	public void setWarningTextAndLog(HarvestService service, String message) {
+		setStatusTextAndLog(service, message, LogEvent.EVENT_WARNING);
 	}
 
 	public void setErrorTextAndLog(HarvestService service, String message) {
@@ -110,7 +120,7 @@ public class StatusServiceImpl implements StatusService {
 			statusLogs.put(service.getId(), statusLog);
 		}
 		statusLog.add(now + ": *** " + message);
-		log2Db(service, 1, nowDate, message);
+		log2Db(service, LogEvent.EVENT_ERROR, nowDate, message);
 	}
 
 	public Step getStep(HarvestService service) {
@@ -164,7 +174,7 @@ public class StatusServiceImpl implements StatusService {
 				statusLog = new ArrayList<String>();
 				do {
 					statusLog.add(ContentHelper.formatDate(rs.getTimestamp("eventTs"), true) +
-							": " + (rs.getInt("eventType") != 0 ? "*** " : "") +
+							": " + (rs.getInt("eventType") != LogEvent.EVENT_INFO ? "*** " : "") +
 							rs.getString("message"));
 				} while (rs.next());
 			}
@@ -179,6 +189,50 @@ public class StatusServiceImpl implements StatusService {
 		if (statusLog == null) {
 			statusLog = Collections.emptyList();
 		}
+		return statusLog;
+	}
+
+	public List<LogEvent> getProblemLogHistory(int maxRows, String sort, String sortDir) {
+		List<LogEvent> statusLog = Collections.emptyList();
+		final List<String> columns = Arrays.asList("serviceId", "eventType", "eventTs", "message");
+		if (!columns.contains(sort)) {
+			return Collections.singletonList(new LogEvent("err", LogEvent.EVENT_ERROR, "now",
+					"Bad sort column: " + sort + ", must be one of " + columns));
+		}
+		if (!"asc".equals(sortDir) && !"desc".equals(sortDir)) {
+			return Collections.singletonList(new LogEvent("err", LogEvent.EVENT_ERROR, "now",
+					"Bad sort direction: " + sortDir + ", must be one of asc, desc"));
+		}
+		if (maxRows <= 0) {
+			return Collections.singletonList(new LogEvent("err", LogEvent.EVENT_ERROR, "now",
+					"Bad maxRows: " + maxRows + ", must be > 0"));
+		}
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			c = ds.getConnection();
+			pst = c.prepareStatement("select * from servicelog where eventType > ? " +
+					"order by " + sort + " " + sortDir + ", eventId asc");
+			pst.setInt(1, LogEvent.EVENT_INFO);
+			pst.setMaxRows(maxRows);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				statusLog = new ArrayList<LogEvent>();
+				do {
+					statusLog.add(new LogEvent(rs.getString("serviceId"),
+							rs.getInt("eventType"),
+							ContentHelper.formatDate(rs.getTimestamp("eventTs"), true),
+							rs.getString("message")));
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			Logger.getLogger(this.getClass()).error("Error when fetching old problem log messages", e);
+			DBUtil.rollback(c);
+		} finally {
+			DBUtil.closeDBResources(rs, pst, c);
+		}
+		
 		return statusLog;
 	}
 

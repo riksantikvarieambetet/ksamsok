@@ -52,6 +52,17 @@ public interface StatusService {
 	void setStatusText(HarvestService service, String message);
 
 	/**
+	 * Sätter varningsmeddelande och lägger också till meddelandet i tjänstens logg.
+	 * Ett varningsmeddelande är samma sak som ett statusmeddelande pss att tex
+	 * {@linkplain #getStatusText(HarvestService)} ger senast satta varningsmeddelande.
+	 * Den enda skillnaden är att de lagras med en annan kod i databasen.
+	 * 
+	 * @param service tjänst
+	 * @param message meddelande
+	 */
+	void setWarningTextAndLog(HarvestService service, String message);
+
+	/**
 	 * Hämtar senast satta statusmeddelande för tjänsten.
 	 * 
 	 * @param service tjänst
@@ -76,6 +87,17 @@ public interface StatusService {
 	 * @return lista med loggmeddelanden
 	 */
 	List<String> getStatusLogHistory(HarvestService service);
+
+	/**
+	 * Hämtar en tjänsts problemloggmeddelandehistorik.
+	 * 
+	 * @param service tjänst
+	 * @param maxRows max antal loggrader
+	 * @param sort sorteringskolumn
+	 * @param sortDir sorteringriktning (asc/desc)
+	 * @return lista med loggmeddelanden av typen varningar eller fel
+	 */
+	List<LogEvent> getProblemLogHistory(int maxRows, String sort, String sortDir);
 
 	/**
 	 * Sätter felmeddelande och lägger till meddelandet i tjänstens logg.

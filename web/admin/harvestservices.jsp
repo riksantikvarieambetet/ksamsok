@@ -53,6 +53,7 @@
 			<a href="index.jsp">Startsida</a>&nbsp;&nbsp;
 			<a href="indexservices.jsp">Indexhantering</a>
 			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
+			<a href="problemlog.jsp">Problemlogg</a>
 			<span class="servername"><%=request.getServerName() %></span>
 		</div>
 		<hr/>

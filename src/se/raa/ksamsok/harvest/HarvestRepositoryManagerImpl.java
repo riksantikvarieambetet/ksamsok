@@ -519,10 +519,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		// rapportera eventuella problemmeddelanden
 		Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
 		if (problemMessages != null && problemMessages.size() > 0) {
-			ss.setStatusTextAndLog(service, "Note! Problem(s) when " + operation + " ");
+			ss.setWarningTextAndLog(service, "Note! Problem(s) when " + operation + " ");
 			logger.warn(service.getId() + ", got following problem(s) when " + operation + ": ");
 			for (String uri: problemMessages.keySet()) {
-				ss.setStatusTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
+				ss.setWarningTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
 				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
 			}
 		}
