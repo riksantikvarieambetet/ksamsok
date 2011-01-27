@@ -1,5 +1,7 @@
 package se.raa.ksamsok.api;
 
+import javax.sql.DataSource;
+
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchService;
@@ -33,4 +35,10 @@ public interface APIServiceProvider {
 	 * @return the statistics manager
 	 */
 	StatisticsManager getStatisticsManager();
+
+	/**
+	 * Ger datasource
+	 * @return datasource
+	 */
+	DataSource getDataSource();
 }

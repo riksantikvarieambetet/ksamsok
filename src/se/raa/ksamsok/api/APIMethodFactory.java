@@ -3,6 +3,8 @@ package se.raa.ksamsok.api;
 import java.io.PrintWriter;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -10,6 +12,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
 import se.raa.ksamsok.api.method.Facet;
+import se.raa.ksamsok.api.method.GetGeoResource;
 import se.raa.ksamsok.api.method.GetRelations;
 import se.raa.ksamsok.api.method.GetServiceOrganization;
 import se.raa.ksamsok.api.method.RSS;
@@ -39,6 +42,8 @@ public class APIMethodFactory implements APIServiceProvider {
 	OrganizationManager organizationManager;
 	@Autowired
 	StatisticsManager statisticsManager;
+	@Autowired
+	DataSource dataSource;
 
 	public APIMethodFactory() {
 	}
@@ -95,6 +100,8 @@ public class APIMethodFactory implements APIServiceProvider {
 			m = new Stem(this, writer, params);
 		} else if (method.equals(GetRelations.METHOD_NAME)) {
 			m = new GetRelations(this, writer, params);
+		} else if (method.equals(GetGeoResource.METHOD_NAME)) {
+			m = new GetGeoResource(this, writer, params);
 		} else {
 			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod", "felaktig metod", false);
 		}
@@ -121,4 +128,8 @@ public class APIMethodFactory implements APIServiceProvider {
 		return statisticsManager;
 	}
 
+	@Override
+	public DataSource getDataSource() {
+		return dataSource;
+	}
 }
