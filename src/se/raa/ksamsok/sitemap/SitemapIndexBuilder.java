@@ -8,8 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +33,10 @@ public class SitemapIndexBuilder
 	private HttpServletRequest request;
 	
 	public static final int BATCH_SIZE = 40000;
-	
+
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", new Locale("sv", "SE"));
+	private static Date lastChanged = new Date();
+	private static int lastRecordCount = 0;
 
 	private static final String SITEMAP_URL = "http://kulturarvsdata.se/sitemap?batch=";
 	
@@ -103,6 +109,10 @@ public class SitemapIndexBuilder
 	{
 		writer.println("<sitemap>");
 		writer.println("<loc>" + SITEMAP_URL + batchNumber + "</loc>");
+		String formatted = sdf.format(lastChanged);
+		// remove the "GMT" (http://www.fileformat.info/tip/java/simpledateformat.htm)
+		String lastmod = formatted.substring(0, 19) + formatted.substring(22, formatted.length());
+		writer.println("<lastmod>" + lastmod + "</lastmod>");
 		writer.println("</sitemap>");
 	}
 	
@@ -110,6 +120,12 @@ public class SitemapIndexBuilder
 	{
 		int numberOfBatches = 0;
 		int recordCount = getRecordCount();
+		
+		if(recordCount != lastRecordCount){
+			lastRecordCount = recordCount;
+			lastChanged = new Date();
+		}
+					
 		if(recordCount % BATCH_SIZE == 0) {
 			numberOfBatches = recordCount / BATCH_SIZE;
 		}else {
@@ -126,8 +142,6 @@ public class SitemapIndexBuilder
 		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
-			// TODO: where deleted is null borde väl vara med här?
-			// svar: ja google tycker inte om tomma batchar, så testar så här, //martin
 			String sql = "select count(*) from content " +
 					"WHERE deleted IS NULL " +
 					getFilterSitemapUrlsQuery(request);
