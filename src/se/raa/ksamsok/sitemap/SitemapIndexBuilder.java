@@ -34,7 +34,7 @@ public class SitemapIndexBuilder
 	
 	public static final int BATCH_SIZE = 40000;
 
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", new Locale("sv", "SE"));
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv", "SE"));
 	private static Date lastChanged = new Date();
 	private static int lastRecordCount = 0;
 
