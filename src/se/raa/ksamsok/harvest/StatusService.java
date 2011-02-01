@@ -1,5 +1,6 @@
 package se.raa.ksamsok.harvest;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,6 +62,18 @@ public interface StatusService {
 	 * @param message meddelande
 	 */
 	void setWarningTextAndLog(HarvestService service, String message);
+
+	/**
+	 * Sätter varningsmeddelande och lägger också till meddelandet i tjänstens logg.
+	 * Ett varningsmeddelande är samma sak som ett statusmeddelande pss att tex
+	 * {@linkplain #getStatusText(HarvestService)} ger senast satta varningsmeddelande.
+	 * Den enda skillnaden är att de lagras med en annan kod i databasen.
+	 * 
+	 * @param service tjänst
+	 * @param message meddelande
+	 * @param date tidsstämpel att ge meddelandet
+	 */
+	void setWarningTextAndLog(HarvestService service, String message, Date date);
 
 	/**
 	 * Hämtar senast satta statusmeddelande för tjänsten.

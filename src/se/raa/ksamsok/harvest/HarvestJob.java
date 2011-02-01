@@ -321,7 +321,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				if (!ss.containsRDFErrors(service)) {
 					hsm.updateServiceDate(service, nowTs);
 				} else {
-					ss.setStatusTextAndLog(service, "NOTE: the data contained some unparsable rdf " +
+					ss.setWarningTextAndLog(service, "NOTE: the data contained some unparsable rdf " +
 							"(see log) so the last harvest date has NOT been updated - this problem needs to be fixed");
 				}
 
@@ -352,7 +352,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				if (!ss.containsRDFErrors(service)) {
 					hsm.updateServiceDate(service, now);
 				} else {
-					ss.setStatusTextAndLog(service, "NOTE: the data contained some unparsable rdf " +
+					ss.setWarningTextAndLog(service, "NOTE: the data contained some unparsable rdf " +
 							"(see log) so the last harvest date has NOT been updated - this problem needs to be fixed");
 				}
 			}

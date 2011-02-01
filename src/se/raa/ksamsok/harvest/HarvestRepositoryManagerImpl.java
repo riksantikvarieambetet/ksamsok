@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -519,10 +520,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		// rapportera eventuella problemmeddelanden
 		Map<String,Integer> problemMessages = ContentHelper.getAndClearProblemMessages();
 		if (problemMessages != null && problemMessages.size() > 0) {
-			ss.setWarningTextAndLog(service, "Note! Problem(s) when " + operation + " ");
+			Date nowDate = new Date();
+			ss.setWarningTextAndLog(service, "Note! Problem(s) when " + operation, nowDate);
 			logger.warn(service.getId() + ", got following problem(s) when " + operation + ": ");
 			for (String uri: problemMessages.keySet()) {
-				ss.setWarningTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times");
+				ss.setWarningTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times", nowDate);
 				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
 			}
 		}

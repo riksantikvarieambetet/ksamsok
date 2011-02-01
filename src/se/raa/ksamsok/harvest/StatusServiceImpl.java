@@ -22,6 +22,9 @@ import se.raa.ksamsok.lucene.ContentHelper;
 public class StatusServiceImpl implements StatusService {
 
 
+	// gräns i antal dagar för hur länge loggmeddelanden sparas i databasen
+	static final int LOG_THRESHHOLD_DAYS = 21;
+
 	Map<String, String> statusTexts = Collections.synchronizedMap(new HashMap<String, String>());
 	Map<String, String> errorTexts = Collections.synchronizedMap(new HashMap<String, String>());
 	Map<String, List<String>> statusLogs = Collections.synchronizedMap(new HashMap<String, List<String>>());
@@ -37,6 +40,7 @@ public class StatusServiceImpl implements StatusService {
 		this.ds = ds;
 	}
 
+	@Override
 	public void checkInterrupt(HarvestService service) {
 		String iDate = interrupts.remove(service.getId());
 		if (iDate != null) {
@@ -45,6 +49,7 @@ public class StatusServiceImpl implements StatusService {
 		}
 	}
 
+	@Override
 	public List<String> getStatusLog(HarvestService service) {
 		List<String> statusLog = statusLogs.get(service.getId());
 		if (statusLog == null) {
@@ -53,18 +58,22 @@ public class StatusServiceImpl implements StatusService {
 		return statusLog;
 	}
 
+	@Override
 	public String getStatusText(HarvestService service) {
 		return statusTexts.get(service.getId());
 	}
 
+	@Override
 	public String getErrorText(HarvestService service) {
 		return errorTexts.get(service.getId());
 	}
 
+	@Override
 	public String getLastStart(HarvestService service) {
 		return lastStarts.get(service.getId());
 	}
 
+	@Override
 	public void initStatus(HarvestService service, String message) {
 		interrupts.remove(service.getId());
 		statusTexts.remove(service.getId());
@@ -79,22 +88,25 @@ public class StatusServiceImpl implements StatusService {
 		setStatusTextAndLog(service, "------ " + message + " ------");
 	}
 
+	@Override
 	public void requestInterrupt(HarvestService service) {
 		setStatusTextAndLog(service, "* Request for abortion received");
 		interrupts.put(service.getId(), ContentHelper.formatDate(new Date(), true));
 	}
 
+	@Override
 	public void setStatusText(HarvestService service, String message) {
 		String now = ContentHelper.formatDate(new Date(), true);
 		statusTexts.put(service.getId(), message + " (" + now + ")");
 	}
 
+	@Override
 	public void setStatusTextAndLog(HarvestService service, String message) {
-		setStatusTextAndLog(service, message, LogEvent.EVENT_INFO);
+		setStatusTextAndLog(service, message, LogEvent.EVENT_INFO, null);
 	}
 
-	protected void setStatusTextAndLog(HarvestService service, String message, int eventType) {
-		Date nowDate = new Date();
+	protected void setStatusTextAndLog(HarvestService service, String message, int eventType, Date date) {
+		Date nowDate = date != null ? date : new Date();
 		String now = ContentHelper.formatDate(nowDate, true);
 		statusTexts.put(service.getId(), message + " (" + now + ")");
 		List<String> statusLog = statusLogs.get(service.getId());
@@ -106,10 +118,17 @@ public class StatusServiceImpl implements StatusService {
 		log2Db(service, eventType, nowDate, message);
 	}
 
+	@Override
 	public void setWarningTextAndLog(HarvestService service, String message) {
-		setStatusTextAndLog(service, message, LogEvent.EVENT_WARNING);
+		setStatusTextAndLog(service, message, LogEvent.EVENT_WARNING, null);
 	}
 
+	@Override
+	public void setWarningTextAndLog(HarvestService service, String message, Date date) {
+		setStatusTextAndLog(service, message, LogEvent.EVENT_WARNING, date);
+	}
+
+	@Override
 	public void setErrorTextAndLog(HarvestService service, String message) {
 		Date nowDate = new Date();
 		String now = ContentHelper.formatDate(nowDate, true);
@@ -123,6 +142,7 @@ public class StatusServiceImpl implements StatusService {
 		log2Db(service, LogEvent.EVENT_ERROR, nowDate, message);
 	}
 
+	@Override
 	public Step getStep(HarvestService service) {
 		Step step = steps.get(service.getId());
 		if (step == null) {
@@ -131,10 +151,12 @@ public class StatusServiceImpl implements StatusService {
 		return step;
 	}
 
+	@Override
 	public void setStep(HarvestService service, Step step) {
 		steps.put(service.getId(), step);
 	}
 
+	@Override
 	public Step getStartStep(HarvestService service) {
 		Step step = startSteps.get(service.getId());
 		if (step == null) {
@@ -143,14 +165,17 @@ public class StatusServiceImpl implements StatusService {
 		return step;
 	}
 
+	@Override
 	public void setStartStep(HarvestService service, Step step) {
 		startSteps.put(service.getId(), step);
 	}
 
+	@Override
 	public void signalRDFError(HarvestService service) {
 		rdfErrors.put(service.getId(), true);
 	}
 
+	@Override
 	public boolean containsRDFErrors(HarvestService service) {
 		Boolean containError = rdfErrors.get(service.getId());
 		if (containError != null) {
@@ -159,6 +184,7 @@ public class StatusServiceImpl implements StatusService {
 		return false;
 	}
 
+	@Override
 	public List<String> getStatusLogHistory(HarvestService service) {
 		List<String> statusLog = null;
 		Connection c = null;
@@ -192,6 +218,7 @@ public class StatusServiceImpl implements StatusService {
 		return statusLog;
 	}
 
+	@Override
 	public List<LogEvent> getProblemLogHistory(int maxRows, String sort, String sortDir) {
 		List<LogEvent> statusLog = Collections.emptyList();
 		final List<String> columns = Arrays.asList("serviceId", "eventType", "eventTs", "message");
@@ -261,6 +288,12 @@ public class StatusServiceImpl implements StatusService {
 		}
 	}
 
+	
+	/**
+	 * Rensar loggmeddelanden äldre än ca {@linkplain #LOG_THRESHHOLD_DAYS}.
+	 * @param service tjänst
+	 * @param now datum/tid att utgå från, vanligen "nu"
+	 */
 	protected void cleanDb(HarvestService service, Date now) {
 		Connection c = null;
 		PreparedStatement pst = null;
@@ -268,7 +301,7 @@ public class StatusServiceImpl implements StatusService {
 			c = ds.getConnection();
 			pst = c.prepareStatement("delete from servicelog where serviceId = ? and eventTs < ?");
 			pst.setString(1, service.getId());
-			pst.setTimestamp(2, new Timestamp(DateUtils.addDays(now, -14).getTime()));
+			pst.setTimestamp(2, new Timestamp(DateUtils.addDays(now, -LOG_THRESHHOLD_DAYS).getTime()));
 			pst.executeUpdate();
 			c.commit();
 		} catch (Exception e) {
