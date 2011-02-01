@@ -109,10 +109,7 @@ public class SitemapIndexBuilder
 	{
 		writer.println("<sitemap>");
 		writer.println("<loc>" + SITEMAP_URL + batchNumber + "</loc>");
-		String formatted = sdf.format(lastChanged);
-		// remove the "GMT" (http://www.fileformat.info/tip/java/simpledateformat.htm)
-		String lastmod = formatted.substring(0, 19) + formatted.substring(22, formatted.length());
-		writer.println("<lastmod>" + lastmod + "</lastmod>");
+		writer.println("<lastmod>" + sdf.format(lastChanged) + "</lastmod>");
 		writer.println("</sitemap>");
 	}
 	
