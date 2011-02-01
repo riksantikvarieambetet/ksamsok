@@ -1,3 +1,6 @@
+<%@page import="org.apache.solr.client.solrj.SolrServerException"%>
+<%@page import="org.apache.solr.common.util.NamedList"%>
+<%@page import="se.raa.ksamsok.solr.SearchService"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
@@ -9,6 +12,7 @@
 <%
 	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
+	SearchService searchService = ctx.getBean(SearchService.class);
 	String uidString = " [" + request.getRemoteUser() + "]";
 %>
 	<head>
@@ -23,9 +27,17 @@
 			<a href="problemlog.jsp">Problemlogg</a>
 		</div>
 		<hr/>
+
 <%
+		String indexInfoErrMess = null;
+		NamedList<Object> indexInfo = null;
 		HarvestService service = hsm.getService(HarvestServiceManager.SERVICE_INDEX_OPTIMIZE);
 		if (service != null) {
+			try {
+				indexInfo = searchService.getIndexInfo();
+			} catch (SolrServerException e) {
+				indexInfoErrMess = "Fel vid solr-anrop: " + e.getMessage() + (e.getCause() != null ? " - " + e.getCause().getMessage() : "");
+			}
 			String serviceId = service.getId();
 			String cronstring = service.getCronString();
 	   		Date lastHarvestDate = service.getLastHarvestDate();
@@ -36,6 +48,20 @@
 				lastHarvest = ContentHelper.formatDate(lastHarvestDate, true);
 	   		}
 %>
+		<h4>Solr-info</h4>
+<%
+			if (indexInfo != null) {
+%>
+		Indexsökväg = <%= indexInfo.get("path") %>, indexstorlek = <%= indexInfo.get("size") %>,
+		ledigt diskutrymme = <%= indexInfo.get("free") %>
+<%
+			} else {
+%>
+		<%= indexInfoErrMess %>
+<%
+			}
+%>
+		<hr/>
 		<form action="serviceaction.jsp" method="post" accept-charset="iso-8859-1">
 			<table id="servicetable">
 				<thead class="bgGrayLight">

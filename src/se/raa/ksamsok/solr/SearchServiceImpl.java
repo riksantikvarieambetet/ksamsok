@@ -156,4 +156,15 @@ public class SearchServiceImpl implements SearchService {
 	public String getSolrURL() {
 		return (solr instanceof CommonsHttpSolrServer ? ((CommonsHttpSolrServer) solr).getBaseURL() : null);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public NamedList<Object> getIndexInfo() throws SolrServerException {
+		final String qpath = "/admin/indexdiskinfo";
+		SolrQuery query = new SolrQuery();
+		query.setQueryType(qpath);
+		QueryRequest qreq = new QueryRequest(query, METHOD.POST);
+		QueryResponse qres = qreq.process(solr);
+		return (NamedList<Object>) qres.getResponse().get("index");
+	}
 }

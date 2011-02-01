@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.util.NamedList;
 
 import se.raa.ksamsok.api.util.Term;
 
@@ -55,6 +56,13 @@ public interface SearchService {
 	 * @throws SolrServerException
 	 */
 	List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException;
+
+	/**
+	 * Ger index-information ("path", "free", "size").
+	 * @return lista med namngivna strängar
+	 * @throws SolrServerException 
+	 */
+	NamedList<Object> getIndexInfo() throws SolrServerException;
 
 	/**
 	 * Ger url till den solr-instans som används.
