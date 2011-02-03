@@ -158,9 +158,9 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				c = ds.getConnection();
 				String sql;
 				if (ts != null) {
-					sql = "select uri, deleted, xmldata from content where serviceId = ? and changed > ?";
+					sql = "select uri, deleted, added, xmldata from content where serviceId = ? and changed > ?";
 				} else {
-					sql = "select xmldata from content where serviceId = ? and deleted is null";
+					sql = "select added, xmldata from content where serviceId = ? and deleted is null";
 				}
 				pst = c.prepareStatement(sql);
 				pst.setString(1, serviceId);
@@ -175,6 +175,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				//String oaiURI;
 				String uri;
 				String xmlContent;
+				Timestamp added;
 				int i = 0;
 				int nonI = 0;
 				int deleted = 0;
@@ -196,7 +197,8 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						}
 					}
 					xmlContent = rs.getString("xmldata");
-					SolrInputDocument doc = helper.createSolrDocument(service, xmlContent);
+					added = rs.getTimestamp("added");
+					SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, added);
 					if (doc == null) {
 						// inget dokument betyder att tjänsten har skickat itemForIndexing=n
 						++nonI;

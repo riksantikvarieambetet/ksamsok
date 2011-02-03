@@ -354,10 +354,12 @@ public abstract class ContentHelper {
 	 * 
 	 * @param service tjänst
 	 * @param xmlContent xml-innehåll
+	 * @param added datum posten först lades till i repot
 	 * @return ett solr-dokument, eller null om inte posten ska indexeras
 	 * @throws Exception vid problem
 	 */
-	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent) throws Exception;
+	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent,
+			Date added) throws Exception;
 
 	// statiska metoder
 

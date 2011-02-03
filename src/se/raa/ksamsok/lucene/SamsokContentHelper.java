@@ -215,7 +215,7 @@ public class SamsokContentHelper extends ContentHelper {
 
 	@Override
 	public SolrInputDocument createSolrDocument(HarvestService service,
-				String xmlContent) throws Exception {
+				String xmlContent, Date added) throws Exception {
 		SolrInputDocument luceneDoc = new SolrInputDocument();
 		StringReader r = null;
 		Graph graph = null;
@@ -414,20 +414,23 @@ public class SamsokContentHelper extends ContentHelper {
 			Date created = null;
 			String createdDate = extractSingleValue(graph, s, rCreatedDate, null);
 			if (createdDate != null) {
-				created = parseAndIndexISO8601DateAsDate(IX_CREATEDDATE, createdDate, ip);
+				created = parseAndIndexISO8601DateAsDate(identifier, IX_CREATEDDATE, createdDate, ip);
 			} else {
 				addProblemMessage("Value for '" + IX_CREATEDDATE +
 						// troligen saknas det på alla så identifier inte med tillsvidare
 						"' is missing"); //  för " + identifier);
 			}
 			// lite logik för att sätta datum då posten först lades till i indexet
-			Date addedToIndex = calculateAddedToIndex(service.getFirstIndexDate(), created);
+			// i normala fall är added != null då den sätts när poster läggs till, men
+			// det kan finnas gammalt data i repot som inte har nåt värde och då använder
+			// vi den gamla logiken från innan databaskolumnen added fanns
+			Date addedToIndex = added != null ? added: calculateAddedToIndex(service.getFirstIndexDate(), created);
 			ip.setCurrent(IX_ADDEDTOINDEXDATE);
 			ip.addToDoc(formatDate(addedToIndex, false));
 			// hämta ut lastChangedDate (01, fast 11 egentligen?)
 			String lastChangedDate = extractSingleValue(graph, s, rLastChangedDate, null);
 			if (lastChangedDate != null) {
-				parseAndIndexISO8601DateAsDate(IX_LASTCHANGEDDATE, lastChangedDate, ip);
+				parseAndIndexISO8601DateAsDate(identifier, IX_LASTCHANGEDDATE, lastChangedDate, ip);
 			} else {
 				// lastChanged är inte lika viktig som createdDate så den varnar vi inte för tills vidare
 				// addProblemMessage("Värde för '" + IX_LASTCHANGEDDATE +
@@ -1264,15 +1267,20 @@ public class SamsokContentHelper extends ContentHelper {
 		return date;
 	}
 
-	// tolkar och indexerar ett iso-datum som yyyy-mm-dd
-	private static Date parseAndIndexISO8601DateAsDate(String index, String dateStr, IndexProcessor ip) {
+	// tolkar och indexerar ett iso-datum som yyyy-mm-dd om det inte ligger i framtiden
+	private static Date parseAndIndexISO8601DateAsDate(String identifier, String index, String dateStr, IndexProcessor ip) {
 		Date date = parseISO8601Date(dateStr);
 		if (date != null) {
-			ip.setCurrent(index);
-			ip.addToDoc(formatDate(date, false));
+			if (date.after(new Date())) {
+				addProblemMessage("The date in '" + index + "' for " + identifier  + " is in the future: " + dateStr);
+			} else {
+				ip.setCurrent(index);
+				ip.addToDoc(formatDate(date, false));
+			}
 		} else {
-			addProblemMessage("Could not interpret '" + index +
-					"' as ISO8601: " + dateStr);
+			// TODO: vill man ha med identifier i varningmeddelandet? Kan dock bli
+			//       många loggrader då detta verkar vara ett vanligt fel
+			addProblemMessage("Could not interpret '" + index + "' as ISO8601: " + dateStr);
 		}
 		return date;
 	}
