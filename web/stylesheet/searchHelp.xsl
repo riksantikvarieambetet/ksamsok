@@ -36,9 +36,8 @@ xmlns:srw="http://www.loc.gov/zing/srw/">
   		</tr>
   		<xsl:for-each select="//term">
   			<tr>
-  				<td>
-  					<xsl:value-of select="value"/>
-  				</td>
+  				<td><xsl:value-of select="value"/></td>
+  				<td align="right"><xsl:value-of select="count"/></td>
   			</tr>
   		</xsl:for-each>
   	</table>
