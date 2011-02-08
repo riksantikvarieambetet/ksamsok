@@ -48,6 +48,9 @@ public class Search extends AbstractSearchMethod {
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
 	public static final String RECORD_SCHEMA_BASE = "http://kulturarvsdata.se/";
+
+	// index att använda för sortering (transparent) istället för itemName
+	private static final String ITEM_NAME_SORT = "itemNameSort";
 	
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.Search");
 
@@ -76,7 +79,14 @@ public class Search extends AbstractSearchMethod {
 		sort = params.get(Search.SORT);
 		if (sort != null) {
 			if (!ContentHelper.indexExists(sort)) {
-				throw new BadParameterException("sorterings indexet " + sort + " finns inte.", "Search.performMethod", null, false);
+				throw new BadParameterException("Sorteringsindexet " + sort + " finns inte.", "Search.performMethod", null, false);
+			}
+			// TODO: generalisera, lägga i konf-fil?
+			// specialhantering för sortering på itemName, istället används itemNameSort
+			// transparent som rensar itemName och behåller bara bokstäver och siffor - fix
+			// för att tex poster med citationstecken ("konstiga" tecken) kom först
+			if (ContentHelper.IX_ITEMNAME.equals(sort)) {
+				sort = ITEM_NAME_SORT;
 			}
 		}
 		sortDesc = getSortConfig(params.get(Search.SORT), params.get(Search.SORT_CONFIG));
