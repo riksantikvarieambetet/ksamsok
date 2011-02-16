@@ -72,7 +72,7 @@
 					<tr>
 						<th>Tjänst</th>
 						<th>Namn</th>
-						<th>Senast indexerad</th>
+						<th>Senast sk�rdad</th>
 						<th title="Ej borttagna, dvs där deleted är null"># i databas*</th>
 						<th title="Obs att poster med itemForIndexing=n inte är med här men kan fn ej skiljas ut ifrån databasposterna så antalen kan skilja beroende på det"># i index*</th>
 					</tr>
