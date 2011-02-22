@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ServiceOrganization Admin</title>
+<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 <link media="all" rel="stylesheet" type="text/css" href="../css/orgAdmin.css"/>
 <script type="text/javascript">
 function showHide()
@@ -32,9 +33,9 @@ function remove()
 </script>
 </head>
 <body>
+<%@include file="nav_and_services_i.jsp" %>
 <div id="page">
 	<div id="head">
-		<a href="index.jsp">Index</a>
 		<form action="orgAdmin" accept-charset="UTF-8" method="post">
 			<input type="hidden" name="operation" value="passwordAdmin"/>
 			<input type="submit" value="Administrera Lösenord"/>

@@ -1,6 +1,3 @@
-<%@page import="se.raa.ksamsok.solr.SearchService"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="org.apache.solr.common.SolrDocument"%>
 <%@page import="org.apache.solr.common.SolrDocumentList"%>
 <%@page import="org.apache.solr.client.solrj.response.QueryResponse"%>
@@ -28,18 +25,15 @@
 <%
 	Map<String,String> params = ContentHelper.extractUTF8Params(request.getQueryString());
 	String query = params.get("query");
+	boolean escapequery = Boolean.parseBoolean(params.get("escapequery"));
 	query = (query == null ? "" : query.trim());
 %>
 	<body class="bgGrayUltraLight">
-		<br/>
-		<div class="bgBlackLight menu">
-			<a href="index.jsp">Startsida</a>
-			<a href="map.jsp">Sök + karta</a>
-		</div>
-		<hr/>
+		<%@include file="nav_and_services_i.jsp" %>
 		<form action="" accept-charset="utf-8">
 			<div class="center">
-				<input name="query" value="<%=query.replace("\"", "&quot;")%>">
+				<input name="escapequery" <%=escapequery ? "checked": ""%> value="true" type="checkbox">&nbsp;Escape?</input>
+				<input name="query" value="<%=query.replace("\"", "&quot;")%>" />
 				<button>Sök</button>
 			</div>
 		</form>
@@ -49,11 +43,9 @@
 	String message = "";
 	if (query.length() > 0) {
 		try {
-			SolrQuery q = new SolrQuery(ClientUtils.escapeQueryChars(query));
+			SolrQuery q = new SolrQuery(escapequery ? ClientUtils.escapeQueryChars(query) : query);
 			q.setRows(maxHits);
 			q.setFields("* score");
-			ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-			SearchService searchService = ctx.getBean(SearchService.class);
 			QueryResponse qr = searchService.query(q);
 			int i = 0;
 			SolrDocumentList hits = qr.getResults();

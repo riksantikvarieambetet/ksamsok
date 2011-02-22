@@ -6,57 +6,35 @@
 <%@page import="java.util.Collections"%>
 <%@page import="se.raa.ksamsok.harvest.StatusService.Step"%>
 <%@page import="java.util.List"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="java.util.Date"%>
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
-<%@page import="java.io.File"%><html>
+<%@page import="java.io.File"%>
 <%
-	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-	final HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
-	HarvestRepositoryManager hrm = ctx.getBean(HarvestRepositoryManager.class);
-	SearchService searchService = ctx.getBean(SearchService.class);
-
-	final Collator sweCol = Collator.getInstance(new Locale("sv", "SE"));
 	String uidString = " [" + request.getRemoteUser() + "]";
-	Runtime runtime = Runtime.getRuntime();
-
-	int procs = runtime.availableProcessors();
-	int freeMem = (int) (runtime.freeMemory() / (1024 * 1024));
-	int maxMem = (int) (runtime.maxMemory() / (1024 * 1024));
-	int totalMem = (int) (runtime.totalMemory() / (1024 * 1024));
-	File spoolDir = hrm.getSpoolDir();
-	int freeDisk = (int) (spoolDir.getFreeSpace() / (1024 * 1024));
-	String jvmInfo = procs + " processorer/kärnor, minne - ledigt: " + freeMem + "Mb allokerat: " +
-		totalMem + "Mb max: " + maxMem + "Mb, disk - ledigt " + freeDisk + "Mb " +
-		"<span style='font-size: 85%;'>(på spool: " + spoolDir.getAbsolutePath() + ")</span>";
-	// funkar bara ok i drift om man går mot www.kulturarvsdata.se så länge som proxyHost
-	//  inte är satt till utsidans hostnamn då solr inte är (eller ska vara i alla fall!) synligt utåt
-	URL solrURL = new URL(searchService.getSolrURL());
-	if ("127.0.0.1".equals(solrURL.getHost())) {
-		solrURL = new URL(solrURL.toString().replaceFirst("127\\.0\\.0\\.1", request.getServerName()));
-	} else if ("localhost".equals(solrURL.getHost())) {
-		solrURL = new URL(solrURL.toString().replaceFirst("localhost", request.getServerName()));
-	}
 %>
+<html>
 	<head>
-		<title>Tjänstelista<%= uidString %></title>&nbsp;&nbsp;
+		<title>Tjänstelista<%= uidString %></title>
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 	</head>
 	<body class="bgGrayUltraLight">
-		<br/>
-		<div class="bgBlackLight menu">
-			<a href="index.jsp">Startsida</a>&nbsp;&nbsp;
-			<a href="indexservices.jsp">Indexhantering</a>
-			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
-			<a href="problemlog.jsp">Problemlogg</a>
-			<span class="servername"><%=request.getServerName() %></span>
-		</div>
-		<hr/>
+		<%@include file="nav_and_services_i.jsp" %>
+<%
+		final Collator sweCol = Collator.getInstance(new Locale("sv", "SE"));
+		Runtime runtime = Runtime.getRuntime();
+
+		int procs = runtime.availableProcessors();
+		int freeMem = (int) (runtime.freeMemory() / (1024 * 1024));
+		int maxMem = (int) (runtime.maxMemory() / (1024 * 1024));
+		int totalMem = (int) (runtime.totalMemory() / (1024 * 1024));
+		File spoolDir = hrm.getSpoolDir();
+		int freeDisk = (int) (spoolDir.getFreeSpace() / (1024 * 1024));
+		String jvmInfo = procs + " processorer/kärnor, minne - ledigt: " + freeMem + "Mb allokerat: " +
+			totalMem + "Mb max: " + maxMem + "Mb, disk - ledigt " + freeDisk + "Mb " +
+			"<span style='font-size: 85%;'>(på spool: " + spoolDir.getAbsolutePath() + ")</span>";
+%>
 		<div>
 			<button onclick="javascript:window.location='editservice.jsp'; return false;">Ny tjänst</button>
 			<span class="paddingWideLeft">JVMInfo: <%=jvmInfo %></span>

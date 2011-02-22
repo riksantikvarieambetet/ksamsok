@@ -1,7 +1,3 @@
-<%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
-<%@page import="se.raa.ksamsok.solr.SearchService"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="org.apache.solr.common.SolrDocument"%>
 <%@page import="org.apache.solr.common.SolrDocumentList"%>
@@ -109,9 +105,6 @@
 		</script>
 	</head>
 <%
-	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-	SearchService searchService = ctx.getBean(SearchService.class);
-	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
 	Map<String,String> params = ContentHelper.extractUTF8Params(request.getQueryString());
 	String query = StringUtils.trimToEmpty(params.get("query"));
 	boolean withCoordsOnly = Boolean.parseBoolean(params.get("withCoords"));
@@ -121,12 +114,7 @@
 	String limitToService = StringUtils.trimToEmpty(params.get("serviceId"));
 %>
 	<body onload="init(<%=useMapExtent%>, '<%=searchExtent%>')" class="bgGrayUltraLight">
-		<br/>
-		<div class="bgBlackLight menu">
-			<a href="index.jsp">Startsida</a>
-			<a href="search.jsp">Sök utan karta</a>
-		</div>
-		<hr/>
+		<%@include file="nav_and_services_i.jsp" %>
 		<div class="floatLeft">
 			<div id="map" style="width: 512px; height: 256px; border: 1px solid #ccc;" class="smallmap"></div>
 		</div>

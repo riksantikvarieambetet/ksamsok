@@ -546,11 +546,21 @@ body
     UTIL STOP
 ----------------------------------------------- */
 
+.menu
+{
+	padding-left: 5px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
 .menu a
 {
-    text-decoration: underline;
+    text-decoration: none;
     color: black;
     font-weight: bold;
+    margin-right: 5px;
+    padding: 2px;
+    border: 1px black solid;
 }
 .menu a:hover
 {

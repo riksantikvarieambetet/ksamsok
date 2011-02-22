@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>K-Sams&ouml;k - statistic</title>
+<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../css/statistic.css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
 <script type="text/javascript">
@@ -22,10 +23,8 @@ function hideShow()
 </script>
 </head>
 <body>
+	<%@include file="nav_and_services_i.jsp" %>
 <div id="page">
-	<div id="head">
-		<a href="../userAdmin/orgAdmin">Administrera organisation</a>
-	</div>
 	<div id="overview">
 		<label id="toggle" onclick="hideShow()">Dölj</label>
 		<div id="hideable">

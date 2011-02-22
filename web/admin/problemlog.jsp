@@ -1,20 +1,16 @@
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.LogEvent"%>
-<%@page import="se.raa.ksamsok.harvest.StatusService"%>
 <%@page import="java.net.URL"%>
-<%@page import="se.raa.ksamsok.solr.SearchService"%>
 <%@page import="java.util.List"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
+<html>
+	<head>
+		<title>Problem- och fellogg</title>
+		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
+	</head>
+	<body class="bgGrayUltraLight">
+		<%@include file="nav_and_services_i.jsp" %>
 <%
-	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-	final HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
-	//HarvestRepositoryManager hrm = ctx.getBean(HarvestRepositoryManager.class);
-	//SearchService searchService = ctx.getBean(SearchService.class);
-	StatusService statusService = ctx.getBean(StatusService.class);
-
 	String infoMessage = null;
 	String serviceId = request.getParameter("serviceId");
 	HarvestService service = null;
@@ -48,20 +44,6 @@
 	String messageSortClass = "message".equals(sort) ? (sortDesc ? "sortdesc" : "sortasc") : "sortable";
 
 %>
-<html>
-	<head>
-		<title>Problem- och fellogg</title>&nbsp;&nbsp;
-		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
-	</head>
-	<body class="bgGrayUltraLight">
-		<br/>
-		<div class="bgBlackLight menu">
-			<a href="index.jsp">Startsida</a>
-			<a href="harvestservices.jsp">Tjänster</a>
-			<a href="indexservices.jsp">Indexhantering</a>
-			<span class="servername"><%=request.getServerName() %></span>
-		</div>
-		<hr/>
 		<h4>Problem- och felmeddelanden</h4>
 <%
 	if (infoMessage != null) {

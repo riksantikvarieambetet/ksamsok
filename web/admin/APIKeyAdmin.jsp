@@ -21,12 +21,13 @@ function hide()
 	document.getElementById("hideable").style.display = "none";
 }
 </script>
+<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../css/APIKeyAdmin.css"/>
 </head>
 <body onload="hide()">
 <div id="page">
+	<%@include file="nav_and_services_i.jsp" %>
 	<div id="head">
-		<a href="index.jsp">Index</a>&nbsp;&nbsp;
 		<label id="addKey" onclick="showAddNewDiv()">L&auml;gg till nyckel</label>
 	</div>
 	<div id="hideable">

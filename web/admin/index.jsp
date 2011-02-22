@@ -4,49 +4,18 @@
 <%@page import="java.util.Comparator"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.Collator"%>
-<%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
-<%@page import="se.raa.ksamsok.solr.SearchService"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>
-<%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
 <html>
-<%
-	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-	SearchService searchService = ctx.getBean(SearchService.class);
-	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
-	HarvestRepositoryManager hrm = ctx.getBean(HarvestRepositoryManager.class);
-	// funkar bara ok i drift om man går mot www.kulturarvsdata.se så länge som proxyHost
-	//  inte är satt till utsidans hostnamn då solr inte är (eller ska vara i alla fall!) synligt utåt
-	URL solrURL = new URL(searchService.getSolrURL());
-	if ("127.0.0.1".equals(solrURL.getHost())) {
-		solrURL = new URL(solrURL.toString().replaceFirst("127\\.0\\.0\\.1", request.getServerName()));
-	} else if ("localhost".equals(solrURL.getHost())) {
-		solrURL = new URL(solrURL.toString().replaceFirst("localhost", request.getServerName()));
-	}
-%>
 	<head>
 		<title>Översikt</title>
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 	</head>
 	<body class="bgGrayUltraLight">
-		<br/>
-		<div class="bgBlackLight menu">
-			<a href="map.jsp">Sök + karta</a>&nbsp;&nbsp;
-			<a href="harvestservices.jsp">Tjänster</a>&nbsp;&nbsp;
-			<a href="problemlog.jsp">Problemlogg</a>&nbsp;&nbsp;
-			<a href="apiKeyAdmin">API-nycklar</a>&nbsp;&nbsp;
-			<a href="orgAdmin">Admin org</a>&nbsp;&nbsp;
-			<a href="statistic">Statistik</a>&nbsp;&nbsp;
-			<a href="../sru">SRU-gränssnitt</a>
-			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
-			<span class="servername"><%=request.getServerName() %></span>
-		</div>
-		<hr/>
+		<%@include file="nav_and_services_i.jsp" %>
 		<div class="bgGrayLight">
 			<h4>
 				K-Samsök 0.99, gemensamt sökindex för olika källor.
@@ -72,7 +41,7 @@
 					<tr>
 						<th>Tjänst</th>
 						<th>Namn</th>
-						<th>Senast sk�rdad</th>
+						<th>Senast skördad</th>
 						<th title="Ej borttagna, dvs där deleted är null"># i databas*</th>
 						<th title="Obs att poster med itemForIndexing=n inte är med här men kan fn ej skiljas ut ifrån databasposterna så antalen kan skilja beroende på det"># i index*</th>
 					</tr>

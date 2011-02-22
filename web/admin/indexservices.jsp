@@ -1,18 +1,11 @@
 <%@page import="org.apache.solr.client.solrj.SolrServerException"%>
 <%@page import="org.apache.solr.common.util.NamedList"%>
-<%@page import="se.raa.ksamsok.solr.SearchService"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
-<%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="java.util.Date"%>
 <%@page import="se.raa.ksamsok.lucene.ContentHelper"%>
 <%@page import="java.util.List"%><html>
 <%
-	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
-	SearchService searchService = ctx.getBean(SearchService.class);
 	String uidString = " [" + request.getRemoteUser() + "]";
 %>
 	<head>
@@ -20,14 +13,7 @@
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 	</head>
 	<body class="bgGrayUltraLight">
-		<br/>
-		<div class="bgBlackLight menu">
-			<a href="index.jsp">Startsida</a>&nbsp;&nbsp;
-			<a href="harvestservices.jsp">Tjänster</a>&nbsp;&nbsp;
-			<a href="problemlog.jsp">Problemlogg</a>
-		</div>
-		<hr/>
-
+		<%@include file="nav_and_services_i.jsp" %>
 <%
 		String indexInfoErrMess = null;
 		NamedList<Object> indexInfo = null;

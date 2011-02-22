@@ -11,7 +11,7 @@
 <%@page import="se.raa.ksamsok.organization.Organization" %>
 <%@page import="java.util.Map" %>
 <%@page import="java.util.List" %>
-
+<%@page import="java.io.File"%>
 <%
 	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
@@ -21,6 +21,7 @@
 	String serviceId = request.getParameter("serviceId");
 	String uidString = " [" + request.getRemoteUser() + "]";
 %>
+<html>
 	<head>
 		<title>
 			<%= (serviceId == null ? "Ny" : "Redigera") + " tjänst" + uidString %>
@@ -238,5 +239,4 @@
 			</table>
 		</form>
   </body> 
-
-<%@page import="java.io.File"%></html>
+</html>

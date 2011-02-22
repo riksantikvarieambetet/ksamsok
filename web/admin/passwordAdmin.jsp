@@ -6,9 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Administrera l&ouml;senord</title>
+<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../css/passwordAdmin.css"/>
 </head>
 <body>
+	<%@include file="nav_and_services_i.jsp" %>
 <div id="page">
 	<div id="head">
 		<form action="orgAdmin" accept-charset="UTF-8">
