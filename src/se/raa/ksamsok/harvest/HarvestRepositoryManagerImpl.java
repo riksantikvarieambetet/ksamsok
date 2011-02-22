@@ -431,8 +431,13 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		int count = 0;
 		try {
 			c = ds.getConnection();
-			// lite special istället för group by för att få db-index att vara med och slippa full table scan...
-			String sql = "select s.serviceId, (select count(*) from content where serviceId = s.serviceId and deleted is null) c from harvestservices s";
+			// ora: lite special istället för group by för att få db-index att vara med och slippa full table scan...
+			//String sql = "select s.serviceId, (select count(*) from content where serviceId = s.serviceId and deleted is null) c from harvestservices s";
+			// pg: verkar klara group by bättre (troligen index-relaterat också), ca 13 sek för ovan mot ca 4 för nedan
+			String sql = "select serviceId, count(uri) from content where deleted is null " +
+				// villkor som filtrerar bort de poster i content som inte har nån "korrekt" tjänst - bortkommenterat tills vidare
+				//"and serviceId in (select serviceId from harvestservices) " +
+				"group by serviceId";
 			pst = c.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
