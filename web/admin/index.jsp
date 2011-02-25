@@ -1,3 +1,4 @@
+<%@page import="java.util.Map.Entry"%>
 <%@page import="java.net.URL"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Collections"%>
@@ -22,10 +23,11 @@
 			</h4>
 		</div>
 		<hr/>
-		<div>
+		<div style="float: left">
 <%
 			final Collator sweCol = Collator.getInstance(new Locale("sv", "SE"));
 			List<HarvestService> services = hsm.getServices();
+			Map<String, Long> indexCountMap = searchService.getIndexCounts();
 			Collections.sort(services, new Comparator<HarvestService>() {
 				public int compare(HarvestService o1, HarvestService o2) {
 						return sweCol.compare(o1.getName(), o2.getName());
@@ -52,7 +54,6 @@
 				Number repoCount;
 				Number indexCount;
 				Map<String, Integer> repoCountMap = hrm.getCounts();
-				Map<String, Long> indexCountMap = searchService.getIndexCounts();
 				for (HarvestService service: services) {
 %>
 					<tr>
@@ -63,14 +64,14 @@
 						repoCount = 0;
 					}
 					dbCount += repoCount.longValue();
-					indexCount = indexCountMap.get(service.getId());
+					indexCount = indexCountMap.remove(service.getId());
 					if (indexCount == null) {
 						indexCount = 0;
 					}
 					iCount += indexCount.longValue();
 %>
 						<td><a href="editservice.jsp?serviceId=<%=service.getId()%>"><%=service.getId()%></a></td>
-						<td><%= service.getName() %>
+						<td><%= service.getName() %></td>
 						<td class="right"><%= (d != null ? ContentHelper.formatDate(d, false) : "aldrig") %></td>
 						<td class="right"><%= repoCount %></td>
 						<td class="right" style='<%= (repoCount.longValue() != indexCount.longValue() ? "color: orange;" : "") %>'><%= indexCount %></td>
@@ -94,7 +95,36 @@
 				<%= services.size() %> tjänster.
 			</p>
 		</div>
-		<hr/>
+<%
+			if (indexCountMap.size() > 0) {
+%>
+		<div style="float: left; margin-left: 20px;">
+			<h5 class="marginBottomSmall">OBS Dessa tjänster finns bara i indexet och inte i repot</h5>
+			<table>
+				<thead>
+					<tr>
+						<th>Tjänst</th>
+						<th># i index</th>
+					</tr>
+				</thead>
+				<tbody>
+<%
+				for (Entry<String,Long> entry: indexCountMap.entrySet()) {
+%>
+				<tr>
+					<td><%=entry.getKey()%></td>
+					<td class="right" style='color: orange;'><%= entry.getValue() %></td>
+				</tr>
+<%
+				}
+%>
+				</tbody>
+			</table>
+		</div>
+<%
+			}
+%>
+		<hr style="clear: both"/>
 		Enkla exempel med sru (i nytt fönster/flik):<br/>
 		<a target="_blank" href="../sru?operation=searchRetrieve&version=1.1&query=<%=ContentHelper.IX_TEXT%>%3Drunsten">Sökning på text=runsten</a>
 		<br/>
