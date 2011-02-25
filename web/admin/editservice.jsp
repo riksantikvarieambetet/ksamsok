@@ -176,7 +176,7 @@
 					<tr>
 						<td>Spoolfil:</td>
 						<td><%= spoolFile.getAbsolutePath() %> (ca <%= (int) (spoolFile.length() / (1024 * 1024)) %>Mb)
-							<b>OBS! Kommer användas vid nästa körning om den ej tas bort</b>
+							<b>OBS! Kommer användas vid nästa körning om den ej tas bort och innehållet i filen kommer behandlas som om det vore en full skörd, dvs ersätta allt annat innehåll.</b>
 						</td>
 					</tr>
 					<%

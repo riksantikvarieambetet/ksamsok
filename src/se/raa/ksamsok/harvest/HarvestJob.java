@@ -189,15 +189,16 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			}
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.FETCH);
-			ss.setStatusTextAndLog(service, "Performing Identify");
 
-			ServiceMetadata sm = performIdentify(service);
+			ServiceMetadata sm = null;
 
 			int numRecords = -1; // -1 är okänt antal poster
 			spoolFile = hrm.getSpoolFile(service);
 			// kolla om vi har en hämtad fil som vi kan använda
 			if (!spoolFile.exists()) {
-				// ingen tidigare hämtning att använda
+				// ingen tidigare hämtning att använda, gör identify
+				ss.setStatusTextAndLog(service, "Performing Identify");
+				sm = performIdentify(service);
 				ss.setStatusTextAndLog(service, "Fetching metadata format");
 				List<ServiceFormat> formats = performGetFormats(service);
 				String f = getMetadataFormat();
@@ -255,6 +256,12 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				if (logger.isDebugEnabled()) {
 					logger.debug(serviceId + ", using existing file from spool: " + spoolFile.getName());
 				}
+				// vi har en spoolfil som ska användas och för att undvika ett nätanrop alls i det fallet så
+				// "fuskar" vi till en metadata-instans
+				// OBS att om tjänsten egentligen stödjer persistent deletes (vilket fn är omöjligt att veta
+				//     här utan att fråga tjänsten) och spoolfilen är en delta-skörd kommer indexet ändå att
+				//     rensas och bara spoolfilens "delta-poster" lagras och indexeras!
+				sm = new ServiceMetadata(ServiceMetadata.D_TRANSIENT, ServiceMetadata.G_DAY);
 			}
 			// om vi har records och en spool-fil ska vi bearbeta den
 			if (numRecords != 0 && spoolFile.exists()) {
