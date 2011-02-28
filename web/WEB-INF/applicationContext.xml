@@ -36,6 +36,8 @@
 		<constructor-arg ref="dataSource" />
 		<constructor-arg ref="harvestRepositoryManager" />
 		<constructor-arg ref="statusService" />
+		<!-- sträng som måste finnas i db-url:en från datasource:n för att tjänster ska får scheduleras utan år -->
+		<constructor-arg value="lx-ra-kmsdb" />
 	</bean>
 	<bean id="searchService" class="se.raa.ksamsok.solr.SearchServiceImpl">
 		<property name="solr" ref="solr"/>

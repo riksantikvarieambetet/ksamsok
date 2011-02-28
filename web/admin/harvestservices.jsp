@@ -37,7 +37,15 @@
 %>
 		<div>
 			<button onclick="javascript:window.location='editservice.jsp'; return false;">Ny tjänst</button>
-			<span class="paddingWideLeft">JVMInfo: <%=jvmInfo %></span>
+			<span class="paddingWideLeft">JVMInfo: <%=jvmInfo %>
+<%
+		if (hsm.isForceYear()) {
+%>
+			<b style='font-size: 85%;'>OBS! År påtvingas vid schedulering pga konf</b>
+<%
+		}
+%>
+			</span>
 		</div>
 <%
 		String sortByParam = request.getParameter("sortby");
@@ -96,7 +104,7 @@
 			<thead class="bgGrayLight">
 				<tr>
 					<th class="<%= idSortClass %>"><a href="?sortby=id&sortdir=<%= newSortDir %>">Tjänst</a></th>
-					<th class="<%= nameSortClass %>"><a href="?sortby=name&sortdir=<%= newSortDir %>">Name</a></th>
+					<th class="<%= nameSortClass %>"><a href="?sortby=name&sortdir=<%= newSortDir %>">Namn</a></th>
 					<th>Cron-schema</th>
 					<th>Skörde-URL</th>
 					<th class="<%= dateSortClass %>"><a href="?sortby=date&sortdir=<%= newSortDir %>">Senaste skörd</a></th>

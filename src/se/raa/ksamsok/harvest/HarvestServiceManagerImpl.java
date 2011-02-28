@@ -8,9 +8,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.InterruptableJob;
@@ -35,23 +37,51 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	private static final String TRIGGER_SUFFIX = "-trigger";
 	private static final String OPTIMIZE_TYPE = "_LUCENE_OPTIMIZE"; // TODO: ligger i db så kan inte bara ändras till solr
 
+	// flagga för att påtvinga år på jobb när de schemaläggs i quartz för att förhindra att de körs på tex testmaskiner
+	// som använder en databas kopierad från drift
+	private boolean forceYear;
+
 	protected Scheduler scheduler;
 	protected HarvestRepositoryManager hrm;
 	protected StatusService ss;
+	protected String allowNoYearIfDbURLContains;
 
-	protected HarvestServiceManagerImpl(DataSource ds, HarvestRepositoryManager hrm, StatusService ss) {
+	protected HarvestServiceManagerImpl(DataSource ds, HarvestRepositoryManager hrm,
+			StatusService ss, String allowNoYearIfDbURLContains) {
 		super(ds);
 		this.hrm = hrm;
 		this.ss = ss;
+		this.allowNoYearIfDbURLContains = StringUtils.trimToEmpty(allowNoYearIfDbURLContains).toLowerCase();
+		this.forceYear = true; // default
 	}
 
 	protected void init() throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Startar HarvestServiceManager");
+			logger.info("Starting HarvestServiceManager");
 		}
 		Connection c = null;
 		try {
 			c = ds.getConnection();
+			if (c != null) {
+				String dbUrl = c.getMetaData().getURL();
+				if (dbUrl != null) {
+					forceYear = !dbUrl.toLowerCase().contains(allowNoYearIfDbURLContains);
+					if (logger.isInfoEnabled()) {
+						logger.info("This has been determined to be a " +
+								(forceYear ? "development" : "production") + " instance based on " +
+								"the fact that the jdbc url:");
+						logger.info("'" + dbUrl + "' " + (forceYear ? "does not contain " : "contains ") +
+								"the configured string: '" + allowNoYearIfDbURLContains + "'");
+						logger.info("and the forcing of year when scheduling has thus " +
+								"been set to " + forceYear);
+					}
+				} else {
+					logger.warn("Cannot determine if this is a production or development instance since " +
+							"the jdbc url could not be read from database metadata - " +
+							"assuming development and forcing year when scheduling.");
+					forceYear = true;
+				}
+			}
 		} catch (Throwable t) {
 			logger.error("Error in datasource, can not retrieve connection", t);
 		} finally {
@@ -83,7 +113,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			createService(service);
 		}
 		if (logger.isInfoEnabled()) {
-			logger.info("HarvestServiceManager startad");
+			logger.info("HarvestServiceManager started");
 		}
 	}
 
@@ -138,6 +168,12 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		}
 	}
 
+	@Override
+	public boolean isForceYear() {
+		return forceYear;
+	}
+
+	@Override
 	public void createService(HarvestService service) throws Exception {
 	    Connection c = null;
 	    PreparedStatement  pst = null;
@@ -175,6 +211,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    }
 	}
 
+	@Override
 	public HarvestService getService(String serviceId) throws Exception {
 		HarvestService service = null;
 	    Connection c = null;
@@ -194,6 +231,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    return service;
 	}
 
+	@Override
 	public List<HarvestService> getServices() throws Exception {
 	    Connection c = null;
 	    PreparedStatement  pst = null;
@@ -214,10 +252,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		return services;
 	}
 
+	@Override
 	public HarvestService newServiceInstance() {
 		return new HarvestServiceImpl();
 	}
-	
+
 	protected HarvestService newServiceInstance(ResultSet rs) throws SQLException {
 		HarvestService service = newServiceInstance();
 		service.setId(rs.getString("serviceId"));
@@ -239,39 +278,47 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		return service;
 	}
 
+	@Override
 	public void triggerHarvest(HarvestService service) throws Exception {
 		triggerJob(service.getId());
 	}
 
+	@Override
 	public void triggerReindex(HarvestService service) throws Exception {
 		triggerJob(service, Step.INDEX);
 	}
 
+	@Override
 	public void triggerRemoveindex(HarvestService service) throws Exception {
 		triggerJob(service, Step.EMPTYINDEX);
 	}
 
+	@Override
 	public void triggerReindexAll() throws Exception {
 		JobDetail jd = new JobDetail(SERVICE_INDEX_REINDEX, JOBGROUP_HARVESTERS, ReindexAllJob.class);
 		scheduler.scheduleJob(jd, new SimpleTrigger(SERVICE_INDEX_REINDEX + TRIGGER_SUFFIX, null));
 	}
 
+	@Override
 	public boolean interruptHarvest(HarvestService service) throws Exception {
 		// begär att jobbet ska avbrytas, både på "logisk nivå" och på jobb-nivå
 		ss.requestInterrupt(service);
 		return interruptJob(service.getId());
 	}
 
+	@Override
 	public boolean interruptReindexAll() throws Exception {
 		HarvestService service = newServiceInstance();
 		service.setId(SERVICE_INDEX_REINDEX);
 		return interruptHarvest(service);
 	}
 
+	@Override
 	public boolean isRunning(HarvestService service) {
 		return isJobRunning(service.getId());
 	}
 
+	@Override
 	public void updateService(HarvestService service) throws Exception {
 		HarvestService dbService = getService(service.getId());
 		if (dbService == null) {
@@ -338,6 +385,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    }
 	}
 
+	@Override
 	public void updateServiceDate(HarvestService service, Date date) throws Exception {
 		HarvestService dbService = getService(service.getId());
 		if (dbService == null) {
@@ -403,6 +451,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    }
 	}
 
+	@Override
 	public void deleteService(HarvestService service) throws Exception {
 	    Connection c = null;
 	    PreparedStatement pst = null;
@@ -439,8 +488,18 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	private void scheduleJob(HarvestService service, String jobGroup) throws Exception {
 		if (service.getCronString() != null) {
 			JobDetail jd = createJobDetail(service);
-			Trigger t = new CronTrigger(service.getId() + TRIGGER_SUFFIX, null,
-					service.getCronString());
+			String cronString = service.getCronString();
+			if (forceYear && !SERVICE_INDEX_OPTIMIZE.equals(service.getId())) {
+				StringTokenizer tok = new StringTokenizer(cronString, " ");
+				if (tok.countTokens() == 6) {
+					// inget år
+					cronString += " 2029"; // TODO: räcker 2029..?! :)
+					if (logger.isInfoEnabled()) {
+						logger.info("Forcing year when scheduling service " + service.getId());
+					}
+				}
+			}
+			Trigger t = new CronTrigger(service.getId() + TRIGGER_SUFFIX, null, cronString);
 			scheduler.scheduleJob(jd, t);
 		}
 	}
@@ -462,6 +521,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public String getJobStatus(HarvestService service) {
 		CronTrigger t = null;
 		if (!SERVICE_INDEX_REINDEX.equals(service.getId())) {
@@ -497,25 +557,33 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		} catch (SchedulerException e) {
 			logger.warn("Error when fetching running job", e);
 		}
+		String extraInfo = "";
 		if (t != null && !t.getCronExpression().equals(service.getCronString())) {
-			return isRunning + "Not the same execution schema!";
+			if (forceYear && !SERVICE_INDEX_OPTIMIZE.equals(service.getId())) {
+				extraInfo = " (NOTE: actual cron string is " + t.getCronExpression() + ") ";
+			} else {
+				return isRunning + "Not the same execution schema!";
+			}
 		}
 		status = ss.getStatusText(service);
 		if (status == null) {
 			// okänd status, ej kört ännu tex
 			status = "Ok";
 		}
-		return isRunning + status;
+		return isRunning + status + extraInfo;
 	}
 
+	@Override
 	public List<String> getJobLog(HarvestService service) {
 		return ss.getStatusLog(service);
 	}
 
+	@Override
 	public List<String> getJobLogHistory(HarvestService service) {
 		return ss.getStatusLogHistory(service);
 	}
 
+	@Override
 	public Step getJobStep(HarvestService service) {
 		return ss.getStep(service);
 	}

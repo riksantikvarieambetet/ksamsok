@@ -172,4 +172,10 @@ public interface HarvestServiceManager {
 	 * @return lista med meddelanden
 	 */
 	List<String> getJobLogHistory(HarvestService service);
+
+	/**
+	 * Ger om denna instans är konfad att påtvinga år när tjänster scheduleras
+	 * @return sant om år påtvingas
+	 */
+	boolean isForceYear();
 }
