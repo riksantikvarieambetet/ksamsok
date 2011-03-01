@@ -144,6 +144,10 @@ public class GetGeoResource extends AbstractAPIMethod {
 					parentTagName = "county";
 					break;
 				}
+				// fixa in ns om det saknas, tex för pg (8 i alla fall)
+				if (gmlResult != null && !gmlResult.contains("xmlns:gml=")) {
+					gmlResult = gmlResult.replace(" srsName", " xmlns:gml=\"http://www.opengis.net/gml\" srsName");
+				}
 			} else {
 				throw new Exception("Felaktig kod (" + code + ") i uri:n " + uri + "?");
 			}
