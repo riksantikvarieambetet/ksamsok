@@ -11,6 +11,8 @@ import java.util.Vector;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
+
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
 import se.raa.ksamsok.harvest.DBUtil;
 
@@ -19,15 +21,15 @@ import se.raa.ksamsok.harvest.DBUtil;
  * information
  * @author Henrik Hjalmarsson
  */
-public class OrganizationManager extends DBBasedManagerImpl
-{
+public class OrganizationManager extends DBBasedManagerImpl {
+
+	private static final Logger logger = Logger.getLogger(OrganizationManager.class);
 
 	/**
 	 * Skapar en ny databashanterare
 	 * @param ds datakälla som skall användas
 	 */
-	public OrganizationManager(DataSource ds)
-	{
+	public OrganizationManager(DataSource ds) {
 		super(ds);
 	}
 	
@@ -36,8 +38,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * @return Map med String,String. Key är kortnamn för organisation
 	 * och value är det svenska namnet för organisationen
 	 */
-	public List<Organization> getServiceOrganizations()
-	{
+	public List<Organization> getServiceOrganizations() {
 		List<Organization> list = new Vector<Organization>();
 		Connection c = null;
 		PreparedStatement ps = null;
@@ -55,8 +56,8 @@ public class OrganizationManager extends DBBasedManagerImpl
 				list.add(o);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+			logger.error("Problem getting organizations", e);
+		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return list;
@@ -68,8 +69,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * @param kortnamn organisationens kortnamn
 	 * @return Böna med organisations-data
 	 */
-	public Organization getOrganization(String kortnamn, boolean isServOrg)
-	{	
+	public Organization getOrganization(String kortnamn, boolean isServOrg) {
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -103,7 +103,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 				org.setServiceList(serviceList);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Problem getting organization " + kortnamn + " (isServOrg: " + isServOrg + ")", e);
 		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
@@ -116,8 +116,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * @param rs ResultSet från SQL query
 	 * @return Organisationsbönan med satta värden
 	 */
-	private Organization setOrgValues(Organization org, ResultSet rs)
-	{
+	private Organization setOrgValues(Organization org, ResultSet rs) {
 		try {
 			org.setKortnamn(rs.getString("kortnamn"));
 			org.setServ_org(rs.getString("serv_org"));
@@ -134,8 +133,8 @@ public class OrganizationManager extends DBBasedManagerImpl
 			org.setWebsidaKS(rs.getString("websidaks"));
 			org.setLowressUrl(rs.getString("lowressurl"));
 			org.setThumbnailUrl(rs.getString("thumbnailurl"));
-		}catch(SQLException e) {
-			e.printStackTrace();
+		} catch(SQLException e) {
+			logger.error("Problem setting organization values", e);
 		}
 		return org;
 	}
@@ -144,8 +143,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * Uppdaterar given organisation i databasen
 	 * @param org organisationen som skall uppdateras
 	 */
-	public void updateOrg(Organization org)
-	{
+	public void updateOrg(Organization org) {
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -169,8 +167,8 @@ public class OrganizationManager extends DBBasedManagerImpl
 			DBUtil.commit(c);
 		} catch (SQLException e) {
 			DBUtil.rollback(c);
-			e.printStackTrace();
-		}finally {
+			logger.error("Problem updating organization " + org != null ? org.getKortnamn() : "null", e);
+		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
 	}
@@ -181,8 +179,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * @param org organisationens uppdaterade data
 	 * @return PreparedStatement med strängar satta
 	 */
-	private PreparedStatement setPsStrings(PreparedStatement ps, Organization org)
-	{
+	private PreparedStatement setPsStrings(PreparedStatement ps, Organization org) {
 		try {
 			ps.setString(1, org.getNamnSwe());
 			ps.setString(2, org.getNamnEng());
@@ -199,8 +196,8 @@ public class OrganizationManager extends DBBasedManagerImpl
 			ps.setString(13, org.getThumbnailUrl());
 			ps.setString(14, org.getServ_org());
 			ps.setString(15, org.getKortnamn());
-		}catch(SQLException e) {
-			e.printStackTrace();
+		} catch(SQLException e) {
+			logger.error("Problem setting ps strings", e);
 		}
 		return ps;
 	}
@@ -209,8 +206,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * Returnerar alla organisationer i databasen i form av en lista med organisationsbönor
 	 * @return Lista med organisationer i databasen
 	 */
-	public List<Organization> getAllOrganizations()
-	{
+	public List<Organization> getAllOrganizations() {
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -220,12 +216,12 @@ public class OrganizationManager extends DBBasedManagerImpl
 			String sql = "SELECT kortnamn FROM organisation";
 			ps = c.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				orgList.add(getOrganization(rs.getString("kortnamn"), false));
 			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
+		} catch(SQLException e) {
+			logger.error("Problem getting all organizations", e);
+		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return orgList;
@@ -237,8 +233,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * @param password lösenordet för organisationen
 	 * @return true om lösenord och kortnamn är korrekt. Annars false
 	 */
-	public boolean Authenticate(String kortnamn, String password)
-	{
+	public boolean Authenticate(String kortnamn, String password) {
 		boolean authentic = false;
 		Connection c = null;
 		PreparedStatement ps = null;
@@ -256,7 +251,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Problem authenticating " + kortnamn, e);
 		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
@@ -267,8 +262,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * Returnerar en Map med alla organisationskortnamn och deras lösen
 	 * @return Map med lösenord
 	 */
-	public Map<String,String> getPasswords()
-	{
+	public Map<String,String> getPasswords() {
 		Map<String,String> passwordMap = new HashMap<String,String>();
 		Connection c = null;
 		PreparedStatement ps = null;
@@ -284,8 +278,8 @@ public class OrganizationManager extends DBBasedManagerImpl
 				passwordMap.put(kortnamn, password);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+			logger.error("Problem getting passwords", e);
+		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
 		return passwordMap;
@@ -295,8 +289,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * ändrar lösenord för organisationer
 	 * @param passwordMap Map med användare och lösenord.
 	 */
-	public void setPassword(Map<String,String> passwordMap)
-	{
+	public void setPassword(Map<String,String> passwordMap) {
 		Connection c = null;
 		PreparedStatement ps = null;
 		try {
@@ -311,8 +304,8 @@ public class OrganizationManager extends DBBasedManagerImpl
 			DBUtil.commit(c);
 		} catch (SQLException e) {
 			DBUtil.rollback(c);
-			e.printStackTrace();
-		}finally {
+			logger.error("Problem setting passwords", e);
+		} finally {
 			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
@@ -323,8 +316,7 @@ public class OrganizationManager extends DBBasedManagerImpl
 	 * @param kortnamn Kortnamnet för organisationen
 	 * @param namnSwe svenska namnet för organisationen
 	 */
-	public void addOrganization(String kortnamn, String namnSwe)
-	{
+	public void addOrganization(String kortnamn, String namnSwe) {
 		Connection c = null;
 		PreparedStatement ps = null;
 		try {
@@ -337,16 +329,15 @@ public class OrganizationManager extends DBBasedManagerImpl
 			ps.setString(++i, namnSwe);
 			ps.executeUpdate();
 			DBUtil.commit(c);
-		}catch(SQLException e) {
+		} catch(SQLException e) {
 			DBUtil.rollback(c);
-			e.printStackTrace();
-		}finally {
+			logger.error("Problem adding organization " + kortnamn + " - " + namnSwe, e);
+		} finally {
 			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
 
-	public void removeOrganization(String kortnamn)
-	{
+	public void removeOrganization(String kortnamn) {
 		Connection c = null;
 		PreparedStatement ps = null;
 		try {
@@ -356,9 +347,10 @@ public class OrganizationManager extends DBBasedManagerImpl
 			ps.setString(1, kortnamn);
 			ps.executeUpdate();
 			DBUtil.commit(c);
-		}catch(SQLException e) {
+		} catch(SQLException e) {
 			DBUtil.rollback(c);
-		}finally {
+			logger.error("Problem removing organization " + kortnamn, e);
+		} finally {
 			DBUtil.closeDBResources(null, ps, c);
 		}
 	}

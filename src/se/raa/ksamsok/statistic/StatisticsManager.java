@@ -186,8 +186,15 @@ public class StatisticsManager extends DBBasedManagerImpl {
 			if (logger.isDebugEnabled()) {
 				logger.debug("storing Logg Data: apikey=" + data.getAPIKey() + "; param=" + data.getParam() + "; query string=" + data.getQueryString());
 			}
-			if (!updateStatistic(data)) {
-				insertStatistic(data);
+			try {
+				if (!updateStatistic(data)) {
+					insertStatistic(data);
+				}
+			} catch (Exception e) {
+				logger.error("Error storing statistic data: " + e.getMessage());
+				if (logger.isDebugEnabled()) {
+					logger.debug("When storing statistic data", e);
+				}
 			}
 		}
 	}
@@ -197,7 +204,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	 * @param data data
 	 * @throws SQLException
 	 */
-	private void insertStatistic(StatisticLoggData data) {
+	private void insertStatistic(StatisticLoggData data) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Inserting new Database row");
 		}
@@ -216,7 +223,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 			DBUtil.commit(c);
 		} catch (SQLException e) {
 			DBUtil.rollback(c);
-			logger.error("When inserting statistic", e);
+			throw new Exception("When inserting statistic: " + e.getMessage(), e);
 		} finally {
 			DBUtil.closeDBResources(null, ps, c);
 		}
@@ -227,7 +234,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	 * @param data sökdata
 	 * @return sant om någon databasrad uppdaterades
 	 */
-	private boolean updateStatistic(StatisticLoggData data) {
+	private boolean updateStatistic(StatisticLoggData data)  throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Updating database row");
 		}
@@ -247,7 +254,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 			result = updated > 0;
 		} catch (SQLException e) {
 			DBUtil.rollback(c);
-			logger.error("When updating statistic", e);
+			throw new Exception("When updating statistic: " + e.getMessage(), e);
 		} finally {
 			DBUtil.closeDBResources(null, ps, c);
 		}

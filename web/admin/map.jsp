@@ -1,3 +1,4 @@
+<%@page import="java.util.Collections"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="org.apache.solr.common.SolrDocument"%>
 <%@page import="org.apache.solr.common.SolrDocumentList"%>
@@ -139,7 +140,10 @@
 				<select class="marginSmallLeft" name="serviceId" id="serviceId">
 					<option value="">[ingen begränsning]</option>
 					<%
-						for (HarvestService s: hsm.getServices()) {
+						if (services == null) {
+							services = Collections.emptyList();
+						}
+						for (HarvestService s: services) {
 					%>
 					<option value="<%= s.getId() %>"<%= s.getId().equals(limitToService) ? " selected" : ""%>><%= s.getId() %> - <%= s.getName() %></option>
 					<%
@@ -151,7 +155,7 @@
 		</div>
 <%
 	String message = "";
-	if (query.length() > 0 || useMapExtent || limitToService.length() > 0) {
+	if (query.length() > 0 || withCoordsOnly || useMapExtent || limitToService.length() > 0) {
 		try {
 			String qs = "";
 			SolrQuery q = new SolrQuery();

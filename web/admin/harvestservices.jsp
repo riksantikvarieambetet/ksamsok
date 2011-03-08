@@ -51,7 +51,10 @@
 		String sortByParam = request.getParameter("sortby");
 		final String sort = sortByParam != null ? sortByParam : "name"; // name är default
 		final boolean sortDesc = "desc".equals(request.getParameter("sortdir"));
-		List<HarvestService> services = hsm.getServices();
+		if (services == null) {
+			// ingen db
+			services = Collections.emptyList();
+		}
 		Collections.sort(services, new Comparator<HarvestService>() {
 			public int compare(HarvestService o1, HarvestService o2) {
 				Step step1 = hsm.getJobStep(o1);
@@ -114,37 +117,37 @@
 			</thead>
 			<tbody>
 <%
-	int i = 0;
-	String className;
-	Step lastStep = Step.IDLE;
-	for (HarvestService service: services) {
-   		String serviceId = service.getId();
-   		String cronstring = service.getCronString();
-   		Date lastHarvestDate = service.getLastHarvestDate();
-   		String lastHarvest;
-   		if (lastHarvestDate == null) {
-   			lastHarvest = "aldrig";
-   		} else {
-			lastHarvest = ContentHelper.formatDate(lastHarvestDate, true);
-   		}
-   		if (++i % 2 == 0) {
-   			className = "bgWhite";
-   		} else {
-   			className = "bgGrayUltraLight";
-   		}
-   		String colorStyle = "";
-   		Step step = hsm.getJobStep(service);
-   		if (step != Step.IDLE) {
-   			colorStyle = "color: orange;";
-   		}
-   		if (lastStep != Step.IDLE && step == Step.IDLE) {
+		int i = 0;
+		String className;
+		Step lastStep = Step.IDLE;
+		for (HarvestService service: services) {
+	   		String serviceId = service.getId();
+	   		String cronstring = service.getCronString();
+	   		Date lastHarvestDate = service.getLastHarvestDate();
+	   		String lastHarvest;
+	   		if (lastHarvestDate == null) {
+	   			lastHarvest = "aldrig";
+	   		} else {
+				lastHarvest = ContentHelper.formatDate(lastHarvestDate, true);
+	   		}
+	   		if (++i % 2 == 0) {
+	   			className = "bgWhite";
+	   		} else {
+	   			className = "bgGrayUltraLight";
+	   		}
+	   		String colorStyle = "";
+	   		Step step = hsm.getJobStep(service);
+	   		if (step != Step.IDLE) {
+	   			colorStyle = "color: orange;";
+	   		}
+	   		if (lastStep != Step.IDLE && step == Step.IDLE) {
 %>
 				<tr class="bgGrayLight">
 					<td colspan="7"><hr /></td>
 				</tr>
 <%   			
-   		}
-   		lastStep = step;
+	   		}
+	   		lastStep = step;
 %>
 				<tr class="<%= className %>">
 					<td><a href="editservice.jsp?serviceId=<%= java.net.URLEncoder.encode(serviceId, "ISO-8859-1") %>"><%= serviceId %></a></td>

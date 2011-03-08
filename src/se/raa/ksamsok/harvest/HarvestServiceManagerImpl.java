@@ -37,6 +37,9 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	private static final String TRIGGER_SUFFIX = "-trigger";
 	private static final String OPTIMIZE_TYPE = "_LUCENE_OPTIMIZE"; // TODO: ligger i db så kan inte bara ändras till solr
 
+	// hur ofta init-försök ska göras vid försenad init
+	private static final int INIT_RETRY_TIME_MS = 60000; // 1 min
+
 	// flagga för att påtvinga år på jobb när de schemaläggs i quartz för att förhindra att de körs på tex testmaskiner
 	// som använder en databas kopierad från drift
 	private boolean forceYear;
@@ -45,6 +48,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	protected HarvestRepositoryManager hrm;
 	protected StatusService ss;
 	protected String allowNoYearIfDbURLContains;
+
+	// hjälpvariabler för försenad init (db ej åtkomlig vid uppstart)
+	protected volatile long initLastFailedAt;
+	protected volatile boolean initOk = false;
+	protected Thread delayedInit;
 
 	protected HarvestServiceManagerImpl(DataSource ds, HarvestRepositoryManager hrm,
 			StatusService ss, String allowNoYearIfDbURLContains) {
@@ -55,65 +63,110 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		this.forceYear = true; // default
 	}
 
+	protected boolean checkInit() {
+		return initOk;
+	}
+
 	protected void init() throws Exception {
 		if (logger.isInfoEnabled()) {
 			logger.info("Starting HarvestServiceManager");
 		}
-		Connection c = null;
-		try {
-			c = ds.getConnection();
-			if (c != null) {
-				String dbUrl = c.getMetaData().getURL();
-				if (dbUrl != null) {
-					forceYear = !dbUrl.toLowerCase().contains(allowNoYearIfDbURLContains);
-					if (logger.isInfoEnabled()) {
-						logger.info("This has been determined to be a " +
-								(forceYear ? "development" : "production") + " instance based on " +
-								"the fact that the jdbc url:");
-						logger.info("'" + dbUrl + "' " + (forceYear ? "does not contain " : "contains ") +
-								"the configured string: '" + allowNoYearIfDbURLContains + "'");
-						logger.info("and the forcing of year when scheduling has thus " +
-								"been set to " + forceYear);
-					}
-				} else {
-					logger.warn("Cannot determine if this is a production or development instance since " +
-							"the jdbc url could not be read from database metadata - " +
-							"assuming development and forcing year when scheduling.");
-					forceYear = true;
-				}
-			}
-		} catch (Throwable t) {
-			logger.error("Error in datasource, can not retrieve connection", t);
-		} finally {
-			if (c != null) {
-				c.close();
-			}
-		}
-		SchedulerFactory schedFact = new StdSchedulerFactory();
-		scheduler = schedFact.getScheduler();
-		scheduler.getContext().put(SS_KEY, ss);
-		scheduler.getContext().put(HSM_KEY, this);
-		scheduler.getContext().put(HRM_KEY, hrm);
-		scheduler.start();
 
-		List<HarvestService> services = getServices();
-		for (HarvestService service: services) {
-			scheduleJob(service);
-		}
-		// skapa "tjänst" om den inte finns
-		HarvestService indexOptimizeService = getService(SERVICE_INDEX_OPTIMIZE);
-		if (indexOptimizeService != null) {
-			scheduleJob(indexOptimizeService);
-		} else {
-			HarvestService service = newServiceInstance();
-			service.setId(SERVICE_INDEX_OPTIMIZE);
-			service.setServiceType(OPTIMIZE_TYPE);
-			service.setName("Index optimizer");
-			service.setCronString("0 30 6 * * ? 2049");
-			createService(service);
+		try {
+			innerInit();
+		} catch (Throwable e) {
+			delayedInit = new Thread() {
+				public void run() {
+					logger.info("Starting delayed init thread since there were errors during init");
+					while (!initOk) {
+						try {
+							Thread.sleep(INIT_RETRY_TIME_MS);
+							logger.info("Attempting delayed init");
+							innerInit();
+							logger.info("Init has now been run successfully");
+						} catch (InterruptedException e) {
+							break;
+						} catch (Throwable t) {
+							logger.error("Problem doing delayed init, trying again in " +
+									INIT_RETRY_TIME_MS + " millis", t);
+						}
+					}
+					logger.info("Exiting delayed init thread");
+				};
+			};
+			delayedInit.setDaemon(true);
+			delayedInit.start();
 		}
 		if (logger.isInfoEnabled()) {
 			logger.info("HarvestServiceManager started");
+		}
+	}
+
+	protected void innerInit() throws Throwable {
+		synchronized (JOBGROUP_HARVESTERS) {
+			if (initOk) {
+				return;
+			}
+			Connection c = null;
+			try {
+				c = ds.getConnection();
+				if (c != null) {
+					String dbUrl = c.getMetaData().getURL();
+					if (dbUrl != null) {
+						forceYear = !dbUrl.toLowerCase().contains(allowNoYearIfDbURLContains);
+						if (logger.isInfoEnabled()) {
+							logger.info("This has been determined to be a " +
+									(forceYear ? "development" : "production") + " instance based on " +
+									"the fact that the jdbc url:");
+							logger.info("'" + dbUrl + "' " + (forceYear ? "does not contain " : "contains ") +
+									"the configured string: '" + allowNoYearIfDbURLContains + "'");
+							logger.info("and the forcing of year when scheduling has thus " +
+									"been set to " + forceYear);
+						}
+					} else {
+						logger.warn("Cannot determine if this is a production or development instance since " +
+								"the jdbc url could not be read from database metadata - " +
+								"assuming development and forcing year when scheduling.");
+						forceYear = true;
+					}
+				}
+				// hämta ut tidigt (från inner-metoder) för att få ev fel här innan scheduleraren skapats och startats
+				List<HarvestService> services = innerGetServices();
+				if (services == null) {
+					throw new Exception("No services from innerGetServices during init, db problem?");
+				}
+				HarvestService indexOptimizeService = innerGetService(SERVICE_INDEX_OPTIMIZE);
+
+				SchedulerFactory schedFact = new StdSchedulerFactory();
+				scheduler = schedFact.getScheduler();
+				scheduler.getContext().put(SS_KEY, ss);
+				scheduler.getContext().put(HSM_KEY, this);
+				scheduler.getContext().put(HRM_KEY, hrm);
+				scheduler.start();
+
+				for (HarvestService service: services) {
+					scheduleJob(service);
+				}
+				// skapa "tjänst" om den inte finns
+				if (indexOptimizeService != null) {
+					scheduleJob(indexOptimizeService);
+				} else {
+					HarvestService service = newServiceInstance();
+					service.setId(SERVICE_INDEX_OPTIMIZE);
+					service.setServiceType(OPTIMIZE_TYPE);
+					service.setName("Index optimizer");
+					service.setCronString("0 30 6 * * ? 2049");
+					createService(service);
+				}
+				initOk = true;
+				initLastFailedAt = 0;
+			} catch (Throwable t) {
+				initLastFailedAt = System.currentTimeMillis();
+				//logger.error("Error when starting harvest service manager", t);
+				throw t;
+			} finally {
+				DBUtil.closeDBResources(null, null, c);
+			}
 		}
 	}
 
@@ -122,21 +175,27 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		if (logger.isInfoEnabled()) {
 			logger.info("Stoppar HarvestServiceManager");
 		}
-		try {
-			for (HarvestService service: getServices()) {
-				Step s = ss.getStep(service);
-				if (s != Step.IDLE) {
-					if (logger.isDebugEnabled()) {
-						logger.debug("Destroy, request abort of running job for " + service.getId() +
-								" in step " + s);
-					}
-					ss.requestInterrupt(service);
-				}
+		if (delayedInit != null) {
+			if (delayedInit.isAlive()) {
+				delayedInit.interrupt();
 			}
-		} catch (Exception e) {
-			logger.error("Error when fetching services to abort", e);
+			delayedInit = null;
 		}
 		if (scheduler != null) {
+			try {
+				for (HarvestService service: getServices()) {
+					Step s = ss.getStep(service);
+					if (s != Step.IDLE) {
+						if (logger.isDebugEnabled()) {
+							logger.debug("Destroy, request abort of running job for " + service.getId() +
+									" in step " + s);
+						}
+						ss.requestInterrupt(service);
+					}
+				}
+			} catch (Exception e) {
+				logger.error("Error when fetching services to abort", e);
+			}
 			try {
 				if (scheduler.isStarted()) {
 					// stoppa nya jobb från att triggas
@@ -166,6 +225,17 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		if (logger.isInfoEnabled()) {
 			logger.info("HarvestServiceManager stoppad");
 		}
+	}
+
+	@Override
+	public boolean isSchedulerStarted() {
+		boolean result = false;
+		try {
+			result = scheduler != null && scheduler.isStarted();
+		} catch (SchedulerException e) {
+			logger.error("Problem checking scheduler running status", e);
+		}
+		return result;
 	}
 
 	@Override
@@ -213,6 +283,19 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	@Override
 	public HarvestService getService(String serviceId) throws Exception {
+		if (!checkInit()) {
+			return null;
+		}
+		return innerGetService(serviceId);
+	}
+
+	/**
+	 * Inre version av {@linkplain #getService(String)} som inte kontrollerar init-status.
+	 * @param serviceId id
+	 * @return tjänst eller null
+	 * @throws Exception
+	 */
+	protected HarvestService innerGetService(String serviceId) throws Exception {
 		HarvestService service = null;
 	    Connection c = null;
 	    PreparedStatement pst = null;
@@ -225,6 +308,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			if (rs.next()) {
 				service = newServiceInstance(rs);
 			}
+	    } catch (SQLException e) {
+	    	logger.error("Problem getting service " + serviceId + ": " + e.getMessage());
 	    } finally {
 	    	DBUtil.closeDBResources(rs, pst, c);
 	    }
@@ -233,19 +318,34 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	@Override
 	public List<HarvestService> getServices() throws Exception {
+	    if (!checkInit()) {
+	    	return null;
+	    }
+		return innerGetServices();
+	}
+
+	/**
+	 * Inre version av {@linkplain #getServices()} som inte kontrollerar init-status.
+	 * @return lista med tjänster, eller null vid databasproblem
+	 * @throws Exception
+	 */
+	protected List<HarvestService> innerGetServices() throws Exception {
 	    Connection c = null;
 	    PreparedStatement  pst = null;
 	    ResultSet rs = null;
-	    List<HarvestService> services = new ArrayList<HarvestService>();
+	    List<HarvestService> services = null;
 	    try {
 	    	c = ds.getConnection();
 	    	pst = c.prepareStatement("select * from harvestservices where serviceId <> '" +
 	    			SERVICE_INDEX_OPTIMIZE + "' order by name");
 	    	rs = pst.executeQuery();
+	    	services = new ArrayList<HarvestService>();
 	    	while (rs.next()) {
 	    		HarvestService service = newServiceInstance(rs);
 	    		services.add(service);
 	    	}
+	    } catch (SQLException e) {
+			logger.error("Problem getting services " + e.getMessage()); 
 		} finally {
 			DBUtil.closeDBResources(rs, pst, c);
 		}
@@ -523,6 +623,9 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	@SuppressWarnings("unchecked")
 	@Override
 	public String getJobStatus(HarvestService service) {
+		if (scheduler == null) {
+			return null;
+		}
 		CronTrigger t = null;
 		if (!SERVICE_INDEX_REINDEX.equals(service.getId())) {
 			JobDetail jd = null;
@@ -592,16 +695,18 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	@SuppressWarnings("unchecked")
 	private boolean isJobRunning(String serviceId) {
 		boolean isRunning = false;
-		try {
-			List<JobExecutionContext> running = scheduler.getCurrentlyExecutingJobs();
-			for (JobExecutionContext jce: running) {
-				if (serviceId.equals(jce.getJobDetail().getName())) {
-					isRunning = true;
-					break;
+		if (scheduler != null) {
+			try {
+				List<JobExecutionContext> running = scheduler.getCurrentlyExecutingJobs();
+				for (JobExecutionContext jce: running) {
+					if (serviceId.equals(jce.getJobDetail().getName())) {
+						isRunning = true;
+						break;
+					}
 				}
+			} catch (SchedulerException e) {
+				logger.warn("Error when fetching running job", e);
 			}
-		} catch (SchedulerException e) {
-			logger.warn("Error when fetching running job", e);
 		}
 		return isRunning;
 	}

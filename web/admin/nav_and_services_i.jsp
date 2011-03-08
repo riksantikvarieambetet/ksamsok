@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="se.raa.ksamsok.harvest.StatusService"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
@@ -12,6 +14,9 @@
 	final HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
 	final HarvestRepositoryManager hrm = ctx.getBean(HarvestRepositoryManager.class);
 	final StatusService statusService = ctx.getBean(StatusService.class);
+
+	List<HarvestService> services = hsm.getServices();
+	final boolean isSchedulerStarted = hsm.isSchedulerStarted();
 
 	// funkar bara ok i drift om man går mot www.kulturarvsdata.se så länge som proxyHost
 	//  inte är satt till utsidans hostnamn då solr inte är (eller ska vara i alla fall!) synligt utåt
@@ -36,4 +41,18 @@
 			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
 			<span class="servername"><%=request.getServerName() %></span>
 		</div>
+<%
+	if (!isSchedulerStarted) {
+%>
+		<hr>
+			<h2 class="red">Scheduleraren körs ej fn, troligen pga db-problem vid uppstart!</h2>
+<%
+	}
+	if (services == null) {
+%>
+		<hr>
+			<h2 class="red">Ingen kontakt med databasen fn!</h2>
+<%
+	}
+%>
 		<hr/>

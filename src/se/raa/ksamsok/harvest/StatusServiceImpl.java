@@ -21,6 +21,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
 
 public class StatusServiceImpl implements StatusService {
 
+	private static final Logger logger = Logger.getLogger(StatusService.class);
 
 	// gräns i antal dagar för hur länge loggmeddelanden sparas i databasen
 	static final int LOG_THRESHHOLD_DAYS = 21;
@@ -205,8 +206,7 @@ public class StatusServiceImpl implements StatusService {
 				} while (rs.next());
 			}
 		} catch (Exception e) {
-			Logger.getLogger(this.getClass()).error(
-					"Error when fetching old log messages for service " + service.getId(), e);
+			logger.error("Error when fetching old log messages for service " + service.getId(), e);
 			DBUtil.rollback(c);
 		} finally {
 			DBUtil.closeDBResources(rs, pst, c);
@@ -254,7 +254,7 @@ public class StatusServiceImpl implements StatusService {
 				} while (rs.next());
 			}
 		} catch (Exception e) {
-			Logger.getLogger(this.getClass()).error("Error when fetching old problem log messages", e);
+			logger.error("Error when fetching old problem log messages", e);
 			DBUtil.rollback(c);
 		} finally {
 			DBUtil.closeDBResources(rs, pst, c);
@@ -279,8 +279,7 @@ public class StatusServiceImpl implements StatusService {
 			pst.executeUpdate();
 			c.commit();
 		} catch (Exception e) {
-			Logger.getLogger(this.getClass()).error(
-					"Error when storing log messages for service " + service.getId() +
+			logger.error("Error when storing log messages for service " + service.getId() +
 					": " + message, e);
 			DBUtil.rollback(c);
 		} finally {
@@ -305,8 +304,7 @@ public class StatusServiceImpl implements StatusService {
 			pst.executeUpdate();
 			c.commit();
 		} catch (Exception e) {
-			Logger.getLogger(this.getClass()).error(
-					"Error when purging log messages for service " + service.getId(), e);
+			logger.error("Error when purging log messages for service " + service.getId(), e);
 			DBUtil.rollback(c);
 		} finally {
 			DBUtil.closeDBResources(null, pst, c);

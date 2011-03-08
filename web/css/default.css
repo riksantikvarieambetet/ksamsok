@@ -302,6 +302,10 @@ body
     color: #000;
 }
 
+.red {
+	color: red;
+}
+
 /* -----------------------------------------------
     COLORS STOP
 ----------------------------------------------- */
@@ -574,6 +578,7 @@ body
 	float: right;
 	color: white;
 	font-weight: bold;
+	margin-right: 5px;
 }
 
 #problemlog th

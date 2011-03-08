@@ -23,7 +23,7 @@ public interface HarvestServiceManager {
 	/**
 	 * Ger lista med alla användarskapade tjänster.
 	 * 
-	 * @return lista med tjänster
+	 * @return lista med tjänster, eller null vid databasproblem
 	 * @throws Exception
 	 */
 	List<HarvestService>getServices() throws Exception;
@@ -178,4 +178,11 @@ public interface HarvestServiceManager {
 	 * @return sant om år påtvingas
 	 */
 	boolean isForceYear();
+
+	/**
+	 * Ger om quartz-scheduleraren har startats. I princip är detta samma sak som
+	 * att kontrollera att init har lyckats.
+	 * @return sant om scheduleraren körs
+	 */
+	boolean isSchedulerStarted();
 }

@@ -26,7 +26,10 @@
 		<div style="float: left">
 <%
 			final Collator sweCol = Collator.getInstance(new Locale("sv", "SE"));
-			List<HarvestService> services = hsm.getServices();
+			// "trasig" db om null
+			if (services == null) {
+				services = Collections.emptyList();
+			}
 			Map<String, Long> indexCountMap = searchService.getIndexCounts();
 			Collections.sort(services, new Comparator<HarvestService>() {
 				public int compare(HarvestService o1, HarvestService o2) {

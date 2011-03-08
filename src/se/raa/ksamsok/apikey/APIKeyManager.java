@@ -12,11 +12,15 @@ import java.util.Vector;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
+
 import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
 import se.raa.ksamsok.statistic.APIKey;
 
 public class APIKeyManager extends DBBasedManagerImpl {
+
+	private static final Logger logger = Logger.getLogger(APIKeyManager.class);
 
 	// ladda om cache med detta mellanrum (lazily)
 	private static final long UPDATE_INTERVAL_MILLIS = 10 * 60 * 1000; // 10 min
@@ -24,6 +28,8 @@ public class APIKeyManager extends DBBasedManagerImpl {
 	// behåll en cache i minnet (obs volatile för att vara trådsäker)
 	private volatile Set<String> currentApiKeys = Collections.emptySet();
 	private volatile long lastUpdateTime;
+
+	private volatile long lastFailedAt = 0;
 
 	public APIKeyManager(DataSource ds) {
 		super(ds);
@@ -37,7 +43,8 @@ public class APIKeyManager extends DBBasedManagerImpl {
 		if ((System.currentTimeMillis() - lastUpdateTime) > UPDATE_INTERVAL_MILLIS) {
 			reloadAPIKeys();
 		}
-		return currentApiKeys.contains(apiKey);
+		// kolla mappen, men tillåt allt om vi startat utan databas (inte 100% sant, men tillräckligt bra)
+		return currentApiKeys.contains(apiKey) || (lastFailedAt > 0 && currentApiKeys.size() == 0);
 	}
 
 	public List<APIKey> getAPIKeys() {
@@ -58,7 +65,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			}
 		} catch (SQLException e) {
 			DBUtil.rollback(c);
-			e.printStackTrace();
+			logger.error("Problem getting api keyes", e);
 		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
@@ -86,7 +93,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			reloadAPIKeys();
 		} catch(SQLException e) {
 			DBUtil.rollback(c);
-			e.printStackTrace();
+			logger.error("Problem removing api key " + apiKey, e);
 		} finally {
 			DBUtil.closeDBResources(null, ps, c);
 		}
@@ -108,7 +115,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			reloadAPIKeys();
 		} catch(SQLException e) {
 			DBUtil.rollback(c);
-			e.printStackTrace();
+			logger.error("Problem adding api key " + apiKey + " (owner: " + owner + ")", e);
 		} finally {
 			DBUtil.closeDBResources(null, ps, c);
 		}
@@ -129,10 +136,13 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			ps.setString(1, apiKey);
 			ps.executeUpdate();
 			DBUtil.commit(c);
-		} catch(SQLException e) {
+		} catch(Exception e) {
 			//logger.error("error. Doing rollback");
 			DBUtil.rollback(c);
-			e.printStackTrace();
+			logger.error("Error updating usage: " + e.getMessage());
+			if (logger.isDebugEnabled()) {
+				logger.debug("Error updating usage", e);
+			}
 		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
@@ -156,8 +166,15 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			}
 			// sätt om den interna nyckelmängden
 			currentApiKeys = apiKeys;
-		} catch(SQLException e) {
-			e.printStackTrace();
+			// nollställ misslyckande-tid
+			lastFailedAt = 0;
+		} catch (Exception e) {
+			// sätt misslyckande-tid
+			lastFailedAt = lastUpdateTime;
+			logger.error("Error reloading api keys: " + e.getMessage());
+			if (logger.isDebugEnabled()) {
+				logger.debug("Error reloading api keys", e);
+			}
 		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}

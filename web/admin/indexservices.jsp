@@ -17,13 +17,13 @@
 <%
 		String indexInfoErrMess = null;
 		NamedList<Object> indexInfo = null;
+		try {
+			indexInfo = searchService.getIndexInfo();
+		} catch (SolrServerException e) {
+			indexInfoErrMess = "Fel vid solr-anrop: " + e.getMessage() + (e.getCause() != null ? " - " + e.getCause().getMessage() : "");
+		}
 		HarvestService service = hsm.getService(HarvestServiceManager.SERVICE_INDEX_OPTIMIZE);
 		if (service != null) {
-			try {
-				indexInfo = searchService.getIndexInfo();
-			} catch (SolrServerException e) {
-				indexInfoErrMess = "Fel vid solr-anrop: " + e.getMessage() + (e.getCause() != null ? " - " + e.getCause().getMessage() : "");
-			}
 			String serviceId = service.getId();
 			String cronstring = service.getCronString();
 	   		Date lastHarvestDate = service.getLastHarvestDate();
