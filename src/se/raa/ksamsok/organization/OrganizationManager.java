@@ -219,8 +219,11 @@ public class OrganizationManager extends DBBasedManagerImpl {
 			while (rs.next()) {
 				orgList.add(getOrganization(rs.getString("kortnamn"), false));
 			}
-		} catch(SQLException e) {
-			logger.error("Problem getting all organizations", e);
+		} catch (SQLException e) {
+			logger.error("Problem getting all organizations: " + e.getMessage());
+			if (logger.isDebugEnabled()) {
+				logger.debug("Problem getting all organizations", e);
+			}
 		} finally {
 			DBUtil.closeDBResources(rs, ps, c);
 		}
