@@ -75,6 +75,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		try {
 			innerInit();
 		} catch (Throwable e) {
+			logger.error("Error during initial init", e);
 			delayedInit = new Thread() {
 				public void run() {
 					logger.info("Starting delayed init thread since there were errors during init");
