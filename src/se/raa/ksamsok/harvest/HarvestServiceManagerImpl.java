@@ -664,7 +664,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		String extraInfo = "";
 		if (t != null && !t.getCronExpression().equals(service.getCronString())) {
 			if (forceYear && !SERVICE_INDEX_OPTIMIZE.equals(service.getId())) {
-				extraInfo = " (NOTE: actual cron string is " + t.getCronExpression() + ") ";
+				extraInfo = " (NOTE: scheduled with " + t.getCronExpression() + ") ";
 			} else {
 				return isRunning + "Not the same execution schema!";
 			}
