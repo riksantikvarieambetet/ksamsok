@@ -5,19 +5,24 @@ Utvecklat med java 1.6, tomcat 6.0 och FireFox (admingränssnittet fungerar mindr
 ** Installation
 
 Installeras normalt med rpm och då sker allt automatiskt och applikationen konfigureras
-till att gå mot driftdatabasen.
-Rpm skapas med: "ant RAA-RPM"
-Kräver en ksamsok-solr i samma webapp, se readme för det projektet.
+till att gå mot driftdatabasen. Stöd finns för att bygga master- och slav-instanser (vilket också
+gäller för ksamsok-solr). Skillnad mellan master och slav i modulen ksamsok är att admin-gui:t inte
+finns i en slav-instans.
+Rpm skapas med: "ant RAA-RPM" (default är att bygga en master)
+OBS! Kräver en ksamsok-solr i samma webapp, se readme för det projektet för relaterade utv-inställningar.
 
-** Manuell installation
+** Manuell installation för utv
 
 * konfigurera datakälla för applikationen jdbc/harvestdb
 
-För utv mot oracle, se rpm/contextTest.xml. För derby, ladda ner derby från http://db.apache.org/derby/
+För utv mot postgres och testdb, se rpm/contextTest.xml, kopiera in postgresql-*.jar till tomcat/lib från
+ksamsok/lib och hoppa över steg ner till tomcat-användar-steget.
+
+För derby, ladda ner derby från http://db.apache.org/derby/
 och starta en nätverksserver (eller ändra i exempel nedan till fil) och kopiera in derbyclient.jar till
 tomcat/lib. Att köra med nätverksserver gör det enklare att hantera databasen och att titta på
 datat medan applikationen kör.
-De två databaser som stöds fn är oracle och derby.
+De databaser som stöds fn är postgres/postgis, oracle och derby (notera att derby-stödet nog ej är 100% uppdaterat).
 
 Ex i context.xml för en derby i network-mode:
     <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
@@ -31,12 +36,13 @@ Ex i context.xml för en derby i network-mode:
 		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
 		defaultAutoCommit="false" />
 
-Jdbc-driver för rätt databastyp måste in i tomcat/lib. För Oracle behöver man tex jbdc-jar och även spatial-utökningar
-för att kunna lagra spatiala data (sdoapi, sdoutl och Oracles xmlparser). Javadatabasen Derby/JavaDB stödjer inte
+Jdbc-driver för rätt databastyp måste in i tomcat/lib. För postgres behövs tex postgresql-*.jar (lib) och
+för Oracle behöver man tex jbdc-jar och även spatial-utökningar för att kunna lagra spatiala data
+(sdoapi, sdoutl och Oracles xmlparser). Javadatabasen Derby/JavaDB stödjer inte
 spatiala data men med klassen se.raa.ksamsok.spatial.VerbatimGMLWriter kan gml:en skrivas ner
 som en clob om man vill tex för debug, se nedan.
 
-* Skapa tabeller enligt sql i sql/repo.sql för datakällan (för derby kan identity-kolumner användas
+* Skapa ev tabeller enligt sql i sql/repo.sql för datakällan (för derby kan identity-kolumner användas
   istället för sekvenser och för derby vill man också skicka med "create=true" i jdbc-url:en när man
   kopplar upp sig med sitt sql-verktyg för att skapa databasen/schemat automatiskt)
 
@@ -45,10 +51,11 @@ som en clob om man vill tex för debug, se nedan.
  En skörd hämtas först till en temporärfil och flyttas sen till spool-katalogen så att den kan
  återanvändas om jobbet går fel vid senare steg, tex lagring i databas
  Om ej pekas ut kommer (default) tempdir att användas, typiskt tomcat/temp.
+ Behöver normalt sett inte ändras.
 
-* Ange om inte datakällan stödjer spatialt data (tex för derby) med -Dsamsok.spatial=false
+* Ange ev om inte datakällan stödjer spatialt data (tex för derby) med -Dsamsok.spatial=false
  Default är sant och en klass för att hantera spatialdata kommer att försöka härledas
- fram utfrån klassen på uppkopplingen - fn stöds bara oracle
+ fram utfrån klassen på uppkopplingen - fn stöds postgresql/postgis och oracle och för dessa behövs inget ändras
 
 * Ange ev egen klass för att hantera spatialt data med -Dsamsok.spatial.class=xx.yy.Z
  klassen måste implementera interfacet se.raa.ksamsok.spatial.GMLDBWriter och ha en publik
@@ -58,16 +65,18 @@ som en clob om man vill tex för debug, se nedan.
  se.raa.ksamsok.spatial.VerbatimGMLWriter stödjer att geometriernas gml skrivs ner som en
  clob i geometritabellen så om den klassen används måste databaskolumntypen för kolumnen
  geometry vara clob.
+ Behövs normalt sett inte ändras.
 
 * Lägg in användare i tomcat med rollen ksamsok för att kunna köra admin-gränssnittet. Görs
   enklast i tomcat-users.xml, se rpm/tomcat-users.xml.
 
-* Kör "ant war" och kopiera war-fil till tomcat/webapps (eller ant rpm för drift på raä)
+* Kör "ant war" och kopiera war-fil till tomcat/webapps. Skapar normalt en master-war, vilket oftast
+ är det man vill ha. För mer info se build.xml.
 
 ** Användning
 
-Ett grundläggande (fult och ej stylat) gränssnitt finns för att hantera tjänster, uppdatera
-lucene-index och sökning. Det nås på http://[HOST][:PORT]/ksamsok/admin/
+Ett grundläggande gränssnitt finns för att hantera tjänster, uppdatera
+solr-index och sökning. Det nås på http://[HOST][:PORT]/ksamsok/admin/
 
 Tjänster kan läggas upp i gränssnittet för skörd med http eller via en
 filläsning. En fil måste ha samma syntax som en hämtning mha OAIPMHHarvestJob.getRecords()
@@ -79,7 +88,7 @@ Ex
 Tjänsterna skördas enligt den periodicitet som anges i cron-strängen. Om kolumnen jobbstatus
 ej visar "OK" är det troligt att cron-strängen ej är korrekt.
 Stöd finns också för att köra en tjänst interaktivt, indexera om en tjänst (innebär att uppdatera
-lucene-indexet för den tjänsten - förändrar ej det skördade datat) eller att indexera om alla tjänster.
+solr-indexet för den tjänsten - förändrar ej det skördade datat) eller att indexera om alla tjänster.
 Indexoptimering kan också schemaläggas.
 
 Ett simpelt sökgränssnitt finns vilket söker i fältet "text" (fritext) och visar
@@ -88,8 +97,9 @@ träffarna som xml och på karta om de har koordinater.
 Admin-delen av centralnoden skyddas och användare måste ha rollen "ksamsok" för att få
 använda den vilket måste sättas upp i tomcat-konf på vanligt sätt.
 
-SRU-gränssnittet nås genom URL:en http://[HOST][:PORT]/ksamsok/sru och i svaret från den URL:en
-finns info om vilka index som stödjs mm genom en "SRU explain".
+SRU-gränssnittet (som nu är deprecerat) nås genom URL:en http://[HOST][:PORT]/ksamsok/sru och i svaret från den URL:en
+finns info om vilka index som stödjs mm genom en "SRU explain". Se istället www.ksamsok.se för information om API, tex
+http://[HOST][:PORT]/ksamsok/api?method=search&query=text=bil&x-api=test.
 
 Uppslagning ("resolve") av URI/URL till html, museumdat och rdf stödjs också. Genom att anropa
 http://[HOST][:PORT]/ksamsok/[INSTITUTION]/[TJÄNST][/FORMAT]/[ID] kan man antingen i fallet
