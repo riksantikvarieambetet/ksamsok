@@ -145,8 +145,10 @@ public class SearchServiceImpl implements SearchService {
 		query.addFacetField(ContentHelper.I_IX_SERVICE);
 		QueryResponse qr = query(query);
 		for (FacetField ff: qr.getFacetFields()) {
-			for (Count value: ff.getValues()) {
-				countMap.put(value.getName(), value.getCount());
+			if (ff.getValues() != null) {
+				for (Count value: ff.getValues()) {
+					countMap.put(value.getName(), value.getCount());
+				}
 			}
 		}
 		return countMap;
