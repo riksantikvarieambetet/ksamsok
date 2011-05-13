@@ -15,20 +15,20 @@ public class GetServiceOrganizationTest extends TestCase
 	public void testPerformMethod()
 	{
 		StringWriter sw = new StringWriter();
-		PrintWriter writer = new PrintWriter(sw);
-		APIMethod m = new GetServiceOrganization(writer, "all");
-		try {
-			m.performMethod();
-		} catch (MissingParameterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadParameterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DiagnosticException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		PrintWriter writer = new PrintWriter(sw);
+//		APIMethod m = new GetServiceOrganization(writer, "all");
+//		try {
+//			m.performMethod();
+//		} catch (MissingParameterException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (BadParameterException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (DiagnosticException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		System.out.println(sw.toString());
 	}
 }
