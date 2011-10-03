@@ -63,11 +63,22 @@ public class CQL2Solr {
 			String right = makeQuery(cbn.right, left);
 
 			if (node instanceof CQLAndNode) {
-				// TODO: blir detta rätt i alla fall som kan uppstå?
-				// om höger träd är en or lägger vi en parentes runt
-				boolean rIsOr = (cbn.right instanceof CQLOrNode);
-				query = left + " AND " + (rIsOr ? "(" + right + ")" : right);
+				// kapsla in ev or-noder för and
+				if ((cbn.left instanceof CQLOrNode)) {
+					left = "(" + left + ")";
+				}
+				if (cbn.right instanceof CQLOrNode) {
+					right = "(" + right + ")";
+				}
+				query = left + " AND " + right;
 			} else if (node instanceof CQLNotNode) {
+				// kapsla in ev or-noder för not
+				if ((cbn.left instanceof CQLOrNode)) {
+					left = "(" + left + ")";
+				}
+				if (cbn.right instanceof CQLOrNode) {
+					right = "(" + right + ")";
+				}
 				query = left + " NOT " + right;
 			} else if (node instanceof CQLOrNode) {
 				query = left + " OR " + right;
