@@ -31,6 +31,9 @@ public class GetRelations extends AbstractAPIMethod {
 
 	private static final Logger logger = Logger.getLogger(GetRelations.class);
 
+	// om och hur sameAs ska hanteras
+	private enum InferSameAs { yes, no, sourceOnly, targetsOnly };
+
 	// dubbelriktade
 	private static final String HAS_PART = "hasPart";
 	private static final String IS_PART_OF = "isPartOf";
@@ -64,6 +67,8 @@ public class GetRelations extends AbstractAPIMethod {
 	public static final String IDENTIFIER_PARAMETER = "objectId";
 	/** Parameternamn för max antal träffar */
 	public static final String MAXCOUNT_PARAMETER = "maxCount";
+	/** Parameternamn för hantering av sameAs-relationer */
+	public static final String INFERSAMEAS_PARAMETER = "inferSameAs";
 	/** Parametervärde för att ange alla relationer */
 	public static final String RELATION_ALL = "all";
 
@@ -76,6 +81,7 @@ public class GetRelations extends AbstractAPIMethod {
 	protected String relation;
 	protected String partialIdentifier;
 	protected int maxCount;
+	protected InferSameAs inferSameAs;
 	// hjälpvariabler
 	protected boolean isAll;
 
@@ -156,6 +162,18 @@ public class GetRelations extends AbstractAPIMethod {
 		} else {
 			maxCount = -1;
 		}
+		String inferSameAsStr = getOptionalParameterValue(INFERSAMEAS_PARAMETER, "GetRelations.extractParameters", null, false);
+		if (inferSameAsStr != null) {
+			try {
+				inferSameAs = InferSameAs.valueOf(inferSameAsStr);
+			} catch (Exception e) {
+				throw new BadParameterException("Värdet för parametern " + INFERSAMEAS_PARAMETER + " är ogiltigt",
+						"GetRelations.extractParameters", null, false);
+			}
+		} else {
+			inferSameAs = InferSameAs.no;
+		}
+
 	}
 
 	@Override
@@ -166,21 +184,67 @@ public class GetRelations extends AbstractAPIMethod {
 		}
 		SearchService searchService = serviceProvider.getSearchService();
 		final String uri = URI_PREFIX + partialIdentifier;
+		Set<String> itemUris = new HashSet<String>();
+		itemUris.add(uri);
+
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
 		SolrQuery query = new SolrQuery();
 		query.setRows(Integer.MAX_VALUE); // TODO: kan det bli för många?
+
+		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
+		// algoritmen ser fn ut så här - inferSameAs styr steg 1 och 3, default är att inte utföra dem
+		// 1. hämta ev post för att få tag på postens sameAs
+		// 2. sök fram källpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
+		// 3. hämta ev de relaterades sameAs och lägg till dessa som relationer
+
 		// hämta uri och relationer
 		query.addField(ContentHelper.I_IX_RELATIONS);
 		query.addField(ContentHelper.IX_ITEMID);
-		// sök fram denna post och alla som har relation till denna post, sameAs hanteras ej annorlunda än övriga
-		query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri + " OR " + ContentHelper.IX_RELURI + ":"+ escapedUri);
 		try {
-			QueryResponse qr = searchService.query(query);
-			SolrDocumentList docs = qr.getResults();
+			QueryResponse qr;
+			SolrDocumentList docs;
+			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
+				// hämta andra poster som är samma som denna och lägg till dem som "källposter"
+				query.setQuery(ContentHelper.IX_ITEMID + ":"+ escapedUri);
+				qr = searchService.query(query);
+				docs = qr.getResults();
+				for (SolrDocument doc: docs) {
+					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
+					Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
+					if (values != null) {
+						for (Object value: values) {
+							String parts[] = ((String) value).split("\\|");
+							if (parts.length != 2) {
+								logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
+								continue;
+							}
+							String typePart = parts[0];
+							String uriPart = parts[1];
+							if (SAME_AS.equals(typePart)) {
+								itemUris.add(uriPart);
+							}
+						}
+					}
+				}
+			}
+			// bygg söksträng mh källposten/alla källposter
+			StringBuilder searchStr = new StringBuilder();
+			for (String itemId: itemUris) {
+				String escapedItemId = ClientUtils.escapeQueryChars(itemId);
+				if (searchStr.length() > 0) {
+					searchStr.append(" OR ");
+				}
+				searchStr.append(ContentHelper.IX_ITEMID + ":" + escapedItemId + " OR " + ContentHelper.IX_RELURI + ":"+ escapedItemId);
+			}
+			// sök fram källposten/-erna och alla som har relation till den/dem
+			query.setQuery(searchStr.toString());
+
+			qr = searchService.query(query);
+			docs = qr.getResults();
 			relations = new HashSet<Relation>();
 			for (SolrDocument doc: docs) {
 				String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
-				boolean isSourceDoc = uri.equals(itemId);
+				boolean isSourceDoc = itemUris.contains(itemId);
 				Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
 				if (values != null) {
 					for (Object value: values) {
@@ -193,7 +257,7 @@ public class GetRelations extends AbstractAPIMethod {
 						String typePart = parts[0];
 						String uriPart = parts[1];
 						if (!isSourceDoc) {
-							if (!uri.equals(uriPart)) {
+							if (!itemUris.contains(uriPart)) {
 								// inte för aktuellt objekt
 								continue;
 							}
@@ -239,6 +303,28 @@ public class GetRelations extends AbstractAPIMethod {
 					}
 				}
 			}
+			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.targetsOnly) {
+				// sökning på same as för träffarnas uri:er och skapa relation till dessa också
+				query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
+				for (Relation rel: new HashSet<Relation>(relations)) {
+					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ ClientUtils.escapeQueryChars(rel.getTargetUri()));
+					qr = searchService.query(query);
+					docs = qr.getResults();
+					for (SolrDocument doc: docs) {
+						String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
+						// ta inte med min uri
+						if (itemUris.contains(itemId)) {
+							continue;
+						}
+						if (!relations.add(new Relation(rel.getRelationType(), itemId, rel.getSource(), rel.getOriginalRelationType()))) {
+							if (logger.isDebugEnabled()) {
+								logger.debug("duplicate rel (from same as) " + rel);
+							}
+						}
+					}
+				}
+			}
+
 			// postfilter vid sökning på specifik relation
 			if (!isAll) {
 				int matches = 0;
