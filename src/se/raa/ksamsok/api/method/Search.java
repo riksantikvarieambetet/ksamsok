@@ -226,7 +226,7 @@ public class Search extends AbstractSearchMethod {
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.createQuery", e.getMessage(), true);
 		} catch (CQLParseException e) {
-			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen på att query-strängen inte fäljer CQL syntax. Var god kontrollera söksträngen eller kontakta systemadministratör för söksystemet du använder", "Search.createQuery", e.getMessage(), false);
+			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen på att query-strängen inte följer CQL syntax. Var god kontrollera söksträngen eller kontakta systemadministratör för söksystemet du använder", "Search.createQuery", e.getMessage(), false);
 		}
 		return query;
 	}
