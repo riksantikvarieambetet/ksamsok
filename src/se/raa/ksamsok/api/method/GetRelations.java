@@ -189,7 +189,7 @@ public class GetRelations extends AbstractAPIMethod {
 
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
 		SolrQuery query = new SolrQuery();
-		query.setRows(Integer.MAX_VALUE); // TODO: kan det bli för många?
+		query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
 
 		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
 		// algoritmen ser fn ut så här - inferSameAs styr steg 1 och 3, default är att inte utföra dem
