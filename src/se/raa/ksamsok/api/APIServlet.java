@@ -77,25 +77,29 @@ public class APIServlet extends HttpServlet {
 		Map<String,String> reqParams = null;
 		APIMethod method = null;
 		PrintWriter writer = resp.getWriter();
-		String stylesheet = null;
-		String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
-		if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
-		if (apiKey != null && keyManager.contains(apiKey)) {
-			try {
-				reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-				stylesheet = reqParams.get("stylesheet");
-				method = apiMethodFactory.getAPIMethod(reqParams, writer);
-				method.performMethod();
-				keyManager.updateUsage(apiKey);
-			} catch (APIException e) {
-				diagnostic(writer, method, stylesheet, e);
-			} catch (Exception e) {
-				logger.error("In doGet", e);
+		try {
+			String stylesheet = null;
+			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
+			if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
+			if (apiKey != null && keyManager.contains(apiKey)) {
+				try {
+					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+					stylesheet = reqParams.get("stylesheet");
+					method = apiMethodFactory.getAPIMethod(reqParams, writer);
+					method.performMethod();
+					keyManager.updateUsage(apiKey);
+				} catch (APIException e) {
+					diagnostic(writer, method, stylesheet, e);
+				} catch (Exception e) {
+					logger.error("In doGet", e);
+				}
+			} else if (apiKey == null){
+				diagnostic(writer, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
+			} else {
+				diagnostic(writer, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 			}
-		} else if (apiKey == null){
-			diagnostic(writer, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
-		} else {
-			diagnostic(writer, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
+		} finally {
+			writer.close();
 		}
 	}
 

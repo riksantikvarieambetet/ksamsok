@@ -48,8 +48,10 @@ public abstract class AbstractAPIMethod implements APIMethod {
 		performMethodLogic();
 		// skriv huvud
 		writeHead();
+		writer.flush();
 		// skriv data
 		writeResult();
+		writer.flush();
 		// skriv fot
 		writeFoot();
 	}

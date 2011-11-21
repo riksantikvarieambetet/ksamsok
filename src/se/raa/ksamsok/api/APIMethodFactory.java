@@ -13,6 +13,7 @@ import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
 import se.raa.ksamsok.api.method.Facet;
 import se.raa.ksamsok.api.method.GetGeoResource;
+import se.raa.ksamsok.api.method.GetRelationTypes;
 import se.raa.ksamsok.api.method.GetRelations;
 import se.raa.ksamsok.api.method.GetServiceOrganization;
 import se.raa.ksamsok.api.method.RSS;
@@ -102,6 +103,8 @@ public class APIMethodFactory implements APIServiceProvider {
 			m = new GetRelations(this, writer, params);
 		} else if (method.equals(GetGeoResource.METHOD_NAME)) {
 			m = new GetGeoResource(this, writer, params);
+		} else if (method.equals(GetRelationTypes.METHOD_NAME)) {
+			m = new GetRelationTypes(this, writer, params);
 		} else {
 			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod", "felaktig metod", false);
 		}
