@@ -28,8 +28,30 @@ import ORG.oclc.oai.harvester2.verb.ListSets;
  */
 public class OAIPMHHarvestJob extends HarvestJob {
 
+	// provar nåt snällare för Tekniska Museets skull:
+	private static final int MAX_TRIES = 6;
+	private static final int WAIT_SECS = 100;
+
+	/** max antal försök */
+	protected final int maxTries;
+	/** sekunder att vänta mellan varje försök */
+	protected final int waitSecs;
+
+	/**
+	 * Skapa ny instans med default antal hämtningsförsök och väntetid.
+	 */
 	public OAIPMHHarvestJob() {
-		super();
+		this(MAX_TRIES, WAIT_SECS);
+	}
+
+	/**
+	 * Skapa med specifika värden (främst för test för att slippa vänta)
+	 * @param maxTries max antal försök
+	 * @param waitSecs sekunder att vänta mellan varje försök
+	 */
+	OAIPMHHarvestJob(int maxTries, int waitSecs) {
+		this.maxTries = maxTries;
+		this.waitSecs = waitSecs;
 	}
 
 	@Override
@@ -265,11 +287,6 @@ public class OAIPMHHarvestJob extends HarvestJob {
     	// TODO: bättre konstanter/värden
     	//       skilj på connect/error?
     	//       olika värden per tjänst? smh/va är helt tillståndslösa, oiacat inte 
-    	//final int maxTries = 3;
-    	//final int waitSecs = 120;
-		//provar nåt snällare för Tekniska Museets skull:
-    	final int maxTries = 6;
-    	final int waitSecs = 100;
 		if (tryNum >= maxTries) {
 			throw new Exception("Problem when contacting the service, surrendered after " + maxTries + " tries" + (resumptionToken != null ? " with token: " +
 					resumptionToken : ""), ioe);

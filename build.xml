@@ -37,6 +37,13 @@
             </fileset>
         </path>
 
+        <path id="project.test.classpath">
+            <fileset dir="${basedir}/test/lib">
+                <include name="*.jar"/>
+            </fileset>
+            <path refid="project.classpath" />
+        </path>
+
         <fileset id="deploy.jars" dir="${project.src.lib.dir}">
             <patternset id="deploy.jars.pattern" />
         </fileset>
@@ -66,7 +73,8 @@
             classpathref="project.classpath"
             debug="${javac.debug}" 
             optimize="${javac.optimize}"
-            encoding="ISO-8859-1">
+            encoding="ISO-8859-1"
+        	includeantruntime="false">
             <patternset>
                 <include name="**/*.java"/>
             	<exclude name="**/*Test.java"/>
@@ -84,6 +92,7 @@
 			<patternset>
 				<include name="**/*.class"/>
 				<include name="**/*.xsd"/>
+				<exclude name="test" />
 			</patternset>
 			<patternset refid="conf.files"/>
 		</jar>
@@ -242,4 +251,43 @@
 	<!-- <target name="RAA-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
 	</target> -->
 
+	<target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
+		<mkdir dir="${project.build.dir}/test"/>
+		<mkdir dir="${project.build.dir}/test/reports"/>
+        <javac srcdir="${basedir}/test/src"
+            destdir="${project.build.dir}/test"
+            debug="${javac.debug}" 
+            optimize="${javac.optimize}"
+            encoding="ISO-8859-1"
+        	includeantruntime="false">
+        	<classpath>
+        		<path refid="project.test.classpath" />
+        		<pathelement location="${project.build.dir}" />
+        	</classpath>
+            <patternset>
+                <include name="**/*.java"/>
+            </patternset>
+
+        </javac>
+
+		<junit printsummary="no">
+			<classpath>
+				<path refid="project.test.classpath" />
+				<pathelement location="${project.build.dir}/test" />
+				<pathelement location="${project.build.dir}/lib/${jar.name}" />
+			</classpath>
+			<formatter type="xml"/>
+			<batchtest todir="build/test/reports">
+				<fileset dir="${basedir}/test/src">
+					<include name="**/*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="build/test/reports" >
+		  <fileset dir="build/test/reports">
+		    <include name="TEST-*.xml"/>
+		  </fileset>
+		  <report format="frames" todir="build/test/htmlreport" />
+		</junitreport>
+	</target>
 </project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/ContextType">
+
+	<ContextType rdf:ID="create">
+		<contextLabel>Tillverkad</contextLabel>
+		<description>Omfattar tillverkning, skapande etc. Tillverkad kan ersättas med Skapad, Skissad, Uppfunnen, Konstruerad, Modifierad eller Färdigställd.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="use">
+		<contextLabel>Brukad</contextLabel>
+		<description>Omfattar bruk, aktivitet, ändringar etc. Brukad kan ersättas med Restaurerad, Boplatsaktivitet, Gravaktivitet eller Annan aktivitet.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="destroyed">
+		<contextLabel>Förstörd</contextLabel>
+		<description>Omfattar händelser som avslutar objektets livscykel. Förstörd kan ersättas med Förlorad (inkluderar borttappad och stulen) eller Avslutad.</description>
+	</ContextType>
+
+</rdf:RDF>

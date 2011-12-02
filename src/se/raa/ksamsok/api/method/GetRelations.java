@@ -119,6 +119,25 @@ public class GetRelations extends AbstractAPIMethod {
 		map.put(HAS_OBJECT_EXAMPLE, IS_OBJECT_EXAMPLE_FOR);
 		map.put(IS_OBJECT_EXAMPLE_FOR, HAS_OBJECT_EXAMPLE);
 
+		// bio
+		map.put(ContentHelper.IX_FATHER, ContentHelper.IX_CHILD);
+		map.put(ContentHelper.IX_MOTHER, ContentHelper.IX_CHILD);
+		map.put(ContentHelper.IX_CHILD, ContentHelper.IX_PARENT);
+		map.put(ContentHelper.IX_PARENT, ContentHelper.IX_CHILD);
+
+		// cidoc
+		map.put(ContentHelper.IX_HASFORMERORCURRENTOWNER, ContentHelper.IX_ISFORMERORCURRENTOWNEROF);
+		map.put(ContentHelper.IX_ISFORMERORCURRENTOWNEROF, ContentHelper.IX_HASFORMERORCURRENTOWNER);
+
+		map.put(ContentHelper.IX_HASFORMERORCURRENTKEEPER, ContentHelper.IX_ISFORMERORCURRENTKEEPEROF);
+		map.put(ContentHelper.IX_ISFORMERORCURRENTKEEPEROF, ContentHelper.IX_HASFORMERORCURRENTKEEPER);
+
+		map.put(ContentHelper.IX_HASCREATED, ContentHelper.IX_WASCREATEDBY);
+		map.put(ContentHelper.IX_WASCREATEDBY, ContentHelper.IX_HASCREATED);
+
+		map.put(ContentHelper.IX_HASRIGHTON, ContentHelper.IX_RIGHTHELDBY);
+		map.put(ContentHelper.IX_RIGHTHELDBY, ContentHelper.IX_HASRIGHTON);
+
 		// enkelriktade
 		map.put(HAS_BEEN_USED_IN, IS_RELATED_TO);
 		map.put(HAS_IMAGE, IS_RELATED_TO);

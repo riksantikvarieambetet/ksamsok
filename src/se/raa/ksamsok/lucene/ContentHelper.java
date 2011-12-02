@@ -23,6 +23,8 @@ import se.raa.ksamsok.spatial.GMLInfoHolder;
  */
 public abstract class ContentHelper {
 
+	// TODO: inför info om kardinalitet och uri:s ska slås upp eller ej... och automatifiera ip mfl mer?
+
 	// diverse systemtermer
 	public static final String CONTEXT_SET_SAMSOK = "samsok";
 	public static final String CONTEXT_SET_SAMSOK_IDENTIFIER = "http://kulturarvsdata.se/resurser/contextSets/samsok/1.0/";
@@ -144,6 +146,22 @@ public abstract class ContentHelper {
 	public static final String IX_ISVISUALIZEDBY = "isVisualizedBy";
 	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
 	public static final String IX_VISUALIZES = "visualizes";
+
+	// cidoc-crm
+	public static final String IX_HASFORMERORCURRENTOWNER = "has_former_or_current_owner";
+	public static final String IX_ISFORMERORCURRENTOWNEROF = "is_former_or_current_owner_of";
+	public static final String IX_HASFORMERORCURRENTKEEPER = "has_former_or_current_keeper";
+	public static final String IX_ISFORMERORCURRENTKEEPEROF = "is_former_or_current_keeper_of";
+	public static final String IX_HASCREATED = "has_created";
+	public static final String IX_WASCREATEDBY = "was_created_by";
+	public static final String IX_HASRIGHTON = "has_right_on";
+	public static final String IX_RIGHTHELDBY = "right_held_by";
+
+	// bio
+	public static final String IX_CHILD = "child";
+	public static final String IX_PARENT = "parent";
+	public static final String IX_MOTHER = "mother";
+	public static final String IX_FATHER = "father";
 
 	// media-index
 	public static final String IX_MEDIALICENSE = "mediaLicense";
@@ -296,6 +314,22 @@ public abstract class ContentHelper {
 				"obs att detta datum är ungefärligt då det beror på skördefrekvens för " +
 				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
 				IX_CREATEDDATE + ")", IndexType.VERBATIM);
+
+		// cidoc-crm
+		addIndex(IX_HASFORMERORCURRENTOWNER, "Har nuvarande eller tidigare ägare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISFORMERORCURRENTOWNEROF, "Är eller var tidigare ägare till (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASFORMERORCURRENTKEEPER, "Har nuvarande eller tidigare förvaltare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISFORMERORCURRENTKEEPEROF, "Är eller var tidigare förvaltare till (uri)", IndexType.VERBATIM);
+		addIndex(IX_WASCREATEDBY, "Skapades av (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASCREATED, "Har skapat (uri)", IndexType.VERBATIM);
+		addIndex(IX_RIGHTHELDBY, "Rättigheter ägs av (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASRIGHTON, "Äger rättigheter till (uri)", IndexType.VERBATIM);
+
+		// bio
+		addIndex(IX_CHILD, "Var far till (uri)", IndexType.VERBATIM);
+		addIndex(IX_PARENT, "Var barn till (uri)", IndexType.VERBATIM);
+		addIndex(IX_MOTHER, "Har mor (uri)", IndexType.VERBATIM);
+		addIndex(IX_FATHER, "Har far (uri)", IndexType.VERBATIM);
 
 		// media
 		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.TOLOWERCASE);
@@ -488,16 +522,18 @@ public abstract class ContentHelper {
 		if (indexName == null) {
 			return false;
 		}
-		String indexNameToCheck = indexName;
+		// testa hela namnet först
+		if (indices.containsKey(indexName)) {
+			return true;
+		}
+		// sen om det (troligen) är ett kontextindex, "[contextType]_[indexName]"
 		if (indexName.indexOf("_") > 0) {
 			String[] parts = indexName.split("\\_");
 			if (parts != null && parts.length == 2) {
-				indexNameToCheck = parts[1];
-			} else {
-				return false;
+				return indices.containsKey(parts[1]);
 			}
 		}
-		return indices.containsKey(indexNameToCheck);
+		return false;
 	}
 
 	/**
