@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/EntitySuperType">
+
+	<EntitySuperType rdf:ID="agent">
+		<name>Person/Grupp/Organisation</name>
+		<description>Personer, grupper och organisationer.</description>
+	</EntitySuperType>
+
+	<EntitySuperType rdf:ID="object">
+		<name>Fysiska ting</name>
+		<description>Föremål/objekt.</description>
+	</EntitySuperType>
+
+	<EntitySuperType rdf:ID="event">
+		<name>Händelse</name>
+		<description>Historisk händelse, utställningar.</description>
+	</EntitySuperType>
+
+	<EntitySuperType rdf:ID="concept">
+		<name>Koncept</name>
+		<description>Koncept.</description>
+	</EntitySuperType>
+
+</rdf:RDF>

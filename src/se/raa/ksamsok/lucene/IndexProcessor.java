@@ -1,5 +1,6 @@
 package se.raa.ksamsok.lucene;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,20 +32,18 @@ class IndexProcessor {
 	 * @param lookupURI om urivärde ska slås upp
 	 * @param extraIndexName ev extra index värdet ska in i, eller null
 	 */
-	void setCurrent(String indexName, String contextPrefix, boolean lookupURI, String extraIndexName) {
+	void setCurrent(String indexName, String [] contextPrefix, boolean lookupURI, String extraIndexName) {
+		ArrayList<String> indexList = new ArrayList<String>();
+		indexList.add(indexName);
 		if (contextPrefix != null) {
-			if (extraIndexName != null) {
-				setCurrent(new String[] {indexName, contextPrefix + "_" + indexName, extraIndexName }, lookupURI);
-			} else {
-				setCurrent(new String[] {indexName, contextPrefix + "_" + indexName, }, lookupURI);
-			}
-		} else {
-			if (extraIndexName != null) {
-				setCurrent(new String[] { indexName, extraIndexName }, lookupURI);
-			} else {
-				setCurrent(indexName, lookupURI);
+			for (String prefix: contextPrefix) {
+				indexList.add(prefix + "_" + indexName);
 			}
 		}
+		if (extraIndexName != null) {
+			indexList.add(extraIndexName);
+		}
+		setCurrent(indexList.toArray(new String[indexList.size()]), lookupURI);
 	}
 
 	/**
@@ -52,10 +51,10 @@ class IndexProcessor {
 	 * kontext-index. Värdet i indexet kommer också lagras i ett kontext-index.
 	 * 
 	 * @param indexName indexnamn
-	 * @param contextPrefix kontext-prefix eller null
+	 * @param contextPrefixes kontext-prefix eller null
 	 */
-	void setCurrent(String indexName, String contextPrefix) {
-		setCurrent(indexName, contextPrefix, true, null);
+	void setCurrent(String indexName, String[] contextPrefixes) {
+		setCurrent(indexName, contextPrefixes, true, null);
 	}
 
 	/**

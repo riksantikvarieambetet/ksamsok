@@ -56,8 +56,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 	// kontexttyper
 	private static final Map<String, String> contextTypes_1_1_TO;
-	// underkontexttyper
-	private static final Map<String, String> subContextTypes_1_1_TO;
+	// superkontexttyper
+	private static final Map<String, String> superContextTypes_1_1_TO;
 
 	static {
 		//Object o = new String[][] { { "", "" } };
@@ -66,18 +66,19 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		RDFUtil.readURIValueResource(PATH + "contexttype_1.1.rdf", SamsokProtocol.uri_rContextLabel, contextTypeValues);
 		contextTypes_1_1_TO = Collections.unmodifiableMap(contextTypeValues);
 
-		// TODO: fixa ny fil/innehåll
-		final Map<String,String> contextSubTypeValues = new HashMap<String,String>();
-		RDFUtil.readURIValueResource(PATH + "contexttype_1.1.rdf", SamsokProtocol.uri_rContextLabel, contextSubTypeValues);
-		subContextTypes_1_1_TO = Collections.unmodifiableMap(contextSubTypeValues);
+		// kontextsupertyper
+		final Map<String,String> contextSuperTypeValues = new HashMap<String,String>();
+		RDFUtil.readURIValueResource(PATH + "contextsupertype_1.1.rdf", SamsokProtocol.uri_rContextLabel, contextSuperTypeValues);
+		superContextTypes_1_1_TO = Collections.unmodifiableMap(contextSuperTypeValues);
 
 		Map<String,String> values = new HashMap<String,String>();
 		// läs in uri-värden för uppslagning
 		RDFUtil.readURIValueResource(PATH + "entitytype_1.1.rdf", SamsokProtocol.uri_r__Name, values);
+		RDFUtil.readURIValueResource(PATH + "entitysupertype_1.1.rdf", SamsokProtocol.uri_r__Name, values);
 		RDFUtil.readURIValueResource(PATH + "subject.rdf", SamsokProtocol.uri_r__Name, values);
 		RDFUtil.readURIValueResource(PATH + "dataquality.rdf", SamsokProtocol.uri_r__Name, values);
 		values.putAll(contextTypes_1_1_TO);
-		values.putAll(subContextTypes_1_1_TO);
+		values.putAll(superContextTypes_1_1_TO);
 		//RDFUtil.readURIValueResource(PATH + "contexttype_1.1.rdf", SamsokProtocol.uri_rContextLabel, values);
 
 		uriValues_1_1_TO = Collections.unmodifiableMap(values);
@@ -156,6 +157,16 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		return relationType;
 	}
 
+	@Override
+	protected void extractItemInformation() throws Exception {
+		super.extractItemInformation();
+		// TODO: kontrollera hierarkin också?
+		ip.setCurrent(ContentHelper.IX_ITEMSUPERTYPE, true);
+		String superType = extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rItemSuperType), ip);
+		if (superType == null) {
+			throw new Exception("No item supertype for item with identifier " + s.toString());
+		}
+	}
 	/**
 	 * Extraherar och indexerar typinformation ur en kontextnod.
 	 * Hanterar de index som gäller för protokollversion 1.1, se dok.
@@ -167,11 +178,23 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	 * @throws Exception vid fel
 	 */
 	@Override
-	protected String extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
+	protected String[] extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
 
-		// TODO: fixa till och lägg till subtype och gör så att en satt label tas före en uppslagen + validering?
+		// TODO: kontrollera hierarkin också (att produce bara får finnas under create tex)?
+		String contextSuperTypeURI = extractSingleValue(graph, cS, getURIRef(elementFactory, SamsokProtocol.uri_rContextSuperType), null);
+		if (contextSuperTypeURI == null) {
+			throw new Exception("No supertype for context for item with identifier " + identifier);
+		}
+		String contextSuperType = StringUtils.substringAfter(contextSuperTypeURI, SamsokProtocol.contextsuper_pre);
+		if (StringUtils.isEmpty(contextSuperType)) {
+			throw new Exception("The context supertype URI " + contextSuperTypeURI +
+					" does not start with " + SamsokProtocol.contextsuper_pre +
+					" for item with identifier " + identifier);
+		}
+		ip.setCurrent(ContentHelper.IX_CONTEXTSUPERTYPE);
+		ip.addToDoc(contextSuperType);
 
-		// hämta ut vilket kontext vi är i
+		// hämta ut vilket kontext vi är i 
 		String contextType;
 		String contextTypeURI = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContextType), null);
 		if (contextTypeURI != null) {
@@ -182,7 +205,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 			contextType = StringUtils.substringAfter(contextTypeURI, context_pre);
 			if (StringUtils.isEmpty(contextType)) {
 				throw new Exception("The context type URI " + contextTypeURI +
-						" does not start with " + context_pre);
+						" does not start with " + context_pre +
+						" for item with identifier " + identifier);
 			}
 			ip.setCurrent(IX_CONTEXTTYPE);
 			ip.addToDoc(contextType);
@@ -196,35 +220,20 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		} else {
 			throw new Exception("No context type for node " + cS + " for " + identifier);
 		}
-		return contextType;
+		return new String[] { contextSuperType, contextType };
 	}
 
 	@Override
 	protected void extractContextActorInformation(SubjectNode cS,
-			String contextType, List<String> relations) throws Exception {
-		super.extractContextActorInformation(cS, contextType, relations);
+			String[] contextTypes, List<String> relations) throws Exception {
+		super.extractContextActorInformation(cS, contextTypes, relations);
 		// hantera relationer i kontexten
-		extractContextRelationInformation(cS, contextType, relations);
+		extractContextRelationInformation(cS, contextTypes, relations);
 	}
 
-	protected void extractContextRelationInformation(SubjectNode cS, String contextType,
+	protected void extractContextRelationInformation(SubjectNode cS, String[] contextTypes,
 			List<String> relations) throws Exception {
 		extractContextLevelRelations(cS, relations);
-		// relationer
-		// relationer, in i respektive index + i IX_RELURI
-		//final String[] relIx = new String[] { null, IX_RELURI };
-		// hämta ut containsInformationAbout (0n)
-		//relIx[0] = IX_CONTAINSINFORMATIONABOUT;
-		// http://www.cidoc-crm.org/rdfs/cidoc-crm-english-label
-		// http://www.cidoc-crm.org/rdfs/cidoc-crm
-//		ip.setCurrent(IX_HASFORMERORCURRENTOWNER, contextType, false, IX_RELURI);
-//		extractValue(graph, cS, getURIRef(elementFactory, uri_cidoc_P51F_has_former_or_current_owner), null, ip, relations);
-//		ip.setCurrent(IX_HASFORMERORCURRENTKEEPER, contextType, false, IX_RELURI);
-//		extractValue(graph, cS, getURIRef(elementFactory, uri_cidoc_P49F_has_former_or_current_keeper), null, ip, relations);
-//		ip.setCurrent(IX_WASCREATEDBY, contextType, false, IX_RELURI);
-//		extractValue(graph, cS, getURIRef(elementFactory, uri_cidoc_P94B_was_created_by), null, ip, relations);
-//		ip.setCurrent(IX_RIGHTHELDBY, contextType, false, IX_RELURI);
-//		extractValue(graph, cS, getURIRef(elementFactory, uri_cidoc_P105F_right_held_by), null, ip, relations);
 	}
 
 	/**

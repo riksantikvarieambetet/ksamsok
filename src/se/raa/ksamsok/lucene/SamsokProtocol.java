@@ -40,6 +40,7 @@ public class SamsokProtocol {
 	static final URI uri_rItemTitle = URI.create(uriPrefixKSamsok + "itemTitle");
 	static final URI uri_rItemLabel = URI.create(uriPrefixKSamsok + "itemLabel");
 	static final URI uri_rItemType = URI.create(uriPrefixKSamsok + "itemType");
+	static final URI uri_rItemSuperType = URI.create(uriPrefixKSamsok + "itemSuperType");
 	static final URI uri_rItemClass = URI.create(uriPrefixKSamsok + "itemClass");
 	static final URI uri_rItemClassName = URI.create(uriPrefixKSamsok + "itemClassName");
 	static final URI uri_rItemName = URI.create(uriPrefixKSamsok + "itemName");
@@ -65,6 +66,7 @@ public class SamsokProtocol {
 	static final URI uri_rPres = URI.create(uriPrefixKSamsok + "presentation");
 	static final URI uri_rContext = URI.create(uriPrefixKSamsok + "context");
 	static final URI uri_rContextType = URI.create(uriPrefixKSamsok + "contextType");
+	static final URI uri_rContextSuperType = URI.create(uriPrefixKSamsok + "contextSuperType");
 	static final URI uri_rContextLabel = URI.create(uriPrefixKSamsok + "contextLabel");
 	static final URI uri_rURL = URI.create(uriPrefixKSamsok + "url");
 	static final URI uri_rMuseumdatURL = URI.create(uriPrefixKSamsok + "museumdatUrl");
@@ -147,5 +149,6 @@ public class SamsokProtocol {
 
 	// context
 	static final String context_pre = uriPrefix + "resurser/ContextType#";
+	static final String contextsuper_pre = uriPrefix + "resurser/ContextSuperType#";
 
 }

@@ -108,6 +108,8 @@ public class SamsokContentHelperTest {
 		assertNotNull("Ingen latitud", doc.getFieldValue(ContentHelper.I_IX_LAT));
 		assertNotNull("Ingen longitud", doc.getFieldValue(ContentHelper.I_IX_LON));
 
+		singleValueIndexAssert(doc, ContentHelper.IX_PROTOCOLVERSION, "0.97");
+
 		singleValueIndexAssert(doc, ContentHelper.IX_ISRELATEDTO, "http://kulturarvsdata.se/raa/test/2");
 		singleValueIndexAssert(doc, ContentHelper.IX_CONTAINSINFORMATIONABOUT, "http://kulturarvsdata.se/raa/test/3");
 		singleValueIndexAssert(doc, ContentHelper.IX_CONTAINSOBJECT, "http://kulturarvsdata.se/raa/test/4");
@@ -287,6 +289,202 @@ public class SamsokContentHelperTest {
 
 		assertNotNull("Ingen beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION));
 		assertTrue("Fel beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION).toString().contains("som beskriver Gustav"));
+	}
+
+	@Test
+	public void testCreateDoc_1_1_All() throws Exception {
+		// test av (nästan) allt
+
+		SamsokContentHelper helper = new SamsokContentHelper();
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		String xmlContent = loadTestFileAsString("alla_index_1.1.rdf");
+		Date addedDate = new Date();
+		SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, addedDate);
+		assertNotNull("Inget solr-dokument", doc);
+		// kolla system-index
+		
+		singleValueIndexAssert(doc, ContentHelper.I_IX_SERVICE, "TESTID");
+		singleValueIndexAssert(doc, ContentHelper.IX_SERVICENAME, "test");
+		singleValueIndexAssert(doc, ContentHelper.IX_SERVICEORGANISATION, "TEST");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMID, "http://kulturarvsdata.se/raa/test/1");
+		assertNotNull("Ingen RDF", doc.getFieldValue(ContentHelper.I_IX_RDF));
+		assertNotNull("Inget pres-block", doc.getFieldValue(ContentHelper.I_IX_PRES));
+		assertNotNull("Ingen latitud", doc.getFieldValue(ContentHelper.I_IX_LAT));
+		assertNotNull("Ingen longitud", doc.getFieldValue(ContentHelper.I_IX_LON));
+		
+		singleValueIndexAssert(doc, ContentHelper.IX_PROTOCOLVERSION, "1.1");
+
+		singleValueIndexAssert(doc, ContentHelper.IX_ISRELATEDTO, "http://kulturarvsdata.se/raa/test/2");
+		singleValueIndexAssert(doc, ContentHelper.IX_CONTAINSINFORMATIONABOUT, "http://kulturarvsdata.se/raa/test/3");
+		singleValueIndexAssert(doc, ContentHelper.IX_CONTAINSOBJECT, "http://kulturarvsdata.se/raa/test/4");
+		singleValueIndexAssert(doc, ContentHelper.IX_HASBEENUSEDIN, "http://kulturarvsdata.se/raa/test/5");
+		singleValueIndexAssert(doc, ContentHelper.IX_HASCHILD, "http://kulturarvsdata.se/raa/test/6");
+		singleValueIndexAssert(doc, ContentHelper.IX_HASFIND, "http://kulturarvsdata.se/raa/test/7");
+		singleValueIndexAssert(doc, ContentHelper.IX_HASIMAGE, "http://kulturarvsdata.se/raa/test/8");
+		multipleValueIndexAssert(doc, ContentHelper.IX_HASOBJECTEXAMPLE, new String[] {
+				"http://kulturarvsdata.se/raa/test/9", "http://kulturarvsdata.se/raa/test/10"	
+		}, 2);
+		singleValueIndexAssert(doc, ContentHelper.IX_HASPARENT, "http://kulturarvsdata.se/raa/test/11");
+		singleValueIndexAssert(doc, ContentHelper.IX_HASPART, "http://kulturarvsdata.se/raa/test/12");
+		singleValueIndexAssert(doc, ContentHelper.IX_ISDESCRIBEDBY, "http://kulturarvsdata.se/raa/test/13");
+		singleValueIndexAssert(doc, ContentHelper.IX_ISFOUNDIN, "http://kulturarvsdata.se/raa/test/14");
+		singleValueIndexAssert(doc, ContentHelper.IX_ISPARTOF, "http://kulturarvsdata.se/raa/test/15");
+		singleValueIndexAssert(doc, ContentHelper.IX_ISVISUALIZEDBY, "http://kulturarvsdata.se/raa/test/16");
+		singleValueIndexAssert(doc, ContentHelper.IX_SAMEAS, "http://kulturarvsdata.se/raa/test/17");
+		singleValueIndexAssert(doc, ContentHelper.IX_VISUALIZES, "http://kulturarvsdata.se/raa/test/18");
+		
+		singleValueIndexAssert(doc, ContentHelper.IX_HASFORMERORCURRENTKEEPER, "http://kulturarvsdata.se/raa/test/19");
+		singleValueIndexAssert(doc, ContentHelper.IX_HASFORMERORCURRENTOWNER, "http://kulturarvsdata.se/raa/test/20");
+		singleValueIndexAssert(doc, ContentHelper.IX_WASCREATEDBY, "http://kulturarvsdata.se/raa/test/21");
+		singleValueIndexAssert(doc, ContentHelper.IX_RIGHTHELDBY, "http://kulturarvsdata.se/raa/test/22");
+
+		// specialindexet för relationer
+		String[] allRelations = new String[] {
+				ContentHelper.IX_ISRELATEDTO + "|" + "http://kulturarvsdata.se/raa/test/2",
+				ContentHelper.IX_CONTAINSINFORMATIONABOUT + "|" + "http://kulturarvsdata.se/raa/test/3",
+				ContentHelper.IX_CONTAINSOBJECT + "|" + "http://kulturarvsdata.se/raa/test/4",
+				ContentHelper.IX_HASBEENUSEDIN + "|" + "http://kulturarvsdata.se/raa/test/5",
+				ContentHelper.IX_HASCHILD + "|" + "http://kulturarvsdata.se/raa/test/6",
+				ContentHelper.IX_HASFIND + "|" + "http://kulturarvsdata.se/raa/test/7",
+				ContentHelper.IX_HASIMAGE + "|" + "http://kulturarvsdata.se/raa/test/8",
+				ContentHelper.IX_HASOBJECTEXAMPLE + "|" + "http://kulturarvsdata.se/raa/test/9",
+				ContentHelper.IX_HASOBJECTEXAMPLE + "|" + "http://kulturarvsdata.se/raa/test/10",
+				ContentHelper.IX_HASPARENT + "|" + "http://kulturarvsdata.se/raa/test/11",
+				ContentHelper.IX_HASPART + "|" + "http://kulturarvsdata.se/raa/test/12",
+				ContentHelper.IX_ISDESCRIBEDBY + "|" + "http://kulturarvsdata.se/raa/test/13",
+				ContentHelper.IX_ISFOUNDIN + "|" + "http://kulturarvsdata.se/raa/test/14",
+				ContentHelper.IX_ISPARTOF + "|" + "http://kulturarvsdata.se/raa/test/15",
+				ContentHelper.IX_ISVISUALIZEDBY + "|" + "http://kulturarvsdata.se/raa/test/16",
+				ContentHelper.IX_SAMEAS + "|" + "http://kulturarvsdata.se/raa/test/17",
+				ContentHelper.IX_VISUALIZES + "|" + "http://kulturarvsdata.se/raa/test/18",
+				ContentHelper.IX_HASFORMERORCURRENTKEEPER + "|" + "http://kulturarvsdata.se/raa/test/19",
+				ContentHelper.IX_HASFORMERORCURRENTOWNER + "|" + "http://kulturarvsdata.se/raa/test/20",
+				ContentHelper.IX_WASCREATEDBY + "|" + "http://kulturarvsdata.se/raa/test/21",
+				ContentHelper.IX_RIGHTHELDBY + "|" + "http://kulturarvsdata.se/raa/test/22"
+		};
+		multipleValueIndexAssert(doc, ContentHelper.I_IX_RELATIONS, allRelations, allRelations.length);
+
+		// \u00e5 å, \u00e4 ä,  \u00f6 ö
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTITLE, "Gustav Vasas hj\u00e4lm");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMLABEL, "Hj\u00e4lm");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "Objekt/f\u00f6rem\u00e5l");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMCLASS, "http://raa.se/test/itemClass#test");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMCLASSNAME, "Test");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMNAME, "F\u00f6rem\u00e5l");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMSPECIFICATION, "Huvudsak");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMKEYWORD, "Hj\u00e4lm");
+		multipleValueIndexAssert(doc, ContentHelper.IX_ITEMMOTIVEWORD, new String[] {
+				"Hj\u00e4lm", "Huvudbonad"
+		}, 2);
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMMATERIAL, "metall");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTECHNIQUE, "gjuten");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMSTYLE, "tuff");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMCOLOR, "metall");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMNUMBER, "4711");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMDESCRIPTION, "som beskriver Gustav", true);
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMLICENSE, "http://kulturarvsdata.se/resurser/license#public");
+
+		// klassificering
+		singleValueIndexAssert(doc, ContentHelper.IX_SUBJECT, "Kulturhistoria");
+		singleValueIndexAssert(doc, ContentHelper.IX_COLLECTION, "En samling");
+		singleValueIndexAssert(doc, ContentHelper.IX_DATAQUALITY, "Bearbetad");
+		singleValueIndexAssert(doc, ContentHelper.IX_MEDIATYPE, "text/html");
+		singleValueIndexAssert(doc, ContentHelper.IX_THEME, "http://kulturarvsdata.se/resurser/Theme#test");
+		// dates
+		singleValueIndexAssert(doc, ContentHelper.IX_CREATEDDATE, "2006-01-01");
+		singleValueIndexAssert(doc, ContentHelper.IX_ADDEDTOINDEXDATE, ContentHelper.formatDate(addedDate, false));
+		singleValueIndexAssert(doc, ContentHelper.IX_LASTCHANGEDDATE, "2009-03-06");
+		// specialindex
+		singleValueIndexAssert(doc, ContentHelper.IX_GEODATAEXISTS, "j");
+		singleValueIndexAssert(doc, ContentHelper.IX_TIMEINFOEXISTS, "j");
+		singleValueIndexAssert(doc, ContentHelper.IX_THUMBNAILEXISTS, "j");
+
+		// bilder
+		singleValueIndexAssert(doc, ContentHelper.IX_MEDIALICENSE, "http://kulturarvsdata.se/resurser/License#test");
+		singleValueIndexAssert(doc, ContentHelper.IX_MEDIAMOTIVEWORD, "Stockholms slott");
+
+		// kontext
+		multipleValueIndexAssert(doc, ContentHelper.IX_CONTEXTSUPERTYPE, new String[] {
+				"create", "interact"
+		}, 2);
+		multipleValueIndexAssert(doc, ContentHelper.IX_CONTEXTTYPE, new String[] {
+				"produce", "use"
+		}, 2);
+		multipleValueIndexAssert(doc, ContentHelper.IX_CONTEXTLABEL, new String[] {
+				"Producera", "Anv\u00e4nda"
+		}, 2);
+
+		// kontext, plats
+		singleValueIndexAssert(doc, ContentHelper.IX_PLACENAME, "Stockholm");
+		singleValueIndexAssert(doc, ContentHelper.IX_CADASTRALUNIT, "Stockholm 1:1");
+		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERMID, "4711");
+		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERMAUTH, "Vaktm\u00e4staren");
+		singleValueIndexAssert(doc, ContentHelper.IX_CONTINENTNAME, "Europa");
+		singleValueIndexAssert(doc, ContentHelper.IX_COUNTRYNAME, "Sverige");
+		singleValueIndexAssert(doc, ContentHelper.IX_COUNTYNAME, "Stockholm");
+		singleValueIndexAssert(doc, ContentHelper.IX_MUNICIPALITYNAME, "Stockholm");
+		singleValueIndexAssert(doc, ContentHelper.IX_PROVINCENAME, "Uppland");
+		singleValueIndexAssert(doc, ContentHelper.IX_PARISHNAME, "Stockholm");
+		singleValueIndexAssert(doc, ContentHelper.IX_COUNTRY, "se");
+		singleValueIndexAssert(doc, ContentHelper.IX_COUNTY, "1");
+		singleValueIndexAssert(doc, ContentHelper.IX_MUNICIPALITY, "180");
+		singleValueIndexAssert(doc, ContentHelper.IX_PROVINCE, "Up");
+		singleValueIndexAssert(doc, ContentHelper.IX_PARISH, "91");
+
+		// kontext, agent
+		singleValueIndexAssert(doc, ContentHelper.IX_FIRSTNAME, "Gustav");
+		singleValueIndexAssert(doc, ContentHelper.IX_SURNAME, "Vasa");
+		singleValueIndexAssert(doc, ContentHelper.IX_FULLNAME, "Gustav Vasa");
+		multipleValueIndexAssert(doc, ContentHelper.IX_NAME, new String[] {
+				"Gustav Vasa", "Kunz Lochner"	
+		}, 2);
+		singleValueIndexAssert(doc, ContentHelper.IX_GENDER, "male");
+		singleValueIndexAssert(doc, ContentHelper.IX_ORGANIZATION, "Kungarna");
+		multipleValueIndexAssert(doc, ContentHelper.IX_TITLE, new String[] {
+				"Kung", "Smed"	
+		}, 2);
+		singleValueIndexAssert(doc, ContentHelper.IX_FULLNAME, "Gustav Vasa");
+		singleValueIndexAssert(doc, ContentHelper.IX_NAMEID, "59878606");
+		singleValueIndexAssert(doc, ContentHelper.IX_NAMEAUTH, "VIAF");
+
+		// kontext, tid
+		multipleValueIndexAssert(doc, ContentHelper.IX_FROMTIME, new String[] {
+				"1540", "1542"	
+		}, 2);
+		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_FROMTIME, "1540"); // supertyp
+		singleValueIndexAssert(doc, "produce_" + ContentHelper.IX_FROMTIME, "1540"); // typ
+		singleValueIndexAssert(doc, "interact_" + ContentHelper.IX_FROMTIME, "1542"); // supertyp
+		singleValueIndexAssert(doc, "use_" + ContentHelper.IX_FROMTIME, "1542");
+		multipleValueIndexAssert(doc, ContentHelper.IX_TOTIME, new String[] {
+				"1541", "1560"	
+		}, 2);
+		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_TOTIME, "1541");
+		singleValueIndexAssert(doc, "use_" + ContentHelper.IX_TOTIME, "1560");
+		multipleValueIndexAssert(doc, ContentHelper.IX_DECADE, new String[] {
+				"1540", "1550", "1560"
+		}, -1); // 4 värden, 1540 är med 2 ggr, fixa i TimeUtil-metoden?
+		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_DECADE, "1540");
+		multipleValueIndexAssert(doc, "use_" + ContentHelper.IX_DECADE, new String[] {
+				"1540", "1550", "1560"
+		}, 3);
+		multipleValueIndexAssert(doc, ContentHelper.IX_CENTURY, new String[] {
+				"1500"	
+		}, -1); // 2 värden, 1500 är med 2 ggr, fixa i TimeUtil-metoden?
+		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_CENTURY, "1500");
+		singleValueIndexAssert(doc, "use_" + ContentHelper.IX_CENTURY, "1500");
+
+		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODNAME, "Omodern tid");
+		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODNAME, "Modern tid");
+
+		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODID, "1234");
+		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODID, "5678");
+
+		singleValueIndexAssert(doc, ContentHelper.IX_PERIODAUTH, "Tidsoptimisterna");
+
+		singleValueIndexAssert(doc, ContentHelper.IX_EVENTNAME, "Hj\u00e4lmhamrande");
+		singleValueIndexAssert(doc, ContentHelper.IX_EVENTAUTH, "Hj\u00e4lmhamrarf\u00f6rbundet");
+
 	}
 
 	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value) {

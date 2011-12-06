@@ -5,6 +5,7 @@ import static junit.framework.Assert.*;
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,8 +53,10 @@ public class Protocol_1_1_Test {
 		lookupNotNull(handler, "http://kulturarvsdata.se/resurser/DataQuality#raw");
 		lookupNotNull(handler, "http://kulturarvsdata.se/resurser/EntityType#photo");
 
-		String agent = lookup(handler, "http://kulturarvsdata.se/resurser/EntityType#agent");
-		assertNotNull("Agent ska vara med i 1.1", agent);
+		String agent = lookup(handler, "http://kulturarvsdata.se/resurser/EntitySuperType#agent");
+		assertNotNull("Agent ska vara med som supertyp i 1.1", agent);
+		String person = lookup(handler, "http://kulturarvsdata.se/resurser/EntityType#person");
+		assertNotNull("Person ska vara med som typ i 1.1", person);
 		String exist = lookup(handler, "http://kulturarvsdata.se/resurser/ContextType#exist");
 		assertNull("Exist ska inte vara med i 1.1", exist);
 	}
@@ -91,10 +94,25 @@ public class Protocol_1_1_Test {
 		// kontrollera exists-index
 		assertEquals("Felaktigt värde för geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
 		assertEquals("Felaktigt värde för thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
-		assertEquals("Felaktigt värde för timeInfoExists", "n", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
+		assertEquals("Felaktigt värde för timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
+		assertEquals("Felaktig objektsupertyp", "Fysiska ting", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
+		Collection<Object> contextSuperTypes = doc.getFieldValues(ContentHelper.IX_CONTEXTSUPERTYPE);
+		assertNotNull("Kontextsupertyper saknas", contextSuperTypes);
+		assertTrue("Kontextsupertypen 'Tillverka' (create) saknas", contextSuperTypes.contains("create"));
 		// namn + namn i kontexttypspecifikt index
 		assertTrue("Skaparnamn ej extraherat", doc.getFieldValues(ContentHelper.IX_NAME).contains("Kunz Lochner"));
-		assertTrue("Skaparnamn (kontext-index) ej extraherat", doc.getFieldValues("create_" + ContentHelper.IX_NAME).contains("Kunz Lochner"));
+		Collection<Object> contextSuperTypeIndexValues = doc.getFieldValues("create_" + ContentHelper.IX_NAME);
+		assertNotNull("Indexet create_name saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexValues);
+		Collection<Object> contextTypeIndexValues = doc.getFieldValues("produce_" + ContentHelper.IX_NAME);
+		assertNotNull("Indexet produce_name saknar värden (kontexttyp_indexnamn)", contextTypeIndexValues);
+		assertTrue("Skaparnamn (kontext-index) ej extraherat ur produce_name", contextTypeIndexValues.contains("Kunz Lochner"));
+		// century/decade inkl kontext
+		Collection<Object> decadeValues = doc.getFieldValues(ContentHelper.IX_DECADE);
+		assertNotNull("Indexet decade saknar värden", decadeValues);
+		Collection<Object> contextSuperTypeIndexDecadeValues = doc.getFieldValues("create_" + ContentHelper.IX_DECADE);
+		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
+		Collection<Object> contextSuperTypeIndexCenturyValues = doc.getFieldValues("create_" + ContentHelper.IX_CENTURY);
+		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
 	}
 
 	@Test

@@ -68,6 +68,7 @@ public class SamsokContentHelper extends ContentHelper {
 			URIReference rMuseumdatURL = elementFactory.createURIReference(SamsokProtocol.uri_rMuseumdatURL);
 			// special
 			URIReference rItemForIndexing = elementFactory.createURIReference(SamsokProtocol.uri_rItemForIndexing);
+			URIReference rProtocolVersion = elementFactory.createURIReference(SamsokProtocol.uri_rKsamsokVersion);
 
 			SubjectNode s = null;
 			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
@@ -88,13 +89,20 @@ public class SamsokContentHelper extends ContentHelper {
 			if ("n".equals(itemForIndexing)) {
 				return null;
 			}
+			String protocolVersion = RDFUtil.extractSingleValue(graph, s, rProtocolVersion, null);
+			if (protocolVersion == null) {
+				logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + graph);
+				throw new Exception("Hittade ingen protokollversion i rdf-grafen");
+			}
+
 			LinkedList<String> gmlGeometries = new LinkedList<String>();
 			LinkedList<String> relations = new LinkedList<String>();
-			SamsokProtocolHandler sph = getProtocolHandlerForVersion(graph, s);
+			SamsokProtocolHandler sph = getProtocolHandlerForVersion(protocolVersion, graph, s);
 			luceneDoc = sph.handle(service, added, relations, gmlGeometries);
 
-			// den unika identifieraren
+			// den unika identifieraren och protokollversionen
 			luceneDoc.addField(IX_ITEMID, identifier);
+			luceneDoc.addField(IX_PROTOCOLVERSION, protocolVersion);
 
 			// interna system-index
 
@@ -172,14 +180,8 @@ public class SamsokContentHelper extends ContentHelper {
 		return luceneDoc;
 	}
 
-	private SamsokProtocolHandler getProtocolHandlerForVersion(Graph graph, SubjectNode s)  throws Exception {
-		URIReference ksamsokVersion = graph.getElementFactory().createURIReference(SamsokProtocol.uri_rKsamsokVersion);
-		String protocolVersion = RDFUtil.extractSingleValue(graph, s, ksamsokVersion, null);
-		if (protocolVersion == null) {
-			logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + graph);
-			throw new Exception("Hittade ingen protokollversion i rdf-grafen");
-		}
-
+	private SamsokProtocolHandler getProtocolHandlerForVersion(String protocolVersion,
+			Graph graph, SubjectNode s)  throws Exception {
 		Double protocol;
 		SamsokProtocolHandler handler = null;
 		try {
@@ -262,7 +264,13 @@ public class SamsokContentHelper extends ContentHelper {
 							URIReference rItemType = elementFactory.createURIReference(SamsokProtocol.uri_rItemType);
 							String typeUri = RDFUtil.extractSingleValue(graph, s, rItemType, null);
 							if (typeUri != null) {
-								SamsokProtocolHandler handler = getProtocolHandlerForVersion(graph, s);
+								URIReference rProtocolVersion = elementFactory.createURIReference(SamsokProtocol.uri_rKsamsokVersion);
+								String protocolVersion = RDFUtil.extractSingleValue(graph, s, rProtocolVersion, null);
+								if (protocolVersion == null) {
+									logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + graph);
+									throw new Exception("Hittade ingen protokollversion i rdf-grafen");
+								}
+								SamsokProtocolHandler handler = getProtocolHandlerForVersion(protocolVersion, graph, s);
 								name = handler.lookupURIValue(typeUri);
 								//name = uriValues.get(typeUri);
 							}

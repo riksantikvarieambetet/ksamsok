@@ -4,19 +4,74 @@
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xml:base="http://kulturarvsdata.se/resurser/ContextType">
 
-	<ContextType rdf:ID="create">
-		<contextLabel>Tillverkad</contextLabel>
-		<description>Omfattar tillverkning, skapande etc. Tillverkad kan ersättas med Skapad, Skissad, Uppfunnen, Konstruerad, Modifierad eller Färdigställd.</description>
+	<ContextType rdf:ID="design">
+		<contextLabel>Designa</contextLabel>
+		<description>Skapa förutsättningar för att något ska bli till.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="produce">
+		<contextLabel>Producera</contextLabel>
+		<description>Att skapa någonting konkret.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="start">
+		<contextLabel>Starta</contextLabel>
+		<description>(Event) Utspela sig (Agenter) Födas.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="find">
+		<contextLabel>Funnen</contextLabel>
+		<description>Hitta, Påträffa.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="transact">
+		<contextLabel>Överföra</contextLabel>
+		<description>Överföra, ge/skänka, förvärva, deponera, accedera, röva (krigsbyte), tappa, deponera (i marken), försvinna.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="explore">
+		<contextLabel>Undersöka och beforska</contextLabel>
+		<description>Undersöka, inventera, konditionsbeskriva, gräva, konservera, analysera, dokumentera, samla in.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="own">
+		<contextLabel>Äga</contextLabel>
+		<description>Äga, förvalta, äga immateriellt.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="use">
-		<contextLabel>Brukad</contextLabel>
-		<description>Omfattar bruk, aktivitet, ändringar etc. Brukad kan ersättas med Restaurerad, Boplatsaktivitet, Gravaktivitet eller Annan aktivitet.</description>
+		<contextLabel>Använda</contextLabel>
+		<description>Bruka, nyttja, använda.</description>
 	</ContextType>
 
-	<ContextType rdf:ID="destroyed">
-		<contextLabel>Förstörd</contextLabel>
-		<description>Omfattar händelser som avslutar objektets livscykel. Förstörd kan ersättas med Förlorad (inkluderar borttappad och stulen) eller Avslutad.</description>
+	<ContextType rdf:ID="reproduce">
+		<contextLabel>Reproducera</contextLabel>
+		<description>Avbilda, rita av/måla av, fotografera av eller reprofotografera.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="display">
+		<contextLabel>Visa</contextLabel>
+		<description>(Fysiskt ting och Event)Visa upp, Ställa ut, Publicera.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="act">
+		<contextLabel>Verka</contextLabel>
+		<description>(Agenter) Regera, Vara anställd, Ta ett uppdrag, Vara gift.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="dismiss">
+		<contextLabel>Avföra</contextLabel>
+		<description>Förstöra, gallra, kassera.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="disutilize">
+		<contextLabel>Ej ta tillvara</contextLabel>
+		<description>Ej ta tillvara.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="stop">
+		<contextLabel>Avsluta</contextLabel>
+		<description>(Event) Utspela sig (Agenter) Dö, Lägga ner</description>
 	</ContextType>
 
 </rdf:RDF>

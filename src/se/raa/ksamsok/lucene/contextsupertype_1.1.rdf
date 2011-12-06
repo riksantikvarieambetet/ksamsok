@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/ContextSuperType">
+
+	<ContextSuperType rdf:ID="create">
+		<contextLabel>Skapa</contextLabel>
+		<description>Omfattar tillverkning, skapande etc.</description>
+	</ContextSuperType>
+
+	<ContextSuperType rdf:ID="interact">
+		<contextLabel>Interagera</contextLabel>
+		<description>Omfattar interaktion, brukande etc.</description>
+	</ContextSuperType>
+
+	<ContextSuperType rdf:ID="cease">
+		<contextLabel>Upphöra</contextLabel>
+		<description>Omfattar händelser som avslutar objektets livscykel.</description>
+	</ContextSuperType>
+
+</rdf:RDF>

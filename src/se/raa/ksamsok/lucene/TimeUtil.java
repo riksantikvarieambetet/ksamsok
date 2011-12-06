@@ -93,7 +93,7 @@ public class TimeUtil {
 	}
 
 	static void expandDecadeAndCentury(String fromTime, String toTime,
-			String contextType, IndexProcessor ip) throws Exception {
+			String[] contextTypePrefixes, IndexProcessor ip) throws Exception {
 		// timeInfoExists, decade och century
 		if (fromTime != null || toTime != null) {
 			// bara då vi ska skapa århundraden och årtionden
@@ -125,11 +125,11 @@ public class TimeUtil {
 
 			while (runner<=stop) {
 				dTimeValue=decadeString(runner);
-				ip.setCurrent(IX_DECADE, contextType);
+				ip.setCurrent(IX_DECADE, contextTypePrefixes);
 				ip.addToDoc(dTimeValue);
 				if (insideRunner%100==0){
 					cTimeValue=centuryString(runner);
-					ip.setCurrent(IX_CENTURY, contextType);
+					ip.setCurrent(IX_CENTURY, contextTypePrefixes);
 					ip.addToDoc(cTimeValue);
 				}
 				runner+=10;
@@ -138,12 +138,12 @@ public class TimeUtil {
 			//slutvillkorskontroller
 			if (!dTimeValue.equals(decadeString(stop)) && stop>century_start) {
 				dTimeValue=decadeString(stop);
-				ip.setCurrent(IX_DECADE, contextType);
+				ip.setCurrent(IX_DECADE, contextTypePrefixes);
 				ip.addToDoc(dTimeValue);
 			}
 			if (!cTimeValue.equals(centuryString(stop)) && stop>century_start) {
 				cTimeValue=centuryString(stop);
-				ip.setCurrent(IX_CENTURY, contextType);
+				ip.setCurrent(IX_CENTURY, contextTypePrefixes);
 				ip.addToDoc(cTimeValue);
 			}
 		}

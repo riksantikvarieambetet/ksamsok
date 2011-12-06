@@ -3,20 +3,10 @@
 	xmlns="http://kulturarvsdata.se/ksamsok#" 
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xml:base="http://kulturarvsdata.se/resurser/EntityType">
-
-	<EntityType rdf:ID="agent">
-		<name>Person/Organisation</name>
-		<description>Personer och organisationer.</description>
-	</EntityType>
 	
 	<EntityType rdf:ID="object">
 		<name>Objekt/föremål</name>
 		<description>Objektbeskrivningar, metadata om objekt.</description>
-	</EntityType>
-
-	<EntityType rdf:ID="objectImage">
-		<name>Objektavbildning</name>
-		<description>Objektavbildningar.</description>
 	</EntityType>
 	
 	<EntityType rdf:ID="photo">
@@ -73,5 +63,35 @@
 		<name>Miljö</name>
 		<description>Data om miljöer eller platsbundna objekt som fornlämningar och bebyggelse.</description>
 	</EntityType>
-	
+
+	<EntityType rdf:ID="person">
+		<name>Person</name>
+		<description>Personer.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="organization">
+		<name>Organisation</name>
+		<description>Organisationer.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="group">
+		<name>Grupp</name>
+		<description>Grupper.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="event">
+		<name>Historisk händelse</name>
+		<description>Historisk händelse.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="display">
+		<name>Utställning</name>
+		<description>Utställning.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="concept">
+		<name>Koncept</name>
+		<description>Koncept.</description>
+	</EntityType>
+
 </rdf:RDF>

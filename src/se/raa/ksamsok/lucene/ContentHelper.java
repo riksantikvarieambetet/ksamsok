@@ -52,6 +52,7 @@ public abstract class ContentHelper {
 	public static final String IX_CREATEDDATE = "createdDate";
 	public static final String IX_LASTCHANGEDDATE = "lastChangedDate";
 	public static final String IX_ADDEDTOINDEXDATE = "addedToIndexDate"; // special
+	public static final String IX_PROTOCOLVERSION = "protocolVersion";
 
 	// entitet
 
@@ -62,6 +63,7 @@ public abstract class ContentHelper {
 	public static final String IX_MEDIATYPE = "mediaType";
 	public static final String IX_DATAQUALITY = "dataQuality";
 	public static final String IX_ITEMTYPE = "itemType";
+	public static final String IX_ITEMSUPERTYPE = "itemSuperType";
 	public static final String IX_ITEMCLASS = "itemClass";
 	public static final String IX_ITEMCLASSNAME = "itemClassName";
 	public static final String IX_ITEMNAME = "itemName";
@@ -83,6 +85,7 @@ public abstract class ContentHelper {
 	//	Sammanhang enligt ändlig lista. Sammanhanget gäller för tider, platser och personer/organisationer. Listan på sammanhang hittar du här: http://kulturarvsdata.se/resurser/Context
 	public static final String IX_CONTEXTLABEL = "contextLabel";
 	public static final String IX_CONTEXTTYPE = "contextType";
+	public static final String IX_CONTEXTSUPERTYPE = "contextSuperType";
 	
 	// tider
 	public static final String IX_TIME = "time"; // fritext i alla tidsfält
@@ -205,10 +208,12 @@ public abstract class ContentHelper {
 		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE);
 		addIndex(IX_DATAQUALITY, "Beskrivningsnivå", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.TOLOWERCASE); // uri // TODO: detta stämmer ej(?)
+		addIndex(IX_PROTOCOLVERSION, "Protokollversion för posten", IndexType.VERBATIM); // flyttal
 
 		// objekt
 		addIndex(IX_ITEM, "Fritext i entitetsfält", IndexType.ANALYZED);
 		addIndex(IX_ITEMTYPE, "Typ av objekt", IndexType.TOLOWERCASE); // uri (översatt)
+		addIndex(IX_ITEMSUPERTYPE, "Huvudtyp av objekt", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_ITEMCLASS, "Objektets klass, kategorisering eller klassifikation", IndexType.TOLOWERCASE); // uri
 		addIndex(IX_ITEMCLASSNAME, "Klass eller kategori, om det inte finns en klassificeringsresurs", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMNAME, "Objektets huvudsakliga benämning eller sakord", IndexType.TOLOWERCASE);
@@ -291,6 +296,7 @@ public abstract class ContentHelper {
 		// context
 		addIndex(IX_CONTEXTLABEL, "Sammanhang enligt ändlig lista, beskrivning", IndexType.TOLOWERCASE);
 		addIndex(IX_CONTEXTTYPE, "Sammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE);
+		addIndex(IX_CONTEXTSUPERTYPE, "Huvudsammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE);
 
 		// relationer TODO: fixa beskrivningstexterna när Börje har skickat dem
 		addIndex(IX_RELURI, "Är relaterat på något sätt till annat objekt (uri)", IndexType.VERBATIM);

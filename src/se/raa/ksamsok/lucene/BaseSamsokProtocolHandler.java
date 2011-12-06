@@ -478,13 +478,13 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 */
 	protected void extractContextNodeInformation(SubjectNode cS, String identifier, List<String> relations, List<String> gmlGeometries) throws Exception {
 		// hämta ut vilket kontext vi är i mm
-		String contextType = extractContextTypeAndLabelInformation(cS, identifier);
+		String[] contextTypes = extractContextTypeAndLabelInformation(cS, identifier);
 		// place
-		extractContextPlaceInformation(cS, contextType, gmlGeometries);
+		extractContextPlaceInformation(cS, contextTypes, gmlGeometries);
 		// actor
-		extractContextActorInformation(cS, contextType, relations);
+		extractContextActorInformation(cS, contextTypes, relations);
 		// time
-		extractContextTimeInformation(cS, contextType);
+		extractContextTimeInformation(cS, contextTypes);
 	}
 
 	/**
@@ -497,7 +497,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * @return kontexttyp, kortnamn
 	 * @throws Exception vid fel
 	 */
-	protected String extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
+	protected String[] extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
 		// hämta ut vilket kontext vi är i
 		// OBS! Använder inte contexttype.rdf för uppslagning av denna utan lägger
 		// det uppslagna värde i contextLabel
@@ -528,7 +528,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 				extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContextLabel), ip);
 			}
 		}
-		return contextType;
+		return contextType != null ? new String[] { contextType } : null;
 	}
 
 	/**
@@ -537,56 +537,56 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * Överlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
-	 * @param contextType kontexttypnamn
+	 * @param contextTypes kontexttypnamn
 	 * @throws Exception vid fel
 	 */
-	protected void extractContextPlaceInformation(SubjectNode cS, String contextType, List<String> gmlGeometries) throws Exception {
+	protected void extractContextPlaceInformation(SubjectNode cS, String[] contextTypes, List<String> gmlGeometries) throws Exception {
 		// place
 
 		// 0-m
-		ip.setCurrent(IX_PLACENAME, contextType);
+		ip.setCurrent(IX_PLACENAME, contextTypes);
 		extractValue(graph, cS, getURIRef(elementFactory, uri_rPlaceName), null, ip);
 
-		ip.setCurrent(IX_CADASTRALUNIT, contextType);
+		ip.setCurrent(IX_CADASTRALUNIT, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCadastralUnit), ip);
 
-		ip.setCurrent(IX_PLACETERMID, contextType);
+		ip.setCurrent(IX_PLACETERMID, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rPlaceTermId), ip);
 
-		ip.setCurrent(IX_PLACETERMAUTH, contextType);
+		ip.setCurrent(IX_PLACETERMAUTH, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rPlaceTermAuth), ip);
 
-		ip.setCurrent(IX_CONTINENTNAME, contextType);
+		ip.setCurrent(IX_CONTINENTNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContinentName), ip);
 
-		ip.setCurrent(IX_COUNTRYNAME, contextType);
+		ip.setCurrent(IX_COUNTRYNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCountryName), ip);
 
-		ip.setCurrent(IX_COUNTYNAME, contextType);
+		ip.setCurrent(IX_COUNTYNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCountyName), ip);
 
-		ip.setCurrent(IX_MUNICIPALITYNAME, contextType);
+		ip.setCurrent(IX_MUNICIPALITYNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMunicipalityName), ip);
 
-		ip.setCurrent(IX_PROVINCENAME, contextType);
+		ip.setCurrent(IX_PROVINCENAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rProvinceName), ip);
 
-		ip.setCurrent(IX_PARISHNAME, contextType);
+		ip.setCurrent(IX_PARISHNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rParishName), ip);
 
-		ip.setCurrent(IX_COUNTRY, contextType);
+		ip.setCurrent(IX_COUNTRY, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCountry), ip);
 
-		ip.setCurrent(IX_COUNTY, contextType);
+		ip.setCurrent(IX_COUNTY, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCounty), ip);
 
-		ip.setCurrent(IX_MUNICIPALITY, contextType);
+		ip.setCurrent(IX_MUNICIPALITY, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMunicipality), ip);
 
-		ip.setCurrent(IX_PROVINCE, contextType);
+		ip.setCurrent(IX_PROVINCE, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rProvince), ip);
 
-		ip.setCurrent(IX_PARISH, contextType);
+		ip.setCurrent(IX_PARISH, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rParish), ip);
 
 		// hämta ut gml
@@ -604,56 +604,46 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * Överlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
-	 * @param contextType kontexttypnamn
+	 * @param contextTypes kontexttypnamn
 	 * @throws Exception vid fel
 	 */
-	protected void extractContextActorInformation(SubjectNode cS, String contextType, List<String> relations) throws Exception {
+	protected void extractContextActorInformation(SubjectNode cS, String[] contextTypes, List<String> relations) throws Exception {
 		// actor
 
-		ip.setCurrent(IX_FIRSTNAME, contextType);
+		ip.setCurrent(IX_FIRSTNAME, contextTypes);
 		String firstName = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFirstName), ip);
 
-		ip.setCurrent(IX_SURNAME, contextType);
+		ip.setCurrent(IX_SURNAME, contextTypes);
 		String lastName = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rSurname), ip);
 
-		ip.setCurrent(IX_FULLNAME, contextType);
+		ip.setCurrent(IX_FULLNAME, contextTypes);
 		String fullName = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFullName), ip);
 
 		// om vi inte har fått ett fullName men har ett förnamn och ett efternamn så lägger vi in det i IX_FULLNAME
 		if (fullName == null && firstName != null && lastName != null) {
-			ip.setCurrent(IX_FULLNAME, contextType);
+			ip.setCurrent(IX_FULLNAME, contextTypes);
 			ip.addToDoc(firstName + " " + lastName);
 		}
 
-		ip.setCurrent(IX_NAME, contextType);
+		ip.setCurrent(IX_NAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rName), ip);
-//		String n = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rName), ip);
-//		if ("Johan III".equals(n)) {
-//			graph.add(cS, getURIRef(elementFactory, uri_cidoc_P51F_has_former_or_current_owner), elementFactory.createURIReference(URI.create("http://kulturarvsdata.se/raa/niklas/3")));
-//		} else if (n != null && n.indexOf("Haskiya") >= 0) {
-//			graph.add(cS, getURIRef(elementFactory, uri_cidoc_P51F_has_former_or_current_owner), elementFactory.createURIReference(URI.create("http://kulturarvsdata.se/raa/niklas/4")));						
-//		}
 
 		// TODO: bara vissa värden? http://xmlns.com/foaf/spec/#term_gender:
 		// "In most cases the value will be the string 'female' or 'male' (in
 		//  lowercase without surrounding quotes or spaces)."
-		ip.setCurrent(IX_GENDER, contextType);
+		ip.setCurrent(IX_GENDER, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rGender), ip);
 
-		ip.setCurrent(IX_ORGANIZATION, contextType);
+		ip.setCurrent(IX_ORGANIZATION, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rOrganization), ip);
-//		n = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rOrganization), ip);
-//		if ("Gustav Vasa".equals(n)) {
-//			graph.add(cS, getURIRef(elementFactory, uri_cidoc_P51F_has_former_or_current_owner), elementFactory.createURIReference(URI.create("http://kulturarvsdata.se/raa/niklas/1")));
-//		}
 
-		ip.setCurrent(IX_TITLE, contextType);
+		ip.setCurrent(IX_TITLE, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rTitle), ip);
 
-		ip.setCurrent(IX_NAMEID, contextType);
+		ip.setCurrent(IX_NAMEID, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rNameId), ip);
 
-		ip.setCurrent(IX_NAMEAUTH, contextType);
+		ip.setCurrent(IX_NAMEAUTH, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rNameAuth), ip);
 	}
 
@@ -663,16 +653,16 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * Överlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
-	 * @param contextType kontexttypnamn
+	 * @param contextTypes kontexttypnamn
 	 * @throws Exception vid fel
 	 */
-	protected void extractContextTimeInformation(SubjectNode cS, String contextType) throws Exception {
+	protected void extractContextTimeInformation(SubjectNode cS, String[] contextTypes) throws Exception {
 		// time
 
-		ip.setCurrent(IX_FROMTIME, contextType);
+		ip.setCurrent(IX_FROMTIME, contextTypes);
 		String fromTime = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFromTime), ip);
 
-		ip.setCurrent(IX_TOTIME, contextType);
+		ip.setCurrent(IX_TOTIME, contextTypes);
 		String toTime = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rToTime), ip);
 
 		// hantera ? i tidsfälten
@@ -688,27 +678,27 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		}
 
 		// hantera årtionden och århundraden
-		TimeUtil.expandDecadeAndCentury(fromTime, toTime, contextType, ip);
+		TimeUtil.expandDecadeAndCentury(fromTime, toTime, contextTypes, ip);
 
-		ip.setCurrent(IX_FROMPERIODNAME, contextType);
+		ip.setCurrent(IX_FROMPERIODNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFromPeriodName), ip);
 
-		ip.setCurrent(IX_TOPERIODNAME, contextType);
+		ip.setCurrent(IX_TOPERIODNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rToPeriodName), ip);
 
-		ip.setCurrent(IX_FROMPERIODID, contextType);
+		ip.setCurrent(IX_FROMPERIODID, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFromPeriodId), ip);
 
-		ip.setCurrent(IX_TOPERIODID, contextType);
+		ip.setCurrent(IX_TOPERIODID, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rToPeriodId), ip);
 
-		ip.setCurrent(IX_PERIODAUTH, contextType);
+		ip.setCurrent(IX_PERIODAUTH, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rPeriodAuth), ip);
 
-		ip.setCurrent(IX_EVENTNAME, contextType);
+		ip.setCurrent(IX_EVENTNAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rEventName), ip);
 
-		ip.setCurrent(IX_EVENTAUTH, contextType);
+		ip.setCurrent(IX_EVENTAUTH, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rEventAuth), ip);
 	}
 
