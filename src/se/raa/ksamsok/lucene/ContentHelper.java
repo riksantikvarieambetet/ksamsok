@@ -159,6 +159,10 @@ public abstract class ContentHelper {
 	public static final String IX_WASCREATEDBY = "was_created_by";
 	public static final String IX_HASRIGHTON = "has_right_on";
 	public static final String IX_RIGHTHELDBY = "right_held_by";
+	public static final String IX_WASPRESENTAT = "was_present_at";
+	public static final String IX_OCCUREDINTHEPRESENCEOF = "occurred_in_the_presence_of";
+	public static final String IX_HADPARTICIPANT = "had_participant";
+	public static final String IX_PARTICIPATEDIN = "participated_in";
 
 	// bio
 	public static final String IX_CHILD = "child";
@@ -330,6 +334,10 @@ public abstract class ContentHelper {
 		addIndex(IX_HASCREATED, "Har skapat (uri)", IndexType.VERBATIM);
 		addIndex(IX_RIGHTHELDBY, "Rättigheter ägs av (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASRIGHTON, "Äger rättigheter till (uri)", IndexType.VERBATIM);
+		addIndex(IX_WASPRESENTAT, "Var närvarande vid händelse (uri)", IndexType.VERBATIM);
+		addIndex(IX_OCCUREDINTHEPRESENCEOF, "Händelsen skedde i närvaro av (uri)", IndexType.VERBATIM);
+		addIndex(IX_HADPARTICIPANT, "Händelsen hade deltagare (uri)", IndexType.VERBATIM);
+		addIndex(IX_PARTICIPATEDIN, "Deltog i händelse (uri)", IndexType.VERBATIM);
 
 		// bio
 		addIndex(IX_CHILD, "Var far till (uri)", IndexType.VERBATIM);

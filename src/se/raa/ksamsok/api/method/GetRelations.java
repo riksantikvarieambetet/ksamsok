@@ -95,59 +95,45 @@ public class GetRelations extends AbstractAPIMethod {
 	static {
 		Map<String, String> map = new HashMap<String, String>();
 		// dubbelriktade
-		map.put(IS_PART_OF, HAS_PART);
-		map.put(HAS_PART, IS_PART_OF);
+		twoWay(map, IS_PART_OF, HAS_PART);
+		twoWay(map, CONTAINS_OBJECT, IS_CONTAINED_IN);
+		twoWay(map, IS_FOUND_IN, HAS_FIND);
+		twoWay(map, HAS_CHILD, HAS_PARENT);
+		twoWay(map, VISUALIZES, IS_VISUALIZED_BY);
+		twoWay(map, IS_DESCRIBED_BY, DESCRIBES);
+		twoWay(map, CONTAINS_INFORMATION_ABOUT, IS_MENTIONED_BY);
+		twoWay(map, HAS_OBJECT_EXAMPLE, IS_OBJECT_EXAMPLE_FOR);
 
-		map.put(CONTAINS_OBJECT, IS_CONTAINED_IN);
-		map.put(IS_CONTAINED_IN, CONTAINS_OBJECT);
-
-		map.put(IS_FOUND_IN, HAS_FIND);
-		map.put(HAS_FIND, IS_FOUND_IN);
-
-		map.put(HAS_CHILD, HAS_PARENT);
-		map.put(HAS_PARENT, HAS_CHILD);
-
-		map.put(VISUALIZES, IS_VISUALIZED_BY);
-		map.put(IS_VISUALIZED_BY, VISUALIZES);
-
-		map.put(IS_DESCRIBED_BY, DESCRIBES);
-		map.put(DESCRIBES, IS_DESCRIBED_BY);
-
-		map.put(CONTAINS_INFORMATION_ABOUT, IS_MENTIONED_BY);
-		map.put(IS_MENTIONED_BY, CONTAINS_INFORMATION_ABOUT);
-
-		map.put(HAS_OBJECT_EXAMPLE, IS_OBJECT_EXAMPLE_FOR);
-		map.put(IS_OBJECT_EXAMPLE_FOR, HAS_OBJECT_EXAMPLE);
-
-		// bio
+		// bio (lite special)
 		map.put(ContentHelper.IX_FATHER, ContentHelper.IX_CHILD);
 		map.put(ContentHelper.IX_MOTHER, ContentHelper.IX_CHILD);
-		map.put(ContentHelper.IX_CHILD, ContentHelper.IX_PARENT);
-		map.put(ContentHelper.IX_PARENT, ContentHelper.IX_CHILD);
+		twoWay(map, ContentHelper.IX_CHILD, ContentHelper.IX_PARENT);
 
 		// cidoc
-		map.put(ContentHelper.IX_HASFORMERORCURRENTOWNER, ContentHelper.IX_ISFORMERORCURRENTOWNEROF);
-		map.put(ContentHelper.IX_ISFORMERORCURRENTOWNEROF, ContentHelper.IX_HASFORMERORCURRENTOWNER);
-
-		map.put(ContentHelper.IX_HASFORMERORCURRENTKEEPER, ContentHelper.IX_ISFORMERORCURRENTKEEPEROF);
-		map.put(ContentHelper.IX_ISFORMERORCURRENTKEEPEROF, ContentHelper.IX_HASFORMERORCURRENTKEEPER);
-
-		map.put(ContentHelper.IX_HASCREATED, ContentHelper.IX_WASCREATEDBY);
-		map.put(ContentHelper.IX_WASCREATEDBY, ContentHelper.IX_HASCREATED);
-
-		map.put(ContentHelper.IX_HASRIGHTON, ContentHelper.IX_RIGHTHELDBY);
-		map.put(ContentHelper.IX_RIGHTHELDBY, ContentHelper.IX_HASRIGHTON);
+		twoWay(map, ContentHelper.IX_HASFORMERORCURRENTOWNER, ContentHelper.IX_ISFORMERORCURRENTOWNEROF);
+		twoWay(map, ContentHelper.IX_HASFORMERORCURRENTKEEPER, ContentHelper.IX_ISFORMERORCURRENTKEEPEROF);
+		twoWay(map, ContentHelper.IX_HASCREATED, ContentHelper.IX_WASCREATEDBY);
+		twoWay(map, ContentHelper.IX_HASRIGHTON, ContentHelper.IX_RIGHTHELDBY);
+		twoWay(map, ContentHelper.IX_WASPRESENTAT, ContentHelper.IX_OCCUREDINTHEPRESENCEOF);
+		twoWay(map, ContentHelper.IX_HADPARTICIPANT, ContentHelper.IX_PARTICIPATEDIN);
 
 		// enkelriktade
 		map.put(HAS_BEEN_USED_IN, IS_RELATED_TO);
 		map.put(HAS_IMAGE, IS_RELATED_TO);
-		relationOneWay = Collections.unmodifiableList(Arrays.asList(HAS_BEEN_USED_IN, HAS_IMAGE));
+		relationOneWay = Collections.unmodifiableList(Arrays.asList(
+				HAS_BEEN_USED_IN, HAS_IMAGE, ContentHelper.IX_FATHER, ContentHelper.IX_MOTHER));
 
 		// samma i bägge riktningarna
 		map.put(IS_RELATED_TO, IS_RELATED_TO);
 		map.put(SAME_AS, SAME_AS);
 
 		relationXlate = Collections.unmodifiableMap(map);
+	}
+
+	// lägger till relationerna åt bägge håll
+	private static void twoWay(Map<String, String> map, String relA, String relB) {
+		map.put(relA, relB);
+		map.put(relB, relA);
 	}
 
 	/**

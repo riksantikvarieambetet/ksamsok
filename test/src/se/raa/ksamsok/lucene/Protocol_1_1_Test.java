@@ -155,9 +155,11 @@ public class Protocol_1_1_Test {
 
 		// kontrollera specialformatet för relationer
 		String[] expectedRelations = {
-				"sameAs|http://libris.kb.se/resource/auth/58087",
-				"sameAs|http://viaf.org/viaf/59878606",
-				"child|http://kulturarvsdata.se/raa/test/2"
+				ContentHelper.IX_SAMEAS + "|" + "http://libris.kb.se/resource/auth/58087",
+				ContentHelper.IX_SAMEAS + "|" + "http://viaf.org/viaf/59878606",
+				ContentHelper.IX_CHILD + "|" + "http://kulturarvsdata.se/raa/test/2",
+				ContentHelper.IX_PARTICIPATEDIN + "|" + "http://kulturarvsdata.se/raa/test/3",
+				ContentHelper.IX_WASPRESENTAT + "|" + "http://kulturarvsdata.se/raa/test/4"
 		};
 
 		assertEquals("Fel antal relationer tillbaka", expectedRelations.length, relations.size());
@@ -190,6 +192,40 @@ public class Protocol_1_1_Test {
 		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
 		Collection<Object> contextSuperTypeIndexCenturyValues = doc.getFieldValues("create_" + ContentHelper.IX_CENTURY);
 		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
+	}
+
+	@Test
+	public void testParse_Event() throws Exception {
+		String rdf = loadTestFileAsString("lutzen_1.1.rdf");
+		Graph graph = RDFUtil.parseGraph(rdf);
+		assertNotNull("Ingen graf, fel på rdf:en?", graph);
+		GraphElementFactory elementFactory = graph.getElementFactory();
+		// grund
+		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
+		URIReference samsokEntity = elementFactory.createURIReference(SamsokProtocol.uri_samsokEntity);
+
+		SubjectNode s = null;
+		for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
+			if (s != null) {
+				throw new Exception("Ska bara finnas en entity i rdf-grafen");
+			}
+			s = triple.getSubject();
+		}
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_1(graph, s);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		LinkedList<String> relations = new LinkedList<String>();
+		List<String> gmlGeometries = new LinkedList<String>();
+		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+		assertNotNull("Inget doc tillbaka", doc);
+		// TODO: händelse är utställning också(?) så bort med "historisk"?
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "Historisk h\u00e4ndelse");
+		singleValueIndexAssert(doc, ContentHelper.IX_HADPARTICIPANT, "http://viaf.org/viaf/10637323");
+		singleValueIndexAssert(doc, ContentHelper.IX_OCCUREDINTHEPRESENCEOF, "http://viaf.org/viaf/10637323");
+		multipleValueIndexAssert(doc, ContentHelper.I_IX_RELATIONS, new String[] {
+				ContentHelper.IX_HADPARTICIPANT + "|" + "http://viaf.org/viaf/10637323",
+				ContentHelper.IX_OCCUREDINTHEPRESENCEOF + "|" + "http://viaf.org/viaf/10637323"
+		}, relations, 2);
 	}
 
 	@Test
@@ -250,9 +286,15 @@ public class Protocol_1_1_Test {
 		}
 	}
 
-	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName, String[] values, int count) {
+	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName,
+			String[] values, int count) {
 		Collection<Object> docValues = doc.getFieldValues(indexName);
 		assertNotNull("Fältet " + indexName + " saknas", docValues);
+		multipleValueIndexAssert(doc, indexName, values, docValues, count);
+	}
+
+	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName,
+			String[] values, Collection<? extends Object> docValues, int count) {
 		if (count > 0) {
 			assertEquals("Fältet " + indexName + " innehåller fel antal värden, värden är" +
 					docValues, count, docValues.size());

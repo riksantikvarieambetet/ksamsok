@@ -87,14 +87,23 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		Map<String, URI> relMap = new HashMap<String, URI>(relationsMap_0_TO_1_0);
 		// TODO: tillåta dessa åt det här hållet? Kanske bättre att de bara finns i kontextet åt andra hållet?
 		// cidoc-crm
-		// hämta ut has created (01)
+		// hämta ut has created (0M)
 		relMap.put(IX_HASCREATED, uri_cidoc_P94F_has_created);
-		// hämta ut current or former owner of (01)
+		// hämta ut current or former owner of (0M)
 		relMap.put(IX_ISFORMERORCURRENTOWNEROF, uri_cidoc_P51B_is_former_or_current_owner_of);
-		// hämta ut has former or current keeper of (01)
+		// hämta ut has former or current keeper of (0M)
 		relMap.put(IX_ISFORMERORCURRENTKEEPEROF, uri_cidoc_P49B_is_former_or_current_keeper_of);
-		// hämta ut has right on (01)
+		// hämta ut has right on (0M)
 		relMap.put(IX_HASRIGHTON, uri_cidoc_P105B_has_right_on);
+
+		// hämta ut had participant (0M)
+		relMap.put(ContentHelper.IX_HADPARTICIPANT, SamsokProtocol.uri_cidoc_P11F_had_participant);
+		// hämta ut participated in (0M)
+		relMap.put(ContentHelper.IX_PARTICIPATEDIN, SamsokProtocol.uri_cidoc_P11B_participated_in);
+		// hämta ut was present at (0M)
+		relMap.put(ContentHelper.IX_WASPRESENTAT, SamsokProtocol.uri_cidoc_P12B_was_present_at);
+		// hämta ut occured in the presence of (0M)
+		relMap.put(ContentHelper.IX_OCCUREDINTHEPRESENCEOF, SamsokProtocol.uri_cidoc_P12F_occurred_in_the_presence_of);
 
 		// bio
 		// hämta ut child (01)

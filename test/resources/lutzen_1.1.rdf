@@ -3,22 +3,11 @@
     <ns5:buildDate>2010-01-22</ns5:buildDate>
     <ns5:createdDate>2006-01-01</ns5:createdDate>
     <ns5:dataQuality rdf:resource="http://kulturarvsdata.se/resurser/DataQuality#processed"/>
-    <ns5:itemKeyWord>Kung</ns5:itemKeyWord>
-    <ns5:itemTitle>Gustav Vasa</ns5:itemTitle>
-    <ns5:itemLabel>Gustav Vasa</ns5:itemLabel>
-    <ns5:nameAuth>RAÄ</ns5:nameAuth>
-    <ns5:nameId>1234</ns5:nameId>
-    <ns6:name>Gustav Vasa</ns6:name>
-    <ns6:name>Gustaf Vasa</ns6:name>
-    <ns6:name>Gustav I</ns6:name>
-    <ns6:name>Gustaf Eriksson Vasa</ns6:name>
-    <ns6:firstName>Gustav</ns6:firstName>
-    <ns6:surname>Vasa</ns6:surname>
-    <ns6:gender>male</ns6:gender>
-    <ns6:title>Kung</ns6:title>
-    <ns6:organization>Kungahuset</ns6:organization>
-    <ns5:itemSuperType rdf:resource="http://kulturarvsdata.se/resurser/EntitySuperType#agent"/>
-    <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#person"/>
+    <ns5:itemKeyWord>Lützen</ns5:itemKeyWord>
+    <ns5:itemTitle>Slaget vid Lützen</ns5:itemTitle>
+    <ns5:itemLabel>Slaget vid Lützen</ns5:itemLabel>
+    <ns5:itemSuperType rdf:resource="http://kulturarvsdata.se/resurser/EntitySuperType#event"/>
+    <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#event"/>
     <ns5:ksamsokVersion>1.1</ns5:ksamsokVersion>
     <ns5:lastChangedDate>2009-03-06</ns5:lastChangedDate>
     <ns5:mediaType>text/html</ns5:mediaType>
@@ -26,23 +15,19 @@
     <ns5:serviceName>test</ns5:serviceName>
     <ns5:serviceOrganization>RAÄ</ns5:serviceOrganization>
     <ns5:subject rdf:resource="http://kulturarvsdata.se/resurser/Subject#culturalHistory"/>
-    <ns5:url>http://www.livrustkammaren.se/default.asp?id=4872&amp;ptid=&amp;refid=4983&amp;filename=&amp;xmlfilename=</ns5:url>
-    <ns5:thumbnail>http://www.livrustkammaren.se/livrustkammaren/Redaktionellt/Global/Bilder/Basbilder/Vasa/GustavVasa100.jpg</ns5:thumbnail>
-    <owl:sameAs rdf:resource="http://libris.kb.se/resource/auth/58087"/>
-    <owl:sameAs rdf:resource="http://viaf.org/viaf/59878606"/>
-    <bio:child rdf:resource="http://kulturarvsdata.se/raa/test/2"/>
-    <crm:P11B.participated_in rdf:resource="http://kulturarvsdata.se/raa/test/3"/>
-    <crm:P12B.was_present_at rdf:resource="http://kulturarvsdata.se/raa/test/4"/>
+    <ns5:url>http://sv.wikipedia.org/wiki/Slaget_vid_L%C3%BCtzen</ns5:url>
+    <ns5:thumbnail>http://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Battle_of_Lutzen.jpg/320px-Battle_of_Lutzen.jpg</ns5:thumbnail>
+    <crm:P11F.had_participant rdf:resource="http://viaf.org/viaf/10637323" />
+    <crm:P12F.occurred_in_the_presence_of rdf:resource="http://viaf.org/viaf/10637323" />
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_0">
-    <ns5:name>Person</ns5:name>
+    <ns5:name>Slag</ns5:name>
     <ns5:type>Namn</ns5:type>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemName"/>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_1">
-    <ns5:desc>Text som beskriver Gustav Vasa</ns5:desc>
+    <ns5:desc>Text som beskriver slaget</ns5:desc>
     <ns5:type>Beskrivning</ns5:type>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemDescription"/>
 </rdf:Description>
@@ -50,16 +35,13 @@
     <ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#create"/>
     <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#start"/>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
-    <ns5:fromTime>1496</ns5:fromTime>
-    <ns6:name>Erik Johansson</ns6:name>
+    <ns5:fromTime>1632</ns5:fromTime>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_3">
-    <ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#interact"/>
-    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#act"/>
+    <ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#cease"/>
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#stop"/>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
-    <ns5:fromTime>1531</ns5:fromTime>
-    <!-- TODO ska vara gift med -->
-    <ns6:isRelatedTo rdf:resource="http://kulturarvsdata.se/raa/test/3"/>
+    <ns5:toTime>1632</ns5:toTime>
 </rdf:Description>
 <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
     <ns5:context rdf:nodeID="bNode_2"/>

@@ -24,6 +24,10 @@ public class SamsokProtocol {
 	static final URI uri_cidoc_P49B_is_former_or_current_keeper_of = URI.create(uriPrefix_cidoc_crm + "P49B.is_former_or_current_keeper_of");
 	static final URI uri_cidoc_P105F_right_held_by = URI.create(uriPrefix_cidoc_crm + "P105F.right_held_by");
 	static final URI uri_cidoc_P105B_has_right_on = URI.create(uriPrefix_cidoc_crm + "P105B.has_right_on");
+	static final URI uri_cidoc_P11F_had_participant = URI.create(uriPrefix_cidoc_crm + "P11F.had_participant");
+	static final URI uri_cidoc_P11B_participated_in = URI.create(uriPrefix_cidoc_crm + "P11B.participated_in");
+	static final URI uri_cidoc_P12B_was_present_at = URI.create(uriPrefix_cidoc_crm + "P12B.was_present_at");
+	static final URI uri_cidoc_P12F_occurred_in_the_presence_of = URI.create(uriPrefix_cidoc_crm + "P12F.occurred_in_the_presence_of");
 
 	// bio
 	static final String uriPrefix_bio = "http://purl.org/vocab/bio/0.1/";
