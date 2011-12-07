@@ -166,6 +166,32 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		if (superType == null) {
 			throw new Exception("No item supertype for item with identifier " + s.toString());
 		}
+		// TODO: göra några obligatoriska eller varna om de saknas för agenter
+		//       (supertype==agent ovan kan tex användas)
+		// nya index för agenter på toppnivå
+		ip.setCurrent(ContentHelper.IX_NAMEAUTH);
+		extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameAuth), ip);
+		ip.setCurrent(ContentHelper.IX_NAMEID);
+		extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameId), ip);
+		// TODO: foaf:name innehåller även alternativa namn men man kanske vill ha ett separat
+		//       index för detta? foaf innehåller inget sånt tyvärr så det var därför jag stoppade
+		//       in alternativa namn i namn-fältet enligt http://viaf.org/viaf/59878606/rdf.xml
+		//       skos har alternativt namn som man skulle kunna använda men egentligen berör ju det
+		//       koncept, men det kommer vi ju också lägga in framöver så..
+		ip.setCurrent(ContentHelper.IX_NAME);
+		RDFUtil.extractValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rName), null, ip);
+		ip.setCurrent(ContentHelper.IX_FIRSTNAME);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rFirstName), ip);
+		ip.setCurrent(ContentHelper.IX_SURNAME);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rSurname), ip);
+		ip.setCurrent(ContentHelper.IX_FULLNAME);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rFullName), ip);
+		ip.setCurrent(ContentHelper.IX_GENDER);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rGender), ip);
+		ip.setCurrent(ContentHelper.IX_TITLE);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rTitle), ip);
+		ip.setCurrent(ContentHelper.IX_ORGANIZATION);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rOrganization), ip);
 	}
 	/**
 	 * Extraherar och indexerar typinformation ur en kontextnod.

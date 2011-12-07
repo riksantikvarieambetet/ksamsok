@@ -1,6 +1,8 @@
 package se.raa.ksamsok.lucene;
 
 import static junit.framework.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.InputStream;
@@ -116,6 +118,81 @@ public class Protocol_1_1_Test {
 	}
 
 	@Test
+	public void testParse_Agent() throws Exception {
+		String rdf = loadTestFileAsString("kung_1.1.rdf");
+		Graph graph = RDFUtil.parseGraph(rdf);
+		assertNotNull("Ingen graf, fel på rdf:en?", graph);
+		GraphElementFactory elementFactory = graph.getElementFactory();
+		// grund
+		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
+		URIReference samsokEntity = elementFactory.createURIReference(SamsokProtocol.uri_samsokEntity);
+
+		SubjectNode s = null;
+		for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
+			if (s != null) {
+				throw new Exception("Ska bara finnas en entity i rdf-grafen");
+			}
+			s = triple.getSubject();
+		}
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_1(graph, s);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		LinkedList<String> relations = new LinkedList<String>();
+		List<String> gmlGeometries = new LinkedList<String>();
+		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+		assertNotNull("Inget doc tillbaka", doc);
+		singleValueIndexAssert(doc, ContentHelper.IX_NAMEAUTH, "RAÄ");
+		singleValueIndexAssert(doc, ContentHelper.IX_NAMEID, "1234");
+		multipleValueIndexAssert(doc, ContentHelper.IX_NAME, new String[] {
+				"Gustav Vasa", "Gustaf Vasa", "Gustav I", "Gustaf Eriksson Vasa",
+				"Erik Johansson" // från kontextet
+		}, 5);
+		singleValueIndexAssert(doc, ContentHelper.IX_FIRSTNAME, "Gustav");
+		singleValueIndexAssert(doc, ContentHelper.IX_SURNAME, "Vasa");
+		singleValueIndexAssert(doc, ContentHelper.IX_GENDER, "male");
+		singleValueIndexAssert(doc, ContentHelper.IX_TITLE, "Kung");
+		singleValueIndexAssert(doc, ContentHelper.IX_ORGANIZATION, "Kungahuset");
+
+		// kontrollera specialformatet för relationer
+		String[] expectedRelations = {
+				"sameAs|http://libris.kb.se/resource/auth/58087",
+				"sameAs|http://viaf.org/viaf/59878606",
+				"child|http://kulturarvsdata.se/raa/test/2"
+		};
+
+		assertEquals("Fel antal relationer tillbaka", expectedRelations.length, relations.size());
+		for (String relation: expectedRelations) {
+			assertTrue("Specialrelationen " + relation + " saknas", relations.contains(relation));
+		}
+		// kontrollera uppslagning
+		assertEquals("Felaktigt uppslaget ämne", "Kulturhistoria", doc.getFieldValue(ContentHelper.IX_SUBJECT));
+		// kontrollera exists-index
+		assertEquals("Felaktigt värde för geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
+		assertEquals("Felaktigt värde för thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
+		assertEquals("Felaktigt värde för timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
+		assertEquals("Felaktig objektsupertyp", "Person/Grupp/Organisation", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
+		Collection<Object> contextSuperTypes = doc.getFieldValues(ContentHelper.IX_CONTEXTSUPERTYPE);
+		assertNotNull("Kontextsupertyper saknas", contextSuperTypes);
+		assertTrue("Kontextsupertypen 'Tillverka' (create) saknas", contextSuperTypes.contains("create"));
+		// namn + namn i kontexttypspecifikt index
+		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_NAME, "Erik Johansson");
+		singleValueIndexAssert(doc, "start_" + ContentHelper.IX_NAME, "Erik Johansson");
+
+		Collection<Object> contextSuperTypeIndexValues = doc.getFieldValues("create_" + ContentHelper.IX_NAME);
+		assertNotNull("Indexet create_name saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexValues);
+		multipleValueIndexAssert(doc, ContentHelper.IX_FROMTIME, new String[] {
+				"1496", "1531"
+		}, 2);
+		// century/decade inkl kontext
+		Collection<Object> decadeValues = doc.getFieldValues(ContentHelper.IX_DECADE);
+		assertNotNull("Indexet decade saknar värden", decadeValues);
+		Collection<Object> contextSuperTypeIndexDecadeValues = doc.getFieldValues("create_" + ContentHelper.IX_DECADE);
+		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
+		Collection<Object> contextSuperTypeIndexCenturyValues = doc.getFieldValues("create_" + ContentHelper.IX_CENTURY);
+		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
+	}
+
+	@Test
 	public void testParseBadContextType() throws Exception {
 		String rdf = loadTestFileAsString("hjalm_1.1_felaktig.rdf");
 		Graph graph = RDFUtil.parseGraph(rdf);
@@ -155,6 +232,37 @@ public class Protocol_1_1_Test {
 	private String lookup(SamsokProtocolHandler handler, String uri) {
 		return handler.lookupURIValue(uri);
 	}
+
+	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value) {
+		singleValueIndexAssert(doc, indexName, value, false);
+	}
+
+	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value, boolean contains) {
+		String docValue = (String) doc.getFieldValue(indexName);
+		assertNotNull("Fältet " + indexName + " saknas", docValue);
+		Collection<Object> docValues = doc.getFieldValues(indexName);
+		assertEquals("Fältet " + indexName + " ska bara ha ett värde, värden är, " +
+				docValues, 1, docValues.size());
+		if (contains) {
+			assertTrue("Fel värde för " + indexName, docValue.contains(value));
+		} else {
+			assertEquals("Fel värde för " + indexName, value, docValue);
+		}
+	}
+
+	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName, String[] values, int count) {
+		Collection<Object> docValues = doc.getFieldValues(indexName);
+		assertNotNull("Fältet " + indexName + " saknas", docValues);
+		if (count > 0) {
+			assertEquals("Fältet " + indexName + " innehåller fel antal värden, värden är" +
+					docValues, count, docValues.size());
+		}
+		for (String value: values) {
+			assertTrue("Värdet " + value + " saknas för " + indexName +
+					", värden är " + docValues, docValues.contains(value));
+		}
+	}
+
 
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
