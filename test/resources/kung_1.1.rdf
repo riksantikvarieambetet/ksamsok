@@ -33,6 +33,7 @@
     <bio:child rdf:resource="http://kulturarvsdata.se/raa/test/2"/>
     <crm:P11B.participated_in rdf:resource="http://kulturarvsdata.se/raa/test/3"/>
     <crm:P12B.was_present_at rdf:resource="http://kulturarvsdata.se/raa/test/4"/>
+    <crm:P107B.is_current_or_former_member_of rdf:resource="http://kulturarvsdata.se/raa/test/5"/>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 </rdf:Description>

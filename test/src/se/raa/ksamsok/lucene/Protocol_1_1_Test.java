@@ -159,7 +159,8 @@ public class Protocol_1_1_Test {
 				ContentHelper.IX_SAMEAS + "|" + "http://viaf.org/viaf/59878606",
 				ContentHelper.IX_CHILD + "|" + "http://kulturarvsdata.se/raa/test/2",
 				ContentHelper.IX_PARTICIPATEDIN + "|" + "http://kulturarvsdata.se/raa/test/3",
-				ContentHelper.IX_WASPRESENTAT + "|" + "http://kulturarvsdata.se/raa/test/4"
+				ContentHelper.IX_WASPRESENTAT + "|" + "http://kulturarvsdata.se/raa/test/4",
+				ContentHelper.IX_ISCURRENTORFORMERMEMBEROF + "|" + "http://kulturarvsdata.se/raa/test/5"
 		};
 
 		assertEquals("Fel antal relationer tillbaka", expectedRelations.length, relations.size());

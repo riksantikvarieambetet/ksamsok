@@ -28,6 +28,8 @@ public class SamsokProtocol {
 	static final URI uri_cidoc_P11B_participated_in = URI.create(uriPrefix_cidoc_crm + "P11B.participated_in");
 	static final URI uri_cidoc_P12B_was_present_at = URI.create(uriPrefix_cidoc_crm + "P12B.was_present_at");
 	static final URI uri_cidoc_P12F_occurred_in_the_presence_of = URI.create(uriPrefix_cidoc_crm + "P12F.occurred_in_the_presence_of");
+	static final URI uri_cidoc_P107B_is_current_or_former_member_of = URI.create(uriPrefix_cidoc_crm + "P107B.is_current_or_former_member_of");
+	static final URI uri_cidoc_P107F_has_current_or_former_member = URI.create(uriPrefix_cidoc_crm + "P107F.has_current_or_former_member");
 
 	// bio
 	static final String uriPrefix_bio = "http://purl.org/vocab/bio/0.1/";
@@ -96,6 +98,8 @@ public class SamsokProtocol {
 	static final URI uri_rIsVisualizedBy = URI.create(uriPrefixKSamsok + "isVisualizedBy");
 	static final URI uri_rSameAs = URI.create("http://www.w3.org/2002/07/owl#sameAs"); // obs, owl
 	static final URI uri_rVisualizes = URI.create(uriPrefixKSamsok + "visualizes");
+	static final URI uri_rIsMentionedBy = URI.create(uriPrefixKSamsok + "isMentionedBy");
+	static final URI uri_rMentions = URI.create(uriPrefixKSamsok + "mentions");
 
 	// var-kontext
 	static final URI uri_rContinentName = URI.create(uriPrefixKSamsok + "continentName");

@@ -45,6 +45,7 @@
 	<ns5:isVisualizedBy rdf:resource="http://kulturarvsdata.se/raa/test/16"/>
 	<owl:sameAs rdf:resource="http://kulturarvsdata.se/raa/test/17"/>
 	<ns5:visualizes rdf:resource="http://kulturarvsdata.se/raa/test/18"/>
+	<ns5:isMentionedBy rdf:resource="http://kulturarvsdata.se/raa/test/23" />
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_0">

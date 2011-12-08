@@ -149,6 +149,8 @@ public abstract class ContentHelper {
 	public static final String IX_ISVISUALIZEDBY = "isVisualizedBy";
 	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
 	public static final String IX_VISUALIZES = "visualizes";
+	public static final String IX_ISMENTIONEDBY = "isMentionedBy";
+	public static final String IX_MENTIONS = "mentions";
 
 	// cidoc-crm
 	public static final String IX_HASFORMERORCURRENTOWNER = "has_former_or_current_owner";
@@ -163,6 +165,8 @@ public abstract class ContentHelper {
 	public static final String IX_OCCUREDINTHEPRESENCEOF = "occurred_in_the_presence_of";
 	public static final String IX_HADPARTICIPANT = "had_participant";
 	public static final String IX_PARTICIPATEDIN = "participated_in";
+	public static final String IX_ISCURRENTORFORMERMEMBEROF = "is_current_or_former_member_of";
+	public static final String IX_HASCURRENTORFORMERMEMBER = "has_current_or_former_member";
 
 	// bio
 	public static final String IX_CHILD = "child";
@@ -320,6 +324,8 @@ public abstract class ContentHelper {
 		addIndex(IX_ISVISUALIZEDBY, "Visualiseras av annat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_SAMEAS, "Samma som (uri)", IndexType.VERBATIM);
 		addIndex(IX_VISUALIZES, "Visualiserar objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISMENTIONEDBY, "Nämns av (uri)", IndexType.VERBATIM);
+		addIndex(IX_MENTIONS, "Nämner (uri)", IndexType.VERBATIM);
 		addIndex(IX_ADDEDTOINDEXDATE, "Datum posten lades till i indexet (yyyy-mm-dd) - " + 
 				"obs att detta datum är ungefärligt då det beror på skördefrekvens för " +
 				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
@@ -338,6 +344,8 @@ public abstract class ContentHelper {
 		addIndex(IX_OCCUREDINTHEPRESENCEOF, "Händelsen skedde i närvaro av (uri)", IndexType.VERBATIM);
 		addIndex(IX_HADPARTICIPANT, "Händelsen hade deltagare (uri)", IndexType.VERBATIM);
 		addIndex(IX_PARTICIPATEDIN, "Deltog i händelse (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISCURRENTORFORMERMEMBEROF, "Är eller var tidigare medlem av (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASCURRENTORFORMERMEMBER, "Har eller hade medlem (uri)", IndexType.VERBATIM);
 
 		// bio
 		addIndex(IX_CHILD, "Var far till (uri)", IndexType.VERBATIM);

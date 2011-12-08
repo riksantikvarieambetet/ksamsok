@@ -338,6 +338,7 @@ public class SamsokContentHelperTest {
 		singleValueIndexAssert(doc, ContentHelper.IX_HASFORMERORCURRENTOWNER, "http://kulturarvsdata.se/raa/test/20");
 		singleValueIndexAssert(doc, ContentHelper.IX_WASCREATEDBY, "http://kulturarvsdata.se/raa/test/21");
 		singleValueIndexAssert(doc, ContentHelper.IX_RIGHTHELDBY, "http://kulturarvsdata.se/raa/test/22");
+		singleValueIndexAssert(doc, ContentHelper.IX_ISMENTIONEDBY, "http://kulturarvsdata.se/raa/test/23");
 
 		// specialindexet för relationer
 		String[] allRelations = new String[] {
@@ -361,7 +362,8 @@ public class SamsokContentHelperTest {
 				ContentHelper.IX_HASFORMERORCURRENTKEEPER + "|" + "http://kulturarvsdata.se/raa/test/19",
 				ContentHelper.IX_HASFORMERORCURRENTOWNER + "|" + "http://kulturarvsdata.se/raa/test/20",
 				ContentHelper.IX_WASCREATEDBY + "|" + "http://kulturarvsdata.se/raa/test/21",
-				ContentHelper.IX_RIGHTHELDBY + "|" + "http://kulturarvsdata.se/raa/test/22"
+				ContentHelper.IX_RIGHTHELDBY + "|" + "http://kulturarvsdata.se/raa/test/22",
+				ContentHelper.IX_ISMENTIONEDBY + "|" + "http://kulturarvsdata.se/raa/test/23"
 		};
 		multipleValueIndexAssert(doc, ContentHelper.I_IX_RELATIONS, allRelations, allRelations.length);
 

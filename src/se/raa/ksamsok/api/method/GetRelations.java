@@ -103,6 +103,7 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, IS_DESCRIBED_BY, DESCRIBES);
 		twoWay(map, CONTAINS_INFORMATION_ABOUT, IS_MENTIONED_BY);
 		twoWay(map, HAS_OBJECT_EXAMPLE, IS_OBJECT_EXAMPLE_FOR);
+		twoWay(map, ContentHelper.IX_ISMENTIONEDBY, ContentHelper.IX_MENTIONS);
 
 		// bio (lite special)
 		map.put(ContentHelper.IX_FATHER, ContentHelper.IX_CHILD);
@@ -116,6 +117,7 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_HASRIGHTON, ContentHelper.IX_RIGHTHELDBY);
 		twoWay(map, ContentHelper.IX_WASPRESENTAT, ContentHelper.IX_OCCUREDINTHEPRESENCEOF);
 		twoWay(map, ContentHelper.IX_HADPARTICIPANT, ContentHelper.IX_PARTICIPATEDIN);
+		twoWay(map, ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, ContentHelper.IX_HASCURRENTORFORMERMEMBER);
 
 		// enkelriktade
 		map.put(HAS_BEEN_USED_IN, IS_RELATED_TO);

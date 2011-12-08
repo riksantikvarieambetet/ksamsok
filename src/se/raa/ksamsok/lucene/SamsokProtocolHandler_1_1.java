@@ -60,8 +60,6 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	private static final Map<String, String> superContextTypes_1_1_TO;
 
 	static {
-		//Object o = new String[][] { { "", "" } };
-		// TODO: hantera nya kontexttyperna
 		final Map<String,String> contextTypeValues = new HashMap<String,String>();
 		RDFUtil.readURIValueResource(PATH + "contexttype_1.1.rdf", SamsokProtocol.uri_rContextLabel, contextTypeValues);
 		contextTypes_1_1_TO = Collections.unmodifiableMap(contextTypeValues);
@@ -79,12 +77,22 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		RDFUtil.readURIValueResource(PATH + "dataquality.rdf", SamsokProtocol.uri_r__Name, values);
 		values.putAll(contextTypes_1_1_TO);
 		values.putAll(superContextTypes_1_1_TO);
-		//RDFUtil.readURIValueResource(PATH + "contexttype_1.1.rdf", SamsokProtocol.uri_rContextLabel, values);
 
 		uriValues_1_1_TO = Collections.unmodifiableMap(values);
 
 		// utgå från tidigare version
 		Map<String, URI> relMap = new HashMap<String, URI>(relationsMap_0_TO_1_0);
+
+		// hämta ut is mentioned by (0M)
+		relMap.put(ContentHelper.IX_ISMENTIONEDBY, SamsokProtocol.uri_rIsMentionedBy);
+		// hämta ut mentions (0M)
+		relMap.put(ContentHelper.IX_MENTIONS, SamsokProtocol.uri_rMentions);
+
+		// hämta ut current or former owner of (0M)
+		relMap.put(ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, SamsokProtocol.uri_cidoc_P107B_is_current_or_former_member_of);
+		// hämta ut has former or current keeper of (0M)
+		relMap.put(ContentHelper.IX_HASCURRENTORFORMERMEMBER, SamsokProtocol.uri_cidoc_P107F_has_current_or_former_member);
+
 		// TODO: tillåta dessa åt det här hållet? Kanske bättre att de bara finns i kontextet åt andra hållet?
 		// cidoc-crm
 		// hämta ut has created (0M)
