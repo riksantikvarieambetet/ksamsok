@@ -6,72 +6,67 @@
 
 	<ContextType rdf:ID="design">
 		<contextLabel>Designa</contextLabel>
-		<description>Skapa förutsättningar för att något ska bli till.</description>
+		<description>Skapa förutsättningar för att något ska bli till, t.ex. formge eller skissa.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="produce">
 		<contextLabel>Producera</contextLabel>
-		<description>Att skapa någonting konkret.</description>
+		<description>Producera ett fysiskt ting, t.ex. fotografera eller måla.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="start">
 		<contextLabel>Starta</contextLabel>
-		<description>(Event) Utspela sig (Agenter) Födas.</description>
+		<description>Anger när ett Event startar (t.ex. Andra världkriget) eller när en Agent(t.ex. person eller organisation) föds eller grundas.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="find">
-		<contextLabel>Funnen</contextLabel>
-		<description>Hitta, Påträffa.</description>
+		<contextLabel>Hitta</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har påträffats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="transact">
 		<contextLabel>Överföra</contextLabel>
-		<description>Överföra, ge/skänka, förvärva, deponera, accedera, röva (krigsbyte), tappa, deponera (i marken), försvinna.</description>
+		<description>Anger var, när och av vem ett fysiskt ting har förflyttats, t.ex. ge/skänka, förvärva, eller röva (krigsbyte).</description>
 	</ContextType>
 
 	<ContextType rdf:ID="explore">
 		<contextLabel>Undersöka och beforska</contextLabel>
-		<description>Undersöka, inventera, konditionsbeskriva, gräva, konservera, analysera, dokumentera, samla in.</description>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. inventerats, grävts ut eller konserverats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="own">
 		<contextLabel>Äga</contextLabel>
-		<description>Äga, förvalta, äga immateriellt.</description>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. ägts eller förvaltats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="use">
 		<contextLabel>Använda</contextLabel>
-		<description>Bruka, nyttja, använda.</description>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. brukats eller nyttjats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="reproduce">
 		<contextLabel>Reproducera</contextLabel>
-		<description>Avbilda, rita av/måla av, fotografera av eller reprofotografera.</description>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. avbildats eller reprofotograferats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="display">
 		<contextLabel>Visa</contextLabel>
-		<description>(Fysiskt ting och Event)Visa upp, Ställa ut, Publicera.</description>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. visats upp eller vid en utställning (Event) ställts ut.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="act">
 		<contextLabel>Verka</contextLabel>
-		<description>(Agenter) Regera, Vara anställd, Ta ett uppdrag, Vara gift.</description>
+		<description>Anger var, när och med vem en Agent (t.ex. person eller organisation) har t.ex. regerat, varit gift eller haft ett uppdrag.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="dismiss">
 		<contextLabel>Avföra</contextLabel>
-		<description>Förstöra, gallra, kassera.</description>
-	</ContextType>
-
-	<ContextType rdf:ID="disutilize">
-		<contextLabel>Ej ta tillvara</contextLabel>
-		<description>Ej ta tillvara.</description>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. förstörts, gallrats eller kasserats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="stop">
 		<contextLabel>Avsluta</contextLabel>
-		<description>(Event) Utspela sig (Agenter) Dö, Lägga ner</description>
+		<description>Anger var, när och med vem ett Event avslutas, Agenter (person) dör eller (organisationer) läggs ner.</description>
 	</ContextType>
 
 </rdf:RDF>
