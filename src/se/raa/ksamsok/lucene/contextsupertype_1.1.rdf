@@ -6,17 +6,17 @@
 
 	<ContextSuperType rdf:ID="create">
 		<contextLabel>Skapa</contextLabel>
-		<description>Omfattar tillverkning, skapande etc.</description>
+		<description>Anger tillblivelse (början) av en persons liv, en händelses start eller ett fysiskt tings design, tillverkning eller uppförande.</description>
 	</ContextSuperType>
 
 	<ContextSuperType rdf:ID="interact">
 		<contextLabel>Interagera</contextLabel>
-		<description>Omfattar interaktion, brukande etc.</description>
+		<description>Anger olika händelser i ett fysiskt tings livscykel.</description>
 	</ContextSuperType>
 
 	<ContextSuperType rdf:ID="cease">
 		<contextLabel>Upphöra</contextLabel>
-		<description>Omfattar händelser som avslutar objektets livscykel.</description>
+		<description>Anger händelser som avslutar ett fysiskt tings eller en agents livscykel.</description>
 	</ContextSuperType>
 
 </rdf:RDF>
