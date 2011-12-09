@@ -60,7 +60,11 @@ public class Protocol_1_1_Test {
 		String person = lookup(handler, "http://kulturarvsdata.se/resurser/EntityType#person");
 		assertNotNull("Person ska vara med som typ i 1.1", person);
 		String exist = lookup(handler, "http://kulturarvsdata.se/resurser/ContextType#exist");
-		assertNull("Exist ska inte vara med i 1.1", exist);
+		assertNull("Exist ska inte vara med som kontexttyp i 1.1", exist);
+		String create = lookup(handler, "http://kulturarvsdata.se/resurser/ContextType#create");
+		assertNull("Create ska inte vara med som kontexttyp i 1.1", create);
+		create = lookup(handler, "http://kulturarvsdata.se/resurser/ContextSuperType#create");
+		assertNotNull("Create ska vara med som kontextsupertyp i 1.1", create);
 	}
 
 	@Test
@@ -219,7 +223,6 @@ public class Protocol_1_1_Test {
 		List<String> gmlGeometries = new LinkedList<String>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
-		// TODO: händelse är utställning också(?) så bort med "historisk"?
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "Historisk h\u00e4ndelse");
 		singleValueIndexAssert(doc, ContentHelper.IX_HADPARTICIPANT, "http://viaf.org/viaf/10637323");
 		singleValueIndexAssert(doc, ContentHelper.IX_OCCUREDINTHEPRESENCEOF, "http://viaf.org/viaf/10637323");

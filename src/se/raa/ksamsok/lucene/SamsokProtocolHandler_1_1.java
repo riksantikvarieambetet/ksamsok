@@ -66,7 +66,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 		// kontextsupertyper
 		final Map<String,String> contextSuperTypeValues = new HashMap<String,String>();
-		RDFUtil.readURIValueResource(PATH + "contextsupertype_1.1.rdf", SamsokProtocol.uri_rContextLabel, contextSuperTypeValues);
+		RDFUtil.readURIValueResource(PATH + "contextsupertype_1.1.rdf", SamsokProtocol.uri_r__Name, contextSuperTypeValues);
 		superContextTypes_1_1_TO = Collections.unmodifiableMap(contextSuperTypeValues);
 
 		Map<String,String> values = new HashMap<String,String>();
