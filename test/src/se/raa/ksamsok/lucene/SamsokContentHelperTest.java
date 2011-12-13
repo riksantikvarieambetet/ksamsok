@@ -370,7 +370,7 @@ public class SamsokContentHelperTest {
 		// \u00e5 å, \u00e4 ä,  \u00f6 ö
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTITLE, "Gustav Vasas hj\u00e4lm");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMLABEL, "Hj\u00e4lm");
-		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "Objekt/f\u00f6rem\u00e5l");
+		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "F\u00f6rem\u00e5l");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMCLASS, "http://raa.se/test/itemClass#test");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMCLASSNAME, "Test");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMNAME, "F\u00f6rem\u00e5l");

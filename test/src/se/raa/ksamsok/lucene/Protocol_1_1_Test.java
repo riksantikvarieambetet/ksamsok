@@ -101,7 +101,7 @@ public class Protocol_1_1_Test {
 		assertEquals("Felaktigt värde för geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
 		assertEquals("Felaktigt värde för thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
 		assertEquals("Felaktigt värde för timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
-		assertEquals("Felaktig objektsupertyp", "Fysiska ting", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
+		assertEquals("Felaktig objektsupertyp", "Fysiskt ting", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
 		Collection<Object> contextSuperTypes = doc.getFieldValues(ContentHelper.IX_CONTEXTSUPERTYPE);
 		assertNotNull("Kontextsupertyper saknas", contextSuperTypes);
 		assertTrue("Kontextsupertypen 'Tillverka' (create) saknas", contextSuperTypes.contains("create"));
@@ -177,7 +177,7 @@ public class Protocol_1_1_Test {
 		assertEquals("Felaktigt värde för geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
 		assertEquals("Felaktigt värde för thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
 		assertEquals("Felaktigt värde för timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
-		assertEquals("Felaktig objektsupertyp", "Person/Grupp/Organisation", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
+		assertEquals("Felaktig objektsupertyp", "Agent", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
 		Collection<Object> contextSuperTypes = doc.getFieldValues(ContentHelper.IX_CONTEXTSUPERTYPE);
 		assertNotNull("Kontextsupertyper saknas", contextSuperTypes);
 		assertTrue("Kontextsupertypen 'Tillverka' (create) saknas", contextSuperTypes.contains("create"));

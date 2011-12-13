@@ -5,23 +5,23 @@
 	xml:base="http://kulturarvsdata.se/resurser/EntitySuperType">
 
 	<EntitySuperType rdf:ID="agent">
-		<name>Person/Grupp/Organisation</name>
-		<description>Personer, grupper och organisationer.</description>
+		<name>Agent</name>
+		<description>Person, grupp och organisation.</description>
 	</EntitySuperType>
 
 	<EntitySuperType rdf:ID="object">
-		<name>Fysiska ting</name>
-		<description>Föremål/objekt.</description>
+		<name>Fysiskt ting</name>
+		<description>Föremål, fotografi, bearbetningar/interaktiv resurs, film/video, ljud, dokument, karta, byggnad, fornlämning, konstverk, bok, samling, ritning, teckning och kulturmiljö.</description>
 	</EntitySuperType>
 
 	<EntitySuperType rdf:ID="event">
 		<name>Händelse</name>
-		<description>Historisk händelse, utställningar.</description>
+		<description>Avgränsas av tid och rum t.ex. historisk händelse och utställning.</description>
 	</EntitySuperType>
 
 	<EntitySuperType rdf:ID="concept">
 		<name>Koncept</name>
-		<description>Koncept.</description>
+		<description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</description>
 	</EntitySuperType>
 
 </rdf:RDF>
