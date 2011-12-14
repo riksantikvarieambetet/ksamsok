@@ -119,6 +119,63 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_HADPARTICIPANT, ContentHelper.IX_PARTICIPATEDIN);
 		twoWay(map, ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, ContentHelper.IX_HASCURRENTORFORMERMEMBER);
 
+		// roller
+		// TODO: Har inte gjort index av alla inverserna vilket man kanske borde - det
+		//       beror på om man vill tillåta (och indexera) rollrelationer från
+		//       leverantörer från ett objekt på toppnivån till ett annat utan att
+		//       peka från ett kontext vilket då gör att man tappar övrig kontext-info. 
+		//       Inversen används nu bara för visning i tex kringla och bara
+		//       några få inversindex finns, se todo i SamsokProtocolHandlers static-block
+		twoWay(map, ContentHelper.IX_CLIENT, "clientOf");
+		twoWay(map, ContentHelper.IX_COMPOSER, "composerOf");
+		twoWay(map, ContentHelper.IX_AUTHOR, "authorOf");
+		twoWay(map, ContentHelper.IX_ARCHITECT, "architectOf");
+		twoWay(map, ContentHelper.IX_INVENTOR, "inventorOf");
+		twoWay(map, ContentHelper.IX_SCENOGRAPHER, "scenographerOf");
+		twoWay(map, ContentHelper.IX_DESIGNER, "designerOf");
+		twoWay(map, ContentHelper.IX_PRODUCER, "producerOf");
+		twoWay(map, ContentHelper.IX_ORGANIZER, "organizerOf");
+		twoWay(map, ContentHelper.IX_DIRECTOR, "directorOf");
+		twoWay(map, ContentHelper.IX_PHOTOGRAPHER, "photographerOf");
+		twoWay(map, ContentHelper.IX_PAINTER, "painterOf");
+		twoWay(map, ContentHelper.IX_BUILDER, "builderOf");
+		twoWay(map, ContentHelper.IX_MASTERBUILDER, "masterBuilderOf");
+		twoWay(map, ContentHelper.IX_CONSTRUCTIONCLIENT, "constructionClientOf");
+		twoWay(map, ContentHelper.IX_ENGRAVER, "engraverOf");
+		twoWay(map, ContentHelper.IX_MINTMASTER, "mintmasterOf");
+		twoWay(map, ContentHelper.IX_ARTIST, "artistOf");
+		twoWay(map, ContentHelper.IX_DESIGNENGINEER, "designEngineerOf");
+		twoWay(map, ContentHelper.IX_CARPENTER, "carpenterOf");
+		twoWay(map, ContentHelper.IX_MASON, "masonOf");
+		twoWay(map, ContentHelper.IX_TECHNICIAN, "technicianOf");
+		twoWay(map, ContentHelper.IX_PUBLISHER, "publisherOf");
+		twoWay(map, ContentHelper.IX_PUBLICIST, "publicistOf");
+		twoWay(map, ContentHelper.IX_MUSICIAN, "musicianOf");
+		twoWay(map, ContentHelper.IX_ACTORACTRESS, "actorActressOf");
+		twoWay(map, ContentHelper.IX_PRINTER, "printerOf");
+		twoWay(map, ContentHelper.IX_SIGNER, "signerOf");
+		twoWay(map, ContentHelper.IX_FINDER, "finderOf");
+		twoWay(map, ContentHelper.IX_ABANDONEE, "abandoneeOf");
+		twoWay(map, ContentHelper.IX_INTERMEDIARY, "intermediaryOf");
+		twoWay(map, ContentHelper.IX_BUYER, "buyerOf");
+		twoWay(map, ContentHelper.IX_SELLER, "sellerOf");
+		twoWay(map, ContentHelper.IX_GENERALAGENT, "generalAgentOf");
+		twoWay(map, ContentHelper.IX_DONOR, "donorOf");
+		twoWay(map, ContentHelper.IX_DEPOSITOR, "depositorOf");
+		twoWay(map, ContentHelper.IX_RESELLER, "resellerOf");
+		twoWay(map, ContentHelper.IX_INVENTORYTAKER, "inventoryTakerOf");
+		twoWay(map, ContentHelper.IX_EXCAVATOR, "excavatorOf");
+		twoWay(map, ContentHelper.IX_EXAMINATOR, "examinatorOf");
+		twoWay(map, ContentHelper.IX_CONSERVATOR, "conservatorOf");
+		twoWay(map, ContentHelper.IX_ARCHIVECONTRIBUTOR, "archiveContributorOf");
+		twoWay(map, ContentHelper.IX_INTERVIEWER, "interviewerOf");
+		twoWay(map, ContentHelper.IX_INFORMANT, "informantOf");
+		twoWay(map, ContentHelper.IX_PATENTHOLDER, "patentHolderOf");
+		twoWay(map, ContentHelper.IX_USER, "userOf");
+		twoWay(map, ContentHelper.IX_SCANNEROPERATOR, "scannerOperatorOf");
+		twoWay(map, ContentHelper.IX_PICTUREEDITOR, "pictureEditorOf");
+		twoWay(map, ContentHelper.IX_EMPLOYER, "employerOf");
+
 		// enkelriktade
 		map.put(HAS_BEEN_USED_IN, IS_RELATED_TO);
 		map.put(HAS_IMAGE, IS_RELATED_TO);
@@ -128,6 +185,7 @@ public class GetRelations extends AbstractAPIMethod {
 		// samma i bägge riktningarna
 		map.put(IS_RELATED_TO, IS_RELATED_TO);
 		map.put(SAME_AS, SAME_AS);
+		map.put(ContentHelper.IX_MARRIEDTO, ContentHelper.IX_MARRIEDTO);
 
 		relationXlate = Collections.unmodifiableMap(map);
 	}

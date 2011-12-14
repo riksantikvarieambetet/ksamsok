@@ -174,6 +174,58 @@ public abstract class ContentHelper {
 	public static final String IX_MOTHER = "mother";
 	public static final String IX_FATHER = "father";
 
+	// roller
+	public static final String IX_CLIENT = "client";
+	public static final String IX_COMPOSER = "composer";
+	public static final String IX_AUTHOR = "author";
+	public static final String IX_ARCHITECT = "architect";
+	public static final String IX_INVENTOR = "inventor";
+	public static final String IX_SCENOGRAPHER = "scenographer";
+	public static final String IX_DESIGNER = "designer";
+	public static final String IX_PRODUCER = "producer";
+	public static final String IX_ORGANIZER = "organizer";
+	public static final String IX_DIRECTOR = "director";
+	public static final String IX_PHOTOGRAPHER = "photographer";
+	public static final String IX_PAINTER = "painter";
+	public static final String IX_BUILDER = "builder";
+	public static final String IX_MASTERBUILDER = "masterBuilder";
+	public static final String IX_CONSTRUCTIONCLIENT = "constructionClient";
+	public static final String IX_ENGRAVER = "engraver";
+	public static final String IX_MINTMASTER = "mintmaster";
+	public static final String IX_ARTIST = "artist";
+	public static final String IX_DESIGNENGINEER = "designEngineer";
+	public static final String IX_CARPENTER = "carpenter";
+	public static final String IX_MASON = "mason";
+	public static final String IX_TECHNICIAN = "technician";
+	public static final String IX_PUBLISHER = "publisher";
+	public static final String IX_PUBLICIST = "publicist";
+	public static final String IX_MUSICIAN = "musician";
+	public static final String IX_ACTORACTRESS = "actorActress"; // ACTOR fanns redan så detta är en specialare...
+	public static final String IX_PRINTER = "printer";
+	public static final String IX_SIGNER = "signer";
+	public static final String IX_FINDER = "finder";
+	public static final String IX_ABANDONEE = "abandonee";
+	public static final String IX_INTERMEDIARY = "intermediary";
+	public static final String IX_BUYER = "buyer";
+	public static final String IX_SELLER = "seller";
+	public static final String IX_GENERALAGENT = "generalAgent";
+	public static final String IX_DONOR = "donor";
+	public static final String IX_DEPOSITOR = "depositor";
+	public static final String IX_RESELLER = "reseller";
+	public static final String IX_INVENTORYTAKER = "inventoryTaker";
+	public static final String IX_EXCAVATOR = "excavator";
+	public static final String IX_EXAMINATOR = "examinator";
+	public static final String IX_CONSERVATOR = "conservator";
+	public static final String IX_ARCHIVECONTRIBUTOR = "archiveContributor";
+	public static final String IX_INTERVIEWER = "interviewer";
+	public static final String IX_INFORMANT = "informant";
+	public static final String IX_PATENTHOLDER = "patentHolder";
+	public static final String IX_USER = "user";
+	public static final String IX_SCANNEROPERATOR = "scannerOperator";
+	public static final String IX_PICTUREEDITOR = "pictureEditor";
+	public static final String IX_EMPLOYER = "employer";
+	public static final String IX_MARRIEDTO = "marriedTo";
+
 	// media-index
 	public static final String IX_MEDIALICENSE = "mediaLicense";
 	public static final String IX_MEDIAMOTIVEWORD = "mediaMotiveWord";
@@ -352,6 +404,59 @@ public abstract class ContentHelper {
 		addIndex(IX_PARENT, "Var barn till (uri)", IndexType.VERBATIM);
 		addIndex(IX_MOTHER, "Har mor (uri)", IndexType.VERBATIM);
 		addIndex(IX_FATHER, "Har far (uri)", IndexType.VERBATIM);
+
+		// roller
+		addIndex(IX_CLIENT, "Beställare (uri)", IndexType.VERBATIM);
+		addIndex(IX_COMPOSER, "Kompositör (uri)", IndexType.VERBATIM);
+		addIndex(IX_AUTHOR, "Författare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ARCHITECT, "Arkitekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_INVENTOR, "Uppfinnare (uri)", IndexType.VERBATIM);
+		addIndex(IX_SCENOGRAPHER, "Scenograf (uri)", IndexType.VERBATIM);
+		addIndex(IX_DESIGNER, "Designer (uri)", IndexType.VERBATIM);
+		addIndex(IX_PRODUCER, "Producent (uri)", IndexType.VERBATIM);
+		addIndex(IX_ORGANIZER, "Arrangör (uri)", IndexType.VERBATIM);
+		addIndex(IX_DIRECTOR, "Regissör (uri)", IndexType.VERBATIM);
+		addIndex(IX_PHOTOGRAPHER, "Fotograf (uri)", IndexType.VERBATIM);
+		addIndex(IX_PAINTER, "Målare (uri)", IndexType.VERBATIM);
+		addIndex(IX_BUILDER, "Byggare (uri)", IndexType.VERBATIM);
+		addIndex(IX_MASTERBUILDER, "Byggmästare (uri)", IndexType.VERBATIM);
+		addIndex(IX_CONSTRUCTIONCLIENT, "Byggherre (uri)", IndexType.VERBATIM);
+		addIndex(IX_ENGRAVER, "Gravör (uri)", IndexType.VERBATIM);
+		addIndex(IX_MINTMASTER, "Myntmästare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ARTIST, "Konstnär (uri)", IndexType.VERBATIM);
+		addIndex(IX_DESIGNENGINEER, "Konstruktör (uri)", IndexType.VERBATIM);
+		addIndex(IX_CARPENTER, "Snickare (uri)", IndexType.VERBATIM);
+		addIndex(IX_MASON, "Murare (uri)", IndexType.VERBATIM);
+		addIndex(IX_TECHNICIAN, "Tekniker (uri)", IndexType.VERBATIM);
+		addIndex(IX_PUBLISHER, "Förläggare (uri)", IndexType.VERBATIM);
+		addIndex(IX_PUBLICIST, "Publicist (uri)", IndexType.VERBATIM);
+		addIndex(IX_MUSICIAN, "Musiker (uri)", IndexType.VERBATIM);
+		addIndex(IX_ACTORACTRESS, "Skådespelare (uri)", IndexType.VERBATIM);
+		addIndex(IX_PRINTER, "Tryckare (uri)", IndexType.VERBATIM);
+		addIndex(IX_SIGNER, "Påskrift av (uri)", IndexType.VERBATIM);
+		addIndex(IX_FINDER, "Upphittare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ABANDONEE, "Förvärvare (uri)", IndexType.VERBATIM);
+		addIndex(IX_INTERMEDIARY, "Förmedlare (uri)", IndexType.VERBATIM);
+		addIndex(IX_BUYER, "Köpare (uri)", IndexType.VERBATIM);
+		addIndex(IX_SELLER, "Säljare (uri)", IndexType.VERBATIM);
+		addIndex(IX_GENERALAGENT, "Generalagent (uri)", IndexType.VERBATIM);
+		addIndex(IX_DONOR, "Givare (uri)", IndexType.VERBATIM);
+		addIndex(IX_DEPOSITOR, "Deponent (uri)", IndexType.VERBATIM);
+		addIndex(IX_RESELLER, "Återförsäljare (uri)", IndexType.VERBATIM);
+		addIndex(IX_INVENTORYTAKER, "Inventerare (uri)", IndexType.VERBATIM);
+		addIndex(IX_EXCAVATOR, "Grävare (uri)", IndexType.VERBATIM);
+		addIndex(IX_EXAMINATOR, "Undersökare (uri)", IndexType.VERBATIM);
+		addIndex(IX_CONSERVATOR, "Konservator (uri)", IndexType.VERBATIM);
+		addIndex(IX_ARCHIVECONTRIBUTOR, "Arkivbildare (uri)", IndexType.VERBATIM);
+		addIndex(IX_INTERVIEWER, "Intervjuare (uri)", IndexType.VERBATIM);
+		addIndex(IX_INFORMANT, "Informant (uri)", IndexType.VERBATIM);
+		addIndex(IX_PATENTHOLDER, "Patentinnehavare (uri)", IndexType.VERBATIM);
+		addIndex(IX_USER, "Brukare (uri)", IndexType.VERBATIM);
+		addIndex(IX_SCANNEROPERATOR, "Skanneroperatör (uri)", IndexType.VERBATIM);
+		addIndex(IX_PICTUREEDITOR, "Bildredaktör (uri)", IndexType.VERBATIM);
+		addIndex(IX_EMPLOYER, "Arbets- eller uppdragsgivare (uri)", IndexType.VERBATIM);
+		addIndex(IX_MARRIEDTO, "Gift med (uri)", IndexType.VERBATIM);
+		
 
 		// media
 		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.TOLOWERCASE);
@@ -556,6 +661,16 @@ public abstract class ContentHelper {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Ger index-instans för givet indexnamn. OBS! hanterar ej "kontext-index".
+	 * 
+	 * @param indexName indexnamn
+	 * @return index-instans, eller null
+	 */
+	public static Index getIndex(String indexName) {
+		return indices.get(indexName);
 	}
 
 	/**

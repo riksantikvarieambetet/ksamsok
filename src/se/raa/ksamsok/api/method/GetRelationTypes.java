@@ -5,10 +5,15 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.ContentHelper.Index;
 
 public class GetRelationTypes extends AbstractAPIMethod {
 
@@ -61,8 +66,25 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	@Override
 	protected void writeResult() throws DiagnosticException {
 		writer.println("<relationTypes count=\"" + relationTypes.size() + "\">");
+		Index index;
+		String indexTitle;
 		for (Entry<String, String> rel: relationTypes.entrySet()) {
+			index = ContentHelper.getIndex(rel.getKey());
+			if (index != null) {
+				indexTitle = index.getTitle();
+			} else {
+				index = ContentHelper.getIndex(rel.getValue());
+				if (index != null) {
+					// TODO: hämta rätt sträng, antingen som ovan när/om det blir
+					//       index av inverserna eller på annat sätt
+					indexTitle = "Är/var " + StringUtils.lowerCase(index.getTitle()) + " för";
+				} else {
+					// ska inte hända
+					indexTitle = rel.getKey();
+				}
+			}
 			writer.print("<relationType name=\"" + rel.getKey() + "\"" +
+					" title=\"" + StringEscapeUtils.escapeXml(indexTitle) + "\"" +
 					" reverse=\"" + rel.getValue() + "\">");
 			writer.println("</relationType>");
 		}

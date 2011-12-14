@@ -69,6 +69,7 @@
     <ns5:eventAuth>Hjälmhamrarförbundet</ns5:eventAuth>
     <ns6:title>Smed</ns6:title>
     <ns6:name>Kunz Lochner</ns6:name>
+    <ns5:client rdf:resource="http://kulturarvsdata.se/raa/test/24"/>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_3">
 	<ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#interact"/>
