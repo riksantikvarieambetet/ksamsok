@@ -5,17 +5,17 @@
 	xml:base="http://kulturarvsdata.se/resurser/EntityType">
 	
 	<EntityType rdf:ID="object">
-		<name>Föremål</name>
+		<name>Objekt/föremål</name>
 		<description>Information om t.ex. museiföremål. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 	
 	<EntityType rdf:ID="photo">
-		<name>Fotografi</name>
+		<name>Foto</name>
 		<description>Information om fotografier. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="interactiveResource">
-		<name>Interaktiv resurs</name>
+		<name>Bearbetning/interaktiv resurs</name>
 		<description>Information om en interaktiv resurs som texter, Internet-sidor och multimedia. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 
