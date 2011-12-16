@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -43,7 +45,7 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		value = params.get(GetServiceOrganization.VALUE);
+		value = StringUtils.defaultIfEmpty(params.get(GetServiceOrganization.VALUE), ALL);
 	}
 
 	@Override
