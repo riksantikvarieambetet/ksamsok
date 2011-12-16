@@ -4,12 +4,8 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_CHILD;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTEXTLABEL;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTEXTTYPE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FATHER;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_HASCREATED;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_HASFORMERORCURRENTKEEPER;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_HASFORMERORCURRENTOWNER;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_HASRIGHTON;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_ISFORMERORCURRENTKEEPEROF;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_ISFORMERORCURRENTOWNEROF;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MOTHER;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PARENT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_RIGHTHELDBY;
@@ -21,14 +17,10 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_child;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_father;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_mother;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_parent;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P105B_has_right_on;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P105F_right_held_by;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P49B_is_former_or_current_keeper_of;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P49F_has_former_or_current_keeper;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P51B_is_former_or_current_owner_of;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P51F_has_former_or_current_owner;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P94B_was_created_by;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P94F_has_created;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rContextLabel;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rContextType;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rSameAs;
@@ -38,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jrdf.graph.Graph;
@@ -92,17 +85,6 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		relMap.put(ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, SamsokProtocol.uri_cidoc_P107B_is_current_or_former_member_of);
 		// hämta ut has former or current keeper of (0M)
 		relMap.put(ContentHelper.IX_HASCURRENTORFORMERMEMBER, SamsokProtocol.uri_cidoc_P107F_has_current_or_former_member);
-
-		// TODO: tillåta dessa åt det här hållet? Kanske bättre att de bara finns i kontextet åt andra hållet?
-		// cidoc-crm
-		// hämta ut has created (0M)
-		relMap.put(IX_HASCREATED, uri_cidoc_P94F_has_created);
-		// hämta ut current or former owner of (0M)
-		relMap.put(IX_ISFORMERORCURRENTOWNEROF, uri_cidoc_P51B_is_former_or_current_owner_of);
-		// hämta ut has former or current keeper of (0M)
-		relMap.put(IX_ISFORMERORCURRENTKEEPEROF, uri_cidoc_P49B_is_former_or_current_keeper_of);
-		// hämta ut has right on (0M)
-		relMap.put(IX_HASRIGHTON, uri_cidoc_P105B_has_right_on);
 
 		// hämta ut had participant (0M)
 		relMap.put(ContentHelper.IX_HADPARTICIPANT, SamsokProtocol.uri_cidoc_P11F_had_participant);

@@ -385,13 +385,9 @@ public abstract class ContentHelper {
 
 		// cidoc-crm
 		addIndex(IX_HASFORMERORCURRENTOWNER, "Har nuvarande eller tidigare ägare (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISFORMERORCURRENTOWNEROF, "Är eller var tidigare ägare till (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASFORMERORCURRENTKEEPER, "Har nuvarande eller tidigare förvaltare (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISFORMERORCURRENTKEEPEROF, "Är eller var tidigare förvaltare till (uri)", IndexType.VERBATIM);
 		addIndex(IX_WASCREATEDBY, "Skapades av (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASCREATED, "Har skapat (uri)", IndexType.VERBATIM);
 		addIndex(IX_RIGHTHELDBY, "Rättigheter ägs av (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASRIGHTON, "Äger rättigheter till (uri)", IndexType.VERBATIM);
 		addIndex(IX_WASPRESENTAT, "Var närvarande vid händelse (uri)", IndexType.VERBATIM);
 		addIndex(IX_OCCUREDINTHEPRESENCEOF, "Händelsen skedde i närvaro av (uri)", IndexType.VERBATIM);
 		addIndex(IX_HADPARTICIPANT, "Händelsen hade deltagare (uri)", IndexType.VERBATIM);
