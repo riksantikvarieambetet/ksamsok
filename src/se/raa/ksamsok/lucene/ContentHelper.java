@@ -396,7 +396,7 @@ public abstract class ContentHelper {
 		addIndex(IX_HASCURRENTORFORMERMEMBER, "Har eller hade medlem (uri)", IndexType.VERBATIM);
 
 		// bio
-		addIndex(IX_CHILD, "Var far till (uri)", IndexType.VERBATIM);
+		addIndex(IX_CHILD, "Var förälder till (uri)", IndexType.VERBATIM);
 		addIndex(IX_PARENT, "Var barn till (uri)", IndexType.VERBATIM);
 		addIndex(IX_MOTHER, "Har mor (uri)", IndexType.VERBATIM);
 		addIndex(IX_FATHER, "Har far (uri)", IndexType.VERBATIM);
