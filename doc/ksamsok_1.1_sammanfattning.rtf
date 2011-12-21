@@ -1,0 +1,91 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1053{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang29\b\f0\fs22 F\'f6r\'e4ndringar iom protokollversion 1.1 i k-sams\'f6k\par
+\b0 Detta \'e4r ett f\'f6rs\'f6k att kort sammanfatta de till\'e4gg och f\'f6r\'e4ndringar som skett iom utvecklingen av version 1.1 av k-sams\'f6ksprotokollet. F\'f6r mer utf\'f6rlig dokumentation, se annan projektdokumentation. De stora f\'f6r\'e4ndringarna mot tidigare versioner handlar om nya objekttyper f\'f6r agenter, h\'e4ndelser och koncept samt roll-relationer. K-sams\'f6k kommer hantera poster enligt tidigare protokollversion ett tag fram\'f6ver, men p\'e5 sikt b\'f6r alla tj\'e4nster g\'e5 \'f6ver till version 1.1.\par
+\b Objekttyper (itemType)\b0\par
+Objekttypen objectImage/Objektavbildning har utg\'e5tt, och n\'e5gra nya objekttyper har tillkommit: map/Karta, monument/Kulturl\'e4mning, building/Byggnad, person/Person, organization/Organisation, group/Grupp, event/Historisk h\'e4ndelse, display/Utst\'e4llning och concept/Koncept (de nya objekttyperna har som tidigare prefixet {\field{\*\fldinst{HYPERLINK "http://kulturarvsdata.se/resurser/EntityType#"}}{\fldrslt{\ul\cf1 http://kulturarvsdata.se/resurser/EntityType#}}}\f0\fs22 ). K-sams\'f6k kr\'e4ver iom version 1.1 att itemType verkligen \'e4r n\'e5gon av de definierade typerna f\'f6r att en post ska godk\'e4nnas vid sk\'f6rd.\par
+F\'f6r att gruppera objekttyperna har ocks\'e5 en \'f6vergripande typ inf\'f6rts (itemSuperType) som ocks\'e5 \'e4r obligatorisk. Den \'e4r en URI pss som itemType och m\'e5ste ha n\'e5got av v\'e4rdena agent/Agent, object/Fysiskt ting, event/H\'e4ndelse eller concept/Concept (prefixat av {\field{\*\fldinst{HYPERLINK "http://kulturarvsdata.se/resurser/EntitySuperType#"}}{\fldrslt{\ul\cf1 http://kulturarvsdata.se/resurser/EntitySuperType#}}}\f0\fs22 ). Alla pre-1.1-objekttyper hamnar i strukturen under object/Fysiskt ting.\par
+RDF-resurser f\'f6r itemType och itemSuperType kommer finnas p\'e5 ksamsok.se.\par
+\b Nytt data f\'f6r agenter\par
+\b0 F\'f6r agenter har ett f\'e5tal nya f\'e4lt tillkommit p\'e5 toppniv\'e5n. Det handlar om name (namn, alternativa namn), gender, title, nameAuth, nameId, firstName, surname och organization. Samtliga till\'e4gg \'e4r fr\'e5n foaf som har anv\'e4nts i tidigare protokollversioner (ex {\field{\*\fldinst{HYPERLINK "http://xmlns.com/foaf/0.1/#name"}}{\fldrslt{\ul\cf1 http://xmlns.com/foaf/0.1/#name}}}\f0\fs22 ).\par
+\b H\'e4ndelser och koncept\par
+\b0 F\'f6r h\'e4ndelser och koncept har inget tillkommit, f\'f6rutom objekttyperna sj\'e4lva.\par
+\b Kontexttyper (contextType)\b0\par
+Iom 1.1 har kontexttyperna \'e4ndrats en del. Precis som f\'f6r objekttyperna s\'e5 har en obligatorisk supertyp (contextSuperType (URI)) inf\'f6rts f\'f6r de generella create/Skapa, interact/Interagera och cease/Upph\'f6ra (prefixat av {\field{\*\fldinst{HYPERLINK "http://kulturarvsdata.se/resurser/ContextSuperType#"}}{\fldrslt{\ul\cf1 http://kulturarvsdata.se/resurser/ContextSuperType#}}}\f0\fs22 ).\par
+Kontexttyperna start/Starta, design/Designa, produce/Producera, display/Visa, act/Verka, dismiss/Avf\'f6ra och stop/Avsluta har tillkommit och exist/Bel\'e4gen har f\'f6rsvunnit. Kontexttypen reproduced/Fotograferad har blivit reproduce/Reproducerad, create/Tillverkad har flyttat till att bli en supertyp och destroyed/F\'f6rst\'f6rd har \'f6verg\'e5tt till supertypen cease/Upph\'f6ra. ContextLabel f\'f6r n\'e5gra har \'e4ndrats ocks\'e5, och iom 1.1 indexeras alltid en inskickad contextLabel om den finns, och inte fr\'e5n resursen. V\'e4rden f\'f6r contextType (och contextSuperType) m\'e5ste vara enligt specificerad v\'e4rdem\'e4ngd f\'f6r att poster ska indexeras.\par
+RDF-resurser f\'f6r contextType och contextSuperType kommer finnas p\'e5 ksamsok.se.\par
+\b Relationer\b0\par
+N\'e5gra nya relationer har tillkommit p\'e5 toppniv\'e5, dvs mellan objekt. De flesta har att g\'f6ra med de nya objekttyperna. Nya relationer \'e4r:\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 isMentionedBy /N\'e4mns av (k-sams\'f6ks NS)\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 mentions/N\'e4mner (k-sams\'f6ks NS)\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 child/F\'f6r\'e4lder till (BIO, prefix {\field{\*\fldinst{HYPERLINK "http://purl.org/vocab/bio/0.1/"}}{\fldrslt{\ul\cf1 http://purl.org/vocab/bio/0.1/}}}\f0\fs22 )\par
+{\pntext\f1\'B7\tab}parent/Barn till (BIO)\par
+{\pntext\f1\'B7\tab}mother/Har mor (BIO)\par
+{\pntext\f1\'B7\tab}father/Har far (BIO)\par
+{\pntext\f1\'B7\tab}P12F.occurred_in_the_presence_of/H\'e4ndelsen skedde i n\'e4rvaro av (CIDOC-CRM, prefix {\field{\*\fldinst{HYPERLINK "http://www.cidoc-crm.org/rdfs/cidoc-crm#"}}{\fldrslt{\ul\cf1 http://www.cidoc-crm.org/rdfs/cidoc-crm#}}}\f0\fs22 )\par
+{\pntext\f1\'B7\tab}P12B.was_present_at/Var n\'e4rvarande vid h\'e4ndelse (CIDOC-CRM)\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 P11F.had_participant/H\'e4ndelsen hade deltagare (CIDOC-CRM)\par
+{\pntext\f1\'B7\tab}P11B.participated_in/Deltog i h\'e4ndelse (CIDOC-CRM)\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 P107B.is_current_or_former_member_of/\'c4r eller var tidigare medlem i (CIDOC-CRM)\par
+{\pntext\f1\'B7\tab}P107F.has_current_or_former_member/Har eller hade medlem (CIDOC-CRM)\par
+\pard\sa200\sl276\slmult1 Notera att CIDOC-CRM-relationernas index/v\'e4rden inte har med P-prefixet, utan bara namnet, tex was_present_at.\par
+\pard\sa200\sl276\slmult1\b Roll-relationer\par
+\b0 Ett antal nya relationer som utg\'e5r fr\'e5n kontexten och som pekar p\'e5 agenter har ocks\'e5 tillkommit i k-sams\'f6ks NS och fr\'e5n CIDOC-CRM. Nya kontext-/roll-relationer \'e4r (i k-sams\'f6ks NS om inget annat anges) :\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1  client/Best\'e4llare\par
+{\pntext\f1\'B7\tab} composer/Komposit\'f6r\par
+{\pntext\f1\'B7\tab} author/F\'f6rfattare\par
+{\pntext\f1\'B7\tab} architect/Arkitekt\par
+{\pntext\f1\'B7\tab} inventor/Uppfinnare\par
+{\pntext\f1\'B7\tab} scenographer/Scenograf\par
+{\pntext\f1\'B7\tab} designer/Designer\par
+{\pntext\f1\'B7\tab} producer/Producent\par
+{\pntext\f1\'B7\tab} organizer/Arrang\'f6r\par
+{\pntext\f1\'B7\tab} director/Regiss\'f6r\par
+{\pntext\f1\'B7\tab} photographer/Fotograf\par
+{\pntext\f1\'B7\tab} painter/M\'e5lare\par
+{\pntext\f1\'B7\tab} builder/Byggare\par
+{\pntext\f1\'B7\tab} masterBuilder/Byggm\'e4stare\par
+{\pntext\f1\'B7\tab} constructionClient/Byggherre\par
+{\pntext\f1\'B7\tab} engraver/Grav\'f6r\par
+{\pntext\f1\'B7\tab} mintmaster/Myntm\'e4stare\par
+{\pntext\f1\'B7\tab} artist/Konstn\'e4r\par
+{\pntext\f1\'B7\tab} designEngineer/Konstrukt\'f6r\par
+{\pntext\f1\'B7\tab} carpenter/Snickare\par
+{\pntext\f1\'B7\tab} mason/Murare\par
+{\pntext\f1\'B7\tab} technician/Tekniker\par
+{\pntext\f1\'B7\tab} publisher/F\'f6rl\'e4ggare\par
+{\pntext\f1\'B7\tab} publicist/Publicist\par
+{\pntext\f1\'B7\tab} musician/Musiker\par
+{\pntext\f1\'B7\tab} actorActress/Sk\'e5despelare\par
+{\pntext\f1\'B7\tab} printer/Tryckare\par
+{\pntext\f1\'B7\tab} signer/P\'e5skrift av\par
+{\pntext\f1\'B7\tab} finder/Upphittare\par
+{\pntext\f1\'B7\tab} abandonee/F\'f6rv\'e4rvare\par
+{\pntext\f1\'B7\tab} intermediary/F\'f6rmedlare\par
+{\pntext\f1\'B7\tab} buyer/K\'f6pare\par
+{\pntext\f1\'B7\tab} seller \tab S\'e4ljare\par
+{\pntext\f1\'B7\tab} generalAgent/Generalagent\par
+{\pntext\f1\'B7\tab} donor/Givare\par
+{\pntext\f1\'B7\tab} depositor/Deponent\par
+{\pntext\f1\'B7\tab} reseller/\'c5terf\'f6rs\'e4ljare\par
+{\pntext\f1\'B7\tab} inventoryTaker/Inventerare\par
+{\pntext\f1\'B7\tab} excavator/Gr\'e4vare\par
+{\pntext\f1\'B7\tab} examinator/Unders\'f6kare\par
+{\pntext\f1\'B7\tab} conservator/Konservator\par
+{\pntext\f1\'B7\tab} archiveContributor/Arkivbildare\par
+{\pntext\f1\'B7\tab} interviewer/Intervjuare\par
+{\pntext\f1\'B7\tab} informant/Informant\par
+{\pntext\f1\'B7\tab} patentHolder/Patentinnehavare\par
+{\pntext\f1\'B7\tab} user/Brukare\par
+{\pntext\f1\'B7\tab} scannerOperator/Skanneroperat\'f6r\par
+{\pntext\f1\'B7\tab} pictureEditor/Bildredakt\'f6r\par
+{\pntext\f1\'B7\tab} employer/Arbets- eller uppdragsgivare\par
+{\pntext\f1\'B7\tab}P49F.has_former_or_current_keeper/Har nuvarande eller tidigare f\'f6rvaltare (CIDOC-CRM)\par
+{\pntext\f1\'B7\tab}P51F.has_former_or_current_owner/Har nuvarande eller tidigare \'e4gare (CIDOC-CRM)\par
+{\pntext\f1\'B7\tab}P94B.was_created_by/Skapades av (CIDOC-CRM)\par
+{\pntext\f1\'B7\tab}P105F.right_held_by/R\'e4ttigheter \'e4gs av (CIDOC-CRM)\par
+\pard\sa200\sl276\slmult1 Notera att CIDOC-CRM-relationernas index/v\'e4rden inte har med P-prefixet, utan bara namnet, tex was_created_by. Notera ocks\'e5 att fn kan man bara ange dessa relationer utg\'e5ende fr\'e5n kontextet, och inte fr\'e5n "andra h\'e5llet" fr\'e5n den utpekade agenten.\par
+\b "Kontextindex" med typ och supertyp\b0\par
+Nytt \'e4r ocks\'e5 iom inf\'f6randet av kontextsupertyper att "kontextindex", dvs tex use_fromTime \'e4ven bildas med supertypen. Om ett fromTime-v\'e4rde finns i ett kontext d\'e4r kontexsupertypen \'e4r "create" och kontexttypen \'e4r "start" s\'e5 kommer v\'e4rdet indexeras i b\'e5de create_fromTime och start_fromTime.\par
+}
+ 
