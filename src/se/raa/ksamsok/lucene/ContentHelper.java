@@ -225,6 +225,57 @@ public abstract class ContentHelper {
 	public static final String IX_PICTUREEDITOR = "pictureEditor";
 	public static final String IX_EMPLOYER = "employer";
 	public static final String IX_MARRIEDTO = "marriedTo";
+	
+	//roller inverser inte index men konstanter
+	public static final String CLIENT_OF ="clientOf";
+	public static final String COMPOSER_OF ="composerOf";
+	public static final String AUTHOR_OF = "authorOf";
+	public static final String ARCHITECT_OF = "architectOf";
+	public static final String INVENTOR_OF = "inventorOf";
+	public static final String SCENOGRAPHER_OF = "scenographerOf";
+	public static final String DESIGNER_OF = "designerOf";
+	public static final String PRODUCER_OF = "producerOf";
+	public static final String ORGANIZER_OF = "organizerOf";
+	public static final String DIRECTOR_OF = "directorOf";
+	public static final String PHOTOGRAPHER_OF = "photographerOf";
+	public static final String PAINTER_OF = "painterOf";
+	public static final String BUILDER_OF = "builderOf";
+	public static final String MASTERBUILDER_OF = "masterBuilderOf";
+	public static final String CONSTRUCTIONCLIENT_OF = "constructionClientOf";
+	public static final String ENGRAVER_OF = "engraverOf";
+	public static final String MINTMASTER_OF = "mintmasterOf";
+	public static final String ARTIST_OF = "artistOf";
+	public static final String DESIGNENGINEER_OF = "designEngineerOf";
+	public static final String CARPENTER_OF = "carpenterOf";
+	public static final String MASON_OF = "masonOf";
+	public static final String TECHNICIAN_OF = "technicianOf";
+	public static final String PUBLISHER_OF = "publisherOf";
+	public static final String PUBLICIST_OF = "publicistOf";
+	public static final String MUSICIAN_OF = "musicianOf";
+	public static final String ACTORACTRESS_OF = "actorActressOf";
+	public static final String PRINTER_OF = "printerOf";
+	public static final String SIGNER_OF = "signerOf";
+	public static final String FINDER_OF = "finderOf";
+	public static final String ABANDONEE_OF = "abandoneeOf";
+	public static final String INTERMEDIARY_OF = "intermediaryOf";
+	public static final String BUYER_OF = "buyerOf";
+	public static final String SELLER_OF = "sellerOf";
+	public static final String GENERALAGENT_OF = "generalAgentOf";
+	public static final String DONOR_OF = "donorOf";
+	public static final String DEPOSITOR_OF = "depositorOf";
+	public static final String RESELLER_OF = "resellerOf";
+	public static final String INVENTORYTAKER_OF = "inventoryTakerOf";
+	public static final String EXCAVATOR_OF = "excavatorOf";
+	public static final String EXAMINATOR_OF = "examinatorOf";
+	public static final String CONSERVATOR_OF = "conservatorOf";
+	public static final String ARCHIVECONTRIBUTOR_OF = "archiveContributorOf";
+	public static final String INTERVIEWER_OF = "interviewerOf";
+	public static final String INFORMANT_OF = "informantOf";
+	public static final String PATENTHOLDER_OF = "patentHolderOf";
+	public static final String USER_OF = "userOf";
+	public static final String SCANNEROPERATOR_OF = "scannerOperatorOf";
+	public static final String PICTUREEDITOR_OF = "pictureEditorOf";
+	public static final String EMPLOYER_OF = "employerOf";
 
 	// media-index
 	public static final String IX_MEDIALICENSE = "mediaLicense";
