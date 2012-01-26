@@ -66,7 +66,12 @@
 
 	<EntityType rdf:ID="site">
 		<name>Miljö</name>
-		<description>Information om en större miljö som t.ex. innefattar fornlämningar och/eller bebyggelse. Underkategori till Fysiskt ting.</description>
+		<description>Ersätts av Kulturmiljö men finns kvar för bakåtkompatibilitet. Underkategori till Fysiskt ting.</description>
+	</EntityType>
+	
+	<EntityType rdf:ID="culturallandscape">
+		<name>Kulturmiljö</name>
+		<description>Information om en större miljö som t.ex. innefattar fornlämningar och/eller bebyggelse (exempelvis en kyrkomiljö eller ett riksintresse). Underkategori till Fysiskt ting.</description>
 	</EntityType>
 	
 	<EntityType rdf:ID="monument">
