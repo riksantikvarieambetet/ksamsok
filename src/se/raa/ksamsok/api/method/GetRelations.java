@@ -120,12 +120,6 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, ContentHelper.IX_HASCURRENTORFORMERMEMBER);
 
 		// roller
-		// TODO: Har inte gjort index av alla inverserna vilket man kanske borde - det
-		//       beror på om man vill tillåta (och indexera) rollrelationer från
-		//       leverantörer från ett objekt på toppnivån till ett annat utan att
-		//       peka från ett kontext vilket då gör att man tappar övrig kontext-info. 
-		//       Inversen används nu bara för visning i tex kringla och bara
-		//       några få inversindex finns, se todo i SamsokProtocolHandlers static-block
 		twoWay(map, ContentHelper.IX_CLIENT, ContentHelper.CLIENT_OF);
 		twoWay(map, ContentHelper.IX_COMPOSER, ContentHelper.COMPOSER_OF);
 		twoWay(map, ContentHelper.IX_AUTHOR, ContentHelper.AUTHOR_OF);

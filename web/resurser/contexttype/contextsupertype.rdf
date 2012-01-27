@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/ContextSuperType">
+
+	<ContextSuperType rdf:ID="create">
+		<name>Skapa</name>
+		<description>Anger tillblivelse (början) av en persons liv, en händelses start eller ett fysiskt tings design, tillverkning eller uppförande.</description>
+	</ContextSuperType>
+
+	<ContextSuperType rdf:ID="interact">
+		<name>Interagera</name>
+		<description>Anger olika händelser i ett fysiskt tings livscykel.</description>
+	</ContextSuperType>
+
+	<ContextSuperType rdf:ID="cease">
+		<name>Upphöra</name>
+		<description>Anger händelser som avslutar ett fysiskt tings eller en agents livscykel.</description>
+	</ContextSuperType>
+
+</rdf:RDF>

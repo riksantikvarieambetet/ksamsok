@@ -1,52 +1,72 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF 
 	xmlns="http://kulturarvsdata.se/ksamsok#" 
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	xml:base="http://kulturarvsdata.se/resurser/ContextType#">
-	
-	<ContextType rdf:ID="create">
-		<contextLabel>Tillverkad</contextLabel>
-		<description>Omfattar tillverkning, skapande etc. Tillverkad kan ersättas med Skapad, Skissad, Uppfunnen, Konstruerad, Modifierad eller Färdigställd.</description>
-	</ContextType>
-	
-	<ContextType rdf:ID="find">
-		<contextLabel>Funnen</contextLabel>
-		<description>Omfattar hittande etc. Funnen kan ersättas med Påträffad.</description>
-	</ContextType>
-	
-	<ContextType rdf:ID="use">
-		<contextLabel>Brukad</contextLabel>
-		<description>Omfattar bruk, aktivitet, ändringar etc. Brukad kan ersättas med Restaurerad, Boplatsaktivitet, Gravaktivitet eller Annan aktivitet.</description>
-	</ContextType>
-	
-	<ContextType rdf:ID="explore">
-		<contextLabel>Undersökt</contextLabel>
-		<description>Omfattar undersökningar, analyser, konservering etc. Undersökt kan ersättas med Inventerad, Utgrävd eller Konserverad.</description>
-	</ContextType>
-	
-	<ContextType rdf:ID="transact">
-		<contextLabel>Deponerad</contextLabel>
-		<description>Omfattar överföringar, gåvor, förvärv etc. Deponerad kan ersättas med Förvärvad eller Skänkt.</description>
-	</ContextType>
-	
-	<ContextType rdf:ID="own">
-		<contextLabel>Ägd</contextLabel>
-		<description>Omfattar ägande. Inga andra valbara alternativ på etiketten för närvarande.</description>
-	</ContextType>
-	
-	<ContextType rdf:ID="exist">
-		<contextLabel>Belägen</contextLabel>
-		<description>Omfattar belägenhet. Inga andra valbara alternativ på etiketten för närvarande.</description>
-	</ContextType>
-	
-	<ContextType rdf:ID="reproduced">
-		<contextLabel>Fotograferad</contextLabel>
-		<description>Omfattar avbildning. Fotograferad kan ersättas med Förstorad.</description>
+	xml:base="http://kulturarvsdata.se/resurser/ContextType">
+
+	<ContextType rdf:ID="design">
+		<contextLabel>Designa</contextLabel>
+		<description>Skapa förutsättningar för att något ska bli till, t.ex. formge eller skissa.</description>
 	</ContextType>
 
-	<ContextType rdf:ID="destroyed">
-		<contextLabel>Förstörd</contextLabel>
-		<description>Omfattar händelser som avslutar objektets livscykel. Förstörd kan ersättas med Förlorad (inkluderar borttappad och stulen) eller Avslutad.</description>
+	<ContextType rdf:ID="produce">
+		<contextLabel>Producera</contextLabel>
+		<description>Producera ett fysiskt ting, t.ex. fotografera eller måla.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="start">
+		<contextLabel>Starta</contextLabel>
+		<description>Anger när ett Event startar (t.ex. Andra världkriget) eller när en Agent(t.ex. person eller organisation) föds eller grundas.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="find">
+		<contextLabel>Hitta</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har påträffats.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="transact">
+		<contextLabel>Överföra</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har förflyttats, t.ex. ge/skänka, förvärva, eller röva (krigsbyte).</description>
+	</ContextType>
+
+	<ContextType rdf:ID="explore">
+		<contextLabel>Undersöka och beforska</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. inventerats, grävts ut eller konserverats.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="own">
+		<contextLabel>Äga</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. ägts eller förvaltats.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="use">
+		<contextLabel>Använda</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. brukats eller nyttjats.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="reproduce">
+		<contextLabel>Reproducera</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. avbildats eller reprofotograferats.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="display">
+		<contextLabel>Visa</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. visats upp eller vid en utställning (Event) ställts ut.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="act">
+		<contextLabel>Verka</contextLabel>
+		<description>Anger var, när och med vem en Agent (t.ex. person eller organisation) har t.ex. regerat, varit gift eller haft ett uppdrag.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="dismiss">
+		<contextLabel>Avföra</contextLabel>
+		<description>Anger var, när och av vem ett fysiskt ting har t.ex. förstörts, gallrats eller kasserats.</description>
+	</ContextType>
+
+	<ContextType rdf:ID="stop">
+		<contextLabel>Avsluta</contextLabel>
+		<description>Anger var, när och med vem ett Event avslutas, Agenter (person) dör eller (organisationer) läggs ner.</description>
 	</ContextType>
 
 </rdf:RDF>
