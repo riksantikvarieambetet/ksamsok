@@ -73,6 +73,11 @@ public class RDFUtil {
 				buf.append(value);
 				if (ip != null) {
 					ip.addToDoc(value);
+					// specialfall för att hantera relationer som nog egentligen felaktigt(?) är vanliga värden, de borde vara rdf-resurser och då URIReferences
+					// jmfr <isPartOf>http...</isPartOf> och <isPartOf rdf:resource="http..." />
+					if (relations != null) {
+						ip.lookupAndHandleURIValue(value, relations, ref != null ? ref.getURI().toString() : null);
+					}
 				}
 			} else if (t.getObject() instanceof URIReference) {
 				value = getReferenceValue((URIReference) t.getObject(), ip, relations, ref);
