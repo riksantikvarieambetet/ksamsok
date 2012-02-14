@@ -67,14 +67,14 @@
 #   CATALINA_PID    (Optional) Path of the file which should contains the pid
 #                   of catalina startup java process, when start (fork) is used
 #
-# $Id: catalina.sh,v 1.6 2010/12/17 08:28:08 bolew Exp $
+# $Id: catalina.sh,v 1.7 2012/02/14 17:18:52 niklas Exp $
 # -----------------------------------------------------------------------------
 
 #RAA Parametrar
 LANG=en_US.utf-8; export LANG
 
 JRE_HOME=/usr/java/jre1.6.0; export JRE_HOME
-JAVA_OPTS="-server -Xmx1536m"
+JAVA_OPTS="-server -Xmx1536m -XX:MaxPermSize=128m -XX:+HeapDumpOnOutOfMemoryError -XX:SoftRefLRUPolicyMSPerMB=1000 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:+CMSIncrementalPacing -XX:CMSIncrementalDutyCycleMin=0 -XX:CMSIncrementalDutyCycle=10"
 unset CATALINA_HOME
 CATALINA_OPTS="-d64 -Dsun.net.client.defaultReadTimeout=5000000 -Dsun.net.client.defaultConnectTimeout=60000 -Djava.awt.headless=true -Dkms.ojb.lrucache.size=100000"
 #END RAA Parametrar  
