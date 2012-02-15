@@ -54,6 +54,8 @@ public class SitemapBuilder
 			ps = c.prepareStatement(sql);
 			ps.setInt(1, batchSize);
 			ps.setInt(2, offset);
+			// fetch in smaller groups
+			ps.setFetchSize(DBUtil.FETCH_SIZE);
 			rs = ps.executeQuery();
 			writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			writer.println("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
@@ -74,9 +76,11 @@ public class SitemapBuilder
 			}
 		}catch(SQLException e) {
 			logger.error(e.getMessage(), e);
-		}finally{
-			writer.println("</urlset>");
+		} finally {
+			// make sure the db resources get closed first
 			DBUtil.closeDBResources(rs, ps, c);
+			// and then write the end tag and potentially risk an exception
+			writer.println("</urlset>");
 		}
 	}
 	
