@@ -24,6 +24,7 @@ import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.statistic.StatisticLoggData;
+import se.raa.ksamsok.util.ShmSiteCacherHackTicket3419;
 
 /**
  * Hanterar sökningar efter objekt
@@ -192,12 +193,17 @@ public class Search extends AbstractSearchMethod {
 		String content = null;
 		byte[] xmlData = (byte[]) doc.getFieldValue(binDataField);
 		try {
-			if (xmlData != null) {
-				content = new String(xmlData, "UTF-8");
-			}
-			// TODO: NEK: ta bort när allt är omindexerat
-			if (content == null) {
-				content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
+			// hämta ev från hack-cachen
+			if (ShmSiteCacherHackTicket3419.useCache(params.get(ShmSiteCacherHackTicket3419.KRINGLA), uri)) {
+				content = ShmSiteCacherHackTicket3419.getOrRecache(uri, xmlData);
+			} else {
+				if (xmlData != null) {
+					content = new String(xmlData, "UTF-8");
+				}
+				// TODO: NEK: ta bort när allt är omindexerat
+				if (content == null) {
+					content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
+				}
 			}
 			if (content == null) {
 				logger.warn("Hittade inte xml-data (" + binDataField + ") för " + uri);

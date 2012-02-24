@@ -24,6 +24,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.solr.SearchService;
+import se.raa.ksamsok.util.ShmSiteCacherHackTicket3419;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect 
@@ -142,6 +143,8 @@ public class ResolverServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		// ge möjlighet att rensa cache manuellt vid behov
+		ShmSiteCacherHackTicket3419.clearCache(req.getParameter(ShmSiteCacherHackTicket3419.CLEAR_CACHE));
 		String[] pathComponents = checkAndForwardRequests(req, resp);
 		if (pathComponents == null) {
 			return;
@@ -217,12 +220,17 @@ public class ResolverServlet extends HttpServlet {
 			switch (format) {
 			case RDF:
 				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-				if (xmlContent != null) {
-					content = new String(xmlContent, "UTF-8");
-				}
-				// TODO: NEK ta bort när allt är omindexerat
-				if (content == null) {
-					content = hrm.getXMLData(urli);
+				// hämta ev från hack-cachen
+				if (ShmSiteCacherHackTicket3419.useCache(req.getParameter(ShmSiteCacherHackTicket3419.KRINGLA), urli)) {
+					content = ShmSiteCacherHackTicket3419.getOrRecache(urli, xmlContent);
+				} else {
+					if (xmlContent != null) {
+						content = new String(xmlContent, "UTF-8");
+					}
+					// TODO: NEK ta bort när allt är omindexerat
+					if (content == null) {
+						content = hrm.getXMLData(urli);
+					}
 				}
 				if (content == null) {
 					logger.warn("Could not find rdf for record with uri: " + urli);
