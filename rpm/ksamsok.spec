@@ -1,14 +1,14 @@
 %define ver 1.0.1
-%define rel 28
+%define rel 29
 
-Summary: Raä K-Samsök, centralnod (@RPM_SUFFIX@)
+Summary: Raï¿½ K-Samsï¿½k, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@
 Version: %{ver}
 Release: %{rel}
 Packager: Borje Lewin <borje.lewin@raa.com>
 Vendor: Raa 
 URL: http://www.raa.se
-License: (C) 2009 RAÄ 
+License: (C) 2009 RAï¿½ 
 Group: System Environment/Daemons
 # provar att kommentera bort BuildArchitectures: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -17,7 +17,7 @@ Requires: raa-tomcat8080 >= 6.0.18, raa-ksamsok_solr_@RPM_SUFFIX@ >= 1.0.0
 Provides: raa-ksamsok_applic
 
 %description
-Raä K-Samsok, centralnod (@RPM_SUFFIX@)
+Raï¿½ K-Samsok, centralnod (@RPM_SUFFIX@)
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -64,8 +64,8 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 # %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/context.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/tomcat-users.xml
 %attr(0755,tomcat,nobody) /usr/local/tomcat8080/bin/catalina.sh
-# oracle-drivrutiner för jdbc och spatialutökningar
-# obs, se till att ha samma matchningar här som i build.xml
+# oracle-drivrutiner fï¿½r jdbc och spatialutï¿½kningar
+# obs, se till att ha samma matchningar hï¿½r som i build.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/postgresql-9.0-801.jdbc4.jar
@@ -76,20 +76,20 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 * Mon Dec 6 2010 ant
 - Master/slave
 * Wed Dec 1 2010 ant
-- Beroende på ksamok-solr och bort med lucenes indexkatalog
+- Beroende pï¿½ ksamok-solr och bort med lucenes indexkatalog
 * Fri Dec 11 2009 ant
 - Uppdaterat till nya RPM-metodiken
 * Tue Jul 28 2009 ant
-- La till extra jar-filer för hantering av spatiala data
+- La till extra jar-filer fï¿½r hantering av spatiala data
 * Fri Feb 13 2009 ant
-- Nya tjänsterelaterade index mm
+- Nya tjï¿½nsterelaterade index mm
 * Tue Feb 3 2009 ant
 - Tecken- och indexfixar
 * Tue Feb 3 2009 ant
-- Hantera too many boolean clauses bättre
+- Hantera too many boolean clauses bï¿½ttre
 * Mon Feb 2 2009 ant
-- Flyttade om gränssnitt en aning
+- Flyttade om grï¿½nssnitt en aning
 * Mon Feb 2 2009 ant
 - Diverse buggfixar
 * Mon Jan 19 2009 ant
-- Första version
+- Fï¿½rsta version
