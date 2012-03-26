@@ -396,7 +396,7 @@
 	</Country>
 
 	<Country rdf:ID="cd">
-		<name>Kongo-Brazzaville</name>
+		<name>Kongo</name>
 		<name>Democratic Republic of the Congo@en</name>
 		<owl:sameAs>http://sws.geonames.org/203312</owl:sameAs>
 		<alpha2>cd</alpha2>
@@ -416,7 +416,7 @@
 	</Country>
 
 	<Country rdf:ID="cg">
-		<name>Kongo</name>
+		<name>Kongo-Brazzaville</name>
 		<name>Republic of the Congo@en</name>
 		<owl:sameAs>http://sws.geonames.org/2260494</owl:sameAs>
 		<alpha2>cg</alpha2>
