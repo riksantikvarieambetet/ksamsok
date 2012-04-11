@@ -26,7 +26,7 @@ import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Hanterar förfrågningar till K-samsöks API
+ * Hanterar fï¿½rfrï¿½gningar till K-samsï¿½ks API
  * @author Henrik Hjalmarsson
  */
 public class APIServlet extends HttpServlet {
@@ -89,6 +89,7 @@ public class APIServlet extends HttpServlet {
 					method.performMethod();
 					keyManager.updateUsage(apiKey);
 				} catch (APIException e) {
+					logger.error("queryString i requesten: "+ req.getQueryString());					
 					diagnostic(writer, method, stylesheet, e);
 				} catch (Exception e) {
 					logger.error("In doGet", e);
