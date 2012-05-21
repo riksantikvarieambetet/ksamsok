@@ -135,14 +135,17 @@ public abstract class ContentHelper {
 	public static final String IX_RELURI = "relUri"; // slask-indexet
 	public static final String IX_CONTAINSINFORMATIONABOUT = "containsInformationAbout";
 	public static final String IX_CONTAINSOBJECT = "containsObject";
+	public static final String IX_ISCONTAINEDIN = "isContainedIn";
 	public static final String IX_HASBEENUSEDIN = "hasBeenUsedIn";
 	public static final String IX_HASCHILD = "hasChild";
 	public static final String IX_HASFIND = "hasFind";
 	public static final String IX_HASIMAGE = "hasImage";
 	public static final String IX_HASOBJECTEXAMPLE = "hasObjectExample";
+	public static final String IX_ISOBJECTEXAMPLEFOR = "isObjectExampleFor";
 	public static final String IX_HASPARENT = "hasParent";
 	public static final String IX_HASPART = "hasPart";
 	public static final String IX_ISDESCRIBEDBY = "isDescribedBy";
+	public static final String IX_DESCRIBES = "describes";
 	public static final String IX_ISFOUNDIN = "isFoundIn";
 	public static final String IX_ISPARTOF = "isPartOf";
 	public static final String IX_ISRELATEDTO = "isRelatedTo";
@@ -413,14 +416,17 @@ public abstract class ContentHelper {
 		addIndex(IX_RELURI, "Är relaterat på något sätt till annat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_CONTAINSINFORMATIONABOUT, "Har information om (uri)", IndexType.VERBATIM);
 		addIndex(IX_CONTAINSOBJECT, "Innehåller objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISCONTAINEDIN, "Innehålls i objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASBEENUSEDIN, "Används i (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASCHILD, "Har underordnat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASFIND, "Har fynd (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASIMAGE, "Har bild (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASOBJECTEXAMPLE, "Har objektexempel (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISOBJECTEXAMPLEFOR, "Är objektexempel för (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASPARENT, "Har överordnat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASPART, "Har del (uri)", IndexType.VERBATIM);
 		addIndex(IX_ISDESCRIBEDBY, "Beskrivs av (uri)", IndexType.VERBATIM);
+		addIndex(IX_DESCRIBES, "Beskriver (uri)", IndexType.VERBATIM);
 		addIndex(IX_ISFOUNDIN, "Finns i (uri)", IndexType.VERBATIM);
 		addIndex(IX_ISPARTOF, "Är del av annat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_ISRELATEDTO, "Är relaterat till annat objekt (uri)", IndexType.VERBATIM);

@@ -1,30 +1,5 @@
 package se.raa.ksamsok.lucene;
 
-import static se.raa.ksamsok.lucene.ContentHelper.IX_CHILD;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTEXTLABEL;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTEXTTYPE;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_FATHER;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_HASFORMERORCURRENTKEEPER;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_HASFORMERORCURRENTOWNER;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_MOTHER;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_PARENT;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_RIGHTHELDBY;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_WASCREATEDBY;
-import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
-import static se.raa.ksamsok.lucene.SamsokProtocol.context_pre;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uriPrefixKSamsok;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_child;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_father;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_mother;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_bio_parent;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P105F_right_held_by;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P49F_has_former_or_current_keeper;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P51F_has_former_or_current_owner;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_cidoc_P94B_was_created_by;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rContextLabel;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rContextType;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rSameAs;
-
 import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,13 +48,19 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 		uriValues_1_1_TO = Collections.unmodifiableMap(values);
 
-		// utgå från tidigare version
+		// utgå från tidigare version och lägg till de nytillkomna
 		Map<String, URI> relMap = new HashMap<String, URI>(relationsMap_0_TO_1_0);
 
 		// hämta ut is mentioned by (0M)
 		relMap.put(ContentHelper.IX_ISMENTIONEDBY, SamsokProtocol.uri_rIsMentionedBy);
 		// hämta ut mentions (0M)
 		relMap.put(ContentHelper.IX_MENTIONS, SamsokProtocol.uri_rMentions);
+		// hämta ut is contained in (0M)
+		relMap.put(ContentHelper.IX_ISCONTAINEDIN, SamsokProtocol.uri_rIsContainedIn);
+		// hämta ut describes (0M)
+		relMap.put(ContentHelper.IX_DESCRIBES, SamsokProtocol.uri_rDescribes);
+		// hämta ut is object example for (0M)
+		relMap.put(ContentHelper.IX_ISOBJECTEXAMPLEFOR, SamsokProtocol.uri_rIsObjectExampleFor);
 
 		// hämta ut current or former owner of (0M)
 		relMap.put(ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, SamsokProtocol.uri_cidoc_P107B_is_current_or_former_member_of);
@@ -97,23 +78,23 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 		// bio
 		// hämta ut child (01)
-		relMap.put(IX_CHILD, uri_bio_child);
+		relMap.put(ContentHelper.IX_CHILD, SamsokProtocol.uri_bio_child);
 		// hämta ut parent (01)
-		relMap.put(IX_PARENT, uri_bio_parent);
+		relMap.put(ContentHelper.IX_PARENT, SamsokProtocol.uri_bio_parent);
 		// hämta ut mother (01)
-		relMap.put(IX_MOTHER, uri_bio_mother);
+		relMap.put(ContentHelper.IX_MOTHER, SamsokProtocol.uri_bio_mother);
 		// hämta ut father (01)
-		relMap.put(IX_FATHER, uri_bio_father);
+		relMap.put(ContentHelper.IX_FATHER, SamsokProtocol.uri_bio_father);
 
 		relationsMap_1_1_TO = Collections.unmodifiableMap(relMap);
 
 		// kontextrelationerna
 		Map<String, URI> contextRelMap = new HashMap<String, URI>();
 
-		contextRelMap.put(IX_HASFORMERORCURRENTKEEPER, uri_cidoc_P49F_has_former_or_current_keeper);
-		contextRelMap.put(IX_HASFORMERORCURRENTOWNER, uri_cidoc_P51F_has_former_or_current_owner);
-		contextRelMap.put(IX_WASCREATEDBY, uri_cidoc_P94B_was_created_by);
-		contextRelMap.put(IX_RIGHTHELDBY, uri_cidoc_P105F_right_held_by);
+		contextRelMap.put(ContentHelper.IX_HASFORMERORCURRENTKEEPER, SamsokProtocol.uri_cidoc_P49F_has_former_or_current_keeper);
+		contextRelMap.put(ContentHelper.IX_HASFORMERORCURRENTOWNER, SamsokProtocol.uri_cidoc_P51F_has_former_or_current_owner);
+		contextRelMap.put(ContentHelper.IX_WASCREATEDBY, SamsokProtocol.uri_cidoc_P94B_was_created_by);
+		contextRelMap.put(ContentHelper.IX_RIGHTHELDBY, SamsokProtocol.uri_cidoc_P105F_right_held_by);
 		contextRelMap.put(ContentHelper.IX_CLIENT, SamsokProtocol.uri_rClient);
 		contextRelMap.put(ContentHelper.IX_AUTHOR, SamsokProtocol.uri_rAuthor);
 		contextRelMap.put(ContentHelper.IX_ARCHITECT, SamsokProtocol.uri_rArchitect);
@@ -185,10 +166,10 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	public String getRelationTypeNameFromURI(String refUri) {
 		// specialhantering av relationer
 		String relationType;
-		if (uri_rSameAs.toString().equals(refUri)) {
+		if (SamsokProtocol.uri_rSameAs.toString().equals(refUri)) {
 			relationType = ContentHelper.IX_SAMEAS;
 		} else {
-			relationType = StringUtils.trimToNull(StringUtils.substringAfter(refUri, uriPrefixKSamsok));
+			relationType = StringUtils.trimToNull(StringUtils.substringAfter(refUri, SamsokProtocol.uriPrefixKSamsok));
 			// TODO: fixa bättre/validera lite
 			if (relationType == null) {
 				// testa cidoc
@@ -210,7 +191,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		super.extractItemInformation();
 		// TODO: kontrollera hierarkin också?
 		ip.setCurrent(ContentHelper.IX_ITEMSUPERTYPE, true);
-		String superType = extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rItemSuperType), ip);
+		String superType = RDFUtil.extractSingleValue(graph, s,
+				getURIRef(elementFactory, SamsokProtocol.uri_rItemSuperType), ip);
 		if (superType == null) {
 			throw new Exception("No item supertype for item with identifier " + s.toString());
 		}
@@ -218,9 +200,9 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		//       (supertype==agent ovan kan tex användas)
 		// nya index för agenter på toppnivå
 		ip.setCurrent(ContentHelper.IX_NAMEAUTH);
-		extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameAuth), ip);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameAuth), ip);
 		ip.setCurrent(ContentHelper.IX_NAMEID);
-		extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameId), ip);
+		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameId), ip);
 		// TODO: foaf:name innehåller även alternativa namn men man kanske vill ha ett separat
 		//       index för detta? foaf innehåller inget sånt tyvärr så det var därför jag stoppade
 		//       in alternativa namn i namn-fältet enligt http://viaf.org/viaf/59878606/rdf.xml
@@ -255,7 +237,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	protected String[] extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
 
 		// TODO: kontrollera hierarkin också (att produce bara får finnas under create tex)?
-		String contextSuperTypeURI = extractSingleValue(graph, cS, getURIRef(elementFactory, SamsokProtocol.uri_rContextSuperType), null);
+		String contextSuperTypeURI = RDFUtil.extractSingleValue(graph, cS,
+				getURIRef(elementFactory, SamsokProtocol.uri_rContextSuperType), null);
 		if (contextSuperTypeURI == null) {
 			throw new Exception("No supertype for context for item with identifier " + identifier);
 		}
@@ -270,26 +253,28 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 		// hämta ut vilket kontext vi är i 
 		String contextType;
-		String contextTypeURI = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContextType), null);
+		String contextTypeURI = RDFUtil.extractSingleValue(graph, cS,
+				getURIRef(elementFactory, SamsokProtocol.uri_rContextType), null);
 		if (contextTypeURI != null) {
 			String defaultLabel = contextTypes_1_1_TO.get(contextTypeURI);
 			if (defaultLabel == null) {
 				throw new Exception("The context type URI " + contextTypeURI + " is not valid for 1.1");
 			}
-			contextType = StringUtils.substringAfter(contextTypeURI, context_pre);
+			contextType = StringUtils.substringAfter(contextTypeURI, SamsokProtocol.context_pre);
 			if (StringUtils.isEmpty(contextType)) {
 				throw new Exception("The context type URI " + contextTypeURI +
-						" does not start with " + context_pre +
+						" does not start with " + SamsokProtocol.context_pre +
 						" for item with identifier " + identifier);
 			}
-			ip.setCurrent(IX_CONTEXTTYPE);
+			ip.setCurrent(ContentHelper.IX_CONTEXTTYPE);
 			ip.addToDoc(contextType);
 			// ta först en inskickad label, och annars defaultvärdet
-			String contextLabel = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContextLabel), ip);
+			String contextLabel = RDFUtil.extractSingleValue(graph, cS,
+					getURIRef(elementFactory, SamsokProtocol.uri_rContextLabel), ip);
 			if (contextLabel == null) {
 				contextLabel = defaultLabel;
 			}
-			ip.setCurrent(IX_CONTEXTLABEL);
+			ip.setCurrent(ContentHelper.IX_CONTEXTLABEL);
 			ip.addToDoc(contextLabel);
 		} else {
 			throw new Exception("No context type for node " + cS + " for " + identifier);

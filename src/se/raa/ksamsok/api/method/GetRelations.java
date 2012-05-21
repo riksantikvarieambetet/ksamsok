@@ -33,31 +33,6 @@ public class GetRelations extends AbstractAPIMethod {
 
 	// om och hur sameAs ska hanteras
 	private enum InferSameAs { yes, no, sourceOnly, targetsOnly };
-
-	// dubbelriktade
-	private static final String HAS_PART = "hasPart";
-	private static final String IS_PART_OF = "isPartOf";
-	private static final String CONTAINS_OBJECT = "containsObject";
-	private static final String IS_CONTAINED_IN = "isContainedIn";
-	private static final String IS_FOUND_IN = "isFoundIn";
-	private static final String HAS_FIND = "hasFind";
-	private static final String HAS_PARENT = "hasParent";
-	private static final String HAS_CHILD = "hasChild";
-	private static final String VISUALIZES = "visualizes";
-	private static final String IS_VISUALIZED_BY = "isVisualizedBy";
-	private static final String DESCRIBES = "describes";
-	private static final String IS_DESCRIBED_BY = "isDescribedBy";
-	private static final String CONTAINS_INFORMATION_ABOUT = "containsInformationAbout";
-	private static final String IS_MENTIONED_BY = "isMentionedBy";
-	private static final String HAS_OBJECT_EXAMPLE = "hasObjectExample";
-	private static final String IS_OBJECT_EXAMPLE_FOR = "isObjectExampleFor";
-	// enkelriktade
-	private static final String HAS_BEEN_USED_IN = "hasBeenUsedIn";
-	private static final String HAS_IMAGE = "hasImage";
-	// samma i bägge riktningarna
-	private static final String IS_RELATED_TO = "isRelatedTo";
-	private static final String SAME_AS = "sameAs";
-
 	/** Metodnamn */
 	public static final String METHOD_NAME = "getRelations";
 
@@ -87,7 +62,7 @@ public class GetRelations extends AbstractAPIMethod {
 
 	private Set<Relation> relations = Collections.emptySet();
 
-	/** map som håller översättningsinformation för relationer */
+	/** map som håller översättningsinformation för relationer - OBS används också från getRelationTypes */
 	protected static final Map<String, String> relationXlate;
 	/** map som håller envägsrelationer */
 	protected static final List<String> relationOneWay;
@@ -95,14 +70,13 @@ public class GetRelations extends AbstractAPIMethod {
 	static {
 		Map<String, String> map = new HashMap<String, String>();
 		// dubbelriktade
-		twoWay(map, IS_PART_OF, HAS_PART);
-		twoWay(map, CONTAINS_OBJECT, IS_CONTAINED_IN);
-		twoWay(map, IS_FOUND_IN, HAS_FIND);
-		twoWay(map, HAS_CHILD, HAS_PARENT);
-		twoWay(map, VISUALIZES, IS_VISUALIZED_BY);
-		twoWay(map, IS_DESCRIBED_BY, DESCRIBES);
-		twoWay(map, CONTAINS_INFORMATION_ABOUT, IS_MENTIONED_BY);
-		twoWay(map, HAS_OBJECT_EXAMPLE, IS_OBJECT_EXAMPLE_FOR);
+		twoWay(map, ContentHelper.IX_ISPARTOF, ContentHelper.IX_HASPART);
+		twoWay(map, ContentHelper.IX_CONTAINSOBJECT, ContentHelper.IX_ISCONTAINEDIN);
+		twoWay(map, ContentHelper.IX_ISFOUNDIN, ContentHelper.IX_HASFIND);
+		twoWay(map, ContentHelper.IX_HASCHILD, ContentHelper.IX_HASPARENT);
+		twoWay(map, ContentHelper.IX_VISUALIZES, ContentHelper.IX_ISVISUALIZEDBY);
+		twoWay(map, ContentHelper.IX_ISDESCRIBEDBY, ContentHelper.IX_DESCRIBES);
+		twoWay(map, ContentHelper.IX_HASOBJECTEXAMPLE, ContentHelper.IX_ISOBJECTEXAMPLEFOR);
 		twoWay(map, ContentHelper.IX_ISMENTIONEDBY, ContentHelper.IX_MENTIONS);
 
 		// bio (lite special)
@@ -119,7 +93,10 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_HADPARTICIPANT, ContentHelper.IX_PARTICIPATEDIN);
 		twoWay(map, ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, ContentHelper.IX_HASCURRENTORFORMERMEMBER);
 
-		// roller
+		// roller, obs rollerna har fn inga invers-index, dvs man kan inte ange
+		// (eller rättare sagt det indexeras inte) tex en författares verk
+		// från toppnivån av författarobjektet då man helst vill kunna få med
+		// år etc från kontextet vilket man inte kan få om relationen går åt andra hållet
 		twoWay(map, ContentHelper.IX_CLIENT, ContentHelper.CLIENT_OF);
 		twoWay(map, ContentHelper.IX_COMPOSER, ContentHelper.COMPOSER_OF);
 		twoWay(map, ContentHelper.IX_AUTHOR, ContentHelper.AUTHOR_OF);
@@ -171,14 +148,16 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_EMPLOYER, ContentHelper.EMPLOYER_OF);
 
 		// enkelriktade
-		map.put(HAS_BEEN_USED_IN, IS_RELATED_TO);
-		map.put(HAS_IMAGE, IS_RELATED_TO);
+		map.put(ContentHelper.IX_HASBEENUSEDIN, ContentHelper.IX_ISRELATEDTO);
+		map.put(ContentHelper.IX_HASIMAGE, ContentHelper.IX_ISRELATEDTO);
+		map.put(ContentHelper.IX_CONTAINSINFORMATIONABOUT, ContentHelper.IX_ISMENTIONEDBY);
 		relationOneWay = Collections.unmodifiableList(Arrays.asList(
-				HAS_BEEN_USED_IN, HAS_IMAGE, ContentHelper.IX_FATHER, ContentHelper.IX_MOTHER));
+				ContentHelper.IX_CONTAINSINFORMATIONABOUT, ContentHelper.IX_HASBEENUSEDIN,
+				ContentHelper.IX_HASIMAGE, ContentHelper.IX_FATHER, ContentHelper.IX_MOTHER));
 
 		// samma i bägge riktningarna
-		map.put(IS_RELATED_TO, IS_RELATED_TO);
-		map.put(SAME_AS, SAME_AS);
+		map.put(ContentHelper.IX_ISRELATEDTO, ContentHelper.IX_ISRELATEDTO);
+		map.put(ContentHelper.IX_SAMEAS, ContentHelper.IX_SAMEAS);
 		map.put(ContentHelper.IX_MARRIEDTO, ContentHelper.IX_MARRIEDTO);
 
 		relationXlate = Collections.unmodifiableMap(map);
@@ -279,7 +258,7 @@ public class GetRelations extends AbstractAPIMethod {
 							}
 							String typePart = parts[0];
 							String uriPart = parts[1];
-							if (SAME_AS.equals(typePart)) {
+							if (ContentHelper.IX_SAMEAS.equals(typePart)) {
 								itemUris.add(uriPart);
 							}
 						}
@@ -326,7 +305,7 @@ public class GetRelations extends AbstractAPIMethod {
 
 							// försök ta bort de som är onödiga, dvs de som redan har en envägs-relation
 							// deras invers är inte intressant att ha med då den inte säger nåt
-							if (IS_RELATED_TO.equals(typePart)) {
+							if (ContentHelper.IX_ISRELATEDTO.equals(typePart)) {
 								boolean exists = false;
 								Relation rel = null;
 								for (String owRel: relationOneWay) {
