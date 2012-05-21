@@ -1,5 +1,5 @@
 %define ver 1.0.1
-%define rel 30
+%define rel 31
 
 Summary: Ra� K-Sams�k, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@
