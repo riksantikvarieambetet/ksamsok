@@ -1,5 +1,5 @@
 var KSamsok = window.KSamsok || {};
-KSamsok.search = function(text, callback) {
+KSamsok.search = function(text, callback, fields) {
 	var scrSrc;
 	if (!KSamsok.__scriptBase) {
 		var scripts = document.getElementsByTagName("script");
@@ -16,7 +16,7 @@ KSamsok.search = function(text, callback) {
 			return;
 		}
 	}
-      scrSrc = KSamsok.__scriptBase + "jssearch.jsp?query=" + escape(text) + "&callback=" + callback;
+      scrSrc = KSamsok.__scriptBase + "jssearch.jsp?query=" + escape(text) + "&callback=" + callback + "&fields=" + fields;
 	var heads = document.getElementsByTagName("head");
 	if (!heads) {
 		alert("hittade inte head i html");

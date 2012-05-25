@@ -4,20 +4,47 @@
 	<script type="text/javascript" src="ksamsok_api.js"></script>
 	<script type="text/javascript">
 		function searchAndShow() {
-			KSamsok.search(document.getElementById('text').value, "setData");
+			var fields = [];
+			var opts = document.getElementById('fields').options;
+			for (var i = 0; i < opts.length; ++i) {
+				if (opts[i].selected) {
+					fields.push(opts[i].value);
+				}
+			}
+			KSamsok.search(document.getElementById('text').value, "setData", fields.join());
 		}
 		function setData(data) {
 			// en array med en strängar innehållande träffarnas presentations-xml
 			var str = "";
 			for (var i = 0; i < data.length; ++i) {
-				str += "\n\n" + data[i];
+				str += "" + (i + 1) + ".  " + data[i] + "\n";
 			}
 			document.getElementById('visa').value = str;
 		}
 	</script>
 </head>
 <body>
-<input type="text" id="text"/><button onclick="searchAndShow();">S&ouml;k</button>
+<label for="text">Söktext</label>
+<input type="text" id="text"/>
+<label for="fields">Valda svarsfält</label>
+<select size="5" multiple="multiple" id="fields">
+  <option selected="selected">itemId</option>
+  <option selected="selected">itemName</option>
+  <option>itemTitle</option>
+  <option selected="selected">itemType</option>
+  <option>itemDescription</option>
+  <option>countyName</option>
+  <option>parishName</option>
+  <option>placeName</option>
+  <option>firstName</option>
+  <option>surname</option>
+  <option>fullName</option>
+  <option>subject</option>
+  <option>_htmlurl</option>
+  <option>_lon</option>
+  <option>_lat</option>
+</select>
+<button onclick="searchAndShow();">S&ouml;k</button>
 <br/>
 <textarea rows="30" cols="120" id="visa"></textarea>
 </body>
