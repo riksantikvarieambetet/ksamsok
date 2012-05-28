@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<rdf:RDF 
+	xmlns="http://kulturarvsdata.se/ksamsok#" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xml:base="http://kulturarvsdata.se/resurser/Theme#">
+	
+	<Theme rdf:ID="theme01">
+		<name>2:a världskriget</name>
+		<description>Exempel på ett tema som exempelvis kan märka upp data för användning i ett projekt för landets högstadieskolor.</description>
+	</Theme>
+
+	<Theme rdf:ID="theme02">
+		<name>Modern konst</name>
+		<description>Ett annat exempel.</description>
+	</Theme>
+
+	<Theme rdf:ID="theme03">
+		<name>Utställd</name>
+		<description>To be deprecated.</description>
+	</Theme>
+
+	<Theme rdf:ID="exhibited">
+		<name>Utställd</name>
+		<description>Objektet finns i en pågående utställning.</description>
+	</Theme>
+
+</rdf:RDF>
