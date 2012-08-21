@@ -17,16 +17,17 @@
 -->
 <!-- The contents of this file will be loaded for each web application -->
 <Context antiJARLocking="true">
-	<Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
-        factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
-        maxActive="10" maxIdle="5" maxWait="-1"
-        username="ksamsok" password="ksamsok" driverClassName="org.postgresql.Driver"
-        url="jdbc:postgresql://lx-ra-testdb.raa.se/ksamsok"
-        testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
-        validationQuery="select version()"
-        timeBetweenEvictionRunsMillis="300000"
-        minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
-        defaultAutoCommit="false" />
+	<!-- OBS Denna fil används inte längre vid rpm-bygge -->
+    <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
+    		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+		maxActive="10" maxIdle="5" maxWait="-1"
+		username="ksamsok_prod" password="s0kN1ng" driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@ux-ra-kmsdb.raa.se:1521:RAASP"
+		testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
+		timeBetweenEvictionRunsMillis="300000"
+		validationQuery="select 1 from dual"
+		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
+		defaultAutoCommit="false" />
 
     <!-- Default set of monitored resources -->
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
