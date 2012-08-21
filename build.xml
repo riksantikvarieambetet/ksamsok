@@ -245,11 +245,11 @@
 	</target>
 
 	<!-- Här avgörs om man bygger en master eller slav -->
-	<!--<target name="RAA-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
-	</target>-->
-	
-	<target name="RAA-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	<target name="RAA-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
 	</target>
+	
+	<!--<target name="RAA-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	</target>-->
 
 	<target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
 		<mkdir dir="${project.build.dir}/test"/>
