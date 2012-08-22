@@ -63,14 +63,14 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/webapps/ksamsok.war
 # %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/context.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/tomcat-users.xml
-%attr(0755,tomcat,nobody) /usr/local/tomcat8080/bin/catalina.sh
+#%attr(0755,tomcat,nobody) /usr/local/tomcat8080/bin/catalina.sh
 # oracle-drivrutiner för jdbc och spatialutökningar
 # obs, se till att ha samma matchningar här som i build.xml
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/postgresql-9.0-801.jdbc4.jar
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/standard.jar
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/jstl.jar
+#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
+#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
+#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/postgresql-9.0-801.jdbc4.jar
+#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/standard.jar
+#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/jstl.jar
 
 %changelog
 * Mon Dec 6 2010 ant
