@@ -19,7 +19,7 @@ import se.raa.ksamsok.api.util.Term;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
 
 /**
- * utför en statisticSearch operation
+ * utfÃ¶r en statisticSearch operation
  * @author Henrik Hjalmarsson
  */
 public class StatisticSearch extends Statistic {
@@ -27,13 +27,13 @@ public class StatisticSearch extends Statistic {
 
 	/** metodens namn */
 	public static final String METHOD_NAME = "statisticSearch";
-	/** parameternamn där query skickas in */
+	/** parameternamn dÃ¤r query skickas in */
 	public static final String QUERY_PARAMS = "query";
 
 	/**
 	 * skapar ett objekt av StatisticSearch
-	 * @param writer används för att skriva svar
-	 * @param queryString sträng med query
+	 * @param writer anvÃ¤nds fÃ¶r att skriva svar
+	 * @param queryString strÃ¤ng med query
 	 * @param indexMap set med index namn
 	 */
 	public StatisticSearch(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
@@ -51,24 +51,24 @@ public class StatisticSearch extends Statistic {
 	protected void performMethodLogic() throws DiagnosticException {
 		Map<String, List<Term>> termMap = null;
 		try {
-			// TODO: om bara ett index borde man kunna köra facet rakt av
+			// TODO: om bara ett index borde man kunna kÃ¶ra facet rakt av
 			SolrQuery query = new SolrQuery();
 			query.setQuery("*");
 
-			// TODO: enda som skiljer från super? skapa metod att overrida?
-			// använd frågan som filter
+			// TODO: enda som skiljer frÃ¥n super? skapa metod att overrida?
+			// anvÃ¤nd frÃ¥gan som filter
 			CQLParser parser = new CQLParser();
 			CQLNode node = parser.parse(queryString);
 			String queryString = CQL2Solr.makeQuery(node);
 			query.addFilterQuery(queryString);
 
 			query.setRows(0);
-			// en mängd med mängder med mängder!
+			// en mÃ¤ngd med mÃ¤ngder med mÃ¤ngder!
 			termMap = buildTermMap();
 			if (getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT) {
-				throw new BadParameterException("Den kartesiska produkten av inskickade index blir för stor för att utföra denna operation.", "Statistic.performMethod", null, false);
+				throw new BadParameterException("Den kartesiska produkten av inskickade index blir fÃ¶r stor fÃ¶r att utfÃ¶ra denna operation.", "Statistic.performMethod", null, false);
 			}
-			//gör en kartesisk produkt på de värden i termMap
+			//gÃ¶r en kartesisk produkt pÃ¥ de vÃ¤rden i termMap
 			queryResults = cartesian(termMap);
 
 			for (int i = 0; i < queryResults.size(); i++) {
@@ -86,9 +86,9 @@ public class StatisticSearch extends Statistic {
 				}
 			}
 		} catch(OutOfMemoryError e) {
-			throw new DiagnosticException("De inskickade indexvärdena gav upphov till att för många värden hittades och denna sökning gick ej att utföra", "Statistic.performMethod", null, false);
+			throw new DiagnosticException("De inskickade indexvÃ¤rdena gav upphov till att fÃ¶r mÃ¥nga vÃ¤rden hittades och denna sÃ¶kning gick ej att utfÃ¶ra", "Statistic.performMethod", null, false);
 		} catch (Exception e) {
-			throw new DiagnosticException("Oväntat fel uppstod", "Statistic.performMethod", null, false);
+			throw new DiagnosticException("OvÃ¤ntat fel uppstod", "Statistic.performMethod", null, false);
 		}
 	}
 

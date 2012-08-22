@@ -19,9 +19,9 @@ import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Utför en prefix sökning för att ge förslag på fortsättningar av ett givet query
- * TODO: denna klarar bara ett index trots att dok på kulturarvsdata.se säger att den ska klara
- *       fler - det enda som händer om man anger fler är att man får resultatet av det sista indexet...
+ * UtfÃ¶r en prefix sÃ¶kning fÃ¶r att ge fÃ¶rslag pÃ¥ fortsÃ¤ttningar av ett givet query
+ * TODO: denna klarar bara ett index trots att dok pÃ¥ kulturarvsdata.se sÃ¤ger att den ska klara
+ *       fler - det enda som hÃ¤nder om man anger fler Ã¤r att man fÃ¥r resultatet av det sista indexet...
  * @author Henrik Hjalmarsson
  */
 public class SearchHelp extends AbstractAPIMethod {
@@ -29,13 +29,13 @@ public class SearchHelp extends AbstractAPIMethod {
 	
 	/** metodens namn */
 	public static final String METHOD_NAME = "searchHelp";
-	/** parameter namn för prefix */
+	/** parameter namn fÃ¶r prefix */
 	public static final String PREFIX_PARAMETER = "prefix";
-	/** parameter namn för hur många förslag som önskas */
+	/** parameter namn fÃ¶r hur mÃ¥nga fÃ¶rslag som Ã¶nskas */
 	public static final String MAX_VALUE_COUNT_PARAMETER = "maxValueCount";
-	/** parameter namn för index */
+	/** parameter namn fÃ¶r index */
 	public static final String INDEX_PARAMETER = "index";
-	/** default värde för max value count */
+	/** default vÃ¤rde fÃ¶r max value count */
 	public static final int DEFAULT_MAX_VALUE_COUNT = 3;
 
 	protected List<Term> termList = Collections.emptyList();
@@ -65,7 +65,7 @@ public class SearchHelp extends AbstractAPIMethod {
 
 	@Override
 	protected void performMethodLogic() throws DiagnosticException {
-		// TODO: detta är fel då endast ett index stöds, men det är exakt som innan funktionsmässigt, se TODO ovan
+		// TODO: detta Ã¤r fel dÃ¥ endast ett index stÃ¶ds, men det Ã¤r exakt som innan funktionsmÃ¤ssigt, se TODO ovan
 		try {
 			for (int i = 0; i < indexList.size(); i++) {
 				String index = indexList.get(i);
@@ -76,12 +76,12 @@ public class SearchHelp extends AbstractAPIMethod {
 				termList = serviceProvider.getSearchService().terms(index, prefix, 0, maxValueCount);
 			}
 		} catch (SolrServerException e) {
-			throw new DiagnosticException("Oväntat IO fel uppstod", "SearchHelp.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO fel uppstod", "SearchHelp.performMethod", e.getMessage(), true);
 		}
 	}
 	
 	/**
-	 * skriver ut början av svaret
+	 * skriver ut bÃ¶rjan av svaret
 	 */
 	@Override
 	protected void writeHeadExtra() {
@@ -127,7 +127,7 @@ public class SearchHelp extends AbstractAPIMethod {
 	public List<String> getIndexList(String indexString)  throws MissingParameterException {
 		List<String> indexList = new ArrayList<String>();
 		if (indexString == null || indexString.trim().length() < 1) {
-			throw new MissingParameterException("parametern index saknas eller är tom", "APIMethodFactory.getIndexList", null, false);
+			throw new MissingParameterException("parametern index saknas eller Ã¤r tom", "APIMethodFactory.getIndexList", null, false);
 		}
 		StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
 		while (indexTokenizer.hasMoreTokens()) {
@@ -164,7 +164,7 @@ public class SearchHelp extends AbstractAPIMethod {
 			try {
 				maxValueCount = Integer.parseInt(maxValueCountString);
 			} catch(NumberFormatException e) {
-				throw new BadParameterException("parametern maxValueCount måste vara ett numeriskt värde", "APIMethodFactory.getMaxValueCount", null, false);
+				throw new BadParameterException("parametern maxValueCount mÃ¥ste vara ett numeriskt vÃ¤rde", "APIMethodFactory.getMaxValueCount", null, false);
 			}
 		}
 		return maxValueCount;

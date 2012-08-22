@@ -17,13 +17,13 @@ import se.raa.ksamsok.organization.Organization;
 import se.raa.ksamsok.organization.Service;
 
 /**
- * Metod som h‰mtar information om institutioner och deras tj‰nster 
+ * Metod som h√§mtar information om institutioner och deras tj√§nster 
  * @author Henrik Hjalmarsson
  */
 public class GetServiceOrganization extends AbstractAPIMethod {
 	/** Metodens namn */
 	public static final String METHOD_NAME = "getServiceOrganization";
-	/** namn pÂ parametern som hÂller institutions kortnamn */
+	/** namn p√• parametern som h√•ller institutions kortnamn */
 	public static final String VALUE = "value";
 
 	//privata statiska
@@ -35,8 +35,8 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 
 	/**
 	 * Skapar ett objekt av GetServiceOrganization
-	 * @param writer Skrivaren som anv‰nds fˆr att skriva resultatet
-	 * @param value kortnamn pÂ organisationen som skall h‰mtas data om
+	 * @param writer Skrivaren som anv√§nds f√∂r att skriva resultatet
+	 * @param value kortnamn p√• organisationen som skall h√§mtas data om
 	 */
 	public GetServiceOrganization(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
 		super(serviceProvider, writer, params);

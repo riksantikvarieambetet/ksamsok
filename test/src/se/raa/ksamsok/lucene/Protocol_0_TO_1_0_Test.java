@@ -61,7 +61,7 @@ public class Protocol_0_TO_1_0_Test {
 	public void testParse1() throws Exception {
 		String rdf = loadTestFileAsString("hjalm_0.99.rdf");
 		Graph graph = RDFUtil.parseGraph(rdf);
-		assertNotNull("Ingen graf, fel på rdf:en?", graph);
+		assertNotNull("Ingen graf, fel pÃ¥ rdf:en?", graph);
 		GraphElementFactory elementFactory = graph.getElementFactory();
 		// grund
 		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
@@ -85,11 +85,11 @@ public class Protocol_0_TO_1_0_Test {
 		// kontrollera specialformatet
 		assertEquals("Felaktig relation", "isRelatedTo|http://kulturarvsdata.se/raa/test/2", relations.getFirst());
 		// kontrollera uppslagning
-		assertEquals("Felaktigt uppslaget ämne", "Kulturhistoria", doc.getFieldValue(ContentHelper.IX_SUBJECT));
+		assertEquals("Felaktigt uppslaget Ã¤mne", "Kulturhistoria", doc.getFieldValue(ContentHelper.IX_SUBJECT));
 		// kontrollera exists-index
-		assertEquals("Felaktigt värde för geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
-		assertEquals("Felaktigt värde för thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
-		assertEquals("Felaktigt värde för timeInfoExists", "n", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
+		assertEquals("Felaktigt vÃ¤rde fÃ¶r geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
+		assertEquals("Felaktigt vÃ¤rde fÃ¶r thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
+		assertEquals("Felaktigt vÃ¤rde fÃ¶r timeInfoExists", "n", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
 		// namn + namn i kontexttypspecifikt index
 		assertTrue("Skaparnamn ej extraherat", doc.getFieldValues(ContentHelper.IX_NAME).contains("Kunz Lochner"));
 		assertTrue("Skaparnamn (kontext-index) ej extraherat", doc.getFieldValues("create_" + ContentHelper.IX_NAME).contains("Kunz Lochner"));
@@ -97,7 +97,7 @@ public class Protocol_0_TO_1_0_Test {
 
 	private void lookupNotNull(SamsokProtocolHandler handler, String uri) {
 		String value = lookup(handler, uri);
-		assertNotNull("Hittade inte värde för " + uri, value);
+		assertNotNull("Hittade inte vÃ¤rde fÃ¶r " + uri, value);
 	}
 
 	private String lookup(SamsokProtocolHandler handler, String uri) {

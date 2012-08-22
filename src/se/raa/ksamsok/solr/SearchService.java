@@ -15,24 +15,24 @@ import se.raa.ksamsok.api.util.Term;
 public interface SearchService {
 
 	/**
-	 * St‰ller en frÂga och ger svaret.
-	 * @param query frÂga
-	 * @return frÂgesvar
+	 * St√§ller en fr√•ga och ger svaret.
+	 * @param query fr√•ga
+	 * @return fr√•gesvar
 	 * @throws SolrServerException vid kommuikationsproblem
 	 */
 	QueryResponse query(SolrQuery query) throws SolrServerException;
 
 	/**
-	 * H‰mtar antal dokument i indexet fˆr angiven tj‰nst, eller totalt om tj‰nstenamnet ‰r null.
-	 * @param serviceName tj‰nstenamn
-	 * @return antal tr‰ffar fˆr tj‰nsten eller totalt
+	 * H√§mtar antal dokument i indexet f√∂r angiven tj√§nst, eller totalt om tj√§nstenamnet √§r null.
+	 * @param serviceName tj√§nstenamn
+	 * @return antal tr√§ffar f√∂r tj√§nsten eller totalt
 	 * @throws SolrServerException vid fel
 	 */
 	long getIndexCount(String serviceName) throws SolrServerException;
 
 	/**
-	 * H‰mtar antal dokument i indexet fˆr alla tj‰nster nycklat pÂ tj‰nste-id.
-	 * @return antal tr‰ffar fˆr alla tj‰nster
+	 * H√§mtar antal dokument i indexet f√∂r alla tj√§nster nycklat p√• tj√§nste-id.
+	 * @return antal tr√§ffar f√∂r alla tj√§nster
 	 * @throws SolrServerException vid fel
 	 */
 	Map<String, Long> getIndexCounts() throws SolrServerException;
@@ -40,32 +40,32 @@ public interface SearchService {
 	/**
 	 * Analyserar (stammar) ett eller flera ord.
 	 * @param words ord
-	 * @return m‰ngd med ordstammar
-	 * @throws SolrServerException vid sˆkfel
+	 * @return m√§ngd med ordstammar
+	 * @throws SolrServerException vid s√∂kfel
 	 * @throws IOException vid kommunikationsfel
 	 */
 	Set<String> analyze(String words) throws SolrServerException, IOException;
 
 	/**
-	 * H‰mtar termer fˆr angivet index med angivet prefix sorterade i fallande fˆrekomstordning.
+	 * H√§mtar termer f√∂r angivet index med angivet prefix sorterade i fallande f√∂rekomstordning.
 	 * @param index indexnamn
 	 * @param prefix prefix
-	 * @param removeBelow minsta tr‰ff-frekvens
+	 * @param removeBelow minsta tr√§ff-frekvens
 	 * @param maxCount max antal termer
-	 * @return m‰ngd med {@linkplain Term}er
+	 * @return m√§ngd med {@linkplain Term}er
 	 * @throws SolrServerException
 	 */
 	List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException;
 
 	/**
 	 * Ger index-information ("path", "free", "size").
-	 * @return lista med namngivna str‰ngar
+	 * @return lista med namngivna str√§ngar
 	 * @throws SolrServerException 
 	 */
 	NamedList<Object> getIndexInfo() throws SolrServerException;
 
 	/**
-	 * Ger url till den solr-instans som anv‰nds.
+	 * Ger url till den solr-instans som anv√§nds.
 	 * @return url eller null
 	 */
 	String getSolrURL();

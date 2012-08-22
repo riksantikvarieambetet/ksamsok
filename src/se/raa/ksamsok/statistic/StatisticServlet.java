@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- * Servlet som hanterar anrop frÂn Admin gr‰nssnittet som hanterar visning av statistik
+ * Servlet som hanterar anrop fr√•n Admin gr√§nssnittet som hanterar visning av statistik
  * @author Henrik Hjalmarsson
  */
 public class StatisticServlet extends HttpServlet

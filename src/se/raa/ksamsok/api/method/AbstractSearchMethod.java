@@ -11,15 +11,15 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 
 public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 
-	/** default startplats i sökning */
+	/** default startplats i sÃ¶kning */
 	public static final int DEFAULT_START_RECORD = 1;
-	/** parameternamn där sökparametrarna skall ligga när en sökning görs */
+	/** parameternamn dÃ¤r sÃ¶kparametrarna skall ligga nÃ¤r en sÃ¶kning gÃ¶rs */
 	public static final String SEARCH_PARAMS = "query";
-	/** parameternamnet som anges för att välja antalet träffar per sida */
+	/** parameternamnet som anges fÃ¶r att vÃ¤lja antalet trÃ¤ffar per sida */
 	public static final String HITS_PER_PAGE = "hitsPerPage";
-	/** parameternamnet som anges för att välja startRecord */
+	/** parameternamnet som anges fÃ¶r att vÃ¤lja startRecord */
 	public static final String START_RECORD = "startRecord";
-	/** max antal träffar */
+	/** max antal trÃ¤ffar */
 	public static final int MAX_HITS_PER_PAGE = 500;
 
 	protected String queryString;
@@ -36,10 +36,10 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
 		this.queryString = getQueryString(params.get(SEARCH_PARAMS));
-		//sätter valfria parametrar
+		//sÃ¤tter valfria parametrar
 		int hitsPerPage = getHitsPerPage(params.get(HITS_PER_PAGE));
 		int startRecord = getStartRecord(params.get(START_RECORD));
-		//kontrollerar att hitsPerPage och startRecord har tillåtna värden
+		//kontrollerar att hitsPerPage och startRecord har tillÃ¥tna vÃ¤rden
 		if (hitsPerPage < 1 || hitsPerPage > getMaxHitsPerPage()) {
 			this.hitsPerPage = getDefaultHitsPerPage();
 		} else {
@@ -55,21 +55,21 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 	}
 
 	/**
-	 * Ger default antal träffar per sida
-	 * @return default antal träffar
+	 * Ger default antal trÃ¤ffar per sida
+	 * @return default antal trÃ¤ffar
 	 */
 	abstract protected int getDefaultHitsPerPage();
 
 	/**
-	 * Ger max antal träffar per sida
-	 * @return max antal träffar
+	 * Ger max antal trÃ¤ffar per sida
+	 * @return max antal trÃ¤ffar
 	 */
 	protected int getMaxHitsPerPage() {
 		return MAX_HITS_PER_PAGE;
 	}
 
 	/**
-	 * returnerar en integer för värdet startRecord
+	 * returnerar en integer fÃ¶r vÃ¤rdet startRecord
 	 * @param param
 	 * @return
 	 * @throws BadParameterException
@@ -80,7 +80,7 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 			try {
 				startRecord = Integer.parseInt(param);
 			} catch(NumberFormatException e) {
-				throw new BadParameterException("parametern " + START_RECORD + " måste innehålla ett numeriskt värde", "APIMethodFactory.getSearchObject", "icke numeriskt värde", false);
+				throw new BadParameterException("parametern " + START_RECORD + " mÃ¥ste innehÃ¥lla ett numeriskt vÃ¤rde", "APIMethodFactory.getSearchObject", "icke numeriskt vÃ¤rde", false);
 			}
 		}
 		return startRecord;
@@ -98,7 +98,7 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 			try {
 				hitsPerPage = Integer.parseInt(param);
 			} catch(NumberFormatException e) {
-				throw new BadParameterException("parametern " + Search.HITS_PER_PAGE + " måste innehålla ett numeriskt värde", "APIMethodFactory.getSearchObject", "icke numeriskt värde", false);
+				throw new BadParameterException("parametern " + Search.HITS_PER_PAGE + " mÃ¥ste innehÃ¥lla ett numeriskt vÃ¤rde", "APIMethodFactory.getSearchObject", "icke numeriskt vÃ¤rde", false);
 			}
 		}
 		return hitsPerPage;

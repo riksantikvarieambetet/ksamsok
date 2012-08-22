@@ -15,7 +15,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.StaticMethods;
 
 /**
- * Ufˆr ordstammning av inskickad str‰ng och ger tillbaka en lista med unika ordstammar.
+ * Uf√∂r ordstammning av inskickad str√§ng och ger tillbaka en lista med unika ordstammar.
  */
 public class Stem extends AbstractAPIMethod {
 
@@ -46,14 +46,14 @@ public class Stem extends AbstractAPIMethod {
 		try {
 			stems = serviceProvider.getSearchService().analyze(words);
 		} catch (IOException e) {
-			throw new DiagnosticException("Ov‰ntat IO-fel uppstod", "Stem.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("Ov√§ntat IO-fel uppstod", "Stem.performMethod", e.getMessage(), true);
 		} catch (Exception e) {
-			throw new DiagnosticException("Ov‰ntat fel uppstod vid ordstammning", "Stem.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("Ov√§ntat fel uppstod vid ordstammning", "Stem.performMethod", e.getMessage(), true);
 		}
 	}
 
 	/**
-	 * Skriver ut bˆrjan av svaret
+	 * Skriver ut b√∂rjan av svaret
 	 * @param stemList
 	 */
 	@Override

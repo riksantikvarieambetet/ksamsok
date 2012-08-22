@@ -18,13 +18,13 @@ import se.raa.ksamsok.harvest.DBBasedManagerImpl;
 import se.raa.ksamsok.harvest.DBUtil;
 
 /**
- * Databashanterare som hanterar ändringar och tillägg i statistikdatabasen
- * TODO: statistikloggningen kan göras bättre med batchhämtning och verkligen återanvända prepared statements
+ * Databashanterare som hanterar Ã¤ndringar och tillÃ¤gg i statistikdatabasen
+ * TODO: statistikloggningen kan gÃ¶ras bÃ¤ttre med batchhÃ¤mtning och verkligen Ã¥teranvÃ¤nda prepared statements
  */
 public class StatisticsManager extends DBBasedManagerImpl {
 	private static final Logger logger = Logger.getLogger(StatisticsManager.class);
 
-	// speciell instans som används för att stoppa konsumenttråd
+	// speciell instans som anvÃ¤nds fÃ¶r att stoppa konsumenttrÃ¥d
 	private static final StatisticLoggData STOP = new StatisticLoggData();
 
 	private final BlockingQueue<StatisticLoggData> queue = new LinkedBlockingQueue<StatisticLoggData>();
@@ -39,7 +39,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	}
 
 	/**
-	 * Initierar denna manager och startar en konsumenttråd för att logga till databas.
+	 * Initierar denna manager och startar en konsumenttrÃ¥d fÃ¶r att logga till databas.
 	 */
 	public void init() {
 		if (logger.isInfoEnabled()) {
@@ -73,7 +73,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	}
 
 	/**
-	 * Stänger ner och stoppar statistikkonsumenttråden.
+	 * StÃ¤nger ner och stoppar statistikkonsumenttrÃ¥den.
 	 */
 	public void destroy() {
 		if (logger.isInfoEnabled()) {
@@ -86,7 +86,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	}
 
 	/**
-	 * lägger till data som skall loggas till kön som då loggas med nästa batch
+	 * lÃ¤gger till data som skall loggas till kÃ¶n som dÃ¥ loggas med nÃ¤sta batch
 	 * @param data
 	 */
 	public void addToQueue(StatisticLoggData data) {
@@ -103,7 +103,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	/**
 	 * Returnerar en lista med statistik matchande given API nyckel som skall sorteras efter
 	 * givna sorteringsparametrar
-	 * @param apiKey Specifik API nyckel eller ALL om all statistik skall hämtas
+	 * @param apiKey Specifik API nyckel eller ALL om all statistik skall hÃ¤mtas
 	 * @param sortBy anger efter vilken column data skall sorteras
 	 * @param sortConf anger om data skall sorteras fallande (ASC) eller stigande (DESC)
 	 * @return lista med statistik
@@ -147,8 +147,8 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	}
 	
 	/**
-	 * Returnerar en lista med API nycklar och översiktlig statistik för dessa
-	 * ie. totala antalet sökningar som gjorts med specifik API nyckel
+	 * Returnerar en lista med API nycklar och Ã¶versiktlig statistik fÃ¶r dessa
+	 * ie. totala antalet sÃ¶kningar som gjorts med specifik API nyckel
 	 * @return lista med statistikdata
 	 */
 	public List<APIKey> getOverviewStatistics() {
@@ -200,7 +200,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	}
 	
 	/**
-	 * Lägger till data i databasen då en sökning som ej gjorts förut skall loggas
+	 * LÃ¤gger till data i databasen dÃ¥ en sÃ¶kning som ej gjorts fÃ¶rut skall loggas
 	 * @param data data
 	 * @throws SQLException
 	 */
@@ -230,9 +230,9 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	}
 	
 	/**
-	 * Uppdaterar data i databasen då en sökning som gjorts förut skall loggas
-	 * @param data sökdata
-	 * @return sant om någon databasrad uppdaterades
+	 * Uppdaterar data i databasen dÃ¥ en sÃ¶kning som gjorts fÃ¶rut skall loggas
+	 * @param data sÃ¶kdata
+	 * @return sant om nÃ¥gon databasrad uppdaterades
 	 */
 	private boolean updateStatistic(StatisticLoggData data)  throws Exception {
 		if (logger.isDebugEnabled()) {

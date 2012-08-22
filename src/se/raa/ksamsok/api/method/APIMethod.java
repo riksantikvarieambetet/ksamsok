@@ -5,25 +5,25 @@ import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 
 /**
- * Interface för API metoder
+ * Interface fÃ¶r API metoder
  * @author Henrik Hjalmarsson
  */
 public interface APIMethod 
 {
-	/** versionen för detta API */
+	/** versionen fÃ¶r detta API */
 	public static final String API_VERSION = "1.0";
-	/** namnet på metod parametern */
+	/** namnet pÃ¥ metod parametern */
 	public static final String METHOD = "method";
 	/** API nyckel parameter namn */
 	public static final String API_KEY_PARAM_NAME = "x-api";
-	/** delare för att dela query strängar */
+	/** delare fÃ¶r att dela query strÃ¤ngar */
 	public static final String DELIMITER = "|";
 	
 	/**
-	 * utför API metod
+	 * utfÃ¶r API metod
 	 * @throws MissingParameterException om obligatorisk parameter saknas
-	 * @throws BadParameterException om parameter är felformaterad
-	 * @throws DiagnosticException vid oväntat fel
+	 * @throws BadParameterException om parameter Ã¤r felformaterad
+	 * @throws DiagnosticException vid ovÃ¤ntat fel
 	 */
 	public void performMethod()
 		throws MissingParameterException, BadParameterException,

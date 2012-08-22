@@ -27,30 +27,30 @@ import se.raa.ksamsok.statistic.StatisticLoggData;
 import se.raa.ksamsok.util.ShmSiteCacherHackTicket3419;
 
 /**
- * Hanterar sökningar efter objekt
+ * Hanterar sÃ¶kningar efter objekt
  * @author Henrik Hjalmarsson
  */
 public class Search extends AbstractSearchMethod {
-	/** standardvärdet för antalet träffar per sida */
+	/** standardvÃ¤rdet fÃ¶r antalet trÃ¤ffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 50;
-	/** metodnamn som anges för att använda denna klass */
+	/** metodnamn som anges fÃ¶r att anvÃ¤nda denna klass */
 	public static final String METHOD_NAME = "search";
-	/** parameternamn för sort */
+	/** parameternamn fÃ¶r sort */
 	public static final String SORT = "sort";
-	/** parameternamn för sort configuration */
+	/** parameternamn fÃ¶r sort configuration */
 	public static final String SORT_CONFIG = "sortConfig";
-	/** parametervärde för descending sort */
+	/** parametervÃ¤rde fÃ¶r descending sort */
 	public static final String SORT_DESC = "desc";
-	/** parametervärde för ascending sort */
+	/** parametervÃ¤rde fÃ¶r ascending sort */
 	public static final String SORT_ASC = "asc";
-	/** record shema för presentations data */
+	/** record shema fÃ¶r presentations data */
 	public static final String NS_SAMSOK_PRES =	"http://kulturarvsdata.se/presentation#";
-	/** parameternamn för record schema */
+	/** parameternamn fÃ¶r record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
 	public static final String RECORD_SCHEMA_BASE = "http://kulturarvsdata.se/";
 
-	// index att använda för sortering (transparent) istället för itemName
+	// index att anvÃ¤nda fÃ¶r sortering (transparent) istÃ¤llet fÃ¶r itemName
 	private static final String ITEM_NAME_SORT = "itemNameSort";
 	
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.Search");
@@ -63,10 +63,10 @@ public class Search extends AbstractSearchMethod {
 
 	/**
 	 * skapar ett Search objekt
-	 * @param params sökparametrar
-	 * @param hitsPerPage träffar som skall visas per sida
-	 * @param startRecord startposition i sökningen
-	 * @param writer skrivaren som skall användas för att skriva svaret
+	 * @param params sÃ¶kparametrar
+	 * @param hitsPerPage trÃ¤ffar som skall visas per sida
+	 * @param startRecord startposition i sÃ¶kningen
+	 * @param writer skrivaren som skall anvÃ¤ndas fÃ¶r att skriva svaret
 	 */
 	public Search(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
 		super(serviceProvider, writer, params);
@@ -82,10 +82,10 @@ public class Search extends AbstractSearchMethod {
 			if (!ContentHelper.indexExists(sort)) {
 				throw new BadParameterException("Sorteringsindexet " + sort + " finns inte.", "Search.performMethod", null, false);
 			}
-			// TODO: generalisera, lägga i konf-fil?
-			// specialhantering för sortering på itemName, istället används itemNameSort
-			// transparent som rensar itemName och behåller bara bokstäver och siffor - fix
-			// för att tex poster med citationstecken ("konstiga" tecken) kom först
+			// TODO: generalisera, lÃ¤gga i konf-fil?
+			// specialhantering fÃ¶r sortering pÃ¥ itemName, istÃ¤llet anvÃ¤nds itemNameSort
+			// transparent som rensar itemName och behÃ¥ller bara bokstÃ¤ver och siffor - fix
+			// fÃ¶r att tex poster med citationstecken ("konstiga" tecken) kom fÃ¶rst
 			if (ContentHelper.IX_ITEMNAME.equals(sort)) {
 				sort = ITEM_NAME_SORT;
 			}
@@ -112,22 +112,22 @@ public class Search extends AbstractSearchMethod {
 	protected void performMethodLogic() throws DiagnosticException {
 		try {
 			SolrQuery query = createQuery();
-			// start är 0-baserad
+			// start Ã¤r 0-baserad
 			query.setStart(startRecord - 1);
 			query.setRows(hitsPerPage);
 			if (sort != null) {
 				query.addSortField(sort, sortDesc ? ORDER.desc : ORDER.asc);
 			}
 			query.addField(ContentHelper.IX_ITEMID);
-			query.addField("score"); // score är "solr-special" för uhm, score...
-			// ta fram rätt data
+			query.addField("score"); // score Ã¤r "solr-special" fÃ¶r uhm, score...
+			// ta fram rÃ¤tt data
 			query.addField(binDataField);
 			QueryResponse qr = serviceProvider.getSearchService().query(query);
 			hitList = qr.getResults();
 		} catch(SolrServerException e) {
-			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO-fel uppstod. Var god fÃ¶rsÃ¶k igen", "Search.performMethod", e.getMessage(), true);
 		} catch (BadParameterException e) {
-			throw new DiagnosticException("Oväntat parserfel uppstod", "Search.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat parserfel uppstod", "Search.performMethod", e.getMessage(), true);
 		}
 	}
 
@@ -144,7 +144,7 @@ public class Search extends AbstractSearchMethod {
 	}
 
 	/**
-	 * skriver ut övre del av XML svar
+	 * skriver ut Ã¶vre del av XML svar
 	 * @param numberOfDocs
 	 */
 	@Override
@@ -182,34 +182,34 @@ public class Search extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Hämtar xml-innehåll (fragment) från ett lucene-dokument som en sträng.
+	 * HÃ¤mtar xml-innehÃ¥ll (fragment) frÃ¥n ett lucene-dokument som en strÃ¤ng.
 	 * @param doc lucenedokument
-	 * @param uri postens uri (används bara för log)
-	 * @param xmlIndex index att hämta innehåll från
+	 * @param uri postens uri (anvÃ¤nds bara fÃ¶r log)
+	 * @param xmlIndex index att hÃ¤mta innehÃ¥ll frÃ¥n
 	 * @return xml-fragment med antingen presentations-xml eller rdf; null om data saknas
-	 * @throws Exception vid teckenkodningsfel (bör ej inträffa) 
+	 * @throws Exception vid teckenkodningsfel (bÃ¶r ej intrÃ¤ffa) 
 	 */
 	protected String getContent(SolrDocument doc, String uri) {
 		String content = null;
 		byte[] xmlData = (byte[]) doc.getFieldValue(binDataField);
 		try {
-			// hämta ev från hack-cachen
+			// hÃ¤mta ev frÃ¥n hack-cachen
 			if (ShmSiteCacherHackTicket3419.useCache(params.get(ShmSiteCacherHackTicket3419.KRINGLA), uri)) {
 				content = ShmSiteCacherHackTicket3419.getOrRecache(uri, xmlData);
 			} else {
 				if (xmlData != null) {
 					content = new String(xmlData, "UTF-8");
 				}
-				// TODO: NEK: ta bort när allt är omindexerat
+				// TODO: NEK: ta bort nÃ¤r allt Ã¤r omindexerat
 				if (content == null) {
 					content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
 				}
 			}
 			if (content == null) {
-				logger.warn("Hittade inte xml-data (" + binDataField + ") för " + uri);
+				logger.warn("Hittade inte xml-data (" + binDataField + ") fÃ¶r " + uri);
 			}
 		} catch (Exception e) {
-			logger.error("Fel vid hämtande av xml-data (" + binDataField + ") för " + uri);
+			logger.error("Fel vid hÃ¤mtande av xml-data (" + binDataField + ") fÃ¶r " + uri);
 		}
 		return content;
 	}
@@ -226,19 +226,19 @@ public class Search extends AbstractSearchMethod {
 			String solrQueryString = CQL2Solr.makeQuery(rootNode);
 			if (solrQueryString != null) {
 				query = new SolrQuery(solrQueryString);
-				// logga sökdata
+				// logga sÃ¶kdata
 				loggData(rootNode);
 			}
 		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.createQuery", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO-fel uppstod. Var god fÃ¶rsÃ¶k igen", "Search.createQuery", e.getMessage(), true);
 		} catch (CQLParseException e) {
-			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen på att query-strängen inte följer CQL syntax. Var god kontrollera söksträngen eller kontakta systemadministratör för söksystemet du använder", "Search.createQuery", e.getMessage(), false);
+			throw new DiagnosticException("Parserfel uppstod. Detta beror troligen pÃ¥ att query-strÃ¤ngen inte fÃ¶ljer CQL syntax. Var god kontrollera sÃ¶kstrÃ¤ngen eller kontakta systemadministratÃ¶r fÃ¶r sÃ¶ksystemet du anvÃ¤nder", "Search.createQuery", e.getMessage(), false);
 		}
 		return query;
 	}
 
 	/**
-	 * returnerar true om sortConfig är satt till "desc"
+	 * returnerar true om sortConfig Ã¤r satt till "desc"
 	 * @param sort
 	 * @param sortConfig
 	 * @return
@@ -254,7 +254,7 @@ public class Search extends AbstractSearchMethod {
 	}
 
 	/**
-	 * Loggar data för sökningen för indexet "text".
+	 * Loggar data fÃ¶r sÃ¶kningen fÃ¶r indexet "text".
 	 * @param query cql
 	 * @throws DiagnosticException
 	 */
@@ -268,7 +268,7 @@ public class Search extends AbstractSearchMethod {
 			loggData(bool.right);
 		} else if (query instanceof CQLTermNode) {
 			CQLTermNode t = (CQLTermNode) query;
-			// bara för "text"
+			// bara fÃ¶r "text"
 			if (t.getIndex().equals(ContentHelper.IX_TEXT)) {
 				StatisticLoggData data = new StatisticLoggData();
 				data.setParam(t.getIndex());

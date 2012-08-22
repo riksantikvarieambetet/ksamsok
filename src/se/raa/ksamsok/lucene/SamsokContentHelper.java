@@ -82,9 +82,9 @@ public class SamsokContentHelper extends ContentHelper {
 				throw new Exception("Hittade ingen entity i rdf-grafen");
 			}
 			identifier = s.toString();
-			// kolla om denna post inte ska indexeras och returnera i sÂ fall null
-			// notera att detta gˆr att inte posten indexeras alls vilket kr‰ver ett
-			// specialfall i resolverservleten dÂ den fr‰mst jobbar mot lucene-indexet
+			// kolla om denna post inte ska indexeras och returnera i s√• fall null
+			// notera att detta g√∂r att inte posten indexeras alls vilket kr√§ver ett
+			// specialfall i resolverservleten d√• den fr√§mst jobbar mot lucene-indexet
 			String itemForIndexing = RDFUtil.extractSingleValue(graph, s, rItemForIndexing, null);
 			if ("n".equals(itemForIndexing)) {
 				return null;
@@ -106,7 +106,7 @@ public class SamsokContentHelper extends ContentHelper {
 
 			// interna system-index
 
-			// tj‰nst-id
+			// tj√§nst-id
 			luceneDoc.addField(I_IX_SERVICE, service.getId());
 
 			// html-url
@@ -126,13 +126,13 @@ public class SamsokContentHelper extends ContentHelper {
 				luceneDoc.addField(I_IX_MUSEUMDAT_URL, url);
 			}
 
-			// lagra den fˆrsta geometrins centroid
+			// lagra den f√∂rsta geometrins centroid
 			if (gmlGeometries.size() > 0) {
 				String gml = gmlGeometries.getFirst();
 				if (gmlGeometries.size() > 1 && logger.isDebugEnabled()) {
-					logger.debug("H‰mtade " + gmlGeometries.size() +
-							" geometrier fˆr " + identifier + ", kommer bara " +
-							"att anv‰nda den fˆrsta");
+					logger.debug("H√§mtade " + gmlGeometries.size() +
+							" geometrier f√∂r " + identifier + ", kommer bara " +
+							"att anv√§nda den f√∂rsta");
 				}
 				try {
 					Point2d p = GMLUtil.getLonLatCentroid(gml);
@@ -144,22 +144,22 @@ public class SamsokContentHelper extends ContentHelper {
 				}
 			}
 
-			// l‰gg in relationer i specialstruktur/index (typ|uri)
+			// l√§gg in relationer i specialstruktur/index (typ|uri)
 			if (relations.size() > 0) {
 				for (String value: relations) {
 					luceneDoc.addField(I_IX_RELATIONS, value);
 				}
 			}
 
-			// h‰mta ut presentationsblocket
+			// h√§mta ut presentationsblocket
 			String pres = extractSingleValue(graph, s, rPres, null);
 			if (pres != null && pres.length() > 0) {
-				// verifiera att det ‰r xml
-				// TODO: kontrollera korrekt schema ocksÂ
+				// verifiera att det √§r xml
+				// TODO: kontrollera korrekt schema ocks√•
 				Document doc = parseDocument(pres);
 				// serialisera som ett xml-fragment, dvs utan xml-deklaration
 				pres = serializeDocumentAsFragment(doc);
-				// lagra bin‰rt, kodat i UTF-8
+				// lagra bin√§rt, kodat i UTF-8
 				byte[] presBytes = pres.getBytes("UTF-8");
 				luceneDoc.addField(I_IX_PRES, Base64.byteArrayToBase64(presBytes, 0, presBytes.length));
 			}
@@ -169,8 +169,8 @@ public class SamsokContentHelper extends ContentHelper {
 			luceneDoc.addField(I_IX_RDF, Base64.byteArrayToBase64(rdfBytes, 0, rdfBytes.length));
 
 		} catch (Exception e) {
-			// TODO: kasta exception/r‰kna felen/annat?
-			logger.error("Fel vid skapande av lucenedokument fˆr " + identifier + ": " + e.getMessage());
+			// TODO: kasta exception/r√§kna felen/annat?
+			logger.error("Fel vid skapande av lucenedokument f√∂r " + identifier + ": " + e.getMessage());
 			throw e;
 		} finally {
 			if (graph != null) {
@@ -233,27 +233,27 @@ public class SamsokContentHelper extends ContentHelper {
 			info.setNativeURL(htmlURL);
 			if (gmlInfoHolder != null) {
 				try {
-					// s‰tt identifier fˆrst dÂ den anv‰nds fˆr deletes etc ‰ven om det gÂr
+					// s√§tt identifier f√∂rst d√• den anv√§nds f√∂r deletes etc √§ven om det g√•r
 					// fel nedan
 					gmlInfoHolder.setIdentifier(identifier);
 					URIReference rCoordinates = elementFactory.createURIReference(SamsokProtocol.uri_rCoordinates);
 					URIReference rContext = elementFactory.createURIReference(SamsokProtocol.uri_rContext);
-					// h‰mta ev gml frÂn kontext-noder
+					// h√§mta ev gml fr√•n kontext-noder
 					LinkedList<String> gmlGeometries = new LinkedList<String>();
 					for (Triple triple: graph.find(s, rContext, AnyObjectNode.ANY_OBJECT_NODE)) {
 						if (triple.getObject() instanceof SubjectNode) {
 							SubjectNode cS = (SubjectNode) triple.getObject();
 							String gml = RDFUtil.extractSingleValue(graph, cS, rCoordinates, null);
 							if (gml != null && gml.length() > 0) {
-								// vi konverterar till SWEREF 99 TM dÂ det ‰r vÂrt standardformat
-								// dessutom fungerar konverteringen som en kontroll av om gml:en ‰r ok
+								// vi konverterar till SWEREF 99 TM d√• det √§r v√•rt standardformat
+								// dessutom fungerar konverteringen som en kontroll av om gml:en √§r ok
 								gml = GMLUtil.convertTo(gml, GMLUtil.CRS_SWEREF99_TM_3006);
 								gmlGeometries.add(gml);
 							}
 						}
 					}
 					gmlInfoHolder.setGmlGeometries(gmlGeometries);
-					// itemTitle kan vara 0M sÂ om den saknas fˆrsˆker vi ta itemName och
+					// itemTitle kan vara 0M s√• om den saknas f√∂rs√∂ker vi ta itemName och
 					// om den saknas, itemType
 					URIReference rItemTitle = elementFactory.createURIReference(SamsokProtocol.uri_rItemTitle);
 					String name = StringUtils.trimToNull(RDFUtil.extractValue(graph, s, rItemTitle, null, null));
@@ -277,12 +277,12 @@ public class SamsokContentHelper extends ContentHelper {
 						}
 					}
 					if (name == null) {
-						name = "Ok‰nt objekt";
+						name = "Ok√§nt objekt";
 					}
 					gmlInfoHolder.setName(name);
 				} catch (Exception e) {
-					//logger.error("Fel vid gmlhantering fˆr " + identifier, e);
-					// rensa m‰ngd med geometrier
+					//logger.error("Fel vid gmlhantering f√∂r " + identifier, e);
+					// rensa m√§ngd med geometrier
 					gmlInfoHolder.setGmlGeometries(null);
 					addProblemMessage("Problem with GML for " + identifier + ": " + e.getMessage());
 				}
@@ -295,9 +295,9 @@ public class SamsokContentHelper extends ContentHelper {
 		return info;
 	}
 
-	// hj‰lpmetod som parsar ett xml-dokument och ger en dom tillbaka
+	// hj√§lpmetod som parsar ett xml-dokument och ger en dom tillbaka
 	static Document parseDocument(String xmlContent) throws Exception {
-        // records mÂste matcha schema
+        // records m√•ste matcha schema
         //xmlFact.setSchema(schema);
         DocumentBuilder builder = xmlFact.newDocumentBuilder();
         StringReader sr = null;
@@ -316,14 +316,14 @@ public class SamsokContentHelper extends ContentHelper {
         return doc;
 	}
 
-	// hj‰lpmetod som serialiserar ett dom-tr‰d som xml utan xml-deklaration
+	// hj√§lpmetod som serialiserar ett dom-tr√§d som xml utan xml-deklaration
 	static String serializeDocumentAsFragment(Document doc) throws Exception {
-		// TODO: anv‰nd samma Transformer fˆr en hel serie, kr‰ver refaktorering
-		//       av hur ContentHelpers anv‰nds map deras livscykel
+		// TODO: anv√§nd samma Transformer f√∂r en hel serie, kr√§ver refaktorering
+		//       av hur ContentHelpers anv√§nds map deras livscykel
 		final int initialSize = 4096;
 		Source source = new DOMSource(doc);
 		Transformer xformer = xformerFact.newTransformer();
-		// ingen xml-deklaration dÂ vi vill anv‰nda den som ett xml-fragment
+		// ingen xml-deklaration d√• vi vill anv√§nda den som ett xml-fragment
 		xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 		xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 		StringWriter sw = new StringWriter(initialSize);

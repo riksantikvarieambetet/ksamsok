@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Klass som hanterar skörd av data ifrån en fil i k-samsöksformat.
+ * Klass som hanterar skÃ¶rd av data ifrÃ¥n en fil i k-samsÃ¶ksformat.
  */
 public class SamsokSimpleHarvestJob extends SimpleHarvestJob {
 	public SamsokSimpleHarvestJob() {}
@@ -19,7 +19,7 @@ public class SamsokSimpleHarvestJob extends SimpleHarvestJob {
 		final List<ServiceFormat> list = new ArrayList<ServiceFormat>(1);
 		list.add(new ServiceFormat("rdf",
 				"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-				"http://www.w3.org/2000/07/rdf.xsd")); // TODO: rätt schemaplats
+				"http://www.w3.org/2000/07/rdf.xsd")); // TODO: rÃ¤tt schemaplats
 		return list;
 	}
 

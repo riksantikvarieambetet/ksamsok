@@ -36,14 +36,14 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.HarvestRepositoryManager");
 
-	/** parameter som pekar ut var hämtad xml ska mellanlagras, om ej satt används tempdir */
+	/** parameter som pekar ut var hÃ¤mtad xml ska mellanlagras, om ej satt anvÃ¤nds tempdir */
 	protected static final String D_HARVEST_SPOOL_DIR = "samsok-harvest-spool-dir";
 
-	private static final Object SYNC = new Object(); // används för att synka skrivningar till solr
+	private static final Object SYNC = new Object(); // anvÃ¤nds fÃ¶r att synka skrivningar till solr
 
 	private static final ContentHelper samsokContentHelper = new SamsokContentHelper();
 
-	// antal solr-dokument som skickas per batch, för få -> mycket io, för många -> mycket minne
+	// antal solr-dokument som skickas per batch, fÃ¶r fÃ¥ -> mycket io, fÃ¶r mÃ¥nga -> mycket minne
 	private static final int solrBatchSize = 50;
 	// statusrapportering sker efter uppdatering av detta antal objekt
 	private static final int statusReportBatchSize = 500;
@@ -61,7 +61,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		spoolDir = new File(System.getProperty(D_HARVEST_SPOOL_DIR,
 				System.getProperty("java.io.tmpdir")));
 		if (!spoolDir.exists() || !spoolDir.isDirectory() || !spoolDir.canWrite()) {
-			throw new RuntimeException("Kan inte läsa spoolkatalog: " + spoolDir);
+			throw new RuntimeException("Kan inte lÃ¤sa spoolkatalog: " + spoolDir);
 		}
 		this.solr = solr;
 	}
@@ -80,22 +80,22 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			SAXParser p = spf.newSAXParser();
 			h = new OAIPMHHandler(ss, service, getContentHelper(service), sm, c, ts);
 			if (!sm.handlesPersistentDeletes()) {
-				// ta bort alla gamla poster om inte denna tjänst klarar persistenta deletes
-				// inget tas egentligen bort utan posternas status sätts till pending
+				// ta bort alla gamla poster om inte denna tjÃ¤nst klarar persistenta deletes
+				// inget tas egentligen bort utan posternas status sÃ¤tts till pending
 				h.deleteAllFromThisService();
 			} else {
-				// nollställ status för att bättre klara en inkrementell
-				// skörd efter en misslyckad full skörd
+				// nollstÃ¤ll status fÃ¶r att bÃ¤ttre klara en inkrementell
+				// skÃ¶rd efter en misslyckad full skÃ¶rd
 				h.resetTmpStatus();
 			}
-			// gå igenom xml-filen och uppdatera databasen med filens poster
+			// gÃ¥ igenom xml-filen och uppdatera databasen med filens poster
 			p.parse(xmlFile, h);
-			// gör utestående commit och uppdatera räknare inför statusuppdatering
+			// gÃ¶r utestÃ¥ende commit och uppdatera rÃ¤knare infÃ¶r statusuppdatering
 			h.commitAndUpdateCounters();
-			// uppdatera status och data för berörda poster samt nollställ temp-kolumner
-			// OBS att commit görs i anropet nedan nu när den gör batch-commits
+			// uppdatera status och data fÃ¶r berÃ¶rda poster samt nollstÃ¤ll temp-kolumner
+			// OBS att commit gÃ¶rs i anropet nedan nu nÃ¤r den gÃ¶r batch-commits
 			h.updateTmpStatus();
-			// flagga för att något har uppdaterats
+			// flagga fÃ¶r att nÃ¥got har uppdaterats
 			updated = (h.getDeleted() > 0 || h.getInserted() > 0 || h.getUpdated() > 0);
 			ss.setStatusTextAndLog(service, "Stored harvest (i/u/d " + h.getInserted() +
 					"/" + h.getUpdated() + "/" + h.getDeleted() + ")");
@@ -104,8 +104,8 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			if (h != null) {
 				ss.setStatusTextAndLog(service, "Stored part of harvest before error (i/u/d " +
 						h.getInserted() + "/" + h.getUpdated() + "/" + h.getDeleted() + ")");
-				// försök återställ status för poster till normaltillstånd
-				// hängslen och livrem då status också sätts om i start av denna metod
+				// fÃ¶rsÃ¶k Ã¥terstÃ¤ll status fÃ¶r poster till normaltillstÃ¥nd
+				// hÃ¤ngslen och livrem dÃ¥ status ocksÃ¥ sÃ¤tts om i start av denna metod
 				try {
 					ss.setStatusText(service, "Attempting to reset status for records");
 					h.resetTmpStatus();
@@ -125,7 +125,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						", new: " + h.getInserted() +
 						", changed: " + h.getUpdated());
 			}
-			// frigör resurser såsom prepared statements etc
+			// frigÃ¶r resurser sÃ¥som prepared statements etc
 			if (h != null) {
 				h.destroy();
 			}
@@ -147,7 +147,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		String serviceId = null;
-		synchronized (SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som fÃ¥r kÃ¶ra index-write
 			try {
 				long start = System.currentTimeMillis();
 				int count = getCount(service, ts);
@@ -181,8 +181,8 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				int deleted = 0;
 				ContentHelper helper = getContentHelper(service);
 				ContentHelper.initProblemMessages();
-				// TODO: man skulle kunna strömma allt i en enda request, men jag tror inte man
-				//       skulle tjäna så mycket på det
+				// TODO: man skulle kunna strÃ¶mma allt i en enda request, men jag tror inte man
+				//       skulle tjÃ¤na sÃ¥ mycket pÃ¥ det
 				//       se http://wiki.apache.org/solr/Solrj#Streaming_documents_for_an_update
 				List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>(solrBatchSize);
 				while (rs.next()) {
@@ -192,7 +192,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 						solr.deleteById(uri);
 						if (rs.getTimestamp("deleted") != null) {
 							++deleted;
-							// om borttagen, gå till nästa
+							// om borttagen, gÃ¥ till nÃ¤sta
 							continue;
 						}
 					}
@@ -200,7 +200,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					added = rs.getTimestamp("added");
 					SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, added);
 					if (doc == null) {
-						// inget dokument betyder att tjänsten har skickat itemForIndexing=n
+						// inget dokument betyder att tjÃ¤nsten har skickat itemForIndexing=n
 						++nonI;
 						continue;
 					}
@@ -279,7 +279,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	@Override
 	public void deleteIndexData(HarvestService service) throws Exception {
 		String serviceId = null;
-		synchronized (SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som fÃ¥r kÃ¶ra index-write
 			try {
 				long start = System.currentTimeMillis();
 				int count = getCount(service);
@@ -317,21 +317,21 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		Connection c = null;
 		PreparedStatement pst = null;
 		String serviceId = null;
-		synchronized (SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som fÃ¥r kÃ¶ra index-write
 			try {
 				serviceId = service.getId();
 				c = ds.getConnection();
-				// rensa först allt vanligt innehåll
+				// rensa fÃ¶rst allt vanligt innehÃ¥ll
 				pst = c.prepareStatement("delete from content where serviceId = ?");
 				pst.setString(1, serviceId);
 				pst.executeUpdate();
-				// och rensa ev spatial-data för tjänsten
+				// och rensa ev spatial-data fÃ¶r tjÃ¤nsten
 				GMLDBWriter gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
 				if (gmlDBWriter != null) {
 					gmlDBWriter.deleteAllForService();
 				}
 				solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
-				// commit först för db då den är troligast att den smäller och sen solr
+				// commit fÃ¶rst fÃ¶r db dÃ¥ den Ã¤r troligast att den smÃ¤ller och sen solr
 				DBUtil.commit(c);
 				solr.commit();
 				if (logger.isInfoEnabled()) {
@@ -382,10 +382,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	}
 
 	/**
-	 * Ger antal poster i repositoryt för en tjänst. Om ts skickas in ges antal poster
-	 * som ändrats efter ts.
+	 * Ger antal poster i repositoryt fÃ¶r en tjÃ¤nst. Om ts skickas in ges antal poster
+	 * som Ã¤ndrats efter ts.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param ts timestamp
 	 * @return antal poster
 	 * @throws Exception
@@ -431,11 +431,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		int count = 0;
 		try {
 			c = ds.getConnection();
-			// ora: lite special istället för group by för att få db-index att vara med och slippa full table scan...
+			// ora: lite special istÃ¤llet fÃ¶r group by fÃ¶r att fÃ¥ db-index att vara med och slippa full table scan...
 			//String sql = "select s.serviceId, (select count(*) from content where serviceId = s.serviceId and deleted is null) c from harvestservices s";
-			// pg: verkar klara group by bättre (troligen index-relaterat också), ca 13 sek för ovan mot ca 4 för nedan
+			// pg: verkar klara group by bÃ¤ttre (troligen index-relaterat ocksÃ¥), ca 13 sek fÃ¶r ovan mot ca 4 fÃ¶r nedan
 			String sql = "select serviceId, count(uri) from content where deleted is null " +
-				// villkor som filtrerar bort de poster i content som inte har nån "korrekt" tjänst - bortkommenterat tills vidare
+				// villkor som filtrerar bort de poster i content som inte har nÃ¥n "korrekt" tjÃ¤nst - bortkommenterat tills vidare
 				//"and serviceId in (select serviceId from harvestservices) " +
 				"group by serviceId";
 			pst = c.prepareStatement(sql);
@@ -456,14 +456,14 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	@Override
 	public void optimizeIndex() throws Exception {
-		synchronized (SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som fÃ¥r kÃ¶ra index-write
 			solr.optimize();
 		}
 	}
 
 	@Override
 	public void clearIndex() throws Exception {
-		synchronized (SYNC) { // en i taget som får köra index-write
+		synchronized (SYNC) { // en i taget som fÃ¥r kÃ¶ra index-write
 			solr.deleteByQuery("*:*");
 			solr.commit();
 		}
@@ -506,9 +506,9 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	}
 	
 	/**
-	 * Hjälpmetod som stänger en ström.
+	 * HjÃ¤lpmetod som stÃ¤nger en strÃ¶m.
 	 * 
-	 * @param stream ström
+	 * @param stream strÃ¶m
 	 */
 	protected void closeStream(Closeable stream) {
 		if (stream != null) {
@@ -520,8 +520,8 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	/**
 	 * Rensa och rapportera ev problemmeddelanden till statusservicen och logga. 
-	 * @param service tjänst
-	 * @param operation operation för loggmeddelande, kort format (eng)
+	 * @param service tjÃ¤nst
+	 * @param operation operation fÃ¶r loggmeddelande, kort format (eng)
 	 */
 	private void reportAndClearProblemMessages(HarvestService service, String operation) {
 		// rapportera eventuella problemmeddelanden
@@ -538,17 +538,17 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	}
 
 	/**
-	 * Hämtar rätt typ av ContentHelper för tjänst.
+	 * HÃ¤mtar rÃ¤tt typ av ContentHelper fÃ¶r tjÃ¤nst.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return ContentHelper
 	 */
 	protected static ContentHelper getContentHelper(HarvestService service) {
-		// TODO: bättre kontroll
+		// TODO: bÃ¤ttre kontroll
 		if (service.getServiceType().endsWith("-SAMSOK")) {
 			return samsokContentHelper;
 		}
-		logger.warn("ContentHelper för tjänst kunde ej bestämmas, npe inkommande?");
+		logger.warn("ContentHelper fÃ¶r tjÃ¤nst kunde ej bestÃ¤mmas, npe inkommande?");
 		return null;
 	}
 

@@ -32,8 +32,8 @@ import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Utfˆr metoden allIndexUniqueValue count som returnerar en lista ˆver index
- * och hur mÂnga unika v‰rden dessa index har som matchar givet query.
+ * Utf√∂r metoden allIndexUniqueValue count som returnerar en lista √∂ver index
+ * och hur m√•nga unika v√§rden dessa index har som matchar givet query.
  * @author Henrik Hjalmarsson
  */
 public class AllIndexUniqueValueCount extends AbstractAPIMethod {
@@ -42,9 +42,9 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 	/** metodens namn */
 	public static final String METHOD_NAME = "allIndexUniqueValueCount";
-	/** namnet pÂ parametern som hÂller medskickade index */
+	/** namnet p√• parametern som h√•ller medskickade index */
 	public static final String INDEX_PARAMETER = "index";
-	/** parameternamn d‰r query skickas in */
+	/** parameternamn d√§r query skickas in */
 	public static final String QUERY_PARAMS = "query";
 
 
@@ -53,7 +53,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
 
 	static {
-		// kopierat frÂn LuceneServlet
+		// kopierat fr√•n LuceneServlet
 		Map<String, String> im = new HashMap<String, String>();
 		try {
 			String fileName = PATH + "index.xml";
@@ -68,7 +68,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 				im.put(node.getTextContent(),"*");
 			}
 		} catch (Exception e) {
-			logger.error("Fel vid inl‰sning av default-index", e);
+			logger.error("Fel vid inl√§sning av default-index", e);
 		}
 		defaultIndexMap = Collections.unmodifiableMap(im);
 	}
@@ -79,7 +79,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 	protected List<FacetField> facetFields = Collections.emptyList();
 
 	/**
-	 * skapar ett objekt av AllIndexUniqueValueCount frÂn given query str‰ng
+	 * skapar ett objekt av AllIndexUniqueValueCount fr√•n given query str√§ng
 	 * och writer som skall skriva resultatet.
 	 * @param queryString
 	 * @param writer
@@ -123,13 +123,13 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 			QueryResponse qr = serviceProvider.getSearchService().query(query);
 			facetFields = qr.getFacetFields();
 		} catch (IOException e) {
-			throw new DiagnosticException("Ov‰ntat IO fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("Ov√§ntat IO fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
 		} catch (SolrServerException e) {
-			throw new DiagnosticException("Ov‰ntat fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("Ov√§ntat fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
 		} catch (CQLParseException e) {
-			throw new DiagnosticException("Ov‰ntat parserfel uppstod. Detta beror troligen pÂ att CQL syntax ej fˆljs. Var god kontrollera query str‰ng eller kontakta systemadministratˆr fˆr sˆksystemet du anv‰nder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
+			throw new DiagnosticException("Ov√§ntat parserfel uppstod. Detta beror troligen p√• att CQL syntax ej f√∂ljs. Var god kontrollera query str√§ng eller kontakta systemadministrat√∂r f√∂r s√∂ksystemet du anv√§nder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
 		} catch (BadParameterException e) {
-			throw new DiagnosticException("Ov‰ntat parserfel uppstod. Detta beror troligen pÂ att CQL syntax ej fˆljs. Var god kontrollera query str‰ng eller kontakta systemadministratˆr fˆr sˆksystemet du anv‰nder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
+			throw new DiagnosticException("Ov√§ntat parserfel uppstod. Detta beror troligen p√• att CQL syntax ej f√∂ljs. Var god kontrollera query str√§ng eller kontakta systemadministrat√∂r f√∂r s√∂ksystemet du anv√§nder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
 		}
 	} 
 

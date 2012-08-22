@@ -8,12 +8,12 @@ import se.raa.ksamsok.solr.SearchService;
 import se.raa.ksamsok.statistic.StatisticsManager;
 
 /**
- * Interface f�r att koppla loss factory fr�n metoderna och undvika cirkelberoenden.
+ * Interface fÃ¶r att koppla loss factory frÃ¥n metoderna och undvika cirkelberoenden.
  */
 public interface APIServiceProvider {
 
 	/**
-	 * Ger s�ktj�nst
+	 * Ger sÃ¶ktjÃ¤nst
 	 * @return the searchService
 	 */
 	SearchService getSearchService();

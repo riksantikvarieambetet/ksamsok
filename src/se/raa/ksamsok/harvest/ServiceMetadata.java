@@ -1,7 +1,7 @@
 package se.raa.ksamsok.harvest;
 
 /**
- * Klass för att hantera metadata/capabilities för en oai-pmh-nod.
+ * Klass fÃ¶r att hantera metadata/capabilities fÃ¶r en oai-pmh-nod.
  */
 public class ServiceMetadata {
 
@@ -23,8 +23,8 @@ public class ServiceMetadata {
 	}
 
 	/**
-	 * Ger om tjänsten klarar att hantera persistenta deletes (krävs om inkrementell
-	 * skörd ska kunna användas)
+	 * Ger om tjÃ¤nsten klarar att hantera persistenta deletes (krÃ¤vs om inkrementell
+	 * skÃ¶rd ska kunna anvÃ¤ndas)
 	 * 
 	 * @return sant om persistenta deletes hanteras
 	 */
@@ -33,9 +33,9 @@ public class ServiceMetadata {
 	}
 
 	/**
-	 * Ger om tjänsten kan skicka deletes.
+	 * Ger om tjÃ¤nsten kan skicka deletes.
 	 * 
-	 * @return sant om tjänsten kan skicka deletes
+	 * @return sant om tjÃ¤nsten kan skicka deletes
 	 */
 	boolean canSendDeletes() {
 		return !D_NO.equals(deletedRecord);
@@ -51,9 +51,9 @@ public class ServiceMetadata {
 	}
 
 	/**
-	 * Ger datumformatsträng för aktuell tjänsts datum/tid-granularitet.
+	 * Ger datumformatstrÃ¤ng fÃ¶r aktuell tjÃ¤nsts datum/tid-granularitet.
 	 * 
-	 * @return datumformatsträng
+	 * @return datumformatstrÃ¤ng
 	 */
 	String getDateFormatString() {
 		if (G_FINE.equals(granularity)) {

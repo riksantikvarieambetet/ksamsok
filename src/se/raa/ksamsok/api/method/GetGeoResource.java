@@ -15,14 +15,14 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.harvest.DBUtil;
 
 /**
- * Metod som hämtar rdf för en geo-resurs, dvs län, kommun, landskap eller socken från databas.
+ * Metod som hÃ¤mtar rdf fÃ¶r en geo-resurs, dvs lÃ¤n, kommun, landskap eller socken frÃ¥n databas.
  */
 public class GetGeoResource extends AbstractAPIMethod {
 
 	/** Metodnamn */
 	public static final Object METHOD_NAME = "getGeoResource";
 
-	// diverse hjälpkonstanter
+	// diverse hjÃ¤lpkonstanter
 	private static final String URI_PARAMETER = "uri";
 	private static final String URI_PREFIX = "http://kulturarvsdata.se/resurser/aukt/geo/";
 	private static final String URI_PREFIX_COUNTY = URI_PREFIX + "county#";
@@ -35,7 +35,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 	private static final int PROVINCE = 2;
 	private static final int PARISH = 3;
 
-	// parameter- och tillståndsvariabler
+	// parameter- och tillstÃ¥ndsvariabler
 	String uri;
 	int type;
 	String table;
@@ -51,7 +51,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 
 	/**
 	 * Skapa ny instans.
-	 * @param serviceProvider tjänstetillhandahållare
+	 * @param serviceProvider tjÃ¤nstetillhandahÃ¥llare
 	 * @param writer writer
 	 * @param params parametrar
 	 */
@@ -64,7 +64,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
 		uri = getMandatoryParameterValue("uri", "GetGeoResource", null, false);
-		// sätt lite interna tillstånd baserat på hur uri:n börjar
+		// sÃ¤tt lite interna tillstÃ¥nd baserat pÃ¥ hur uri:n bÃ¶rjar
 		if (uri.startsWith(URI_PREFIX_COUNTY)) {
 			type = COUNTY;
 			table = "lan";
@@ -88,15 +88,15 @@ public class GetGeoResource extends AbstractAPIMethod {
 			tagName = "Parish";
 			parentColumn = "landskapskod";
 		} else {
-			throw new BadParameterException("Värdet för parametern " + URI_PARAMETER + " är ogiltigt.",
+			throw new BadParameterException("VÃ¤rdet fÃ¶r parametern " + URI_PARAMETER + " Ã¤r ogiltigt.",
 					"GetGeoResource.extractParameters", null, false);
 		}
 	}
 
 	@Override
 	protected void performMethodLogic() throws DiagnosticException {
-		// TODO: det kanske är bättre att hämta gml från geoserver istället?
-		// tex nedan + ett ogc-filter för att få bara en viss feature
+		// TODO: det kanske Ã¤r bÃ¤ttre att hÃ¤mta gml frÃ¥n geoserver istÃ¤llet?
+		// tex nedan + ett ogc-filter fÃ¶r att fÃ¥ bara en viss feature
 		// http://localhost:9090/geoserver/wfs?request=getFeature&type=wfs&version=1.0.0&typename=GEM:LANDSKAP
 		String code = uri.substring(uri.lastIndexOf("#") + 1);
 		DataSource ds = serviceProvider.getDataSource();
@@ -105,16 +105,16 @@ public class GetGeoResource extends AbstractAPIMethod {
 		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
-			// hämta sträng för anrop geometri->gml
+			// hÃ¤mta strÃ¤ng fÃ¶r anrop geometri->gml
 			String toGmlCall = DBUtil.toGMLCall(c, "geometri");
-			// bygg dynamisk fråga och ta med förälder om den är satt
+			// bygg dynamisk frÃ¥ga och ta med fÃ¶rÃ¤lder om den Ã¤r satt
 			pst = c.prepareStatement("select namn, " +
 					(parentColumn != null ? parentColumn + ", " : "")
 					+ toGmlCall + " gml from " +
 					table + " where " + pkColumn + " = ?");
 			switch (type) {
 			case PARISH:
-				// sockenkod är, till skillnad från de andra en siffra
+				// sockenkod Ã¤r, till skillnad frÃ¥n de andra en siffra
 				int parishCode;
 				try {
 					parishCode = Integer.parseInt(code);
@@ -133,7 +133,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 			if (rs.next()) {
 				nameResult = rs.getString("namn");
 				gmlResult = rs.getString("gml");
-				// ta ut extrakolumn och sätt taggnamn
+				// ta ut extrakolumn och sÃ¤tt taggnamn
 				switch (type) {
 				case PARISH:
 					parentURI = URI_PREFIX_PROVINCE + rs.getString(parentColumn);
@@ -144,7 +144,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 					parentTagName = "county";
 					break;
 				}
-				// fixa in ns om det saknas, tex för pg (8 i alla fall)
+				// fixa in ns om det saknas, tex fÃ¶r pg (8 i alla fall)
 				if (gmlResult != null && !gmlResult.contains("xmlns:gml=")) {
 					gmlResult = gmlResult.replace(" srsName", " xmlns:gml=\"http://www.opengis.net/gml\" srsName");
 				}
@@ -161,7 +161,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 
 	@Override
 	protected void writeHead() {
-		// överlagrad för att bara få ren rdf
+		// Ã¶verlagrad fÃ¶r att bara fÃ¥ ren rdf
 		writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 	}
 
@@ -179,7 +179,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 
 		writer.println("<" + tagName + " rdf:about=\"" + uri + "\">");
 		writer.println(" <name>" + nameResult + "</name>");
-		// har vi en parent-uri använder vi den, annars tar vi sverige
+		// har vi en parent-uri anvÃ¤nder vi den, annars tar vi sverige
 		if (parentURI != null) {
 			writer.println(" <" + parentTagName + " rdf:resource=\"" + parentURI + "\"/>");
 		} else {

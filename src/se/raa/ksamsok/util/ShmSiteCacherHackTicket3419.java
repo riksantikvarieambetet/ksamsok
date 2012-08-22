@@ -9,15 +9,15 @@ import org.apache.log4j.Logger;
 import se.raa.ksamsok.harvest.HarvestService;
 
 /**
- * Hack för att gringgå problem med stora rdf:er som har många relationer, specifikt
- * shm/site/56171 som har över 200k st.
- * Kopplad till #3419 och hela denna klass kan/ska tas bort när den ticketen är överspelad.
- * Cachen rensas när skördedatum för tjänsten för shm site uppdateras, alternativt
- * kan det göras manuellt genom att anropa resolverservlet med parametern clear_cache=true,
+ * Hack fÃ¶r att gringgÃ¥ problem med stora rdf:er som har mÃ¥nga relationer, specifikt
+ * shm/site/56171 som har Ã¶ver 200k st.
+ * Kopplad till #3419 och hela denna klass kan/ska tas bort nÃ¤r den ticketen Ã¤r Ã¶verspelad.
+ * Cachen rensas nÃ¤r skÃ¶rdedatum fÃ¶r tjÃ¤nsten fÃ¶r shm site uppdateras, alternativt
+ * kan det gÃ¶ras manuellt genom att anropa resolverservlet med parametern clear_cache=true,
  * exvis http://kulturarvsdata.se/ksamsok/?clear_cache=true, eller tex
  * http://kulturarvsdata.se/ksamsok/raa/fmi/123?clear_cache=true
- * Kringla identifierar sig fn för detta med parametern kringla=true vid sökningar etc så för
- * att simulera ett kringla-anrop och se det kringla ser lägg på den parametern, exvis
+ * Kringla identifierar sig fn fÃ¶r detta med parametern kringla=true vid sÃ¶kningar etc sÃ¥ fÃ¶r
+ * att simulera ett kringla-anrop och se det kringla ser lÃ¤gg pÃ¥ den parametern, exvis
  * http://kulturarvsdata.se/ksamsok/shm/site/56171?kringla=true
  *
  */
@@ -30,11 +30,11 @@ public class ShmSiteCacherHackTicket3419 {
 	public static final String CLEAR_CACHE = "clear_cache";
 
 	/**
-	 * Om cachen ska användas. Kringla-parametern måste vara sann och uri:n måste
+	 * Om cachen ska anvÃ¤ndas. Kringla-parametern mÃ¥ste vara sann och uri:n mÃ¥ste
 	 * matcha objekt man vill cacha.
-	 * @param kringlaParam sant om det är kringla som frågar
+	 * @param kringlaParam sant om det Ã¤r kringla som frÃ¥gar
 	 * @param uri uri
-	 * @return sant om cachen ska användas
+	 * @return sant om cachen ska anvÃ¤ndas
 	 */
 	public static boolean useCache(String kringlaParam, String uri) {
 		return "true".equals(kringlaParam) && uri != null &&
@@ -42,9 +42,9 @@ public class ShmSiteCacherHackTicket3419 {
 	}
 
 	/**
-	 * Rensar cache för om tjänsten shm/site skickas in. Skörde-URL:en används för att
-	 * avgöra om det är rätt tjänst.
-	 * @param service tjänst
+	 * Rensar cache fÃ¶r om tjÃ¤nsten shm/site skickas in. SkÃ¶rde-URL:en anvÃ¤nds fÃ¶r att
+	 * avgÃ¶ra om det Ã¤r rÃ¤tt tjÃ¤nst.
+	 * @param service tjÃ¤nst
 	 */
 	public static void clearCache(HarvestService service) {
 		if (service != null && service.getHarvestURL() != null &&
@@ -54,7 +54,7 @@ public class ShmSiteCacherHackTicket3419 {
 	}
 
 	/**
-	 * Rensar cache om argumentet är "true", används för att manuellt kunna trigga
+	 * Rensar cache om argumentet Ã¤r "true", anvÃ¤nds fÃ¶r att manuellt kunna trigga
 	 * en cacherensning.
 	 * @param clearCache
 	 */
@@ -73,7 +73,7 @@ public class ShmSiteCacherHackTicket3419 {
 	}
 
 	/**
-	 * Hämtar data från cachen, eller strippar (utvalda) relationer från
+	 * HÃ¤mtar data frÃ¥n cachen, eller strippar (utvalda) relationer frÃ¥n
 	 * rdf och pres och cachar sen resultatet.
 	 * @param uri uri
 	 * @param xmlContent xml-data

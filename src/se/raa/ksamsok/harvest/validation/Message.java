@@ -10,7 +10,7 @@ public class Message{
 	public int firstOccuranceCol;
 	public int totalOccurances = 1;
 	
-	// för att kunna använda contains()
+	// fÃ¶r att kunna anvÃ¤nda contains()
 	public boolean equals(Object o){	
 		if(o instanceof Message){
 			Message m = (Message)o;

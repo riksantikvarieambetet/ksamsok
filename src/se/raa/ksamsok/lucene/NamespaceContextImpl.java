@@ -9,7 +9,7 @@ import org.apache.xml.utils.PrefixResolverDefault;
 import org.w3c.dom.Document;
 
 /**
- * Hj‰lpklass fˆr uri-prefixhantering. Anv‰nds bara fˆr DC-data fn.
+ * Hj√§lpklass f√∂r uri-prefixhantering. Anv√§nds bara f√∂r DC-data fn.
  */
 public class NamespaceContextImpl implements NamespaceContext {
 
@@ -24,13 +24,13 @@ public class NamespaceContextImpl implements NamespaceContext {
 	}
 
 	public String getPrefix(String namespaceURI) {
-		// EJ IMPLEMENTERAD (anv‰nds dock ej i vÂrt fall)
+		// EJ IMPLEMENTERAD (anv√§nds dock ej i v√•rt fall)
 		return null;
 	}
 
 	@SuppressWarnings({ "rawtypes" })
 	public Iterator getPrefixes(String namespaceURI) {
-		// EJ IMPLEMENTERAD (anv‰nds dock ej i vÂrt fall)
+		// EJ IMPLEMENTERAD (anv√§nds dock ej i v√•rt fall)
 		return null;
 	}
 

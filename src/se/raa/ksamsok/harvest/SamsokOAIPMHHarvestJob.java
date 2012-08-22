@@ -1,7 +1,7 @@
 package se.raa.ksamsok.harvest;
 
 /**
- * Klass som hanterar skörd av OAI-PMH-data i k-samsöksformat.
+ * Klass som hanterar skÃ¶rd av OAI-PMH-data i k-samsÃ¶ksformat.
  */
 public class SamsokOAIPMHHarvestJob extends OAIPMHHarvestJob {
 	public SamsokOAIPMHHarvestJob() {}
@@ -9,7 +9,7 @@ public class SamsokOAIPMHHarvestJob extends OAIPMHHarvestJob {
 	@Override
 	protected String getMetadataFormat() {
 		// TODO: ska det vara vanilj-rdf eller kulturarvsdata-rdf?
-		//       Nils har använt detta i sin nod så det får vara så här tills vidare i alla fall
+		//       Nils har anvÃ¤nt detta i sin nod sÃ¥ det fÃ¥r vara sÃ¥ hÃ¤r tills vidare i alla fall
 		return "http://kulturarvsdata.se/schema/ksamsok-rdf#";
 		//return "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 	}

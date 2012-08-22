@@ -33,9 +33,9 @@ public class ErrorHandlerImpl implements ErrorHandler{
     
     /**
      * Adds a message which will be retrieved by getReport()
-     * @param msgStart början av meddelandet, tex "Fel: "
-     * @param e vilket exception som helst. Är det ett
-     * SAXParseException så läggs rad&kolumn till i meddelandet
+     * @param msgStart bÃ¶rjan av meddelandet, tex "Fel: "
+     * @param e vilket exception som helst. Ã„r det ett
+     * SAXParseException sÃ¥ lÃ¤ggs rad&kolumn till i meddelandet
      */
     public void addMessage(String msgStart, Exception e){
     	Message m = new Message();

@@ -100,61 +100,61 @@ public class SamsokProtocol {
 	static final URI uri_bio_mother = URI.create(uriPrefix_bio + "mother");
 	static final URI uri_bio_father = URI.create(uriPrefix_bio + "father");
 
-	// roller (relationer i kontext som berör agenter) enl protokolldokument v0.6
-	static final URI uri_rClient = URI.create(uriPrefixKSamsok + "client"); // Beställare
-	static final URI uri_rComposer = URI.create(uriPrefixKSamsok + "composer"); // Kompositör
-	static final URI uri_rAuthor = URI.create(uriPrefixKSamsok + "author"); // Författare
+	// roller (relationer i kontext som berÃ¶r agenter) enl protokolldokument v0.6
+	static final URI uri_rClient = URI.create(uriPrefixKSamsok + "client"); // BestÃ¤llare
+	static final URI uri_rComposer = URI.create(uriPrefixKSamsok + "composer"); // KompositÃ¶r
+	static final URI uri_rAuthor = URI.create(uriPrefixKSamsok + "author"); // FÃ¶rfattare
 	static final URI uri_rArchitect = URI.create(uriPrefixKSamsok + "architect"); // Arkitekt
 	static final URI uri_rInventor = URI.create(uriPrefixKSamsok + "inventor"); // Uppfinnare
 	static final URI uri_rScenographer = URI.create(uriPrefixKSamsok + "scenographer"); // Scenograf
 	static final URI uri_rDesigner = URI.create(uriPrefixKSamsok + "designer"); // Formgivare
 	static final URI uri_rProducer = URI.create(uriPrefixKSamsok + "producer"); // Producent
-	static final URI uri_rOrganizer = URI.create(uriPrefixKSamsok + "organizer"); // Arrangör
-	static final URI uri_rDirector = URI.create(uriPrefixKSamsok + "director"); // Regissör
+	static final URI uri_rOrganizer = URI.create(uriPrefixKSamsok + "organizer"); // ArrangÃ¶r
+	static final URI uri_rDirector = URI.create(uriPrefixKSamsok + "director"); // RegissÃ¶r
 
 	static final URI uri_rPhotographer = URI.create(uriPrefixKSamsok + "photographer"); // Fotograf
-	static final URI uri_rPainter = URI.create(uriPrefixKSamsok + "painter"); // Målare
+	static final URI uri_rPainter = URI.create(uriPrefixKSamsok + "painter"); // MÃ¥lare
 	static final URI uri_rBuilder = URI.create(uriPrefixKSamsok + "builder"); // Byggare
-	static final URI uri_rMasterBuilder = URI.create(uriPrefixKSamsok + "masterBuilder"); // Byggmästare
+	static final URI uri_rMasterBuilder = URI.create(uriPrefixKSamsok + "masterBuilder"); // ByggmÃ¤stare
 	static final URI uri_rConstructionClient = URI.create(uriPrefixKSamsok + "constructionClient"); // Byggherre
-	static final URI uri_rEngraver = URI.create(uriPrefixKSamsok + "engraver"); // Gravör
-	static final URI uri_rMintmaster = URI.create(uriPrefixKSamsok + "mintmaster"); // Myntmästare
-	static final URI uri_rArtist = URI.create(uriPrefixKSamsok + "artist"); // Konstnär
-	static final URI uri_rDesignEngineer = URI.create(uriPrefixKSamsok + "designEngineer"); // Konstruktör
+	static final URI uri_rEngraver = URI.create(uriPrefixKSamsok + "engraver"); // GravÃ¶r
+	static final URI uri_rMintmaster = URI.create(uriPrefixKSamsok + "mintmaster"); // MyntmÃ¤stare
+	static final URI uri_rArtist = URI.create(uriPrefixKSamsok + "artist"); // KonstnÃ¤r
+	static final URI uri_rDesignEngineer = URI.create(uriPrefixKSamsok + "designEngineer"); // KonstruktÃ¶r
 	static final URI uri_rCarpenter = URI.create(uriPrefixKSamsok + "carpenter"); // Snickare
 	static final URI uri_rMason = URI.create(uriPrefixKSamsok + "mason"); // Murare
 	static final URI uri_rTechnician = URI.create(uriPrefixKSamsok + "technician"); // Tekniker
-	static final URI uri_rPublisher = URI.create(uriPrefixKSamsok + "publisher"); // Förläggare
+	static final URI uri_rPublisher = URI.create(uriPrefixKSamsok + "publisher"); // FÃ¶rlÃ¤ggare
 	static final URI uri_rPublicist = URI.create(uriPrefixKSamsok + "publicist"); // Publicist
 	static final URI uri_rMusician = URI.create(uriPrefixKSamsok + "musician"); // Musiker
-	static final URI uri_rActorActress = URI.create(uriPrefixKSamsok + "actorActress"); // Skådespelare - ACTOR finns redan så det fick bli så här...
+	static final URI uri_rActorActress = URI.create(uriPrefixKSamsok + "actorActress"); // SkÃ¥despelare - ACTOR finns redan sÃ¥ det fick bli sÃ¥ hÃ¤r...
 	static final URI uri_rPrinter = URI.create(uriPrefixKSamsok + "printer"); // Tryckare
-	static final URI uri_rSigner = URI.create(uriPrefixKSamsok + "signer"); // TODO: egentligen: Påskrift av - Signature by
+	static final URI uri_rSigner = URI.create(uriPrefixKSamsok + "signer"); // TODO: egentligen: PÃ¥skrift av - Signature by
 	static final URI uri_rFinder = URI.create(uriPrefixKSamsok + "finder"); // Upphittare
-	static final URI uri_rAbandonee = URI.create(uriPrefixKSamsok + "abandonee"); // Förvärvare
-	static final URI uri_rIntermediary = URI.create(uriPrefixKSamsok + "intermediary"); // Förmedlare
-	static final URI uri_rBuyer = URI.create(uriPrefixKSamsok + "buyer"); // Köpare
-	static final URI uri_rSeller = URI.create(uriPrefixKSamsok + "seller");  // Säljare
+	static final URI uri_rAbandonee = URI.create(uriPrefixKSamsok + "abandonee"); // FÃ¶rvÃ¤rvare
+	static final URI uri_rIntermediary = URI.create(uriPrefixKSamsok + "intermediary"); // FÃ¶rmedlare
+	static final URI uri_rBuyer = URI.create(uriPrefixKSamsok + "buyer"); // KÃ¶pare
+	static final URI uri_rSeller = URI.create(uriPrefixKSamsok + "seller");  // SÃ¤ljare
 	static final URI uri_rGeneralAgent = URI.create(uriPrefixKSamsok + "generalAgent"); // Generalagent
 	static final URI uri_rDonor = URI.create(uriPrefixKSamsok + "donor"); // Givare
 	static final URI uri_rDepositor = URI.create(uriPrefixKSamsok + "depositor"); // Deponent
-	static final URI uri_rReseller = URI.create(uriPrefixKSamsok + "reseller"); // Återförsäljare
+	static final URI uri_rReseller = URI.create(uriPrefixKSamsok + "reseller"); // Ã…terfÃ¶rsÃ¤ljare
 	static final URI uri_rInventoryTaker = URI.create(uriPrefixKSamsok + "inventoryTaker"); // Inventerare
-	static final URI uri_rExcavator = URI.create(uriPrefixKSamsok + "excavator"); // Grävare
-	static final URI uri_rExaminator = URI.create(uriPrefixKSamsok + "examinator"); // Undersökare
+	static final URI uri_rExcavator = URI.create(uriPrefixKSamsok + "excavator"); // GrÃ¤vare
+	static final URI uri_rExaminator = URI.create(uriPrefixKSamsok + "examinator"); // UndersÃ¶kare
 	static final URI uri_rConservator = URI.create(uriPrefixKSamsok + "conservator"); // Konservator
 	static final URI uri_rArchiveContributor = URI.create(uriPrefixKSamsok + "archiveContributor"); // Arkivbildare
 	static final URI uri_rInterviewer = URI.create(uriPrefixKSamsok + "interviewer"); // Intervjuare
 	static final URI uri_rInformant = URI.create(uriPrefixKSamsok + "informant"); // Informant
 
-	// NOTE: Ägare - Owner hanteras av cidoc-crm has...owner
-	// NOTE: Upphovsrättsägare - Copyright holder hanteras av cidoc-crm rights held by
+	// NOTE: Ã„gare - Owner hanteras av cidoc-crm has...owner
+	// NOTE: UpphovsrÃ¤ttsÃ¤gare - Copyright holder hanteras av cidoc-crm rights held by
 	static final URI uri_rPatentHolder = URI.create(uriPrefixKSamsok + "patentHolder"); // Patentinnehavare
 	static final URI uri_rUser = URI.create(uriPrefixKSamsok + "user"); // Brukare
-	static final URI uri_rScannerOperator = URI.create(uriPrefixKSamsok + "scannerOperator"); // Skanneroperatör
-	static final URI uri_rPictureEditor = URI.create(uriPrefixKSamsok + "picureEditor"); // Bildredaktör
+	static final URI uri_rScannerOperator = URI.create(uriPrefixKSamsok + "scannerOperator"); // SkanneroperatÃ¶r
+	static final URI uri_rPictureEditor = URI.create(uriPrefixKSamsok + "picureEditor"); // BildredaktÃ¶r
 
-	//	TODO: byta nån? samma: Uppdragsgivare - Employer
+	//	TODO: byta nÃ¥n? samma: Uppdragsgivare - Employer
 	//	                       Arbetsgivare - Employer
 	static final URI uri_rEmployer = URI.create(uriPrefixKSamsok + "employer"); // Arbetsgivare/uppdragsgivare
 	static final URI uri_rMarriedTo = URI.create(uriPrefixKSamsok + "marriedTo"); // samma invers
@@ -188,7 +188,7 @@ public class SamsokProtocol {
 	static final URI uri_rNameId = URI.create(uriPrefixKSamsok + "nameId");
 	static final URI uri_rNameAuth = URI.create(uriPrefixKSamsok + "nameAuth");
 
-	// när-kontext
+	// nÃ¤r-kontext
 	static final URI uri_rFromTime = URI.create(uriPrefixKSamsok + "fromTime");
 	static final URI uri_rToTime = URI.create(uriPrefixKSamsok + "toTime");
 	static final URI uri_rFromPeriodName = URI.create(uriPrefixKSamsok + "fromPeriodName");
@@ -200,7 +200,7 @@ public class SamsokProtocol {
 	static final URI uri_rEventAuth = URI.create(uriPrefixKSamsok + "eventAuth");
 	//static final URI uri_rTimeText = URI.create(uriPrefixKSamsok + "timeText");
 
-	// övriga
+	// Ã¶vriga
 	static final URI uri_rThumbnail = URI.create(uriPrefixKSamsok + "thumbnail");
 	static final URI uri_rImage = URI.create(uriPrefixKSamsok + "image");
 	static final URI uri_rMediaLicense = URI.create(uriPrefixKSamsok + "mediaLicense");

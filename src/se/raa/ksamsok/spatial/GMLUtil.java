@@ -25,24 +25,24 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
 /**
- * Klass med metoder fˆr att jobba med GML, koordinater och koordinatsystem.
- * TODO: se ˆver allt som har med GML-versioner och koordinatsystem/ordning att gˆra - nu
- *       k‰nns det som om det ‰r en salig blandning
+ * Klass med metoder f√∂r att jobba med GML, koordinater och koordinatsystem.
+ * TODO: se √∂ver allt som har med GML-versioner och koordinatsystem/ordning att g√∂ra - nu
+ *       k√§nns det som om det √§r en salig blandning
  */
 public class GMLUtil {
 
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.spatial.GMLUtil");
 
-	// klassnamn fˆr databasspecifik GML-hanterare
+	// klassnamn f√∂r databasspecifik GML-hanterare
 	private static String gmlDBWriterClassName;
-	// flagga som anger om man har fˆrsˆkt s‰tta klassnamnsvariabeln
+	// flagga som anger om man har f√∂rs√∂kt s√§tta klassnamnsvariabeln
 	private static boolean gmlDBWriterClassNameSet = false;
 
 	static {
-		// OBS! denna ‰r v‰ldigt viktig - det blir fel annars - i alla fall om srsName ‰r pÂ formen EPSG:4326
-		// TODO: kolla upp vad som h‰nder om man fÂr in en uri pÂ formen
-		//       http://www.opengis.net/gml/srs/epsg.xml#4326 (lon fˆrst?)
-		//       eller pÂ formen urn:x-ogc:def:crs:EPSG:4326 (lat fˆrst(default)?)
+		// OBS! denna √§r v√§ldigt viktig - det blir fel annars - i alla fall om srsName √§r p√• formen EPSG:4326
+		// TODO: kolla upp vad som h√§nder om man f√•r in en uri p√• formen
+		//       http://www.opengis.net/gml/srs/epsg.xml#4326 (lon f√∂rst?)
+		//       eller p√• formen urn:x-ogc:def:crs:EPSG:4326 (lat f√∂rst(default)?)
 		//       som geotools kan producera
 		System.setProperty("org.geotools.referencing.forceXY", "true");
 	}
@@ -54,9 +54,9 @@ public class GMLUtil {
 	/** EPSG:3021, RT90 2.5 gon V */
 	public static final String CRS_RT90_3021 = "EPSG:3021";
 
-	// vi anv‰nder en enda parser och synkroniserar parsning pga fˆljande bug i geotools 2.5.5
+	// vi anv√§nder en enda parser och synkroniserar parsning pga f√∂ljande bug i geotools 2.5.5
 	// http://jira.codehaus.org/browse/GEOT-2615
-	// TODO: n‰r den ‰r fixat och geotools uppgraderas kan man ta bort synkroniseringen
+	// TODO: n√§r den √§r fixat och geotools uppgraderas kan man ta bort synkroniseringen
 	private static final Configuration configuration = new GMLConfiguration();
 	private static final Parser parser = new Parser(configuration);
 	private static final GeometryFactory geometryFactory = new GeometryFactory();
@@ -64,8 +64,8 @@ public class GMLUtil {
 	/**
 	 * Konverterar gml-geometri till annat koordinatsystem.
 	 * @param gml gml
-	 * @param crsName identifierare fˆr koordinatsystem
-	 * @return konverterad gml-str‰ng
+	 * @param crsName identifierare f√∂r koordinatsystem
+	 * @return konverterad gml-str√§ng
 	 * @throws Exception vid fel
 	 */
 	public static String convertTo(String gml, String crsName) throws Exception {
@@ -81,7 +81,7 @@ public class GMLUtil {
 	}
 
 	/**
-	 * H‰mtar ut centrumpunkt fˆr gml-geometrin som lon/lat (x/y).
+	 * H√§mtar ut centrumpunkt f√∂r gml-geometrin som lon/lat (x/y).
 	 * @param gml gml-geometri
 	 * @return centrumpunkt i WGS 84 (EPSG:4326)
 	 * @throws Exception vid fel
@@ -95,15 +95,15 @@ public class GMLUtil {
 		boolean nameEquals = parsedCRS.getName().equals(wsg84.getName());
 		boolean equals = parsedCRS.equals(wsg84);
 		if (nameEquals) {
-			// TODO: se ˆver
+			// TODO: se √∂ver
 			if (!equals) {
-				// samma namn, men ej samma referenssystem - beror sÂ gott som alltid pÂ
-				// att lat/lon tros vara omkastade mot vad vi vill, men vi "kr‰ver" att
-				// det ska vara pÂ xy sÂ vi antar att det ‰r det
-				logger.warn("getLonLatCentroid: gml ‰r (WGS84) men koordinatsystemen ‰r !equals");
+				// samma namn, men ej samma referenssystem - beror s√• gott som alltid p√•
+				// att lat/lon tros vara omkastade mot vad vi vill, men vi "kr√§ver" att
+				// det ska vara p√• xy s√• vi antar att det √§r det
+				logger.warn("getLonLatCentroid: gml √§r (WGS84) men koordinatsystemen √§r !equals");
 			}
 		} else {
-			// TODO: kanske ‰r samma problem med andra koordinatreferenssystem med omkastade
+			// TODO: kanske √§r samma problem med andra koordinatreferenssystem med omkastade
 			//       koordinater och inte bara wsg 84?
 			centroid = (Point) transformCRS(centroid, wsg84, parsedCRS, false);
 		}
@@ -111,9 +111,9 @@ public class GMLUtil {
 	}
 
 	/**
-	 * Transformerar array med koordinater frÂn ett namngivet koordinatsystem till ett annat.
-	 * Ordningen fˆruts‰tts vara x1, y1, x2, y2 etc och antalet inskickade koordinatv‰rden
-	 * mÂste vara j‰mnt.
+	 * Transformerar array med koordinater fr√•n ett namngivet koordinatsystem till ett annat.
+	 * Ordningen f√∂ruts√§tts vara x1, y1, x2, y2 etc och antalet inskickade koordinatv√§rden
+	 * m√•ste vara j√§mnt.
 	 * @param coords koordinater
 	 * @param fromCRS koordinaternas nuvarande koordinatsystem
 	 * @param toCRS koordinatsystem att konvertera till
@@ -125,7 +125,7 @@ public class GMLUtil {
 			return coords;
 		}
 		if (coords.length % 2 != 0) {
-			throw new Exception("Felaktig koordinatlista - oj‰mnt antal koordinater");
+			throw new Exception("Felaktig koordinatlista - oj√§mnt antal koordinater");
 		}
 		double result[] = new double[coords.length];
 		CoordinateReferenceSystem sourceCRS = CRS.decode(fromCRS);
@@ -140,27 +140,27 @@ public class GMLUtil {
 	}
 
 	/**
-	 * H‰mtar (ev) en ny instans av en databas-specifik klass fˆr att hantera geometrier.
-	 * Databasuppkopplingen anv‰nds fˆr att fˆrsˆka h‰rleda fram en klass.
-	 * Fˆr n‰rvarande stˆds bara Oracle, se {@linkplain OracleGMLDBWriter},
-	 * och fˆr ˆvriga kommer anropet ge null.<br/>
-	 * Beteendet ovan kan Âsidos‰ttas genom att explicit s‰tta ett klassnamn
-	 * via -Dsamsok.spatial.class=x.y.Z (klassen mÂste implementera GMLDBWriter och ha
+	 * H√§mtar (ev) en ny instans av en databas-specifik klass f√∂r att hantera geometrier.
+	 * Databasuppkopplingen anv√§nds f√∂r att f√∂rs√∂ka h√§rleda fram en klass.
+	 * F√∂r n√§rvarande st√∂ds bara Oracle, se {@linkplain OracleGMLDBWriter},
+	 * och f√∂r √∂vriga kommer anropet ge null.<br/>
+	 * Beteendet ovan kan √•sidos√§ttas genom att explicit s√§tta ett klassnamn
+	 * via -Dsamsok.spatial.class=x.y.Z (klassen m√•ste implementera GMLDBWriter och ha
 	 * en publik default-konstruktor).<br/>
-	 * Om man ej vill anv‰nda det spatiala stˆdet alls kan man st‰nga av det genom att
-	 * s‰tta flaggan -Dsamsok.spatial=false.
-	 * Den h‰mtade instansen initieras ocksÂ (med init()) och innan den sl‰pps till gc mÂste
-	 * destroy() anropas fˆr att sl‰ppa hÂllna resurser.
+	 * Om man ej vill anv√§nda det spatiala st√∂det alls kan man st√§nga av det genom att
+	 * s√§tta flaggan -Dsamsok.spatial=false.
+	 * Den h√§mtade instansen initieras ocks√• (med init()) och innan den sl√§pps till gc m√•ste
+	 * destroy() anropas f√∂r att sl√§ppa h√•llna resurser.
 	 * 
-	 * @param serviceId tj‰nst
+	 * @param serviceId tj√§nst
 	 * @param c databasuppkoppling
-	 * @return en fˆr aktuell databas (eller konf) l‰mplig hanterare av geometrier, eller null 
+	 * @return en f√∂r aktuell databas (eller konf) l√§mplig hanterare av geometrier, eller null 
 	 */
 	public static GMLDBWriter getGMLDBWriter(String serviceId, Connection c) {
 		GMLDBWriter gmlDbWriter = null;
-		// kolla om vi ska skriva i spatialtabeller, default ‰r sant
+		// kolla om vi ska skriva i spatialtabeller, default √§r sant
 		if (Boolean.parseBoolean(System.getProperty("samsok.spatial", "true"))) {
-			// h‰mta klassnamnet och instantiera och initera en writer
+			// h√§mta klassnamnet och instantiera och initera en writer
 			String className = getGMLDBWriterClassName(c);
 			if (className != null) {
 				try {
@@ -184,16 +184,16 @@ public class GMLUtil {
 		return gmlDbWriter;
 	}
 
-	// h‰mtar cachat klassnamn, eller fˆrsˆker ta reda pÂ ett bra klassnamn och cacha upp det
+	// h√§mtar cachat klassnamn, eller f√∂rs√∂ker ta reda p√• ett bra klassnamn och cacha upp det
 	private static String getGMLDBWriterClassName(Connection c) {
 		// hit ska vi bara komma om vi ska spara data i spatialtabeller
 		// TODO: synkronisera kanske?
 		if (!gmlDBWriterClassNameSet) {
 			gmlDBWriterClassName = System.getProperty("samsok.spatial.class");
-			// om det inte ‰r satt som en systemproperty fˆrsˆk lista ut frÂn uppkopplingen
+			// om det inte √§r satt som en systemproperty f√∂rs√∂k lista ut fr√•n uppkopplingen
 			if (gmlDBWriterClassName == null) {
 				String extractedClassName = c.getClass().getName();
-				// om det ‰r en dbcp delegate, testa att ta fram den aktuella klassen
+				// om det √§r en dbcp delegate, testa att ta fram den aktuella klassen
 				if (extractedClassName.indexOf("dbcp") > 0) {
 					try {
 						Class<?> classToAnalyze = c.getClass();
@@ -205,14 +205,14 @@ public class GMLUtil {
 							Object id = getInnermostDelegate.invoke(c, (Object[]) null);
 							if (id == null) {
 								// fallback genom ett litet trick om metodanrop ger null
-								// TODO: detta ‰r egentligen allt som behˆvs fˆr att fÂ ett
+								// TODO: detta √§r egentligen allt som beh√∂vs f√∂r att f√• ett
 								//       bra klassnamn att kolla
 								id = c.getMetaData().getConnection();
 							}
 							extractedClassName = id.getClass().getName();
 						}
 					} catch (Exception e) {
-						logger.error("Fel vid kontroll av innermost delegate fˆr en dbcp connection", e);
+						logger.error("Fel vid kontroll av innermost delegate f√∂r en dbcp connection", e);
 					}
 				}
 				if (extractedClassName.toLowerCase().indexOf("oracle") >= 0) {
@@ -220,7 +220,7 @@ public class GMLUtil {
 				} else if (extractedClassName.toLowerCase().indexOf("postgres") >= 0) {
 					gmlDBWriterClassName = "se.raa.ksamsok.spatial.PostgresGMLDBWriter";
 				} else {
-					logger.info("Ingen spatial-kapabel (och k‰nd) databas anv‰nds(?), " +
+					logger.info("Ingen spatial-kapabel (och k√§nd) databas anv√§nds(?), " +
 							"connection-klass tolkades som " + extractedClassName);
 				}
 			}
@@ -229,7 +229,7 @@ public class GMLUtil {
 		return gmlDBWriterClassName;
 	}
 
-	// transformera geometri frÂn ett koordinatsystem till ett annat
+	// transformera geometri fr√•n ett koordinatsystem till ett annat
 	private static Geometry transformCRS(Geometry geometry, CoordinateReferenceSystem sourceCRS, CoordinateReferenceSystem targetCRS, boolean lenient) throws Exception {
 		//if (logger.isDebugEnabled()) {
 		//	logger.debug("xform (lenient: " + lenient + ") from " + sourceCRS.getName() + " (" +
@@ -238,36 +238,36 @@ public class GMLUtil {
 		//}
 		MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, lenient);
 		Geometry xformed = JTS.transform(geometry, transform);
-		// s‰tt om crs
+		// s√§tt om crs
 		xformed.setUserData(targetCRS);
 		return xformed;
 	}
 
-	// fˆrsˆker skapa en geometri-instans frÂn gml
+	// f√∂rs√∂ker skapa en geometri-instans fr√•n gml
 	static Geometry parseGeometry(String gml) throws Exception {
 		Object o;
 		if (gml == null) {
-			throw new Exception("gml ‰r null");
+			throw new Exception("gml √§r null");
 		}
-		// fulfix fˆr oracle-genererade srsName med SDO som authority vilket geotools inte
-		// k‰nner till nÂt om
+		// fulfix f√∂r oracle-genererade srsName med SDO som authority vilket geotools inte
+		// k√§nner till n√•t om
 		gml = gml.replace("SDO:", "EPSG:");
 		try {
-			// vi mÂste synkronisera parsningen pga en bug i geotools (eller eclipse-emf/xsd)
+			// vi m√•ste synkronisera parsningen pga en bug i geotools (eller eclipse-emf/xsd)
 			// se http://jira.codehaus.org/browse/GEOT-2615
-			// obs att det inte spelar nÂn roll om man anv‰nder nya parserinstanser istf en
-			// enda utan problemet uppstÂr i alla fall
-			// ett alternativ skulle kunna vara att anv‰nda "xdo"-parser ist‰llet dÂ den
-			// inte berˆrs av buggen och dessutom ‰r snabbare  - den gˆr dock lite annorlunda
-			// med koordinatsystemen och l‰gger till skillnad frÂn gt-xml bara namnet pÂ
-			// utparsat srsName i userData ist‰llet fˆr sj‰lva CoordinateReferenceSystem-
-			// instansen vilket man i sÂ fall mÂste ta h‰nsyn till
+			// obs att det inte spelar n√•n roll om man anv√§nder nya parserinstanser istf en
+			// enda utan problemet uppst√•r i alla fall
+			// ett alternativ skulle kunna vara att anv√§nda "xdo"-parser ist√§llet d√• den
+			// inte ber√∂rs av buggen och dessutom √§r snabbare  - den g√∂r dock lite annorlunda
+			// med koordinatsystemen och l√§gger till skillnad fr√•n gt-xml bara namnet p√•
+			// utparsat srsName i userData ist√§llet f√∂r sj√§lva CoordinateReferenceSystem-
+			// instansen vilket man i s√• fall m√•ste ta h√§nsyn till
 			// typ:
 			// XMLReader reader = XMLReaderFactory.createXMLReader();
 			// XMLSAXHandler xmlHandler = new XMLSAXHandler(new HashMap());
 			// reader.setContentHandler(xmlHandler);
 			// reader.parse(new InputSource(new StringReader(gml)));
-			// Object o = xmlHandler.getDocument(); // bˆr ge en Geometry-instans
+			// Object o = xmlHandler.getDocument(); // b√∂r ge en Geometry-instans
 			synchronized (parser) {
 				o = parser.parse(new StringReader(gml));
 			}
@@ -278,23 +278,23 @@ public class GMLUtil {
 			throw new Exception("Kunde inte tolka inskickad xml som gml");
 		}
 		if (!(o instanceof Geometry)) {
-			throw new Exception("XML verkar vara gml, men kunde inte fÂ fram en geometri");
+			throw new Exception("XML verkar vara gml, men kunde inte f√• fram en geometri");
 		}
 		return (Geometry) o;
 	}
 
-	// h‰mtar ut koordinatsystem frÂn geometri
-	// TODO: ‰r detta samma som GML2EncodingUtils.getCRS()? om ja, anv‰nd den ist‰llet?
+	// h√§mtar ut koordinatsystem fr√•n geometri
+	// TODO: √§r detta samma som GML2EncodingUtils.getCRS()? om ja, anv√§nd den ist√§llet?
 	private static CoordinateReferenceSystem getCRS(Geometry g) throws Exception {
-		// i userdata l‰gger geotools-parsern fn info om vilket koordinatsystem gml:en var i
+		// i userdata l√§gger geotools-parsern fn info om vilket koordinatsystem gml:en var i
 		Object o = g.getUserData();
 		if (o == null || "".equals(o)) {
-			// TODO: fˆruts‰tta att det ‰r nÂt speciellt crs och ge tillbaka en sÂn instans?
-			throw new Exception("GML/XML-parsern frÂn Geotools la ingen koordinatsystem-info " +
+			// TODO: f√∂ruts√§tta att det √§r n√•t speciellt crs och ge tillbaka en s√•n instans?
+			throw new Exception("GML/XML-parsern fr√•n Geotools la ingen koordinatsystem-info " +
 					"i userdata, saknas den i gml:en?");
 		}
 		if (!(o instanceof CoordinateReferenceSystem || o instanceof String)) {
-			throw new Exception("GML/XML-parsern har lagt nÂt annat ‰n koordinatsystem-info " +
+			throw new Exception("GML/XML-parsern har lagt n√•t annat √§n koordinatsystem-info " +
 					"i userdata, en instans av " + o.getClass().getName());
 		}
 		if (o instanceof String) {
@@ -314,18 +314,18 @@ public class GMLUtil {
 		if (crs == null) {
 			crs = getCRS(g);
 		}
-		// skulle kunna anv‰nda xdo ist‰llet men det ‰r svÂrt att styra saker, typ:
+		// skulle kunna anv√§nda xdo ist√§llet men det √§r sv√•rt att styra saker, typ:
 		// GMLConfiguration conf = new GMLConfiguration(); // gml2 eller 3
 		// org.geotools.xml.Encoder e = new org.geotools.xml.Encoder(conf);
 		// e.setOmitXMLDeclaration(true);
 		// e.setIndenting(true);
 		// QName qname = new QName(GMLSchema.NAMESPACE.toString(), gType, "gml");
-		// // g mÂste ha en crs-instans i userdata fˆr att fÂ med srsName i gml:en, namnet r‰cker ej
+		// // g m√•ste ha en crs-instans i userdata f√∂r att f√• med srsName i gml:en, namnet r√§cker ej
 		// e.encode(g, qname, System.out);
 
-		// TODO: detta ‰r lite hackigt dÂ det var svÂrt att fÂ ut ett ok gml-fragment
-		//       sÂ som vi vill ha det med angivet srsName och inga extra namespaces
-		//       frÂn geotools
+		// TODO: detta √§r lite hackigt d√• det var sv√•rt att f√• ut ett ok gml-fragment
+		//       s√• som vi vill ha det med angivet srsName och inga extra namespaces
+		//       fr√•n geotools
 		final String toSrsName = crs.getIdentifiers().iterator().next().toString();
 		GeometryTransformer gt = new GeometryTransformer() {
 			@Override
@@ -353,7 +353,7 @@ public class GMLUtil {
 				return gt;
 			}
 		};
-		gt.setIndentation(4); // TODO: detta kan skippas men ‰r trevligt vid debug
+		gt.setIndentation(4); // TODO: detta kan skippas men √§r trevligt vid debug
 		gt.setOmitXMLDeclaration(true);
 		gt.setNamespaceDeclarationEnabled(true);
 		return gt.transform(g);

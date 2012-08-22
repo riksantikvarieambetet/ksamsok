@@ -4,107 +4,107 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Tjänst som hanterar status mm för skördetjänster (cron-jobb).
+ * TjÃ¤nst som hanterar status mm fÃ¶r skÃ¶rdetjÃ¤nster (cron-jobb).
  */
 public interface StatusService {
 
 	/**
-	 * Enum för de olika steg en tjänst kan befinna sig i.
+	 * Enum fÃ¶r de olika steg en tjÃ¤nst kan befinna sig i.
 	 */
 	public static enum Step { FETCH, STORE, EMPTYINDEX, INDEX, IDLE };
 	
 	/**
-	 * Återställer status för tjänsten så att den är redo för en ny körning.
+	 * Ã…terstÃ¤ller status fÃ¶r tjÃ¤nsten sÃ¥ att den Ã¤r redo fÃ¶r en ny kÃ¶rning.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param message meddelande
 	 */
 	void initStatus(HarvestService service, String message);
 
 	/**
-	 * Begär att en körande tjänst ska avbryta sig själv så snart den kan.
+	 * BegÃ¤r att en kÃ¶rande tjÃ¤nst ska avbryta sig sjÃ¤lv sÃ¥ snart den kan.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 */
 	void requestInterrupt(HarvestService service);
 
 	/**
-	 * Kollar och kastar exception om tjänsten ska avbrytas. Används av tjänsten
-	 * för att kontrollera sin status.
+	 * Kollar och kastar exception om tjÃ¤nsten ska avbrytas. AnvÃ¤nds av tjÃ¤nsten
+	 * fÃ¶r att kontrollera sin status.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 */
 	void checkInterrupt(HarvestService service);
 
 	/**
-	 * Sätter statusmeddelande och lägger också till meddelandet i tjänstens logg.
+	 * SÃ¤tter statusmeddelande och lÃ¤gger ocksÃ¥ till meddelandet i tjÃ¤nstens logg.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param message meddelande
 	 */
 	void setStatusTextAndLog(HarvestService service, String message);
 
 	/**
-	 * Sätter statusmeddelande utan att logga det.
+	 * SÃ¤tter statusmeddelande utan att logga det.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param message meddelande
 	 */
 	void setStatusText(HarvestService service, String message);
 
 	/**
-	 * Sätter varningsmeddelande och lägger också till meddelandet i tjänstens logg.
-	 * Ett varningsmeddelande är samma sak som ett statusmeddelande pss att tex
+	 * SÃ¤tter varningsmeddelande och lÃ¤gger ocksÃ¥ till meddelandet i tjÃ¤nstens logg.
+	 * Ett varningsmeddelande Ã¤r samma sak som ett statusmeddelande pss att tex
 	 * {@linkplain #getStatusText(HarvestService)} ger senast satta varningsmeddelande.
-	 * Den enda skillnaden är att de lagras med en annan kod i databasen.
+	 * Den enda skillnaden Ã¤r att de lagras med en annan kod i databasen.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param message meddelande
 	 */
 	void setWarningTextAndLog(HarvestService service, String message);
 
 	/**
-	 * Sätter varningsmeddelande och lägger också till meddelandet i tjänstens logg.
-	 * Ett varningsmeddelande är samma sak som ett statusmeddelande pss att tex
+	 * SÃ¤tter varningsmeddelande och lÃ¤gger ocksÃ¥ till meddelandet i tjÃ¤nstens logg.
+	 * Ett varningsmeddelande Ã¤r samma sak som ett statusmeddelande pss att tex
 	 * {@linkplain #getStatusText(HarvestService)} ger senast satta varningsmeddelande.
-	 * Den enda skillnaden är att de lagras med en annan kod i databasen.
+	 * Den enda skillnaden Ã¤r att de lagras med en annan kod i databasen.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param message meddelande
-	 * @param date tidsstämpel att ge meddelandet
+	 * @param date tidsstÃ¤mpel att ge meddelandet
 	 */
 	void setWarningTextAndLog(HarvestService service, String message, Date date);
 
 	/**
-	 * Hämtar senast satta statusmeddelande för tjänsten.
+	 * HÃ¤mtar senast satta statusmeddelande fÃ¶r tjÃ¤nsten.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return statusmeddelande eller null
 	 */
 	String getStatusText(HarvestService service);
 
 	/**
-	 * Hämtar loggmedelanden för senaste körning. Denna metod hämtar bara
-	 * meddelanden från minnet så om ett jobb ej körts efter uppstart kommer
-	 * listan inte innehålla några meddelanden.
+	 * HÃ¤mtar loggmedelanden fÃ¶r senaste kÃ¶rning. Denna metod hÃ¤mtar bara
+	 * meddelanden frÃ¥n minnet sÃ¥ om ett jobb ej kÃ¶rts efter uppstart kommer
+	 * listan inte innehÃ¥lla nÃ¥gra meddelanden.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return lista med loggmeddelanden
 	 */
 	List<String> getStatusLog(HarvestService service);
 
 	/**
-	 * Hämtar en tjänsts loggmeddelandehistorik.
+	 * HÃ¤mtar en tjÃ¤nsts loggmeddelandehistorik.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return lista med loggmeddelanden
 	 */
 	List<String> getStatusLogHistory(HarvestService service);
 
 	/**
-	 * Hämtar en tjänsts problemloggmeddelandehistorik.
+	 * HÃ¤mtar en tjÃ¤nsts problemloggmeddelandehistorik.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param maxRows max antal loggrader
 	 * @param sort sorteringskolumn
 	 * @param sortDir sorteringriktning (asc/desc)
@@ -113,71 +113,71 @@ public interface StatusService {
 	List<LogEvent> getProblemLogHistory(int maxRows, String sort, String sortDir);
 
 	/**
-	 * Sätter felmeddelande och lägger till meddelandet i tjänstens logg.
+	 * SÃ¤tter felmeddelande och lÃ¤gger till meddelandet i tjÃ¤nstens logg.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param message meddelande
 	 */
 	void setErrorTextAndLog(HarvestService service, String message);
 
 	/**
-	 * Hämtar felmeddelande.
+	 * HÃ¤mtar felmeddelande.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return felmeddelande eller null
 	 */
 	String getErrorText(HarvestService service);
 
 	/**
-	 * Hämtar senaste starttid för tjänsten.
+	 * HÃ¤mtar senaste starttid fÃ¶r tjÃ¤nsten.
 	 * 
-	 * @param service tjänst
-	 * @return senaste starttid som en sträng, eller null
+	 * @param service tjÃ¤nst
+	 * @return senaste starttid som en strÃ¤ng, eller null
 	 */
 	String getLastStart(HarvestService service);
 
 	/**
-	 * Hämtar vilket steg tjänsten befinner sig i.
+	 * HÃ¤mtar vilket steg tjÃ¤nsten befinner sig i.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return aktuellt steg
 	 */
 	Step getStep(HarvestService service);
 
 	/**
-	 * Sätter vilket steg tjänsten befinner sig i.
+	 * SÃ¤tter vilket steg tjÃ¤nsten befinner sig i.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param step steg
 	 */
 	void setStep(HarvestService service, Step step);
 
 	/**
-	 * Hämtar vilket steg tjänsten ska börja köra ifrån.
+	 * HÃ¤mtar vilket steg tjÃ¤nsten ska bÃ¶rja kÃ¶ra ifrÃ¥n.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return steg
 	 */
 	Step getStartStep(HarvestService service);
 
 	/**
-	 * Sätter vilket steg tjänsten ska börja köra ifrån.
+	 * SÃ¤tter vilket steg tjÃ¤nsten ska bÃ¶rja kÃ¶ra ifrÃ¥n.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param step steg
 	 */
 	void setStartStep(HarvestService service, Step step);
 
 	/**
-	 * Sätter flagga som talar om att det finns rdf-parsningsfel
-	 * @param service tjänst
+	 * SÃ¤tter flagga som talar om att det finns rdf-parsningsfel
+	 * @param service tjÃ¤nst
 	 */
 	void signalRDFError(HarvestService service);
 	
 	/**
-	 * Ger sant om det finns rdf-parsningsfel för tjänsten
-	 * @param service tjänst
-	 * @return om rdf-parsningsfel har upptäckts
+	 * Ger sant om det finns rdf-parsningsfel fÃ¶r tjÃ¤nsten
+	 * @param service tjÃ¤nst
+	 * @return om rdf-parsningsfel har upptÃ¤ckts
 	 */
 	boolean containsRDFErrors(HarvestService service);
 

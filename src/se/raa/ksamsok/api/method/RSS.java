@@ -73,14 +73,14 @@ import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
 
 /**
- * Metod för att få tillbaka en mediaRSS feed på ett sökresultat
- * från K-samsök
+ * Metod fÃ¶r att fÃ¥ tillbaka en mediaRSS feed pÃ¥ ett sÃ¶kresultat
+ * frÃ¥n K-samsÃ¶k
  * @author Henrik Hjalmarsson
  */
 public class RSS extends AbstractSearchMethod {
 	/** metodens namn */
 	public static final String METHOD_NAME = "rss";
-	/** standard värde för antal träffar per sida */
+	/** standard vÃ¤rde fÃ¶r antal trÃ¤ffar per sida */
 	public static final int DEFAULT_HITS_PER_PAGE = 100;
 	
 	// rss version
@@ -92,7 +92,7 @@ public class RSS extends AbstractSearchMethod {
 	private static final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 	private static final JRDFFactory jrdfFactory = SortedMemoryJRDFFactory.getFactory();
 	
-	//URIs för att navigera RDF
+	//URIs fÃ¶r att navigera RDF
 	private static final String URI_PREFIX = "http://kulturarvsdata.se/";
 	private static final String URI_PREFIX_KSAMSOK = URI_PREFIX + "ksamsok#";
 	private static final URI URI_RDF_TYPE = URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
@@ -104,10 +104,10 @@ public class RSS extends AbstractSearchMethod {
 
 	/**
 	 * Skapar ett objekt av RSS
-	 * @param queryString CQL query sträng för att söka mot indexet
-	 * @param hitsPerPage hur många träffar som skall visas per sida
-	 * @param startRecord vart i resultatet sökningen skall starta
-	 * @param writer används för att skriva svaret
+	 * @param queryString CQL query strÃ¤ng fÃ¶r att sÃ¶ka mot indexet
+	 * @param hitsPerPage hur mÃ¥nga trÃ¤ffar som skall visas per sida
+	 * @param startRecord vart i resultatet sÃ¶kningen skall starta
+	 * @param writer anvÃ¤nds fÃ¶r att skriva svaret
 	 */
 	public RSS(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
 		super(serviceProvider, writer, params);
@@ -123,29 +123,29 @@ public class RSS extends AbstractSearchMethod {
 		try {
 			SolrQuery q = createQuery();
 			q.setRows(hitsPerPage);
-			// start är 0-baserad
+			// start Ã¤r 0-baserad
 			q.setStart(startRecord - 1);
-			// fält att hämta
+			// fÃ¤lt att hÃ¤mta
 			q.addField(ContentHelper.IX_ITEMID);
 			q.addField(ContentHelper.I_IX_RDF);
 			QueryResponse qr = serviceProvider.getSearchService().query(q);
 			hitList = qr.getResults();
 		} catch (SolrServerException e) {
-			throw new DiagnosticException("Oväntat IO-fel", "RSS.doSearch", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO-fel", "RSS.doSearch", e.getMessage(), true);
 		} catch (BadParameterException e) {
-			throw new DiagnosticException("Oväntat parserfel uppstod", "RSS.doSearch", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat parserfel uppstod", "RSS.doSearch", e.getMessage(), true);
 		}
 
 	}
 
 	@Override
 	protected void writeHead() {
-		// vi gör inget här
+		// vi gÃ¶r inget hÃ¤r
 	}
 
 	@Override
 	protected void writeFoot() {
-		// vi gör inget här
+		// vi gÃ¶r inget hÃ¤r
 	}
 
 	@Override
@@ -156,9 +156,9 @@ public class RSS extends AbstractSearchMethod {
 			SyndFeedOutput output = new SyndFeedOutput();
 			output.output(feed, writer);
 		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO fel", "RSS.doSyndFeed", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO fel", "RSS.doSyndFeed", e.getMessage(), true);
 		} catch (FeedException e) {
-			throw new DiagnosticException("Något gick fel : /", "RSS.doSyndFeed", e.getMessage(), true);
+			throw new DiagnosticException("NÃ¥got gick fel : /", "RSS.doSyndFeed", e.getMessage(), true);
 		}
 	}
 
@@ -176,9 +176,9 @@ public class RSS extends AbstractSearchMethod {
 			String qs = CQL2Solr.makeQuery(rootNode);
 			q.setQuery(qs);
 		} catch (CQLParseException e) {
-			throw new DiagnosticException("Parser fel. Kontrollera query sträng", "RSS.createQuery", null, false);
+			throw new DiagnosticException("Parser fel. Kontrollera query strÃ¤ng", "RSS.createQuery", null, false);
 		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO fel. Försök igen", "RSS.createQuery", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO fel. FÃ¶rsÃ¶k igen", "RSS.createQuery", e.getMessage(), true);
 		}
 		return q;
 	}
@@ -204,28 +204,28 @@ public class RSS extends AbstractSearchMethod {
 				if (xmlData != null) {
 					content = new String(xmlData, "UTF-8");
 				}
-				// TODO: NEK ta bort när allt är omindexerat
+				// TODO: NEK ta bort nÃ¤r allt Ã¤r omindexerat
 				if (content == null) {
 					content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
 				}
 				if (content != null) {
 					entries.add(getEntry(content));	
 				} else {
-					logger.warn("Hittade inte rdf-data för " + uri);
+					logger.warn("Hittade inte rdf-data fÃ¶r " + uri);
 				}
 			}
 		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO fel", "RSS.getEntries", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO fel", "RSS.getEntries", e.getMessage(), true);
 		} catch(Exception e) {
-			throw new DiagnosticException("Fel vid hämtning av data", "RSS.getEntries", e.getMessage(), true);
+			throw new DiagnosticException("Fel vid hÃ¤mtning av data", "RSS.getEntries", e.getMessage(), true);
 		}
 		return entries;
 	}
 	
 	/**
 	 * skapar ett entry till RSS feed
-	 * @param content XML data som en sträng
-	 * @return ett entry med data från XML sträng
+	 * @param content XML data som en strÃ¤ng
+	 * @return ett entry med data frÃ¥n XML strÃ¤ng
 	 * @throws DiagnosticException 
 	 */
 	@SuppressWarnings("unchecked")
@@ -275,10 +275,10 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Hämtar data från RDF dokument
-	 * @param content textsträng innehållande RDF data
+	 * HÃ¤mtar data frÃ¥n RDF dokument
+	 * @param content textstrÃ¤ng innehÃ¥llande RDF data
 	 * @return ett Rssobjekt med data
-	 * @throws DiagnosticException - om fel uppstår vid hämtning av data 
+	 * @throws DiagnosticException - om fel uppstÃ¥r vid hÃ¤mtning av data 
 	 */
 	private RssObject getData(String content) 
 		throws DiagnosticException
@@ -313,8 +313,8 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Skapar en RDF graf från textsträng
-	 * @param content RDF data som textsträng
+	 * Skapar en RDF graf frÃ¥n textstrÃ¤ng
+	 * @param content RDF data som textstrÃ¤ng
 	 * @return RDF graf
 	 * @throws DiagnosticException
 	 */
@@ -329,9 +329,9 @@ public class RSS extends AbstractSearchMethod {
 			GraphRdfXmlParser parser = new GraphRdfXmlParser(g, new MemMapFactory());
 			parser.parse(reader, "");
 		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO-fel uppstod", "RSS.getGraph", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat IO-fel uppstod", "RSS.getGraph", e.getMessage(), true);
 		} catch (org.jrdf.parser.ParseException e) {
-			throw new DiagnosticException("Oväntat parser fel uppstod", "RSS.getGraph", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat parser fel uppstod", "RSS.getGraph", e.getMessage(), true);
 		} catch (StatementHandlerException e) {
 			throw new DiagnosticException("Internt fel uppstod", "RSS.getGraph", e.getMessage(), true);
 		}finally {
@@ -344,11 +344,11 @@ public class RSS extends AbstractSearchMethod {
 	
 	/**
 	 * returnerar root subject noden
-	 * @param graph - grafen som noden skall hämtas ur
+	 * @param graph - grafen som noden skall hÃ¤mtas ur
 	 * @param rRdfType - URI referens till rdfType
 	 * @param rKsamsokEntity - URI referens till ksamsokEntity
 	 * @return en subject node
-	 * @throws DiagnosticException om något fel uppstår när subject noden skall hämtas ur grafen
+	 * @throws DiagnosticException om nÃ¥got fel uppstÃ¥r nÃ¤r subject noden skall hÃ¤mtas ur grafen
 	 */
 	private SubjectNode getSubjectNode(Graph graph, URIReference rRdfType, URIReference rKsamsokEntity) 
 		throws DiagnosticException
@@ -372,9 +372,9 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * hämtar data från presentationsblocket
-	 * @param presentationBlock presentationsblocket som textsträng
-	 * @param data Rss objektet som datan skall läggas i
+	 * hÃ¤mtar data frÃ¥n presentationsblocket
+	 * @param presentationBlock presentationsblocket som textstrÃ¤ng
+	 * @param data Rss objektet som datan skall lÃ¤ggas i
 	 * @return RssObject med data
 	 */
 	private RssObject getDataFromPresentationBlock(String presentationBlock, RssObject data)
@@ -423,8 +423,8 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Skapar ett DOM document för presentationsblocket
-	 * @param presentationBlock - presentationsblocket som textsträng
+	 * Skapar ett DOM document fÃ¶r presentationsblocket
+	 * @param presentationBlock - presentationsblocket som textstrÃ¤ng
 	 * @return
 	 * @throws DiagnosticException
 	 */
@@ -452,11 +452,11 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Hämtar ett värde från RDF graf
-	 * @param g - grafen som värdet skall hämtas ur
+	 * HÃ¤mtar ett vÃ¤rde frÃ¥n RDF graf
+	 * @param g - grafen som vÃ¤rdet skall hÃ¤mtas ur
 	 * @param sn - subject nod
 	 * @param pn - predicate nod
-	 * @return värde från graf som textsträng
+	 * @return vÃ¤rde frÃ¥n graf som textstrÃ¤ng
 	 */
 	private String getSingleValueFromGraph(Graph g, SubjectNode sn, PredicateNode pn)
 		throws DiagnosticException
@@ -477,12 +477,12 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Hämtar ett eller flera värden från given RDF graf
+	 * HÃ¤mtar ett eller flera vÃ¤rden frÃ¥n given RDF graf
 	 * @param graph - RDF graf
 	 * @param s - subject nod
 	 * @param ref - URI referens till 
 	 * @param refRef - URI referens till eventuella subnoder
-	 * @return värden som textsträng
+	 * @return vÃ¤rden som textstrÃ¤ng
 	 */
 	private String getValueFromGraph(Graph graph, SubjectNode s, URIReference ref, URIReference refRef)
 		throws DiagnosticException
@@ -501,7 +501,7 @@ public class RSS extends AbstractSearchMethod {
 					buf.append(value);
 				} else if (t.getObject() instanceof URIReference) {
 					value = StringUtils.trimToNull(((URIReference) t.getObject()).getURI().toString());
-					// lägg till i buffer bara om detta är en uri vi ska slå upp värde för
+					// lÃ¤gg till i buffer bara om detta Ã¤r en uri vi ska slÃ¥ upp vÃ¤rde fÃ¶r
 					if (value != null) {
 						if (buf.length() > 0) {
 							buf.append(sep);
@@ -526,22 +526,22 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Skapar en RSS feed och sätter några av dess attribut.
+	 * Skapar en RSS feed och sÃ¤tter nÃ¥gra av dess attribut.
 	 * @return SyndFeed
 	 */
 	protected SyndFeed getFeed()
 	{
 		SyndFeed feed = new SyndFeedImpl();
 		feed.setFeedType(RSS_2_0);
-		feed.setTitle("K-samsök sökresultat");
+		feed.setTitle("K-samsÃ¶k sÃ¶kresultat");
 		feed.setLink(getFeedLinkProperty());
-		feed.setDescription("Sökresultat av en sökning mot K-samsök API");
+		feed.setDescription("SÃ¶kresultat av en sÃ¶kning mot K-samsÃ¶k API");
 		
 		return feed;
 	}
 	
 	/**
-	 * Skapar och sätter värden för en media module om bilder finns
+	 * Skapar och sÃ¤tter vÃ¤rden fÃ¶r en media module om bilder finns
 	 * @param data rss-objekt
 	 * @param thumbnailUrl
 	 * @param imageUrl
@@ -560,7 +560,7 @@ public class RSS extends AbstractSearchMethod {
 			mediaModule.setMediaContents(getImage(image));
 		} catch (URISyntaxException e)
 		{
-			throw new DiagnosticException("Oväntat fel uppstod", "se.raa.ksamsok.api.method.RSS.getMediaModule()", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat fel uppstod", "se.raa.ksamsok.api.method.RSS.getMediaModule()", e.getMessage(), true);
 		}
 		return mediaModule;
 	}
@@ -568,7 +568,7 @@ public class RSS extends AbstractSearchMethod {
 	/**
 	 * Skapar en bild i form av ett MediaContent[]
 	 * @param image bildens URL
-	 * @return MediaContent[] innehållande bild data
+	 * @return MediaContent[] innehÃ¥llande bild data
 	 * @throws URISyntaxException
 	 */
 	protected MediaContent[] getImage(String image) 
@@ -586,7 +586,7 @@ public class RSS extends AbstractSearchMethod {
 	 * returnerar ett Metadata objekt med URL till en tumnagel bild
 	 * @param data rss-objekt
 	 * @param thumb URL till tumnagel
-	 * @param mediaModule MediaModule som används
+	 * @param mediaModule MediaModule som anvÃ¤nds
 	 * @return Metadata objekt med tumnagel
 	 * @throws URISyntaxException
 	 * @throws DiagnosticException 
@@ -611,7 +611,7 @@ public class RSS extends AbstractSearchMethod {
 		try {
 			thumbnail = new Thumbnail(new URI(thumb));
 		} catch (URISyntaxException e) {
-			throw new DiagnosticException("Nånting blev fel", "RSS.getThumbnail", e.getMessage(), true);
+			throw new DiagnosticException("NÃ¥nting blev fel", "RSS.getThumbnail", e.getMessage(), true);
 		}
 		Thumbnail[] thumbnails = new Thumbnail[1];
 		thumbnails[0] = thumbnail;
@@ -619,9 +619,9 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * returnerar en stäng med MIME för bild
-	 * @param image bild som skall få en MIME
-	 * @return MIME som sträng
+	 * returnerar en stÃ¤ng med MIME fÃ¶r bild
+	 * @param image bild som skall fÃ¥ en MIME
+	 * @return MIME som strÃ¤ng
 	 */
 	protected String getImageType(String image)
 	{
@@ -637,9 +637,9 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Returnerar en sträng med den URL som använts för att få detta 
+	 * Returnerar en strÃ¤ng med den URL som anvÃ¤nts fÃ¶r att fÃ¥ detta 
 	 * resultat
-	 * @return URL som sträng
+	 * @return URL som strÃ¤ng
 	 */
 	protected String getFeedLinkProperty()
 	{
@@ -648,7 +648,7 @@ public class RSS extends AbstractSearchMethod {
 	}
 	
 	/**
-	 * Böna (typ) som håller data om en RSS entitet
+	 * BÃ¶na (typ) som hÃ¥ller data om en RSS entitet
 	 * @author Henrik Hjalmarsson
 	 */
 	public class RssObject
@@ -681,7 +681,7 @@ public class RSS extends AbstractSearchMethod {
 		}
 
 		/**
-		 * Lägger till ett nyckelord till nyckelordslistan
+		 * LÃ¤gger till ett nyckelord till nyckelordslistan
 		 * @param keyWord
 		 */
 		public void addKeyWord(String keyWord)

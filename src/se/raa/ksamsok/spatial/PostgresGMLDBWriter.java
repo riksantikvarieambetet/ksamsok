@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
  */
 public class PostgresGMLDBWriter extends AbstractGMLDBWriter {
 
-	// TODO: möjligt att denna överagring inte behövs om setObject hanteras ok med det ändrade pst:t
+	// TODO: mÃ¶jligt att denna Ã¶veragring inte behÃ¶vs om setObject hanteras ok med det Ã¤ndrade pst:t
 	@Override
 	public int insert(GMLInfoHolder gmlInfoHolder) throws Exception {
 		int inserted = 0;
@@ -33,8 +33,8 @@ public class PostgresGMLDBWriter extends AbstractGMLDBWriter {
 	}
 	@Override
 	protected Object convertToNative(String gml) throws Exception {
-		// hack då postgres/postgis inte gillar GeometryCollection utan föredrar MultiGeometry
-		// GeometryCollection finns inte i gml 2+ utan bara i gml 1 men förekommer ev i raä:s data fn
+		// hack dÃ¥ postgres/postgis inte gillar GeometryCollection utan fÃ¶redrar MultiGeometry
+		// GeometryCollection finns inte i gml 2+ utan bara i gml 1 men fÃ¶rekommer ev i raÃ¤:s data fn
 		return gml.replace("GeometryCollection", "MultiGeometry");
 	}
 

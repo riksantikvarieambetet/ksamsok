@@ -24,17 +24,17 @@ import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * söka statistik
+ * sÃ¶ka statistik
  * @author Henrik Hjalmarsson
  */
 public class Statistic extends AbstractAPIMethod {
-	/** namnet på metoden */
+	/** namnet pÃ¥ metoden */
 	public static final String METHOD_NAME = "statistic";
-	/** namnet på parametern som håller medskickade index */
+	/** namnet pÃ¥ parametern som hÃ¥ller medskickade index */
 	public static final String INDEX_PARAMETER = "index";
-	/** namn på parameter för att ta bort nollor i svars XML */
+	/** namn pÃ¥ parameter fÃ¶r att ta bort nollor i svars XML */
 	public static final String REMOVE_BELOW = "removeBelow";
-	/** max antal kombinationer av indexvärden */
+	/** max antal kombinationer av indexvÃ¤rden */
 	protected static final int MAX_CARTESIAN_COUNT = 20000;
 	
 	//set med index som skall kollas
@@ -46,7 +46,7 @@ public class Statistic extends AbstractAPIMethod {
 	/**
 	 * Skapar ett nytt statistic objekt
 	 * @param indexes de index som skall scannas
-	 * @param writer används för att skriva ut svaret
+	 * @param writer anvÃ¤nds fÃ¶r att skriva ut svaret
 	 */
 	public Statistic(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
 		super(serviceProvider, writer, params);
@@ -68,16 +68,16 @@ public class Statistic extends AbstractAPIMethod {
 	protected void performMethodLogic() throws DiagnosticException {
 		Map<String, List<Term>> termMap = null;
 		try {
-			// TODO: om bara ett index borde man kunna köra facet rakt av
+			// TODO: om bara ett index borde man kunna kÃ¶ra facet rakt av
 			SolrQuery query = new SolrQuery();
 			query.setQuery("*");
 			query.setRows(0);
-			// en mängd med mängder med mängder!
+			// en mÃ¤ngd med mÃ¤ngder med mÃ¤ngder!
 			termMap = buildTermMap();
 			if (getCartesianCount(termMap)  > MAX_CARTESIAN_COUNT) {
-				throw new BadParameterException("Den kartesiska produkten av inskickade index blir för stor för att utföra denna operation.", "Statistic.performMethod", null, false);
+				throw new BadParameterException("Den kartesiska produkten av inskickade index blir fÃ¶r stor fÃ¶r att utfÃ¶ra denna operation.", "Statistic.performMethod", null, false);
 			}
-			//gör en kartesisk produkt på de värden i termMap
+			//gÃ¶r en kartesisk produkt pÃ¥ de vÃ¤rden i termMap
 			queryResults = cartesian(termMap);
 
 			for (int i = 0; i < queryResults.size(); i++) {
@@ -95,15 +95,15 @@ public class Statistic extends AbstractAPIMethod {
 				}
 			}
 		} catch(OutOfMemoryError e) {
-			throw new DiagnosticException("De inskickade index värdena gav upphov till att för många värden hittades och denna sökning gick ej att utföra", "Statistic.performMethod", null, false);
+			throw new DiagnosticException("De inskickade index vÃ¤rdena gav upphov till att fÃ¶r mÃ¥nga vÃ¤rden hittades och denna sÃ¶kning gick ej att utfÃ¶ra", "Statistic.performMethod", null, false);
 		} catch (Exception e) {
-			throw new DiagnosticException("Oväntat fel uppstod", "Statistic.performMethod", null, false);
+			throw new DiagnosticException("OvÃ¤ntat fel uppstod", "Statistic.performMethod", null, false);
 		}
 	}
 	
 	/**
-	 * bygger en kartesisk produkt av x antal mängder med n antal element
-	 * @param data som skall göra kartesisk produkt av
+	 * bygger en kartesisk produkt av x antal mÃ¤ngder med n antal element
+	 * @param data som skall gÃ¶ra kartesisk produkt av
 	 * @return Kartesisk produkt av indata som en lista
 	 * @throws MissingParameterException
 	 */
@@ -115,21 +115,21 @@ public class Statistic extends AbstractAPIMethod {
 		List<QueryContent> result = null;
 		//lite special cases ifall den bara gick 0 eller 1 varv
 		for(String index : data.keySet()) {
-			if(index1 == null) {//körs första varvet
+			if(index1 == null) {//kÃ¶rs fÃ¶rsta varvet
 				index1 = index;
 				continue;
-			}else if(index2 == null) {//körs andra varvet
+			}else if(index2 == null) {//kÃ¶rs andra varvet
 				index2 = index;
 				result = cartesian(index1, index2, data.get(index1),
 						data.get(index2));
 				continue;
-			}else {//körs resten av varven
+			}else {//kÃ¶rs resten av varven
 				index1 = index;
 				result = cartesian(index1, data.get(index1), result);
 			}		
 		}
 		if(index1 == null && index2 == null) {
-			throw new MissingParameterException("minst ett index behövs för denna operation", "Statistic.cartesian", null, false);
+			throw new MissingParameterException("minst ett index behÃ¶vs fÃ¶r denna operation", "Statistic.cartesian", null, false);
 		}else if(index1 != null && index2 == null) {
 			result = cartesianWithOneIndex(data, index1);
 		}
@@ -137,7 +137,7 @@ public class Statistic extends AbstractAPIMethod {
 	}
 	
 	/**
-	 * körs om endast ett index finns
+	 * kÃ¶rs om endast ett index finns
 	 * @param data
 	 * @param index1
 	 * @return
@@ -171,10 +171,10 @@ public class Statistic extends AbstractAPIMethod {
 	}
 	
 	/**
-	 * Bygger kartesisk produkt av värden i given lista och värden i givet set
-	 * @param index för tillhörande set
-	 * @param set med värden
-	 * @param list med värden
+	 * Bygger kartesisk produkt av vÃ¤rden i given lista och vÃ¤rden i givet set
+	 * @param index fÃ¶r tillhÃ¶rande set
+	 * @param set med vÃ¤rden
+	 * @param list med vÃ¤rden
 	 * @return ny lista med kartesisk produkt av indata
 	 */
 	private static List<QueryContent> cartesian(String index, List<Term> set,
@@ -199,12 +199,12 @@ public class Statistic extends AbstractAPIMethod {
 	}
 	
 	/**
-	 * bygger kartesisk produkt av de två givna setten
-	 * @param index1 tillhörande set1
-	 * @param index2 tillhörande set2
-	 * @param set1 med värden
-	 * @param set2 med värden
-	 * @return lista med kartesisk produkt av de båda setten
+	 * bygger kartesisk produkt av de tvÃ¥ givna setten
+	 * @param index1 tillhÃ¶rande set1
+	 * @param index2 tillhÃ¶rande set2
+	 * @param set1 med vÃ¤rden
+	 * @param set2 med vÃ¤rden
+	 * @return lista med kartesisk produkt av de bÃ¥da setten
 	 */
 	private static List<QueryContent> cartesian(String index1, String index2,
 			List<Term> set1, List<Term> set2)
@@ -225,8 +225,8 @@ public class Statistic extends AbstractAPIMethod {
 	
 	/**
 	 * bygger en term map av den inskickade mappen
-	 * @param searcher som används för att söka i index
-	 * @param indexMap med index och sökvärden
+	 * @param searcher som anvÃ¤nds fÃ¶r att sÃ¶ka i index
+	 * @param indexMap med index och sÃ¶kvÃ¤rden
 	 * @return Map<String,Set<Term>> med index och dess termer
 	 * @throws BadParameterException 
 	 */
@@ -245,13 +245,13 @@ public class Statistic extends AbstractAPIMethod {
 				if (ContentHelper.isToLowerCaseIndex(indexValue) || ContentHelper.isAnalyzedIndex(indexValue)) {
 					value = value != null ? value.toLowerCase() : value;
 				}
-				// snabbfiltrering, finns det inte ens tillräckligt många träffar
-				// totalt så finns det ju inte sen i sökningen heller
+				// snabbfiltrering, finns det inte ens tillrÃ¤ckligt mÃ¥nga trÃ¤ffar
+				// totalt sÃ¥ finns det ju inte sen i sÃ¶kningen heller
 				List<Term> terms = serviceProvider.getSearchService().terms(indexValue, value, removeBelow, -1);
 				extractedTerms.addAll(terms);
 				termMap.put(indexValue, extractedTerms);
 			} catch(SolrServerException e) {
-				throw new DiagnosticException("Oväntat fel uppstod. Var god försök igen", "Statistic.buildTermMap", e.getMessage(), true);
+				throw new DiagnosticException("OvÃ¤ntat fel uppstod. Var god fÃ¶rsÃ¶k igen", "Statistic.buildTermMap", e.getMessage(), true);
 			}
 		}
 		return termMap;
@@ -300,12 +300,12 @@ public class Statistic extends AbstractAPIMethod {
 	}
 
 	/**
-	 * skriver ut övre del av svars XML
+	 * skriver ut Ã¶vre del av svars XML
 	 * @param queryResults
 	 */
 	@Override
 	protected void writeHeadExtra() {
-		//skriver ut hur många värden det blev
+		//skriver ut hur mÃ¥nga vÃ¤rden det blev
 		writer.println("<numberOfTerms>" + queryResults.size() +
 				"</numberOfTerms>");
 	}
@@ -322,14 +322,14 @@ public class Statistic extends AbstractAPIMethod {
 			try {
 				removeBelow = Integer.parseInt(removeBelowString);
 			} catch(NumberFormatException e) {
-				throw new BadParameterException("Parametern removeBelow måste innehålla ett numeriskt värde", "APIMethodFactory.getRemoveBelow", null, false);
+				throw new BadParameterException("Parametern removeBelow mÃ¥ste innehÃ¥lla ett numeriskt vÃ¤rde", "APIMethodFactory.getRemoveBelow", null, false);
 			}
 		}
 		return removeBelow;
 	}
 
 	/**
-	 * returnerar en index lista där alla har samma värde
+	 * returnerar en index lista dÃ¤r alla har samma vÃ¤rde
 	 * @param indexString
 	 * @return
 	 * @throws MissingParameterException
@@ -338,7 +338,7 @@ public class Statistic extends AbstractAPIMethod {
 	public Map<String,String> getIndexMapDoubleValue(String indexString) 
 		throws MissingParameterException, BadParameterException {	
 		if (indexString == null || indexString.trim().length() < 1) 	{
-			throw new MissingParameterException("parametern " + INDEX_PARAMETER + " saknas eller är tom", "APIMethodFactory.getStatisticSearchObject", "index parametern saknas", false);
+			throw new MissingParameterException("parametern " + INDEX_PARAMETER + " saknas eller Ã¤r tom", "APIMethodFactory.getStatisticSearchObject", "index parametern saknas", false);
 		}
 		StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
 		HashMap<String,String> indexMap = new HashMap<String,String>();
@@ -347,7 +347,7 @@ public class Statistic extends AbstractAPIMethod {
 			String index = null;
 			String value = null;
 			if (tokens.length < 2) {
-				throw new BadParameterException("parametern " +  INDEX_PARAMETER + " är felskriven", "APIMethodFactory.getStatisticSearchObject", "syntax error i index parametern", false);
+				throw new BadParameterException("parametern " +  INDEX_PARAMETER + " Ã¤r felskriven", "APIMethodFactory.getStatisticSearchObject", "syntax error i index parametern", false);
 			}
 			for (int i = 0; i < 2; i++) {
 				if (i == 0) {

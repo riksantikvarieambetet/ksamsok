@@ -14,21 +14,21 @@ public class TimeUtil {
 
 	private static final Logger logger = Logger.getLogger(TimeUtil.class);
 
-	// iso8601-datumparser, trådsäker
+	// iso8601-datumparser, trÃ¥dsÃ¤ker
 	private static final DateTimeFormatter isoDateTimeFormatter = ISODateTimeFormat.dateOptionalTimeParser();
 
-	// konstanter för century och decade
-	// från vilken tidpunkt ska vi skapa särskilda index för århundraden och årtionden
+	// konstanter fÃ¶r century och decade
+	// frÃ¥n vilken tidpunkt ska vi skapa sÃ¤rskilda index fÃ¶r Ã¥rhundraden och Ã¥rtionden
 	static final Integer century_start = -1999;
-	// till vilken tidpunkt ska vi skapa särskilda index för århundraden och årtionden
+	// till vilken tidpunkt ska vi skapa sÃ¤rskilda index fÃ¶r Ã¥rhundraden och Ã¥rtionden
 	static final Integer century_stop = 2010;
-	// sträng med årtal som måste vara före century_start
+	// strÃ¤ng med Ã¥rtal som mÃ¥ste vara fÃ¶re century_start
 	static final String old_times = "-9999";
 
 	static String parseYearFromISO8601DateAndTransform(String value) {
 		String result = null;
 		try {
-			// tills vidare godkänner vi också "x f.kr" och "y e.kr" skiftlägesokänsligt här
+			// tills vidare godkÃ¤nner vi ocksÃ¥ "x f.kr" och "y e.kr" skiftlÃ¤gesokÃ¤nsligt hÃ¤r
 			int dotkrpos = value.toLowerCase().indexOf(".kr");
 			int year;
 			if (dotkrpos > 0) {
@@ -36,27 +36,27 @@ public class TimeUtil {
 				switch (value.charAt(dotkrpos - 1)) {
 				case 'F':
 				case 'f':
-					year = -year + 1; // 1 fkr är år 0
+					year = -year + 1; // 1 fkr Ã¤r Ã¥r 0
 					// obs - inget break
 				case 'E':
 				case 'e':
-					// TODO: "numerfixen" görs numera på solr-sidan, ändra returtyp?
+					// TODO: "numerfixen" gÃ¶rs numera pÃ¥ solr-sidan, Ã¤ndra returtyp?
 					result = String.valueOf(year);
 					//result = transformNumberToLuceneString(year);
 					break;
 					default:
-						// måste vara f eller e för att sätta result
+						// mÃ¥ste vara f eller e fÃ¶r att sÃ¤tta result
 				}
 			} else {
 				DateTime dateTime = isoDateTimeFormatter.parseDateTime(value);
 				year = dateTime.getYear();
-				// TODO: "numerfixen" görs numera på solr-sidan, ändra returtyp?
+				// TODO: "numerfixen" gÃ¶rs numera pÃ¥ solr-sidan, Ã¤ndra returtyp?
 				result = String.valueOf(year);
 				//result = transformNumberToLuceneString(year);
 			}
 			
 		} catch (Exception ignore) {
-			// läggs till som "problem" i addToDoc om denna metod returnerar null
+			// lÃ¤ggs till som "problem" i addToDoc om denna metod returnerar null
 		}
 		return result;
 	}
@@ -86,7 +86,7 @@ public class TimeUtil {
 			}
 		} else {
 			// TODO: vill man ha med identifier i varningmeddelandet? Kan dock bli
-			//       många loggrader då detta verkar vara ett vanligt fel
+			//       mÃ¥nga loggrader dÃ¥ detta verkar vara ett vanligt fel
 			ContentHelper.addProblemMessage("Could not interpret '" + index + "' as ISO8601: " + dateStr);
 		}
 		return date;
@@ -96,15 +96,15 @@ public class TimeUtil {
 			String[] contextTypePrefixes, IndexProcessor ip) throws Exception {
 		// timeInfoExists, decade och century
 		if (fromTime != null || toTime != null) {
-			// bara då vi ska skapa århundraden och årtionden
+			// bara dÃ¥ vi ska skapa Ã¥rhundraden och Ã¥rtionden
 			Integer start=century_start, stop=century_stop;
-			// start=senaste av -2000 och fromTime, om fromTime==null så används -2000
-			// stop= tidigaste av 2010 och toTime, om toTime==null så används 2010
+			// start=senaste av -2000 och fromTime, om fromTime==null sÃ¥ anvÃ¤nds -2000
+			// stop= tidigaste av 2010 och toTime, om toTime==null sÃ¥ anvÃ¤nds 2010
 			String myFromTime=null, myToTime=null;
 			if (fromTime!=null) myFromTime = new String(fromTime);
 			if (toTime!=null) myToTime = new String(toTime);
 
-			// om bara ena värdet finns så är det en tidpunkt, inte ett tidsintervall
+			// om bara ena vÃ¤rdet finns sÃ¥ Ã¤r det en tidpunkt, inte ett tidsintervall
 			if (myFromTime==null) {
 				myFromTime=myToTime;
 			}
@@ -154,7 +154,7 @@ public class TimeUtil {
 		try {
 			sLatest=Math.max(Integer.parseInt(aString),aInteger);
 		} catch (Exception e) {
-			logger.error("Fel i fromTime: " + aString + " längd: " + aString.length() + " : " + e.getMessage());
+			logger.error("Fel i fromTime: " + aString + " lÃ¤ngd: " + aString.length() + " : " + e.getMessage());
 			throw e;
 		}
 		return sLatest;
@@ -165,7 +165,7 @@ public class TimeUtil {
 		try {
 			sEarliest=Math.min(Integer.parseInt(aString),aInteger);
 		} catch (Exception e) {
-			logger.error("Fel i toTime: " + aString + " längd: " + aString.length() + " : " + e.getMessage());
+			logger.error("Fel i toTime: " + aString + " lÃ¤ngd: " + aString.length() + " : " + e.getMessage());
 			throw e;
 		}
 		return sEarliest;
@@ -189,12 +189,12 @@ public class TimeUtil {
 		String timeString=aString;
 		try {
 			if ((timeString.length()>5) && timeString.startsWith("-")) {
-				// troligen årtal före -10000
+				// troligen Ã¥rtal fÃ¶re -10000
 				timeString=old_times;
 			}
 			//else if (timeString.indexOf("-"==5)) {
 			//	timeString=timeString.substring(0, 4);
-			// (innefattas av nästa case)
+			// (innefattas av nÃ¤sta case)
 			//}
 			else if (timeString.length()>4 && !timeString.startsWith("-")) {
 				timeString=timeString.substring(0, 4);

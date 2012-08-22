@@ -1,31 +1,31 @@
 Enkelt harvest och content-repository
 
-Utvecklat med java 1.6, tomcat 6.0 och FireFox (admingränssnittet fungerar mindre bra i IE).
+Utvecklat med java 1.6, tomcat 6.0 och FireFox (admingrÃ¤nssnittet fungerar mindre bra i IE).
 
 ** Installation
 
-Installeras normalt med rpm och då sker allt automatiskt och applikationen konfigureras
-till att gå mot driftdatabasen. Stöd finns för att bygga master- och slav-instanser (vilket också
-gäller för ksamsok-solr). Skillnad mellan master och slav i modulen ksamsok är att admin-gui:t inte
+Installeras normalt med rpm och dÃ¥ sker allt automatiskt och applikationen konfigureras
+till att gÃ¥ mot driftdatabasen. StÃ¶d finns fÃ¶r att bygga master- och slav-instanser (vilket ocksÃ¥
+gÃ¤ller fÃ¶r ksamsok-solr). Skillnad mellan master och slav i modulen ksamsok Ã¤r att admin-gui:t inte
 finns i en slav-instans.
-Rpm skapas med: "ant RAA-RPM" (default är att bygga en master)
-OBS! Kräver en ksamsok-solr i samma webapp, se readme för det projektet för relaterade utv-inställningar.
+Rpm skapas med: "ant RAA-RPM" (default Ã¤r att bygga en master)
+OBS! KrÃ¤ver en ksamsok-solr i samma webapp, se readme fÃ¶r det projektet fÃ¶r relaterade utv-instÃ¤llningar.
 
-** Manuell installation för utv
-Context.xml används inte längre. Context specas i ksamsok***Install paketet.  
+** Manuell installation fÃ¶r utv
+Context.xml anvÃ¤nds inte lÃ¤ngre. Context specas i ksamsok***Install paketet.  
 
-* konfigurera datakälla för applikationen jdbc/harvestdb
+* konfigurera datakÃ¤lla fÃ¶r applikationen jdbc/harvestdb
 
-För utv mot postgres och testdb, se rpm/contextTest.xml, kopiera in postgresql-*.jar till tomcat/lib från
-ksamsok/lib och hoppa över steg ner till tomcat-användar-steget.
+FÃ¶r utv mot postgres och testdb, se rpm/contextTest.xml, kopiera in postgresql-*.jar till tomcat/lib frÃ¥n
+ksamsok/lib och hoppa Ã¶ver steg ner till tomcat-anvÃ¤ndar-steget.
 
-För derby, ladda ner derby från http://db.apache.org/derby/
-och starta en nätverksserver (eller ändra i exempel nedan till fil) och kopiera in derbyclient.jar till
-tomcat/lib. Att köra med nätverksserver gör det enklare att hantera databasen och att titta på
-datat medan applikationen kör.
-De databaser som stöds fn är postgres/postgis, oracle och derby (notera att derby-stödet nog ej är 100% uppdaterat).
+FÃ¶r derby, ladda ner derby frÃ¥n http://db.apache.org/derby/
+och starta en nÃ¤tverksserver (eller Ã¤ndra i exempel nedan till fil) och kopiera in derbyclient.jar till
+tomcat/lib. Att kÃ¶ra med nÃ¤tverksserver gÃ¶r det enklare att hantera databasen och att titta pÃ¥
+datat medan applikationen kÃ¶r.
+De databaser som stÃ¶ds fn Ã¤r postgres/postgis, oracle och derby (notera att derby-stÃ¶det nog ej Ã¤r 100% uppdaterat).
 
-Ex i context.xml för en derby i network-mode:
+Ex i context.xml fÃ¶r en derby i network-mode:
     <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
     		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		maxActive="10" maxIdle="5" maxWait="-1"
@@ -37,93 +37,93 @@ Ex i context.xml för en derby i network-mode:
 		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
 		defaultAutoCommit="false" />
 
-Jdbc-driver för rätt databastyp måste in i tomcat/lib. För postgres behövs tex postgresql-*.jar (lib) och
-för Oracle behöver man tex jbdc-jar och även spatial-utökningar för att kunna lagra spatiala data
-(sdoapi, sdoutl och Oracles xmlparser). Javadatabasen Derby/JavaDB stödjer inte
+Jdbc-driver fÃ¶r rÃ¤tt databastyp mÃ¥ste in i tomcat/lib. FÃ¶r postgres behÃ¶vs tex postgresql-*.jar (lib) och
+fÃ¶r Oracle behÃ¶ver man tex jbdc-jar och Ã¤ven spatial-utÃ¶kningar fÃ¶r att kunna lagra spatiala data
+(sdoapi, sdoutl och Oracles xmlparser). Javadatabasen Derby/JavaDB stÃ¶djer inte
 spatiala data men med klassen se.raa.ksamsok.spatial.VerbatimGMLWriter kan gml:en skrivas ner
-som en clob om man vill tex för debug, se nedan.
+som en clob om man vill tex fÃ¶r debug, se nedan.
 
-* Skapa ev tabeller enligt sql i sql/repo.sql för datakällan (för derby kan identity-kolumner användas
-  istället för sekvenser och för derby vill man också skicka med "create=true" i jdbc-url:en när man
-  kopplar upp sig med sitt sql-verktyg för att skapa databasen/schemat automatiskt)
+* Skapa ev tabeller enligt sql i sql/repo.sql fÃ¶r datakÃ¤llan (fÃ¶r derby kan identity-kolumner anvÃ¤ndas
+  istÃ¤llet fÃ¶r sekvenser och fÃ¶r derby vill man ocksÃ¥ skicka med "create=true" i jdbc-url:en nÃ¤r man
+  kopplar upp sig med sitt sql-verktyg fÃ¶r att skapa databasen/schemat automatiskt)
 
-* Peka ev ut var filer som skördas ska läggas innan de behandlas med flaggan
- -Dsamsok-harvest-spool-dir=[sökväg till katalog]
- En skörd hämtas först till en temporärfil och flyttas sen till spool-katalogen så att den kan
- återanvändas om jobbet går fel vid senare steg, tex lagring i databas
- Om ej pekas ut kommer (default) tempdir att användas, typiskt tomcat/temp.
- Behöver normalt sett inte ändras.
+* Peka ev ut var filer som skÃ¶rdas ska lÃ¤ggas innan de behandlas med flaggan
+ -Dsamsok-harvest-spool-dir=[sÃ¶kvÃ¤g till katalog]
+ En skÃ¶rd hÃ¤mtas fÃ¶rst till en temporÃ¤rfil och flyttas sen till spool-katalogen sÃ¥ att den kan
+ Ã¥teranvÃ¤ndas om jobbet gÃ¥r fel vid senare steg, tex lagring i databas
+ Om ej pekas ut kommer (default) tempdir att anvÃ¤ndas, typiskt tomcat/temp.
+ BehÃ¶ver normalt sett inte Ã¤ndras.
 
-* Ange ev om inte datakällan stödjer spatialt data (tex för derby) med -Dsamsok.spatial=false
- Default är sant och en klass för att hantera spatialdata kommer att försöka härledas
- fram utfrån klassen på uppkopplingen - fn stöds postgresql/postgis och oracle och för dessa behövs inget ändras
+* Ange ev om inte datakÃ¤llan stÃ¶djer spatialt data (tex fÃ¶r derby) med -Dsamsok.spatial=false
+ Default Ã¤r sant och en klass fÃ¶r att hantera spatialdata kommer att fÃ¶rsÃ¶ka hÃ¤rledas
+ fram utfrÃ¥n klassen pÃ¥ uppkopplingen - fn stÃ¶ds postgresql/postgis och oracle och fÃ¶r dessa behÃ¶vs inget Ã¤ndras
 
-* Ange ev egen klass för att hantera spatialt data med -Dsamsok.spatial.class=xx.yy.Z
- klassen måste implementera interfacet se.raa.ksamsok.spatial.GMLDBWriter och ha en publik
+* Ange ev egen klass fÃ¶r att hantera spatialt data med -Dsamsok.spatial.class=xx.yy.Z
+ klassen mÃ¥ste implementera interfacet se.raa.ksamsok.spatial.GMLDBWriter och ha en publik
  default-konstruktor.
- Främst för debug eller tredjeparts utv, har inget defaultvärde och bör normalt ej sättas. Sätts
- den måste databastabellerna stödja det den konfade klassen gör naturligtvis. Klassen
- se.raa.ksamsok.spatial.VerbatimGMLWriter stödjer att geometriernas gml skrivs ner som en
- clob i geometritabellen så om den klassen används måste databaskolumntypen för kolumnen
+ FrÃ¤mst fÃ¶r debug eller tredjeparts utv, har inget defaultvÃ¤rde och bÃ¶r normalt ej sÃ¤ttas. SÃ¤tts
+ den mÃ¥ste databastabellerna stÃ¶dja det den konfade klassen gÃ¶r naturligtvis. Klassen
+ se.raa.ksamsok.spatial.VerbatimGMLWriter stÃ¶djer att geometriernas gml skrivs ner som en
+ clob i geometritabellen sÃ¥ om den klassen anvÃ¤nds mÃ¥ste databaskolumntypen fÃ¶r kolumnen
  geometry vara clob.
- Behövs normalt sett inte ändras.
+ BehÃ¶vs normalt sett inte Ã¤ndras.
 
-* Lägg in användare i tomcat med rollen ksamsok för att kunna köra admin-gränssnittet. Görs
+* LÃ¤gg in anvÃ¤ndare i tomcat med rollen ksamsok fÃ¶r att kunna kÃ¶ra admin-grÃ¤nssnittet. GÃ¶rs
   enklast i tomcat-users.xml, se rpm/tomcat-users.xml.
 
-* Kör "ant war" och kopiera war-fil till tomcat/webapps. Skapar normalt en master-war, vilket oftast
- är det man vill ha. För mer info se build.xml.
+* KÃ¶r "ant war" och kopiera war-fil till tomcat/webapps. Skapar normalt en master-war, vilket oftast
+ Ã¤r det man vill ha. FÃ¶r mer info se build.xml.
 
-** Användning
+** AnvÃ¤ndning
 
-Ett grundläggande gränssnitt finns för att hantera tjänster, uppdatera
-solr-index och sökning. Det nås på http://[HOST][:PORT]/ksamsok/admin/
+Ett grundlÃ¤ggande grÃ¤nssnitt finns fÃ¶r att hantera tjÃ¤nster, uppdatera
+solr-index och sÃ¶kning. Det nÃ¥s pÃ¥ http://[HOST][:PORT]/ksamsok/admin/
 
-Tjänster kan läggas upp i gränssnittet för skörd med http eller via en
-filläsning. En fil måste ha samma syntax som en hämtning mha OAIPMHHarvestJob.getRecords()
-vilket är den metod som också används för att göra en skörd via OAI-PMH.
+TjÃ¤nster kan lÃ¤ggas upp i grÃ¤nssnittet fÃ¶r skÃ¶rd med http eller via en
+fillÃ¤sning. En fil mÃ¥ste ha samma syntax som en hÃ¤mtning mha OAIPMHHarvestJob.getRecords()
+vilket Ã¤r den metod som ocksÃ¥ anvÃ¤nds fÃ¶r att gÃ¶ra en skÃ¶rd via OAI-PMH.
 Ex
 	fos = new FileOutputStream(new File("d:/temp/raa_fmi.xml"));
 	OAIPMHHarvestJob.getRecords("http://127.0.0.1:8080/oaicat-ksamsok/OAIHandler/fmi", null, null, "ksamsok-rdf", null, fos);
 
-Tjänsterna skördas enligt den periodicitet som anges i cron-strängen. Om kolumnen jobbstatus
-ej visar "OK" är det troligt att cron-strängen ej är korrekt.
-Stöd finns också för att köra en tjänst interaktivt, indexera om en tjänst (innebär att uppdatera
-solr-indexet för den tjänsten - förändrar ej det skördade datat) eller att indexera om alla tjänster.
-Indexoptimering kan också schemaläggas.
+TjÃ¤nsterna skÃ¶rdas enligt den periodicitet som anges i cron-strÃ¤ngen. Om kolumnen jobbstatus
+ej visar "OK" Ã¤r det troligt att cron-strÃ¤ngen ej Ã¤r korrekt.
+StÃ¶d finns ocksÃ¥ fÃ¶r att kÃ¶ra en tjÃ¤nst interaktivt, indexera om en tjÃ¤nst (innebÃ¤r att uppdatera
+solr-indexet fÃ¶r den tjÃ¤nsten - fÃ¶rÃ¤ndrar ej det skÃ¶rdade datat) eller att indexera om alla tjÃ¤nster.
+Indexoptimering kan ocksÃ¥ schemalÃ¤ggas.
 
-Ett simpelt sökgränssnitt finns vilket söker i fältet "text" (fritext) och visar
-träffarna som xml och på karta om de har koordinater.
+Ett simpelt sÃ¶kgrÃ¤nssnitt finns vilket sÃ¶ker i fÃ¤ltet "text" (fritext) och visar
+trÃ¤ffarna som xml och pÃ¥ karta om de har koordinater.
 
-Admin-delen av centralnoden skyddas och användare måste ha rollen "ksamsok" för att få
-använda den vilket måste sättas upp i tomcat-konf på vanligt sätt.
+Admin-delen av centralnoden skyddas och anvÃ¤ndare mÃ¥ste ha rollen "ksamsok" fÃ¶r att fÃ¥
+anvÃ¤nda den vilket mÃ¥ste sÃ¤ttas upp i tomcat-konf pÃ¥ vanligt sÃ¤tt.
 
-SRU-gränssnittet (som nu är deprecerat) nås genom URL:en http://[HOST][:PORT]/ksamsok/sru och i svaret från den URL:en
-finns info om vilka index som stödjs mm genom en "SRU explain". Se istället www.ksamsok.se för information om API, tex
+SRU-grÃ¤nssnittet (som nu Ã¤r deprecerat) nÃ¥s genom URL:en http://[HOST][:PORT]/ksamsok/sru och i svaret frÃ¥n den URL:en
+finns info om vilka index som stÃ¶djs mm genom en "SRU explain". Se istÃ¤llet www.ksamsok.se fÃ¶r information om API, tex
 http://[HOST][:PORT]/ksamsok/api?method=search&query=text=bil&x-api=test.
 
-Uppslagning ("resolve") av URI/URL till html, museumdat och rdf stödjs också. Genom att anropa
-http://[HOST][:PORT]/ksamsok/[INSTITUTION]/[TJÄNST][/FORMAT]/[ID] kan man antingen i fallet
-rdf få innehållet direkt, eller i övriga bli skickad vidare mha en redirect till respektive
-institutions webbplats. Notera att enbart URI:s som börjar med http://kulturarvsdata.se
-stödjs och formatet på dessa måste vara som ovan. Exempelvis ger uppslagning av: 
+Uppslagning ("resolve") av URI/URL till html, museumdat och rdf stÃ¶djs ocksÃ¥. Genom att anropa
+http://[HOST][:PORT]/ksamsok/[INSTITUTION]/[TJÃ„NST][/FORMAT]/[ID] kan man antingen i fallet
+rdf fÃ¥ innehÃ¥llet direkt, eller i Ã¶vriga bli skickad vidare mha en redirect till respektive
+institutions webbplats. Notera att enbart URI:s som bÃ¶rjar med http://kulturarvsdata.se
+stÃ¶djs och formatet pÃ¥ dessa mÃ¥ste vara som ovan. Exempelvis ger uppslagning av: 
 http://kulturarvsdata.se/raa/fmi/10009102180001 eller
 http://kulturarvsdata.se/raa/fmi/rdf/10009102180001 -> RDF
 och
-http://kulturarvsdata.se/raa/fmi/html/10009102180001 -> redir till Fornsök
+http://kulturarvsdata.se/raa/fmi/html/10009102180001 -> redir till FornsÃ¶k
 
-För test- och utvecklingsversioner (som ej ligger korrekt mappade på kulturarvsdata.se) kan man
+FÃ¶r test- och utvecklingsversioner (som ej ligger korrekt mappade pÃ¥ kulturarvsdata.se) kan man
 testa med:
 http://[HOST][:PORT]/ksamsok/raa/fmi/10009102180001 -> RDF osv
 
-* Modifierad jrdf-jar (troligen löst med nyare version av jrdf, utvecklaren informerad)
-Nedanstående är (ful-)patchar som behövs för att teckenkodning ska fungera ok med
-parseType="Literal" för presentations-xml:en samt för att fixa ett namespace-problem
-där namespaces som användes i en literal fortsatte att skrivas ut felaktigt.
-Teckenkodningsproblemet kan ev ha berott på en felaktig locale-inställning. Denna
-patch förutsätter att alla dokument är i utf-8 vilket de är i ksamsök, men
-det är inte tillräckligt för att submitta en generell patch till jrdf-projektet.
-Namespace-problemet löses annars bara med en rad se "newNamespaceMappings.clear();"
+* Modifierad jrdf-jar (troligen lÃ¶st med nyare version av jrdf, utvecklaren informerad)
+NedanstÃ¥ende Ã¤r (ful-)patchar som behÃ¶vs fÃ¶r att teckenkodning ska fungera ok med
+parseType="Literal" fÃ¶r presentations-xml:en samt fÃ¶r att fixa ett namespace-problem
+dÃ¤r namespaces som anvÃ¤ndes i en literal fortsatte att skrivas ut felaktigt.
+Teckenkodningsproblemet kan ev ha berott pÃ¥ en felaktig locale-instÃ¤llning. Denna
+patch fÃ¶rutsÃ¤tter att alla dokument Ã¤r i utf-8 vilket de Ã¤r i ksamsÃ¶k, men
+det Ã¤r inte tillrÃ¤ckligt fÃ¶r att submitta en generell patch till jrdf-projektet.
+Namespace-problemet lÃ¶ses annars bara med en rad se "newNamespaceMappings.clear();"
 nedan.
 
 Index: src/java/org/jrdf/parser/rdfxml/RdfXmlParser.java

@@ -12,7 +12,7 @@ import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Klass som kˆr omindexering av alla tj‰nster i form av en tj‰nst/cron-jobb. Obs att
+ * Klass som k√∂r omindexering av alla tj√§nster i form av en tj√§nst/cron-jobb. Obs att
  * denna inte kan/ska kunna scheduleras.
  */
 public class ReindexAllJob extends HarvestJob {
@@ -65,14 +65,14 @@ public class ReindexAllJob extends HarvestJob {
 				}
 				ss.setStatusTextAndLog(service, "Starting to index service " + reindexMe.getId());
 				long serviceStart = System.currentTimeMillis();
-				// "initiera jobb" och kˆr ungef‰r som i HarvestJob fˆr reindex
+				// "initiera jobb" och k√∂r ungef√§r som i HarvestJob f√∂r reindex
 				ss.initStatus(reindexMe, "Init");
 				ss.setStatusTextAndLog(reindexMe, "Updating index from repository (by " + service.getId() + ")");
 				try {
 					ss.setStep(reindexMe, Step.INDEX);
 					hrm.updateIndex(reindexMe, null, service);
 				} catch (Exception e) {
-					// s‰tta felet pÂ aktuell tj‰nst och kasta vidare sÂ att det ocksÂ s‰tts pÂ reindexall
+					// s√§tta felet p√• aktuell tj√§nst och kasta vidare s√• att det ocks√• s√§tts p√• reindexall
 					String errMsg = e.getMessage();
 					if (errMsg == null || errMsg.length() == 0) {
 						errMsg = e.toString();

@@ -50,11 +50,11 @@ public class OAIPMHHarvestJobTest {
 
 	@BeforeClass
 	public static void setup() throws Exception {
-		// starta en lokal jetty och servera statiska filer frÂn test/resources
+		// starta en lokal jetty och servera statiska filer fr√•n test/resources
 		server = new Server(PORT);
 		ResourceHandler handler = new ResourceHandler();
 		handler.setResourceBase("test/resources");
-		//handler.setDirectoriesListed(true); // bra fˆr debug, ger dirlistning
+		//handler.setDirectoriesListed(true); // bra f√∂r debug, ger dirlistning
 		HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[] { handler, new DefaultHandler() });
         server.setHandler(handlers);
@@ -70,7 +70,7 @@ public class OAIPMHHarvestJobTest {
 		}
 	}
 
-	// kan "avkommenteras" och anv‰ndas fˆr funktionstester av tj‰nster
+	// kan "avkommenteras" och anv√§ndas f√∂r funktionstester av tj√§nster
 
 //	public void testPerformGetRecords() throws Exception {
 //		OAIPMHHarvestJob oaipmhHarvesterJob = new OAIPMHHarvestJob();
@@ -130,7 +130,7 @@ public class OAIPMHHarvestJobTest {
 
 	@Test
 	public void testGetRecords_harvestFile_0_TO_0_99() throws Exception {
-		// TODO: detta testfall kanske inte s‰ger sÂ mycket dÂ ingen behandling av det som h‰mtas gˆrs
+		// TODO: detta testfall kanske inte s√§ger s√• mycket d√• ingen behandling av det som h√§mtas g√∂rs
 		OAIPMHHarvestJob oaipmhHarvesterJob = new OAIPMHHarvestJob(1, 1);
 		ByteArrayOutputStream os = null;
 		try {
@@ -163,7 +163,7 @@ public class OAIPMHHarvestJobTest {
 				ExtractedInfo info = samsokContentHelper.extractInfo(rdf, null);
 				assertNotNull("Ingen info extraherad ur rdf", info);
 				SolrInputDocument solrDoc = samsokContentHelper.createSolrDocument(service, rdf, added);
-				assertNotNull("Inget solr-dokument frÂn rdf", solrDoc);
+				assertNotNull("Inget solr-dokument fr√•n rdf", solrDoc);
 			}
 			
 		} finally {
@@ -175,7 +175,7 @@ public class OAIPMHHarvestJobTest {
 
 	@Test
 	public void testGetRecords_harvestFile_1_1() throws Exception {
-		// TODO: detta testfall kanske inte s‰ger sÂ mycket dÂ ingen behandling av det som h‰mtas gˆrs
+		// TODO: detta testfall kanske inte s√§ger s√• mycket d√• ingen behandling av det som h√§mtas g√∂rs
 		OAIPMHHarvestJob oaipmhHarvesterJob = new OAIPMHHarvestJob(1, 1);
 		ByteArrayOutputStream os = null;
 		try {
@@ -209,7 +209,7 @@ public class OAIPMHHarvestJobTest {
 				ExtractedInfo info = samsokContentHelper.extractInfo(rdf, null);
 				assertNotNull("Ingen info extraherad ur rdf", info);
 				SolrInputDocument solrDoc = samsokContentHelper.createSolrDocument(service, rdf, added);
-				assertNotNull("Inget solr-dokument frÂn rdf", solrDoc);
+				assertNotNull("Inget solr-dokument fr√•n rdf", solrDoc);
 			}
 
 		} finally {
@@ -219,14 +219,14 @@ public class OAIPMHHarvestJobTest {
 		}
 	}
 
-	// hj‰lpmetod som serialiserar en dom-nod som xml utan xml-deklaration
+	// hj√§lpmetod som serialiserar en dom-nod som xml utan xml-deklaration
 	static String serializeNode(Node node) throws Exception {
-		// TODO: anv‰nd samma Transformer fˆr en hel serie, kr‰ver refaktorering
-		//       av hur ContentHelpers anv‰nds map deras livscykel
+		// TODO: anv√§nd samma Transformer f√∂r en hel serie, kr√§ver refaktorering
+		//       av hur ContentHelpers anv√§nds map deras livscykel
 		final int initialSize = 4096;
 		Source source = new DOMSource(node);
 		Transformer xformer = xformerFact.newTransformer();
-		// ingen xml-deklaration dÂ vi vill anv‰nda den som ett xml-fragment
+		// ingen xml-deklaration d√• vi vill anv√§nda den som ett xml-fragment
 		xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 		xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 		StringWriter sw = new StringWriter(initialSize);

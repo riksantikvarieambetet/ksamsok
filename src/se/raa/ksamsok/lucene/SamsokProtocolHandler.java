@@ -9,12 +9,12 @@ import se.raa.ksamsok.harvest.HarvestService;
 public interface SamsokProtocolHandler {
 
 	/**
-	 * Skapar ett solr-dokument och fyller det med v‰rden.
+	 * Skapar ett solr-dokument och fyller det med v√§rden.
 	 * 
-	 * @param service tj‰nst
-	 * @param added n‰r posten lades till i k-samsˆk, om k‰nt
-	 * @param relations lista att fyllas pÂ med relationer [typ|uri] fˆr specialindexet
-	 * @param gmlGeometries lista att fyllas pÂ med gml
+	 * @param service tj√§nst
+	 * @param added n√§r posten lades till i k-sams√∂k, om k√§nt
+	 * @param relations lista att fyllas p√• med relationer [typ|uri] f√∂r specialindexet
+	 * @param gmlGeometries lista att fyllas p√• med gml
 	 * @return solr-dokument
 	 * @throws Exception vid fel
 	 */
@@ -22,17 +22,17 @@ public interface SamsokProtocolHandler {
 			List<String> relations, List<String> gmlGeometries) throws Exception;
 
 	/**
-	 * H‰mtar klasspecifik logger.
+	 * H√§mtar klasspecifik logger.
 	 * 
 	 * @return logger
 	 */
 	Logger getLogger();
 	
 	/**
-	 * SlÂr upp ett v‰rde fˆr en uri, tex l‰nsnamn.
+	 * Sl√•r upp ett v√§rde f√∂r en uri, tex l√§nsnamn.
 	 * 
 	 * @param uri uri
-	 * @return v‰rde eller null
+	 * @return v√§rde eller null
 	 */
 	String lookupURIValue(String uri);
 }

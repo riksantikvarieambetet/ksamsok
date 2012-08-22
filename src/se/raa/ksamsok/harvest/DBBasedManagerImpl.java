@@ -3,7 +3,7 @@ package se.raa.ksamsok.harvest;
 import javax.sql.DataSource;
 
 /**
- * Basklass för databasbaserad tjänstehanterare.
+ * Basklass fÃ¶r databasbaserad tjÃ¤nstehanterare.
  */
 public class DBBasedManagerImpl {
 

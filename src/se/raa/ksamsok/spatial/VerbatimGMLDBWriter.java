@@ -1,8 +1,8 @@
 package se.raa.ksamsok.spatial;
 
 /**
- * Enkel klass som inte gör nån konvertering av gml:en utan returnerar den.
- * Används främst för debug och databaskolumnen geometry måste vara anpassad till
+ * Enkel klass som inte gÃ¶r nÃ¥n konvertering av gml:en utan returnerar den.
+ * AnvÃ¤nds frÃ¤mst fÃ¶r debug och databaskolumnen geometry mÃ¥ste vara anpassad till
  * detta.
  */
 public class VerbatimGMLDBWriter extends AbstractGMLDBWriter {

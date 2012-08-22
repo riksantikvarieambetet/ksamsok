@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Klass som innehåller ett info om ett query
+ * Klass som innehÃ¥ller ett info om ett query
  * @author Henrik Hjalmarsson
  */
 public class QueryContent
@@ -23,9 +23,9 @@ public class QueryContent
 	}
 	
 	/**
-	 * lägger till en term
-	 * @param index för term
-	 * @param term värde för term
+	 * lÃ¤gger till en term
+	 * @param index fÃ¶r term
+	 * @param term vÃ¤rde fÃ¶r term
 	 */
 	public void addTerm(String index, String term)
 	{
@@ -33,8 +33,8 @@ public class QueryContent
 	}
 	
 	/**
-	 * sätter antalet träffar för query
-	 * @param hits träffar
+	 * sÃ¤tter antalet trÃ¤ffar fÃ¶r query
+	 * @param hits trÃ¤ffar
 	 */
 	public void setHits(int hits)
 	{
@@ -42,8 +42,8 @@ public class QueryContent
 	}
 	
 	/**
-	 * returnerar antalet träffar för query
-	 * @return antal träffar
+	 * returnerar antalet trÃ¤ffar fÃ¶r query
+	 * @return antal trÃ¤ffar
 	 */
 	public int getHits()
 	{
@@ -60,8 +60,8 @@ public class QueryContent
 	}
 	
 	/**
-	 * skapar en query sträng av termer
-	 * @return query sträng
+	 * skapar en query strÃ¤ng av termer
+	 * @return query strÃ¤ng
 	 */
 	public String getQueryString()
 	{
@@ -77,9 +77,9 @@ public class QueryContent
 	}
 
 	/**
-	 * skapar en query sträng av lagrade termer och given query sträng
+	 * skapar en query strÃ¤ng av lagrade termer och given query strÃ¤ng
 	 * @param query
-	 * @return query sträng
+	 * @return query strÃ¤ng
 	 */
 	public String getQueryString(String query)
 	{

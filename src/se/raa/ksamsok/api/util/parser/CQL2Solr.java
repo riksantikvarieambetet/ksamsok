@@ -21,11 +21,11 @@ import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.spatial.GMLUtil;
 
 /**
- * Kod inspirerad av LuceneTranslator från 
+ * Kod inspirerad av LuceneTranslator frÃ¥n 
  * srwlucene 1.0 (http://wiki.osuosl.org/display/OCKPub/SRWLucene)
- * vilken är under apache 2.0-licens.
+ * vilken Ã¤r under apache 2.0-licens.
  * 
- * TODO: hanterar bara enkla frågor fn
+ * TODO: hanterar bara enkla frÃ¥gor fn
  */
 public class CQL2Solr {
 
@@ -35,7 +35,7 @@ public class CQL2Solr {
 	private static final String INDEX_CQL_RESULTSETID = "cql.resultSetId";
 
 	/**
-	 * Skapar en query utifrån en CQL-nod.
+	 * Skapar en query utifrÃ¥n en CQL-nod.
 	 * 
 	 * @param node cql-nod
 	 * @return query eller null
@@ -46,10 +46,10 @@ public class CQL2Solr {
 	}
 
 	/**
-	 * Skapar en lucene-query utifrån en CQL-nod och ett vänsterled.
+	 * Skapar en lucene-query utifrÃ¥n en CQL-nod och ett vÃ¤nsterled.
 	 * 
 	 * @param node cql-nod
-	 * @param leftQuery vänsterled i form av en lucene-query eller null
+	 * @param leftQuery vÃ¤nsterled i form av en lucene-query eller null
 	 * @return en lucene-query eller null
 	 */
 	static String makeQuery(CQLNode node, String leftQuery)
@@ -63,7 +63,7 @@ public class CQL2Solr {
 			String right = makeQuery(cbn.right, left);
 
 			if (node instanceof CQLAndNode) {
-				// kapsla in ev or-noder för and
+				// kapsla in ev or-noder fÃ¶r and
 				if ((cbn.left instanceof CQLOrNode)) {
 					left = "(" + left + ")";
 				}
@@ -72,7 +72,7 @@ public class CQL2Solr {
 				}
 				query = left + " AND " + right;
 			} else if (node instanceof CQLNotNode) {
-				// kapsla in ev or-noder för not
+				// kapsla in ev or-noder fÃ¶r not
 				if ((cbn.left instanceof CQLOrNode)) {
 					left = "(" + left + ")";
 				}
@@ -83,7 +83,7 @@ public class CQL2Solr {
 			} else if (node instanceof CQLOrNode) {
 				query = left + " OR " + right;
 			} else {
-				throw new BadParameterException("okänd boolesk operation",
+				throw new BadParameterException("okÃ¤nd boolesk operation",
 						"CQL2Solr.makeQuery", node.toString(), true);
 			}
 		} else if (node instanceof CQLTermNode) {
@@ -94,14 +94,14 @@ public class CQL2Solr {
 
 			if (!index.equals("")) {
 				String term = ctn.getTerm();
-				// result sets stöds ej
+				// result sets stÃ¶ds ej
 				if (INDEX_CQL_RESULTSETID.equals(index)) {
-					throw new DiagnosticException("Resultsets stöds ej",
+					throw new DiagnosticException("Resultsets stÃ¶ds ej",
 							"CQL2Solr.makeQuery", "unsupported", false);
 				}
-				// anchoring (position av värde i indexerat fält) stöds ej
+				// anchoring (position av vÃ¤rde i indexerat fÃ¤lt) stÃ¶ds ej
 				if (term.indexOf('^') != -1) {
-					throw new DiagnosticException("ankartecken stöds ej",
+					throw new DiagnosticException("ankartecken stÃ¶ds ej",
 							"CQL2Solr.makeQuery", "unsupported", false);
 				}
 				// hantera virtuellt index
@@ -164,17 +164,17 @@ public class CQL2Solr {
 				} else {
 					//anything else is unsupported
 					throw new DiagnosticException("relationen " + 
-							ctn.getRelation().getBase() + " stöds ej",
+							ctn.getRelation().getBase() + " stÃ¶ds ej",
 							"CQL2Solr.makeQuery",
-							ctn.getRelation().getBase() + " stöds ej", true);
+							ctn.getRelation().getBase() + " stÃ¶ds ej", true);
 				}
 			}
 		} else if (node instanceof CQLSortNode) {
-			throw new DiagnosticException("sortering stöds ej",
+			throw new DiagnosticException("sortering stÃ¶ds ej",
 					"CQL2Solr.makeQuery", null, false);
 		} else {
-			throw new DiagnosticException("okänt fel uppstod",
-					"CQL2Solr.makeQuery", "error: " + 47 + " - okänd CQL "
+			throw new DiagnosticException("okÃ¤nt fel uppstod",
+					"CQL2Solr.makeQuery", "error: " + 47 + " - okÃ¤nd CQL "
 					+ "nod: " + ""+node+")", true);
 		}
 		if (logger.isDebugEnabled()) {
@@ -184,20 +184,20 @@ public class CQL2Solr {
 	}
 
 	/**
-	 * Skapar en term-query utifrån inskickade värden.
+	 * Skapar en term-query utifrÃ¥n inskickade vÃ¤rden.
 	 * 
 	 * @param field index
-	 * @param value värde
+	 * @param value vÃ¤rde
 	 * @param relation relation
 	 * @return lucene-query eller null
 	 * @throws Exception
 	 */
 	public static String createTermQuery(String field, String value, String relation) throws DiagnosticException {
 		String termQuery = null;
-		// vi tillåter mellanslag i termerna, typ "Stockholm 1:1"
+		// vi tillÃ¥ter mellanslag i termerna, typ "Stockholm 1:1"
 		if (relation == null || relation.equals("=") ||
 				relation.equals("<>") || relation.equals("exact")) {
-			// för dessa relationer/operatorer, gör vanlig fråga även med mellanslag och låt solr hantera det
+			// fÃ¶r dessa relationer/operatorer, gÃ¶r vanlig frÃ¥ga Ã¤ven med mellanslag och lÃ¥t solr hantera det
 			termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
 		} else if (relation.equals("any")) {
 			/**
@@ -229,16 +229,16 @@ public class CQL2Solr {
 			}
 		} else {
 			throw new DiagnosticException("relationen " + relation +
-					" stöds ej", "CQL2Solr.createTermQuery",
-					"relationen " + relation + " stöds ej för phrase" +
+					" stÃ¶ds ej", "CQL2Solr.createTermQuery",
+					"relationen " + relation + " stÃ¶ds ej fÃ¶r phrase" +
 							" query", true);
 		}
 		return termQuery;
 	}
 
 	/**
-	 * Skapar en spatial-query för lucene för ett virtuellt spatialt index.
-	 * Queryn blir olika beroende på index.
+	 * Skapar en spatial-query fÃ¶r lucene fÃ¶r ett virtuellt spatialt index.
+	 * Queryn blir olika beroende pÃ¥ index.
 	 * @param index indexnamn
 	 * @param ctn termnod
 	 * @return query
@@ -250,7 +250,7 @@ public class CQL2Solr {
 		String relation = ctn.getRelation().getBase();
 		if (!"=".equals(relation)) {
 			throw new DiagnosticException("kombinationen av relation och " +
-					"index stöds ej: " + index + " " + relation,
+					"index stÃ¶ds ej: " + index + " " + relation,
 					"CQL2Solr.createSpatialQuery", null, true);
 		}
 		String term = ctn.getTerm();
@@ -258,53 +258,53 @@ public class CQL2Solr {
 			double[] coords = parseDoubleValues(term, 4);
 			if (coords == null) {
 				throw new DiagnosticException("Termen har ogiltligt format" +
-						" för index eller relation: " + index + ": " + term,
+						" fÃ¶r index eller relation: " + index + ": " + term,
 						"CQL2Solr.createSpatialQuery", null, true);
 			}
 			String epsgIdent = getSingleModifier(ctn);
 			epsgIdent = translateEPSGModifier(epsgIdent);
 			coords = transformCoordsToWGS84(epsgIdent, coords);
-			// gör pss som locallucene, men utan påtvingad fyrkant
-			// (dvs vi tillåter rektanglar)
+			// gÃ¶r pss som locallucene, men utan pÃ¥tvingad fyrkant
+			// (dvs vi tillÃ¥ter rektanglar)
 			query = ContentHelper.I_IX_LAT + ":[" + coords[1] + " TO " + coords[3] + "] AND " +
 				ContentHelper.I_IX_LON + ":[" + coords[0] + " TO " + coords[2] + "]";
 		} else if (ContentHelper.IX_POINT_DISTANCE.equals(index)) {
-			throw new DiagnosticException("Funktionen/indexet stöds ej fn",
+			throw new DiagnosticException("Funktionen/indexet stÃ¶ds ej fn",
 					"CQL2Solr.createSpatialQueryssName", null, true);
 			/*
 			double[] coordsAndDist = parseDoubleValues(term, 3);
 			if (coordsAndDist == null) 
 			{
 				throw new DiagnosticException("Termen har ogiltligt format" +
-						" för index eller relation: " + index + ": " + term,
+						" fÃ¶r index eller relation: " + index + ": " + term,
 						"CQL2Solr.createSpatialQuery", null, true);
 			}
 			String epsgIdent = getSingleModifier(ctn);
 			epsgIdent = translateEPSGModifier(epsgIdent);
-			// hämta ut punkten
+			// hÃ¤mta ut punkten
 			double[] point = { coordsAndDist[0], coordsAndDist[1] };
-			// och hämta distansen och konvertera den till miles för
+			// och hÃ¤mta distansen och konvertera den till miles fÃ¶r
 			// locallucenes DistanceQuery
 			double distInKm = coordsAndDist[2];
 			double distInMiles =  distInKm * 0.621371;
 			if (distInMiles < 1) 
 			{
-				// locallucene ger fel om distansvärdet är för litet så vi
-				// kontrollerar här först
+				// locallucene ger fel om distansvÃ¤rdet Ã¤r fÃ¶r litet sÃ¥ vi
+				// kontrollerar hÃ¤r fÃ¶rst
 				throw new DiagnosticException("Termen har ogiltligt format" +
-						" för index eller relation: avstånd för litet",
+						" fÃ¶r index eller relation: avstÃ¥nd fÃ¶r litet",
 						"CQL2Solr.createSpatialQuery", "distans " +
-						distInMiles + " för liten", true);
+						distInMiles + " fÃ¶r liten", true);
 			} else if (distInKm > 30) 
 			{
-				// locallucene cachar upp en massa data för punkt + distans
-				// så det här värdet
-				// får definitivt inte vara för stort heller, då riskerar vi
-				// oom - 30km kanske är ok?
-				throw new DiagnosticException("Term har ogiltigt format för" +
-						" index eller relation: avstånd för stort",
+				// locallucene cachar upp en massa data fÃ¶r punkt + distans
+				// sÃ¥ det hÃ¤r vÃ¤rdet
+				// fÃ¥r definitivt inte vara fÃ¶r stort heller, dÃ¥ riskerar vi
+				// oom - 30km kanske Ã¤r ok?
+				throw new DiagnosticException("Term har ogiltigt format fÃ¶r" +
+						" index eller relation: avstÃ¥nd fÃ¶r stort",
 						"CQL2Solr.createSpatialQuery", "distans " +
-						distInKm + " för stor", true);
+						distInKm + " fÃ¶r stor", true);
 			}
 			point = transformCoordsToWGS84(epsgIdent, point);
 			query = new DistanceQuery(point[1], point[0], distInMiles,
@@ -312,8 +312,8 @@ public class CQL2Solr {
 					true).getQuery();
 			*/
 		} else {
-			// Hmm, det här borde inte hända
-			throw new DiagnosticException("index " + index + " stöds ej",
+			// Hmm, det hÃ¤r borde inte hÃ¤nda
+			throw new DiagnosticException("index " + index + " stÃ¶ds ej",
 					"CQL2Solr.createSpatialQuery", null, false);
 		}
 		return query;
@@ -321,40 +321,40 @@ public class CQL2Solr {
 
 
 	/**
-	 * Översätter indexnamn från cql till de som lucene använder internt.
-	 * Ger default-indexnamn och strippar samsökskontext. 
+	 * Ã–versÃ¤tter indexnamn frÃ¥n cql till de som lucene anvÃ¤nder internt.
+	 * Ger default-indexnamn och strippar samsÃ¶kskontext. 
 	 * 
 	 * @param index index
-	 * @return översatt indexnamn
+	 * @return Ã¶versatt indexnamn
 	 */
 	public static String translateIndexName(String index) {
 		// TODO: toLowerCase() ?
 		String translatedIndex = index;
-		// översätt default-index till fritext
+		// Ã¶versÃ¤tt default-index till fritext
 		if (INDEX_CQL_SERVERCHOICE.equals(index)) {
 			translatedIndex = ContentHelper.IX_TEXT;
 		} else if (index.indexOf('.') > 0 &&
 				index.startsWith(ContentHelper.CONTEXT_SET_SAMSOK)) {
-			// strippar samsok-contextet eftersom det är default
+			// strippar samsok-contextet eftersom det Ã¤r default
 			translatedIndex = index.substring(
 					ContentHelper.CONTEXT_SET_SAMSOK.length() + 1);
 		}
 		return translatedIndex;
 	}
 
-	// "översätter" ev värde beroende på indextyp
+	// "Ã¶versÃ¤tter" ev vÃ¤rde beroende pÃ¥ indextyp
 	public static String transformValueForField(String field, String value)
 		throws DiagnosticException {
 		if (ContentHelper.isToLowerCaseIndex(field) || ContentHelper.isAnalyzedIndex(field)) {
 			value = value.toLowerCase();
 		} else if (ContentHelper.isISO8601DateYearIndex(field)) {
-			// TODO: behövs detta?
-			// gör om år till för lucene tillfixad sträng så att intervall
-			// mm stöds
+			// TODO: behÃ¶vs detta?
+			// gÃ¶r om Ã¥r till fÃ¶r lucene tillfixad strÃ¤ng sÃ¥ att intervall
+			// mm stÃ¶ds
 			try {
 				value =	String.valueOf(Integer.parseInt(value));
 			} catch (Exception e) {
-				throw new DiagnosticException("Term har ogiltigt format för" +
+				throw new DiagnosticException("Term har ogiltigt format fÃ¶r" +
 						" index eller relation",
 						"CQL2Solr.transformValueForField", "ogiltigt " +
 								"format: " + field + ": " + value, true);
@@ -363,28 +363,28 @@ public class CQL2Solr {
 		return value;
 	}
 
-	// skapar en sökterm av indexnamn, värde och info om det är en exakt matchning som avses
+	// skapar en sÃ¶kterm av indexnamn, vÃ¤rde och info om det Ã¤r en exakt matchning som avses
 	private static String createEscapedTermQuery(String indexName, String value, boolean isExact) throws DiagnosticException {
 		String termQuery;
 		if (!isExact) {
 			if (value.indexOf("?") != -1 || value.indexOf("*") != -1) {
 				if (ContentHelper.isISO8601DateYearIndex(indexName) ||
 						ContentHelper.isSpatialCoordinateIndex(indexName)) {
-					// inget stöd för wildcards för dessa fält
-					throw new DiagnosticException("Wildcardtecken stöds ej" +
-							" för index: " + indexName,
+					// inget stÃ¶d fÃ¶r wildcards fÃ¶r dessa fÃ¤lt
+					throw new DiagnosticException("Wildcardtecken stÃ¶ds ej" +
+							" fÃ¶r index: " + indexName,
 							"CQL2Solr.createTermQuery", null, true);
 				}
-				// notera att är det ett wildcard med passerar frågan inte nån analyzer så då måste
-				// värdet vara som det är i indexet, dvs omgjort till lowercase för lowercase + analyserade index tex
+				// notera att Ã¤r det ett wildcard med passerar frÃ¥gan inte nÃ¥n analyzer sÃ¥ dÃ¥ mÃ¥ste
+				// vÃ¤rdet vara som det Ã¤r i indexet, dvs omgjort till lowercase fÃ¶r lowercase + analyserade index tex
 				value = transformValueForField(indexName, value);
 			}
-			// gör escape av hela värdet och sen "unescape" på ev wildcards
+			// gÃ¶r escape av hela vÃ¤rdet och sen "unescape" pÃ¥ ev wildcards
 			value = ClientUtils.escapeQueryChars(value).replace("\\*", "*").replace("\\?", "?");
-			// sätt ihop
+			// sÃ¤tt ihop
 			termQuery = indexName + ":" + value;
 		} else {
-			// sätt ihop och använd quotes för en exakt matchning
+			// sÃ¤tt ihop och anvÃ¤nd quotes fÃ¶r en exakt matchning
 			termQuery = indexName + ":\"" + value + "\"";
 		}
 		return termQuery;
@@ -419,8 +419,8 @@ public class CQL2Solr {
 				diagData += "/" + modifiers.get(j).getType();
 			}
 			throw new DiagnosticException("Kombinationen av relations " +
-					"modifierare stöds ej", "CQL2Solr.getSingleModifier",
-					"kombinationen stöds ej: " + diagData, true);
+					"modifierare stÃ¶ds ej", "CQL2Solr.getSingleModifier",
+					"kombinationen stÃ¶ds ej: " + diagData, true);
 		} else if (modifiers.size() == 1) {
 			singleModifier = modifiers.get(0).getType().toUpperCase();
 		}
@@ -432,7 +432,7 @@ public class CQL2Solr {
 		double[] xformedCoords = coords;
 		if (fromCRS != null && !GMLUtil.CRS_WGS84_4326.equals(fromCRS)) {
 			if (coords == null || coords.length == 0) {
-				throw new DiagnosticException("Term har ogiltigt format för" +
+				throw new DiagnosticException("Term har ogiltigt format fÃ¶r" +
 						" index eller relation: Inga kordinater",
 						"CQL2Solr.transformCoordsToWGS84", null, false);
 			}
@@ -440,12 +440,12 @@ public class CQL2Solr {
 				xformedCoords = GMLUtil.transformCRS(coords, fromCRS,
 						GMLUtil.CRS_WGS84_4326);
 			} catch (Exception e) {
-				throw new DiagnosticException("Relations modifierare stöds" +
+				throw new DiagnosticException("Relations modifierare stÃ¶ds" +
 						" ej", "CQL2Solr.transformCoordsToWGS84",
-						"relationsmodifierare stöds ej: " + fromCRS, true);
+						"relationsmodifierare stÃ¶ds ej: " + fromCRS, true);
 			}
 			if (logger.isDebugEnabled()) {
-				logger.debug("Transformerade koordinater från " + fromCRS +
+				logger.debug("Transformerade koordinater frÃ¥n " + fromCRS +
 						" till WGS 84 (" + ArrayUtils.toString(coords) +
 						" -> " + ArrayUtils.toString(xformedCoords) + ")");
 			}
@@ -455,7 +455,7 @@ public class CQL2Solr {
 
 	private static String translateEPSGModifier(String epsgIdent) {
 		if (epsgIdent != null) {
-			// översätt kända konstanter till epsg-koder
+			// Ã¶versÃ¤tt kÃ¤nda konstanter till epsg-koder
 			if (ContentHelper.WGS84_4326.equalsIgnoreCase(epsgIdent)) {
 				epsgIdent = GMLUtil.CRS_WGS84_4326;
 			} else if (ContentHelper.SWEREF99_3006.equalsIgnoreCase(epsgIdent)) {
@@ -464,14 +464,14 @@ public class CQL2Solr {
 				epsgIdent = GMLUtil.CRS_RT90_3021;
 			}
 		} else {
-			// default är SWEREF99 så vi måste alltid transformera då
+			// default Ã¤r SWEREF99 sÃ¥ vi mÃ¥ste alltid transformera dÃ¥
 			// koordinater lagras i wgs84
 			epsgIdent = GMLUtil.CRS_SWEREF99_TM_3006;
 		}
 		return epsgIdent;
 	}
 
-	// bara för debug, dumpar cql-trädet
+	// bara fÃ¶r debug, dumpar cql-trÃ¤det
 	public static void dumpQueryTree(CQLNode node) {
 		if (!logger.isDebugEnabled()) {
 			return;

@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
- * Validating a xml and checks if it matches ksamsöks standard harvest-format
+ * Validating a xml and checks if it matches ksamsÃ¶ks standard harvest-format
  * 
  * @author Martin Duveborg
  *
@@ -57,7 +57,7 @@ public class XmlValidator {
 	    	 errorHandler.addMessage("IO-Problem: ", io);
 		 }
 		 catch (SAXException se){
-	    	 errorHandler.addMessage("Fel inläsning av xmlschema: ", se);
+	    	 errorHandler.addMessage("Fel inlÃ¤sning av xmlschema: ", se);
 		 }
 	    
 		 if(errorHandler.getReport().isEmpty()){

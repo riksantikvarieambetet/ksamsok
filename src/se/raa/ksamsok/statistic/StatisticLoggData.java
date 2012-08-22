@@ -1,7 +1,7 @@
 package se.raa.ksamsok.statistic;
 
 /**
- * Böna som håller data som skall loggas till statistik databasen
+ * BÃ¶na som hÃ¥ller data som skall loggas till statistik databasen
  * @author Henrik Hjalmarsson
  */
 public class StatisticLoggData

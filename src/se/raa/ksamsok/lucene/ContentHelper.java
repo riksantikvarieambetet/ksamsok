@@ -19,11 +19,11 @@ import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 /**
- * Basklass för innehållshantering av tjänstedata och index samt diverse hjälpmetoder.
+ * Basklass fÃ¶r innehÃ¥llshantering av tjÃ¤nstedata och index samt diverse hjÃ¤lpmetoder.
  */
 public abstract class ContentHelper {
 
-	// TODO: inför info om kardinalitet och uri:s ska slås upp eller ej... och automatifiera ip mfl mer?
+	// TODO: infÃ¶r info om kardinalitet och uri:s ska slÃ¥s upp eller ej... och automatifiera ip mfl mer?
 
 	// diverse systemtermer
 	public static final String CONTEXT_SET_SAMSOK = "samsok";
@@ -45,8 +45,8 @@ public abstract class ContentHelper {
 	
 	// generella
 
-	public static final String IX_TEXT = "text"; // fritext för "alla" fält
-	public static final String IX_STRICT = "strict"; // fritext för "alla" fält, ostammat
+	public static final String IX_TEXT = "text"; // fritext fÃ¶r "alla" fÃ¤lt
+	public static final String IX_STRICT = "strict"; // fritext fÃ¶r "alla" fÃ¤lt, ostammat
 	public static final String IX_SERVICENAME = "serviceName";
 	public static final String IX_SERVICEORGANISATION = "serviceOrganization";
 	public static final String IX_CREATEDDATE = "createdDate";
@@ -56,7 +56,7 @@ public abstract class ContentHelper {
 
 	// entitet
 
-	public static final String IX_ITEM = "item"; // fritext för alla item-fält
+	public static final String IX_ITEM = "item"; // fritext fÃ¶r alla item-fÃ¤lt
 	public static final String IX_ITEMID = "itemId"; // identifierare, rdf:about
 	public static final String IX_SUBJECT = "subject";
 	public static final String IX_COLLECTION = "collection";
@@ -82,13 +82,13 @@ public abstract class ContentHelper {
 	public static final String IX_THEME = "theme";
 
 	// tider, platser, personer
-	//	Sammanhang enligt ändlig lista. Sammanhanget gäller för tider, platser och personer/organisationer. Listan på sammanhang hittar du här: http://kulturarvsdata.se/resurser/Context
+	//	Sammanhang enligt Ã¤ndlig lista. Sammanhanget gÃ¤ller fÃ¶r tider, platser och personer/organisationer. Listan pÃ¥ sammanhang hittar du hÃ¤r: http://kulturarvsdata.se/resurser/Context
 	public static final String IX_CONTEXTLABEL = "contextLabel";
 	public static final String IX_CONTEXTTYPE = "contextType";
 	public static final String IX_CONTEXTSUPERTYPE = "contextSuperType";
 	
 	// tider
-	public static final String IX_TIME = "time"; // fritext i alla tidsfält
+	public static final String IX_TIME = "time"; // fritext i alla tidsfÃ¤lt
 	public static final String IX_FROMTIME = "fromTime";
 	public static final String IX_TOTIME = "toTime";
 	public static final String IX_FROMPERIODNAME = "fromPeriodName";
@@ -101,7 +101,7 @@ public abstract class ContentHelper {
 	//public static final String IX_TIMETEXT = "timeText";
 
 	// platser
-	public static final String IX_PLACE = "place"; // fritext i alla platsfält
+	public static final String IX_PLACE = "place"; // fritext i alla platsfÃ¤lt
 	public static final String IX_CONTINENTNAME = "continentName";
 	public static final String IX_COUNTRY = "country";
 	public static final String IX_COUNTY = "county";
@@ -120,7 +120,7 @@ public abstract class ContentHelper {
 	//public static final String IX_COORDINATES = "coordinates";
 
 	// personer
-	public static final String IX_ACTOR = "actor"; // alla fält sammanslagna (ej fritext dock!)
+	public static final String IX_ACTOR = "actor"; // alla fÃ¤lt sammanslagna (ej fritext dock!)
 	public static final String IX_FIRSTNAME = "firstName";
 	public static final String IX_SURNAME = "surname";
 	public static final String IX_NAME = "name";
@@ -203,7 +203,7 @@ public abstract class ContentHelper {
 	public static final String IX_PUBLISHER = "publisher";
 	public static final String IX_PUBLICIST = "publicist";
 	public static final String IX_MUSICIAN = "musician";
-	public static final String IX_ACTORACTRESS = "actorActress"; // ACTOR fanns redan så detta är en specialare...
+	public static final String IX_ACTORACTRESS = "actorActress"; // ACTOR fanns redan sÃ¥ detta Ã¤r en specialare...
 	public static final String IX_PRINTER = "printer";
 	public static final String IX_SIGNER = "signer";
 	public static final String IX_FINDER = "finder";
@@ -293,7 +293,7 @@ public abstract class ContentHelper {
 	public static final String RT90_3021 = "RT90";
 	public static final String WGS84_4326 = "WGS84";
 
-	// övriga specialindex
+	// Ã¶vriga specialindex
 	public static final String IX_THUMBNAILEXISTS = "thumbnailExists";
 	public static final String IX_GEODATAEXISTS = "geoDataExists";
 	public static final String IX_TIMEINFOEXISTS = "timeInfoExists";
@@ -305,8 +305,8 @@ public abstract class ContentHelper {
 	// publika index
 	private static final List<Index> publicIndices = new ArrayList<Index>();
 
-	// meddelanden om eventuella problem vid tolkning av tjänsteinnehållet, tex att en konstant
-	// inte kunde slås upp etc, och antal ggr problemet förekom - främst för utv/debug
+	// meddelanden om eventuella problem vid tolkning av tjÃ¤nsteinnehÃ¥llet, tex att en konstant
+	// inte kunde slÃ¥s upp etc, och antal ggr problemet fÃ¶rekom - frÃ¤mst fÃ¶r utv/debug
 	private static final ThreadLocal<Map<String,Integer>> problemMessages = new ThreadLocal<Map<String,Integer>>();
 
 	static {
@@ -314,222 +314,222 @@ public abstract class ContentHelper {
 
 		// de visas per default i denna ordning i SRU-explain via publicIndices
 		addIndex(IX_ITEMID, "Identifierare", IndexType.VERBATIM);
-		addIndex(IX_SERVICENAME, "Ursprungstjänst", IndexType.TOLOWERCASE);
+		addIndex(IX_SERVICENAME, "UrsprungstjÃ¤nst", IndexType.TOLOWERCASE);
 		addIndex(IX_SERVICEORGANISATION, "Ursprungsorganisation", IndexType.TOLOWERCASE);
 		addIndex(IX_TEXT, "Fritext, generellt", IndexType.ANALYZED);
 		addIndex(IX_STRICT, "Fritext, generellt - ostammat", IndexType.TOLOWERCASE);
-		addIndex(IX_SUBJECT, "Ämnesavgränsning", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE);
-		addIndex(IX_DATAQUALITY, "Beskrivningsnivå", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.TOLOWERCASE); // uri // TODO: detta stämmer ej(?)
-		addIndex(IX_PROTOCOLVERSION, "Protokollversion för posten", IndexType.VERBATIM); // flyttal
+		addIndex(IX_SUBJECT, "Ã„mnesavgrÃ¤nsning", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
+		addIndex(IX_COLLECTION, "Namn pÃ¥ samlingen som objektet tillhÃ¶r", IndexType.TOLOWERCASE);
+		addIndex(IX_DATAQUALITY, "BeskrivningsnivÃ¥", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
+		addIndex(IX_MEDIATYPE, "AvgrÃ¤nsning av mediatyper", IndexType.TOLOWERCASE); // uri // TODO: detta stÃ¤mmer ej(?)
+		addIndex(IX_PROTOCOLVERSION, "Protokollversion fÃ¶r posten", IndexType.VERBATIM); // flyttal
 
 		// objekt
-		addIndex(IX_ITEM, "Fritext i entitetsfält", IndexType.ANALYZED);
-		addIndex(IX_ITEMTYPE, "Typ av objekt", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_ITEMSUPERTYPE, "Huvudtyp av objekt", IndexType.TOLOWERCASE); // uri (översatt)
+		addIndex(IX_ITEM, "Fritext i entitetsfÃ¤lt", IndexType.ANALYZED);
+		addIndex(IX_ITEMTYPE, "Typ av objekt", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
+		addIndex(IX_ITEMSUPERTYPE, "Huvudtyp av objekt", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
 		addIndex(IX_ITEMCLASS, "Objektets klass, kategorisering eller klassifikation", IndexType.TOLOWERCASE); // uri
 		addIndex(IX_ITEMCLASSNAME, "Klass eller kategori, om det inte finns en klassificeringsresurs", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMNAME, "Objektets huvudsakliga benämning eller sakord", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMNAME, "Objektets huvudsakliga benÃ¤mning eller sakord", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMSPECIFICATION, "Modellbeteckning eller liknande", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMTITLE, "Titel eller verksnamn", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMLABEL, "Huvudsaklig beskrivning av objektet - klassifikation, sakord el dyl", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMDESCRIPTION, "Fritext i beskrivningsfält", IndexType.ANALYZED);
+		addIndex(IX_ITEMDESCRIPTION, "Fritext i beskrivningsfÃ¤lt", IndexType.ANALYZED);
 		addIndex(IX_ITEMKEYWORD, "Nyckelord", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMMOTIVEWORD, "Ord som förekommer som beskrivning av ett motiv i ett bild- eller målningsobjekt", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMMATERIAL, "Material som objektet består av", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMTECHNIQUE, "Teknik för att producera objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMSTYLE, "Stil som präglar objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMCOLOR, "Färg som präglar objektet", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMMOTIVEWORD, "Ord som fÃ¶rekommer som beskrivning av ett motiv i ett bild- eller mÃ¥lningsobjekt", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMMATERIAL, "Material som objektet bestÃ¥r av", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMTECHNIQUE, "Teknik fÃ¶r att producera objektet", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMSTYLE, "Stil som prÃ¤glar objektet", IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMCOLOR, "FÃ¤rg som prÃ¤glar objektet", IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMNUMBER, "Inventarienummer eller annan identifikation av objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet (uri)", IndexType.TOLOWERCASE); // typ? uri -> verbatim, kod -> lowercase
-		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
-		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
+		addIndex(IX_ITEMLICENSE, "Licens fÃ¶r anvÃ¤ndning av objektet (uri)", IndexType.TOLOWERCASE); // typ? uri -> verbatim, kod -> lowercase
+		addIndex(IX_CREATEDDATE, "Datum dÃ¥ posten skapades i kÃ¤llsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
+		addIndex(IX_LASTCHANGEDDATE, "Datum dÃ¥ posten Ã¤ndrades i kÃ¤llsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_THEME, "Tema", IndexType.TOLOWERCASE);
 		
 		// plats
 		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_PLACETERMID, "Plats-ID hos auktoritet [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_PLACETERMAUTH, "Auktoritet för plats-ID [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_PLACETERMAUTH, "Auktoritet fÃ¶r plats-ID [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_CONTINENTNAME, "Kontinent [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_COUNTRYNAME, "Land, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_COUNTYNAME, "Län, namn [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_COUNTYNAME, "LÃ¤n, namn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_MUNICIPALITYNAME, "Kommun, namn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_PROVINCENAME, "Landskap, namn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_PARISHNAME, "Socken, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_COUNTRY, "Land, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_COUNTY, "Län, kod [*]",IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_MUNICIPALITY, "Kommun, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_PROVINCE, "Landskap, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_PARISH, "Socken, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
+		addIndex(IX_COUNTRY, "Land, kod [*]", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
+		addIndex(IX_COUNTY, "LÃ¤n, kod [*]",IndexType.TOLOWERCASE); // uri (Ã¶versatt)
+		addIndex(IX_MUNICIPALITY, "Kommun, kod [*]", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
+		addIndex(IX_PROVINCE, "Landskap, kod [*]", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
+		addIndex(IX_PARISH, "Socken, kod [*]", IndexType.TOLOWERCASE); // uri (Ã¶versatt)
 		addIndex(IX_PLACE, "Var - Fritext i geografiska data", IndexType.ANALYZED);
 
 		// spatiala virtuella index
-		String coordExplain = "koordinater separerade med mellanslag i (nästan) valfritt format " +
-		"((EPSG:3006 (SWEREF99 TM) är default, OBS att x,y förutsätts! Giltiga värden förutom " +
-		"EPSG:XXXX är '" + SWEREF99_3006 + "' (EPSG:3006 - SWEREF99 TM), " +
+		String coordExplain = "koordinater separerade med mellanslag i (nÃ¤stan) valfritt format " +
+		"((EPSG:3006 (SWEREF99 TM) Ã¤r default, OBS att x,y fÃ¶rutsÃ¤tts! Giltiga vÃ¤rden fÃ¶rutom " +
+		"EPSG:XXXX Ã¤r '" + SWEREF99_3006 + "' (EPSG:3006 - SWEREF99 TM), " +
 		"'" + RT90_3021 + "' (EPSG:3021 - RT90 2.5 gon V) och " +
 		"'" + WGS84_4326 + "' (EPSG:4326))";
-		addIndex(IX_BOUNDING_BOX, "Spatial sökning med omslutande rektangel, " +
+		addIndex(IX_BOUNDING_BOX, "Spatial sÃ¶kning med omslutande rektangel, " +
 				coordExplain + " - ex " +
 				IX_BOUNDING_BOX + "=/EPSG:3021 \"1628000.0 6585000.0 1628490.368 6585865.547\" eller " +
 				IX_BOUNDING_BOX + "=/" + RT90_3021 + "\"1628000.0 6585000.0 1628490.368 6585865.547\"",
 				IndexType.SPATIAL_VIRTUAL);
-		addIndex(IX_POINT_DISTANCE, "Spatial närhetssökning med angiven punkt och radie, " +
+		addIndex(IX_POINT_DISTANCE, "Spatial nÃ¤rhetssÃ¶kning med angiven punkt och radie, " +
 				coordExplain + " och radien i km - ex " +
 				IX_POINT_DISTANCE + "=/EPSG:3021 \"1628000.0 6585000.0 3.5\" eller " +
 				IX_POINT_DISTANCE + "=/" + RT90_3021 + " \"1628000.0 6585000.0 3.5\"",
 				IndexType.SPATIAL_VIRTUAL);
 
 		// person
-		addIndex(IX_FIRSTNAME, "Förnamn [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_FIRSTNAME, "FÃ¶rnamn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_SURNAME, "Efternamn [*]", IndexType.TOLOWERCASE);
 		//addIndex(IX_NAME, "Namn", IndexType.TOLOWERCASE); // ej index, bara i med fritext
-		addIndex(IX_GENDER, "Kön [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_FULLNAME, "Fullständigt namn ([förnamn] [efternamn]) [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_GENDER, "KÃ¶n [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_FULLNAME, "FullstÃ¤ndigt namn ([fÃ¶rnamn] [efternamn]) [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_ORGANIZATION, "Organisation [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_TITLE, "Titel (person) [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_NAMEAUTH, "Auktoritet för namn [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_NAMEAUTH, "Auktoritet fÃ¶r namn [*]", IndexType.TOLOWERCASE);
 		addIndex(IX_ACTOR, "Vem - Fritext i person- och organisationsdata", IndexType.ANALYZED);
 
 		// tid
-		addIndex(IX_FROMTIME, "Tidpunkt eller start på tidsintervall (årtal enligt ISO 8601) [*]", IndexType.ISO8601DATEYEAR);
-		addIndex(IX_TOTIME, "Tidpunkt eller slut på tidsintervall (årtal enligt ISO 8601) [*]", IndexType.ISO8601DATEYEAR);
-		addIndex(IX_FROMPERIODNAME, "Tidpunkt eller start på tidsintervall, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_TOPERIODNAME, "Tidpunkt eller slut på tidsintervall, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_FROMPERIODID, "Tidpunkt eller start på tidsintervall, kod [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_TOPERIODID, "Tidpunkt eller slut på tidsintervall, kod [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_EVENTNAME, "Namn på en händelse [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_FROMTIME, "Tidpunkt eller start pÃ¥ tidsintervall (Ã¥rtal enligt ISO 8601) [*]", IndexType.ISO8601DATEYEAR);
+		addIndex(IX_TOTIME, "Tidpunkt eller slut pÃ¥ tidsintervall (Ã¥rtal enligt ISO 8601) [*]", IndexType.ISO8601DATEYEAR);
+		addIndex(IX_FROMPERIODNAME, "Tidpunkt eller start pÃ¥ tidsintervall, namn [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_TOPERIODNAME, "Tidpunkt eller slut pÃ¥ tidsintervall, namn [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_FROMPERIODID, "Tidpunkt eller start pÃ¥ tidsintervall, kod [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_TOPERIODID, "Tidpunkt eller slut pÃ¥ tidsintervall, kod [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_PERIODAUTH, "Auktoritet fÃ¶r perioder [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_EVENTNAME, "Namn pÃ¥ en hÃ¤ndelse [*]", IndexType.TOLOWERCASE);
+		addIndex(IX_EVENTAUTH, "Auktoritet fÃ¶r hÃ¤ndelser [*]", IndexType.TOLOWERCASE);
 		//addIndex(IX_TIMETEXT, "Annan tidsuppgift [*]", IndexType.ANALYZED);
-		addIndex(IX_TIME, "När - Fritext i tidsdata", IndexType.ANALYZED);
+		addIndex(IX_TIME, "NÃ¤r - Fritext i tidsdata", IndexType.ANALYZED);
 
 		// context
-		addIndex(IX_CONTEXTLABEL, "Sammanhang enligt ändlig lista, beskrivning", IndexType.TOLOWERCASE);
-		addIndex(IX_CONTEXTTYPE, "Sammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE);
-		addIndex(IX_CONTEXTSUPERTYPE, "Huvudsammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE);
+		addIndex(IX_CONTEXTLABEL, "Sammanhang enligt Ã¤ndlig lista, beskrivning", IndexType.TOLOWERCASE);
+		addIndex(IX_CONTEXTTYPE, "Sammanhang enligt Ã¤ndlig lista, nyckelvÃ¤rde", IndexType.TOLOWERCASE);
+		addIndex(IX_CONTEXTSUPERTYPE, "Huvudsammanhang enligt Ã¤ndlig lista, nyckelvÃ¤rde", IndexType.TOLOWERCASE);
 
-		// relationer TODO: fixa beskrivningstexterna när Börje har skickat dem
-		addIndex(IX_RELURI, "Är relaterat på något sätt till annat objekt (uri)", IndexType.VERBATIM);
+		// relationer TODO: fixa beskrivningstexterna nÃ¤r BÃ¶rje har skickat dem
+		addIndex(IX_RELURI, "Ã„r relaterat pÃ¥ nÃ¥got sÃ¤tt till annat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_CONTAINSINFORMATIONABOUT, "Har information om (uri)", IndexType.VERBATIM);
-		addIndex(IX_CONTAINSOBJECT, "Innehåller objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISCONTAINEDIN, "Innehålls i objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASBEENUSEDIN, "Används i (uri)", IndexType.VERBATIM);
+		addIndex(IX_CONTAINSOBJECT, "InnehÃ¥ller objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISCONTAINEDIN, "InnehÃ¥lls i objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASBEENUSEDIN, "AnvÃ¤nds i (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASCHILD, "Har underordnat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASFIND, "Har fynd (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASIMAGE, "Har bild (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASOBJECTEXAMPLE, "Har objektexempel (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISOBJECTEXAMPLEFOR, "Är objektexempel för (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASPARENT, "Har överordnat objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISOBJECTEXAMPLEFOR, "Ã„r objektexempel fÃ¶r (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASPARENT, "Har Ã¶verordnat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASPART, "Har del (uri)", IndexType.VERBATIM);
 		addIndex(IX_ISDESCRIBEDBY, "Beskrivs av (uri)", IndexType.VERBATIM);
 		addIndex(IX_DESCRIBES, "Beskriver (uri)", IndexType.VERBATIM);
 		addIndex(IX_ISFOUNDIN, "Finns i (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISPARTOF, "Är del av annat objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISRELATEDTO, "Är relaterat till annat objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISPARTOF, "Ã„r del av annat objekt (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISRELATEDTO, "Ã„r relaterat till annat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_ISVISUALIZEDBY, "Visualiseras av annat objekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_SAMEAS, "Samma som (uri)", IndexType.VERBATIM);
 		addIndex(IX_VISUALIZES, "Visualiserar objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISMENTIONEDBY, "Nämns av (uri)", IndexType.VERBATIM);
-		addIndex(IX_MENTIONS, "Nämner (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISMENTIONEDBY, "NÃ¤mns av (uri)", IndexType.VERBATIM);
+		addIndex(IX_MENTIONS, "NÃ¤mner (uri)", IndexType.VERBATIM);
 		addIndex(IX_ADDEDTOINDEXDATE, "Datum posten lades till i indexet (yyyy-mm-dd) - " + 
-				"obs att detta datum är ungefärligt då det beror på skördefrekvens för " +
-				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
+				"obs att detta datum Ã¤r ungefÃ¤rligt dÃ¥ det beror pÃ¥ skÃ¶rdefrekvens fÃ¶r " +
+				"kÃ¤lltjÃ¤nsten, berÃ¤knas som max(kÃ¤lltjÃ¤nstens fÃ¶rsta indexeringsdatum, " +
 				IX_CREATEDDATE + ")", IndexType.VERBATIM);
 
 		// cidoc-crm
-		addIndex(IX_HASFORMERORCURRENTOWNER, "Har nuvarande eller tidigare ägare (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASFORMERORCURRENTKEEPER, "Har nuvarande eller tidigare förvaltare (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASFORMERORCURRENTOWNER, "Har nuvarande eller tidigare Ã¤gare (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASFORMERORCURRENTKEEPER, "Har nuvarande eller tidigare fÃ¶rvaltare (uri)", IndexType.VERBATIM);
 		addIndex(IX_WASCREATEDBY, "Skapades av (uri)", IndexType.VERBATIM);
-		addIndex(IX_RIGHTHELDBY, "Rättigheter ägs av (uri)", IndexType.VERBATIM);
-		addIndex(IX_WASPRESENTAT, "Var närvarande vid händelse (uri)", IndexType.VERBATIM);
-		addIndex(IX_OCCUREDINTHEPRESENCEOF, "Händelsen skedde i närvaro av (uri)", IndexType.VERBATIM);
-		addIndex(IX_HADPARTICIPANT, "Händelsen hade deltagare (uri)", IndexType.VERBATIM);
-		addIndex(IX_PARTICIPATEDIN, "Deltog i händelse (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISCURRENTORFORMERMEMBEROF, "Är eller var tidigare medlem av (uri)", IndexType.VERBATIM);
+		addIndex(IX_RIGHTHELDBY, "RÃ¤ttigheter Ã¤gs av (uri)", IndexType.VERBATIM);
+		addIndex(IX_WASPRESENTAT, "Var nÃ¤rvarande vid hÃ¤ndelse (uri)", IndexType.VERBATIM);
+		addIndex(IX_OCCUREDINTHEPRESENCEOF, "HÃ¤ndelsen skedde i nÃ¤rvaro av (uri)", IndexType.VERBATIM);
+		addIndex(IX_HADPARTICIPANT, "HÃ¤ndelsen hade deltagare (uri)", IndexType.VERBATIM);
+		addIndex(IX_PARTICIPATEDIN, "Deltog i hÃ¤ndelse (uri)", IndexType.VERBATIM);
+		addIndex(IX_ISCURRENTORFORMERMEMBEROF, "Ã„r eller var tidigare medlem av (uri)", IndexType.VERBATIM);
 		addIndex(IX_HASCURRENTORFORMERMEMBER, "Har eller hade medlem (uri)", IndexType.VERBATIM);
 
 		// bio
-		addIndex(IX_CHILD, "Var förälder till (uri)", IndexType.VERBATIM);
+		addIndex(IX_CHILD, "Var fÃ¶rÃ¤lder till (uri)", IndexType.VERBATIM);
 		addIndex(IX_PARENT, "Var barn till (uri)", IndexType.VERBATIM);
 		addIndex(IX_MOTHER, "Har mor (uri)", IndexType.VERBATIM);
 		addIndex(IX_FATHER, "Har far (uri)", IndexType.VERBATIM);
 
 		// roller
-		addIndex(IX_CLIENT, "Beställare (uri)", IndexType.VERBATIM);
-		addIndex(IX_COMPOSER, "Kompositör (uri)", IndexType.VERBATIM);
-		addIndex(IX_AUTHOR, "Författare (uri)", IndexType.VERBATIM);
+		addIndex(IX_CLIENT, "BestÃ¤llare (uri)", IndexType.VERBATIM);
+		addIndex(IX_COMPOSER, "KompositÃ¶r (uri)", IndexType.VERBATIM);
+		addIndex(IX_AUTHOR, "FÃ¶rfattare (uri)", IndexType.VERBATIM);
 		addIndex(IX_ARCHITECT, "Arkitekt (uri)", IndexType.VERBATIM);
 		addIndex(IX_INVENTOR, "Uppfinnare (uri)", IndexType.VERBATIM);
 		addIndex(IX_SCENOGRAPHER, "Scenograf (uri)", IndexType.VERBATIM);
 		addIndex(IX_DESIGNER, "Designer (uri)", IndexType.VERBATIM);
 		addIndex(IX_PRODUCER, "Producent (uri)", IndexType.VERBATIM);
-		addIndex(IX_ORGANIZER, "Arrangör (uri)", IndexType.VERBATIM);
-		addIndex(IX_DIRECTOR, "Regissör (uri)", IndexType.VERBATIM);
+		addIndex(IX_ORGANIZER, "ArrangÃ¶r (uri)", IndexType.VERBATIM);
+		addIndex(IX_DIRECTOR, "RegissÃ¶r (uri)", IndexType.VERBATIM);
 		addIndex(IX_PHOTOGRAPHER, "Fotograf (uri)", IndexType.VERBATIM);
-		addIndex(IX_PAINTER, "Målare (uri)", IndexType.VERBATIM);
+		addIndex(IX_PAINTER, "MÃ¥lare (uri)", IndexType.VERBATIM);
 		addIndex(IX_BUILDER, "Byggare (uri)", IndexType.VERBATIM);
-		addIndex(IX_MASTERBUILDER, "Byggmästare (uri)", IndexType.VERBATIM);
+		addIndex(IX_MASTERBUILDER, "ByggmÃ¤stare (uri)", IndexType.VERBATIM);
 		addIndex(IX_CONSTRUCTIONCLIENT, "Byggherre (uri)", IndexType.VERBATIM);
-		addIndex(IX_ENGRAVER, "Gravör (uri)", IndexType.VERBATIM);
-		addIndex(IX_MINTMASTER, "Myntmästare (uri)", IndexType.VERBATIM);
-		addIndex(IX_ARTIST, "Konstnär (uri)", IndexType.VERBATIM);
-		addIndex(IX_DESIGNENGINEER, "Konstruktör (uri)", IndexType.VERBATIM);
+		addIndex(IX_ENGRAVER, "GravÃ¶r (uri)", IndexType.VERBATIM);
+		addIndex(IX_MINTMASTER, "MyntmÃ¤stare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ARTIST, "KonstnÃ¤r (uri)", IndexType.VERBATIM);
+		addIndex(IX_DESIGNENGINEER, "KonstruktÃ¶r (uri)", IndexType.VERBATIM);
 		addIndex(IX_CARPENTER, "Snickare (uri)", IndexType.VERBATIM);
 		addIndex(IX_MASON, "Murare (uri)", IndexType.VERBATIM);
 		addIndex(IX_TECHNICIAN, "Tekniker (uri)", IndexType.VERBATIM);
-		addIndex(IX_PUBLISHER, "Förläggare (uri)", IndexType.VERBATIM);
+		addIndex(IX_PUBLISHER, "FÃ¶rlÃ¤ggare (uri)", IndexType.VERBATIM);
 		addIndex(IX_PUBLICIST, "Publicist (uri)", IndexType.VERBATIM);
 		addIndex(IX_MUSICIAN, "Musiker (uri)", IndexType.VERBATIM);
-		addIndex(IX_ACTORACTRESS, "Skådespelare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ACTORACTRESS, "SkÃ¥despelare (uri)", IndexType.VERBATIM);
 		addIndex(IX_PRINTER, "Tryckare (uri)", IndexType.VERBATIM);
-		addIndex(IX_SIGNER, "Påskrift av (uri)", IndexType.VERBATIM);
+		addIndex(IX_SIGNER, "PÃ¥skrift av (uri)", IndexType.VERBATIM);
 		addIndex(IX_FINDER, "Upphittare (uri)", IndexType.VERBATIM);
-		addIndex(IX_ABANDONEE, "Förvärvare (uri)", IndexType.VERBATIM);
-		addIndex(IX_INTERMEDIARY, "Förmedlare (uri)", IndexType.VERBATIM);
-		addIndex(IX_BUYER, "Köpare (uri)", IndexType.VERBATIM);
-		addIndex(IX_SELLER, "Säljare (uri)", IndexType.VERBATIM);
+		addIndex(IX_ABANDONEE, "FÃ¶rvÃ¤rvare (uri)", IndexType.VERBATIM);
+		addIndex(IX_INTERMEDIARY, "FÃ¶rmedlare (uri)", IndexType.VERBATIM);
+		addIndex(IX_BUYER, "KÃ¶pare (uri)", IndexType.VERBATIM);
+		addIndex(IX_SELLER, "SÃ¤ljare (uri)", IndexType.VERBATIM);
 		addIndex(IX_GENERALAGENT, "Generalagent (uri)", IndexType.VERBATIM);
 		addIndex(IX_DONOR, "Givare (uri)", IndexType.VERBATIM);
 		addIndex(IX_DEPOSITOR, "Deponent (uri)", IndexType.VERBATIM);
-		addIndex(IX_RESELLER, "Återförsäljare (uri)", IndexType.VERBATIM);
+		addIndex(IX_RESELLER, "Ã…terfÃ¶rsÃ¤ljare (uri)", IndexType.VERBATIM);
 		addIndex(IX_INVENTORYTAKER, "Inventerare (uri)", IndexType.VERBATIM);
-		addIndex(IX_EXCAVATOR, "Grävare (uri)", IndexType.VERBATIM);
-		addIndex(IX_EXAMINATOR, "Undersökare (uri)", IndexType.VERBATIM);
+		addIndex(IX_EXCAVATOR, "GrÃ¤vare (uri)", IndexType.VERBATIM);
+		addIndex(IX_EXAMINATOR, "UndersÃ¶kare (uri)", IndexType.VERBATIM);
 		addIndex(IX_CONSERVATOR, "Konservator (uri)", IndexType.VERBATIM);
 		addIndex(IX_ARCHIVECONTRIBUTOR, "Arkivbildare (uri)", IndexType.VERBATIM);
 		addIndex(IX_INTERVIEWER, "Intervjuare (uri)", IndexType.VERBATIM);
 		addIndex(IX_INFORMANT, "Informant (uri)", IndexType.VERBATIM);
 		addIndex(IX_PATENTHOLDER, "Patentinnehavare (uri)", IndexType.VERBATIM);
 		addIndex(IX_USER, "Brukare (uri)", IndexType.VERBATIM);
-		addIndex(IX_SCANNEROPERATOR, "Skanneroperatör (uri)", IndexType.VERBATIM);
-		addIndex(IX_PICTUREEDITOR, "Bildredaktör (uri)", IndexType.VERBATIM);
+		addIndex(IX_SCANNEROPERATOR, "SkanneroperatÃ¶r (uri)", IndexType.VERBATIM);
+		addIndex(IX_PICTUREEDITOR, "BildredaktÃ¶r (uri)", IndexType.VERBATIM);
 		addIndex(IX_EMPLOYER, "Arbets- eller uppdragsgivare (uri)", IndexType.VERBATIM);
 		addIndex(IX_MARRIEDTO, "Gift med (uri)", IndexType.VERBATIM);
 		
 
 		// media
-		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.TOLOWERCASE);
-		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED);
+		addIndex(IX_MEDIALICENSE, "Licens fÃ¶r ingÃ¥ende bild/media(uri)", IndexType.TOLOWERCASE);
+		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv fÃ¶r ingÃ¥ende bilder/media", IndexType.ANALYZED);
 
-		// övriga
+		// Ã¶vriga
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
 		addIndex(IX_GEODATAEXISTS, "Om objektet har spatial data (j/n)", IndexType.TOLOWERCASE);
 		addIndex(IX_TIMEINFOEXISTS, "Om objektet har tidsangivelse (i " + IX_FROMTIME + "/" + IX_TOTIME + ") (j/n)", IndexType.TOLOWERCASE);
-		addIndex(IX_CENTURY, "De århundraden som objektet omfattar", IndexType.ISO8601DATEYEAR);
-		addIndex(IX_DECADE, "De årtionden som objektet omfattar", IndexType.ISO8601DATEYEAR);
+		addIndex(IX_CENTURY, "De Ã¥rhundraden som objektet omfattar", IndexType.ISO8601DATEYEAR);
+		addIndex(IX_DECADE, "De Ã¥rtionden som objektet omfattar", IndexType.ISO8601DATEYEAR);
 
-		// övriga, "interna"
+		// Ã¶vriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);
 		addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
-		addIndex(I_IX_SERVICE, "tjänst", IndexType.VERBATIM, false);
+		addIndex(I_IX_SERVICE, "tjÃ¤nst", IndexType.VERBATIM, false);
 		addIndex(I_IX_HTML_URL, "html-representation, url", IndexType.VERBATIM, false);
 		addIndex(I_IX_MUSEUMDAT_URL, "museumdat-representation, url", IndexType.VERBATIM, false);
-		addIndex(I_IX_LON, "longitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
-		addIndex(I_IX_LAT, "latitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
+		addIndex(I_IX_LON, "longitud fÃ¶r centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
+		addIndex(I_IX_LAT, "latitud fÃ¶r centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
 		addIndex(I_IX_RELATIONS, "relationer", IndexType.VERBATIM, false);
 		addIndex(CONTEXT_SET_REC + "." + IX_REC_IDENTIFIER, "identifierare", IndexType.VERBATIM, false);
 		//addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
@@ -548,27 +548,27 @@ public abstract class ContentHelper {
 	public ContentHelper() {
 	}
 
-	// instansmetoder som måste implementeras i subklasser
+	// instansmetoder som mÃ¥ste implementeras i subklasser
 
 	/**
-	 * Extraherar identifierare mm ur xml-innehåll. För k-samsökstjänster ska identifieraren
-	 * vara en URI och xml-innehållet är en post med k-samsöks-xml (rdf).
+	 * Extraherar identifierare mm ur xml-innehÃ¥ll. FÃ¶r k-samsÃ¶kstjÃ¤nster ska identifieraren
+	 * vara en URI och xml-innehÃ¥llet Ã¤r en post med k-samsÃ¶ks-xml (rdf).
 	 * 
-	 * @param xmlContent xml-innehåll
-	 * @param gmlInfoHolder böna som fylls på med funna gml-geometrier mm om ej null
-	 * @return värdeböna, aldrig null
+	 * @param xmlContent xml-innehÃ¥ll
+	 * @param gmlInfoHolder bÃ¶na som fylls pÃ¥ med funna gml-geometrier mm om ej null
+	 * @return vÃ¤rdebÃ¶na, aldrig null
 	 * @throws Exception vid problem
 	 */
 	public abstract ExtractedInfo extractInfo(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
-	 * Skapar ett solr-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster
-	 * är xml-innehållet en post med k-samsöks-xml (rdf). Om metoden ger null har tjänsten
-	 * begärt att posten bara ska lagras och inte indexeras.
+	 * Skapar ett solr-dokument utifrÃ¥n det inskickade xml-innehÃ¥llet. FÃ¶r k-samsÃ¶kstjÃ¤nster
+	 * Ã¤r xml-innehÃ¥llet en post med k-samsÃ¶ks-xml (rdf). Om metoden ger null har tjÃ¤nsten
+	 * begÃ¤rt att posten bara ska lagras och inte indexeras.
 	 * 
-	 * @param service tjänst
-	 * @param xmlContent xml-innehåll
-	 * @param added datum posten först lades till i repot
+	 * @param service tjÃ¤nst
+	 * @param xmlContent xml-innehÃ¥ll
+	 * @param added datum posten fÃ¶rst lades till i repot
 	 * @return ett solr-dokument, eller null om inte posten ska indexeras
 	 * @throws Exception vid problem
 	 */
@@ -581,7 +581,7 @@ public abstract class ContentHelper {
 	 * Formaterar ett datum i svenskt standardformat med eller utan tid.
 	 * @param date datum
 	 * @param inclTime om tid ska med
-	 * @return formaterad sträng
+	 * @return formaterad strÃ¤ng
 	 */
 	public static String formatDate(Date date, boolean inclTime) {
 		final String format;
@@ -594,8 +594,8 @@ public abstract class ContentHelper {
 		return df.format(date);
 	}
 
-	// hämtar ut ett konfat index, eller dess "pappa" för prefixade index
-	// bör bara användas för att fastställa vilken typ av index det är
+	// hÃ¤mtar ut ett konfat index, eller dess "pappa" fÃ¶r prefixade index
+	// bÃ¶r bara anvÃ¤ndas fÃ¶r att faststÃ¤lla vilken typ av index det Ã¤r
 	private static IndexType getIndexType(String indexName) {
 		int underScorePos = -1;
 		if (indexName != null && (underScorePos = indexName.indexOf("_")) > 0) {
@@ -606,10 +606,10 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett analyserat index.
+	 * Ger sant om indexnamnet Ã¤r ett analyserat index.
 	 * 
 	 * @param indexName indexnamn
-	 * @return sant för analyserade indexnamn
+	 * @return sant fÃ¶r analyserade indexnamn
 	 */
 	public static boolean isAnalyzedIndex(String indexName) {
 		// analyserade index, dvs fritext
@@ -617,11 +617,11 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett verbatim-index, dvs om värdet ej ändras
-	 * utan lagras exakt och måste sökas efter exakt.
+	 * Ger sant om indexnamnet Ã¤r ett verbatim-index, dvs om vÃ¤rdet ej Ã¤ndras
+	 * utan lagras exakt och mÃ¥ste sÃ¶kas efter exakt.
 	 * 
 	 * @param indexName indexnamn
-	 * @return sant för index som är verbatim
+	 * @return sant fÃ¶r index som Ã¤r verbatim
 	 */
 	public static boolean isVerbatimIndex(String indexName) {
 		// de index som indexerats verbatim, typ identifierare, uris etc
@@ -629,11 +629,11 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett gemener-index, dvs om värdet görs
-	 * om till gemener vid indexering och sökning.
+	 * Ger sant om indexnamnet Ã¤r ett gemener-index, dvs om vÃ¤rdet gÃ¶rs
+	 * om till gemener vid indexering och sÃ¶kning.
 	 * 
 	 * @param indexName indexnamn
-	 * @return sant för index vars innehåll görs om till gemener
+	 * @return sant fÃ¶r index vars innehÃ¥ll gÃ¶rs om till gemener
 	 */
 	public static boolean isToLowerCaseIndex(String indexName) {
 		// de index som indexerats med lower case
@@ -641,12 +641,12 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett spatialt virtuellt index. Denna typ är
-	 * ett specialfall som hanteras olika beroende på indexnamn då de kan ha
-	 * olika utseende på sina parametrar skapa frågor som söker i andra index etc.
+	 * Ger sant om indexnamnet Ã¤r ett spatialt virtuellt index. Denna typ Ã¤r
+	 * ett specialfall som hanteras olika beroende pÃ¥ indexnamn dÃ¥ de kan ha
+	 * olika utseende pÃ¥ sina parametrar skapa frÃ¥gor som sÃ¶ker i andra index etc.
 	 * 
 	 * @param indexName indexnamn
-	 * @return sant för spatiala index
+	 * @return sant fÃ¶r spatiala index
 	 */
 	public static boolean isSpatialVirtualIndex(String indexName) {
 		// de index som indexerats med lower case
@@ -654,10 +654,10 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett spatialt index vars värden är rena koordinater.
+	 * Ger sant om indexnamnet Ã¤r ett spatialt index vars vÃ¤rden Ã¤r rena koordinater.
 	 * 
 	 * @param indexName indexnamn
-	 * @return sant för spatiala index
+	 * @return sant fÃ¶r spatiala index
 	 */
 	public static boolean isSpatialCoordinateIndex(String indexName) {
 		// de index som indexerats med lower case
@@ -665,22 +665,22 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett iso8601-datum-index. Denna typ är ett specialfall
-	 * då invärdet i från lokalnoderna kan vara hela datum men då enbart årtalet ska
-	 * indexeras. Dvs görs värdet om till årtal och behandlas vid indexering med algoritm
-	 * från solr:s NumberUtils så att lucene kan göra intervallsökningar även med negativa
-	 * värden. Vid sökning appliceras samma algoritm på sökvärdet som då förutsätts
-	 * vara ett årtal.
+	 * Ger sant om indexnamnet Ã¤r ett iso8601-datum-index. Denna typ Ã¤r ett specialfall
+	 * dÃ¥ invÃ¤rdet i frÃ¥n lokalnoderna kan vara hela datum men dÃ¥ enbart Ã¥rtalet ska
+	 * indexeras. Dvs gÃ¶rs vÃ¤rdet om till Ã¥rtal och behandlas vid indexering med algoritm
+	 * frÃ¥n solr:s NumberUtils sÃ¥ att lucene kan gÃ¶ra intervallsÃ¶kningar Ã¤ven med negativa
+	 * vÃ¤rden. Vid sÃ¶kning appliceras samma algoritm pÃ¥ sÃ¶kvÃ¤rdet som dÃ¥ fÃ¶rutsÃ¤tts
+	 * vara ett Ã¥rtal.
 	 * 
 	 * @param indexName indexnamn
-	 * @return sant för index vars innehåll ska vara årtal och som görs om till strängvärden
+	 * @return sant fÃ¶r index vars innehÃ¥ll ska vara Ã¥rtal och som gÃ¶rs om till strÃ¤ngvÃ¤rden
 	 */
 	public static boolean isISO8601DateYearIndex(String indexName) {
 		// de index som indexerats verbatim, typ identifierare, uris etc
 		return IndexType.ISO8601DATEYEAR == getIndexType(indexName);
 	}
 
-	// lägger till index i index-listan, används bara vid init
+	// lÃ¤gger till index i index-listan, anvÃ¤nds bara vid init
 	private static void addIndex(String indexName, String title, IndexType indexType) {
 		addIndex(indexName, title, indexType, true);
 	}
@@ -689,24 +689,24 @@ public abstract class ContentHelper {
 	}
 	
 	/**
-	 * Kollar om inskickat index existerar. Om indexet är ett "kontext-index", dvs
-	 * om det är på formen "[kontexttyp]_[indexnamn] kontrolleras endast att
-	 * indexnamn är ok då dessa index är dynamiska och inget register finns för att
+	 * Kollar om inskickat index existerar. Om indexet Ã¤r ett "kontext-index", dvs
+	 * om det Ã¤r pÃ¥ formen "[kontexttyp]_[indexnamn] kontrolleras endast att
+	 * indexnamn Ã¤r ok dÃ¥ dessa index Ã¤r dynamiska och inget register finns fÃ¶r att
 	 * kontrollera dessa.
 	 * 
 	 * @param indexName index att kontrollera
-	 * @return sant om indexet finns eller om indexet är ett kontext-index och dess
-	 * suffix är ett giltigt index
+	 * @return sant om indexet finns eller om indexet Ã¤r ett kontext-index och dess
+	 * suffix Ã¤r ett giltigt index
 	 */
 	public static boolean indexExists(String indexName) {
 		if (indexName == null) {
 			return false;
 		}
-		// testa hela namnet först
+		// testa hela namnet fÃ¶rst
 		if (indices.containsKey(indexName)) {
 			return true;
 		}
-		// sen om det (troligen) är ett kontextindex, "[contextType]_[indexName]"
+		// sen om det (troligen) Ã¤r ett kontextindex, "[contextType]_[indexName]"
 		if (indexName.indexOf("_") > 0) {
 			String[] parts = indexName.split("\\_");
 			if (parts != null && parts.length == 2) {
@@ -717,7 +717,7 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger index-instans för givet indexnamn. OBS! hanterar ej "kontext-index".
+	 * Ger index-instans fÃ¶r givet indexnamn. OBS! hanterar ej "kontext-index".
 	 * 
 	 * @param indexName indexnamn
 	 * @return index-instans, eller null
@@ -727,16 +727,16 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Hämtar lista med alla publika index.
+	 * HÃ¤mtar lista med alla publika index.
 	 * 
-	 * @return lista med publikt sökbara index.
+	 * @return lista med publikt sÃ¶kbara index.
 	 */
 	public static List<Index>getPublicIndices() {
 		return publicIndices;
 	}
 
 	/**
-	 * Enum för indextyp.
+	 * Enum fÃ¶r indextyp.
 	 */
 	public static enum IndexType { ANALYZED, VERBATIM, TOLOWERCASE, ISO8601DATEYEAR, SPATIAL_VIRTUAL, SPATIAL_COORDINATE };
 
@@ -760,7 +760,7 @@ public abstract class ContentHelper {
 		}
 
 		/**
-		 * Hämtar indexnamnet.
+		 * HÃ¤mtar indexnamnet.
 		 * 
 		 * @return indexnamn
 		 */
@@ -769,7 +769,7 @@ public abstract class ContentHelper {
 		}
 
 		/**
-		 * Hämtar beskrivande text.
+		 * HÃ¤mtar beskrivande text.
 		 * 
 		 * @return beskrivande text
 		 */
@@ -778,7 +778,7 @@ public abstract class ContentHelper {
 		}
 
 		/**
-		 * Hämtar indextyp.
+		 * HÃ¤mtar indextyp.
 		 * 
 		 * @return indextyp
 		 */
@@ -787,9 +787,9 @@ public abstract class ContentHelper {
 		}
 
 		/**
-		 * Ger sant om indexet är publikt.
+		 * Ger sant om indexet Ã¤r publikt.
 		 * 
-		 * @return sant för publika index
+		 * @return sant fÃ¶r publika index
 		 */
 		public boolean isPublic() {
 			return isPublic;
@@ -797,15 +797,15 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Initierar mappen med problemmeddelanden för denna tråd.
+	 * Initierar mappen med problemmeddelanden fÃ¶r denna trÃ¥d.
 	 */
 	public static void initProblemMessages() {
-		// linked hashmap för att behålla ordningen
+		// linked hashmap fÃ¶r att behÃ¥lla ordningen
 		problemMessages.set(new LinkedHashMap<String, Integer>());
 	}
 
 	/**
-	 * Hämtar och rensar mappen med problemmeddelanden för denna tråd.
+	 * HÃ¤mtar och rensar mappen med problemmeddelanden fÃ¶r denna trÃ¥d.
 	 * 
 	 * @return problemmeddelanden eller null
 	 */
@@ -816,7 +816,7 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Lägger till ett problemmeddelande för denna tråd/detta jobb.
+	 * LÃ¤gger till ett problemmeddelande fÃ¶r denna trÃ¥d/detta jobb.
 	 * 
 	 * @param message meddelande
 	 */
@@ -838,23 +838,23 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Formaterar körtid/deltatid på formatet hh:mm:ss.
+	 * Formaterar kÃ¶rtid/deltatid pÃ¥ formatet hh:mm:ss.
 	 * 
-	 * @param durationMillis körtid i millisekunder
-	 * @return sträng med körtid
+	 * @param durationMillis kÃ¶rtid i millisekunder
+	 * @return strÃ¤ng med kÃ¶rtid
 	 */
 	public static String formatRunTime(long durationMillis) {
 		return DurationFormatUtils.formatDuration(durationMillis, "HH:mm:ss");
 	}
 
 	/**
-	 * Beräknar ungefärlig återstående tid utifrån hur lång tid det hittills har tagit
-	 * för en delmängd. Beräkningen antar att förloppet sker med konstant hastighet.
+	 * BerÃ¤knar ungefÃ¤rlig Ã¥terstÃ¥ende tid utifrÃ¥n hur lÃ¥ng tid det hittills har tagit
+	 * fÃ¶r en delmÃ¤ngd. BerÃ¤kningen antar att fÃ¶rloppet sker med konstant hastighet.
 	 *  
-	 * @param deltaMillis tid det tog för delmängd att bli klar
-	 * @param deltaCount antal i delmängd
+	 * @param deltaMillis tid det tog fÃ¶r delmÃ¤ngd att bli klar
+	 * @param deltaCount antal i delmÃ¤ngd
 	 * @param fullCount antal totalt
-	 * @return ungefärlig återstående tid i millisekunder
+	 * @return ungefÃ¤rlig Ã¥terstÃ¥ende tid i millisekunder
 	 */
 	public static long getRemainingRunTimeMillis(long deltaMillis, int deltaCount, int fullCount) {
         long remainingTimeMillis = -1;
@@ -869,8 +869,8 @@ public abstract class ContentHelper {
 	 * Formaterar antal per sekund.
 	 * 
 	 * @param count antal
-	 * @param durationMillis körtid i millisekunder
-	 * @return sträng med antal per sekund med en nogrannhet på en decimal
+	 * @param durationMillis kÃ¶rtid i millisekunder
+	 * @return strÃ¤ng med antal per sekund med en nogrannhet pÃ¥ en decimal
 	 */
 	public static String formatSpeedPerSec(long count, long durationMillis) {
 		double perSec = getSpeedPerSec(count, durationMillis);
@@ -878,10 +878,10 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Beräknar antal per sekund.
+	 * BerÃ¤knar antal per sekund.
 	 * 
 	 * @param count antal
-	 * @param durationMillis körtid i millisekunder
+	 * @param durationMillis kÃ¶rtid i millisekunder
 	 * @return antal per sekund med 1 decimal
 	 */
 	public static double getSpeedPerSec(long count, long durationMillis) {
@@ -891,10 +891,10 @@ public abstract class ContentHelper {
 	// 
 
 	/**
-	 * Hjälpmetod som extraherar parametrar kodade mha utf-8 från query-strängen, krävs bla
-	 * för sru/cql.
-	 * @param qs querysträng
-	 * @return map med avkodade parametrar och värden
+	 * HjÃ¤lpmetod som extraherar parametrar kodade mha utf-8 frÃ¥n query-strÃ¤ngen, krÃ¤vs bla
+	 * fÃ¶r sru/cql.
+	 * @param qs querystrÃ¤ng
+	 * @return map med avkodade parametrar och vÃ¤rden
 	 * @throws Exception vid fel med avkodning eller annat
 	 */
 	public static Map<String, String> extractUTF8Params(String qs) throws Exception {
@@ -907,7 +907,7 @@ public abstract class ContentHelper {
 					if (par.length == 2) {
 						params.put(par[0], URLDecoder.decode(par[1], "UTF-8"));
 					} else {
-						// vi är snälla och tillåter = okodat i parametrar för att enklare
+						// vi Ã¤r snÃ¤lla och tillÃ¥ter = okodat i parametrar fÃ¶r att enklare
 						// kunna testa
 						StringBuffer pVal = new StringBuffer();
 						pVal.append(par[1]);

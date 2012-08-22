@@ -174,8 +174,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	protected final SolrInputDocument luceneDoc;
 
 	/**
-	 * Map som hÂller ev Âterkommande uri:er och uri-referenser fˆr att slippa
-	 * skapa dem flera gÂnger eller ha variabler
+	 * Map som h√•ller ev √•terkommande uri:er och uri-referenser f√∂r att slippa
+	 * skapa dem flera g√•nger eller ha variabler
 	 */
 	protected Map<URI, URIReference> mapper = new HashMap<URI, URIReference>();
 
@@ -192,9 +192,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	}
 
 	/**
-	 * Ger map med v‰rden nycklade pÂ uri.
+	 * Ger map med v√§rden nycklade p√• uri.
 	 * 
-	 * @return map men uri/v‰rde-par
+	 * @return map men uri/v√§rde-par
 	 */
 	protected abstract Map<String,String> getURIValues();
 
@@ -204,7 +204,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	}
 
 	/**
-	 * Skapar en URIReference fˆr aktuell graf och cachar den.
+	 * Skapar en URIReference f√∂r aktuell graf och cachar den.
 	 * @param elementFactory factory
 	 * @param uri uri
 	 * @return en URIReference
@@ -237,50 +237,50 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// klassificeringar
 		extractClassificationInformation();
 
-		// extrahera topnivÂ-relationer (objekt-objekt, ej i kontext)
+		// extrahera topniv√•-relationer (objekt-objekt, ej i kontext)
 		extractTopLevelRelations(relations);
 
-		// h‰mta ut diverse data ur en kontext-nod
-		// v‰rden frÂn kontexten indexeras dels i angivet index och dels i
+		// h√§mta ut diverse data ur en kontext-nod
+		// v√§rden fr√•n kontexten indexeras dels i angivet index och dels i
 		// ett index per kontexttyp genom att skicka in ett prefix till ip.setCurrent()
 		extractContextNodes(identifier, relations, gmlGeometries);
 
-		// l‰s in v‰rden frÂn Image-noder
+		// l√§s in v√§rden fr√•n Image-noder
 		extractImageNodes();
 
-		// l‰gg in specialindex
+		// l√§gg in specialindex
 		addSpecialIndices();
 
 		return luceneDoc;
 	}
 
 	/**
-	 * Extraherar och indexerar information som berˆr tj‰nsten posten kommer ifrÂn.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Extraherar och indexerar information som ber√∂r tj√§nsten posten kommer ifr√•n.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @throws Exception vid fel
 	 */
 	protected void extractServiceInformation() throws Exception {
 		ip.setCurrent(IX_SERVICENAME);
 		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rServiceName), ip);
-		// h‰mta ut serviceOrganization (01, fast 11 egentligen?)
+		// h√§mta ut serviceOrganization (01, fast 11 egentligen?)
 		ip.setCurrent(IX_SERVICEORGANISATION);
 		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rServiceOrganization), ip);
 	}
 
 	/**
 	 * Extraherar och indexerar specialindex, dvs "exists"-index.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @throws Exception vid fel
 	 */
 	protected void addSpecialIndices() throws Exception {
-		// l‰gg in specialindex
+		// l√§gg in specialindex
 		luceneDoc.addField(IX_GEODATAEXISTS, geoDataExists ? "j" : "n");
 		luceneDoc.addField(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n");
-		// l‰gg till specialindex fˆr om tumnagel existerar eller ej (j/n), IndexType.TOLOWERCASE
+		// l√§gg till specialindex f√∂r om tumnagel existerar eller ej (j/n), IndexType.TOLOWERCASE
 		boolean thumbnailExists = extractSingleValue(graph, s, getURIRef(elementFactory, uri_rThumbnail), null) != null;
 		luceneDoc.addField(IX_THUMBNAILEXISTS, thumbnailExists ? "j" : "n");
 
@@ -288,16 +288,16 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Extraherar, ev behandlar och indexerar indexdatum.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param identifier identifierare
-	 * @param service tj‰nst
-	 * @param added datum n‰r posten fˆrst lades till
+	 * @param service tj√§nst
+	 * @param added datum n√§r posten f√∂rst lades till
 	 * @throws Exception vid fel
 	 */
 	protected void extractAndHandleIndexDates(String identifier, HarvestService service, Date added) throws Exception {
-		// h‰mta ut createdDate (01, fast 11 egentligen? speciellt om man vill ha ut info
+		// h√§mta ut createdDate (01, fast 11 egentligen? speciellt om man vill ha ut info
 		// om nya objekt i indexet)
 		Date created = null;
 		String createdDate = extractSingleValue(graph, s, getURIRef(elementFactory, uri_rCreatedDate), null);
@@ -305,120 +305,120 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			created = TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_CREATEDDATE, createdDate, ip);
 		} else {
 			addProblemMessage("Value for '" + IX_CREATEDDATE +
-					// troligen saknas det pÂ alla sÂ identifier inte med tillsvidare
-					"' is missing"); //  fˆr " + identifier);
+					// troligen saknas det p√• alla s√• identifier inte med tillsvidare
+					"' is missing"); //  f√∂r " + identifier);
 		}
-		// lite logik fˆr att s‰tta datum dÂ posten fˆrst lades till i indexet
-		// i normala fall ‰r added != null dÂ den s‰tts n‰r poster l‰ggs till, men
-		// det kan finnas gammalt data i repot som inte har nÂt v‰rde och dÂ anv‰nder
-		// vi den gamla logiken frÂn innan databaskolumnen added fanns
+		// lite logik f√∂r att s√§tta datum d√• posten f√∂rst lades till i indexet
+		// i normala fall √§r added != null d√• den s√§tts n√§r poster l√§ggs till, men
+		// det kan finnas gammalt data i repot som inte har n√•t v√§rde och d√• anv√§nder
+		// vi den gamla logiken fr√•n innan databaskolumnen added fanns
 		Date addedToIndex = added != null ? added: calculateAddedToIndex(service.getFirstIndexDate(), created);
 		ip.setCurrent(IX_ADDEDTOINDEXDATE);
 		ip.addToDoc(formatDate(addedToIndex, false));
-		// h‰mta ut lastChangedDate (01, fast 11 egentligen?)
+		// h√§mta ut lastChangedDate (01, fast 11 egentligen?)
 		String lastChangedDate = extractSingleValue(graph, s, getURIRef(elementFactory, uri_rLastChangedDate), null);
 		if (lastChangedDate != null) {
 			TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_LASTCHANGEDDATE, lastChangedDate, ip);
 		} else {
-			// lastChanged ‰r inte lika viktig som createdDate sÂ den varnar vi inte fˆr tills vidare
-			// addProblemMessage("V‰rde fˆr '" + IX_LASTCHANGEDDATE +
-			//		"' saknas fˆr " + identifier);
+			// lastChanged √§r inte lika viktig som createdDate s√• den varnar vi inte f√∂r tills vidare
+			// addProblemMessage("V√§rde f√∂r '" + IX_LASTCHANGEDDATE +
+			//		"' saknas f√∂r " + identifier);
 		}
 	}
 
 	/**
-	 * Extraherar och indexerar information som berˆr klassificeringar.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Extraherar och indexerar information som ber√∂r klassificeringar.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @throws Exception vid fel
 	 */
 	protected void extractClassificationInformation() throws Exception {
-		// TODO: subject inte r‰tt, ‰r bara en uri-pekare nu(?)
-		// h‰mta ut subject (0m)
+		// TODO: subject inte r√§tt, √§r bara en uri-pekare nu(?)
+		// h√§mta ut subject (0m)
 		ip.setCurrent(IX_SUBJECT);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rSubject), null, ip);
-		// h‰mta ut collection (0m)
+		// h√§mta ut collection (0m)
 		ip.setCurrent(IX_COLLECTION);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rCollection), null, ip);
-		// h‰mta ut dataQuality (1)
+		// h√§mta ut dataQuality (1)
 		ip.setCurrent(IX_DATAQUALITY);
 		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rDataQuality), ip);
-		// h‰mta ut mediaType (0n)
+		// h√§mta ut mediaType (0n)
 		ip.setCurrent(IX_MEDIATYPE);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rMediaType), null, ip);
-		// h‰mta ut tema (0n)
+		// h√§mta ut tema (0n)
 		ip.setCurrent(IX_THEME);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rTheme), null, ip);
 	}
 
 	/**
-	 * Extraherar och indexerar information som berˆr "item"-index, dvs huvuddata.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Extraherar och indexerar information som ber√∂r "item"-index, dvs huvuddata.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @throws Exception vid fel
 	 */
 	protected void extractItemInformation() throws Exception {
-		// h‰mta ut itemTitle (0m)
+		// h√§mta ut itemTitle (0m)
 		ip.setCurrent(IX_ITEMTITLE);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemTitle), null, ip);
-		// h‰mta ut itemLabel (11)
+		// h√§mta ut itemLabel (11)
 		ip.setCurrent(IX_ITEMLABEL);
 		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rItemLabel), ip);
-		// h‰mta ut itemType (1)
+		// h√§mta ut itemType (1)
 		ip.setCurrent(IX_ITEMTYPE);
 		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rItemType), ip);
-		// h‰mta ut itemClass (0m)
-		ip.setCurrent(IX_ITEMCLASS, false); // slÂ inte upp uri
+		// h√§mta ut itemClass (0m)
+		ip.setCurrent(IX_ITEMCLASS, false); // sl√• inte upp uri
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemClass), null, ip);
-		// h‰mta ut itemClassName (0m)
+		// h√§mta ut itemClassName (0m)
 		ip.setCurrent(IX_ITEMCLASSNAME);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemClassName), null, ip);
-		// h‰mta ut itemName (1m)
+		// h√§mta ut itemName (1m)
 		ip.setCurrent(IX_ITEMNAME);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemName), getURIRef(elementFactory, uri_r__Name), ip);
-		// h‰mta ut itemSpecification (0m)
+		// h√§mta ut itemSpecification (0m)
 		ip.setCurrent(IX_ITEMSPECIFICATION);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemSpecification), getURIRef(elementFactory, uri_r__Spec), ip);
-		// h‰mta ut itemKeyWord (0m)
+		// h√§mta ut itemKeyWord (0m)
 		ip.setCurrent(IX_ITEMKEYWORD);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemKeyWord), null, ip);
-		// h‰mta ut itemMotiveWord (0m)
+		// h√§mta ut itemMotiveWord (0m)
 		ip.setCurrent(IX_ITEMMOTIVEWORD);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemMotiveWord), null, ip);
-		// h‰mta ut itemMaterial (0m)
+		// h√§mta ut itemMaterial (0m)
 		ip.setCurrent(IX_ITEMMATERIAL);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemMaterial), getURIRef(elementFactory, uri_rMaterial), ip);
-		// h‰mta ut itemTechnique (0m)
+		// h√§mta ut itemTechnique (0m)
 		ip.setCurrent(IX_ITEMTECHNIQUE);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemTechnique), null, ip);
-		// h‰mta ut itemStyle (0m)
+		// h√§mta ut itemStyle (0m)
 		ip.setCurrent(IX_ITEMSTYLE);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemStyle), null, ip);
-		// h‰mta ut itemColor (0m)
+		// h√§mta ut itemColor (0m)
 		ip.setCurrent(IX_ITEMCOLOR);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemColor), null, ip);
-		// h‰mta ut itemNumber (0m)
+		// h√§mta ut itemNumber (0m)
 		ip.setCurrent(IX_ITEMNUMBER);
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemNumber), getURIRef(elementFactory, uri_rNumber), ip);
-		// h‰mta ut itemDescription, resursnod (0m)
+		// h√§mta ut itemDescription, resursnod (0m)
 		ip.setCurrent(IX_ITEMDESCRIPTION); // fritext
 		extractValue(graph, s, getURIRef(elementFactory, uri_rItemDescription), getURIRef(elementFactory, uri_r__Desc), ip);
-		// h‰mta ut itemLicense (01)
+		// h√§mta ut itemLicense (01)
 		ip.setCurrent(IX_ITEMLICENSE, false); // uri, ingen uppslagning fn
 		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rItemLicense), ip);
 	}
 
 	/**
 	 * Tar bildnoder och extraherar och indexerar information ur dem.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @throws Exception vid fel
 	 */
 	protected void extractImageNodes() throws Exception {
-		// l‰s in v‰rden frÂn Image-noder
+		// l√§s in v√§rden fr√•n Image-noder
 		for (Triple triple: graph.find(s, getURIRef(elementFactory, uri_rImage), AnyObjectNode.ANY_OBJECT_NODE)) {
 			if (triple.getObject() instanceof SubjectNode) {
 				SubjectNode cS = (SubjectNode) triple.getObject();
@@ -430,8 +430,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Extraherar och indexerar information ur en bildnod.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS bildnod
 	 * @throws Exception vid fel
@@ -445,8 +445,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Tar kontextnoder och extraherar och indexerar information ur dem.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param identifier identifierare
 	 * @param relations relationslista
@@ -460,15 +460,15 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 				extractContextNodeInformation(cS, identifier, relations, gmlGeometries);
 			} else {
-				logger.warn("context borde vara en blank-nod? Ingen context-info utl‰st");
+				logger.warn("context borde vara en blank-nod? Ingen context-info utl√§st");
 			}
 		}
 	}
 
 	/**
 	 * Extraherar och indexerar information ur en kontextnod.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
 	 * @param identifier identifierare
@@ -477,7 +477,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * @throws Exception vid fel
 	 */
 	protected void extractContextNodeInformation(SubjectNode cS, String identifier, List<String> relations, List<String> gmlGeometries) throws Exception {
-		// h‰mta ut vilket kontext vi ‰r i mm
+		// h√§mta ut vilket kontext vi √§r i mm
 		String[] contextTypes = extractContextTypeAndLabelInformation(cS, identifier);
 		// place
 		extractContextPlaceInformation(cS, contextTypes, gmlGeometries);
@@ -489,8 +489,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Extraherar och indexerar typinformation ur en kontextnod.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
 	 * @param identifier identifierare
@@ -498,20 +498,20 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * @throws Exception vid fel
 	 */
 	protected String[] extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
-		// h‰mta ut vilket kontext vi ‰r i
-		// OBS! Anv‰nder inte contexttype.rdf fˆr uppslagning av denna utan l‰gger
-		// det uppslagna v‰rde i contextLabel
+		// h√§mta ut vilket kontext vi √§r i
+		// OBS! Anv√§nder inte contexttype.rdf f√∂r uppslagning av denna utan l√§gger
+		// det uppslagna v√§rde i contextLabel
 		String contextType = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContextType), null);
 		if (contextType != null) {
 			String contextLabel = lookupURIValue(contextType);
 			contextType = restIfStartsWith(contextType, context_pre);
-			// TODO: verifiera frÂn lista ist‰llet
+			// TODO: verifiera fr√•n lista ist√§llet
 			if (contextType != null) {
 				if (contextType.indexOf("#") >= 0) {
-					// bˆrjar den inte med r‰tt prefix och ‰r en uri kan vi
-					// lika g‰rna strunta i den...
+					// b√∂rjar den inte med r√§tt prefix och √§r en uri kan vi
+					// lika g√§rna strunta i den...
 					if (logger.isDebugEnabled()) {
-						logger.debug("contextType med felaktig uri fˆr " + identifier +
+						logger.debug("contextType med felaktig uri f√∂r " + identifier +
 								": " + contextType);
 					}
 					contextType = null;
@@ -533,8 +533,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Extraherar och indexerar platsinformation ur en kontextnod.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
 	 * @param contextTypes kontexttypnamn
@@ -589,7 +589,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_PARISH, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rParish), ip);
 
-		// h‰mta ut gml
+		// h√§mta ut gml
 		String gml = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCoordinates), null);
 		if (gml != null && gml.length() > 0) {
 			gmlGeometries.add(gml);
@@ -600,8 +600,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Extraherar och indexerar agentinformation ur en kontextnod.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
 	 * @param contextTypes kontexttypnamn
@@ -619,7 +619,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_FULLNAME, contextTypes);
 		String fullName = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFullName), ip);
 
-		// om vi inte har fÂtt ett fullName men har ett fˆrnamn och ett efternamn sÂ l‰gger vi in det i IX_FULLNAME
+		// om vi inte har f√•tt ett fullName men har ett f√∂rnamn och ett efternamn s√• l√§gger vi in det i IX_FULLNAME
 		if (fullName == null && firstName != null && lastName != null) {
 			ip.setCurrent(IX_FULLNAME, contextTypes);
 			ip.addToDoc(firstName + " " + lastName);
@@ -628,7 +628,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_NAME, contextTypes);
 		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rName), ip);
 
-		// TODO: bara vissa v‰rden? http://xmlns.com/foaf/spec/#term_gender:
+		// TODO: bara vissa v√§rden? http://xmlns.com/foaf/spec/#term_gender:
 		// "In most cases the value will be the string 'female' or 'male' (in
 		//  lowercase without surrounding quotes or spaces)."
 		ip.setCurrent(IX_GENDER, contextTypes);
@@ -649,8 +649,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Extraherar och indexerar tidsinformation ur en kontextnod.
-	 * Hanterar de index som g‰llde fˆr protokollversioner till och med 1.0, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§llde f√∂r protokollversioner till och med 1.0, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
 	 * @param contextTypes kontexttypnamn
@@ -665,7 +665,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_TOTIME, contextTypes);
 		String toTime = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rToTime), ip);
 
-		// hantera ? i tidsf‰lten
+		// hantera ? i tidsf√§lten
 		if (fromTime != null && fromTime.startsWith("?")) {
 			fromTime = null;
 		}
@@ -677,7 +677,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			timeInfoExists = true;
 		}
 
-		// hantera Ârtionden och Ârhundraden
+		// hantera √•rtionden och √•rhundraden
 		TimeUtil.expandDecadeAndCentury(fromTime, toTime, contextTypes, ip);
 
 		ip.setCurrent(IX_FROMPERIODNAME, contextTypes);
@@ -703,19 +703,19 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	}
 
 	/**
-	 * Ger map med giltiga toppnivÂrelationer nycklat pÂ indexnamn.
+	 * Ger map med giltiga toppniv√•relationer nycklat p√• indexnamn.
 	 * 
-	 * ÷verlagra i subklasser vid behov.
-	 * @return map med toppnivÂrelationer
+	 * √ñverlagra i subklasser vid behov.
+	 * @return map med toppniv√•relationer
 	 */
 	protected abstract Map<String, URI> getTopLevelRelationsMap();
 
 	/**
-	 * Extraherar och indexerar toppnivÂrelationer som h‰mtas via
+	 * Extraherar och indexerar toppniv√•relationer som h√§mtas via
 	 * {@linkplain #getTopLevelRelationsMap()}.
-	 * ÷verlagra i subklasser vid behov.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
-	 * @param relations lista med relationer fˆr specialrelationsindexet
+	 * @param relations lista med relationer f√∂r specialrelationsindexet
 	 * @throws Exception vid fel
 	 */
 	protected void extractTopLevelRelations(List<String> relations) throws Exception {
@@ -724,10 +724,10 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	}
 
 	/**
-	 * Extraherar och indexerar relationer frÂn mappen frÂn inskickad nod.  
-	 * ÷verlagra i subklasser vid behov.
+	 * Extraherar och indexerar relationer fr√•n mappen fr√•n inskickad nod.  
+	 * √ñverlagra i subklasser vid behov.
 	 * 
-	 * @param relations lista med relationer fˆr specialrelationsindexet
+	 * @param relations lista med relationer f√∂r specialrelationsindexet
 	 * @throws Exception vid fel
 	 */
 	protected void extractRelationsFromNode(SubjectNode subjectNode,
@@ -746,55 +746,55 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 
 	/**
-	 * Ber‰knar n‰r posten fˆrst lades till indexet, anv‰nds fˆr att fÂ fram listningar
-	 * pÂ nya objekt i indexet. H‰nsyn tas till n‰r tj‰nsten fˆrst indexerades och n‰r
-	 * posten skapades fˆr att fÂ fram ett nÂgorlunda bra datum, se kommentar nedan.
-	 * Ber‰knas i praktiken som max(firstIndexed, recordCreated).
+	 * Ber√§knar n√§r posten f√∂rst lades till indexet, anv√§nds f√∂r att f√• fram listningar
+	 * p√• nya objekt i indexet. H√§nsyn tas till n√§r tj√§nsten f√∂rst indexerades och n√§r
+	 * posten skapades f√∂r att f√• fram ett n√•gorlunda bra datum, se kommentar nedan.
+	 * Ber√§knas i praktiken som max(firstIndexed, recordCreated).
 	 * 
-	 * @param firstIndexed n‰r tj‰nsten fˆrst indexerades i k-samsˆk, om k‰nt
-	 * @param recordCreated n‰r tj‰nsten s‰ger att posten skapades
-	 * @return ber‰knat datum fˆr n‰r posten fˆrst indexerades i k-samsˆk
+	 * @param firstIndexed n√§r tj√§nsten f√∂rst indexerades i k-sams√∂k, om k√§nt
+	 * @param recordCreated n√§r tj√§nsten s√§ger att posten skapades
+	 * @return ber√§knat datum f√∂r n√§r posten f√∂rst indexerades i k-sams√∂k
 	 */
 	static Date calculateAddedToIndex(Date firstIndexed, Date recordCreated) {
 		Date addedToIndex = null;
 		if (firstIndexed != null) {
-			// tj‰nsten har redan indexerats (minst) en gÂng
+			// tj√§nsten har redan indexerats (minst) en g√•ng
 			if (recordCreated != null) {
 				if (recordCreated.after(firstIndexed)) {
-					// nytt objekt i redan indexerad tj‰nst
-					// OBS:  detta datum ‰r inte riktigt 100% sant egentligen utan det
-					//       beror ocksÂ pÂ med vilken frekvens tj‰nsten skˆrdas, tex
-					//       om tj‰nsten skˆrdas var tredje dag sÂ kan det skilja pÂ
-					//       tvÂ dagar n‰r objektet egentligen fˆrst dˆk upp i indexet
-					//       och vilket v‰rde som anv‰nds, sÂ fn fÂr det ses som en uppskattning
+					// nytt objekt i redan indexerad tj√§nst
+					// OBS:  detta datum √§r inte riktigt 100% sant egentligen utan det
+					//       beror ocks√• p√• med vilken frekvens tj√§nsten sk√∂rdas, tex
+					//       om tj√§nsten sk√∂rdas var tredje dag s√• kan det skilja p√•
+					//       tv√• dagar n√§r objektet egentligen f√∂rst d√∂k upp i indexet
+					//       och vilket v√§rde som anv√§nds, s√• fn f√•r det ses som en uppskattning
 					addedToIndex = recordCreated;
 				} else {
-					// "gammalt" objekt i redan indexerad tj‰nst
+					// "gammalt" objekt i redan indexerad tj√§nst
 					addedToIndex = firstIndexed;
 				}
 			} else {
-				// objekt med ok‰nt skapad-datum i redan indexerad tj‰nst
-				// TODO: s‰tta "nu" ist‰llet eller ‰r detta ok? kan vara nytt, kan vara
-				//       gammalt men dÂ vi inte vet kanske det ska fÂ vara gammalt?
+				// objekt med ok√§nt skapad-datum i redan indexerad tj√§nst
+				// TODO: s√§tta "nu" ist√§llet eller √§r detta ok? kan vara nytt, kan vara
+				//       gammalt men d√• vi inte vet kanske det ska f√• vara gammalt?
 				addedToIndex = firstIndexed;
 			}
 		} else {
-			// ny tj‰nst -> nytt objekt
-			// TODO: kanske alltid ska ha samma v‰rde? kan gÂ ˆver dygngr‰ns
-			//       egentligen vill man alltid ha datumet dÂ indexeringen lyckades (= gick
-			//       klart ok) men det vet man ju aldrig h‰r (varken om eller n‰r)...
+			// ny tj√§nst -> nytt objekt
+			// TODO: kanske alltid ska ha samma v√§rde? kan g√• √∂ver dygngr√§ns
+			//       egentligen vill man alltid ha datumet d√• indexeringen lyckades (= gick
+			//       klart ok) men det vet man ju aldrig h√§r (varken om eller n√§r)...
 			addedToIndex = new Date();
 		}
 		return addedToIndex;
 	}
 
-	// hj‰lpmetod som tar ut suffixet ur str‰ngen om den startar med inskickad startstr‰ng
+	// hj√§lpmetod som tar ut suffixet ur str√§ngen om den startar med inskickad startstr√§ng
 	static String restIfStartsWith(String str, String start) {
 		return restIfStartsWith(str, start, false);
 	}
 
-	// hj‰lpmetod som tar ut suffixet ur str‰ngen om den startar med inskickad startstr‰ng
-	// och fˆrsˆker tolka v‰rdet som ett heltal om asNumber ‰r sant
+	// hj√§lpmetod som tar ut suffixet ur str√§ngen om den startar med inskickad startstr√§ng
+	// och f√∂rs√∂ker tolka v√§rdet som ett heltal om asNumber √§r sant
 	static String restIfStartsWith(String str, String start, boolean asNumber) {
 		String value = null;
 		if (str.startsWith(start)) {
@@ -811,7 +811,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	}
 
 	/**
-	 * NOTE: Apache 2.0 licens, sÂ kopiering ‰r ok.
+	 * NOTE: Apache 2.0 licens, s√• kopiering √§r ok.
 	 * 
 	 * Returns a Log4J logger configured as the calling class. This ensures copy-paste safe code to get a logger instance,
 	 * an ensures the logger is always fetched in a consistent manner. <br>

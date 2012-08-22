@@ -19,7 +19,7 @@
   <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
   <xs:import namespace="http://xmlns.com/foaf/0.1/#" schemaLocation="foaf.xsd"/>
   
-  <!-- obs: maxOccurs="1" minOccurs="1" är defaultvärden -->
+  <!-- obs: maxOccurs="1" minOccurs="1" Ã¤r defaultvÃ¤rden -->
   <!-- Entitys struktur --> 
   <xs:element name="Entity">
     <xs:complexType>
@@ -252,7 +252,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="contextLabel" type="xs:string"/> 
-  <!-- Möjligt att datum-elementen nedan inte borde vara strängar utan validers -->
+  <!-- MÃ¶jligt att datum-elementen nedan inte borde vara strÃ¤ngar utan validers -->
   <xs:element name="fromTime" type="xs:string"/> 
   <xs:element name="toTime" type="xs:string"/> 
   <xs:element name="fromPeriodName" type="xs:string"/> 
@@ -395,7 +395,7 @@
   
   <xs:element name="type" type="xs:string"/>
   
-  <!-- Används där man vill ha datum med YYYY-MM-DD -->
+  <!-- AnvÃ¤nds dÃ¤r man vill ha datum med YYYY-MM-DD -->
   <xs:simpleType name="ISO8601Date">
     <xs:restriction base="xs:token">
         <xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>

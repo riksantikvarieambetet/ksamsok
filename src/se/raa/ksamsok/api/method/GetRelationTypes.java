@@ -20,21 +20,21 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	/** Metodnamn */
 	public static final String METHOD_NAME = "getRelationTypes";
 
-	/** Parameternamn fˆr relationstyp */
+	/** Parameternamn f√∂r relationstyp */
 	public static final String RELATION_PARAMETER = "relation";
-	/** Parameterv‰rde fˆr att ange alla relationstyper */
+	/** Parameterv√§rde f√∂r att ange alla relationstyper */
 	public static final String RELATION_ALL = "all";
 
 	private Map<String, String> relationTypes = Collections.emptyMap();
 
 	// datavariabler
 	private String relation;
-	// hj‰lpvariabler
+	// hj√§lpvariabler
 	private boolean isAll;
 
 	/**
 	 * Skapa ny instans.
-	 * @param serviceProvider tj‰nstetillhandahÂllare
+	 * @param serviceProvider tj√§nstetillhandah√•llare
 	 * @param writer writer
 	 * @param params parametrar
 	 */
@@ -48,7 +48,7 @@ public class GetRelationTypes extends AbstractAPIMethod {
 		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null, false);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !GetRelations.relationXlate.containsKey(relation)) {
-			throw new BadParameterException("V‰rdet fˆr parametern " + RELATION_PARAMETER + " ‰r ogiltigt",
+			throw new BadParameterException("V√§rdet f√∂r parametern " + RELATION_PARAMETER + " √§r ogiltigt",
 					"GetRelations.extractParameters", null, false);
 		}
 	}
@@ -75,11 +75,11 @@ public class GetRelationTypes extends AbstractAPIMethod {
 			} else {
 				index = ContentHelper.getIndex(rel.getValue());
 				if (index != null) {
-					// TODO: h‰mta r‰tt str‰ng, antingen som ovan n‰r/om det blir
-					//       index av inverserna eller pÂ annat s‰tt
-					indexTitle = "ƒr/var " + StringUtils.lowerCase(index.getTitle()) + " fˆr";
+					// TODO: h√§mta r√§tt str√§ng, antingen som ovan n√§r/om det blir
+					//       index av inverserna eller p√• annat s√§tt
+					indexTitle = "√Ñr/var " + StringUtils.lowerCase(index.getTitle()) + " f√∂r";
 				} else {
-					// ska inte h‰nda
+					// ska inte h√§nda
 					indexTitle = rel.getKey();
 				}
 			}

@@ -1,5 +1,5 @@
--- enkelt repository för k-samsök i pg
--- kan läggas i eget schema eller i public
+-- enkelt repository fÃ¶r k-samsÃ¶k i pg
+-- kan lÃ¤ggas i eget schema eller i public
 
 CREATE TABLE apikeys (
 apikey varchar PRIMARY KEY not null,
@@ -52,7 +52,7 @@ beskrivning varchar,
 FOREIGN KEY (kortnamn) REFERENCES organisation(kortnamn));
 
 
--- oklart om denna används fn?
+-- oklart om denna anvÃ¤nds fn?
 CREATE TABLE relations (
 relid int8,
 object1 varchar,
@@ -77,8 +77,8 @@ eventts timestamp,
 message varchar,
 eventid bigserial unique);
 
--- dessa index är i princip kopierade från oracle-scriptet och det är möjligt att de ska
--- se lite annorlunda ut i pg, fler/färre etc 
+-- dessa index Ã¤r i princip kopierade frÃ¥n oracle-scriptet och det Ã¤r mÃ¶jligt att de ska
+-- se lite annorlunda ut i pg, fler/fÃ¤rre etc 
 create index ix_content_serv_oai on content (serviceId, oaiURI);
 create index ix_content_serv on content (serviceId);
 create index ix_content_oai on content (oaiURI);
@@ -110,12 +110,12 @@ create index ix_geometries_serv on geometries (serviceId);
 -- spatialt index
 CREATE INDEX IX_GEOMETRIES_GEOMETRY ON GEOMETRIES using GIST (GEOMETRY);
 
--- skapa motsvarande vy för geoserver (måste heta samma som feature type i geoservers conf)
--- notera att man skulle kunna gå direkt mot tabellen geometries men iom att vi gör
--- en vy skulle man kunna stoppa in fler värden som hämtas/genereras utifrån annat
+-- skapa motsvarande vy fÃ¶r geoserver (mÃ¥ste heta samma som feature type i geoservers conf)
+-- notera att man skulle kunna gÃ¥ direkt mot tabellen geometries men iom att vi gÃ¶r
+-- en vy skulle man kunna stoppa in fler vÃ¤rden som hÃ¤mtas/genereras utifrÃ¥n annat
 -- data, exempelvis gtype mm
--- notera att geoserver är skiflägeskänslig
+-- notera att geoserver Ã¤r skiflÃ¤geskÃ¤nslig
 create or replace view KSAMSOK_WMS as select * from geometries;
 
--- möjligt att man måste lägga in vyns geometrikolumn manuellt i geometry_columns men det verkar inte behövas, se:
+-- mÃ¶jligt att man mÃ¥ste lÃ¤gga in vyns geometrikolumn manuellt i geometry_columns men det verkar inte behÃ¶vas, se:
 -- http://postgis.refractions.net/documentation/manual-1.5/ch04.html#Manual_Register_Spatial_Column

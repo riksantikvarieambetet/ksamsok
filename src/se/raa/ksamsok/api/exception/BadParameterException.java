@@ -1,7 +1,7 @@
 package se.raa.ksamsok.api.exception;
 
 /**
- * Kastas om en parameter är felaktig eller leder till fel
+ * Kastas om en parameter Ã¤r felaktig eller leder till fel
  * @author Henrik Hjalmarsson
  */
 public class BadParameterException extends APIException

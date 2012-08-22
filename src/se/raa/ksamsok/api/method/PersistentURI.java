@@ -3,15 +3,15 @@ package se.raa.ksamsok.api.method;
 import java.io.PrintWriter;
 
 /**
- * hämtar persistent URI från given URL
+ * hÃ¤mtar persistent URI frÃ¥n given URL
  * @author Henrik Hjalmarsson
  */
 @SuppressWarnings("unused")
 public class PersistentURI implements APIMethod 
 {
-	/** namn på metoden */
+	/** namn pÃ¥ metoden */
 	public static final String METHOD_NAME = "persistentURI";
-	/** parameter för url */
+	/** parameter fÃ¶r url */
 	public static final String URI_PARAMETER = "url";
 	
 	private PrintWriter writer;

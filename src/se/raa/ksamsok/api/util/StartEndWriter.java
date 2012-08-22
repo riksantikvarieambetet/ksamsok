@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import se.raa.ksamsok.api.method.APIMethod;
 
 /**
- * Klass för att hålla koll på och skriva ut huvuddel av XML svar
+ * Klass fÃ¶r att hÃ¥lla koll pÃ¥ och skriva ut huvuddel av XML svar
  * och fot av XML fil
  * @author Henrik Hjalmarsson
  */
@@ -33,7 +33,7 @@ public class StartEndWriter {
 	}
 	
 	/**
-	 * skriver ut error om sådant uppstår
+	 * skriver ut error om sÃ¥dant uppstÃ¥r
 	 * @param writer
 	 * @param e
 	 */

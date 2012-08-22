@@ -6,67 +6,67 @@
 
 	<ContextType rdf:ID="design">
 		<contextLabel>Designa</contextLabel>
-		<description>Skapa förutsättningar för att något ska bli till, t.ex. formge eller skissa.</description>
+		<description>Skapa fÃ¶rutsÃ¤ttningar fÃ¶r att nÃ¥got ska bli till, t.ex. formge eller skissa.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="produce">
 		<contextLabel>Producera</contextLabel>
-		<description>Producera ett fysiskt ting, t.ex. fotografera eller måla.</description>
+		<description>Producera ett fysiskt ting, t.ex. fotografera eller mÃ¥la.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="start">
 		<contextLabel>Starta</contextLabel>
-		<description>Anger när ett Event startar (t.ex. Andra världkriget) eller när en Agent(t.ex. person eller organisation) föds eller grundas.</description>
+		<description>Anger nÃ¤r ett Event startar (t.ex. Andra vÃ¤rldkriget) eller nÃ¤r en Agent(t.ex. person eller organisation) fÃ¶ds eller grundas.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="find">
 		<contextLabel>Hitta</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har påträffats.</description>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har pÃ¥trÃ¤ffats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="transact">
-		<contextLabel>Överföra</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har förflyttats, t.ex. ge/skänka, förvärva, eller röva (krigsbyte).</description>
+		<contextLabel>ÃverfÃ¶ra</contextLabel>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har fÃ¶rflyttats, t.ex. ge/skÃ¤nka, fÃ¶rvÃ¤rva, eller rÃ¶va (krigsbyte).</description>
 	</ContextType>
 
 	<ContextType rdf:ID="explore">
-		<contextLabel>Undersöka och beforska</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har t.ex. inventerats, grävts ut eller konserverats.</description>
+		<contextLabel>UndersÃ¶ka och beforska</contextLabel>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har t.ex. inventerats, grÃ¤vts ut eller konserverats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="own">
-		<contextLabel>Äga</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har t.ex. ägts eller förvaltats.</description>
+		<contextLabel>Ãga</contextLabel>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har t.ex. Ã¤gts eller fÃ¶rvaltats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="use">
-		<contextLabel>Använda</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har t.ex. brukats eller nyttjats.</description>
+		<contextLabel>AnvÃ¤nda</contextLabel>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har t.ex. brukats eller nyttjats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="reproduce">
 		<contextLabel>Reproducera</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har t.ex. avbildats eller reprofotograferats.</description>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har t.ex. avbildats eller reprofotograferats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="display">
 		<contextLabel>Visa</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har t.ex. visats upp eller vid en utställning (Event) ställts ut.</description>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har t.ex. visats upp eller vid en utstÃ¤llning (Event) stÃ¤llts ut.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="act">
 		<contextLabel>Verka</contextLabel>
-		<description>Anger var, när och med vem en Agent (t.ex. person eller organisation) har t.ex. regerat, varit gift eller haft ett uppdrag.</description>
+		<description>Anger var, nÃ¤r och med vem en Agent (t.ex. person eller organisation) har t.ex. regerat, varit gift eller haft ett uppdrag.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="dismiss">
-		<contextLabel>Avföra</contextLabel>
-		<description>Anger var, när och av vem ett fysiskt ting har t.ex. förstörts, gallrats eller kasserats.</description>
+		<contextLabel>AvfÃ¶ra</contextLabel>
+		<description>Anger var, nÃ¤r och av vem ett fysiskt ting har t.ex. fÃ¶rstÃ¶rts, gallrats eller kasserats.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="stop">
 		<contextLabel>Avsluta</contextLabel>
-		<description>Anger var, när och med vem ett Event avslutas, Agenter (person) dör eller (organisationer) läggs ner.</description>
+		<description>Anger var, nÃ¤r och med vem ett Event avslutas, Agenter (person) dÃ¶r eller (organisationer) lÃ¤ggs ner.</description>
 	</ContextType>
 
 </rdf:RDF>

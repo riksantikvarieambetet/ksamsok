@@ -8,30 +8,30 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 /**
- * Hjälpmetoder och konstanter för databasoperationer.
+ * HjÃ¤lpmetoder och konstanter fÃ¶r databasoperationer.
  */
 public class DBUtil {
 
 	private static final Logger logger = Logger.getLogger(DBUtil.class);
-	// stödda databastyper (nödvändigt då det är olika syntax för rownum/limit/offet etc)
+	// stÃ¶dda databastyper (nÃ¶dvÃ¤ndigt dÃ¥ det Ã¤r olika syntax fÃ¶r rownum/limit/offet etc)
 	private static enum DBType  { DERBY, ORACLE, POSTGRES };
-	// instans för att komma ihåg vilken databastyp det var
+	// instans fÃ¶r att komma ihÃ¥g vilken databastyp det var
 	private static volatile DBType dbType = null;
 
-	/** Konstant för normalt värde för status på poster */
+	/** Konstant fÃ¶r normalt vÃ¤rde fÃ¶r status pÃ¥ poster */
 	public static final int STATUS_NORMAL = 0;
-	/** Konstant för att flagga att en post håller på att behandlas */
+	/** Konstant fÃ¶r att flagga att en post hÃ¥ller pÃ¥ att behandlas */
 	public static final int STATUS_PENDING = 1;
 
-	/** Fetchsize att använda på statements om man inte använder begränsande sql (limit/rownum etc)
-	 * Se även {@linkplain #fetchFirst(Connection, String, int)} för annat alternativ.
-	 * Oracle verkar ha ett default-värde (via row prefetching) på 10, för diskusion om detta se
+	/** Fetchsize att anvÃ¤nda pÃ¥ statements om man inte anvÃ¤nder begrÃ¤nsande sql (limit/rownum etc)
+	 * Se Ã¤ven {@linkplain #fetchFirst(Connection, String, int)} fÃ¶r annat alternativ.
+	 * Oracle verkar ha ett default-vÃ¤rde (via row prefetching) pÃ¥ 10, fÃ¶r diskusion om detta se
 	 * http://download.oracle.com/docs/cd/B10501_01/java.920/a96654/oraperf.htm#1002425
 	 */
 	public static final int FETCH_SIZE = 100;
 
 	/**
-	 * Hjälpmetod som stänger databasresurser.
+	 * HjÃ¤lpmetod som stÃ¤nger databasresurser.
 	 * 
 	 * @param rs resultset eller null
 	 * @param st statement eller null
@@ -56,7 +56,7 @@ public class DBUtil {
 	}
 
 	/**
-	 * Hjälpmetod som gör commit om c != null och ej i autocommit-läge.
+	 * HjÃ¤lpmetod som gÃ¶r commit om c != null och ej i autocommit-lÃ¤ge.
 	 * 
 	 * @param c connection
 	 * @throws SQLException
@@ -68,7 +68,7 @@ public class DBUtil {
 	}
 
 	/**
-	 * Hjälpmetod som gör rollback om c != null och ej i autocommit-läge.
+	 * HjÃ¤lpmetod som gÃ¶r rollback om c != null och ej i autocommit-lÃ¤ge.
 	 * 
 	 * @param c connection
 	 */
@@ -83,11 +83,11 @@ public class DBUtil {
 	}
 
 	/**
-	 * Ger sql för att hämta de första fetchNum raderna av inskickad sql för den
-	 * databastyp som uppkopplingen stödjer.
+	 * Ger sql fÃ¶r att hÃ¤mta de fÃ¶rsta fetchNum raderna av inskickad sql fÃ¶r den
+	 * databastyp som uppkopplingen stÃ¶djer.
 	 * @param c databasuppkoppling
 	 * @param sql sql
-	 * @param fetchNum antal rader att hämta
+	 * @param fetchNum antal rader att hÃ¤mta
 	 * @return sql anpassad till aktuell databas
 	 */
 	public static String fetchFirst(Connection c, String sql, int fetchNum) {
@@ -105,10 +105,10 @@ public class DBUtil {
 	}
 
 	/**
-	 * Ger en sträng som kan användas för att få en geometrikolumn översatt till gml (v2).
+	 * Ger en strÃ¤ng som kan anvÃ¤ndas fÃ¶r att fÃ¥ en geometrikolumn Ã¶versatt till gml (v2).
 	 * @param c connection
 	 * @param columnName geometrins kolumnnamn
-	 * @return sträng med funktionsanrop anpassat till aktuell databas
+	 * @return strÃ¤ng med funktionsanrop anpassat till aktuell databas
 	 */
 	public static String toGMLCall(Connection c, String columnName) {
 		switch (determineDBType(c)) {
@@ -126,8 +126,8 @@ public class DBUtil {
 		}
 	}
 
-	// avgör och cachar upp databastyp för uppkopplingen, kastar runtime exception
-	// om databastypen inte gick att avgöra eller om den inte stöds
+	// avgÃ¶r och cachar upp databastyp fÃ¶r uppkopplingen, kastar runtime exception
+	// om databastypen inte gick att avgÃ¶ra eller om den inte stÃ¶ds
 	private static DBType determineDBType(Connection c) {
 		if (dbType == null) {
 			try {

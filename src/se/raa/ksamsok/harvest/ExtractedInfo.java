@@ -1,7 +1,7 @@
 package se.raa.ksamsok.harvest;
 
 /**
- * Värdeböna som innehåller information extraherad från rdf.
+ * VÃ¤rdebÃ¶na som innehÃ¥ller information extraherad frÃ¥n rdf.
  */
 public class ExtractedInfo {
 
@@ -18,7 +18,7 @@ public class ExtractedInfo {
 		return identifier;
 	}
 	/**
-	 * Sätter identifierare
+	 * SÃ¤tter identifierare
 	 * @param identifier identifierare
 	 */
 	public void setIdentifier(String identifier) {
@@ -32,7 +32,7 @@ public class ExtractedInfo {
 		return nativeURL;
 	}
 	/**
-	 * Sätter html-url.
+	 * SÃ¤tter html-url.
 	 * @param nativeURL html-url
 	 */
 	public void setNativeURL(String nativeURL) {

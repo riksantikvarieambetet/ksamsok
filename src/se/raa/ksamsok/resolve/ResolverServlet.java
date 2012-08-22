@@ -27,14 +27,14 @@ import se.raa.ksamsok.solr.SearchService;
 import se.raa.ksamsok.util.ShmSiteCacherHackTicket3419;
 
 /**
- * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect 
- * till respektive tjänst beroende på format eller levererar lagrad rdf eller xml. 
+ * Enkel servlet som sÃ¶ker i lucene mha pathInfo som en identifierare och gÃ¶r redirect 
+ * till respektive tjÃ¤nst beroende pÃ¥ format eller levererar lagrad rdf eller xml. 
  */
 public class ResolverServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ResolverServlet.class);
-	// urlar att redirecta till får inte starta med detta (gemener)
+	// urlar att redirecta till fÃ¥r inte starta med detta (gemener)
 	private static final String badURLPrefix = "http://kulturarvsdata.se/";
 
 	@Autowired
@@ -43,15 +43,15 @@ public class ResolverServlet extends HttpServlet {
 	HarvestRepositoryManager hrm;
 
 	/**
-	 * Enum för de olika formaten som stöds.
+	 * Enum fÃ¶r de olika formaten som stÃ¶ds.
 	 */
 	private enum Format {
 		RDF, HTML, MUSEUMDAT, XML;
 
 		/**
-		 * Parsar en sträng med formatet och ger motsvarande konstant.
+		 * Parsar en strÃ¤ng med formatet och ger motsvarande konstant.
 		 * 
-		 * @param formatString formatsträng
+		 * @param formatString formatstrÃ¤ng
 		 * @return formatkonstant eller null
 		 */
 		static Format parseFormat(String formatString) {
@@ -78,8 +78,8 @@ public class ResolverServlet extends HttpServlet {
 	}
 
 	/**
-	 * Försöker kontrollera om requesten är något resolverservleten ska hantera. Om det inte
-	 * är det skickas requesten vidare mha request dispatchers.
+	 * FÃ¶rsÃ¶ker kontrollera om requesten Ã¤r nÃ¥got resolverservleten ska hantera. Om det inte
+	 * Ã¤r det skickas requesten vidare mha request dispatchers.
 	 * 
 	 * @param req request
 	 * @param resp response
@@ -90,7 +90,7 @@ public class ResolverServlet extends HttpServlet {
 	protected String[] checkAndForwardRequests(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
 		String path = req.getPathInfo();
-		// special då resolverservlet "käkar" upp default-sidehanteringen
+		// special dÃ¥ resolverservlet "kÃ¤kar" upp default-sidehanteringen
 		if ("/admin/".equals(path) || "/".equals(path)) {
 			resp.sendRedirect("index.jsp");
 			return null;
@@ -113,7 +113,7 @@ public class ResolverServlet extends HttpServlet {
 	}
 
 	/**
-	 * Försöker göra forward på ej hanterad request genom att hitta en passande request
+	 * FÃ¶rsÃ¶ker gÃ¶ra forward pÃ¥ ej hanterad request genom att hitta en passande request
 	 * dispatcher.
 	 * 
 	 * @param req request
@@ -124,7 +124,7 @@ public class ResolverServlet extends HttpServlet {
 	protected void forwardRequest(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
 		RequestDispatcher rd;
-		// TODO: dessa dispatchers fungerar för tomcat, fungerar de för övriga?
+		// TODO: dessa dispatchers fungerar fÃ¶r tomcat, fungerar de fÃ¶r Ã¶vriga?
 		String name = "default";
 		if (req.getRequestURI().endsWith(".jsp")) {
 			name = "jsp";
@@ -143,7 +143,7 @@ public class ResolverServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// ge möjlighet att rensa cache manuellt vid behov
+		// ge mÃ¶jlighet att rensa cache manuellt vid behov
 		ShmSiteCacherHackTicket3419.clearCache(req.getParameter(ShmSiteCacherHackTicket3419.CLEAR_CACHE));
 		String[] pathComponents = checkAndForwardRequests(req, resp);
 		if (pathComponents == null) {
@@ -175,7 +175,7 @@ public class ResolverServlet extends HttpServlet {
 			SolrQuery q = new SolrQuery();
 			q.setQuery(ContentHelper.IX_ITEMID + ":" + ClientUtils.escapeQueryChars(urli));
 			q.setRows(1);
-			// hämta bara nödvändigt fält
+			// hÃ¤mta bara nÃ¶dvÃ¤ndigt fÃ¤lt
 			switch (format) {
 			case RDF:
 				q.setFields(ContentHelper.I_IX_RDF);
@@ -199,9 +199,9 @@ public class ResolverServlet extends HttpServlet {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Could not find record for q: " + q);
 				}
-				// specialfall för att hantera itemForIndexing=n, bara för rdf
+				// specialfall fÃ¶r att hantera itemForIndexing=n, bara fÃ¶r rdf
 				// vid detta fall ligger rdf:en bara i databasen och inte i lucene
-				// men det är ett undantagsfall så vi provar alltid lucene först
+				// men det Ã¤r ett undantagsfall sÃ¥ vi provar alltid lucene fÃ¶rst
 				if (format == Format.RDF) {
 					content = hrm.getXMLData(urli);
 					if (content != null) {
@@ -220,14 +220,14 @@ public class ResolverServlet extends HttpServlet {
 			switch (format) {
 			case RDF:
 				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-				// hämta ev från hack-cachen
+				// hÃ¤mta ev frÃ¥n hack-cachen
 				if (ShmSiteCacherHackTicket3419.useCache(req.getParameter(ShmSiteCacherHackTicket3419.KRINGLA), urli)) {
 					content = ShmSiteCacherHackTicket3419.getOrRecache(urli, xmlContent);
 				} else {
 					if (xmlContent != null) {
 						content = new String(xmlContent, "UTF-8");
 					}
-					// TODO: NEK ta bort när allt är omindexerat
+					// TODO: NEK ta bort nÃ¤r allt Ã¤r omindexerat
 					if (content == null) {
 						content = hrm.getXMLData(urli);
 					}
@@ -286,7 +286,7 @@ public class ResolverServlet extends HttpServlet {
 				if (urle != null) {
 					if (urle.toLowerCase().startsWith(badURLPrefix)) {
 						logger.warn("Museumdat link is wrong, points to " + badURLPrefix +
-								" för " + urli + ": " + urle);
+								" fÃ¶r " + urli + ": " + urle);
 						resp.sendError(404, "Invalid museumdat url to pass on to");
 					} else {
 						resp.sendRedirect(urle);

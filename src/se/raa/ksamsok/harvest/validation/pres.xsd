@@ -13,8 +13,8 @@
 	xmlns:foaf="http://xmlns.com/foaf/0.1/#">
   
   	<!--
-  	Presentationsdelen som används av utvecklarna. 
-  	En delmängd av ksamsok:Entity(?)
+  	Presentationsdelen som anvÃ¤nds av utvecklarna. 
+  	En delmÃ¤ngd av ksamsok:Entity(?)
   	 -->
   
   <xs:import namespace="http://kulturarvsdata.se/ksamsok#" schemaLocation="ksamsok.xsd"/>

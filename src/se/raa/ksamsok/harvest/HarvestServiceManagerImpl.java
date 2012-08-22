@@ -36,13 +36,13 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	private static final String JOBGROUP_HARVESTERS = "harvesters";
 	private static final String TRIGGER_SUFFIX = "-trigger";
-	private static final String OPTIMIZE_TYPE = "_LUCENE_OPTIMIZE"; // TODO: ligger i db så kan inte bara ändras till solr
+	private static final String OPTIMIZE_TYPE = "_LUCENE_OPTIMIZE"; // TODO: ligger i db sÃ¥ kan inte bara Ã¤ndras till solr
 
-	// hur ofta init-försök ska göras vid försenad init
+	// hur ofta init-fÃ¶rsÃ¶k ska gÃ¶ras vid fÃ¶rsenad init
 	private static final int INIT_RETRY_TIME_MS = 60000; // 1 min
 
-	// flagga för att påtvinga år på jobb när de schemaläggs i quartz för att förhindra att de körs på tex testmaskiner
-	// som använder en databas kopierad från drift
+	// flagga fÃ¶r att pÃ¥tvinga Ã¥r pÃ¥ jobb nÃ¤r de schemalÃ¤ggs i quartz fÃ¶r att fÃ¶rhindra att de kÃ¶rs pÃ¥ tex testmaskiner
+	// som anvÃ¤nder en databas kopierad frÃ¥n drift
 	private boolean forceYear;
 
 	protected Scheduler scheduler;
@@ -50,7 +50,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	protected StatusService ss;
 	protected String allowNoYearIfDbURLContains;
 
-	// hjälpvariabler för försenad init (db ej åtkomlig vid uppstart)
+	// hjÃ¤lpvariabler fÃ¶r fÃ¶rsenad init (db ej Ã¥tkomlig vid uppstart)
 	protected volatile long initLastFailedAt;
 	protected volatile boolean initOk = false;
 	protected Thread delayedInit;
@@ -132,7 +132,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 						forceYear = true;
 					}
 				}
-				// hämta ut tidigt (från inner-metoder) för att få ev fel här innan scheduleraren skapats och startats
+				// hÃ¤mta ut tidigt (frÃ¥n inner-metoder) fÃ¶r att fÃ¥ ev fel hÃ¤r innan scheduleraren skapats och startats
 				List<HarvestService> services = innerGetServices();
 				if (services == null) {
 					throw new Exception("No services from innerGetServices during init, db problem?");
@@ -149,7 +149,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				for (HarvestService service: services) {
 					scheduleJob(service);
 				}
-				// skapa "tjänst" om den inte finns
+				// skapa "tjÃ¤nst" om den inte finns
 				if (indexOptimizeService != null) {
 					scheduleJob(indexOptimizeService);
 				} else {
@@ -200,9 +200,9 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			}
 			try {
 				if (scheduler.isStarted()) {
-					// stoppa nya jobb från att triggas
+					// stoppa nya jobb frÃ¥n att triggas
 					scheduler.standby();
-					// hämta nu körande jobb och avbryt dem
+					// hÃ¤mta nu kÃ¶rande jobb och avbryt dem
 					List<JobExecutionContext> running = scheduler.getCurrentlyExecutingJobs();
 					for (JobExecutionContext jce: running) {
 						Job j = jce.getJobInstance();
@@ -217,7 +217,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 							}
 						}
 					}
-					// TODO: vänta lite också?
+					// TODO: vÃ¤nta lite ocksÃ¥?
 					scheduler.shutdown(true);
 				}
 			} catch (SchedulerException se) {
@@ -294,7 +294,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	/**
 	 * Inre version av {@linkplain #getService(String)} som inte kontrollerar init-status.
 	 * @param serviceId id
-	 * @return tjänst eller null
+	 * @return tjÃ¤nst eller null
 	 * @throws Exception
 	 */
 	protected HarvestService innerGetService(String serviceId) throws Exception {
@@ -328,7 +328,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	/**
 	 * Inre version av {@linkplain #getServices()} som inte kontrollerar init-status.
-	 * @return lista med tjänster, eller null vid databasproblem
+	 * @return lista med tjÃ¤nster, eller null vid databasproblem
 	 * @throws Exception
 	 */
 	protected List<HarvestService> innerGetServices() throws Exception {
@@ -403,7 +403,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	@Override
 	public boolean interruptHarvest(HarvestService service) throws Exception {
-		// begär att jobbet ska avbrytas, både på "logisk nivå" och på jobb-nivå
+		// begÃ¤r att jobbet ska avbrytas, bÃ¥de pÃ¥ "logisk nivÃ¥" och pÃ¥ jobb-nivÃ¥
 		ss.requestInterrupt(service);
 		return interruptJob(service.getId());
 	}
@@ -508,7 +508,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			if (logger.isInfoEnabled()) {
 				logger.info("Updated date for service with ID: " + service.getId());
 			}
-			// rensa cache för shm site
+			// rensa cache fÃ¶r shm site
 			ShmSiteCacherHackTicket3419.clearCache(service);
 	    } catch (Exception e) {
 	    	DBUtil.rollback(c);
@@ -525,7 +525,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		if (dbService == null) {
 			throw new RuntimeException("Could not find service with ID: " + service.getId());
 		}
-		// har vi ett datum behöver vi inte göra nåt
+		// har vi ett datum behÃ¶ver vi inte gÃ¶ra nÃ¥t
 		if (dbService.getFirstIndexDate() != null) {
 			return;
 		}
@@ -547,7 +547,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			}
 	    } catch (Exception e) {
 	    	DBUtil.rollback(c);
-	    	logger.error("Error when updating först indexing date for service with ID: " +
+	    	logger.error("Error when updating fÃ¶rst indexing date for service with ID: " +
 	    			service.getId(), e);
 	    	throw e;
 	    } finally {
@@ -596,8 +596,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			if (forceYear && !SERVICE_INDEX_OPTIMIZE.equals(service.getId())) {
 				StringTokenizer tok = new StringTokenizer(cronString, " ");
 				if (tok.countTokens() == 6) {
-					// inget år
-					cronString += " 2029"; // TODO: räcker 2029..?! :)
+					// inget Ã¥r
+					cronString += " 2029"; // TODO: rÃ¤cker 2029..?! :)
 					if (logger.isInfoEnabled()) {
 						logger.info("Forcing year when scheduling service " + service.getId());
 					}
@@ -646,7 +646,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				return "Not scheduled";
 			}
 		}
-		// hämta info om ev fel vid senaste körning
+		// hÃ¤mta info om ev fel vid senaste kÃ¶rning
 		String err = ss.getErrorText(service);
 		if (err != null) {
 			return err;
@@ -674,7 +674,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		}
 		status = ss.getStatusText(service);
 		if (status == null) {
-			// okänd status, ej kört ännu tex
+			// okÃ¤nd status, ej kÃ¶rt Ã¤nnu tex
 			status = "Ok";
 		}
 		return isRunning + status + extraInfo;
@@ -695,7 +695,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		return ss.getStep(service);
 	}
 
-	// hjälpmetod som kollar om ett jobb körs
+	// hjÃ¤lpmetod som kollar om ett jobb kÃ¶rs
 	@SuppressWarnings("unchecked")
 	private boolean isJobRunning(String serviceId) {
 		boolean isRunning = false;
@@ -715,7 +715,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		return isRunning;
 	}
 
-	// skapar en instans av JobDetail med rätt jobbklass beroende på tjänstetyp
+	// skapar en instans av JobDetail med rÃ¤tt jobbklass beroende pÃ¥ tjÃ¤nstetyp
 	private JobDetail createJobDetail(HarvestService service) {
 		String type = service.getServiceType();
 		Class<? extends HarvestJob> clazz = null;

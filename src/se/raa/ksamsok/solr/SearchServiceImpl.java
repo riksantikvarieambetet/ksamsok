@@ -33,7 +33,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
 
 public class SearchServiceImpl implements SearchService {
 
-	// max antal termer att h‰mta om inget angivits (-1)
+	// max antal termer att h√§mta om inget angivits (-1)
 	private static final int DEFAULT_TERM_COUNT = 1000;
 
 	private static final Logger logger = Logger.getLogger(SearchService.class);
@@ -47,7 +47,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public QueryResponse query(SolrQuery query) throws SolrServerException {
 		if (logger.isInfoEnabled()) {
-			logger.info("Sˆker med " + query.getQuery());
+			logger.info("S√∂ker med " + query.getQuery());
 		}
 		return solr.query(query, METHOD.POST);
 	}
@@ -59,13 +59,13 @@ public class SearchServiceImpl implements SearchService {
 		}
 		Set<String> stems = new HashSet<String>();
 		FieldAnalysisRequest far = new FieldAnalysisRequest();
-		// vi kˆr analys mot text-indexet dÂ vi vet att den stammar
+		// vi k√∂r analys mot text-indexet d√• vi vet att den stammar
 		far.addFieldName(ContentHelper.IX_TEXT);
 		List<String> noFieldTypes = Collections.emptyList();
-		far.setFieldTypes(noFieldTypes); // mÂste s‰tta pga en bugg i solrj(?!)
-		// det ‰r query-delen vi fr‰mst ‰r intresserade av (ger a.getQueryPhases() != null nedan)
+		far.setFieldTypes(noFieldTypes); // m√•ste s√§tta pga en bugg i solrj(?!)
+		// det √§r query-delen vi fr√§mst √§r intresserade av (ger a.getQueryPhases() != null nedan)
 		far.setQuery(words);
-		// men field value mÂste s‰ttas
+		// men field value m√•ste s√§ttas
 		far.setFieldValue(words);
 		far.setMethod(METHOD.POST);
 
@@ -85,12 +85,12 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException {
-		// * tolkas som del av termen sÂ sÂdana kan vi inte ha med
+		// * tolkas som del av termen s√• s√•dana kan vi inte ha med
 		prefix = prefix.replace("*", "");
 		if (logger.isInfoEnabled()) {
-			logger.info("H‰mtar termer fˆr index: " + index + ", prefix: " + prefix);
+			logger.info("H√§mtar termer f√∂r index: " + index + ", prefix: " + prefix);
 		}
-		// TODO: kommer finnas b‰ttre s‰tt att gˆra detta i senare solr/solrj-versioner
+		// TODO: kommer finnas b√§ttre s√§tt att g√∂ra detta i senare solr/solrj-versioner
 		List<Term> terms = new LinkedList<Term>();
 		SolrQuery query = new SolrQuery();
 		query.setQueryType("/terms");
@@ -101,7 +101,7 @@ public class SearchServiceImpl implements SearchService {
 		if (maxCount > 0) {
 			query.set(TermsParams.TERMS_LIMIT, maxCount);
 		} else {
-			// solr har default 10 vilket ‰r lite sÂ vi s‰tter alltid mer h‰r
+			// solr har default 10 vilket √§r lite s√• vi s√§tter alltid mer h√§r
 			query.set(TermsParams.TERMS_LIMIT, DEFAULT_TERM_COUNT);
 		}
 		QueryRequest qreq = new QueryRequest(query, METHOD.POST);
@@ -121,7 +121,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public long getIndexCount(String serviceName) throws SolrServerException {
 		if (logger.isInfoEnabled()) {
-			logger.info("H‰mtar antal fˆr tj‰nsten " + (serviceName != null ? serviceName : "*"));
+			logger.info("H√§mtar antal f√∂r tj√§nsten " + (serviceName != null ? serviceName : "*"));
 		}
 
 		SolrQuery query = new SolrQuery();
@@ -134,7 +134,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Map<String, Long> getIndexCounts() throws SolrServerException {
 		if (logger.isInfoEnabled()) {
-			logger.info("H‰mtar antal fˆr alla tj‰nster");
+			logger.info("H√§mtar antal f√∂r alla tj√§nster");
 		}
 		Map<String, Long> countMap = new HashMap<String, Long>();
 		SolrQuery query = new SolrQuery();

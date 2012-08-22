@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Böna som håller information om en organisation
+ * BÃ¶na som hÃ¥ller information om en organisation
  * @author Henrik Hjalmarsson
  */
 public class Organization implements Serializable

@@ -15,7 +15,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 	private static final Logger classLogger = getClassLogger();
 
-	// map med uri -> v‰rde fˆr indexering
+	// map med uri -> v√§rde f√∂r indexering
 	private static final Map<String,String> uriValues_1_1_TO;
 	// relationsmap
 	private static final Map<String, URI> relationsMap_1_1_TO;
@@ -38,7 +38,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		superContextTypes_1_1_TO = Collections.unmodifiableMap(contextSuperTypeValues);
 
 		Map<String,String> values = new HashMap<String,String>();
-		// l‰s in uri-v‰rden fˆr uppslagning
+		// l√§s in uri-v√§rden f√∂r uppslagning
 		RDFUtil.readURIValueResource(PATH + "entitytype_1.1.rdf", SamsokProtocol.uri_r__Name, values);
 		RDFUtil.readURIValueResource(PATH + "entitysupertype_1.1.rdf", SamsokProtocol.uri_r__Name, values);
 		RDFUtil.readURIValueResource(PATH + "subject.rdf", SamsokProtocol.uri_r__Name, values);
@@ -48,42 +48,42 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 		uriValues_1_1_TO = Collections.unmodifiableMap(values);
 
-		// utgÂ frÂn tidigare version och l‰gg till de nytillkomna
+		// utg√• fr√•n tidigare version och l√§gg till de nytillkomna
 		Map<String, URI> relMap = new HashMap<String, URI>(relationsMap_0_TO_1_0);
 
-		// h‰mta ut is mentioned by (0M)
+		// h√§mta ut is mentioned by (0M)
 		relMap.put(ContentHelper.IX_ISMENTIONEDBY, SamsokProtocol.uri_rIsMentionedBy);
-		// h‰mta ut mentions (0M)
+		// h√§mta ut mentions (0M)
 		relMap.put(ContentHelper.IX_MENTIONS, SamsokProtocol.uri_rMentions);
-		// h‰mta ut is contained in (0M)
+		// h√§mta ut is contained in (0M)
 		relMap.put(ContentHelper.IX_ISCONTAINEDIN, SamsokProtocol.uri_rIsContainedIn);
-		// h‰mta ut describes (0M)
+		// h√§mta ut describes (0M)
 		relMap.put(ContentHelper.IX_DESCRIBES, SamsokProtocol.uri_rDescribes);
-		// h‰mta ut is object example for (0M)
+		// h√§mta ut is object example for (0M)
 		relMap.put(ContentHelper.IX_ISOBJECTEXAMPLEFOR, SamsokProtocol.uri_rIsObjectExampleFor);
 
-		// h‰mta ut current or former owner of (0M)
+		// h√§mta ut current or former owner of (0M)
 		relMap.put(ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, SamsokProtocol.uri_cidoc_P107B_is_current_or_former_member_of);
-		// h‰mta ut has former or current keeper of (0M)
+		// h√§mta ut has former or current keeper of (0M)
 		relMap.put(ContentHelper.IX_HASCURRENTORFORMERMEMBER, SamsokProtocol.uri_cidoc_P107F_has_current_or_former_member);
 
-		// h‰mta ut had participant (0M)
+		// h√§mta ut had participant (0M)
 		relMap.put(ContentHelper.IX_HADPARTICIPANT, SamsokProtocol.uri_cidoc_P11F_had_participant);
-		// h‰mta ut participated in (0M)
+		// h√§mta ut participated in (0M)
 		relMap.put(ContentHelper.IX_PARTICIPATEDIN, SamsokProtocol.uri_cidoc_P11B_participated_in);
-		// h‰mta ut was present at (0M)
+		// h√§mta ut was present at (0M)
 		relMap.put(ContentHelper.IX_WASPRESENTAT, SamsokProtocol.uri_cidoc_P12B_was_present_at);
-		// h‰mta ut occured in the presence of (0M)
+		// h√§mta ut occured in the presence of (0M)
 		relMap.put(ContentHelper.IX_OCCUREDINTHEPRESENCEOF, SamsokProtocol.uri_cidoc_P12F_occurred_in_the_presence_of);
 
 		// bio
-		// h‰mta ut child (01)
+		// h√§mta ut child (01)
 		relMap.put(ContentHelper.IX_CHILD, SamsokProtocol.uri_bio_child);
-		// h‰mta ut parent (01)
+		// h√§mta ut parent (01)
 		relMap.put(ContentHelper.IX_PARENT, SamsokProtocol.uri_bio_parent);
-		// h‰mta ut mother (01)
+		// h√§mta ut mother (01)
 		relMap.put(ContentHelper.IX_MOTHER, SamsokProtocol.uri_bio_mother);
-		// h‰mta ut father (01)
+		// h√§mta ut father (01)
 		relMap.put(ContentHelper.IX_FATHER, SamsokProtocol.uri_bio_father);
 
 		relationsMap_1_1_TO = Collections.unmodifiableMap(relMap);
@@ -170,7 +170,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 			relationType = ContentHelper.IX_SAMEAS;
 		} else {
 			relationType = StringUtils.trimToNull(StringUtils.substringAfter(refUri, SamsokProtocol.uriPrefixKSamsok));
-			// TODO: fixa b‰ttre/validera lite
+			// TODO: fixa b√§ttre/validera lite
 			if (relationType == null) {
 				// testa cidoc
 				relationType = StringUtils.trimToNull(StringUtils.substringAfter(refUri, SamsokProtocol.uriPrefix_cidoc_crm));
@@ -189,25 +189,25 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	@Override
 	protected void extractItemInformation() throws Exception {
 		super.extractItemInformation();
-		// TODO: kontrollera hierarkin ocksÂ?
+		// TODO: kontrollera hierarkin ocks√•?
 		ip.setCurrent(ContentHelper.IX_ITEMSUPERTYPE, true);
 		String superType = RDFUtil.extractSingleValue(graph, s,
 				getURIRef(elementFactory, SamsokProtocol.uri_rItemSuperType), ip);
 		if (superType == null) {
 			throw new Exception("No item supertype for item with identifier " + s.toString());
 		}
-		// TODO: gˆra nÂgra obligatoriska eller varna om de saknas fˆr agenter
-		//       (supertype==agent ovan kan tex anv‰ndas)
-		// nya index fˆr agenter pÂ toppnivÂ
+		// TODO: g√∂ra n√•gra obligatoriska eller varna om de saknas f√∂r agenter
+		//       (supertype==agent ovan kan tex anv√§ndas)
+		// nya index f√∂r agenter p√• toppniv√•
 		ip.setCurrent(ContentHelper.IX_NAMEAUTH);
 		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameAuth), ip);
 		ip.setCurrent(ContentHelper.IX_NAMEID);
 		RDFUtil.extractSingleValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rNameId), ip);
-		// TODO: foaf:name innehÂller ‰ven alternativa namn men man kanske vill ha ett separat
-		//       index fˆr detta? foaf innehÂller inget sÂnt tyv‰rr sÂ det var d‰rfˆr jag stoppade
-		//       in alternativa namn i namn-f‰ltet enligt http://viaf.org/viaf/59878606/rdf.xml
-		//       skos har alternativt namn som man skulle kunna anv‰nda men egentligen berˆr ju det
-		//       koncept, men det kommer vi ju ocksÂ l‰gga in framˆver sÂ..
+		// TODO: foaf:name inneh√•ller √§ven alternativa namn men man kanske vill ha ett separat
+		//       index f√∂r detta? foaf inneh√•ller inget s√•nt tyv√§rr s√• det var d√§rf√∂r jag stoppade
+		//       in alternativa namn i namn-f√§ltet enligt http://viaf.org/viaf/59878606/rdf.xml
+		//       skos har alternativt namn som man skulle kunna anv√§nda men egentligen ber√∂r ju det
+		//       koncept, men det kommer vi ju ocks√• l√§gga in fram√∂ver s√•..
 		ip.setCurrent(ContentHelper.IX_NAME);
 		RDFUtil.extractValue(graph, s, getURIRef(elementFactory, SamsokProtocol.uri_rName), null, ip);
 		ip.setCurrent(ContentHelper.IX_FIRSTNAME);
@@ -225,8 +225,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	}
 	/**
 	 * Extraherar och indexerar typinformation ur en kontextnod.
-	 * Hanterar de index som g‰ller fˆr protokollversion 1.1, se dok.
-	 * ÷verlagra i subklasser vid behov.
+	 * Hanterar de index som g√§ller f√∂r protokollversion 1.1, se dok.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
 	 * @param identifier identifierare
@@ -236,7 +236,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	@Override
 	protected String[] extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
 
-		// TODO: kontrollera hierarkin ocksÂ (att produce bara fÂr finnas under create tex)?
+		// TODO: kontrollera hierarkin ocks√• (att produce bara f√•r finnas under create tex)?
 		String contextSuperTypeURI = RDFUtil.extractSingleValue(graph, cS,
 				getURIRef(elementFactory, SamsokProtocol.uri_rContextSuperType), null);
 		if (contextSuperTypeURI == null) {
@@ -251,7 +251,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		ip.setCurrent(ContentHelper.IX_CONTEXTSUPERTYPE);
 		ip.addToDoc(contextSuperType);
 
-		// h‰mta ut vilket kontext vi ‰r i 
+		// h√§mta ut vilket kontext vi √§r i 
 		String contextType;
 		String contextTypeURI = RDFUtil.extractSingleValue(graph, cS,
 				getURIRef(elementFactory, SamsokProtocol.uri_rContextType), null);
@@ -268,7 +268,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 			}
 			ip.setCurrent(ContentHelper.IX_CONTEXTTYPE);
 			ip.addToDoc(contextType);
-			// ta fˆrst en inskickad label, och annars defaultv‰rdet
+			// ta f√∂rst en inskickad label, och annars defaultv√§rdet
 			String contextLabel = RDFUtil.extractSingleValue(graph, cS,
 					getURIRef(elementFactory, SamsokProtocol.uri_rContextLabel), ip);
 			if (contextLabel == null) {
@@ -296,22 +296,22 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	}
 
 	/**
-	 * Ger map med giltiga toppnivÂrelationer nycklat pÂ indexnamn.
+	 * Ger map med giltiga toppniv√•relationer nycklat p√• indexnamn.
 	 * 
-	 * ÷verlagra i subklasser vid behov.
-	 * @return map med toppnivÂrelationer
+	 * √ñverlagra i subklasser vid behov.
+	 * @return map med toppniv√•relationer
 	 */
 	protected Map<String, URI> getContextLevelRelationsMap() {
 		return contextRelationsMap_1_1_TO;
 	}
 
 	/**
-	 * Extraherar och indexerar kontextnivÂrelationer som h‰mtas via
+	 * Extraherar och indexerar kontextniv√•relationer som h√§mtas via
 	 * {@linkplain #getContextLevelRelationsMap()}.
-	 * ÷verlagra i subklasser vid behov.
+	 * √ñverlagra i subklasser vid behov.
 	 * 
 	 * @param cS kontextnod
-	 * @param relations lista med relationer fˆr specialrelationsindexet
+	 * @param relations lista med relationer f√∂r specialrelationsindexet
 	 * @throws Exception vid fel
 	 */
 	protected void extractContextLevelRelations(SubjectNode cS, List<String> relations) throws Exception {

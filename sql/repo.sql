@@ -1,7 +1,7 @@
 -- enkelt repository
 
--- För oracle, data i default tablespace, index i "KSAMSOK_INDX"
--- för tex Derby eller postgresql krävs små ändringar (postgres stöds ej fn, se javakod)
+-- FÃ¶r oracle, data i default tablespace, index i "KSAMSOK_INDX"
+-- fÃ¶r tex Derby eller postgresql krÃ¤vs smÃ¥ Ã¤ndringar (postgres stÃ¶ds ej fn, se javakod)
 
 --drop table harvestservices
 
@@ -97,7 +97,7 @@ alter table servicelog add constraint pk_servicelog primary key (eventId) using 
 create index ix_servicelog_serv on servicelog (serviceId) tablespace KSAMSOK_INDX;
 create index ix_servicelog_ts on servicelog (eventTs) tablespace KSAMSOK_INDX;
 
--- trigger och sekvens för att få till en räknare i oracle 
+-- trigger och sekvens fÃ¶r att fÃ¥ till en rÃ¤knare i oracle 
 create sequence servicelog_seq MINVALUE 1 START WITH 1 INCREMENT BY 1 CACHE 20;
 CREATE OR REPLACE TRIGGER servicelog_before_insert 
 BEFORE INSERT ON servicelog FOR EACH ROW
@@ -117,7 +117,7 @@ geometry "MDSYS"."SDO_GEOMETRY" NOT NULL
 create index ix_geometries_uri on geometries (uri) tablespace KSAMSOK_INDX;
 create index ix_geometries_serv on geometries (serviceId) tablespace KSAMSOK_INDX;
 
--- tala om spatial-info för oracle (3006 är sweref99 tm)
+-- tala om spatial-info fÃ¶r oracle (3006 Ã¤r sweref99 tm)
 insert into USER_SDO_GEOM_METADATA
 values(
 'GEOMETRIES',
@@ -132,13 +132,13 @@ MDSYS.SDO_DIM_ARRAY(
 CREATE INDEX IX_GEOMETRIES_GEOMETRY ON GEOMETRIES (GEOMETRY) 
    INDEXTYPE IS "MDSYS"."SPATIAL_INDEX" PARAMETERS ('tablespace=KSAMSOK_INDX')
 
--- skapa motsvarande vy för geoserver (måste heta samma som feature type i geoservers conf)
--- notera att man skulle kunna gå direkt mot tabellen geometries men iom att vi gör
--- en vy skulle man kunna stoppa in fler värden som hämtas/genereras utifrån annat
+-- skapa motsvarande vy fÃ¶r geoserver (mÃ¥ste heta samma som feature type i geoservers conf)
+-- notera att man skulle kunna gÃ¥ direkt mot tabellen geometries men iom att vi gÃ¶r
+-- en vy skulle man kunna stoppa in fler vÃ¤rden som hÃ¤mtas/genereras utifrÃ¥n annat
 -- data, exempelvis gtype mm
 create or replace view KSAMSOK_WMS as select * from geometries;
 
--- och tala om spatial-info för oracle för denna vy också (samma som för tabellen)
+-- och tala om spatial-info fÃ¶r oracle fÃ¶r denna vy ocksÃ¥ (samma som fÃ¶r tabellen)
 insert into USER_SDO_GEOM_METADATA
 values(
 'KSAMSOK_WMS',

@@ -3,145 +3,145 @@ package se.raa.ksamsok.harvest;
 import java.util.Date;
 
 /**
- * Böna för en skördetjänst.
+ * BÃ¶na fÃ¶r en skÃ¶rdetjÃ¤nst.
  */
 public interface HarvestService {
 
 	/**
-	 * Ger tjänstens id.
+	 * Ger tjÃ¤nstens id.
 	 * 
 	 * @return ett id
 	 */
 	String getId();
 
 	/**
-	 * Sätter id.
+	 * SÃ¤tter id.
 	 * 
 	 * @param serviceId id
 	 */
 	void setId(String serviceId);
 
 	/**
-	 * Ger cronsträng (körschema).
+	 * Ger cronstrÃ¤ng (kÃ¶rschema).
 	 * 
-	 * @return cronsträng
+	 * @return cronstrÃ¤ng
 	 */
 	String getCronString();
 
 	/**
-	 * Sätter cronsträng (körschema).
+	 * SÃ¤tter cronstrÃ¤ng (kÃ¶rschema).
 	 * 
-	 * @param cronString cronsträng
+	 * @param cronString cronstrÃ¤ng
 	 */
 	void setCronString(String cronString);
 
 	/**
-	 * Ger tjänstens namn.
+	 * Ger tjÃ¤nstens namn.
 	 * 
-	 * @return tjänstens namn
+	 * @return tjÃ¤nstens namn
 	 */
 	String getName();
 
 	/**
-	 * Sätter tjänstens namn.
+	 * SÃ¤tter tjÃ¤nstens namn.
 	 * 
 	 * @param name namn
 	 */
 	void setName(String name);
 
 	/**
-	 * Ger skörde-URL.
+	 * Ger skÃ¶rde-URL.
 	 * 
-	 * @return url till skörd
+	 * @return url till skÃ¶rd
 	 */
 	String getHarvestURL();
 
 	/**
-	 * Sätter skörde-URL.
+	 * SÃ¤tter skÃ¶rde-URL.
 	 * 
 	 * @param harvestURL url
 	 */
 	void setHarvestURL(String harvestURL);
 
 	/**
-	 * Ger datum/tid för senast lyckade skörd.
+	 * Ger datum/tid fÃ¶r senast lyckade skÃ¶rd.
 	 * 
 	 * @return datum
 	 */
 	Date getLastHarvestDate();
 
 	/**
-	 * Sätter datum/tid för senast lyckade skörd.
+	 * SÃ¤tter datum/tid fÃ¶r senast lyckade skÃ¶rd.
 	 * 
 	 * @param date datum
 	 */
 	void setLastHarvestDate(Date date);
 
 	/**
-	 * Ger datum/tid för första lyckade indexeringen.
+	 * Ger datum/tid fÃ¶r fÃ¶rsta lyckade indexeringen.
 	 * 
 	 * @return datum
 	 */
 	Date getFirstIndexDate();
 
 	/**
-	 * Sätter datum/tid för första lyckade indexeringen.
+	 * SÃ¤tter datum/tid fÃ¶r fÃ¶rsta lyckade indexeringen.
 	 * 
 	 * @param date datum
 	 */
 	void setFirstIndexDate(Date date);
 
 	/**
-	 * Ger tjänstetyp som talar om vad denna tjänst klarar av att skörda.
+	 * Ger tjÃ¤nstetyp som talar om vad denna tjÃ¤nst klarar av att skÃ¶rda.
 	 * 
-	 * @return tjänstetyp
+	 * @return tjÃ¤nstetyp
 	 */
 	String getServiceType();
 
 	/**
-	 * Sätter tjänstetyp.
+	 * SÃ¤tter tjÃ¤nstetyp.
 	 * 
 	 * @param type typ
 	 */
 	void setServiceType(String type);
 
 	/**
-	 * Ger om man för denna tjänst alltid ska skörda allt och aldrig försöka att göra
-	 * en inkrementell skörd.
+	 * Ger om man fÃ¶r denna tjÃ¤nst alltid ska skÃ¶rda allt och aldrig fÃ¶rsÃ¶ka att gÃ¶ra
+	 * en inkrementell skÃ¶rd.
 	 * 
-	 * @return sant om man alltid ska skörda allt
+	 * @return sant om man alltid ska skÃ¶rda allt
 	 */
 	boolean getAlwaysHarvestEverything();
 
 	/**
-	 * Sätter värde för att alltid skörda allt.
+	 * SÃ¤tter vÃ¤rde fÃ¶r att alltid skÃ¶rda allt.
 	 * 
 	 * @param value sant/falskt
 	 */
 	void setAlwaysHarvestEverything(boolean value);
 
 	/**
-	 * Hämtar namn på det set (delmängd) som ska skördas för denna tjänst.
+	 * HÃ¤mtar namn pÃ¥ det set (delmÃ¤ngd) som ska skÃ¶rdas fÃ¶r denna tjÃ¤nst.
 	 * 
 	 * @return setnamn eller null
 	 */
 	String getHarvestSetSpec();
 
 	/**
-	 * Sätter namn på set (delmängd) som ska användas vid skörd av denna tjänst.
+	 * SÃ¤tter namn pÃ¥ set (delmÃ¤ngd) som ska anvÃ¤ndas vid skÃ¶rd av denna tjÃ¤nst.
 	 * 
 	 * @param setSpec setnamn
 	 */
 	void setHarvestSetSpec(String setSpec);
 	
 	/**
-	 * Returnerar kortnamn som används för att koppla tjänst till organisation
+	 * Returnerar kortnamn som anvÃ¤nds fÃ¶r att koppla tjÃ¤nst till organisation
 	 * @return
 	 */
 	String getShortName();
 	
 	/**
-	 * Sätter kortnamn för tjänst
+	 * SÃ¤tter kortnamn fÃ¶r tjÃ¤nst
 	 * @param shortName kortnamn
 	 */
 	void setShortName(String shortName);

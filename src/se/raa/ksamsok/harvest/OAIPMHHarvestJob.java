@@ -24,30 +24,30 @@ import ORG.oclc.oai.harvester2.verb.ListRecords;
 import ORG.oclc.oai.harvester2.verb.ListSets;
 
 /**
- * Basklass för att hantera skörd mha OAI-PMH-protokollet.
+ * Basklass fÃ¶r att hantera skÃ¶rd mha OAI-PMH-protokollet.
  */
 public class OAIPMHHarvestJob extends HarvestJob {
 
-	// provar nåt snällare för Tekniska Museets skull:
+	// provar nÃ¥t snÃ¤llare fÃ¶r Tekniska Museets skull:
 	private static final int MAX_TRIES = 6;
 	private static final int WAIT_SECS = 100;
 
-	/** max antal försök */
+	/** max antal fÃ¶rsÃ¶k */
 	protected final int maxTries;
-	/** sekunder att vänta mellan varje försök */
+	/** sekunder att vÃ¤nta mellan varje fÃ¶rsÃ¶k */
 	protected final int waitSecs;
 
 	/**
-	 * Skapa ny instans med default antal hämtningsförsök och väntetid.
+	 * Skapa ny instans med default antal hÃ¤mtningsfÃ¶rsÃ¶k och vÃ¤ntetid.
 	 */
 	public OAIPMHHarvestJob() {
 		this(MAX_TRIES, WAIT_SECS);
 	}
 
 	/**
-	 * Skapa med specifika värden (främst för test för att slippa vänta)
-	 * @param maxTries max antal försök
-	 * @param waitSecs sekunder att vänta mellan varje försök
+	 * Skapa med specifika vÃ¤rden (frÃ¤mst fÃ¶r test fÃ¶r att slippa vÃ¤nta)
+	 * @param maxTries max antal fÃ¶rsÃ¶k
+	 * @param waitSecs sekunder att vÃ¤nta mellan varje fÃ¶rsÃ¶k
 	 */
 	OAIPMHHarvestJob(int maxTries, int waitSecs) {
 		this.maxTries = maxTries;
@@ -123,15 +123,15 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		OutputStream os = null;
 		try {
 			String fromDate = null;
-			// bara om tjänsten (permanent) hanterar info om borttagna
+			// bara om tjÃ¤nsten (permanent) hanterar info om borttagna
 			if (sm.handlesPersistentDeletes() && service.getLastHarvestDate() != null) {
 				// YYYY-MM-DDThh:mm:ssZ eller YYYY-MM-DD
 				SimpleDateFormat df = new SimpleDateFormat(sm.getDateFormatString());
 				df.setTimeZone(TimeZone.getTimeZone("UTC"));
-				// TODO: öka/minska på datum eller tid då from/tom är inclusive? kanske bara
-				//       intressant för datum
-				//       kontrollera om timezone-användningen är korrekt map datumgränser mm
-				// url-kodning av timestamp behövs om tid är inblandat också
+				// TODO: Ã¶ka/minska pÃ¥ datum eller tid dÃ¥ from/tom Ã¤r inclusive? kanske bara
+				//       intressant fÃ¶r datum
+				//       kontrollera om timezone-anvÃ¤ndningen Ã¤r korrekt map datumgrÃ¤nser mm
+				// url-kodning av timestamp behÃ¶vs om tid Ã¤r inblandat ocksÃ¥
 				String fromDateStr = df.format(service.getLastHarvestDate());
 				fromDate = URLEncoder.encode(fromDateStr, "UTF-8");
 				if (ss != null) {
@@ -148,16 +148,16 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	/**
-	 * Utför en hämtning/skörd av data via oai-pmh-protokollet.
+	 * UtfÃ¶r en hÃ¤mtning/skÃ¶rd av data via oai-pmh-protokollet.
 	 * 
-	 * @param url skörde-url
+	 * @param url skÃ¶rde-url
 	 * @param fromDate from eller null
 	 * @param toDate tom eller null
 	 * @param metadataPrefix metadataprefix
 	 * @param setSpec set eller null
-	 * @param os ström att skriva till
+	 * @param os strÃ¶m att skriva till
 	 * @param logger logger eller null
-	 * @return antal hämtade poster
+	 * @return antal hÃ¤mtade poster
 	 * @throws Exception
 	 */
 	public int getRecords(String url, String fromDate, String toDate, String metadataPrefix,
@@ -166,18 +166,18 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	/**
-	 * Utför en hämtning/skörd av data via oai-pmh-protokollet.
+	 * UtfÃ¶r en hÃ¤mtning/skÃ¶rd av data via oai-pmh-protokollet.
 	 * 
-	 * @param url skörde-url
+	 * @param url skÃ¶rde-url
 	 * @param fromDate from eller null
 	 * @param toDate tom eller null
 	 * @param metadataPrefix metadataprefix
 	 * @param setSpec set eller null
-	 * @param os ström att skriva till
+	 * @param os strÃ¶m att skriva till
 	 * @param logger logger eller null
 	 * @param ss statusservice eller null
-	 * @param service tjänst eller null
-	 * @return antal hämtade poster
+	 * @param service tjÃ¤nst eller null
+	 * @return antal hÃ¤mtade poster
 	 * @throws Exception
 	 */
 	public int getRecords(String url, String fromDate, String toDate, String metadataPrefix,
@@ -203,7 +203,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 
             NodeList errors = listRecords.getErrors();
             if (errors != null && errors.getLength() > 0) {
-            	// inga records är inte ett "fel" egentligen
+            	// inga records Ã¤r inte ett "fel" egentligen
             	if ("noRecordsMatch".equals(errors.item(0).getAttributes().getNamedItem("code").getNodeValue())) {
             		c = 0;
             		break;
@@ -215,9 +215,9 @@ public class OAIPMHHarvestJob extends HarvestJob {
             }
             os.write(listRecords.toString().getBytes("UTF-8"));
             os.write("\n".getBytes("UTF-8"));
-            // om token är "" betyder det ingen resumption
+            // om token Ã¤r "" betyder det ingen resumption
             String resumptionToken = listRecords.getResumptionToken();
-            // hämta totala antalet (om det skickas) fast bara första gången
+            // hÃ¤mta totala antalet (om det skickas) fast bara fÃ¶rsta gÃ¥ngen
             if (completeListSize < 0 && c == 0 && StringUtils.isNotBlank(resumptionToken)) {
             	try {
             		completeListSize = Integer.parseInt(listRecords.getSingleString(
@@ -228,9 +228,9 @@ public class OAIPMHHarvestJob extends HarvestJob {
             		}
             	}
             }
-            // räkna antal
+            // rÃ¤kna antal
             c += Integer.parseInt(listRecords.getSingleString("count(/oai20:OAI-PMH/oai20:ListRecords/oai20:record)"));
-            // beräkna ungefär kvarvarande hämtningstid
+            // berÃ¤kna ungefÃ¤r kvarvarande hÃ¤mtningstid
             long deltaMillis = System.currentTimeMillis() - start;
             long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(
             		deltaMillis, c, completeListSize);
@@ -245,7 +245,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
             }
 			if (ss != null) {
 
-				// vi uppdaterar bara status här, logg är inte intressant för dessa
+				// vi uppdaterar bara status hÃ¤r, logg Ã¤r inte intressant fÃ¶r dessa
 				ss.setStatusText(service, "Fetching data to temp file (fetched " + c +
 						(completeListSize > 0 ? "/" + completeListSize : "") + " records)" +
 						(aproxMillisLeft >= 0 ? ", estimated time remaining: " +
@@ -282,18 +282,18 @@ public class OAIPMHHarvestJob extends HarvestJob {
         return c;
 	}
 
-	// hantering av flera försök med viss tid mellan varje försök
+	// hantering av flera fÃ¶rsÃ¶k med viss tid mellan varje fÃ¶rsÃ¶k
 	private void failedTry(int tryNum, String resumptionToken, IOException ioe, StatusService ss, HarvestService service) throws Exception {
-    	// TODO: bättre konstanter/värden
-    	//       skilj på connect/error?
-    	//       olika värden per tjänst? smh/va är helt tillståndslösa, oiacat inte 
+    	// TODO: bÃ¤ttre konstanter/vÃ¤rden
+    	//       skilj pÃ¥ connect/error?
+    	//       olika vÃ¤rden per tjÃ¤nst? smh/va Ã¤r helt tillstÃ¥ndslÃ¶sa, oiacat inte 
 		if (tryNum >= maxTries) {
 			throw new Exception("Problem when contacting the service, surrendered after " + maxTries + " tries" + (resumptionToken != null ? " with token: " +
 					resumptionToken : ""), ioe);
 		}
-		// TODO: kan message vara så pass stor så att 4k-gränsen överskrids och ger nedanstående databasfel?
+		// TODO: kan message vara sÃ¥ pass stor sÃ¥ att 4k-grÃ¤nsen Ã¶verskrids och ger nedanstÃ¥ende databasfel?
 		//       java.sql.SQLException: ORA-01461: can bind a LONG value only for insert into a LONG column
-		//       i så fall måste vi begränsa feltexten, se:
+		//       i sÃ¥ fall mÃ¥ste vi begrÃ¤nsa feltexten, se:
 		//       http://vsadilovskiy.wordpress.com/2007/10/19/ora-01461-can-bind-a-long-value-only-for-insert-into-a-long-column/
 		String msg = "Exception (" + ioe.getMessage() +
 			"), waiting " + waitSecs + " seconds and trying again";
@@ -301,7 +301,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		if (ss != null) {
     		ss.setStatusTextAndLog(service, msg);
 		}
-		// sov totalt waitSecs sekunder, men se till att vi är snabba på att avbryta
+		// sov totalt waitSecs sekunder, men se till att vi Ã¤r snabba pÃ¥ att avbryta
 		for (int i = 0; i < waitSecs; ++i) {
 			Thread.sleep(1000);
         	if (ss != null) {

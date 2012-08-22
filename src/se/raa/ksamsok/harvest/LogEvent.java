@@ -1,11 +1,11 @@
 package se.raa.ksamsok.harvest;
 
 /**
- * Enkel böna som representerar en logghändelse.
+ * Enkel bÃ¶na som representerar en logghÃ¤ndelse.
  */
 public class LogEvent {
 
-	// koder för meddelanden som sparas i db
+	// koder fÃ¶r meddelanden som sparas i db
 	public static final int EVENT_INFO = 0;
 	public static final int EVENT_ERROR = 1;
 	public static final int EVENT_WARNING = 2;
@@ -17,9 +17,9 @@ public class LogEvent {
 
 	/**
 	 * Skapa ny instans.
-	 * @param serviceId tjänste-id
-	 * @param eventType händelsetyp
-	 * @param eventTime händelsetid i formaterat strängformat
+	 * @param serviceId tjÃ¤nste-id
+	 * @param eventType hÃ¤ndelsetyp
+	 * @param eventTime hÃ¤ndelsetid i formaterat strÃ¤ngformat
 	 * @param message meddelandetext
 	 */
 	public LogEvent(String serviceId, int eventType, String eventTime, String message) {
@@ -30,31 +30,31 @@ public class LogEvent {
 	}
 
 	/**
-	 * Getter för tjänste-id
-	 * @return tjänste-id
+	 * Getter fÃ¶r tjÃ¤nste-id
+	 * @return tjÃ¤nste-id
 	 */
 	public String getServiceId() {
 		return serviceId;
 	}
 
 	/**
-	 * Getter för händelsetyp.
-	 * @return händelsetyp.
+	 * Getter fÃ¶r hÃ¤ndelsetyp.
+	 * @return hÃ¤ndelsetyp.
 	 */
 	public int getEventType() {
 		return eventType;
 	}
 
 	/**
-	 * Getter för händelsetid.
-	 * @return händelsetid
+	 * Getter fÃ¶r hÃ¤ndelsetid.
+	 * @return hÃ¤ndelsetid
 	 */
 	public String getEventTime() {
 		return eventTime;
 	}
 
 	/**
-	 * Getter för meddelande.
+	 * Getter fÃ¶r meddelande.
 	 * @return loggmeddelande
 	 */
 	public String getMessage() {

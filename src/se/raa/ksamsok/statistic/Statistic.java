@@ -3,7 +3,7 @@ package se.raa.ksamsok.statistic;
 import java.io.Serializable;
 
 /**
- * Böna som håller information om statistik för en unik sökning
+ * BÃ¶na som hÃ¥ller information om statistik fÃ¶r en unik sÃ¶kning
  * @author Henrik Hjalmarsson
  */
 public class Statistic implements Serializable

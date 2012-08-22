@@ -3,30 +3,30 @@ package se.raa.ksamsok.spatial;
 import java.sql.Connection;
 
 /**
- * Interface för att hantera skrivning av spatial-data i form av gml till databas.
- * Instanser skapas med default-konstruktorn och init() anropas innan någon av de andra
- * metoderna körs. Se också {@linkplain GMLUtil#getGMLDBWriter(String, Connection)}.
- * Alla gml-geometrier är konverterade till SWEREF 99 TM (EPSG:3006) innan de kommer
+ * Interface fÃ¶r att hantera skrivning av spatial-data i form av gml till databas.
+ * Instanser skapas med default-konstruktorn och init() anropas innan nÃ¥gon av de andra
+ * metoderna kÃ¶rs. Se ocksÃ¥ {@linkplain GMLUtil#getGMLDBWriter(String, Connection)}.
+ * Alla gml-geometrier Ã¤r konverterade till SWEREF 99 TM (EPSG:3006) innan de kommer
  * in till instanser av GMLDBWriter.
  */
 public interface GMLDBWriter {
 
 	/**
-	 * Initierar instansen med värden för aktuell tjänst och databas.
-	 * @param serviceId id för tjänsten
+	 * Initierar instansen med vÃ¤rden fÃ¶r aktuell tjÃ¤nst och databas.
+	 * @param serviceId id fÃ¶r tjÃ¤nsten
 	 * @param c en uppkoppling mot databasen
 	 * @throws Exception vid problem
 	 */
 	void init(String serviceId, Connection c) throws Exception;
 
 	/**
-	 * Frigör eventuella resurser instansen håller.
+	 * FrigÃ¶r eventuella resurser instansen hÃ¥ller.
 	 */
 	void destroy();
 
 	/**
 	 * Anropas vid insert av post.
-	 * @param gmlInfoHolder gmldatahållare
+	 * @param gmlInfoHolder gmldatahÃ¥llare
 	 * @return antal inlagda geometrier
 	 * @throws Exception vid fel
 	 */
@@ -34,14 +34,14 @@ public interface GMLDBWriter {
 
 	/**
 	 * Anropas vid update av post.
-	 * @param gmlInfoHolder gmldatahållare
-	 * @return antal ändringar (inlagda + borttagna)
+	 * @param gmlInfoHolder gmldatahÃ¥llare
+	 * @return antal Ã¤ndringar (inlagda + borttagna)
 	 * @throws Exception vid fel
 	 */
 	int update(GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
-	 * Anropas när en post tas bort.
+	 * Anropas nÃ¤r en post tas bort.
 	 * @param identifier uri
 	 * @return antal borttagna
 	 * @throws Exception vid fel
@@ -49,8 +49,8 @@ public interface GMLDBWriter {
 	int delete(String identifier) throws Exception;
 
 	/**
-	 * Anropas för att ta bort alla geometrier i databasen för tjänsten.
-	 * Används enbart i samband med rensning av repository för en tjänst.
+	 * Anropas fÃ¶r att ta bort alla geometrier i databasen fÃ¶r tjÃ¤nsten.
+	 * AnvÃ¤nds enbart i samband med rensning av repository fÃ¶r en tjÃ¤nst.
 	 * @throws Exception
 	 */
 	int deleteAllForService() throws Exception;

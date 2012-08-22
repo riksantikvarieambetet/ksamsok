@@ -1,7 +1,7 @@
 package se.raa.ksamsok.api.util;
 
 /**
- * Värdeböna som innehåller term-information.
+ * VÃ¤rdebÃ¶na som innehÃ¥ller term-information.
  */
 public class Term {
 
@@ -10,7 +10,7 @@ public class Term {
 	final long count;
 
 	/**
-	 * Skapa en ny instans för index, term och antal
+	 * Skapa en ny instans fÃ¶r index, term och antal
 	 * @param index
 	 * @param value
 	 * @param count
@@ -38,7 +38,7 @@ public class Term {
 	}
 
 	/**
-	 * Ger antal förekomster
+	 * Ger antal fÃ¶rekomster
 	 * @return antal
 	 */
 	public long getCount() {

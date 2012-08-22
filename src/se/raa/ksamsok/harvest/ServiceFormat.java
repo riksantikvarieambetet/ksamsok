@@ -1,8 +1,8 @@
 package se.raa.ksamsok.harvest;
 
 /**
- * Enkel värdeklass för att hålla reda på metadataprefix, namespace och schema
- * för OAI-PMH-noder.
+ * Enkel vÃ¤rdeklass fÃ¶r att hÃ¥lla reda pÃ¥ metadataprefix, namespace och schema
+ * fÃ¶r OAI-PMH-noder.
  */
 public class ServiceFormat {
 
@@ -17,7 +17,7 @@ public class ServiceFormat {
 	}
 
 	/**
-	 * Hämtar prefix.
+	 * HÃ¤mtar prefix.
 	 * 
 	 * @return prefix
 	 */
@@ -26,7 +26,7 @@ public class ServiceFormat {
 	}
 
 	/**
-	 * Hämtar schema-uri.
+	 * HÃ¤mtar schema-uri.
 	 * 
 	 * @return schema-uri
 	 */
@@ -35,7 +35,7 @@ public class ServiceFormat {
 	}
 
 	/**
-	 * Hämtar namespace-uri.
+	 * HÃ¤mtar namespace-uri.
 	 * 
 	 * @return namespace-uri
 	 */

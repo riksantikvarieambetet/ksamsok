@@ -24,8 +24,8 @@ public class OracleGMLDBWriter extends AbstractGMLDBWriter {
 
 	@Override
 	public void init(String serviceId, Connection c) throws Exception {
-		// måste vara en oracle-connection för att det ska funka med GML-klassen nedan
-		// hämta ut underliggande oracle-uppkopplingen med ett hack
+		// mÃ¥ste vara en oracle-connection fÃ¶r att det ska funka med GML-klassen nedan
+		// hÃ¤mta ut underliggande oracle-uppkopplingen med ett hack
 		if (c instanceof OracleConnection == false) {
 			try {
 				c = c.getMetaData().getConnection();
@@ -58,13 +58,13 @@ public class OracleGMLDBWriter extends AbstractGMLDBWriter {
 			}
 		}
 		throw new RuntimeException("Fick ingen spatial-kompatibel oracleuppkoppling, " +
-			"oracle spatial-jarfilerna måste kanske läggas i tomcat/lib och tas bort från WEB-INF lib?");
+			"oracle spatial-jarfilerna mÃ¥ste kanske lÃ¤ggas i tomcat/lib och tas bort frÃ¥n WEB-INF lib?");
 	}
 
 	@Override
 	protected Object convertToNative(String gml) throws Exception {
-		// hack då oracles GML-klasser inte gillar GeometryCollection utan föredrar MultiGeometry
-		// GeometryCollection finns inte i gml 2+ utan bara i gml 1 men förekommer i raä:s data fn
+		// hack dÃ¥ oracles GML-klasser inte gillar GeometryCollection utan fÃ¶redrar MultiGeometry
+		// GeometryCollection finns inte i gml 2+ utan bara i gml 1 men fÃ¶rekommer i raÃ¤:s data fn
 		gml = gml.replace("GeometryCollection", "MultiGeometry");
 		parser.parse(new StringReader(gml));
 		Node geomNode = parser.getDocument().getFirstChild();

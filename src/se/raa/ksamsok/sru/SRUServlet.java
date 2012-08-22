@@ -49,7 +49,7 @@ import se.raa.ksamsok.statistic.StatisticLoggData;
 import se.raa.ksamsok.statistic.StatisticsManager;
 
 /**
- * Servlet som svarar på sru-anrop och som söker i indexet.
+ * Servlet som svarar pÃ¥ sru-anrop och som sÃ¶ker i indexet.
  */
 @SuppressWarnings("unused")
 public class SRUServlet extends HttpServlet {
@@ -63,19 +63,19 @@ public class SRUServlet extends HttpServlet {
 	public static final String NS_ZR_20 = "http://explain.z3950.org/dtd/2.0/";
 	public static final String NS_SAMSOK_PRES = "http://kulturarvsdata.se/presentation#";
 	public static final String PREFIX_NS_SAMSOK_PRES = "pres";
-	public static final String LOCATION_NS_SAMSOK_PRES = "http://kulturarvsdata.se/resurser/presentation.xsd";  // TODO: rätt schemaplats
+	public static final String LOCATION_NS_SAMSOK_PRES = "http://kulturarvsdata.se/resurser/presentation.xsd";  // TODO: rÃ¤tt schemaplats
 	//public static final String NS_OAI_DC = "http://www.openarchives.org/OAI/2.0/oai_dc/";
-	// TODO: k-samsöks-rdf?
+	// TODO: k-samsÃ¶ks-rdf?
 	public static final String NS_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 	public static final String PREFIX_NS_RDF = "rdf";
-	public static final String LOCATION_NS_RDF = "http://www.w3.org/2000/07/rdf.xsd";  // TODO: rätt schemaplats
+	public static final String LOCATION_NS_RDF = "http://www.w3.org/2000/07/rdf.xsd";  // TODO: rÃ¤tt schemaplats
 
 	public static final String SRU_VERSION = "1.1";
 
 	private static final int DEFAULT_NUM_RECORDS = 10;
 	private static final int MAX_NUM_RECORDS = 500;
 
-	// TODO: bättre datastruktur för att kunna använda i explain och överallt
+	// TODO: bÃ¤ttre datastruktur fÃ¶r att kunna anvÃ¤nda i explain och Ã¶verallt
 	private static final Map<String, String> knownSchemas = new HashMap<String, String>();
 
 	@Autowired
@@ -130,15 +130,15 @@ public class SRUServlet extends HttpServlet {
 		try {
 			reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 		} catch (Exception e) {
-			throw new ServletException("Fel i query-sträng", e);
+			throw new ServletException("Fel i query-strÃ¤ng", e);
 		}
 		
 		String operation = reqParams.get("operation");
-		// tala om att det är xml vi skickar 
+		// tala om att det Ã¤r xml vi skickar 
 		resp.setContentType("text/xml; charset=UTF-8");
 		XMLStreamWriter xmlsw = null;
 		PrintWriter writer = resp.getWriter();
-		// logga bara stats för icke-explain, dvs "riktig" användning
+		// logga bara stats fÃ¶r icke-explain, dvs "riktig" anvÃ¤ndning
 		if (operation != null && !operation.equals("explain")) {
 			try {
 				storeOverviewStatistics(reqParams.get(APIMethod.API_KEY_PARAM_NAME));
@@ -176,7 +176,7 @@ public class SRUServlet extends HttpServlet {
 				} else if (operation.equals("explain")) {
 					handleExplain(reqParams, writer);
 				} else {
-					// fel i (eller ej stödd) parameter operation
+					// fel i (eller ej stÃ¶dd) parameter operation
 					diagnostics(writer, 4, "Unsupported operation");
 				}
 			} else {
@@ -191,14 +191,14 @@ public class SRUServlet extends HttpServlet {
 				try {
 					xmlsw.close();
 				} catch (Exception e) {
-					logger.warn("Fel vid stängning av XMLStreamWriter", e);
+					logger.warn("Fel vid stÃ¤ngning av XMLStreamWriter", e);
 				}
 			}
 		}
 	}
 
 	/*
- 		Känns inte lika läsbart som den nedan tyvärr
+ 		KÃ¤nns inte lika lÃ¤sbart som den nedan tyvÃ¤rr
 	private void handleExplain(HttpServletRequest request,	HttpServletResponse response,
 			XMLStreamWriter xmlsw) throws ServletException, IOException, XMLStreamException {
 		xmlsw.writeStartElement(NS_SRW, "explainResponse");
@@ -220,12 +220,12 @@ public class SRUServlet extends HttpServlet {
 		xmlsw.writeStartElement("title");
 		xmlsw.writeAttribute("lang", "en");
 		xmlsw.writeAttribute("primary", "true");
-		xmlsw.writeCharacters("K-samsök");
+		xmlsw.writeCharacters("K-samsÃ¶k");
 		xmlsw.writeEndElement();
 		xmlsw.writeStartElement("description");
 		xmlsw.writeAttribute("lang", "en");
 		xmlsw.writeAttribute("primary", "true");
-		xmlsw.writeCharacters("Information skördad från flera källor");
+		xmlsw.writeCharacters("Information skÃ¶rdad frÃ¥n flera kÃ¤llor");
 		xmlsw.writeEndElement();
 		xmlsw.writeEndElement();
 		xmlsw.writeStartElement(NS_ZR_20, "schemaInfo");
@@ -249,7 +249,7 @@ public class SRUServlet extends HttpServlet {
 
 	// hantera ett sru-explain-anrop
 	private void handleExplain(Map<String, String> reqParams, PrintWriter writer) throws ServletException, IOException {
-		// 2-ställig är sv, 3-ställig är swe, se http://www.loc.gov/standards/iso639-2/
+		// 2-stÃ¤llig Ã¤r sv, 3-stÃ¤llig Ã¤r swe, se http://www.loc.gov/standards/iso639-2/
 		final String langSV = "lang=\"sv\"";
 		writer.println("<srw:explainResponse xmlns:srw=\"" + NS_SRW + "\">");
 		writer.println("  <srw:version>" + SRU_VERSION + "</srw:version>");
@@ -260,18 +260,18 @@ public class SRUServlet extends HttpServlet {
 
 		writer.println("      <explain xmlns=\"" + NS_ZR_20 + "\">");
 		writer.println("        <databaseInfo>");
-		writer.println("           <title " + langSV + " primary=\"true\">K-Samsök</title>");
+		writer.println("           <title " + langSV + " primary=\"true\">K-SamsÃ¶k</title>");
 		writer.println("           <description " + langSV + " primary=\"true\">");
-		writer.println("               Information skördad från flera källor. Index markerade med [*]");
-		writer.println("               har även en prefixad variant per sammanhang (värden av index ");
-		writer.println("               " + ContentHelper.IX_CONTEXTTYPE + ") som enbart söker i data");
-		writer.println("               för det sammanhanget. De prefix som finns fn är [");
-		// hämta dynamiskt ut alla värden för contextType
+		writer.println("               Information skÃ¶rdad frÃ¥n flera kÃ¤llor. Index markerade med [*]");
+		writer.println("               har Ã¤ven en prefixad variant per sammanhang (vÃ¤rden av index ");
+		writer.println("               " + ContentHelper.IX_CONTEXTTYPE + ") som enbart sÃ¶ker i data");
+		writer.println("               fÃ¶r det sammanhanget. De prefix som finns fn Ã¤r [");
+		// hÃ¤mta dynamiskt ut alla vÃ¤rden fÃ¶r contextType
 		List<Term> terms = Collections.emptyList();
 		try {
 			terms = searchService.terms(ContentHelper.IX_CONTEXTTYPE, "", 1, -1);
 		} catch (SolrServerException e) {
-			logger.warn("Fel vid hämtande av kontext-typer", e);
+			logger.warn("Fel vid hÃ¤mtande av kontext-typer", e);
 		}
 		String prefix = null;
 		for (Term t: terms) {
@@ -283,10 +283,10 @@ public class SRUServlet extends HttpServlet {
 		writer.println("               ]");
 		writer.println("               Pga av antalet prefixade individuella index listas de ej nedan.");
 		if (prefix != null) {
-			writer.println("               Exempel på prefixad sökning: " + prefix + "_" +
+			writer.println("               Exempel pÃ¥ prefixad sÃ¶kning: " + prefix + "_" +
 					ContentHelper.IX_PARISHNAME + "=felestad.");
 		}
-		writer.println("               För att söka behövs en api-nyckel (x-api=[nyckel]), se http://kulturarvsdata.se.");
+		writer.println("               FÃ¶r att sÃ¶ka behÃ¶vs en api-nyckel (x-api=[nyckel]), se http://kulturarvsdata.se.");
 		writer.println("           </description>");
 		writer.println("        </databaseInfo>");
 
@@ -298,7 +298,7 @@ public class SRUServlet extends HttpServlet {
 			writer.println("              <title " + langSV + ">" + xmlEscape(index.getTitle()) + "</title>");
 			writer.println("              <map>");
 			writer.println("                 <name set=\"" + ContentHelper.CONTEXT_SET_SAMSOK + "\">" + index.getIndex() + "</name>");
-			// special för itemId/rec.identifier
+			// special fÃ¶r itemId/rec.identifier
 			if (ContentHelper.IX_ITEMID.equals(index.getIndex())) {
 				writer.println("                 <name set=\"" + ContentHelper.CONTEXT_SET_REC + "\">" + ContentHelper.IX_REC_IDENTIFIER + "</name>");
 			}
@@ -316,7 +316,7 @@ public class SRUServlet extends HttpServlet {
 		writer.println("           <schema name=\"" + PREFIX_NS_SAMSOK_PRES + "\" identifier=\"" + NS_SAMSOK_PRES + "\"");
 		writer.println("                 location=\"" + LOCATION_NS_SAMSOK_PRES + "\""); 
 		writer.println("                 sort=\"false\" retrieve=\"true\">");
-		writer.println("              <title " + langSV + ">Presentation K-Samsök</title>");
+		writer.println("              <title " + langSV + ">Presentation K-SamsÃ¶k</title>");
 		writer.println("           </schema>");
 		writer.println("        </schemaInfo>");
 
@@ -356,7 +356,7 @@ public class SRUServlet extends HttpServlet {
 		String maximumTerms = reqParams.get("maximumTerms");
 		//String extra_request_data = request.getParameter("extraRequestData");
 
-		// TODO: stöd max + responsepos
+		// TODO: stÃ¶d max + responsepos
 		// kontrollera versionsparametern
 		if (!checkVersion(writer, version, false)) {
 			return;
@@ -372,9 +372,9 @@ public class SRUServlet extends HttpServlet {
 				}
 				CQL2Solr.dumpQueryTree(rootNode);
 				CQLTermNode termNode = (CQLTermNode) rootNode;
-				// hämta ut relationen
+				// hÃ¤mta ut relationen
 				String rel = termNode.getRelation().toCQL();
-				// kontrollera att relationen är giltig
+				// kontrollera att relationen Ã¤r giltig
 				final String[] validRels = { "=" }; // bara "=" nu, "any" }; // "exact", "all" };
 				final List<String> validRelsList = Arrays.asList(validRels);
 				if (!validRelsList.contains(rel)) {
@@ -426,7 +426,7 @@ public class SRUServlet extends HttpServlet {
 		}
 	}
 
-	// hantera ett sök-anrop
+	// hantera ett sÃ¶k-anrop
 	private void handleSearchRetrieve(Map<String, String> reqParams, PrintWriter writer) throws ServletException, IOException {
 		writer.println("<srw:searchRetrieveResponse xmlns:srw=\"" + NS_SRW + "\">");
 		writer.println("  <srw:version>" + SRU_VERSION + "</srw:version>");
@@ -445,8 +445,8 @@ public class SRUServlet extends HttpServlet {
 		String record_schema = reqParams.get("recordSchema");
 		String record_packing = reqParams.get("recordPacking");
 
-		// specialfall tills vidare för sortering istället för att införa
-		// generell sortering då detta är enklare
+		// specialfall tills vidare fÃ¶r sortering istÃ¤llet fÃ¶r att infÃ¶ra
+		// generell sortering dÃ¥ detta Ã¤r enklare
 		boolean europeanaSort = "true".equals(reqParams.get("x-europeana-sort"));
 		/*
 		String record_xpath = request.getParameter("recordXPath");
@@ -514,7 +514,7 @@ public class SRUServlet extends HttpServlet {
 				q.setStart(first_record - 1);
 				q.setRows(num_hits_per_page);
 
-				// hämta rätt xml
+				// hÃ¤mta rÃ¤tt xml
 				String dataIndex = NS_SAMSOK_PRES.equals(record_schema) ? ContentHelper.I_IX_PRES : ContentHelper.I_IX_RDF;
 				q.addField(dataIndex);
 				q.addField(ContentHelper.IX_ITEMID);
@@ -530,16 +530,16 @@ public class SRUServlet extends HttpServlet {
 				int nDocs = first_record - 1 + num_hits_per_page;
 				if (q != null) {
 					if (europeanaSort) {
-						// specialsortering för europeana på lucenes interna dokument-id för att
+						// specialsortering fÃ¶r europeana pÃ¥ lucenes interna dokument-id fÃ¶r att
 						// alltid ha en konsekvent sorteringsordning - flera dokument kan ha samma
-						// score och då kan det vara odefinierat vilken av dem som kommer först
-						// vilket kan ge samma post om en sidobrytpunkt är just där.
+						// score och dÃ¥ kan det vara odefinierat vilken av dem som kommer fÃ¶rst
+						// vilket kan ge samma post om en sidobrytpunkt Ã¤r just dÃ¤r.
 						q.addSortField(ContentHelper.IX_ITEMID, ORDER.asc);
 					}
 					QueryResponse qr = searchService.query(q);
 					hits = qr.getResults();
 				} else {
-					// ingen query men inget fel, ge då 0 träffar
+					// ingen query men inget fel, ge dÃ¥ 0 trÃ¤ffar
 					hits = new SolrDocumentList();
 				}
 				if (hits.getNumFound() > 0 && hits.getNumFound() < first_record) {
@@ -555,9 +555,9 @@ public class SRUServlet extends HttpServlet {
 					String content;
 					String uri;
 					for (SolrDocument doc: hits) {
-						content = null; // rensa värde
-						// TODO: fler och bättre felkontroller
-						// TODO: stödja fler format?
+						content = null; // rensa vÃ¤rde
+						// TODO: fler och bÃ¤ttre felkontroller
+						// TODO: stÃ¶dja fler format?
 						double score = ((Number) doc.getFieldValue("score")).doubleValue();
 						uri = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 						// TODO: ta bort?
@@ -572,7 +572,7 @@ public class SRUServlet extends HttpServlet {
 						if (xmlData != null) {
 							content = new String(xmlData, "UTF-8");
 						}
-						// TODO: NEK ta bort nedan när allt är omindexerat
+						// TODO: NEK ta bort nedan nÃ¤r allt Ã¤r omindexerat
 						if (content == null && ContentHelper.I_IX_RDF.equals(dataIndex)) {
 							content = hrm.getXMLData(uri); 
 						}
@@ -587,8 +587,8 @@ public class SRUServlet extends HttpServlet {
 							writer.println("     </srw:extraRecordData>");
 							writer.println("  </srw:record>");
 						} else {
-							logger.warn("Hittade inte xmldata (" + dataIndex + ") för " + uri);
-							// skriv ut en diagnostic-post istället
+							logger.warn("Hittade inte xmldata (" + dataIndex + ") fÃ¶r " + uri);
+							// skriv ut en diagnostic-post istÃ¤llet
 							writer.println("  <srw:record>");
 							writer.println("     <srw:recordSchema>info:srw/schema/1/diagnostics-v1.1</srw:recordSchema>");
 							writer.println("     <srw:recordPacking>xml</srw:recordPacking>");
@@ -636,7 +636,7 @@ public class SRUServlet extends HttpServlet {
 		}
 	}
 
-	// hjälpmetoder för att skriva diagnostics
+	// hjÃ¤lpmetoder fÃ¶r att skriva diagnostics
 	private void diagnostics(PrintWriter writer, int error_key, String message) {
 		diagnostics(writer, error_key, message, null, false, true);
 	}
@@ -651,7 +651,7 @@ public class SRUServlet extends HttpServlet {
 	}
 	private void diagnostics(PrintWriter writer, int error_key, String message, String details, boolean numRecords, boolean srwNs) {
 		if (numRecords) {
-			// numberOfRecords är obligatoriskt för searchRetrieve
+			// numberOfRecords Ã¤r obligatoriskt fÃ¶r searchRetrieve
 			writer.println("  <srw:numberOfRecords>0</srw:numberOfRecords>");
 		}
 		writer.println("<srw:diagnostics" + (srwNs ? " xmlns:srw=\"" + NS_SRW + "\"" : "") + ">");
@@ -677,7 +677,7 @@ public class SRUServlet extends HttpServlet {
 
 	private void diagnostics(PrintWriter writer, Throwable t, boolean numRecords) {
 		// DiagnosticsException och CQLParseException kanske tas om hand i respektive operation
-		// men vi har en kontroll här också
+		// men vi har en kontroll hÃ¤r ocksÃ¥
 		if (t instanceof DiagnosticsException) {
 			DiagnosticsException de = (DiagnosticsException) t;
 			diagnostics(writer, de.getErrorKey(), de.getMessage(), de.getDetails(), numRecords);
@@ -689,7 +689,7 @@ public class SRUServlet extends HttpServlet {
 			return;
 		}
 		if (numRecords) {
-			// numberOfRecords är obligatoriskt för searchRetrieve
+			// numberOfRecords Ã¤r obligatoriskt fÃ¶r searchRetrieve
 			writer.println("  <srw:numberOfRecords>0</srw:numberOfRecords>");
 		}
 		writer.println("<srw:diagnostics>");
@@ -704,7 +704,7 @@ public class SRUServlet extends HttpServlet {
 	}
 
 	/**
-	 * Loggar data för sökningen för indexet "text".
+	 * Loggar data fÃ¶r sÃ¶kningen fÃ¶r indexet "text".
 	 * @param query cql
 	 * @param apiKey api-nyckel
 	 * @throws DiagnosticException
@@ -719,7 +719,7 @@ public class SRUServlet extends HttpServlet {
 			loggData(bool.right, apiKey);
 		} else if (query instanceof CQLTermNode) {
 			CQLTermNode t = (CQLTermNode) query;
-			// bara för "text"
+			// bara fÃ¶r "text"
 			if (t.getIndex().equals(ContentHelper.IX_TEXT)) {
 				StatisticLoggData data = new StatisticLoggData();
 				data.setParam(t.getIndex());
@@ -736,7 +736,7 @@ public class SRUServlet extends HttpServlet {
 			diagnostics(writer, 7, "Mandatory parameter not supplied", "version", numRecords);
 			return false;
 		}
-		// vi stödjer bara 1.1 fn
+		// vi stÃ¶djer bara 1.1 fn
 		if (!SRU_VERSION.equals(version)) {
 			diagnostics(writer, 5, "Unsupported version", SRU_VERSION, numRecords);
 			return false;
@@ -744,7 +744,7 @@ public class SRUServlet extends HttpServlet {
 		return true;
 	}
 
-	// grundläggande xml-escape
+	// grundlÃ¤ggande xml-escape
 	private static String xmlEscape(String s) {
 		// TODO: inte helt 100
 		//return s.replaceAll("\\&","&amp;").replaceAll("<","&lt;");

@@ -26,7 +26,7 @@ import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Basklass för skördejobb.
+ * Basklass fÃ¶r skÃ¶rdejobb.
  */
 public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 
@@ -38,7 +38,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Hämtar HarvestServiceManager från cron-context.
+	 * HÃ¤mtar HarvestServiceManager frÃ¥n cron-context.
 	 * 
 	 * @param ctx context
 	 * @return HarvestServiceManager
@@ -49,7 +49,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Hämtar HarvestRepositoryManager från cron-context.
+	 * HÃ¤mtar HarvestRepositoryManager frÃ¥n cron-context.
 	 * 
 	 * @param ctx context
 	 * @return HarvestRepositoryManager
@@ -60,7 +60,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Hämtar StatusService från cron-context.
+	 * HÃ¤mtar StatusService frÃ¥n cron-context.
 	 * 
 	 * @param ctx context
 	 * @return StatusService
@@ -71,28 +71,28 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Gör (OAI-PMH) identify.
+	 * GÃ¶r (OAI-PMH) identify.
 	 * 
-	 * @param service tjänst
-	 * @return ett värdeobjekt med metadata om skördenoden
+	 * @param service tjÃ¤nst
+	 * @return ett vÃ¤rdeobjekt med metadata om skÃ¶rdenoden
 	 * @throws Exception
 	 */
 	protected abstract ServiceMetadata performIdentify(HarvestService service) throws Exception;
 
 	/**
-	 * Gör (OAI-PMH) getFormats.
+	 * GÃ¶r (OAI-PMH) getFormats.
 	 * 
-	 * @param service tjänst
-	 * @return lista med av skördenoden stödda format
+	 * @param service tjÃ¤nst
+	 * @return lista med av skÃ¶rdenoden stÃ¶dda format
 	 * @throws Exception
 	 */
 	protected abstract List<ServiceFormat> performGetFormats(HarvestService service) throws Exception;
 
 	/**
-	 * Gör (OAI-PMH) getSets.
+	 * GÃ¶r (OAI-PMH) getSets.
 	 * 
-	 * @param service tjänst
-	 * @return lista med av skördenoden stödda sets.
+	 * @param service tjÃ¤nst
+	 * @return lista med av skÃ¶rdenoden stÃ¶dda sets.
 	 * @throws Exception
 	 */
 	protected List<String> performGetSets(HarvestService service) throws Exception {
@@ -100,20 +100,20 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Gör (OAI-PMH) getRecords.
+	 * GÃ¶r (OAI-PMH) getRecords.
 	 * 
-	 * @param service tjänst
-	 * @param sm service-metadata (från identify)
-	 * @param f service-format (önskat format)
+	 * @param service tjÃ¤nst
+	 * @param sm service-metadata (frÃ¥n identify)
+	 * @param f service-format (Ã¶nskat format)
 	 * @param storeTo katalog att mellanlagra i
 	 * @param ss statusservice
-	 * @return antal records, eller -1 om det inte kunde bestämmas
+	 * @return antal records, eller -1 om det inte kunde bestÃ¤mmas
 	 * @throws Exception
 	 */
 	protected abstract int performGetRecords(HarvestService service, ServiceMetadata sm, ServiceFormat f, File storeTo, StatusService ss) throws Exception;
 
 	/**
-	 * Ger uri för önskat metadataformat.
+	 * Ger uri fÃ¶r Ã¶nskat metadataformat.
 	 * 
 	 * @return uri
 	 */
@@ -134,13 +134,13 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	public void execute(JobExecutionContext ctx) throws JobExecutionException {
 		// 1. init
 		// 2. kontrollera startsteg
-		// 3. om start är index kör det och sluta, annars kör identify
-		// 4. om vi har en hämtad fil sen tidigare i spool ta den och gå till steg 8
-		// 5. hämta och kontrollera metadataformat (getMetadataFormats)
-		// 6. om vi ska hämta ett visst set, hämta stödda sets och kontrollera (getSets)
-		// 7. hämta data till temp och flytta sen till spool-fil (getRecords)
-		// 8. gå igenom och lagra skörd i repo (lagra undan full skörd)
-		// 9. uppdatera solr-index från repo
+		// 3. om start Ã¤r index kÃ¶r det och sluta, annars kÃ¶r identify
+		// 4. om vi har en hÃ¤mtad fil sen tidigare i spool ta den och gÃ¥ till steg 8
+		// 5. hÃ¤mta och kontrollera metadataformat (getMetadataFormats)
+		// 6. om vi ska hÃ¤mta ett visst set, hÃ¤mta stÃ¶dda sets och kontrollera (getSets)
+		// 7. hÃ¤mta data till temp och flytta sen till spool-fil (getRecords)
+		// 8. gÃ¥ igenom och lagra skÃ¶rd i repo (lagra undan full skÃ¶rd)
+		// 9. uppdatera solr-index frÃ¥n repo
 		// 10. klar
 		interrupted = false;
 		Date now = new Date();
@@ -164,7 +164,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			if (service == null) {
 				throw new JobExecutionException("Could not find service with ID: " + serviceId);
 			}
-			// specialfall för indexering från repo
+			// specialfall fÃ¶r indexering frÃ¥n repo
 			if (ss.getStartStep(service) == Step.INDEX) {
 				ss.initStatus(service, "Init");
 				ss.setStatusTextAndLog(service, "Updating index from repository");
@@ -192,11 +192,11 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 
 			ServiceMetadata sm = null;
 
-			int numRecords = -1; // -1 är okänt antal poster
+			int numRecords = -1; // -1 Ã¤r okÃ¤nt antal poster
 			spoolFile = hrm.getSpoolFile(service);
-			// kolla om vi har en hämtad fil som vi kan använda
+			// kolla om vi har en hÃ¤mtad fil som vi kan anvÃ¤nda
 			if (!spoolFile.exists()) {
-				// ingen tidigare hämtning att använda, gör identify
+				// ingen tidigare hÃ¤mtning att anvÃ¤nda, gÃ¶r identify
 				ss.setStatusTextAndLog(service, "Performing Identify");
 				sm = performIdentify(service);
 				ss.setStatusTextAndLog(service, "Fetching metadata format");
@@ -216,7 +216,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				// kolla om vi ska avbryta
 				checkInterrupt(ss, service);
 
-				// kontrollera om ev önskat set stöds av tjänsten
+				// kontrollera om ev Ã¶nskat set stÃ¶ds av tjÃ¤nsten
 				String setSpec = service.getHarvestSetSpec();
 				if (setSpec != null) {
 					boolean setSpecSupported = false;
@@ -238,7 +238,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 
 				// skapa tempfil
 				temp = File.createTempFile(jd.getName().substring(0, Math.min(4, serviceId.length())), null);
-				// hämta data till tempfilen
+				// hÃ¤mta data till tempfilen
 				ss.setStatusTextAndLog(service, "Fetching data to temp file");
 				numRecords = performGetRecords(service, sm, format, temp, ss);
 				if (numRecords != 0) {
@@ -256,10 +256,10 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				if (logger.isDebugEnabled()) {
 					logger.debug(serviceId + ", using existing file from spool: " + spoolFile.getName());
 				}
-				// vi har en spoolfil som ska användas och för att undvika ett nätanrop alls i det fallet så
+				// vi har en spoolfil som ska anvÃ¤ndas och fÃ¶r att undvika ett nÃ¤tanrop alls i det fallet sÃ¥
 				// "fuskar" vi till en metadata-instans
-				// OBS att om tjänsten egentligen stödjer persistent deletes (vilket fn är omöjligt att veta
-				//     här utan att fråga tjänsten) och spoolfilen är en delta-skörd kommer indexet ändå att
+				// OBS att om tjÃ¤nsten egentligen stÃ¶djer persistent deletes (vilket fn Ã¤r omÃ¶jligt att veta
+				//     hÃ¤r utan att frÃ¥ga tjÃ¤nsten) och spoolfilen Ã¤r en delta-skÃ¶rd kommer indexet Ã¤ndÃ¥ att
 				//     rensas och bara spoolfilens "delta-poster" lagras och indexeras!
 				sm = new ServiceMetadata(ServiceMetadata.D_TRANSIENT, ServiceMetadata.G_DAY);
 			}
@@ -269,7 +269,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				checkInterrupt(ss, service);
 
 				long fsizeMb = spoolFile.length() / (1024 * 1024);
-				// lagra skörd i repot
+				// lagra skÃ¶rd i repot
 				ss.setStatusTextAndLog(service, "Storing data in repo (" + numRecords + " records, appr " +
 						fsizeMb + "MB)");
 				if (logger.isDebugEnabled()) {
@@ -282,10 +282,10 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 					logger.debug(serviceId + ", stored records");
 				}
 
-				// arkivera fulla skördar
-				// TODO: arkiveringskatalog? tråd? delta-skördar?
+				// arkivera fulla skÃ¶rdar
+				// TODO: arkiveringskatalog? trÃ¥d? delta-skÃ¶rdar?
 				if (!sm.handlesPersistentDeletes() || service.getLastHarvestDate() == null) {
-					// "full skörd", arkivera
+					// "full skÃ¶rd", arkivera
 					ss.setStatusTextAndLog(service, "Archiving full harvest");
 					OutputStream os = null;
 					InputStream is = null;
@@ -306,17 +306,17 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 					}
 					ss.setStatusTextAndLog(service, "Archived full harvest to gzip (" + (of.length() / (1024*1024)) + " MB)");
 				}
-				// ta bort spool-filen då vi är klara med innehållet
+				// ta bort spool-filen dÃ¥ vi Ã¤r klara med innehÃ¥llet
 				if (!spoolFile.delete()) {
 					logger.error(serviceId + ", could not remove spool file");
 					ss.setStatusTextAndLog(service, "Note: Could not remove spool file");
 				}
 
-				// TODO: är detta rätt datum/tid att sätta även om vi har återupptagit
-				//       ett jobb som inte gick bra? kanske ska ta datum från spoolFile?
+				// TODO: Ã¤r detta rÃ¤tt datum/tid att sÃ¤tta Ã¤ven om vi har Ã¥terupptagit
+				//       ett jobb som inte gick bra? kanske ska ta datum frÃ¥n spoolFile?
 
-				// hämta senaste lyckade körning, bara om tjänsten stödjer persistent deletes
-				// möjliggör omindexering av mindre mängd
+				// hÃ¤mta senaste lyckade kÃ¶rning, bara om tjÃ¤nsten stÃ¶djer persistent deletes
+				// mÃ¶jliggÃ¶r omindexering av mindre mÃ¤ngd
 				Timestamp lastSuccessfulHarvestTs = null;
 				if (sm.handlesPersistentDeletes()) {
 					lastSuccessfulHarvestDate = service.getLastHarvestDate();
@@ -324,7 +324,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 						lastSuccessfulHarvestTs = new Timestamp(lastSuccessfulHarvestDate.getTime());
 					}
 				}
-				// uppdatera senaste skörde datum/tid för servicen
+				// uppdatera senaste skÃ¶rde datum/tid fÃ¶r servicen
 				if (!ss.containsRDFErrors(service)) {
 					hsm.updateServiceDate(service, nowTs);
 				} else {
@@ -335,7 +335,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				// kolla om vi ska avbryta
 				checkInterrupt(ss, service);
 
-				// uppdatera index för tjänsten
+				// uppdatera index fÃ¶r tjÃ¤nsten
 				if (changed) {
 					ss.setStatusTextAndLog(service, "Updating index" +
 							(lastSuccessfulHarvestTs != null ?
@@ -355,7 +355,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				if (logger.isInfoEnabled()) {
 					logger.info(serviceId + ", harvest resulted in no records");
 				}
-				// uppdatera med senaste skördetid
+				// uppdatera med senaste skÃ¶rdetid
 				if (!ss.containsRDFErrors(service)) {
 					hsm.updateServiceDate(service, now);
 				} else {
@@ -376,7 +376,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				}
 			}
 		} catch (Throwable e) {
-			// sätt felmeddelande i statusservicen
+			// sÃ¤tt felmeddelande i statusservicen
 			String errMsg = e.getMessage();
 			if (errMsg == null || errMsg.length() == 0) {
 				errMsg = e.toString();
@@ -399,10 +399,10 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Kontrollerar om jobbet ska avbrytas och kastar i så fall ett exception.
+	 * Kontrollerar om jobbet ska avbrytas och kastar i sÃ¥ fall ett exception.
 	 * 
 	 * @param ss statusservice
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @throws Exception om jobb ska avbrytas
 	 */
 	protected void checkInterrupt(StatusService ss, HarvestService service) throws Exception {
@@ -417,7 +417,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	/**
 	 * Rapporterar fel i loggen.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param message meddelande
 	 * @param e fel eller null
 	 */
@@ -430,9 +430,9 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Hjälpmetod som stänger en ut-ström.
+	 * HjÃ¤lpmetod som stÃ¤nger en ut-strÃ¶m.
 	 * 
-	 * @param os ström
+	 * @param os strÃ¶m
 	 */
 	protected void closeStream(OutputStream os) {
 		if (os != null) {
@@ -443,9 +443,9 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 	}
 
 	/**
-	 * Hjälpmetod som stänger en in-ström.
+	 * HjÃ¤lpmetod som stÃ¤nger en in-strÃ¶m.
 	 * 
-	 * @param is ström
+	 * @param is strÃ¶m
 	 */
 	protected void closeStream(InputStream is) {
 		if (is != null) {

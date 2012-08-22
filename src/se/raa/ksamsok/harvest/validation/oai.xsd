@@ -17,7 +17,7 @@
   <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
   
   <!-- 
-  Här börjar schemat. oai.xsd anropas av validatorn 
+  HÃ¤r bÃ¶rjar schemat. oai.xsd anropas av validatorn 
   http://www.openarchives.org/OAI/openarchivesprotocol.html#OAIPMHschema
   -->
   <xs:element name="OAI-PMH">
@@ -36,7 +36,7 @@
         <xs:extension base="xs:string">
           <xs:attribute name="metadataPrefix" use="required"/>
           <xs:attribute name="identifier" use="optional"/>
-          <!-- Optional för att om status=deleted i header attribut så finns inte verb med -->
+          <!-- Optional fÃ¶r att om status=deleted i header attribut sÃ¥ finns inte verb med -->
           <xs:attribute name="verb" use="optional"/>   
         </xs:extension>
       </xs:simpleContent>
@@ -67,7 +67,7 @@
         <xs:element ref="oai:setSpec" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="status" use="optional">
-        <!-- Måste ligga här av någon anledning -->
+        <!-- MÃ¥ste ligga hÃ¤r av nÃ¥gon anledning -->
       	<xs:simpleType>
           <xs:restriction base="xs:string">
              <xs:enumeration value="deleted"/>

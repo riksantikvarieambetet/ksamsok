@@ -32,9 +32,9 @@ import se.raa.ksamsok.statistic.StatisticsManager;
  * @author Henrik Hjalmarsson
  */
 public class APIMethodFactory implements APIServiceProvider {
-	// diverse tj‰nster och managers som anv‰nds av metoder
-	// de gˆrs tillg‰ngliga via APIServiceProvider och s‰tts mha spring
-	// en gÂng pÂ fabriken ist‰llet fˆr vid varje metodinstansiering
+	// diverse tj√§nster och managers som anv√§nds av metoder
+	// de g√∂rs tillg√§ngliga via APIServiceProvider och s√§tts mha spring
+	// en g√•ng p√• fabriken ist√§llet f√∂r vid varje metodinstansiering
 	@Autowired
 	SearchService searchService;
 	@Autowired
@@ -50,17 +50,17 @@ public class APIMethodFactory implements APIServiceProvider {
 	}
 
 	/**
-	 * returnerar en instans av APIMethod beroende pÂ vilka parametrar som
+	 * returnerar en instans av APIMethod beroende p√• vilka parametrar som
 	 * kommer in
 	 * @param params mottagna parametrar
-	 * @param writer fˆr att skriva svaret
-	 * @return APIMethod en instans av nÂgon subklass till APIMethod
+	 * @param writer f√∂r att skriva svaret
+	 * @return APIMethod en instans av n√•gon subklass till APIMethod
 	 */
 	public APIMethod getAPIMethod(Map<String, String> params, PrintWriter writer)
 			throws MissingParameterException, BadParameterException {
-		//h‰mtar ut metodnamnet frÂn parametermappen
+		//h√§mtar ut metodnamnet fr√•n parametermappen
 		String method = params.get(APIMethod.METHOD);
-		if (method == null) { //mÂste alltid finnas en metod
+		if (method == null) { //m√•ste alltid finnas en metod
 			throw new MissingParameterException("obligatorisk parameter " + 
 					APIMethod.METHOD + " saknas",
 					"APIMethodFactory.getAPIMethod", "metod saknas", false);
@@ -80,7 +80,7 @@ public class APIMethodFactory implements APIServiceProvider {
 	private APIMethod getMethod(String method, Map<String,String> params,
 			PrintWriter writer) throws MissingParameterException {
 		APIMethod m = null;
-		//en ny if-sats l‰ggs till fˆr varje ny metod
+		//en ny if-sats l√§ggs till f√∂r varje ny metod
 		if (method.equals(Search.METHOD_NAME)) {
 			m = new Search(this, writer, params);
 		} else if (method.equals(Statistic.METHOD_NAME)) {

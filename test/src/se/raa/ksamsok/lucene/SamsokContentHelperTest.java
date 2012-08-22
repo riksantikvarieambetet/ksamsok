@@ -76,10 +76,10 @@ public class SamsokContentHelperTest {
 		assertEquals("Fel identifierare", "http://kulturarvsdata.se/raa/test/1", doc.getFieldValue(ContentHelper.IX_ITEMID));
 		assertNotNull("Ingen RDF", doc.getFieldValue(ContentHelper.I_IX_RDF));
 		assertNotNull("Inget pres-block", doc.getFieldValue(ContentHelper.I_IX_PRES));
-		// specialindexet för relationer
+		// specialindexet fÃ¶r relationer
 		Collection<Object> relations = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
-		assertNotNull("Specialindexet för relationer saknas", relations);
-		assertEquals("Specialindexet för relationer har fel antal", 1, relations.size());
+		assertNotNull("Specialindexet fÃ¶r relationer saknas", relations);
+		assertEquals("Specialindexet fÃ¶r relationer har fel antal", 1, relations.size());
 		assertEquals("Felaktig relation", "isRelatedTo|http://kulturarvsdata.se/raa/test/2", relations.iterator().next());
 
 		assertNotNull("Ingen beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION));
@@ -88,7 +88,7 @@ public class SamsokContentHelperTest {
 
 	@Test
 	public void testCreateDoc_0_TO_1_0_All() throws Exception {
-		// test av (nästan) allt
+		// test av (nÃ¤stan) allt
 
 		SamsokContentHelper helper = new SamsokContentHelper();
 		HarvestService service = new HarvestServiceImpl();
@@ -129,7 +129,7 @@ public class SamsokContentHelperTest {
 		singleValueIndexAssert(doc, ContentHelper.IX_SAMEAS, "http://kulturarvsdata.se/raa/test/17");
 		singleValueIndexAssert(doc, ContentHelper.IX_VISUALIZES, "http://kulturarvsdata.se/raa/test/18");
 
-		// specialindexet för relationer
+		// specialindexet fÃ¶r relationer
 		multipleValueIndexAssert(doc, ContentHelper.I_IX_RELATIONS, new String[] {
 				ContentHelper.IX_ISRELATEDTO + "|" + "http://kulturarvsdata.se/raa/test/2",
 				ContentHelper.IX_CONTAINSINFORMATIONABOUT + "|" + "http://kulturarvsdata.se/raa/test/3",
@@ -150,7 +150,7 @@ public class SamsokContentHelperTest {
 				ContentHelper.IX_VISUALIZES + "|" + "http://kulturarvsdata.se/raa/test/18"
 		}, 17);
 
-		// \u00e5 å, \u00e4 ä,  \u00f6 ö
+		// \u00e5 Ã¥, \u00e4 Ã¤,  \u00f6 Ã¶
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTITLE, "Gustav Vasas hj\u00e4lm");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMLABEL, "Hj\u00e4lm");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "Objekt/f\u00f6rem\u00e5l");
@@ -243,14 +243,14 @@ public class SamsokContentHelperTest {
 		singleValueIndexAssert(doc, "use_" + ContentHelper.IX_TOTIME, "1560");
 		multipleValueIndexAssert(doc, ContentHelper.IX_DECADE, new String[] {
 				"1540", "1550", "1560"
-		}, -1); // 4 värden, 1540 är med 2 ggr, fixa i TimeUtil-metoden?
+		}, -1); // 4 vÃ¤rden, 1540 Ã¤r med 2 ggr, fixa i TimeUtil-metoden?
 		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_DECADE, "1540");
 		multipleValueIndexAssert(doc, "use_" + ContentHelper.IX_DECADE, new String[] {
 				"1540", "1550", "1560"
 		}, 3);
 		multipleValueIndexAssert(doc, ContentHelper.IX_CENTURY, new String[] {
 				"1500"	
-		}, -1); // 2 värden, 1500 är med 2 ggr, fixa i TimeUtil-metoden?
+		}, -1); // 2 vÃ¤rden, 1500 Ã¤r med 2 ggr, fixa i TimeUtil-metoden?
 		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_CENTURY, "1500");
 		singleValueIndexAssert(doc, "use_" + ContentHelper.IX_CENTURY, "1500");
 
@@ -280,12 +280,12 @@ public class SamsokContentHelperTest {
 		assertEquals("Fel identifierare", "http://kulturarvsdata.se/raa/test/1", doc.getFieldValue(ContentHelper.IX_ITEMID));
 		assertNotNull("Ingen RDF", doc.getFieldValue(ContentHelper.I_IX_RDF));
 		assertNotNull("Inget pres-block", doc.getFieldValue(ContentHelper.I_IX_PRES));
-		// specialindexet för relationer
+		// specialindexet fÃ¶r relationer
 		Collection<Object> relations = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
-		assertNotNull("Specialindexet för relationer saknas", relations);
-		assertEquals("Specialindexet för relationer har fel antal", 2, relations.size());
-		assertTrue("Specialindexvärde finns inte med", relations.contains("isRelatedTo|http://kulturarvsdata.se/raa/test/2"));
-		assertTrue("Specialindexvärde finns inte med", relations.contains("has_former_or_current_owner|http://libris.kb.se/resource/auth/58087"));
+		assertNotNull("Specialindexet fÃ¶r relationer saknas", relations);
+		assertEquals("Specialindexet fÃ¶r relationer har fel antal", 2, relations.size());
+		assertTrue("SpecialindexvÃ¤rde finns inte med", relations.contains("isRelatedTo|http://kulturarvsdata.se/raa/test/2"));
+		assertTrue("SpecialindexvÃ¤rde finns inte med", relations.contains("has_former_or_current_owner|http://libris.kb.se/resource/auth/58087"));
 
 		assertNotNull("Ingen beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION));
 		assertTrue("Fel beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION).toString().contains("som beskriver Gustav"));
@@ -293,7 +293,7 @@ public class SamsokContentHelperTest {
 
 	@Test
 	public void testCreateDoc_1_1_All() throws Exception {
-		// test av (nästan) allt
+		// test av (nÃ¤stan) allt
 
 		SamsokContentHelper helper = new SamsokContentHelper();
 		HarvestService service = new HarvestServiceImpl();
@@ -341,7 +341,7 @@ public class SamsokContentHelperTest {
 		singleValueIndexAssert(doc, ContentHelper.IX_ISMENTIONEDBY, "http://kulturarvsdata.se/raa/test/23");
 		singleValueIndexAssert(doc, ContentHelper.IX_CLIENT, "http://kulturarvsdata.se/raa/test/24");
 
-		// specialindexet för relationer
+		// specialindexet fÃ¶r relationer
 		String[] allRelations = new String[] {
 				ContentHelper.IX_ISRELATEDTO + "|" + "http://kulturarvsdata.se/raa/test/2",
 				ContentHelper.IX_CONTAINSINFORMATIONABOUT + "|" + "http://kulturarvsdata.se/raa/test/3",
@@ -369,7 +369,7 @@ public class SamsokContentHelperTest {
 		};
 		multipleValueIndexAssert(doc, ContentHelper.I_IX_RELATIONS, allRelations, allRelations.length);
 
-		// \u00e5 å, \u00e4 ä,  \u00f6 ö
+		// \u00e5 Ã¥, \u00e4 Ã¤,  \u00f6 Ã¶
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTITLE, "Gustav Vasas hj\u00e4lm");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMLABEL, "Hj\u00e4lm");
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "Objekt/f\u00f6rem\u00e5l"); // samma som pre 1.1
@@ -467,14 +467,14 @@ public class SamsokContentHelperTest {
 		singleValueIndexAssert(doc, "use_" + ContentHelper.IX_TOTIME, "1560");
 		multipleValueIndexAssert(doc, ContentHelper.IX_DECADE, new String[] {
 				"1540", "1550", "1560"
-		}, -1); // 4 värden, 1540 är med 2 ggr, fixa i TimeUtil-metoden?
+		}, -1); // 4 vÃ¤rden, 1540 Ã¤r med 2 ggr, fixa i TimeUtil-metoden?
 		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_DECADE, "1540");
 		multipleValueIndexAssert(doc, "use_" + ContentHelper.IX_DECADE, new String[] {
 				"1540", "1550", "1560"
 		}, 3);
 		multipleValueIndexAssert(doc, ContentHelper.IX_CENTURY, new String[] {
 				"1500"	
-		}, -1); // 2 värden, 1500 är med 2 ggr, fixa i TimeUtil-metoden?
+		}, -1); // 2 vÃ¤rden, 1500 Ã¤r med 2 ggr, fixa i TimeUtil-metoden?
 		singleValueIndexAssert(doc, "create_" + ContentHelper.IX_CENTURY, "1500");
 		singleValueIndexAssert(doc, "use_" + ContentHelper.IX_CENTURY, "1500");
 
@@ -497,27 +497,27 @@ public class SamsokContentHelperTest {
 
 	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value, boolean contains) {
 		String docValue = (String) doc.getFieldValue(indexName);
-		assertNotNull("Fältet " + indexName + " saknas", docValue);
+		assertNotNull("FÃ¤ltet " + indexName + " saknas", docValue);
 		Collection<Object> docValues = doc.getFieldValues(indexName);
-		assertEquals("Fältet " + indexName + " ska bara ha ett värde, värden är, " +
+		assertEquals("FÃ¤ltet " + indexName + " ska bara ha ett vÃ¤rde, vÃ¤rden Ã¤r, " +
 				docValues, 1, docValues.size());
 		if (contains) {
-			assertTrue("Fel värde för " + indexName, docValue.contains(value));
+			assertTrue("Fel vÃ¤rde fÃ¶r " + indexName, docValue.contains(value));
 		} else {
-			assertEquals("Fel värde för " + indexName, value, docValue);
+			assertEquals("Fel vÃ¤rde fÃ¶r " + indexName, value, docValue);
 		}
 	}
 
 	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName, String[] values, int count) {
 		Collection<Object> docValues = doc.getFieldValues(indexName);
-		assertNotNull("Fältet " + indexName + " saknas", docValues);
+		assertNotNull("FÃ¤ltet " + indexName + " saknas", docValues);
 		if (count > 0) {
-			assertEquals("Fältet " + indexName + " innehåller fel antal värden, värden är" +
+			assertEquals("FÃ¤ltet " + indexName + " innehÃ¥ller fel antal vÃ¤rden, vÃ¤rden Ã¤r" +
 					docValues, count, docValues.size());
 		}
 		for (String value: values) {
-			assertTrue("Värdet " + value + " saknas för " + indexName +
-					", värden är " + docValues, docValues.contains(value));
+			assertTrue("VÃ¤rdet " + value + " saknas fÃ¶r " + indexName +
+					", vÃ¤rden Ã¤r " + docValues, docValues.contains(value));
 		}
 	}
 
@@ -526,8 +526,8 @@ public class SamsokContentHelperTest {
 		InputStream is = null;
 		StringWriter sw = null;
 		try {
-			// förutsätter att testfallen körs med projektkatalogen som cwd
-			// vilket normalt är fallet både från ant och i eclipse
+			// fÃ¶rutsÃ¤tter att testfallen kÃ¶rs med projektkatalogen som cwd
+			// vilket normalt Ã¤r fallet bÃ¥de frÃ¥n ant och i eclipse
 			Document doc = builder.parse(new File("test/resources/" + fileName));
 			final int initialSize = 4096;
 			Source source = new DOMSource(doc);

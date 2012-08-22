@@ -6,127 +6,127 @@ import java.util.List;
 import se.raa.ksamsok.harvest.StatusService.Step;
 
 /**
- * Tjänst som hanterar skördetjänster.
+ * TjÃ¤nst som hanterar skÃ¶rdetjÃ¤nster.
  */
 public interface HarvestServiceManager {
 
-	// nyckelvärden för att nå managers i skördejobb
+	// nyckelvÃ¤rden fÃ¶r att nÃ¥ managers i skÃ¶rdejobb
 	public static final String HSM_KEY = "hsm";
 	public static final String HRM_KEY = "hrm";
 	public static final String SS_KEY = "ss";
 
-	// namn på lucenespecifika interna tjänster (eg bara cronjobb)
-	// TODO: värdena kanske bör ändras då det är solr nu, men de ligger i db också
+	// namn pÃ¥ lucenespecifika interna tjÃ¤nster (eg bara cronjobb)
+	// TODO: vÃ¤rdena kanske bÃ¶r Ã¤ndras dÃ¥ det Ã¤r solr nu, men de ligger i db ocksÃ¥
 	public static final String SERVICE_INDEX_OPTIMIZE = "_lucene_opt";
 	public static final String SERVICE_INDEX_REINDEX = "_lucene_reindex";
 
 	/**
-	 * Ger lista med alla användarskapade tjänster.
+	 * Ger lista med alla anvÃ¤ndarskapade tjÃ¤nster.
 	 * 
-	 * @return lista med tjänster, eller null vid databasproblem
+	 * @return lista med tjÃ¤nster, eller null vid databasproblem
 	 * @throws Exception
 	 */
 	List<HarvestService>getServices() throws Exception;
 
 	/**
-	 * Hämtar böna för tjänst med inskickad id.
+	 * HÃ¤mtar bÃ¶na fÃ¶r tjÃ¤nst med inskickad id.
 	 * 
 	 * @param serviceId id
-	 * @return tjänst eller null
+	 * @return tjÃ¤nst eller null
 	 * @throws Exception
 	 */
 	HarvestService getService(String serviceId) throws Exception;
 
 	/**
-	 * Uppdaterar tjänst i databasen.
+	 * Uppdaterar tjÃ¤nst i databasen.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @throws Exception
 	 */
 	void updateService(HarvestService service) throws Exception;
 
 	/**
-	 * Uppdaterar endast datumfältet (senaste lyckade skörd) för tjänsten i databasen.
+	 * Uppdaterar endast datumfÃ¤ltet (senaste lyckade skÃ¶rd) fÃ¶r tjÃ¤nsten i databasen.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @param date datum
 	 * @throws Exception
 	 */
 	void updateServiceDate(HarvestService service, Date date) throws Exception;
 
 	/**
-	 * Lagrar första gången tjänsten indexerades ok om inget värde finns.
-	 * @param service tjänst
+	 * Lagrar fÃ¶rsta gÃ¥ngen tjÃ¤nsten indexerades ok om inget vÃ¤rde finns.
+	 * @param service tjÃ¤nst
 	 */
 	void storeFirstIndexDateIfNotSet(HarvestService service) throws Exception;
 
 	/**
-	 * Tar bort en tjänst ur databasen. Tar även bort data ur repositoryt och ifrån
+	 * Tar bort en tjÃ¤nst ur databasen. Tar Ã¤ven bort data ur repositoryt och ifrÃ¥n
 	 * indexet.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @throws Exception
 	 */
 	void deleteService(HarvestService service) throws Exception;
 
 	/**
-	 * Skapar en ny tjänst i databasen.
+	 * Skapar en ny tjÃ¤nst i databasen.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @throws Exception
 	 */
 	void createService(HarvestService service) throws Exception;
 
 	/**
-	 * Skapar en ny instans av en tjänsteböna.
+	 * Skapar en ny instans av en tjÃ¤nstebÃ¶na.
 	 * 
 	 * @return ny tom instans
 	 */
 	HarvestService newServiceInstance();
 
 	/**
-	 * Triggar igång en skörd, dvs en full körning av skördejobbet för tjänsten.
+	 * Triggar igÃ¥ng en skÃ¶rd, dvs en full kÃ¶rning av skÃ¶rdejobbet fÃ¶r tjÃ¤nsten.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @throws Exception
 	 */
 	void triggerHarvest(HarvestService service) throws Exception;
 
 	/**
-	 * Triggar igång en omindexering, dvs en delkörning av skördejobbet för tjänsten.
-	 * Omindexeringen görs utifrån data i repositoryt.
+	 * Triggar igÃ¥ng en omindexering, dvs en delkÃ¶rning av skÃ¶rdejobbet fÃ¶r tjÃ¤nsten.
+	 * Omindexeringen gÃ¶rs utifrÃ¥n data i repositoryt.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @throws Exception
 	 */
 	void triggerReindex(HarvestService service) throws Exception;
 
 	/**
-	 * Triggar igång en avindexering, dvs gömmer tjänsten utan att tömma repositoryt.
+	 * Triggar igÃ¥ng en avindexering, dvs gÃ¶mmer tjÃ¤nsten utan att tÃ¶mma repositoryt.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @throws Exception
 	 */
 	void triggerRemoveindex(HarvestService service) throws Exception;
 
 	/**
-	 * Triggar igång omindexering av alla tjänster.
+	 * Triggar igÃ¥ng omindexering av alla tjÃ¤nster.
 	 * 
 	 * @throws Exception
 	 */
 	public void triggerReindexAll() throws Exception;
 
 	/**
-	 * Begär att en pågående skörd ska avbrytas.
+	 * BegÃ¤r att en pÃ¥gÃ¥ende skÃ¶rd ska avbrytas.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return sant om cronscheduleraren tyckte att jobbet kunde avbrytas
 	 * @throws Exception
 	 */
 	boolean interruptHarvest(HarvestService service) throws Exception;
 
 	/**
-	 * Begär att en pågående omindexering av alla tjänster ska avbrytas.
+	 * BegÃ¤r att en pÃ¥gÃ¥ende omindexering av alla tjÃ¤nster ska avbrytas.
 	 * 
 	 * @return sant om cronscheduleraren tyckte att jobbet kunde avbrytas
 	 * @throws Exception
@@ -134,55 +134,55 @@ public interface HarvestServiceManager {
 	boolean interruptReindexAll() throws Exception;
 
 	/**
-	 * Hämtar senast kända jobbstatus.
+	 * HÃ¤mtar senast kÃ¤nda jobbstatus.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return senaste jobbstatus
 	 */
 	String getJobStatus(HarvestService service);
 
 	/**
-	 * Ger om tjänstens jobb kör fn.
+	 * Ger om tjÃ¤nstens jobb kÃ¶r fn.
 	 * 
-	 * @param service tjänst
-	 * @return sant om tjänsten skördas eller omindexeras
+	 * @param service tjÃ¤nst
+	 * @return sant om tjÃ¤nsten skÃ¶rdas eller omindexeras
 	 */
 	boolean isRunning(HarvestService service);
 
 	/**
-	 * Hämtar senast kända jobbsteg.
+	 * HÃ¤mtar senast kÃ¤nda jobbsteg.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return senaste jobbsteg
 	 */
 	Step getJobStep(HarvestService service);
 
 	/**
-	 * Hämtar jobblogg för senaste körning efter omstart (bara från minne).
+	 * HÃ¤mtar jobblogg fÃ¶r senaste kÃ¶rning efter omstart (bara frÃ¥n minne).
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return lista med meddelanden
 	 */
 	List<String> getJobLog(HarvestService service);
 
 	/**
-	 * Hämtar jobblogg från databas.
+	 * HÃ¤mtar jobblogg frÃ¥n databas.
 	 * 
-	 * @param service tjänst
+	 * @param service tjÃ¤nst
 	 * @return lista med meddelanden
 	 */
 	List<String> getJobLogHistory(HarvestService service);
 
 	/**
-	 * Ger om denna instans är konfad att påtvinga år när tjänster scheduleras
-	 * @return sant om år påtvingas
+	 * Ger om denna instans Ã¤r konfad att pÃ¥tvinga Ã¥r nÃ¤r tjÃ¤nster scheduleras
+	 * @return sant om Ã¥r pÃ¥tvingas
 	 */
 	boolean isForceYear();
 
 	/**
-	 * Ger om quartz-scheduleraren har startats. I princip är detta samma sak som
+	 * Ger om quartz-scheduleraren har startats. I princip Ã¤r detta samma sak som
 	 * att kontrollera att init har lyckats.
-	 * @return sant om scheduleraren körs
+	 * @return sant om scheduleraren kÃ¶rs
 	 */
 	boolean isSchedulerStarted();
 }

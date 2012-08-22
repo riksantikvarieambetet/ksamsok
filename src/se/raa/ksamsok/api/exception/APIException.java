@@ -1,7 +1,7 @@
 package se.raa.ksamsok.api.exception;
 
 /**
- * Abstrakt exception klass för att kategorisera de övriga exceptions i detta
+ * Abstrakt exception klass fÃ¶r att kategorisera de Ã¶vriga exceptions i detta
  * program
  * @author Henrik Hjalmarsson
  */
@@ -16,8 +16,8 @@ public abstract class APIException extends Exception
 	/**
 	 * skapar ett APIException
 	 * @param message till externt system
-	 * @param className klassen och metoden där exception kastades
-	 * @param details detaljer för att se vad som blev fel
+	 * @param className klassen och metoden dÃ¤r exception kastades
+	 * @param details detaljer fÃ¶r att se vad som blev fel
 	 */
 	public APIException(String message, String className, String details,
 			boolean logg)
@@ -35,7 +35,7 @@ public abstract class APIException extends Exception
 	}
 	
 	/**
-	 * returnerar true om detta exception bör loggas
+	 * returnerar true om detta exception bÃ¶r loggas
 	 * @return
 	 */
 	public boolean logg()

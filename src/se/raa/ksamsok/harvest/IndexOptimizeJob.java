@@ -13,7 +13,7 @@ import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Klass som kör en optimering av index i form av en tjänst/cron-jobb.
+ * Klass som kÃ¶r en optimering av index i form av en tjÃ¤nst/cron-jobb.
  */
 public class IndexOptimizeJob extends HarvestJob {
 
@@ -65,7 +65,7 @@ public class IndexOptimizeJob extends HarvestJob {
 			ss.setStatusTextAndLog(service, "Index optimization performed in " +
 					ContentHelper.formatRunTime(durationMillis));
 			ss.setStep(service, Step.IDLE);
-			// uppdatera bara om vi har en tjänst med inskickat id, annars är det en engångskörning
+			// uppdatera bara om vi har en tjÃ¤nst med inskickat id, annars Ã¤r det en engÃ¥ngskÃ¶rning
 			if (hasService) {
 				hsm.updateServiceDate(service, new Date());
 			}

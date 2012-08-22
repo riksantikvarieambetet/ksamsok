@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Klass som hanterar h‰mtning/skˆrd av data frÂn fil.
+ * Klass som hanterar h√§mtning/sk√∂rd av data fr√•n fil.
  */
 public class SimpleHarvestJob extends HarvestJob {
 
@@ -37,7 +37,7 @@ public class SimpleHarvestJob extends HarvestJob {
 			ServiceMetadata sm, ServiceFormat f, File storeTo, StatusService ss) throws Exception {
 		int result = 0;
 		if (logger.isDebugEnabled()) {
-			logger.debug(service.getId() + " - H‰mtar " + service.getHarvestURL() + ", senaste h‰mtning: " + service.getLastHarvestDate());
+			logger.debug(service.getId() + " - H√§mtar " + service.getHarvestURL() + ", senaste h√§mtning: " + service.getLastHarvestDate());
 		}
 		byte[] buf = new byte[16384];
 		int read;
@@ -51,7 +51,7 @@ public class SimpleHarvestJob extends HarvestJob {
 				fos.write(buf, 0, read);
 			}
 			fos.flush();
-			// anv‰nd -1 dÂ vi inte vet hur mÂnga poster det ‰r
+			// anv√§nd -1 d√• vi inte vet hur m√•nga poster det √§r
 			result = -1;
 		} finally {
 			closeStream(is);

@@ -27,7 +27,7 @@ public class RDFUtil {
 
 	private static final Logger logger = Logger.getLogger(RDFUtil.class);
 
-    // har en close() men den gˆr inget sÂ vi skapar bara en instans
+    // har en close() men den g√∂r inget s√• vi skapar bara en instans
 	private static final JRDFFactory jrdfFactory = SortedMemoryJRDFFactory.getFactory();
 
 	public static Graph parseGraph(String rdfXml) throws Exception {
@@ -51,14 +51,14 @@ public class RDFUtil {
 		return graph;
 	}
 
-	// l‰ser ut ett v‰rde ur subjektnoden eller subjektnodens objektnod om denna ‰r en subjektnod
-	// och l‰gger till v‰rdet mha indexprocessorn
+	// l√§ser ut ett v√§rde ur subjektnoden eller subjektnodens objektnod om denna √§r en subjektnod
+	// och l√§gger till v√§rdet mha indexprocessorn
 	static String extractValue(Graph graph, SubjectNode s, URIReference ref, URIReference refRef, IndexProcessor ip) throws Exception {
 		return extractValue(graph, s, ref, refRef, ip, null);
 	}
 
-	// l‰ser ut ett v‰rde ur subjektnoden eller subjektnodens objektnod om denna ‰r en subjektnod
-	// och l‰gger till v‰rdet mha indexprocessorn och ev specialhanterar relationer
+	// l√§ser ut ett v√§rde ur subjektnoden eller subjektnodens objektnod om denna √§r en subjektnod
+	// och l√§gger till v√§rdet mha indexprocessorn och ev specialhanterar relationer
 	static String extractValue(Graph graph, SubjectNode s, URIReference ref, URIReference refRef, IndexProcessor ip, List<String> relations) throws Exception {
 		final String sep = " ";
 		StringBuffer buf = new StringBuffer();
@@ -73,7 +73,7 @@ public class RDFUtil {
 				buf.append(value);
 				if (ip != null) {
 					ip.addToDoc(value);
-					// specialfall fˆr att hantera relationer som nog egentligen felaktigt(?) ‰r vanliga v‰rden, de borde vara rdf-resurser och dÂ URIReferences
+					// specialfall f√∂r att hantera relationer som nog egentligen felaktigt(?) √§r vanliga v√§rden, de borde vara rdf-resurser och d√• URIReferences
 					// jmfr <isPartOf>http...</isPartOf> och <isPartOf rdf:resource="http..." />
 					if (relations != null) {
 						ip.lookupAndHandleURIValue(value, relations, ref != null ? ref.getURI().toString() : null);
@@ -81,7 +81,7 @@ public class RDFUtil {
 				}
 			} else if (t.getObject() instanceof URIReference) {
 				value = getReferenceValue((URIReference) t.getObject(), ip, relations, ref);
-				// l‰gg till i buffer bara om detta ‰r en uri vi ska slÂ upp v‰rde fˆr
+				// l√§gg till i buffer bara om detta √§r en uri vi ska sl√• upp v√§rde f√∂r
 				if (value != null && ip != null && ip.translateURI()) {
 					if (buf.length() > 0) {
 						buf.append(sep);
@@ -111,7 +111,7 @@ public class RDFUtil {
 //					relationType = "sameAs";
 //				} else {
 //					relationType = StringUtils.trimToNull(StringUtils.substringAfter(ref.getURI().toString(), uriPrefixKSamsok));
-//					// TODO: fixa b‰ttre
+//					// TODO: fixa b√§ttre
 //					if (relationType == null) {
 //						// testa cidoc
 //						relationType = StringUtils.trimToNull(StringUtils.substringAfter(ref.getURI().toString(), uriPrefix_cidoc_crm));
@@ -124,7 +124,7 @@ public class RDFUtil {
 //						}
 //					}
 //					if (relationType == null) {
-//						throw new Exception("Ok‰nd relation? Bˆrjar ej med k‰nt prefix: " + ref.getURI().toString());
+//						throw new Exception("Ok√§nd relation? B√∂rjar ej med k√§nt prefix: " + ref.getURI().toString());
 //					}
 //				}
 //				relations.add(relationType + "|" + value);
@@ -134,20 +134,20 @@ public class RDFUtil {
 		return buf.length() > 0 ? StringUtils.trimToNull(buf.toString()) : null;
 	}
 
-	// l‰ser ut ett enkelt v‰rde ur subjektoden d‰r objektnoden mÂste vara en literal eller en uri-referens
-	// och l‰gger till det mha indexprocessorn
+	// l√§ser ut ett enkelt v√§rde ur subjektoden d√§r objektnoden m√•ste vara en literal eller en uri-referens
+	// och l√§gger till det mha indexprocessorn
 	static String extractSingleValue(Graph graph, SubjectNode s, PredicateNode p, IndexProcessor ip) throws Exception {
 		String value = null;
 		for (Triple t: graph.find(s, p, AnyObjectNode.ANY_OBJECT_NODE)) {
 			if (value != null) {
-				throw new Exception("Fler v‰rden ‰n ett fˆr s: " + s + " p: " + p);
+				throw new Exception("Fler v√§rden √§n ett f√∂r s: " + s + " p: " + p);
 			}
 			if (t.getObject() instanceof Literal) {
 				value = StringUtils.trimToNull(((Literal) t.getObject()).getValue().toString());
 			} else if (t.getObject() instanceof URIReference) {
 				value = getReferenceValue((URIReference) t.getObject(), ip, null, null); // TODO: handle relations?
 			} else {
-				throw new Exception("MÂste vara literal/urireference o.class: " + t.getObject().getClass().getSimpleName() + " fˆr s: " + s + " p: " + p);
+				throw new Exception("M√•ste vara literal/urireference o.class: " + t.getObject().getClass().getSimpleName() + " f√∂r s: " + s + " p: " + p);
 			}
 			if (ip != null) {
 				ip.addToDoc(value);
@@ -156,13 +156,13 @@ public class RDFUtil {
 		return value;
 	}
 
-	// fˆrsˆker ˆvers‰tta ett uri-v‰rde till ett fˆrinl‰st v‰rde
+	// f√∂rs√∂ker √∂vers√§tta ett uri-v√§rde till ett f√∂rinl√§st v√§rde
 	private static String getReferenceValue(URIReference object, IndexProcessor ip, List<String> relations, URIReference ref) throws Exception {
 		String value = null;
 		String uri = object.getURI().toString();
 		String refUri = ref != null ? ref.getURI().toString() : null;
-		// se om vi ska fˆrsˆka ers‰tta uri:n med en uppslagen text
-		// och l‰gga in den i relations
+		// se om vi ska f√∂rs√∂ka ers√§tta uri:n med en uppslagen text
+		// och l√§gga in den i relations
 		if (ip != null) { // && ip.translateURI()) {
 			value = ip.lookupAndHandleURIValue(uri, relations, refUri);
 		} else {
@@ -174,7 +174,7 @@ private String getReferenceValue(URIReference ref, IndexProcessor ip) {
 String value = null;
 		String uri = ref.getURI().toString();
 		String lookedUpValue;
-		// se om vi ska fˆrsˆka ers‰tta uri:n med en uppslagen text
+		// se om vi ska f√∂rs√∂ka ers√§tta uri:n med en uppslagen text
 		if (ip != null && ip.translateURI() && (lookedUpValue = lookupURIValue(uri)) != null) {
 			value = lookedUpValue;
 		} else {
@@ -184,8 +184,8 @@ String value = null;
  */
 	}
 
-	// l‰ser in en rdf-resurs och lagrar uri-v‰rden och ˆvers‰ttningsv‰rden fˆr uppslagning
-	// alla resurser fˆruts‰tts vara kodade i utf-8 och att v‰rdena ‰r Literals
+	// l√§ser in en rdf-resurs och lagrar uri-v√§rden och √∂vers√§ttningsv√§rden f√∂r uppslagning
+	// alla resurser f√∂ruts√§tts vara kodade i utf-8 och att v√§rdena √§r Literals
 	static void readURIValueResource(String fileName, URI predicateURI, Map<String, String> uriValues) {
 		Reader r = null;
 		Graph graph = null;
@@ -200,10 +200,10 @@ String value = null;
 				++c;
 			}
 			if (logger.isInfoEnabled()) {
-				logger.info("L‰ste in " + c + " uris/v‰rden frÂn " + fileName);
+				logger.info("L√§ste in " + c + " uris/v√§rden fr√•n " + fileName);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("Problem att l‰sa in uri-ˆvers‰ttningsfil " +
+			throw new RuntimeException("Problem att l√§sa in uri-√∂vers√§ttningsfil " +
 					fileName, e);
 		} finally {
 			if (r != null) {

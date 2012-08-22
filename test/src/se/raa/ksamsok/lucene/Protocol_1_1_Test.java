@@ -71,7 +71,7 @@ public class Protocol_1_1_Test {
 	public void testParse1() throws Exception {
 		String rdf = loadTestFileAsString("hjalm_1.1.rdf");
 		Graph graph = RDFUtil.parseGraph(rdf);
-		assertNotNull("Ingen graf, fel pÂ rdf:en?", graph);
+		assertNotNull("Ingen graf, fel p√• rdf:en?", graph);
 		GraphElementFactory elementFactory = graph.getElementFactory();
 		// grund
 		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
@@ -96,11 +96,11 @@ public class Protocol_1_1_Test {
 		assertTrue("Specialrelation saknas", relations.contains("isRelatedTo|http://kulturarvsdata.se/raa/test/2"));
 		assertTrue("Specialrelation saknas", relations.contains("has_former_or_current_owner|http://libris.kb.se/resource/auth/58087"));
 		// kontrollera uppslagning
-		assertEquals("Felaktigt uppslaget ‰mne", "Kulturhistoria", doc.getFieldValue(ContentHelper.IX_SUBJECT));
+		assertEquals("Felaktigt uppslaget √§mne", "Kulturhistoria", doc.getFieldValue(ContentHelper.IX_SUBJECT));
 		// kontrollera exists-index
-		assertEquals("Felaktigt v‰rde fˆr geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
-		assertEquals("Felaktigt v‰rde fˆr thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
-		assertEquals("Felaktigt v‰rde fˆr timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
+		assertEquals("Felaktigt v√§rde f√∂r geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
+		assertEquals("Felaktigt v√§rde f√∂r thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
+		assertEquals("Felaktigt v√§rde f√∂r timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
 		assertEquals("Felaktig objektsupertyp", "Fysiskt ting", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
 		Collection<Object> contextSuperTypes = doc.getFieldValues(ContentHelper.IX_CONTEXTSUPERTYPE);
 		assertNotNull("Kontextsupertyper saknas", contextSuperTypes);
@@ -108,24 +108,24 @@ public class Protocol_1_1_Test {
 		// namn + namn i kontexttypspecifikt index
 		assertTrue("Skaparnamn ej extraherat", doc.getFieldValues(ContentHelper.IX_NAME).contains("Kunz Lochner"));
 		Collection<Object> contextSuperTypeIndexValues = doc.getFieldValues("create_" + ContentHelper.IX_NAME);
-		assertNotNull("Indexet create_name saknar v‰rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexValues);
+		assertNotNull("Indexet create_name saknar v√§rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexValues);
 		Collection<Object> contextTypeIndexValues = doc.getFieldValues("produce_" + ContentHelper.IX_NAME);
-		assertNotNull("Indexet produce_name saknar v‰rden (kontexttyp_indexnamn)", contextTypeIndexValues);
+		assertNotNull("Indexet produce_name saknar v√§rden (kontexttyp_indexnamn)", contextTypeIndexValues);
 		assertTrue("Skaparnamn (kontext-index) ej extraherat ur produce_name", contextTypeIndexValues.contains("Kunz Lochner"));
 		// century/decade inkl kontext
 		Collection<Object> decadeValues = doc.getFieldValues(ContentHelper.IX_DECADE);
-		assertNotNull("Indexet decade saknar v‰rden", decadeValues);
+		assertNotNull("Indexet decade saknar v√§rden", decadeValues);
 		Collection<Object> contextSuperTypeIndexDecadeValues = doc.getFieldValues("create_" + ContentHelper.IX_DECADE);
-		assertNotNull("Indexet create_decade saknar v‰rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
+		assertNotNull("Indexet create_decade saknar v√§rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
 		Collection<Object> contextSuperTypeIndexCenturyValues = doc.getFieldValues("create_" + ContentHelper.IX_CENTURY);
-		assertNotNull("Indexet create_decade saknar v‰rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
+		assertNotNull("Indexet create_decade saknar v√§rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
 	}
 
 	@Test
 	public void testParse_Agent() throws Exception {
 		String rdf = loadTestFileAsString("kung_1.1.rdf");
 		Graph graph = RDFUtil.parseGraph(rdf);
-		assertNotNull("Ingen graf, fel pÂ rdf:en?", graph);
+		assertNotNull("Ingen graf, fel p√• rdf:en?", graph);
 		GraphElementFactory elementFactory = graph.getElementFactory();
 		// grund
 		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
@@ -145,11 +145,11 @@ public class Protocol_1_1_Test {
 		List<String> gmlGeometries = new LinkedList<String>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
-		singleValueIndexAssert(doc, ContentHelper.IX_NAMEAUTH, "RAƒ");
+		singleValueIndexAssert(doc, ContentHelper.IX_NAMEAUTH, "RA√Ñ");
 		singleValueIndexAssert(doc, ContentHelper.IX_NAMEID, "1234");
 		multipleValueIndexAssert(doc, ContentHelper.IX_NAME, new String[] {
 				"Gustav Vasa", "Gustaf Vasa", "Gustav I", "Gustaf Eriksson Vasa",
-				"Erik Johansson" // frÂn kontextet
+				"Erik Johansson" // fr√•n kontextet
 		}, 5);
 		singleValueIndexAssert(doc, ContentHelper.IX_FIRSTNAME, "Gustav");
 		singleValueIndexAssert(doc, ContentHelper.IX_SURNAME, "Vasa");
@@ -157,7 +157,7 @@ public class Protocol_1_1_Test {
 		singleValueIndexAssert(doc, ContentHelper.IX_TITLE, "Kung");
 		singleValueIndexAssert(doc, ContentHelper.IX_ORGANIZATION, "Kungahuset");
 
-		// kontrollera specialformatet fˆr relationer
+		// kontrollera specialformatet f√∂r relationer
 		String[] expectedRelations = {
 				ContentHelper.IX_SAMEAS + "|" + "http://libris.kb.se/resource/auth/58087",
 				ContentHelper.IX_SAMEAS + "|" + "http://viaf.org/viaf/59878606",
@@ -172,11 +172,11 @@ public class Protocol_1_1_Test {
 			assertTrue("Specialrelationen " + relation + " saknas", relations.contains(relation));
 		}
 		// kontrollera uppslagning
-		assertEquals("Felaktigt uppslaget ‰mne", "Kulturhistoria", doc.getFieldValue(ContentHelper.IX_SUBJECT));
+		assertEquals("Felaktigt uppslaget √§mne", "Kulturhistoria", doc.getFieldValue(ContentHelper.IX_SUBJECT));
 		// kontrollera exists-index
-		assertEquals("Felaktigt v‰rde fˆr geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
-		assertEquals("Felaktigt v‰rde fˆr thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
-		assertEquals("Felaktigt v‰rde fˆr timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
+		assertEquals("Felaktigt v√§rde f√∂r geodataExists", "n", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
+		assertEquals("Felaktigt v√§rde f√∂r thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
+		assertEquals("Felaktigt v√§rde f√∂r timeInfoExists", "j", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
 		assertEquals("Felaktig objektsupertyp", "Agent", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
 		Collection<Object> contextSuperTypes = doc.getFieldValues(ContentHelper.IX_CONTEXTSUPERTYPE);
 		assertNotNull("Kontextsupertyper saknas", contextSuperTypes);
@@ -186,24 +186,24 @@ public class Protocol_1_1_Test {
 		singleValueIndexAssert(doc, "start_" + ContentHelper.IX_NAME, "Erik Johansson");
 
 		Collection<Object> contextSuperTypeIndexValues = doc.getFieldValues("create_" + ContentHelper.IX_NAME);
-		assertNotNull("Indexet create_name saknar v‰rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexValues);
+		assertNotNull("Indexet create_name saknar v√§rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexValues);
 		multipleValueIndexAssert(doc, ContentHelper.IX_FROMTIME, new String[] {
 				"1496", "1531"
 		}, 2);
 		// century/decade inkl kontext
 		Collection<Object> decadeValues = doc.getFieldValues(ContentHelper.IX_DECADE);
-		assertNotNull("Indexet decade saknar v‰rden", decadeValues);
+		assertNotNull("Indexet decade saknar v√§rden", decadeValues);
 		Collection<Object> contextSuperTypeIndexDecadeValues = doc.getFieldValues("create_" + ContentHelper.IX_DECADE);
-		assertNotNull("Indexet create_decade saknar v‰rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
+		assertNotNull("Indexet create_decade saknar v√§rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
 		Collection<Object> contextSuperTypeIndexCenturyValues = doc.getFieldValues("create_" + ContentHelper.IX_CENTURY);
-		assertNotNull("Indexet create_decade saknar v‰rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
+		assertNotNull("Indexet create_decade saknar v√§rden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
 	}
 
 	@Test
 	public void testParse_Event() throws Exception {
 		String rdf = loadTestFileAsString("lutzen_1.1.rdf");
 		Graph graph = RDFUtil.parseGraph(rdf);
-		assertNotNull("Ingen graf, fel pÂ rdf:en?", graph);
+		assertNotNull("Ingen graf, fel p√• rdf:en?", graph);
 		GraphElementFactory elementFactory = graph.getElementFactory();
 		// grund
 		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
@@ -236,7 +236,7 @@ public class Protocol_1_1_Test {
 	public void testParseBadContextType() throws Exception {
 		String rdf = loadTestFileAsString("hjalm_1.1_felaktig.rdf");
 		Graph graph = RDFUtil.parseGraph(rdf);
-		assertNotNull("Ingen graf, fel pÂ rdf:en?", graph);
+		assertNotNull("Ingen graf, fel p√• rdf:en?", graph);
 		GraphElementFactory elementFactory = graph.getElementFactory();
 		// grund
 		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
@@ -256,9 +256,9 @@ public class Protocol_1_1_Test {
 		List<String> gmlGeometries = new LinkedList<String>();
 		try {
 			handler.handle(service, new Date(), relations, gmlGeometries);
-			fail("Ett exception borde ha kastats dÂ transact inte ‰r giltig kontexttyp i 1.1");
+			fail("Ett exception borde ha kastats d√• transact inte √§r giltig kontexttyp i 1.1");
 		} catch (Exception expected) {
-			// inte helt ok att kolla exception str‰ngar sÂ h‰r men...
+			// inte helt ok att kolla exception str√§ngar s√• h√§r men...
 			assertTrue("Den felaktiga kontext-uri:n borde vara med i det kastade felet",
 					expected.getMessage().contains(SamsokProtocol.context_pre));
 		}
@@ -266,7 +266,7 @@ public class Protocol_1_1_Test {
 
 	private void lookupNotNull(SamsokProtocolHandler handler, String uri) {
 		String value = lookup(handler, uri);
-		assertNotNull("Hittade inte v‰rde fˆr " + uri, value);
+		assertNotNull("Hittade inte v√§rde f√∂r " + uri, value);
 	}
 
 	private String lookup(SamsokProtocolHandler handler, String uri) {
@@ -279,33 +279,33 @@ public class Protocol_1_1_Test {
 
 	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value, boolean contains) {
 		String docValue = (String) doc.getFieldValue(indexName);
-		assertNotNull("F‰ltet " + indexName + " saknas", docValue);
+		assertNotNull("F√§ltet " + indexName + " saknas", docValue);
 		Collection<Object> docValues = doc.getFieldValues(indexName);
-		assertEquals("F‰ltet " + indexName + " ska bara ha ett v‰rde, v‰rden ‰r, " +
+		assertEquals("F√§ltet " + indexName + " ska bara ha ett v√§rde, v√§rden √§r, " +
 				docValues, 1, docValues.size());
 		if (contains) {
-			assertTrue("Fel v‰rde fˆr " + indexName, docValue.contains(value));
+			assertTrue("Fel v√§rde f√∂r " + indexName, docValue.contains(value));
 		} else {
-			assertEquals("Fel v‰rde fˆr " + indexName, value, docValue);
+			assertEquals("Fel v√§rde f√∂r " + indexName, value, docValue);
 		}
 	}
 
 	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName,
 			String[] values, int count) {
 		Collection<Object> docValues = doc.getFieldValues(indexName);
-		assertNotNull("F‰ltet " + indexName + " saknas", docValues);
+		assertNotNull("F√§ltet " + indexName + " saknas", docValues);
 		multipleValueIndexAssert(doc, indexName, values, docValues, count);
 	}
 
 	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName,
 			String[] values, Collection<? extends Object> docValues, int count) {
 		if (count > 0) {
-			assertEquals("F‰ltet " + indexName + " innehÂller fel antal v‰rden, v‰rden ‰r" +
+			assertEquals("F√§ltet " + indexName + " inneh√•ller fel antal v√§rden, v√§rden √§r" +
 					docValues, count, docValues.size());
 		}
 		for (String value: values) {
-			assertTrue("V‰rdet " + value + " saknas fˆr " + indexName +
-					", v‰rden ‰r " + docValues, docValues.contains(value));
+			assertTrue("V√§rdet " + value + " saknas f√∂r " + indexName +
+					", v√§rden √§r " + docValues, docValues.contains(value));
 		}
 	}
 

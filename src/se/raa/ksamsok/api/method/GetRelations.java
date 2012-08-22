@@ -36,18 +36,18 @@ public class GetRelations extends AbstractAPIMethod {
 	/** Metodnamn */
 	public static final String METHOD_NAME = "getRelations";
 
-	/** Parameternamn för relation */
+	/** Parameternamn fÃ¶r relation */
 	public static final String RELATION_PARAMETER = "relation";
-	/** Parameternamn för objektidentifierare */
+	/** Parameternamn fÃ¶r objektidentifierare */
 	public static final String IDENTIFIER_PARAMETER = "objectId";
-	/** Parameternamn för max antal träffar */
+	/** Parameternamn fÃ¶r max antal trÃ¤ffar */
 	public static final String MAXCOUNT_PARAMETER = "maxCount";
-	/** Parameternamn för hantering av sameAs-relationer */
+	/** Parameternamn fÃ¶r hantering av sameAs-relationer */
 	public static final String INFERSAMEAS_PARAMETER = "inferSameAs";
-	/** Parametervärde för att ange alla relationer */
+	/** ParametervÃ¤rde fÃ¶r att ange alla relationer */
 	public static final String RELATION_ALL = "all";
 
-	private static final String SOURCE_DIRECT = null; // började med värde här men kom fram till null ist
+	private static final String SOURCE_DIRECT = null; // bÃ¶rjade med vÃ¤rde hÃ¤r men kom fram till null ist
 	private static final String SOURCE_REVERSE = "deduced";
 
 	private static final String URI_PREFIX = "http://kulturarvsdata.se/";
@@ -57,14 +57,14 @@ public class GetRelations extends AbstractAPIMethod {
 	protected String partialIdentifier;
 	protected int maxCount;
 	protected InferSameAs inferSameAs;
-	// hjälpvariabler
+	// hjÃ¤lpvariabler
 	protected boolean isAll;
 
 	private Set<Relation> relations = Collections.emptySet();
 
-	/** map som håller översättningsinformation för relationer - OBS används också från getRelationTypes */
+	/** map som hÃ¥ller Ã¶versÃ¤ttningsinformation fÃ¶r relationer - OBS anvÃ¤nds ocksÃ¥ frÃ¥n getRelationTypes */
 	protected static final Map<String, String> relationXlate;
-	/** map som håller envägsrelationer */
+	/** map som hÃ¥ller envÃ¤gsrelationer */
 	protected static final List<String> relationOneWay;
 
 	static {
@@ -94,9 +94,9 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, ContentHelper.IX_HASCURRENTORFORMERMEMBER);
 
 		// roller, obs rollerna har fn inga invers-index, dvs man kan inte ange
-		// (eller rättare sagt det indexeras inte) tex en författares verk
-		// från toppnivån av författarobjektet då man helst vill kunna få med
-		// år etc från kontextet vilket man inte kan få om relationen går åt andra hållet
+		// (eller rÃ¤ttare sagt det indexeras inte) tex en fÃ¶rfattares verk
+		// frÃ¥n toppnivÃ¥n av fÃ¶rfattarobjektet dÃ¥ man helst vill kunna fÃ¥ med
+		// Ã¥r etc frÃ¥n kontextet vilket man inte kan fÃ¥ om relationen gÃ¥r Ã¥t andra hÃ¥llet
 		twoWay(map, ContentHelper.IX_CLIENT, ContentHelper.CLIENT_OF);
 		twoWay(map, ContentHelper.IX_COMPOSER, ContentHelper.COMPOSER_OF);
 		twoWay(map, ContentHelper.IX_AUTHOR, ContentHelper.AUTHOR_OF);
@@ -155,7 +155,7 @@ public class GetRelations extends AbstractAPIMethod {
 				ContentHelper.IX_CONTAINSINFORMATIONABOUT, ContentHelper.IX_HASBEENUSEDIN,
 				ContentHelper.IX_HASIMAGE, ContentHelper.IX_FATHER, ContentHelper.IX_MOTHER));
 
-		// samma i bägge riktningarna
+		// samma i bÃ¤gge riktningarna
 		map.put(ContentHelper.IX_ISRELATEDTO, ContentHelper.IX_ISRELATEDTO);
 		map.put(ContentHelper.IX_SAMEAS, ContentHelper.IX_SAMEAS);
 		map.put(ContentHelper.IX_MARRIEDTO, ContentHelper.IX_MARRIEDTO);
@@ -163,7 +163,7 @@ public class GetRelations extends AbstractAPIMethod {
 		relationXlate = Collections.unmodifiableMap(map);
 	}
 
-	// lägger till relationerna åt bägge håll
+	// lÃ¤gger till relationerna Ã¥t bÃ¤gge hÃ¥ll
 	private static void twoWay(Map<String, String> map, String relA, String relB) {
 		map.put(relA, relB);
 		map.put(relB, relA);
@@ -171,7 +171,7 @@ public class GetRelations extends AbstractAPIMethod {
 
 	/**
 	 * Skapa ny instans.
-	 * @param serviceProvider tjänstetillhandahållare
+	 * @param serviceProvider tjÃ¤nstetillhandahÃ¥llare
 	 * @param writer writer
 	 * @param params parametrar
 	 */
@@ -185,7 +185,7 @@ public class GetRelations extends AbstractAPIMethod {
 		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null, false);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !relationXlate.containsKey(relation)) {
-			throw new BadParameterException("Värdet för parametern " + RELATION_PARAMETER + " är ogiltigt",
+			throw new BadParameterException("VÃ¤rdet fÃ¶r parametern " + RELATION_PARAMETER + " Ã¤r ogiltigt",
 					"GetRelations.extractParameters", null, false);
 		}
 		partialIdentifier = getMandatoryParameterValue(IDENTIFIER_PARAMETER, "GetRelations.extractParameters", null, false);
@@ -194,7 +194,7 @@ public class GetRelations extends AbstractAPIMethod {
 			try {
 				maxCount = Integer.parseInt(maxCountStr); 
 			} catch (Exception e) {
-				throw new BadParameterException("Värdet för parametern " + MAXCOUNT_PARAMETER + " är ogiltigt",
+				throw new BadParameterException("VÃ¤rdet fÃ¶r parametern " + MAXCOUNT_PARAMETER + " Ã¤r ogiltigt",
 						"GetRelations.extractParameters", null, false);
 			}
 		} else {
@@ -205,7 +205,7 @@ public class GetRelations extends AbstractAPIMethod {
 			try {
 				inferSameAs = InferSameAs.valueOf(inferSameAsStr);
 			} catch (Exception e) {
-				throw new BadParameterException("Värdet för parametern " + INFERSAMEAS_PARAMETER + " är ogiltigt",
+				throw new BadParameterException("VÃ¤rdet fÃ¶r parametern " + INFERSAMEAS_PARAMETER + " Ã¤r ogiltigt",
 						"GetRelations.extractParameters", null, false);
 			}
 		} else {
@@ -216,7 +216,7 @@ public class GetRelations extends AbstractAPIMethod {
 
 	@Override
 	protected void performMethodLogic() throws DiagnosticException {
-		// om 0 gör inget alls
+		// om 0 gÃ¶r inget alls
 		if (maxCount == 0) {
 			return;
 		}
@@ -227,22 +227,22 @@ public class GetRelations extends AbstractAPIMethod {
 
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
 		SolrQuery query = new SolrQuery();
-		query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+		query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli fÃ¶r mÃ¥nga?
 
-		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
-		// algoritmen ser fn ut så här - inferSameAs styr steg 1 och 3, default är att inte utföra dem
-		// 1. hämta ev post för att få tag på postens sameAs
-		// 2. sök fram källpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
-		// 3. hämta ev de relaterades sameAs och lägg till dessa som relationer
+		// TODO: algoritmen kan behÃ¶va finslipas och optimeras tex fÃ¶r poster med mÃ¥nga relaterade objekt
+		// algoritmen ser fn ut sÃ¥ hÃ¤r - inferSameAs styr steg 1 och 3, default Ã¤r att inte utfÃ¶ra dem
+		// 1. hÃ¤mta ev post fÃ¶r att fÃ¥ tag pÃ¥ postens sameAs
+		// 2. sÃ¶k fram kÃ¤llpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
+		// 3. hÃ¤mta ev de relaterades sameAs och lÃ¤gg till dessa som relationer
 
-		// hämta uri och relationer
+		// hÃ¤mta uri och relationer
 		query.addField(ContentHelper.I_IX_RELATIONS);
 		query.addField(ContentHelper.IX_ITEMID);
 		try {
 			QueryResponse qr;
 			SolrDocumentList docs;
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
-				// hämta andra poster som är samma som denna och lägg till dem som "källposter"
+				// hÃ¤mta andra poster som Ã¤r samma som denna och lÃ¤gg till dem som "kÃ¤llposter"
 				query.setQuery(ContentHelper.IX_ITEMID + ":"+ escapedUri);
 				qr = searchService.query(query);
 				docs = qr.getResults();
@@ -253,7 +253,7 @@ public class GetRelations extends AbstractAPIMethod {
 						for (Object value: values) {
 							String parts[] = ((String) value).split("\\|");
 							if (parts.length != 2) {
-								logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
+								logger.error("Fel pÃ¥ vÃ¤rde fÃ¶r relationsindex fÃ¶r " + itemId + ", ej pÃ¥ korrekt format: " + value);
 								continue;
 							}
 							String typePart = parts[0];
@@ -265,7 +265,7 @@ public class GetRelations extends AbstractAPIMethod {
 					}
 				}
 			}
-			// bygg söksträng mh källposten/alla källposter
+			// bygg sÃ¶kstrÃ¤ng mh kÃ¤llposten/alla kÃ¤llposter
 			StringBuilder searchStr = new StringBuilder();
 			for (String itemId: itemUris) {
 				String escapedItemId = ClientUtils.escapeQueryChars(itemId);
@@ -274,7 +274,7 @@ public class GetRelations extends AbstractAPIMethod {
 				}
 				searchStr.append(ContentHelper.IX_ITEMID + ":" + escapedItemId + " OR " + ContentHelper.IX_RELURI + ":"+ escapedItemId);
 			}
-			// sök fram källposten/-erna och alla som har relation till den/dem
+			// sÃ¶k fram kÃ¤llposten/-erna och alla som har relation till den/dem
 			query.setQuery(searchStr.toString());
 
 			qr = searchService.query(query);
@@ -288,28 +288,28 @@ public class GetRelations extends AbstractAPIMethod {
 					for (Object value: values) {
 						String parts[] = ((String) value).split("\\|");
 						if (parts.length != 2) {
-							logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
+							logger.error("Fel pÃ¥ vÃ¤rde fÃ¶r relationsindex fÃ¶r " + itemId + ", ej pÃ¥ korrekt format: " + value);
 							continue;
 						}
-						String orgTypePart = null; // håller orginaltypen om vi gör en inversupplagning
+						String orgTypePart = null; // hÃ¥ller orginaltypen om vi gÃ¶r en inversupplagning
 						String typePart = parts[0];
 						String uriPart = parts[1];
 						if (!isSourceDoc) {
 							if (!itemUris.contains(uriPart)) {
-								// inte för aktuellt objekt
+								// inte fÃ¶r aktuellt objekt
 								continue;
 							}
 							orgTypePart = typePart;
 							typePart = relationXlate.get(typePart);
 							uriPart = itemId;
 
-							// försök ta bort de som är onödiga, dvs de som redan har en envägs-relation
-							// deras invers är inte intressant att ha med då den inte säger nåt
+							// fÃ¶rsÃ¶k ta bort de som Ã¤r onÃ¶diga, dvs de som redan har en envÃ¤gs-relation
+							// deras invers Ã¤r inte intressant att ha med dÃ¥ den inte sÃ¤ger nÃ¥t
 							if (ContentHelper.IX_ISRELATEDTO.equals(typePart)) {
 								boolean exists = false;
 								Relation rel = null;
 								for (String owRel: relationOneWay) {
-									// bara typ och uri är intressanta för detta
+									// bara typ och uri Ã¤r intressanta fÃ¶r detta
 									rel = new Relation(owRel, itemId, null, null);
 									if (relations.contains(rel)) {
 										exists = true;
@@ -332,9 +332,9 @@ public class GetRelations extends AbstractAPIMethod {
 								logger.debug("duplicate rel " + rel);
 							}
 						}
-						// optimering genom att göra return direkt vid detta fall, annars ska man
-						// hoppa ur denna loop och den utanför den och sen filtrera
-						// funkar dock bara för fallet "alla"
+						// optimering genom att gÃ¶ra return direkt vid detta fall, annars ska man
+						// hoppa ur denna loop och den utanfÃ¶r den och sen filtrera
+						// funkar dock bara fÃ¶r fallet "alla"
 						if (maxCount > 0 && isAll && relations.size() == maxCount) {
 							return;
 						}
@@ -342,8 +342,8 @@ public class GetRelations extends AbstractAPIMethod {
 				}
 			}
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.targetsOnly) {
-				// sökning på same as för träffarnas uri:er och skapa relation till dessa också
-				query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
+				// sÃ¶kning pÃ¥ same as fÃ¶r trÃ¤ffarnas uri:er och skapa relation till dessa ocksÃ¥
+				query.setFields(ContentHelper.IX_ITEMID); // bara itemId hÃ¤r
 				for (Relation rel: new HashSet<Relation>(relations)) {
 					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ ClientUtils.escapeQueryChars(rel.getTargetUri()));
 					qr = searchService.query(query);
@@ -363,7 +363,7 @@ public class GetRelations extends AbstractAPIMethod {
 				}
 			}
 
-			// postfilter vid sökning på specifik relation
+			// postfilter vid sÃ¶kning pÃ¥ specifik relation
 			if (!isAll) {
 				int matches = 0;
 				Iterator<Relation> iter = relations.iterator();

@@ -23,7 +23,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * Servlet som hanterar uppdateringar och visningar av information om
- * organisationer anslutna till k-samsök
+ * organisationer anslutna till k-samsÃ¶k
  * @author Henrik Hjalmarsson
  */
 public class OrganizationServlet extends HttpServlet {
@@ -88,10 +88,10 @@ public class OrganizationServlet extends HttpServlet {
 	}
 
 	/**
-	 * Skapar och sätter de värden som fåtts in från request för
+	 * Skapar och sÃ¤tter de vÃ¤rden som fÃ¥tts in frÃ¥n request fÃ¶r
 	 * en organisation som skall uppdateras
-	 * @param req request objekt som innehåller parametrarna
-	 * @return Organization böna med de data som skall uppdateras
+	 * @param req request objekt som innehÃ¥ller parametrarna
+	 * @return Organization bÃ¶na med de data som skall uppdateras
 	 */
 	@SuppressWarnings("unchecked")
 	public static Organization getOrganizationValues(HttpServletRequest req) {

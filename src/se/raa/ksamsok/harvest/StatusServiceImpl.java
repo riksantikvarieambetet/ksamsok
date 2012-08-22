@@ -23,7 +23,7 @@ public class StatusServiceImpl implements StatusService {
 
 	private static final Logger logger = Logger.getLogger(StatusService.class);
 
-	// gr‰ns i antal dagar fˆr hur l‰nge loggmeddelanden sparas i databasen
+	// gr√§ns i antal dagar f√∂r hur l√§nge loggmeddelanden sparas i databasen
 	static final int LOG_THRESHHOLD_DAYS = 21;
 
 	Map<String, String> statusTexts = Collections.synchronizedMap(new HashMap<String, String>());
@@ -289,9 +289,9 @@ public class StatusServiceImpl implements StatusService {
 
 	
 	/**
-	 * Rensar loggmeddelanden ‰ldre ‰n ca {@linkplain #LOG_THRESHHOLD_DAYS}.
-	 * @param service tj‰nst
-	 * @param now datum/tid att utgÂ frÂn, vanligen "nu"
+	 * Rensar loggmeddelanden √§ldre √§n ca {@linkplain #LOG_THRESHHOLD_DAYS}.
+	 * @param service tj√§nst
+	 * @param now datum/tid att utg√• fr√•n, vanligen "nu"
 	 */
 	protected void cleanDb(HarvestService service, Date now) {
 		Connection c = null;

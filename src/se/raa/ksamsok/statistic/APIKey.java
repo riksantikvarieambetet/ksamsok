@@ -3,7 +3,7 @@ package se.raa.ksamsok.statistic;
 import java.io.Serializable;
 
 /**
- * Böna som håller data tillhörande en API nyckel
+ * BÃ¶na som hÃ¥ller data tillhÃ¶rande en API nyckel
  * @author Henrik Hjalmarsson
  */
 public class APIKey implements Serializable

@@ -14,7 +14,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.StartEndWriter;
 
 /**
- * Basklass för api-metoder.
+ * Basklass fÃ¶r api-metoder.
  *
  */
 public abstract class AbstractAPIMethod implements APIMethod {
@@ -28,7 +28,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 
 	/**
 	 * Skapar ny instans.
-	 * @param serviceProvider tillhandahåller tjänster etc
+	 * @param serviceProvider tillhandahÃ¥ller tjÃ¤nster etc
 	 * @param writer writer
 	 * @param params parametrar
 	 */
@@ -42,9 +42,9 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	@Override
 	public void performMethod() throws MissingParameterException,
 			BadParameterException, DiagnosticException {
-		// läs ut parametrar och kasta ex vid problem
+		// lÃ¤s ut parametrar och kasta ex vid problem
 		extractParameters();
-		// utför operationen
+		// utfÃ¶r operationen
 		performMethodLogic();
 		// skriv huvud
 		writeHead();
@@ -66,7 +66,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	}
 
 	/**
-	 * Extrasaker att skriva ut efter huvudet, överlagra i subklasser.
+	 * Extrasaker att skriva ut efter huvudet, Ã¶verlagra i subklasser.
 	 */
 	protected void writeHeadExtra() {}
 
@@ -86,7 +86,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	}
 
 	/**
-	 * Extrasaker att skriva ut före foten, överlagra i subklasser.
+	 * Extrasaker att skriva ut fÃ¶re foten, Ã¶verlagra i subklasser.
 	 */
 	protected void writeFootExtra() {}
 
@@ -104,42 +104,42 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	/**
 	 * Tar ut och kontrollerar parametrar.
 	 * @throws MissingParameterException om parameter saknas
-	 * @throws BadParameterException om parameter är felaktig
+	 * @throws BadParameterException om parameter Ã¤r felaktig
 	 */
 	abstract protected void extractParameters() throws MissingParameterException, BadParameterException;
 
 	/**
-	 * Utför metodens logik.
+	 * UtfÃ¶r metodens logik.
 	 * @throws DiagnosticException vid problem
 	 */
 	abstract protected void performMethodLogic() throws DiagnosticException;
 
 	/**
-	 * Returnerar query-strängen eller kastar ett exception om värdet var null
-	 * @param queryString query-sträng
+	 * Returnerar query-strÃ¤ngen eller kastar ett exception om vÃ¤rdet var null
+	 * @param queryString query-strÃ¤ng
 	 * @return queryString
-	 * @throws MissingParameterException om strängen är null eller tomma strängen
+	 * @throws MissingParameterException om strÃ¤ngen Ã¤r null eller tomma strÃ¤ngen
 	 */
 	public String getQueryString(String queryString) throws MissingParameterException {
 		if (queryString == null || queryString.trim().length() < 1) {
-			throw new MissingParameterException("parametern query saknas eller är tom", "APIMethodFactory.getQueryString", null, false);
+			throw new MissingParameterException("parametern query saknas eller Ã¤r tom", "APIMethodFactory.getQueryString", null, false);
 		}
 		return queryString;
 	}
 
 	/**
-	 * Returnerar en index-map där indexen får samma värde, det som är inskickat i value.
+	 * Returnerar en index-map dÃ¤r indexen fÃ¥r samma vÃ¤rde, det som Ã¤r inskickat i value.
 	 *
-	 * @param indexString sträng med indexnamn separerade av {@linkplain #DELIMITER}
-	 * @param value värde för index
-	 * @return index-map med indexnamn som nyckel och inskickat värde som värde, aldrig null men kan vara tom
-	 * @throws MissingParameterException om index-strängen är null eller "tom".
+	 * @param indexString strÃ¤ng med indexnamn separerade av {@linkplain #DELIMITER}
+	 * @param value vÃ¤rde fÃ¶r index
+	 * @return index-map med indexnamn som nyckel och inskickat vÃ¤rde som vÃ¤rde, aldrig null men kan vara tom
+	 * @throws MissingParameterException om index-strÃ¤ngen Ã¤r null eller "tom".
 	 */
 	public Map<String,String> getIndexMapSingleValue(String indexString,
 			String value)  throws MissingParameterException {
 		Map<String,String> indexMap = new HashMap<String,String>();
 		if (indexString == null || indexString.trim().length() < 1) 	{
-			throw new MissingParameterException("parametern index saknas eller är tom", "APIMethodFactory.getIndexMapSingleValue", null, false);
+			throw new MissingParameterException("parametern index saknas eller Ã¤r tom", "APIMethodFactory.getIndexMapSingleValue", null, false);
 		}
 		StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
 		while (indexTokenizer.hasMoreTokens()) {
@@ -161,7 +161,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 			boolean logIfMissing) throws MissingParameterException {
 		String value = StringUtils.trimToNull(params.get(key));
 		if (isMandatory && value == null) {
-			throw new MissingParameterException("Parametern " + key + " saknas eller är tom",
+			throw new MissingParameterException("Parametern " + key + " saknas eller Ã¤r tom",
 					infoClassName, infoDetails, logIfMissing);
 		}
 		return value;

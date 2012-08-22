@@ -25,7 +25,7 @@ import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
 
 /**
- * Klass gjort för att enkelt implementera facet sökningar i TA
+ * Klass gjort fÃ¶r att enkelt implementera facet sÃ¶kningar i TA
  * @author Henrik Hjalmarsson
  */
 public class Facet extends StatisticSearch {	
@@ -36,8 +36,8 @@ public class Facet extends StatisticSearch {
 
 	/**
 	 * skapar ett objekt av Facet
-	 * @param indexMap de index som skall ingå i facetten
-	 * @param writer för att skriva resultatet
+	 * @param indexMap de index som skall ingÃ¥ i facetten
+	 * @param writer fÃ¶r att skriva resultatet
 	 * @param queryString filtrerar resultatet efter query
 	 */
 	public Facet(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
@@ -79,13 +79,13 @@ public class Facet extends StatisticSearch {
 				}
 			}
 		} catch (CQLParseException e) {
-			throw new DiagnosticException("Oväntat parserfel uppstod - detta beror troligen på att query strängen inte följer CQL syntax. Var god kontrollera query-strängen eller kontakta systemadministratören för systemet du använder dig av.", "Facet.performMethod", null, false);
+			throw new DiagnosticException("OvÃ¤ntat parserfel uppstod - detta beror troligen pÃ¥ att query strÃ¤ngen inte fÃ¶ljer CQL syntax. Var god kontrollera query-strÃ¤ngen eller kontakta systemadministratÃ¶ren fÃ¶r systemet du anvÃ¤nder dig av.", "Facet.performMethod", null, false);
 		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO-fel, var god försök igen", "Facet.performMethod", e.getMessage(), true); 
+			throw new DiagnosticException("OvÃ¤ntat IO-fel, var god fÃ¶rsÃ¶k igen", "Facet.performMethod", e.getMessage(), true); 
 		} catch (SolrServerException e) {
-			throw new DiagnosticException("Oväntat sök-fel, var god försök igen", "Facet.performMethod", e.getMessage(), true);
+			throw new DiagnosticException("OvÃ¤ntat sÃ¶k-fel, var god fÃ¶rsÃ¶k igen", "Facet.performMethod", e.getMessage(), true);
 		} catch (BadParameterException e) {
-			throw new DiagnosticException("Oväntat parserfel uppstod - detta beror troligen på att query strängen inte följer CQL syntax. Var god kontrollera query-strängen eller kontakta systemadministratören för systemet du använder dig av.", "Facet.performMethod", null, false);
+			throw new DiagnosticException("OvÃ¤ntat parserfel uppstod - detta beror troligen pÃ¥ att query strÃ¤ngen inte fÃ¶ljer CQL syntax. Var god kontrollera query-strÃ¤ngen eller kontakta systemadministratÃ¶ren fÃ¶r systemet du anvÃ¤nder dig av.", "Facet.performMethod", null, false);
 		}
 	}
 

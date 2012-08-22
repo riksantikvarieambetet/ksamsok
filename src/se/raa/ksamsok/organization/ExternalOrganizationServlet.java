@@ -16,8 +16,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- * Hanterar GUI för Institutioner som vill ändra information om sin organisation och de 
- * tjänster de levererar till K-samsök
+ * Hanterar GUI fÃ¶r Institutioner som vill Ã¤ndra information om sin organisation och de 
+ * tjÃ¤nster de levererar till K-samsÃ¶k
  * @author Henrik Hjalmarsson
  */
 public class ExternalOrganizationServlet extends HttpServlet {

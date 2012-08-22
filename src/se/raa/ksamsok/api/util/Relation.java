@@ -1,11 +1,11 @@
 package se.raa.ksamsok.api.util;
 
 /**
- * Enkel bˆnklass fˆr att hÂlla info om relationer.
- * Obs att informationsk‰lla (source) ej ‰r k‰llan i relationen utan var relationen kom ifrÂn,
- * tex null om den h‰mtades direkt frÂn k‰llobjektet eller "deduced" om den h‰rleddes via
- * relationsinvers (mha originalRelationType). "K‰llan" i relationen fˆruts‰tts vara k‰nd av
- * anv‰ndaren av denna bˆna.
+ * Enkel b√∂nklass f√∂r att h√•lla info om relationer.
+ * Obs att informationsk√§lla (source) ej √§r k√§llan i relationen utan var relationen kom ifr√•n,
+ * tex null om den h√§mtades direkt fr√•n k√§llobjektet eller "deduced" om den h√§rleddes via
+ * relationsinvers (mha originalRelationType). "K√§llan" i relationen f√∂ruts√§tts vara k√§nd av
+ * anv√§ndaren av denna b√∂na.
  */
 public class Relation {
 
@@ -17,8 +17,8 @@ public class Relation {
 	/**
 	 * Skapa ny instans.
 	 * @param relationType typ av relation
-	 * @param targetUri uri som relationen gÂr till
-	 * @param source relationens informationsk‰lla eller null
+	 * @param targetUri uri som relationen g√•r till
+	 * @param source relationens informationsk√§lla eller null
 	 * @param originalRelationType
 	 */
 	public Relation(String relationType, String targetUri, String source, String originalRelationType) {
@@ -37,7 +37,7 @@ public class Relation {
 	}
 
 	/**
-	 * Ger uri fˆr objekt pÂ andra sidan av relationen.
+	 * Ger uri f√∂r objekt p√• andra sidan av relationen.
 	 * @return objekt-uri
 	 */
 	public String getTargetUri() {
@@ -45,15 +45,15 @@ public class Relation {
 	}
 
 	/**
-	 * Ger informationsk‰lla.
-	 * @return informationsk‰lla
+	 * Ger informationsk√§lla.
+	 * @return informationsk√§lla
 	 */
 	public String getSource() {
 		return source;
 	}
 
 	/**
-	 * Ger ev orginalrelationstyp tex om relationen har h‰rletts eller h‰mtats frÂn manuellt inmatad info.
+	 * Ger ev orginalrelationstyp tex om relationen har h√§rletts eller h√§mtats fr√•n manuellt inmatad info.
 	 * @return orginalrelationstyp
 	 */
 	public String getOriginalRelationType() {
@@ -65,8 +65,8 @@ public class Relation {
 	 */
 	@Override
 	public int hashCode() {
-		// genererad av eclipse frÂn uri och relation
-		// OBS bara fˆr uri och relation, ˆvriga ‰r ointressanta vid denna j‰mfˆrelse
+		// genererad av eclipse fr√•n uri och relation
+		// OBS bara f√∂r uri och relation, √∂vriga √§r ointressanta vid denna j√§mf√∂relse
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
@@ -81,8 +81,8 @@ public class Relation {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		// genererad av eclipse frÂn uri och relation
-		// OBS bara fˆr uri och relation, ˆvriga ‰r ointressanta vid denna j‰mfˆrelse
+		// genererad av eclipse fr√•n uri och relation
+		// OBS bara f√∂r uri och relation, √∂vriga √§r ointressanta vid denna j√§mf√∂relse
 		if (this == obj) {
 			return true;
 		}

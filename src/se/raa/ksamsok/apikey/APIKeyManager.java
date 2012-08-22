@@ -25,7 +25,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 	// ladda om cache med detta mellanrum (lazily)
 	private static final long UPDATE_INTERVAL_MILLIS = 10 * 60 * 1000; // 10 min
 
-	// behÂll en cache i minnet (obs volatile fˆr att vara trÂds‰ker)
+	// beh√•ll en cache i minnet (obs volatile f√∂r att vara tr√•ds√§ker)
 	private volatile Set<String> currentApiKeys = Collections.emptySet();
 	private volatile long lastUpdateTime;
 
@@ -43,7 +43,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 		if ((System.currentTimeMillis() - lastUpdateTime) > UPDATE_INTERVAL_MILLIS) {
 			reloadAPIKeys();
 		}
-		// kolla mappen, men tillÂt allt om vi startat utan databas (inte 100% sant, men tillr‰ckligt bra)
+		// kolla mappen, men till√•t allt om vi startat utan databas (inte 100% sant, men tillr√§ckligt bra)
 		return currentApiKeys.contains(apiKey) || (lastFailedAt > 0 && currentApiKeys.size() == 0);
 	}
 
@@ -81,7 +81,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			ps = c.prepareStatement(sql);
 			ps.setString(1, apiKey);
 			ps.executeUpdate();
-			// st‰ng dÂ variabeln Âteranv‰nds
+			// st√§ng d√• variabeln √•teranv√§nds
 			DBUtil.closeDBResources(null, ps, null);
 			ps = null;
 			sql = "DELETE FROM searches WHERE apikey=?";
@@ -89,7 +89,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			ps.setString(1, apiKey);
 			ps.executeUpdate();
 			DBUtil.commit(c);
-			// ladda om och s‰tt om den interna nyckelm‰ngden
+			// ladda om och s√§tt om den interna nyckelm√§ngden
 			reloadAPIKeys();
 		} catch(SQLException e) {
 			DBUtil.rollback(c);
@@ -111,7 +111,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			ps.setString(++i, owner);
 			ps.executeUpdate();
 			DBUtil.commit(c);
-			// ladda om och s‰tt om den interna nyckelm‰ngden
+			// ladda om och s√§tt om den interna nyckelm√§ngden
 			reloadAPIKeys();
 		} catch(SQLException e) {
 			DBUtil.rollback(c);
@@ -122,8 +122,8 @@ public class APIKeyManager extends DBBasedManagerImpl {
 	}
 
 	/**
-	 * Uppdaterar databasen med +1 sˆkning frÂn given API nyckel
-	 * @param apiKey d‰r sˆkningen kommer ifrÂn
+	 * Uppdaterar databasen med +1 s√∂kning fr√•n given API nyckel
+	 * @param apiKey d√§r s√∂kningen kommer ifr√•n
 	 */
 	public void updateUsage(String apiKey) {
 		Connection c = null;
@@ -150,7 +150,7 @@ public class APIKeyManager extends DBBasedManagerImpl {
 
 	
 	private void reloadAPIKeys() {
-		// s‰tt om direkt fˆr att hindra (mÂnga) andra att kˆra samtidigt
+		// s√§tt om direkt f√∂r att hindra (m√•nga) andra att k√∂ra samtidigt
 		lastUpdateTime = System.currentTimeMillis();
 		Connection c  = null;
 		PreparedStatement ps = null;
@@ -164,12 +164,12 @@ public class APIKeyManager extends DBBasedManagerImpl {
 			while (rs.next()) {
 				apiKeys.add(rs.getString("apikey"));
 			}
-			// s‰tt om den interna nyckelm‰ngden
+			// s√§tt om den interna nyckelm√§ngden
 			currentApiKeys = apiKeys;
-			// nollst‰ll misslyckande-tid
+			// nollst√§ll misslyckande-tid
 			lastFailedAt = 0;
 		} catch (Exception e) {
-			// s‰tt misslyckande-tid
+			// s√§tt misslyckande-tid
 			lastFailedAt = lastUpdateTime;
 			logger.error("Error reloading api keys: " + e.getMessage());
 			if (logger.isDebugEnabled()) {

@@ -1,4 +1,4 @@
--- patch-fil för att uppdatera ett schema för att komma ihåg borttagna poster för europeana
+-- patch-fil fÃ¶r att uppdatera ett schema fÃ¶r att komma ihÃ¥g borttagna poster fÃ¶r europeana
 
 alter table content add (added timestamp);
 alter table content add (deleted timestamp);
@@ -15,11 +15,11 @@ create index ix_content_deleted on content (deleted, ' ') tablespace KSAMSOK_IND
 update content set status = 0;
 commit;
 
--- och gör den till not null
+-- och gÃ¶r den till not null
 alter table content modify status not null;
 
--- ful-sql för att parsa ut datum från xml (vilket verkar funka i utvdb i alla fall) och sätta datestamp
--- tar nog mellan 6 och 8h att köra...
+-- ful-sql fÃ¶r att parsa ut datum frÃ¥n xml (vilket verkar funka i utvdb i alla fall) och sÃ¤tta datestamp
+-- tar nog mellan 6 och 8h att kÃ¶ra...
 update content set datestamp = (
 case when INSTR(xmldata, 'lastChangedDate>') > 0 then
   case when to_char(substr(xmldata, INSTR(xmldata, 'lastChangedDate>') + 20, 1)) = '-' then
@@ -33,5 +33,5 @@ end);
 
 commit;
 
--- och gör datestamp till not null
+-- och gÃ¶r datestamp till not null
 alter table content modify datestamp not null;

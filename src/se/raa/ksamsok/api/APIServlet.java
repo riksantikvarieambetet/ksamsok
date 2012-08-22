@@ -26,7 +26,7 @@ import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Hanterar f�rfr�gningar till K-sams�ks API
+ * Hanterar fï¿½rfrï¿½gningar till K-samsï¿½ks API
  * @author Henrik Hjalmarsson
  */
 public class APIServlet extends HttpServlet {
@@ -71,7 +71,7 @@ public class APIServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {	
-		//s�tter contentType och character encoding
+		//sätter contentType och character encoding
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
 		Map<String,String> reqParams = null;

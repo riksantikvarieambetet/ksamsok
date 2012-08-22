@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import se.raa.ksamsok.harvest.DBUtil;
 
 /**
- * Basklass som kan användas för att implementera databasspecifika instanser av
+ * Basklass som kan anvÃ¤ndas fÃ¶r att implementera databasspecifika instanser av
  * GMLDBWriter.
  */
 public abstract class AbstractGMLDBWriter implements GMLDBWriter {
@@ -23,7 +23,7 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 	public void init(String serviceId, Connection c) throws Exception {
 		this.serviceId = serviceId;
 		this.c = c;
-		// förbered några frekvent använda databas-statements
+		// fÃ¶rbered nÃ¥gra frekvent anvÃ¤nda databas-statements
 		this.insertPst = prepareInsert();
 		this.deleteByUriPst = c.prepareStatement("delete from geometries where uri = ?");
 	}
@@ -38,7 +38,7 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 	}
 
 	/**
-	 * Skapar prepared statement att använda för denna writer.
+	 * Skapar prepared statement att anvÃ¤nda fÃ¶r denna writer.
 	 * @return prepared statement
 	 * @throws Exception vid fel
 	 */
@@ -67,8 +67,8 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 
 	@Override
 	public int update(GMLInfoHolder gmlInfoHolder) throws Exception {
-		// ta bort alla och sen stoppa in nya - det kan vara fler/färre än innan så
-		// det är enklare att rensa och stoppa in på nytt än att försöka uppdatera
+		// ta bort alla och sen stoppa in nya - det kan vara fler/fÃ¤rre Ã¤n innan sÃ¥
+		// det Ã¤r enklare att rensa och stoppa in pÃ¥ nytt Ã¤n att fÃ¶rsÃ¶ka uppdatera
 		// befintliga tupler
 		int updated = 0;
 		updated += delete(gmlInfoHolder.getIdentifier());
@@ -82,7 +82,7 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 		if (identifier == null) {
 			return deleted;
 		}
-		// TODO: lägga på serviceId som villkor också?
+		// TODO: lÃ¤gga pÃ¥ serviceId som villkor ocksÃ¥?
 		//pst = c.prepareStatement("delete from geometries where uri = ?");
 		deleteByUriPst.setString(1, identifier);
 		deleted = deleteByUriPst.executeUpdate();
@@ -104,8 +104,8 @@ public abstract class AbstractGMLDBWriter implements GMLDBWriter {
 	}
 
 	/**
-	 * Metod att överlagra i subklasser för att konvertera gml till en databasspecifik
-	 * struct/objekt. Returvärdet används med setObject() på ett prepared statement.
+	 * Metod att Ã¶verlagra i subklasser fÃ¶r att konvertera gml till en databasspecifik
+	 * struct/objekt. ReturvÃ¤rdet anvÃ¤nds med setObject() pÃ¥ ett prepared statement.
 	 * @param gml gml-geometri
 	 * @return ett databasspecifikt objekt
 	 * @throws Exception vid fel

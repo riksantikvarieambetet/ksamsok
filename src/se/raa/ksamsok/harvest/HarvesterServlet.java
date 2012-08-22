@@ -20,7 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- * Används bara fn för att kolla att systemet verkar korrekt instantierat map spring-tjänster
+ * AnvÃ¤nds bara fn fÃ¶r att kolla att systemet verkar korrekt instantierat map spring-tjÃ¤nster
  * och all interaktion sker via jsp.
  */
 public class HarvesterServlet extends HttpServlet {
@@ -48,11 +48,11 @@ public class HarvesterServlet extends HttpServlet {
 		ServletContext servletContext = config.getServletContext();
 		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
-		// lite "sanity-checks" på hela systemet, inget av detta används i denna servlet
-		Validate.notNull(ds, "DataSource är null, spring har inte initialiserats ok");
-		Validate.notNull(ss, "StatusService är null, spring har inte initialiserats ok");
-		Validate.notNull(hsm, "HarvestServiceManager är null, spring har inte initialiserats ok");
-		Validate.notNull(hrm, "HarvestRepositoryManager är null, spring har inte initialiserats ok");
+		// lite "sanity-checks" pÃ¥ hela systemet, inget av detta anvÃ¤nds i denna servlet
+		Validate.notNull(ds, "DataSource Ã¤r null, spring har inte initialiserats ok");
+		Validate.notNull(ss, "StatusService Ã¤r null, spring har inte initialiserats ok");
+		Validate.notNull(hsm, "HarvestServiceManager Ã¤r null, spring har inte initialiserats ok");
+		Validate.notNull(hrm, "HarvestRepositoryManager Ã¤r null, spring har inte initialiserats ok");
 		if (logger.isInfoEnabled()) {
 			logger.info("HarvesterServlet startad");
 		}
@@ -64,9 +64,9 @@ public class HarvesterServlet extends HttpServlet {
 			logger.info("Stoppar HarvesterServlet");
 		}
 		super.destroy();
-		// finalizer-hack för att göra det möjligt att redeploya webappen, annars
-		// hålls referencing-jar bla låst, kanske inte snällt om fler webappar kör
-		// i samma tomcat och imageio ligger utanför webappen i common/lib men...
+		// finalizer-hack fÃ¶r att gÃ¶ra det mÃ¶jligt att redeploya webappen, annars
+		// hÃ¥lls referencing-jar bla lÃ¥st, kanske inte snÃ¤llt om fler webappar kÃ¶r
+		// i samma tomcat och imageio ligger utanfÃ¶r webappen i common/lib men...
 		IIORegistry.getDefaultInstance().deregisterAll();
 		System.runFinalization();
 		if (logger.isInfoEnabled()) {

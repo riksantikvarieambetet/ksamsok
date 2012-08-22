@@ -1,7 +1,7 @@
 package se.raa.ksamsok.api.exception;
 
 /**
- * kastas vid övriga fel
+ * kastas vid Ã¶vriga fel
  * @author Henrik Hjalmarsson
  */
 public class DiagnosticException extends APIException 

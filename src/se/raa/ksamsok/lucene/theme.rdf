@@ -5,8 +5,8 @@
 	xml:base="http://kulturarvsdata.se/resurser/Theme#">
 	
 	<Theme rdf:ID="theme01">
-		<name>2:a världskriget</name>
-		<description>Exempel på ett tema som exempelvis kan märka upp data för användning i ett projekt för landets högstadieskolor.</description>
+		<name>2:a vÃ¤rldskriget</name>
+		<description>Exempel pÃ¥ ett tema som exempelvis kan mÃ¤rka upp data fÃ¶r anvÃ¤ndning i ett projekt fÃ¶r landets hÃ¶gstadieskolor.</description>
 	</Theme>
 
 	<Theme rdf:ID="theme02">
@@ -15,13 +15,13 @@
 	</Theme>
 
 	<Theme rdf:ID="theme03">
-		<name>Utställd</name>
+		<name>UtstÃ¤lld</name>
 		<description>To be deprecated.</description>
 	</Theme>
 
 	<Theme rdf:ID="exhibited">
-		<name>Utställd</name>
-		<description>Objektet finns i en pågående utställning.</description>
+		<name>UtstÃ¤lld</name>
+		<description>Objektet finns i en pÃ¥gÃ¥ende utstÃ¤llning.</description>
 	</Theme>
 
 </rdf:RDF>

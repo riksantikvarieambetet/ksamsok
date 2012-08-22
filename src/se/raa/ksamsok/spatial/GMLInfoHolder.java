@@ -3,7 +3,7 @@ package se.raa.ksamsok.spatial;
 import java.util.Collection;
 
 /**
- * Enkel datahÂllare fˆr spatial-data i form av gml. En typisk post har
+ * Enkel datah√•llare f√∂r spatial-data i form av gml. En typisk post har
  * en identifierar-URI, en namn och noll eller flera geometrier.
  */
 public class GMLInfoHolder {
@@ -18,8 +18,8 @@ public class GMLInfoHolder {
 	public GMLInfoHolder() {};
 
 	/**
-	 * Ger sant om instansen innehÂller geometrier
-	 * @return sant m‰ngd med geometrier finns 
+	 * Ger sant om instansen inneh√•ller geometrier
+	 * @return sant m√§ngd med geometrier finns 
 	 */
 	public boolean hasGeometries() {
 		return gmlGeometries != null && gmlGeometries.size() > 0;
@@ -34,7 +34,7 @@ public class GMLInfoHolder {
 	}
 
 	/**
-	 * S‰tter identifier.
+	 * S√§tter identifier.
 	 * @param identifier identifierar-URI
 	 */
 	public void setIdentifier(String identifier) {
@@ -42,7 +42,7 @@ public class GMLInfoHolder {
 	}
 
 	/**
-	 * Ger satt namn fˆr denna identifier.
+	 * Ger satt namn f√∂r denna identifier.
 	 * @return namn, eller null
 	 */
 	public String getName() {
@@ -50,7 +50,7 @@ public class GMLInfoHolder {
 	}
 
 	/**
-	 * S‰tter namn fˆr denna identifier.
+	 * S√§tter namn f√∂r denna identifier.
 	 * @param name namn
 	 */
 	public void setName(String name) {
@@ -58,16 +58,16 @@ public class GMLInfoHolder {
 	}
 
 	/**
-	 * Ger m‰ngd med geometrier i form av gml-str‰ngar.
-	 * @return m‰ngd med geometrier, eller null
+	 * Ger m√§ngd med geometrier i form av gml-str√§ngar.
+	 * @return m√§ngd med geometrier, eller null
 	 */
 	public Collection<String> getGmlGeometries() {
 		return gmlGeometries;
 	}
 
 	/**
-	 * S‰tter m‰ngd med geometrier.
-	 * @param gmlGeometries m‰ngd med geometrier i form av gml-str‰ngar
+	 * S√§tter m√§ngd med geometrier.
+	 * @param gmlGeometries m√§ngd med geometrier i form av gml-str√§ngar
 	 */
 	public void setGmlGeometries(Collection<String> gmlGeometries) {
 		this.gmlGeometries = gmlGeometries;
