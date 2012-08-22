@@ -126,12 +126,14 @@
 			<lib dir="${project.src.lib.dir}">
 				<include name="*.jar" />
 				<exclude name="servlet-*.jar" />
-				<exclude name="postgresql-9.0-801.jdbc4.jar" />
+				<!--<exclude name="postgresql-9.0-801.jdbc4.jar" />-->
 				<!-- oracle-filer måste läggas i tomcat/lib och kan ej vara med
 				      i war-filen pga diverse klassladdarproblem -->
 				<exclude name="ora10-*.jar" />
 				<exclude name="oracle-*.jar" />
-			</lib>			
+			</lib>
+			<zipfileset dir="${basedir}/rpm" includes="**/context.xml"
+			prefix="META-INF"/>
 		</war>
 		<copy file="${project.build.dir}/war/${war.name}" tofile="${project.build.dir}/war/${short.war.name}"/>
 	</target>
@@ -212,19 +214,19 @@
 			<fileset dir="rpm">
 				<!-- <include name="context.xml"/>  -->
 				<include name="tomcat-users.xml"/>
-				<include name="catalina.sh"/>
+				<!--<include name="catalina.sh"/> -->
 			</fileset>
 		</copy>
-		<copy todir="${project.build.dir}/rpm/SOURCES/">
-			<fileset dir="${project.src.lib.dir}">
+		<!--<copy todir="${project.build.dir}/rpm/SOURCES/">
+			<fileset dir="${project.src.lib.dir}"> -->
 				<!-- obs, se till att ha samma matchningar här som i spec-filen -->
-				<include name="postgresql-9.0-801.jdbc4.jar"/>
+		<!--<include name="postgresql-9.0-801.jdbc4.jar"/>
 				<include name="oracle-*"/>
 				<include name="ora10-*"/>
 				<include name="jstl.jar"/>
 				<include name="standard.jar"/>
 			</fileset>
-		</copy>
+		</copy> -->
 
 		<!-- Skapa själva rpm filen -->
 			    	<echo message="${project.build.dir}"/>
@@ -250,10 +252,10 @@
 	<!--<target name="RAA-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
 	</target>-->
 		
-	<!--<target name="RAA-UTV-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
-	</target>-->
-	<target name="RAA-UTV-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	<target name="RAA-UTV-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
 	</target>
+	<!--<target name="RAA-UTV-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	</target>-->
 
 
 	<target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
