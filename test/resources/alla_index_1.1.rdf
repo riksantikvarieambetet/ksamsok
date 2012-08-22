@@ -4,9 +4,9 @@
     <ns5:buildDate>2010-01-22</ns5:buildDate>
     <ns5:createdDate>2006-01-01</ns5:createdDate>
     <ns5:dataQuality rdf:resource="http://kulturarvsdata.se/resurser/DataQuality#processed"/>
-    <ns5:itemKeyWord>HjÃ¤lm</ns5:itemKeyWord>
-    <ns5:itemTitle>Gustav Vasas hjÃ¤lm</ns5:itemTitle>
-    <ns5:itemLabel>HjÃ¤lm</ns5:itemLabel>
+    <ns5:itemKeyWord>Hjälm</ns5:itemKeyWord>
+    <ns5:itemTitle>Gustav Vasas hjälm</ns5:itemTitle>
+    <ns5:itemLabel>Hjälm</ns5:itemLabel>
     <ns5:itemSuperType rdf:resource="http://kulturarvsdata.se/resurser/EntitySuperType#object"/>
     <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#object"/>
     <ns5:itemClass>http://raa.se/test/itemClass#test</ns5:itemClass>

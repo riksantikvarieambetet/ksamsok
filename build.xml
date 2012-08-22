@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="ksamsok" basedir="." default="RAA-UTV-RPM">
 
     <description>
@@ -24,7 +24,7 @@
         <property name="short.war.name"
             value="${project.name}.war"/>
 
-        <!-- för rpm, öka vid ny version... -->
+        <!-- fÃ¶r rpm, Ã¶ka vid ny version... -->
 		<property name="major.minor" 	value="0.2" />
 		<property name="release" 		value="1" />
 
@@ -99,8 +99,8 @@
 	</target>
 
 	<target name="prepare-war-slave" if="ksamsok.slave">
-		<echo> Patchar katalogstruktur för replikeringsslav </echo>
-		<!-- bort med admin och skriv över konf-filer med "slav-versioner" -->
+		<echo> Patchar katalogstruktur fÃ¶r replikeringsslav </echo>
+		<!-- bort med admin och skriv Ã¶ver konf-filer med "slav-versioner" -->
 		<delete dir="${project.build.dir}/web/userAdmin" verbose="true" />
 		<delete dir="${project.build.dir}/web/admin" verbose="true" />
 		<copy overwrite="true" file="${basedir}/web/WEB-INF/slave.web.xml" tofile="${project.build.dir}/web/WEB-INF/web.xml" verbose="true"/>
@@ -118,7 +118,7 @@
 	</target>
 
 	<!-- Bygger en WAR -->
-	<target name="war" depends="jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
+	<target name="war" depends="jar,prepare-war,prepare-war-slave" description="Skapar en WAR fÃ¶r deployment.">
 		<war excludes="**/web.xml" basedir="${project.build.dir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${project.build.dir}/web/WEB-INF/web.xml">
 			<lib dir="${project.build.dir}/lib">
 				<include name="${jar.name}" />
@@ -127,7 +127,7 @@
 				<include name="*.jar" />
 				<exclude name="servlet-*.jar" />
 				<exclude name="postgresql-9.0-801.jdbc4.jar" />
-				<!-- oracle-filer måste läggas i tomcat/lib och kan ej vara med
+				<!-- oracle-filer mÃ¥ste lÃ¤ggas i tomcat/lib och kan ej vara med
 				      i war-filen pga diverse klassladdarproblem -->
 				<exclude name="ora10-*.jar" />
 				<exclude name="oracle-*.jar" />
@@ -167,7 +167,7 @@
             destdir="${project.build.dir}/javadoc"
             packagenames="se.raa.ksamsok.*"
             defaultexcludes="yes"
-            windowtitle="K-samsök"
+            windowtitle="K-samsÃ¶k"
             access="package"
             use="true"
             >
@@ -175,14 +175,14 @@
     </target>
 
 	<target name="master">
-		<!-- notera att denna bör vara samma som för ksamsok-solr då den här strängen används i paketdeps -->
+		<!-- notera att denna bÃ¶r vara samma som fÃ¶r ksamsok-solr dÃ¥ den hÃ¤r strÃ¤ngen anvÃ¤nds i paketdeps -->
 		<property name="ksamsok.replication.rpm.suffix" value="master" />
 	</target>
 
 	<target name="slave">
 		<!-- flagga att vi bygger en replikeringslav med bara api-funktioner, triggar specialhantering -->
 		<property name="ksamsok.slave" value="true" />
-		<!-- notera att denna bör vara samma som för ksamsok-solr då den här strängen används i paketdeps -->
+		<!-- notera att denna bÃ¶r vara samma som fÃ¶r ksamsok-solr dÃ¥ den hÃ¤r strÃ¤ngen anvÃ¤nds i paketdeps -->
 		<property name="ksamsok.replication.rpm.suffix" value="slave" />
 	</target>
 
@@ -202,7 +202,7 @@
 			</filterset>
 		</copy>
 
-		<!-- kopiera in så som det ska se ut sen efter installation -->
+		<!-- kopiera in sÃ¥ som det ska se ut sen efter installation -->
 		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="${project.build.dir}/war">
 				<include name="ksamsok.war"/>
@@ -217,7 +217,7 @@
 		</copy>
 		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="${project.src.lib.dir}">
-				<!-- obs, se till att ha samma matchningar här som i spec-filen -->
+				<!-- obs, se till att ha samma matchningar hÃ¤r som i spec-filen -->
 				<include name="postgresql-9.0-801.jdbc4.jar"/>
 				<include name="oracle-*"/>
 				<include name="ora10-*"/>
@@ -226,7 +226,7 @@
 			</fileset>
 		</copy>
 
-		<!-- Skapa själva rpm filen -->
+		<!-- Skapa sjÃ¤lva rpm filen -->
 			    	<echo message="${project.build.dir}"/>
 					<rpm
 					        specFile="ksamsok.spec"
@@ -235,7 +235,7 @@
 					        failOnError="true"/>
 			    	
 			    	
-			    	<!-- Lägg upp rpm-filen i ${project.build.rpm.dir} -->
+			    	<!-- LÃ¤gg upp rpm-filen i ${project.build.rpm.dir} -->
 			    	<copy todir="${project.build.dir}/rpm">
 			    		<fileset dir="${project.build.dir}/rpm/RPMS/x86_64">
 			    	    	<include name="*.rpm"/>
@@ -244,19 +244,19 @@
 			    	
 	</target>
 
-	<!-- Här avgörs om man bygger en master eller slav -->
-	<target name="RAA-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	<!-- HÃ¤r avgÃ¶rs om man bygger en master eller slav -->
+	<target name="RAA-RPM" depends="master,base-RAA-RPM" description="Skapa rpm fÃ¶r raÃ¤:s driftmiljÃ¶">
 	</target>
-	<!--<target name="RAA-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	<!--<target name="RAA-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm fÃ¶r raÃ¤:s driftmiljÃ¶">
 	</target>-->
 		
-	<!--<target name="RAA-UTV-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	<!--<target name="RAA-UTV-RPM" depends="master,base-RAA-RPM" description="Skapa rpm fÃ¶r raÃ¤:s driftmiljÃ¶ (slav)">
 	</target>-->
-	<target name="RAA-UTV-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	<target name="RAA-UTV-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm fÃ¶r raÃ¤:s driftmiljÃ¶ (slav)">
 	</target>
 
 
-	<target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
+	<target name="test" depends="jar" description="KÃ¶r alla testfall och genererar en htmlrapport">
 		<mkdir dir="${project.build.dir}/test"/>
 		<mkdir dir="${project.build.dir}/test/reports"/>
         <javac srcdir="${basedir}/test/src"
