@@ -12,7 +12,7 @@ Rpm skapas med: "ant RAA-RPM" (default är att bygga en master)
 OBS! Kräver en ksamsok-solr i samma webapp, se readme för det projektet för relaterade utv-inställningar.
 
 ** Manuell installation för utv
-Context.xml används inte längre. Context specas i ksamsok-solr paketet.  
+Context.xml används inte längre. Context specas i ksamsok***Install paketet.  
 
 * konfigurera datakälla för applikationen jdbc/harvestdb
 
