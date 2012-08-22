@@ -132,8 +132,7 @@
 				<exclude name="ora10-*.jar" />
 				<exclude name="oracle-*.jar" />
 			</lib>
-			<zipfileset dir="${basedir}/rpm" includes="**/context.xml"
-			prefix="META-INF"/>
+			<zipfileset dir="${project.src.conf.context.dir}" includes="**/context.xml" prefix="META-INF"/>
 		</war>
 		<copy file="${project.build.dir}/war/${war.name}" tofile="${project.build.dir}/war/${short.war.name}"/>
 	</target>
@@ -211,7 +210,7 @@
 			</fileset>
 		</copy>
 		<copy todir="${project.build.dir}/rpm/SOURCES/">
-			<fileset dir="rpm">
+			<fileset dir="conf">
 				<!-- <include name="context.xml"/>  -->
 				<include name="tomcat-users.xml"/>
 				<!--<include name="catalina.sh"/> -->
@@ -247,14 +246,14 @@
 	</target>
 
 	<!-- Här avgörs om man bygger en master eller slav -->
-	<!--<target name="RAA-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	<!--<target name="RAA-RPM" depends="produktion,master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
 	</target>-->
-	<target name="RAA-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	<target name="RAA-RPM" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
 	</target>
 		
-	<!--<target name="RAA-UTV-RPM" depends="master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	<!--<target name="RAA-UTV-RPM" depends="utveckling,master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
 	</target>-->
-	<target name="RAA-UTV-RPM" depends="slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
+	<target name="RAA-UTV-RPM" depends="utveckling,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö (slav)">
 	</target>
 
 
@@ -296,5 +295,13 @@
 		  </fileset>
 		  <report format="frames" todir="build/test/htmlreport" />
 		</junitreport>
+	</target>
+	
+	<target name="utveckling">
+		<property name="project.src.conf.context.dir" value="${basedir}/conf/test"/>
+	</target>
+	
+	<target name="produktion">
+		<property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>
 	</target>
 </project>
