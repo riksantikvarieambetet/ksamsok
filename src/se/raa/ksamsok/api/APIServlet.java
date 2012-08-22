@@ -26,7 +26,7 @@ import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
- * Hanterar fï¿½rfrï¿½gningar till K-samsï¿½ks API
+ * Hanterar förfrågningar till K-samsöks API
  * @author Henrik Hjalmarsson
  */
 public class APIServlet extends HttpServlet {
