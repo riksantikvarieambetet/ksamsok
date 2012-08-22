@@ -31,14 +31,14 @@ install -m755 $RPM_SOURCE_DIR/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/w
 
 # install -m755 $RPM_SOURCE_DIR/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
 install -m755 $RPM_SOURCE_DIR/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
-install -m755 $RPM_SOURCE_DIR/postgresql-9.0-801.jdbc4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-install -m755 $RPM_SOURCE_DIR/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-install -m755 $RPM_SOURCE_DIR/ora10-sdoapi.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-install -m755 $RPM_SOURCE_DIR/ora10-sdoutl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-install -m755 $RPM_SOURCE_DIR/jstl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-install -m755 $RPM_SOURCE_DIR/standard.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-install -m755 $RPM_SOURCE_DIR/catalina.sh $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
-install -m755 $RPM_SOURCE_DIR/ora10-xmlparserv2-noservices.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+#install -m755 $RPM_SOURCE_DIR/postgresql-9.0-801.jdbc4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+#install -m755 $RPM_SOURCE_DIR/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+#install -m755 $RPM_SOURCE_DIR/ora10-sdoapi.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+#install -m755 $RPM_SOURCE_DIR/ora10-sdoutl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+#install -m755 $RPM_SOURCE_DIR/jstl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+#install -m755 $RPM_SOURCE_DIR/standard.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
+#install -m755 $RPM_SOURCE_DIR/catalina.sh $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
+#install -m755 $RPM_SOURCE_DIR/ora10-xmlparserv2-noservices.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
