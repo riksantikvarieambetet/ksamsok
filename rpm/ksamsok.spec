@@ -1,5 +1,5 @@
-%define ver 1.0.1
-%define rel 41
+%define ver 1.0.2
+%define rel 0
 
 Summary: Raö K-Samsök, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@
@@ -13,8 +13,7 @@ Group: System Environment/Daemons
 # provar att kommentera bort BuildArchitectures: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 
-Requires: raa-tomcat8080 >= 6.0.18, raa-ksamsok_solr_@RPM_SUFFIX@ >= 1.0.0
-Provides: raa-ksamsok_applic
+Requires: raa-tomcat8080 >= 7.0.0, raa-ksamsok_solr_@RPM_SUFFIX@ >= 1.0.1
 
 %description
 Raä K-Samsok, centralnod (@RPM_SUFFIX@)
@@ -24,21 +23,11 @@ rm -rf $RPM_BUILD_ROOT
 
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
-mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
+
 
 install -m755 $RPM_SOURCE_DIR/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 
-# install -m755 $RPM_SOURCE_DIR/context.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
 install -m755 $RPM_SOURCE_DIR/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
-#install -m755 $RPM_SOURCE_DIR/postgresql-9.0-801.jdbc4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-#install -m755 $RPM_SOURCE_DIR/oracle-10.2.0.4.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-#install -m755 $RPM_SOURCE_DIR/ora10-sdoapi.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-#install -m755 $RPM_SOURCE_DIR/ora10-sdoutl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-#install -m755 $RPM_SOURCE_DIR/jstl.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-#install -m755 $RPM_SOURCE_DIR/standard.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
-#install -m755 $RPM_SOURCE_DIR/catalina.sh $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
-#install -m755 $RPM_SOURCE_DIR/ora10-xmlparserv2-noservices.jar $RPM_BUILD_ROOT/usr/local/tomcat8080/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -61,16 +50,7 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 %files
 %defattr(-,tomcat,nobody)
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/webapps/ksamsok.war
-# %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/context.xml
 %attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/tomcat-users.xml
-#%attr(0755,tomcat,nobody) /usr/local/tomcat8080/bin/catalina.sh
-# oracle-drivrutiner för jdbc och spatialutökningar
-# obs, se till att ha samma matchningar här som i build.xml
-#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/oracle-*.jar
-#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/ora10-*.jar
-#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/postgresql-9.0-801.jdbc4.jar
-#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/standard.jar
-#%attr(0644,tomcat,nobody) /usr/local/tomcat8080/lib/jstl.jar
 
 %changelog
 * Mon Dec 6 2010 ant
