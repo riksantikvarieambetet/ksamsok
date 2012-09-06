@@ -237,10 +237,10 @@
 	<target name="RAA-RPM" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
 	</target>
 		
-	<target name="RAA-UTV-RPM" depends="utveckling,master,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
-	</target>
-	<!--<target name="RAA-UTV-RPM" depends="utveckling,slave,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
+	<!--<target name="RAA-UTV-RPM" depends="utveckling,master,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
 	</target>-->
+	<target name="RAA-UTV-RPM" depends="utveckling,slave,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
+	</target>
 
 
 	<target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
