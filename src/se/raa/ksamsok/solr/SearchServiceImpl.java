@@ -47,7 +47,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public QueryResponse query(SolrQuery query) throws SolrServerException {
 		if (logger.isInfoEnabled()) {
-			logger.info("Söker med " + query.getQuery());
+			logger.info("Söker med \"" + query.getQuery() + "\" sort: " + query.getSortField() + " start: " + query.getStart() + " rows: " + query.getRows());
 		}
 		return solr.query(query, METHOD.POST);
 	}
