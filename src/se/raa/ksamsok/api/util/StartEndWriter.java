@@ -43,7 +43,7 @@ public class StartEndWriter {
 			writeStart(writer, stylesheet);
 		}
 		writer.println("<error>");
-		writer.println(e.getMessage());
+		writer.println(StaticMethods.xmlEscape(e.getMessage()));
 		writer.println("</error>");
 		if(writeFoot) {
 			writeEnd(writer);

@@ -2,14 +2,23 @@ package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrInputDocument;
 import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
@@ -22,7 +31,10 @@ import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
+import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.harvest.HarvestServiceImpl;
 import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.SamsokContentHelper;
 import se.raa.ksamsok.statistic.StatisticLoggData;
 import se.raa.ksamsok.util.ShmSiteCacherHackTicket3419;
 
@@ -43,8 +55,12 @@ public class Search extends AbstractSearchMethod {
 	public static final String SORT_DESC = "desc";
 	/** parametervärde för ascending sort */
 	public static final String SORT_ASC = "asc";
-	/** record shema för presentations data */
+	/** parameternam för sort */
+	public static final String FIELDS = "fields";
+	/** record schema för presentations data */
 	public static final String NS_SAMSOK_PRES =	"http://kulturarvsdata.se/presentation#";
+	/** record schema för valbara fält (xml) */
+	public static final String NS_SAMSOK_XML =	"http://kulturarvsdata.se/xml#";
 	/** parameternamn för record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
@@ -52,7 +68,34 @@ public class Search extends AbstractSearchMethod {
 
 	// index att använda för sortering (transparent) istället för itemName
 	private static final String ITEM_NAME_SORT = "itemNameSort";
-	
+
+	// TODO: detta är inte det mest effektiva sättet att få ut valbara fält
+	//       bättre och snabbare vore att lagra fälten i solr och hämta därifrån,
+	//       men detta är snabbare att implementera och kräver inte med disk för solr-indexet
+	// specialvärden/variabler för valbara fält	
+	private static final String FIELD_THUMBNAIL = "thumbnail";
+	private static final String FIELD_URL = "url";
+	private static final String FIELD_LON = "lon";
+	private static final String FIELD_LAT = "lat";
+	// återanvänd samma kod som används för indexering
+	private static final SamsokContentHelper sch = new SamsokContentHelper();
+	// specialhanterade fält som antingen kräver extra hantering eller som inte blir vettiga
+	private static final List<String> extraFields = Collections.unmodifiableList(
+			Arrays.asList(FIELD_THUMBNAIL, FIELD_LON, FIELD_LAT, FIELD_URL));
+	private static final List<String> disallowedFields = Collections.unmodifiableList(Arrays.asList(
+			ContentHelper.IX_ADDEDTOINDEXDATE,  // blir inte rätt beräknat med dummy-tjänst
+			ContentHelper.IX_BOUNDING_BOX,      // bara för sök
+			ContentHelper.IX_POINT_DISTANCE     // bara för sök
+			// TODO: fler?
+	));
+	// SamsokContentHelper.createSolrDocument() kräver en tjänst så vi skapar en dummy
+	private static final HarvestService dummyService;
+	static {
+		dummyService = new HarvestServiceImpl();
+		dummyService.setId("dummy");
+		dummyService.setName("dummy");
+	}
+
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.Search");
 
 	protected String sort = null;
@@ -60,6 +103,7 @@ public class Search extends AbstractSearchMethod {
 	protected String recordSchema = null;
 	protected String apiKey;
 	protected String binDataField = null;
+	protected Set<String> fields = null;
 
 	/**
 	 * skapar ett Search objekt
@@ -97,6 +141,27 @@ public class Search extends AbstractSearchMethod {
 		}
 		if (NS_SAMSOK_PRES.equals(recordSchema)) {
 			binDataField = ContentHelper.I_IX_PRES;
+		} else if (NS_SAMSOK_XML.equals(recordSchema)) {
+			// valbara fält, använd rdf
+			binDataField = ContentHelper.I_IX_RDF;
+			String reqFields = getMandatoryParameterValue(FIELDS, "Search", null, false);
+			String[] splitFields = StringUtils.split(reqFields, ",");
+			if (splitFields == null || splitFields.length == 0) {
+				throw new BadParameterException("Inga efterfrågade fält.", "Search.performMethod", null, false);
+			}
+			fields = new LinkedHashSet<String>();
+			// ta alltid med itemId så att man vet vilken post det är
+			fields.add(ContentHelper.IX_ITEMID);
+			for (String field: splitFields) {
+				field = StringUtils.trimToNull(field);
+				// godkänn bara fält/index som finns, är ej interna och ev extra specialhanterade fält
+				if (field != null && !disallowedFields.contains(field) && !field.startsWith("_") &&
+						(ContentHelper.indexExists(field) || extraFields.contains(field))) {
+					fields.add(field);
+				} else {
+					throw new BadParameterException("Det efterfrågade fältet/indexet " + field + " finns inte eller stöds inte.", "Search.performMethod", null, false);
+				}
+			}
 		} else {
 			binDataField = ContentHelper.I_IX_RDF;
 		}
@@ -183,11 +248,10 @@ public class Search extends AbstractSearchMethod {
 	
 	/**
 	 * Hämtar xml-innehåll (fragment) från ett lucene-dokument som en sträng.
-	 * @param doc lucenedokument
+	 * @param doc solrdokument
 	 * @param uri postens uri (används bara för log)
-	 * @param xmlIndex index att hämta innehåll från
-	 * @return xml-fragment med antingen presentations-xml eller rdf; null om data saknas
-	 * @throws Exception vid teckenkodningsfel (bör ej inträffa) 
+	 * @return xml-fragment med antingen presentations-xml, rdf eller xml med valbara fält; null om data saknas
+	 * @throws Exception vid teckenkodningsfel (bör ej inträffa)
 	 */
 	protected String getContent(SolrDocument doc, String uri) {
 		String content = null;
@@ -201,13 +265,56 @@ public class Search extends AbstractSearchMethod {
 					content = new String(xmlData, "UTF-8");
 				}
 				// TODO: NEK: ta bort när allt är omindexerat
-				if (content == null) {
+				if (content == null && !NS_SAMSOK_PRES.equals(recordSchema)) {
 					content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
 				}
 			}
 			if (content == null) {
 				logger.warn("Hittade inte xml-data (" + binDataField + ") för " + uri);
 			}
+			if (content != null && NS_SAMSOK_XML.equals(recordSchema)) {
+				SolrInputDocument resDoc = sch.createSolrDocument(dummyService, content, new Date());
+				// nödvändigt då createSolrDocument lägger in felmeddelanden mm
+				ContentHelper.getAndClearProblemMessages();
+				// (ful-)hämta ut tumnagel då den inte indexeras
+				// alternativet är att parsa rdf:en och hämta ut den, men det skulle fn innebära
+				// dubbelparsning av rdf:en och iom att detta med att gå via ett solr-dokument
+				// redan är långsamt och troligen är en temporär lösning så får det bli så här
+				// tills vidare (motsvarar hämtning av SamsokProtocol.uri_rThumbnail) och
+				// förhoppningsvis funkar det för så gott som alla fall
+				if (fields.contains(FIELD_THUMBNAIL)) {
+					String thumb = StringUtils.substringBetween(content, "thumbnail>", "<");
+					if (!StringUtils.isEmpty(thumb)) {
+						resDoc.addField(FIELD_THUMBNAIL, thumb);
+					}
+				}
+				content = "";
+				for (String field: fields) {
+					String docField;
+					// översätt fält vid behov
+					if (FIELD_LON.equals(field)) {
+						docField = ContentHelper.I_IX_LON;
+					} else if (FIELD_LAT.equals(field)) {
+						docField = ContentHelper.I_IX_LAT;
+					} else if (FIELD_URL.equals(field)) {
+						docField = ContentHelper.I_IX_HTML_URL;
+					} else {
+						docField = field;
+					}
+					Collection<Object> fieldValues = resDoc.getFieldValues(docField);
+					if (fieldValues != null) {
+						String fieldValue;
+						for (Object value: fieldValues) {
+							if (value != null && (fieldValue = StringUtils.trimToNull(value.toString())) != null) {
+								content += "<field name=\"" + field + "\">";
+								content += StaticMethods.xmlEscape(fieldValue);
+								content += "</field>\n";
+							}
+						}
+					}
+				}
+			}
+
 		} catch (Exception e) {
 			logger.error("Fel vid hämtande av xml-data (" + binDataField + ") för " + uri);
 		}
