@@ -73,7 +73,7 @@
             classpathref="project.classpath"
             debug="${javac.debug}" 
             optimize="${javac.optimize}"
-            encoding="ISO-8859-1"
+            encoding="UTF-8"
         	includeantruntime="false">
             <patternset>
                 <include name="**/*.java"/>
@@ -250,7 +250,7 @@
             destdir="${project.build.dir}/test"
             debug="${javac.debug}" 
             optimize="${javac.optimize}"
-            encoding="ISO-8859-1"
+            encoding="UTF-8"
         	includeantruntime="false">
         	<classpath>
         		<path refid="project.test.classpath" />
