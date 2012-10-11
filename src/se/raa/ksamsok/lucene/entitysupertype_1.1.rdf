@@ -11,17 +11,17 @@
 
 	<EntitySuperType rdf:ID="object">
 		<name>Fysiskt ting</name>
-		<description>FÃ¶remÃ¥l, fotografi, bearbetningar/interaktiv resurs, film/video, ljud, dokument, karta, byggnad, fornlÃ¤mning, konstverk, bok, samling, ritning, teckning och kulturmiljÃ¶.</description>
+		<description>Föremål, fotografi, bearbetningar/interaktiv resurs, film/video, ljud, dokument, karta, byggnad, fornlämning, konstverk, bok, samling, ritning, teckning och kulturmiljö.</description>
 	</EntitySuperType>
 
 	<EntitySuperType rdf:ID="event">
-		<name>HÃ¤ndelse</name>
-		<description>AvgrÃ¤nsas av tid och rum t.ex. historisk hÃ¤ndelse och utstÃ¤llning.</description>
+		<name>Händelse</name>
+		<description>Avgränsas av tid och rum t.ex. historisk händelse och utställning.</description>
 	</EntitySuperType>
 
 	<EntitySuperType rdf:ID="concept">
 		<name>Koncept</name>
-		<description>En Ã¶vergripande definition av ett event eller ett objekt t.ex. av krig.</description>
+		<description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</description>
 	</EntitySuperType>
 
 </rdf:RDF>

@@ -5,8 +5,8 @@
 	xml:base="http://kulturarvsdata.se/resurser/EntityType">
 	
 	<EntityType rdf:ID="object">
-		<name>Objekt/fÃ¶remÃ¥l</name>
-		<description>Information om t.ex. museifÃ¶remÃ¥l. Underkategori till Fysiskt ting.</description>
+		<name>Objekt/föremål</name>
+		<description>Information om t.ex. museiföremål. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 	
 	<EntityType rdf:ID="photo">
@@ -21,7 +21,7 @@
 
 	<EntityType rdf:ID="video">
 		<name>Film/video</name>
-		<description>Information om rÃ¶rlig bild. Underkategori till Fysiskt ting.</description>
+		<description>Information om rörlig bild. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="sound">
@@ -31,12 +31,12 @@
 
 	<EntityType rdf:ID="document">
 		<name>Dokument</name>
-		<description>Information om ett dokument eller arkivhandling som finns tillgÃ¤nglig i fulltextformat. Underkategori till Fysiskt ting.</description>
+		<description>Information om ett dokument eller arkivhandling som finns tillgänglig i fulltextformat. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="book">
 		<name>Bok</name>
-		<description>Information om en publikation som finns tillgÃ¤nglig i fulltextformat. Underkategori till Fysiskt ting.</description>
+		<description>Information om en publikation som finns tillgänglig i fulltextformat. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="drawing">
@@ -65,18 +65,18 @@
 	</EntityType>
 
 	<EntityType rdf:ID="site">
-		<name>MiljÃ¶</name>
-		<description>ErsÃ¤tts av KulturmiljÃ¶ men finns kvar fÃ¶r bakÃ¥tkompatibilitet. Underkategori till Fysiskt ting.</description>
+		<name>Miljö</name>
+		<description>Ersätts av Kulturmiljö men finns kvar för bakåtkompatibilitet. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 	
 	<EntityType rdf:ID="culturallandscape">
-		<name>KulturmiljÃ¶</name>
-		<description>Information om en stÃ¶rre miljÃ¶ som t.ex. innefattar fornlÃ¤mningar och/eller bebyggelse (exempelvis en kyrkomiljÃ¶ eller ett riksintresse). Underkategori till Fysiskt ting.</description>
+		<name>Kulturmiljö</name>
+		<description>Information om en större miljö som t.ex. innefattar fornlämningar och/eller bebyggelse (exempelvis en kyrkomiljö eller ett riksintresse). Underkategori till Fysiskt ting.</description>
 	</EntityType>
 	
 	<EntityType rdf:ID="monument">
-		<name>KulturlÃ¤mning</name>
-		<description>Information om en kulturlÃ¤mning i kulturlandskapet t.ex. en husgrund eller ett fornminne. Underkategori till Fysiskt ting.</description>
+		<name>Kulturlämning</name>
+		<description>Information om en kulturlämning i kulturlandskapet t.ex. en husgrund eller ett fornminne. Underkategori till Fysiskt ting.</description>
 	</EntityType>
 	
 	<EntityType rdf:ID="building">
@@ -96,22 +96,22 @@
 
 	<EntityType rdf:ID="group">
 		<name>Grupp</name>
-		<description>Information om en grupp personer (t.ex. konstnÃ¤rsgrupp). Underkategori till Agent.</description>
+		<description>Information om en grupp personer (t.ex. konstnärsgrupp). Underkategori till Agent.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="event">
-		<name>Historisk hÃ¤ndelse</name>
-		<description>Information om en hÃ¤ndelse, historisk eller nutida. Underkategori till Event.</description>
+		<name>Historisk händelse</name>
+		<description>Information om en händelse, historisk eller nutida. Underkategori till Event.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="display">
-		<name>UtstÃ¤llning</name>
-		<description>Information om en fysisk eller digital utstÃ¤llning. Underkategori till Event.</description>
+		<name>Utställning</name>
+		<description>Information om en fysisk eller digital utställning. Underkategori till Event.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="concept">
 		<name>Koncept</name>
-		<description>En Ã¶vergripande definition av ett event eller ett objekt t.ex. av krig.</description>
+		<description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</description>
 	</EntityType>
 
 </rdf:RDF>

@@ -6,47 +6,47 @@
 	
 	<ContextType rdf:ID="create">
 		<contextLabel>Tillverkad</contextLabel>
-		<description>Omfattar tillverkning, skapande etc. Tillverkad kan ersÃ¤ttas med Skapad, Skissad, Uppfunnen, Konstruerad, Modifierad eller FÃ¤rdigstÃ¤lld.</description>
+		<description>Omfattar tillverkning, skapande etc. Tillverkad kan ersättas med Skapad, Skissad, Uppfunnen, Konstruerad, Modifierad eller Färdigställd.</description>
 	</ContextType>
 	
 	<ContextType rdf:ID="find">
 		<contextLabel>Funnen</contextLabel>
-		<description>Omfattar hittande etc. Funnen kan ersÃ¤ttas med PÃ¥trÃ¤ffad.</description>
+		<description>Omfattar hittande etc. Funnen kan ersättas med Påträffad.</description>
 	</ContextType>
 	
 	<ContextType rdf:ID="use">
 		<contextLabel>Brukad</contextLabel>
-		<description>Omfattar bruk, aktivitet, Ã¤ndringar etc. Brukad kan ersÃ¤ttas med Restaurerad, Boplatsaktivitet, Gravaktivitet eller Annan aktivitet.</description>
+		<description>Omfattar bruk, aktivitet, ändringar etc. Brukad kan ersättas med Restaurerad, Boplatsaktivitet, Gravaktivitet eller Annan aktivitet.</description>
 	</ContextType>
 	
 	<ContextType rdf:ID="explore">
-		<contextLabel>UndersÃ¶kt</contextLabel>
-		<description>Omfattar undersÃ¶kningar, analyser, konservering etc. UndersÃ¶kt kan ersÃ¤ttas med Inventerad, UtgrÃ¤vd eller Konserverad.</description>
+		<contextLabel>Undersökt</contextLabel>
+		<description>Omfattar undersökningar, analyser, konservering etc. Undersökt kan ersättas med Inventerad, Utgrävd eller Konserverad.</description>
 	</ContextType>
 	
 	<ContextType rdf:ID="transact">
 		<contextLabel>Deponerad</contextLabel>
-		<description>Omfattar Ã¶verfÃ¶ringar, gÃ¥vor, fÃ¶rvÃ¤rv etc. Deponerad kan ersÃ¤ttas med FÃ¶rvÃ¤rvad eller SkÃ¤nkt.</description>
+		<description>Omfattar överföringar, gåvor, förvärv etc. Deponerad kan ersättas med Förvärvad eller Skänkt.</description>
 	</ContextType>
 	
 	<ContextType rdf:ID="own">
-		<contextLabel>Ãgd</contextLabel>
-		<description>Omfattar Ã¤gande. Inga andra valbara alternativ pÃ¥ etiketten fÃ¶r nÃ¤rvarande.</description>
+		<contextLabel>Ägd</contextLabel>
+		<description>Omfattar ägande. Inga andra valbara alternativ på etiketten för närvarande.</description>
 	</ContextType>
 	
 	<ContextType rdf:ID="exist">
-		<contextLabel>BelÃ¤gen</contextLabel>
-		<description>Omfattar belÃ¤genhet. Inga andra valbara alternativ pÃ¥ etiketten fÃ¶r nÃ¤rvarande.</description>
+		<contextLabel>Belägen</contextLabel>
+		<description>Omfattar belägenhet. Inga andra valbara alternativ på etiketten för närvarande.</description>
 	</ContextType>
 	
 	<ContextType rdf:ID="reproduced">
 		<contextLabel>Fotograferad</contextLabel>
-		<description>Omfattar avbildning. Fotograferad kan ersÃ¤ttas med FÃ¶rstorad.</description>
+		<description>Omfattar avbildning. Fotograferad kan ersättas med Förstorad.</description>
 	</ContextType>
 
 	<ContextType rdf:ID="destroyed">
-		<contextLabel>FÃ¶rstÃ¶rd</contextLabel>
-		<description>Omfattar hÃ¤ndelser som avslutar objektets livscykel. FÃ¶rstÃ¶rd kan ersÃ¤ttas med FÃ¶rlorad (inkluderar borttappad och stulen) eller Avslutad.</description>
+		<contextLabel>Förstörd</contextLabel>
+		<description>Omfattar händelser som avslutar objektets livscykel. Förstörd kan ersättas med Förlorad (inkluderar borttappad och stulen) eller Avslutad.</description>
 	</ContextType>
 
 </rdf:RDF>

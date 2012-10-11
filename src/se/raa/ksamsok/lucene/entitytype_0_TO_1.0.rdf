@@ -5,7 +5,7 @@
 	xml:base="http://kulturarvsdata.se/resurser/EntityType">
 	
 	<EntityType rdf:ID="object">
-		<name>Objekt/fÃ¶remÃ¥l</name>
+		<name>Objekt/föremål</name>
 		<description>Objektbeskrivningar, metadata om objekt.</description>
 	</EntityType>
 
@@ -26,7 +26,7 @@
 
 	<EntityType rdf:ID="video">
 		<name>Film/video</name>
-		<description>Data om rÃ¶rlig bild.</description>
+		<description>Data om rörlig bild.</description>
 	</EntityType>
 
 	<EntityType rdf:ID="sound">
@@ -65,8 +65,8 @@
 	</EntityType>
 
 	<EntityType rdf:ID="site">
-		<name>MiljÃ¶</name>
-		<description>Data om miljÃ¶er eller platsbundna objekt som fornlÃ¤mningar och bebyggelse.</description>
+		<name>Miljö</name>
+		<description>Data om miljöer eller platsbundna objekt som fornlämningar och bebyggelse.</description>
 	</EntityType>
 	
 </rdf:RDF>

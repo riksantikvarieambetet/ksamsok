@@ -26,7 +26,7 @@
     </xs:complexType>
   </xs:element>
   
-  <!-- SÃ¥ den ser ut enligt ksamsok.se's specifikationer..
+  <!-- Så den ser ut enligt ksamsok.se's specifikationer..
   <xs:element name="Point">
     <xs:complexType>
       <xs:sequence>

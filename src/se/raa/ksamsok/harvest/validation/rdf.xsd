@@ -203,10 +203,10 @@
 	        
         </xs:choice>
         
-        <!-- Blir lite buggigt med mediatype pÃ¥ image och i entity, sÃ¥ den fÃ¥r ligga utanfÃ¶r -->
+        <!-- Blir lite buggigt med mediatype på image och i entity, så den får ligga utanför -->
        	<xs:element ref="ksamsok:mediaType" minOccurs="0" maxOccurs="unbounded"/> 
         
-		<!-- Vilken typ av Description det Ã¤r... -->
+		<!-- Vilken typ av Description det är... -->
         <xs:element ref="rdf:type" minOccurs="0"/>
         
       </xs:choice>

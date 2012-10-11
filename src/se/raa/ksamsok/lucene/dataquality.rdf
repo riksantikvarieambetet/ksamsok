@@ -5,12 +5,12 @@
 	xml:base="http://kulturarvsdata.se/resurser/DataQuality">
 	
 	<DataQuality rdf:ID="raw">
-		<name>RÃ¥data</name>
-		<description>TjÃ¤nsten innehÃ¥ller i huvudsak rÃ¥, generell information som skapats fÃ¶r att tillgodose den egna organisationens behov.</description>
+		<name>Rådata</name>
+		<description>Tjänsten innehåller i huvudsak rå, generell information som skapats för att tillgodose den egna organisationens behov.</description>
 	</DataQuality>
 	
 	<DataQuality rdf:ID="processed">
 		<name>Bearbetad</name>
-		<description>TjÃ¤nsten innehÃ¥ller bearbetad, mer utfÃ¶rlig, information som Ã¤r redaktionellt anpassad och kanske Ã¤ven medvetet utvald.</description>
+		<description>Tjänsten innehåller bearbetad, mer utförlig, information som är redaktionellt anpassad och kanske även medvetet utvald.</description>
 	</DataQuality>
 </rdf:RDF>

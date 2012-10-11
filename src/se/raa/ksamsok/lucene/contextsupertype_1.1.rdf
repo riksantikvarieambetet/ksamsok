@@ -6,17 +6,17 @@
 
 	<ContextSuperType rdf:ID="create">
 		<name>Skapa</name>
-		<description>Anger tillblivelse (bÃ¶rjan) av en persons liv, en hÃ¤ndelses start eller ett fysiskt tings design, tillverkning eller uppfÃ¶rande.</description>
+		<description>Anger tillblivelse (början) av en persons liv, en händelses start eller ett fysiskt tings design, tillverkning eller uppförande.</description>
 	</ContextSuperType>
 
 	<ContextSuperType rdf:ID="interact">
 		<name>Interagera</name>
-		<description>Anger olika hÃ¤ndelser i ett fysiskt tings livscykel.</description>
+		<description>Anger olika händelser i ett fysiskt tings livscykel.</description>
 	</ContextSuperType>
 
 	<ContextSuperType rdf:ID="cease">
-		<name>UpphÃ¶ra</name>
-		<description>Anger hÃ¤ndelser som avslutar ett fysiskt tings eller en agents livscykel.</description>
+		<name>Upphöra</name>
+		<description>Anger händelser som avslutar ett fysiskt tings eller en agents livscykel.</description>
 	</ContextSuperType>
 
 </rdf:RDF>
