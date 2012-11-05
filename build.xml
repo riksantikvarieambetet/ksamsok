@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ksamsok" basedir="." default="RAA-UTV-RPM">
+<project name="ksamsok" basedir="." default="RAA-RPM">
 
     <description>
         Ant-byggfil, ksamsok.
@@ -232,10 +232,10 @@
 	</target>
 
 	<!-- Här avgörs om man bygger en master eller slav -->
-	<!--<target name="RAA-RPM" depends="produktion,master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
-	</target>-->
-	<target name="RAA-RPM" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	<target name="RAA-RPM" depends="produktion,master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
 	</target>
+	<!--<target name="RAA-RPM" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	</target>-->
 		
 	<target name="RAA-UTV-RPM" depends="utveckling,master,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
 	</target>
