@@ -245,8 +245,11 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// ett index per kontexttyp genom att skicka in ett prefix till ip.setCurrent()
 		extractContextNodes(identifier, relations, gmlGeometries);
 
-		// läs in värden från Image-noder
+		// läs in värden från Image-noder (ska försvinna på sikt och ersättas med media-noder)
 		extractImageNodes();
+
+		// läs in värden från media-noder (from 1.11+, ska ersätta image-noderna)
+		extractMediaNodes();
 
 		// lägg in specialindex
 		addSpecialIndices();
@@ -441,6 +444,17 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicense), null, ip);
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
 		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaMotiveWord), null, ip);
+	}
+
+	/**
+	 * Platshållare för metod som tar medianoder och extraherar och indexerar information ur dem.
+	 * Basmetoden gör inget utan måste överlagras i subklasser då medianoder introducerades
+	 * iom version 1.2, se dok.
+	 * Överlagra i subklasser vid behov.
+	 * 
+	 * @throws Exception vid fel
+	 */
+	protected void extractMediaNodes() throws Exception {
 	}
 
 	/**

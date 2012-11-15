@@ -491,6 +491,32 @@ public class SamsokContentHelperTest {
 
 	}
 
+	@Test
+	public void testCreateDoc_1_11() throws Exception {
+		SamsokContentHelper helper = new SamsokContentHelper();
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		String xmlContent = loadTestFileAsString("hjalm_1.11.rdf");
+		SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, new Date());
+		assertNotNull("Inget solr-dokument", doc);
+		// kolla system-index
+		assertEquals("Felaktigt service-id", "TESTID", doc.getFieldValue(ContentHelper.I_IX_SERVICE));
+		assertEquals("Fel identifierare", "http://kulturarvsdata.se/raa/test/1", doc.getFieldValue(ContentHelper.IX_ITEMID));
+		assertNotNull("Ingen RDF", doc.getFieldValue(ContentHelper.I_IX_RDF));
+		assertNotNull("Inget pres-block", doc.getFieldValue(ContentHelper.I_IX_PRES));
+
+		// mediaLicense från medianod (ny med 1.11) och imagenod
+		multipleValueIndexAssert(doc, ContentHelper.IX_MEDIALICENSE, new String[] {
+				"http://kulturarvsdata.se/resurser/License#by",
+				"http://kulturarvsdata.se/resurser/License#by-sa"
+		}, 2);
+		// mediaMotiveWord från medianod (ny med 1.11) och imagenod
+		multipleValueIndexAssert(doc, ContentHelper.IX_MEDIAMOTIVEWORD, new String[] {
+				"Hjälmdokument",
+				"Hjälmbild"
+		}, 2);
+	}
+
 	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value) {
 		singleValueIndexAssert(doc, indexName, value, false);
 	}

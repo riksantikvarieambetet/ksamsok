@@ -203,7 +203,9 @@ public class SamsokProtocol {
 	// övriga
 	static final URI uri_rThumbnail = URI.create(uriPrefixKSamsok + "thumbnail");
 	static final URI uri_rImage = URI.create(uriPrefixKSamsok + "image");
+	static final URI uri_rMedia = URI.create(uriPrefixKSamsok + "media"); // 1.11
 	static final URI uri_rMediaLicense = URI.create(uriPrefixKSamsok + "mediaLicense");
+	static final URI uri_rMediaLicenseUrl = URI.create(uriPrefixKSamsok + "mediaLicenseUrl"); // 1.11
 	static final URI uri_rMediaMotiveWord = URI.create(uriPrefixKSamsok + "mediaMotiveWord");
 
 	// geo

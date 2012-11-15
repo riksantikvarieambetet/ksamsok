@@ -190,8 +190,10 @@ public class SamsokContentHelper extends ContentHelper {
 			logger.error("Ej numeriskt protokollversionsnummer: " + protocolVersion);
 			throw new Exception("Ej numeriskt protokollversionsnummer: " + protocolVersion);
 		}
-		final double latest = 1.1;
+		final double latest = 1.11;
 		if (protocol == latest) {
+			handler = new SamsokProtocolHandler_1_11(graph, s);
+		} else if (protocol >= 1.1 && protocol < latest) {
 			handler = new SamsokProtocolHandler_1_1(graph, s);
 		} else if (protocol > 0 && protocol <= 1.0) {
 			handler = new SamsokProtocolHandler_0_TO_1_0(graph, s);
