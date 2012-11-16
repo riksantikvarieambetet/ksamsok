@@ -33,6 +33,7 @@ import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
+@SuppressWarnings("unused")
 public class Protocol_1_11_Test {
 
 	private static DocumentBuilderFactory xmlFact;
@@ -43,6 +44,10 @@ public class Protocol_1_11_Test {
 	    xformerFact = TransformerFactory.newInstance();
 	}
 
+
+/* 1.11 ändrades så att mediaLicense och mediaLicenseUrl inte är obligatoriska trots allt
+    vilket gör detta testfall felaktigt, men det får ligga kvar bortkommenterat tillsammans
+    med hjalm_1.11_felaktig.rdf tills vidare
 
 	@Test
 	public void testNoLicense() throws Exception {
@@ -75,7 +80,7 @@ public class Protocol_1_11_Test {
 					expected.getMessage().contains("mediaLicense"));
 		}
 	}
-
+ */
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
 		InputStream is = null;

@@ -3,10 +3,8 @@ package se.raa.ksamsok.lucene;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIALICENSE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIAMOTIVEWORD;
 import static se.raa.ksamsok.lucene.RDFUtil.extractValue;
-import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMedia;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaLicense;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaLicenseUrl;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaMotiveWord;
 
 import org.apache.log4j.Logger;
@@ -53,34 +51,11 @@ public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 	 * @throws Exception vid fel
 	 */
 	protected void extractMediaNodeInformation(SubjectNode cS) throws Exception {
+		// samma som image-noder i protokoll < 1.11
 		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
-		// enbart en per nod
-		if (extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicense), ip) == null) {
-			// TOOD: kolla mot godkänd lista(?)
-			throw new Exception("No mediaLicense for media node for item with identifier " + s.toString());
-		}
+		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicense), null, ip);
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
 		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaMotiveWord), null, ip);
-		// bara kontroll, ingen indexering av mediaLicenseUrl
-		if (extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicenseUrl), null) == null) {
-			throw new Exception("No mediaLicenseUrl for media node for item with identifier " + s.toString());
-		}
-	}
-
-	@Override
-	protected void extractImageNodeInformation(SubjectNode cS) throws Exception {
-		// kör super för att göra indexeringen som innan
-		super.extractImageNodeInformation(cS);
-		// kontrollera sen att vi har värden
-		// bara kontroll, redan indexerad i super, en per nod och obligatoriskt from 1.11
-		if (extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicense), null) == null) {
-			// TOOD: kolla mot godkänd lista(?)
-			throw new Exception("No mediaLicense for image node for item with identifier " + s.toString());
-		}
-		// bara kontroll, ingen indexering av mediaLicenseUrl, obligatoriskt från 1.11
-		if (extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicenseUrl), null) == null) {
-			throw new Exception("No mediaLicenseUrl for image node for item with identifier " + s.toString());
-		}
 	}
 
 	@Override
