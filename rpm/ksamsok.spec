@@ -23,11 +23,14 @@ rm -rf $RPM_BUILD_ROOT
 
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
 mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
+mkdir -p -m755 $RPM_BUILD_ROOT/usr/local/tomcat8080/bin/appconfig
 
 
 install -m755 $RPM_SOURCE_DIR/ksamsok.war $RPM_BUILD_ROOT/usr/local/tomcat8080/webapps
-
 install -m755 $RPM_SOURCE_DIR/tomcat-users.xml $RPM_BUILD_ROOT/usr/local/tomcat8080/conf
+install -m755 $RPM_SOURCE_DIR/setenv.sh $RPM_BUILD_ROOT/usr/local/tomcat8080/bin
+install -m755 $RPM_SOURCE_DIR/ksamsok.javaopts $RPM_BUILD_ROOT/usr/local/tomcat8080/bin/appconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -48,11 +51,15 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 rm -rf /usr/local/tomcat8080/webapps/ksamsok
 
 %files
-%defattr(-,tomcat,nobody)
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/webapps/ksamsok.war
-%attr(0644,tomcat,nobody) /usr/local/tomcat8080/conf/tomcat-users.xml
+%defattr(-,tomcat,raagroup)
+%attr(0644,tomcat,raagroup) /usr/local/tomcat8080/webapps/ksamsok.war
+%attr(0644,tomcat,raagroup) /usr/local/tomcat8080/conf/tomcat-users.xml
+%attr(0644,tomcat,raagroup) /usr/local/tomcat8080/bin/setenv.sh
+%attr(0644,tomcat,raagroup) /usr/local/tomcat8080/bin/appconfig/ksamsok.javaopts
 
 %changelog
+* Thu Dec 6 2012 alwik
+- Flyttar in variabler för tomcat och java i detta paket
 * Mon Dec 6 2010 ant
 - Master/slave
 * Wed Dec 1 2010 ant
@@ -66,7 +73,7 @@ rm -rf /usr/local/tomcat8080/webapps/ksamsok
 * Tue Feb 3 2009 ant
 - Tecken- och indexfixar
 * Tue Feb 3 2009 ant
-- Hantera too many boolean clauses bï¿½ttre
+- Hantera too many boolean clauses bättre
 * Mon Feb 2 2009 ant
 - Flyttade om gränssnitt en aning
 * Mon Feb 2 2009 ant

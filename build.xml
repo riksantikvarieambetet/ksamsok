@@ -210,6 +210,8 @@
 		<copy todir="${project.build.dir}/rpm/SOURCES/">
 			<fileset dir="conf">
 				<include name="tomcat-users.xml"/>
+				<include name="setenv.sh"/>
+				<include name="ksamsok.javaopts"/>
 			</fileset>
 		</copy>
 		
