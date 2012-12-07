@@ -153,7 +153,7 @@
         <delete includeemptydirs="true" >
             <fileset dir="${project.build.dir}">
                 <patternset>
-                    <include name="**"/>
+                	<exclude name="**/*.rpm"/>
                 </patternset>
             </fileset>
         </delete>
@@ -233,16 +233,22 @@
 			    	
 	</target>
 
-	<!-- Här avgörs om man bygger en master eller slav -->
+	<!-- En slav och en master rpm byggs alltid -->
+	
 	<target name="RAA-RPM" depends="produktion,master,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+		<!--Bygg en slav också -->
+		<antcall target="RAA-RPM-SLAVE"/>
 	</target>
-	<!--<target name="RAA-RPM" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
-	</target>-->
+	
+	<target name="RAA-RPM-SLAVE" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+	</target>
 		
 	<target name="RAA-UTV-RPM" depends="utveckling,master,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
+		<!--Bygg en slav också -->
+		<antcall target="RAA-UTV-RPM-SLAVE"/>
 	</target>
-	<!--<target name="RAA-UTV-RPM" depends="utveckling,slave,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
-	</target>-->
+	<target name="RAA-UTV-RPM-SLAVE" depends="utveckling,slave,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
+	</target>
 
 
 	<target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
