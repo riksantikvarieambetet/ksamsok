@@ -28,6 +28,12 @@
 		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
 	</License>
 
+	<License rdf:ID="cc0">
+		<name>Creative Commons - Erkännande</name>
+		<description>Används om informationsförvaltaren vill avsäga sig alla rättigheter till objektet och placera det i Public Domain</description>
+		<sameAs>http://creativecommons.org/publicdomain/zero/1.0/</sameAs>
+	</License>
+
 	<License rdf:ID="by">
 		<name>Creative Commons - Erkännande</name>
 		<description>Upphovsman ska anges vid användning</description>
@@ -63,5 +69,19 @@
 		<description>Upphovsman ska anges vid användning, bearbetningar delas med samma villkor</description>
 		<sameAs>http://creativecommons.org/licenses/by-sa/2.5/</sameAs>
 	</License>
-
+	<License rdf:ID="rr-f">
+		<name>Rights reserved – free access</name>
+		<description>Objektet finns tillgängligt för alla i sin helhet men får inte återanvändas utan tillstånd.</description>
+		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation><
+	</License>
+	<License rdf:ID="rr-p">
+		<name>Rights reserved – paid access</name>
+		<description>Objektet finns tillgängligt på nätet men måste betala för att se det i sin helhet (t ex via en engångskostnad eller prenumeration)</description>
+		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation><
+	</License>
+	<License rdf:ID="rr-r">
+		<name>Rights reserved – restricted access</name>
+		<description>Tillgången till objektet är begränsat på andra sätt än att användaren måste betala för det, t ex registrering eller annan kontrollerad tillgång.</description>
+		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation><
+	</License>
 </rdf:RDF>
