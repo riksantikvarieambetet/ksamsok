@@ -2,6 +2,7 @@ package se.raa.ksamsok.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -10,10 +11,15 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
+/**
+ * This class compares ksamsoks rdf with country codes with the xml from geonames.org
+
+ */
 public class CheckCountryCodes {
 	
 	private static String countryRDF="./web/resurser/aukt/geo/country/country.rdf";
@@ -21,12 +27,59 @@ public class CheckCountryCodes {
 	
 	public static void main(String argv[])
 	{
+		
+		/**
+		 * This inner class parses the rdf for the country codes
+		 */
+		class RDFHandler extends DefaultHandler {
+			private ArrayList<String> countryCodes=new ArrayList<String>(); 
+			private boolean isCountryCode=false;
+			public void startElement(String uri, String localName,String qName,Attributes attributes) throws SAXException {
+				if(qName.equalsIgnoreCase("alpha2"))
+					isCountryCode=true;
+			}
+			public void endElement(String uri, String localName, String qName) throws SAXException {
+				if(qName.equalsIgnoreCase("alpha2"))
+					isCountryCode=false;
+			}
+			public void characters(char ch[], int start, int length) throws SAXException {
+				if (isCountryCode)
+					countryCodes.add(new String(ch, start, length).toUpperCase());
+			}
+			public ArrayList<String>getCountryCodes(){
+				return this.countryCodes;
+			}
+		}
+		
+		/**
+		 * This class parses the xml from geonames.org for the country codes
+		 */
+		class GEOnameHandler extends DefaultHandler {
+			private ArrayList<String> countryCodes=new ArrayList<String>(); 
+			private boolean isCountryCode=false;
+			public void startElement(String uri, String localName,String qName,Attributes attributes) throws SAXException {
+				if(qName.equalsIgnoreCase("countryCode"))
+					isCountryCode=true;
+			}
+			public void endElement(String uri, String localName, String qName) throws SAXException {
+				if(qName.equalsIgnoreCase("countryCode"))
+					isCountryCode=false;
+			}
+			public void characters(char ch[], int start, int length) throws SAXException {
+				if (isCountryCode)
+					countryCodes.add(new String(ch, start, length).toUpperCase());
+			}
+			public ArrayList<String>getCountryCodes(){
+				return this.countryCodes;
+			}
+		}
+		
 		SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+		RDFHandler rdfHandler = new RDFHandler();
+		GEOnameHandler geonameHandler = new GEOnameHandler();
 		try {
 			SAXParser saxParser=parserFactory.newSAXParser();
-			RDFHandler rdfHandler = new RDFHandler();
 			saxParser.parse(new File(countryRDF).getAbsoluteFile(), rdfHandler);
-			GEOnameHandler geonameHandler = new GEOnameHandler();
 			HttpClient httpClient=new HttpClient();
 			HttpMethod method = new GetMethod(geonamesURL);
 			httpClient.executeMethod(method);
@@ -55,6 +108,5 @@ public class CheckCountryCodes {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 }
