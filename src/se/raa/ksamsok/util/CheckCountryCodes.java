@@ -17,7 +17,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 /**
- * This class compares ksamsoks rdf with country codes with the xml from geonames.org
+ * This class compares ksamsok's rdf with country codes with the xml from geonames.org
 
  */
 public class CheckCountryCodes {
