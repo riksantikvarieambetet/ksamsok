@@ -235,6 +235,7 @@ public class RSS extends AbstractSearchMethod {
 			RssObject data = getData(content);
 			entry.setTitle(data.getTitle());
 			entry.setLink(data.getLink());
+			entry.setUri(data.getIdentifier());
 			SyndContent syndContent = new SyndContentImpl();
 			syndContent.setType("text/plain");
 			syndContent.setValue(data.getDescription());
@@ -295,6 +296,7 @@ public class RSS extends AbstractSearchMethod {
 			URIReference rItemKeyWord = elementFactory.createURIReference(URI_ITEM_KEY_WORD);
 			URIReference rBuildDate = elementFactory.createURIReference(URI_BUILD_DATE);
 			SubjectNode s = getSubjectNode(graph, rRdfType, rKsamsokEntity);
+			data.setIdentifier(s.toString());
 			data.setTitle(getValueFromGraph(graph, s, rItemTitle, null));
 			data = getDataFromPresentationBlock(getSingleValueFromGraph(graph, s, rPresentation), data);
 			String itemKeyWordsString = getValueFromGraph(graph, s, rItemKeyWord, null);
@@ -653,6 +655,7 @@ public class RSS extends AbstractSearchMethod {
 	 */
 	public class RssObject
 	{
+		private String identifier;
 		private String title;
 		private String link;
 		private String description;
@@ -757,6 +760,12 @@ public class RSS extends AbstractSearchMethod {
 		public String getCoords()
 		{
 			return coords;
+		}
+		public String getIdentifier() {
+			return identifier;
+		}
+		public void setIdentifier(String identifier) {
+			this.identifier = identifier;
 		}
 	}
 }
