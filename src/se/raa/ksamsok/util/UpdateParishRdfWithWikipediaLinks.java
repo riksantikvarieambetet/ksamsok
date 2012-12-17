@@ -18,16 +18,29 @@ import javax.xml.ws.http.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.jrdf.JRDFFactory;
+import org.jrdf.SortedMemoryJRDFFactory;
+import org.jrdf.graph.AbstractTriple;
+import org.jrdf.graph.AnyNode;
+import org.jrdf.graph.Graph;
+import org.jrdf.graph.GraphException;
+import org.jrdf.graph.Triple;
+import org.jrdf.graph.TripleFactory;
+import org.jrdf.parser.RdfReader;
+import org.jrdf.util.ClosableIterator;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class UpdateSockeRdfWithWikipediaLinks {
+/**
+ * This class updats the parish rdf with links to the parishe's Wikipedia article.
+ */
+public class UpdateParishRdfWithWikipediaLinks {
 	private static File parishRDF= new File("./web/resurser/aukt/geo/parish/parish.rdf");
 	private static String queryUrl="http://toolserver.org/~kolossos/templatetiger/tt-table4.php?lang=svwiki&template=Infobox socken Sverige&where=sockenkod&is=%04d";
 	private static HashMap<Integer,String> parishUrl=new HashMap<Integer,String>();
 	
-	public static void main(String argv[]){
+	public static void main(String argv[]) throws GraphException{
 		 /* **
 		 * This inner class parses the rdf for the parish codes
 		 */
@@ -63,7 +76,11 @@ public class UpdateSockeRdfWithWikipediaLinks {
 				return this.parishCodes;
 			}
 		}
-
+		/*
+		 * Here are the parish codes extracted from the parish rdf.
+		 * Then an query is sent to the toolserver (a wikipedia project) to get the link
+		 * to the parish wikipedia article
+		 */
 		SAXParserFactory parserFactory = SAXParserFactory.newInstance();
 		RDFHandler rdfHandler = new RDFHandler();
 		try {
@@ -107,6 +124,12 @@ public class UpdateSockeRdfWithWikipediaLinks {
 		parishRDFUpdater();
 		
 	}
+	
+	/**
+	 * This method updates the parish rdf with the links to their's wikipedia articels.
+	 * In a perfect world the org.jrdf package should have been used. But we are treating
+	 * the rdf-file as a normal text-file...
+	 */
 	private static void parishRDFUpdater(){
 		try {
 			FileReader fInStream=new FileReader(parishRDF);
