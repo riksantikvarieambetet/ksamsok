@@ -1,5 +1,7 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +9,11 @@ import java.sql.ResultSet;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -34,6 +41,37 @@ public class GetGeoResource extends AbstractAPIMethod {
 	private static final int MUNICIPALITY = 1;
 	private static final int PROVINCE = 2;
 	private static final int PARISH = 3;
+	private static final String WFS_MAPSERVER_URI="http://map.raa.se/deegree/services/wfs?";
+	private static final String OGC_PARISH_FILTER_TEMPLATE="<wfs:GetFeature xmlns:wfs='http://www.opengis.net/wfs' "+
+															"xmlns:ad='urn:x-inspire:specification:gmlas:Addresses:3.0' "+
+															"xmlns:ogc='http://www.opengis.net/ogc' "+
+															"xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' version='1.0.0' service='WFS' "+
+															"xsi:schemaLocation='http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/wfs.xsd' outputFormat='text/xml; subtype=gml/3.2.1'>"+
+															"<wfs:Query typeName='raa:socken'>"+
+															"<ogc:PropertyName>raa:geometri</ogc:PropertyName>"+
+															"<ogc:Filter>"+
+															"<ogc:PropertyIsEqualTo>"+
+															"<ogc:PropertyName>raa:sockenkod</ogc:PropertyName>"+
+															"<ogc:Literal>%d</ogc:Literal>"+//%d will be used by the String.format and replace by the parish code
+															"</ogc:PropertyIsEqualTo>"+
+															"</ogc:Filter>"+
+															"</wfs:Query>"+
+															"</wfs:GetFeature>";
+	private static final String OGC_PROVINCE_FILTER_TEMPLATE="<wfs:GetFeature xmlns:wfs='http://www.opengis.net/wfs' "+
+															"xmlns:ad='urn:x-inspire:specification:gmlas:Addresses:3.0' "+
+															"xmlns:ogc='http://www.opengis.net/ogc' "+
+															"xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' version='1.0.0' service='WFS' "+
+															"xsi:schemaLocation='http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/wfs.xsd' outputFormat='text/xml; subtype=gml/3.2.1'>"+
+															"<wfs:Query typeName='raa:landskap'>"+
+															"<ogc:PropertyName>raa:geometri</ogc:PropertyName>"+
+															"<ogc:Filter>"+
+															"<ogc:PropertyIsEqualTo>"+
+															"<ogc:PropertyName>raa:landskapsk</ogc:PropertyName>"+
+															"<ogc:Literal>%s</ogc:Literal>"+//%d will be used by the String.format and replace by the province code
+															"</ogc:PropertyIsEqualTo>"+
+															"</ogc:Filter>"+
+															"</wfs:Query>"+
+															"</wfs:GetFeature>";
 
 	// parameter- och tillståndsvariabler
 	String uri;
@@ -103,15 +141,9 @@ public class GetGeoResource extends AbstractAPIMethod {
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		String wfsQuery="";
 		try {
 			c = ds.getConnection();
-			// hämta sträng för anrop geometri->gml
-			String toGmlCall = DBUtil.toGMLCall(c, "geometri");
-			// bygg dynamisk fråga och ta med förälder om den är satt
-			pst = c.prepareStatement("select namn, " +
-					(parentColumn != null ? parentColumn + ", " : "")
-					+ toGmlCall + " gml from " +
-					table + " where " + pkColumn + " = ?");
 			switch (type) {
 			case PARISH:
 				// sockenkod är, till skillnad från de andra en siffra
@@ -121,18 +153,74 @@ public class GetGeoResource extends AbstractAPIMethod {
 				} catch (Exception e) {
 					throw new DiagnosticException("Bad parish code", "GetGeoResource", null, false);
 				}
-				pst.setInt(1, parishCode);
+				wfsQuery=String.format(OGC_PARISH_FILTER_TEMPLATE,parishCode);
+				pst = c.prepareStatement("select namn " +
+						(parentColumn != null ? ","+parentColumn : "")
+						+ " from " +
+						table + " where " + pkColumn + " = ?");
+				pst.setString(1, Integer.toString(parishCode));
 				break;
-			case COUNTY:
 			case PROVINCE:
-			case MUNICIPALITY:
+				wfsQuery=String.format(OGC_PROVINCE_FILTER_TEMPLATE,code);
+				pst = c.prepareStatement("select namn " +
+						(parentColumn != null ? ","+parentColumn : "")
+						+ " from " +
+						table + " where " + pkColumn + " = ?");
 				pst.setString(1, code);
 				break;
+			case COUNTY:
+			case MUNICIPALITY:
+				// hämta sträng för anrop geometri->gml
+				String toGmlCall = DBUtil.toGMLCall(c, "geometri");
+				// bygg dynamisk fråga och ta med förälder om den är satt
+				pst = c.prepareStatement("select namn, " +
+						(parentColumn != null ? parentColumn + ", " : "")
+						+ toGmlCall + " gml from " +
+						table + " where " + pkColumn + " = ?");
+				pst.setString(1, code);
+				break;
+			}
+			if (type==PARISH || type==PROVINCE)
+			{
+				HttpClient webClient=new HttpClient();
+				PostMethod method =new PostMethod(WFS_MAPSERVER_URI);
+				method.setRequestEntity(new StringRequestEntity(wfsQuery,"text/xml","utf-8"));
+				webClient.executeMethod(method);
+				BufferedReader bodyReader;
+				String respString;
+				Boolean isGmlBlock=false;
+				String gmlBlock="";
+				if (method.getStatusCode()==200)
+				{
+					bodyReader =new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
+					while((respString=bodyReader.readLine())!=null)
+					{
+						System.out.println(respString);
+						if(respString.contains("<raa:geometri>"))
+						{
+							isGmlBlock=true;
+						}
+						else if (respString.contains("</raa:geometri>"))
+						{
+							isGmlBlock=false;
+						}
+						else if(isGmlBlock)
+						{
+							gmlBlock=gmlBlock+respString;
+						}
+					}
+					gmlResult=gmlBlock;
+				}
+				else
+				{
+					throw new DiagnosticException("Error in communication with map server", "Http status code: "+method.getStatusCode(), null, false);
+				}
 			}
 			rs = pst.executeQuery();
 			if (rs.next()) {
 				nameResult = rs.getString("namn");
-				gmlResult = rs.getString("gml");
+				if (type!=PARISH && type!=PROVINCE)
+					gmlResult = rs.getString("gml");
 				// ta ut extrakolumn och sätt taggnamn
 				switch (type) {
 				case PARISH:
