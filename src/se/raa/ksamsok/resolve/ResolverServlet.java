@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.solr.SearchService;
@@ -214,6 +212,27 @@ public class ResolverServlet extends HttpServlet {
 						return;
 					}
 				}
+				else if (format == Format.HTML){
+					content=hrm.getXMLData(urli);
+					if (content != null){
+						urle = getRedirectUrl(content);
+						if (urle != null) {
+							if (urle.toLowerCase().startsWith(badURLPrefix)) {
+								logger.warn("HTML link is wrong, points to " + badURLPrefix +
+										" for " + urli + ": " + urle);
+								resp.sendError(404, "Invalid html url to pass on to");
+							} else {
+								resp.sendRedirect(urle);
+							}
+						} else {
+							if (logger.isDebugEnabled()) {
+								logger.debug("Could not find html url for record with uri: " + urli);
+							}
+							resp.sendError(404, "Could not find html url to pass on to");
+						}
+						return;
+					}
+				}
 				resp.sendError(404, "Could not find record for path");
 				return;
 			}
@@ -308,6 +327,19 @@ public class ResolverServlet extends HttpServlet {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
 		}
+	}
+
+	private String getRedirectUrl(String content) {
+		String redirectUrl = null;
+		int startIndex=content.indexOf("<url>");
+		if (startIndex>0){
+			int endIndex=content.indexOf("</url>");
+			if (endIndex>(startIndex+5))
+			{
+				redirectUrl=content.substring(startIndex+5, endIndex);
+			}
+		}
+		return redirectUrl;
 	}
 
 	@Override
