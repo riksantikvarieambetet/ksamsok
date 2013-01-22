@@ -210,7 +210,7 @@ public class ResolverServlet extends HttpServlet {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Could not find record for q: " + q);
 				}
-				// specialfall för att hantera itemForIndexing=n, bara för rdf
+				// specialfall för att hantera itemForIndexing=n, bara för rdf och html
 				// vid detta fall ligger rdf:en bara i databasen och inte i lucene
 				// men det är ett undantagsfall så vi provar alltid lucene först
 				if (format == Format.RDF) {
@@ -342,32 +342,27 @@ public class ResolverServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * This method gets the url to the the original storage of the rdf data
+	 * @param content - String containing a rdf
+	 * @return - a string with the url, if not found then null
+	 */
 	private String getRedirectUrl(String content) {
+		String redirectUrl = null;
 		try {
 			Graph graph = RDFUtil.parseGraph(content);
-			URIReference predicateToFind=graph.getElementFactory().createURIReference(URI.create("http://kulturarvsdata.se/ksamsok#url"));
+			URIReference uriPredicate=graph.getElementFactory().createURIReference(URI.create("http://kulturarvsdata.se/ksamsok#url"));
 			TripleFactory tripleFactory = graph.getTripleFactory();
-			Triple tripleToFind = tripleFactory.createTriple(AnySubjectNode.ANY_SUBJECT_NODE ,predicateToFind, AnyObjectNode.ANY_OBJECT_NODE);
-			ClosableIterable<Triple> foundTriples=graph.find(tripleToFind);
-			String testOut="";
-			String url="";
-			for (Triple t:foundTriples)
+			Triple uriTriple = tripleFactory.createTriple(AnySubjectNode.ANY_SUBJECT_NODE ,uriPredicate, AnyObjectNode.ANY_OBJECT_NODE);
+			ClosableIterable<Triple> foundTriples=graph.find(uriTriple);
+			if (foundTriples.iterator().hasNext())
 			{
-				url=t.getSubject().toString();
-				testOut=t.toString();
+				Triple t=foundTriples.iterator().next();
+				URIReference r= (URIReference) t.getObject();
+				redirectUrl=r.getURI().getPath();
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String redirectUrl = null;
-		int startIndex=content.indexOf("<url>");
-		if (startIndex>0){
-			int endIndex=content.indexOf("</url>");
-			if (endIndex>(startIndex+5))
-			{
-				redirectUrl=content.substring(startIndex+5, endIndex);
-			}
+			logger.error(e);
 		}
 		return redirectUrl;
 	}
