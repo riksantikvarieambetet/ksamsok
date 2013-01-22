@@ -15,12 +15,20 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocumentList;
+import org.jrdf.graph.Graph;
+import org.jrdf.graph.SubjectNode;
+import org.jrdf.graph.Triple;
+import org.jrdf.graph.TripleFactory;
+import org.jrdf.graph.global.BlankNodeImpl;
+import org.jrdf.graph.global.URIReferenceImpl;
+import org.jrdf.util.ClosableIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.RDFUtil;
 import se.raa.ksamsok.solr.SearchService;
 import se.raa.ksamsok.util.ShmSiteCacherHackTicket3419;
 
@@ -330,6 +338,22 @@ public class ResolverServlet extends HttpServlet {
 	}
 
 	private String getRedirectUrl(String content) {
+		try {
+			Graph graph = RDFUtil.parseGraph(content);
+			TripleFactory tripleFactory = graph.getTripleFactory();
+			Triple tripleToFind = tripleFactory.createTriple(new BlankNodeImpl() ,new URIReferenceImpl("http://kulturarvsdata.se/ksamsok#url") , new BlankNodeImpl());
+			ClosableIterable<Triple> foundTriples=graph.find(tripleToFind);
+			String testOut="";
+			String url="";
+			for (Triple t:foundTriples)
+			{
+				url=t.getSubject().toString();
+				testOut=t.toString();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String redirectUrl = null;
 		int startIndex=content.indexOf("<url>");
 		if (startIndex>0){
