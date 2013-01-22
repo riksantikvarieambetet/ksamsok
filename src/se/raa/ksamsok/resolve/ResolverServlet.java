@@ -20,6 +20,7 @@ import org.jrdf.graph.AnyObjectNode;
 import org.jrdf.graph.AnyPredicateNode;
 import org.jrdf.graph.AnySubjectNode;
 import org.jrdf.graph.Graph;
+import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.TripleFactory;
@@ -358,8 +359,7 @@ public class ResolverServlet extends HttpServlet {
 			if (foundTriples.iterator().hasNext())
 			{
 				Triple t=foundTriples.iterator().next();
-				URIReference r= (URIReference) t.getObject();
-				redirectUrl=r.getURI().getPath();
+				redirectUrl=t.getObject().toString();
 			}
 		} catch (Exception e) {
 			logger.error(e);
