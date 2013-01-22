@@ -26,6 +26,7 @@ import org.jrdf.graph.Triple;
 import org.jrdf.graph.TripleFactory;
 import org.jrdf.graph.URIReference;
 import org.jrdf.graph.global.BlankNodeImpl;
+import org.jrdf.graph.global.LiteralImpl;
 import org.jrdf.graph.global.URIReferenceImpl;
 import org.jrdf.util.ClosableIterable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -359,7 +360,8 @@ public class ResolverServlet extends HttpServlet {
 			if (foundTriples.iterator().hasNext())
 			{
 				Triple t=foundTriples.iterator().next();
-				redirectUrl=t.getObject().toString();
+				LiteralImpl uri=(LiteralImpl) t.getObject();
+				redirectUrl=uri.getDatatypeURI().getPath();
 			}
 		} catch (Exception e) {
 			logger.error(e);
