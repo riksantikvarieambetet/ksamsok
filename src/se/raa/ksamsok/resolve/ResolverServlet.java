@@ -15,6 +15,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocumentList;
+import org.jrdf.graph.AnyObjectNode;
+import org.jrdf.graph.AnySubjectNode;
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
@@ -341,7 +343,7 @@ public class ResolverServlet extends HttpServlet {
 		try {
 			Graph graph = RDFUtil.parseGraph(content);
 			TripleFactory tripleFactory = graph.getTripleFactory();
-			Triple tripleToFind = tripleFactory.createTriple(new BlankNodeImpl() ,new URIReferenceImpl("http://kulturarvsdata.se/ksamsok#url") , new BlankNodeImpl());
+			Triple tripleToFind = tripleFactory.createTriple(AnySubjectNode.ANY_SUBJECT_NODE ,new URIReferenceImpl("http://kulturarvsdata.se/ksamsok#url") , AnyObjectNode.ANY_OBJECT_NODE);
 			ClosableIterable<Triple> foundTriples=graph.find(tripleToFind);
 			String testOut="";
 			String url="";
