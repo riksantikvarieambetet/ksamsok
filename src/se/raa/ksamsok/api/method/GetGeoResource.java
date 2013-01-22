@@ -273,9 +273,13 @@ public class GetGeoResource extends AbstractAPIMethod {
 		} else {
 			writer.println(" <country rdf:resource=\"" + URI_SVERIGE + "\"/>");
 		}
-		writer.println(" <coordinates rdf:parseType=\"Literal\">");
-		writer.println(gmlResult);
-		writer.println(" </coordinates>");
+		//Om det finns koordinater skriv ut dem annars inte
+		if (gmlResult!=null)
+		{
+			writer.println(" <coordinates rdf:parseType=\"Literal\">");
+			writer.println(gmlResult);
+			writer.println(" </coordinates>");
+		}
 		writer.println("</" + tagName + ">");
 
 		writer.println("</rdf:RDF>");
