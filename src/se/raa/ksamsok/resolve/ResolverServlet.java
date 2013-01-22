@@ -356,7 +356,7 @@ public class ResolverServlet extends HttpServlet {
 			{
 				Triple t=foundTriples.iterator().next();
 				LiteralImpl uri=(LiteralImpl) t.getObject();
-				redirectUrl=uri.getDatatypeURI().getPath();
+				redirectUrl=(String) uri.getValue();
 			}
 		} catch (Exception e) {
 			logger.error(e);
