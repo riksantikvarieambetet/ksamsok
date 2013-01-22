@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF 
 	xmlns="http://kulturarvsdata.se/ksamsok#" 
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -17,9 +17,9 @@
 	</License>
 
 	<License rdf:ID="cc0">
-    	<name>Creative Commons - Zero</name>
-    	<description>Objektet får återanvänas utan restriktioner.</description>
-    	<sameAs>http://creativecommons.org/publicdomain/zero/1.0/</sameAs>
+	    	<name>Creative Commons - Zero</name>
+	    	<description>Objektet får återanvänas utan restriktioner.</description>
+	    	<sameAs>http://creativecommons.org/publicdomain/zero/1.0/</sameAs>
 	</License>
 
 	<License rdf:ID="by">
@@ -59,21 +59,21 @@
 	</License>
 	
 	<License rdf:ID="rr-f">
-    	<name>Rights reserved – free access</name>
-    	<description>Objektet finns tillgängligt för alla i sin helhet men får inte återanvändas utan tillstånd.</description>
-    	<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation><
+    		<name>Rights reserved – free access</name>
+	    	<description>Objektet finns tillgängligt för alla i sin helhet men får inte återanvändas utan tillstånd.</description>
+    		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
 	</License>
 
 	<License rdf:ID="rr-p">
-    	<name>Rights reserved – paid access</name>
-    	<description>Objektet finns tillgängligt på nätet men måste betala för att se det i sin helhet (t ex via en engångskostnad eller prenumeration).</description>
-    	<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation><
+	    	<name>Rights reserved – paid access</name>
+    		<description>Objektet finns tillgängligt på nätet men måste betala för att se det i sin helhet (t ex via en engångskostnad eller prenumeration).</description>
+    		<moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
 	</License>
 
 	<License rdf:ID="rr-r">
 	    <name>Rights reserved – restricted access</name>
 	    <description>Tillgången till objektet är begränsat på andra sätt än att användaren måste betala för det, t ex registrering eller annan kontrollerad tillgång.</description>
-	    <moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation><
+	    <moreInformation>http://www.ksamsok.se/resurser/rattigheter/</moreInformation>
 	</License>
  
 </rdf:RDF>
