@@ -2,6 +2,7 @@ package se.raa.ksamsok.resolve;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -22,6 +23,7 @@ import org.jrdf.graph.Graph;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.TripleFactory;
+import org.jrdf.graph.URIReference;
 import org.jrdf.graph.global.BlankNodeImpl;
 import org.jrdf.graph.global.URIReferenceImpl;
 import org.jrdf.util.ClosableIterable;
@@ -343,8 +345,9 @@ public class ResolverServlet extends HttpServlet {
 	private String getRedirectUrl(String content) {
 		try {
 			Graph graph = RDFUtil.parseGraph(content);
+			URIReference predicateToFind=graph.getElementFactory().createURIReference(URI.create("http://kulturarvsdata.se/ksamsok#url"));
 			TripleFactory tripleFactory = graph.getTripleFactory();
-			Triple tripleToFind = tripleFactory.createTriple(AnySubjectNode.ANY_SUBJECT_NODE ,AnyPredicateNode.ANY_PREDICATE_NODE, AnyObjectNode.ANY_OBJECT_NODE);
+			Triple tripleToFind = tripleFactory.createTriple(AnySubjectNode.ANY_SUBJECT_NODE ,predicateToFind, AnyObjectNode.ANY_OBJECT_NODE);
 			ClosableIterable<Triple> foundTriples=graph.find(tripleToFind);
 			String testOut="";
 			String url="";
