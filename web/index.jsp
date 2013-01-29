@@ -11,7 +11,6 @@
 	SearchService searchService = ctx.getBean(SearchService.class);
 %>
 	<head>
-		<meta HTTP-EQUIV="REFRESH" content="0; url=http://www.ksamsok.se">
 		<title>K-Samsök</title>
 		<link media="all" href="css/default.css" type="text/css" rel="stylesheet">
 	</head>
