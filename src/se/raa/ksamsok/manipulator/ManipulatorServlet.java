@@ -22,7 +22,7 @@ public class ManipulatorServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 213148022059727538L;
 	@Autowired
-	@Qualifier("dataSourceReader")
+	@Qualifier("dataSource")
 	DataSource dataSource;
 
 //	private DataSource dataSource = null;

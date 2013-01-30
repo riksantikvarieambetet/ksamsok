@@ -36,7 +36,7 @@
 		TODO: fixa bort beroendet på denna tjänst för en replikeringsslav?
 	-->
 	<bean id="harvestRepositoryManager" class="se.raa.ksamsok.harvest.HarvestRepositoryManagerImpl">
-		<constructor-arg ref="dataSourceReader" />
+		<constructor-arg ref="dataSource" />
 		<constructor-arg ref="statusService" />
 		<constructor-arg ref="solr" />
 	</bean>
@@ -44,13 +44,13 @@
 		<property name="solr" ref="solr"/>
 	</bean>
 	<bean id="keyManager" class="se.raa.ksamsok.apikey.APIKeyManager" init-method="init">
-		<constructor-arg ref="dataSourceReader" />
+		<constructor-arg ref="dataSource" />
 	</bean>
 	<bean id="statisticsManager" class="se.raa.ksamsok.statistic.StatisticsManager" init-method="init" destroy-method="destroy">
-		<constructor-arg ref="dataSourceReader" />
+		<constructor-arg ref="dataSource" />
 	</bean>
 	<bean id="organizationManager" class="se.raa.ksamsok.organization.OrganizationManager">
-		<constructor-arg ref="dataSourceReader" />
+		<constructor-arg ref="dataSource" />
 	</bean>
 
 </beans>
