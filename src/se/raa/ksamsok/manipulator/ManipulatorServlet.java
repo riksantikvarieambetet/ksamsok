@@ -15,12 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 public class ManipulatorServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 213148022059727538L;
-	
-	private DataSource ds = null;
-	static final String DATASOURCE_NAME = "harvestdb";
+	@Autowired
+	@Qualifier("dataSourceReader")
+	DataSource dataSource;
+
+//	private DataSource dataSource = null;
+//	private DataSource dsReader = null;
+//	static final String DATASOURCE_NAME = "harvestdb";
+//	static final String DATASOURCE_READER_NAME="harvestdbreader";
 	private static final Map<Thread, Manipulator> threadMap = new HashMap<Thread, Manipulator>();
 
 	@Override
@@ -45,7 +53,7 @@ public class ManipulatorServlet extends HttpServlet
 					}
 				}
 				if(!proccessRunning) {
-					NativeUrlManipulator nativeUrlManipulator = new NativeUrlManipulator(ds);
+					NativeUrlManipulator nativeUrlManipulator = new NativeUrlManipulator(dataSource);
 					String ignore = req.getParameter("ignore");
 					if(ignore != null) {
 						nativeUrlManipulator.setManipulateAllPosts(false);
@@ -89,13 +97,14 @@ public class ManipulatorServlet extends HttpServlet
 	public void init(ServletConfig config) throws ServletException
 	{
 		super.init(config);
-		try {
-			Context ctx = new InitialContext();
-			Context envctx =  (Context) ctx.lookup("java:comp/env");
-			ds =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
-		}catch(NamingException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Context ctx = new InitialContext();
+//			Context envctx =  (Context) ctx.lookup("java:comp/env");
+//			dataSource =  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_NAME);
+//			dsReader=  (DataSource) envctx.lookup("jdbc/" + DATASOURCE_READER_NAME);
+//		}catch(NamingException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 }

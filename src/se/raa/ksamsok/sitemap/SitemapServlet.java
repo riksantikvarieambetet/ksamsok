@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -20,6 +21,7 @@ public class SitemapServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 	
 	@Autowired
+	@Qualifier("dataSourceReader")
 	private DataSource ds;
 
 	private static final String BATCH_PARAMETER_NAME = "batch";

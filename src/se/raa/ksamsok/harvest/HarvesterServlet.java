@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -31,6 +32,7 @@ public class HarvesterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
+	@Qualifier("dataSource")
 	private DataSource ds;
 	@Autowired
 	protected HarvestServiceManagerImpl hsm;

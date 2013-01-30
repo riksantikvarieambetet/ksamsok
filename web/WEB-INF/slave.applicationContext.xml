@@ -17,6 +17,11 @@
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/harvestdb" />
 	</bean>
+	
+	<bean id="dataSourceReader" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/harvestdbreader" />
+	</bean>
+	
 
 	<bean id="solr" class="org.apache.solr.client.solrj.impl.CommonsHttpSolrServer" >
 		<constructor-arg>

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
@@ -44,6 +45,7 @@ public class APIMethodFactory implements APIServiceProvider {
 	@Autowired
 	StatisticsManager statisticsManager;
 	@Autowired
+	@Qualifier("dataSourceReader")
 	DataSource dataSource;
 
 	public APIMethodFactory() {
