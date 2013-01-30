@@ -29,15 +29,15 @@
 	</bean>
 
 	<bean id="statusService" class="se.raa.ksamsok.harvest.StatusServiceImpl">
-		<constructor-arg ref="dataSource"/>
+		<constructor-arg ref="dataSourceReader"/>
 	</bean>
 	<bean id="harvestRepositoryManager" class="se.raa.ksamsok.harvest.HarvestRepositoryManagerImpl">
-		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="dataSourceReader" />
 		<constructor-arg ref="statusService" />
 		<constructor-arg ref="solr" />
 	</bean>
 	<bean id="harvestServiceManager" class="se.raa.ksamsok.harvest.HarvestServiceManagerImpl" init-method="init" destroy-method="destroy">
-		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="dataSourceReader" />
 		<constructor-arg ref="harvestRepositoryManager" />
 		<constructor-arg ref="statusService" />
 		<!-- sträng som måste finnas i db-url:en från datasource:n för att tjänster ska får scheduleras utan år -->
@@ -47,13 +47,13 @@
 		<property name="solr" ref="solr"/>
 	</bean>
 	<bean id="keyManager" class="se.raa.ksamsok.apikey.APIKeyManager" init-method="init">
-		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="dataSourceReader" />
 	</bean>
 	<bean id="statisticsManager" class="se.raa.ksamsok.statistic.StatisticsManager" init-method="init" destroy-method="destroy">
-		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="dataSourceReader" />
 	</bean>
 	<bean id="organizationManager" class="se.raa.ksamsok.organization.OrganizationManager">
-		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="dataSourceReader" />
 	</bean>
 
 </beans>
