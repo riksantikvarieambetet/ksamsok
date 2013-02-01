@@ -103,7 +103,7 @@ fi
 echo "Waiting 60 s for tomcat to start web application"
 COUNTER=0
 while [  $COUNTER -lt 60 ]; do
-	if [ -d /usr/localt/tomcat8080/webapps/ksamsok ] ; then
+	if [ -d /usr/local/tomcat8080/webapps/ksamsok ] ; then
 		echo "Still waiting for Tomcat to start web application" 
 		let COUNTER=COUNTER+1
 		sleep 1s
