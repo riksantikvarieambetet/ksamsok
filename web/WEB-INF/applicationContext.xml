@@ -29,7 +29,7 @@
 	</bean>
 
 	<bean id="statusService" class="se.raa.ksamsok.harvest.StatusServiceImpl">
-		<constructor-arg ref="dataSourceReader"/>
+		<constructor-arg ref="dataSource"/>
 	</bean>
 	<bean id="harvestRepositoryManager" class="se.raa.ksamsok.harvest.HarvestRepositoryManagerImpl">
 		<constructor-arg ref="dataSource" />
