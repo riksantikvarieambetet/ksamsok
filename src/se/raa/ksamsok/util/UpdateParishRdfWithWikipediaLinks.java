@@ -138,7 +138,7 @@ public class UpdateParishRdfWithWikipediaLinks {
 			BufferedWriter out = new BufferedWriter(fstream);
 			String inString;
 			int parishCode;
-			String parishLinkTemplate="<rdf:isDescribedby rdf:resource=%s/>";
+			String parishLinkTemplate="<rdf:isDescribedBy rdf:resource=%s/>";
 			String parishLink="";
 			boolean parishStartTag=false;
 			while((inString=in.readLine())!=null){
