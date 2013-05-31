@@ -111,7 +111,7 @@ public class APIServlet extends HttpServlet {
 	 * @param e
 	 */
 	private void diagnostic(PrintWriter writer, APIMethod method, String stylesheet, APIException e) {
-		logger.error(e.getClassName() + " - " + e.getDetails());
+		logger.warn(e.getClassName() + " - " + e.getDetails());
 		// TODO: inte riktigt bra detta med header- och footer-kontrollerna men...
 		boolean writeHead = true;
 		boolean writeFoot = true;
