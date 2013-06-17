@@ -79,14 +79,13 @@ public class APIServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		try {
 			String stylesheet = null;
-			String maxcount = null;
 			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
 			if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
 			if (apiKey != null && keyManager.contains(apiKey)) {
 				try {
 					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 					stylesheet = reqParams.get("stylesheet");
-					logger.info(reqParams.get("maxCount") != null ? "NULL" : reqParams.get("maxCount"));
+					logger.info(reqParams);
 					method = apiMethodFactory.getAPIMethod(reqParams, writer);
 					method.performMethod();
 					keyManager.updateUsage(apiKey);
