@@ -79,13 +79,15 @@ public class APIServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		try {
 			String stylesheet = null;
+			String maxCount = null;
 			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
 			if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
 			if (apiKey != null && keyManager.contains(apiKey)) {
 				try {
 					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 					stylesheet = reqParams.get("stylesheet");
-					logger.info(reqParams.contains("maxCount") ? "There is a maxCount parmeter" : "We have not stated a maxCount-parameter");
+					maxCount = reqParams.contains("maxCount") ? "There is a maxCount parmeter" : "We have not stated a maxCount-parameter";
+					logger.info(maxCount);
 					method = apiMethodFactory.getAPIMethod(reqParams, writer);
 					method.performMethod();
 					keyManager.updateUsage(apiKey);
