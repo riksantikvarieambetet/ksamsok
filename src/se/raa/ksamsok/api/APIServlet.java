@@ -86,7 +86,10 @@ public class APIServlet extends HttpServlet {
 				try {
 					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 					stylesheet = reqParams.get("stylesheet");
-					logger.info("maxCountvalue: " + reqParams.get("maxCount"));
+//					logger.info("maxCountvalue: " + reqParams.get("maxCount"));
+					if(reqParams.get("maxCount") == null) {
+						reqParams.put("maxCount", "100");
+					}
 					method = apiMethodFactory.getAPIMethod(reqParams, writer);
 					method.performMethod();
 					keyManager.updateUsage(apiKey);
