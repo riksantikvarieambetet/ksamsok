@@ -79,16 +79,15 @@ public class APIServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		try {
 			String stylesheet = null;
-			String maxCount = null;
 			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
 			if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
 			if (apiKey != null && keyManager.contains(apiKey)) {
 				try {
 					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 					stylesheet = reqParams.get("stylesheet");
-//					logger.info("maxCountvalue: " + reqParams.get("maxCount"));
+					//Kollar om frågan till ksamsök har en maxCount satt, och sätter en om frågan inte har maxCount satt.
 					if(reqParams.get("maxCount") == null) {
-						reqParams.put("maxCount", "100");
+						reqParams.put("maxCount", "10000");
 					}
 					method = apiMethodFactory.getAPIMethod(reqParams, writer);
 					method.performMethod();
