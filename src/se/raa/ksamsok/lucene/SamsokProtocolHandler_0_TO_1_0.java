@@ -1,5 +1,39 @@
 package se.raa.ksamsok.lucene;
 
+import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTAINSINFORMATIONABOUT;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTAINSOBJECT;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HASBEENUSEDIN;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HASCHILD;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HASFIND;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HASIMAGE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HASOBJECTEXAMPLE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HASPARENT;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HASPART;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISDESCRIBEDBY;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISFOUNDIN;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISPARTOF;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISRELATEDTO;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISVISUALIZEDBY;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_SAMEAS;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_VISUALIZES;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uriPrefixKSamsok;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rContainsInformationAbout;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rContainsObject;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHasBeenUsedIn;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHasChild;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHasFind;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHasImage;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHasObjectExample;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHasParent;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHasPart;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsDescribedBy;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsFoundIn;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsPartOf;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsRelatedTo;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsVisualizedBy;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rSameAs;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rVisualizes;
+
 import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,8 +43,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.SubjectNode;
-import static se.raa.ksamsok.lucene.SamsokProtocol.*;
-import static se.raa.ksamsok.lucene.ContentHelper.*;
 
 public class SamsokProtocolHandler_0_TO_1_0 extends BaseSamsokProtocolHandler {
 

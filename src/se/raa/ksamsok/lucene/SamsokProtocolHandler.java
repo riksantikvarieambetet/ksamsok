@@ -2,8 +2,10 @@ package se.raa.ksamsok.lucene;
 
 import java.util.Date;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
+
 import se.raa.ksamsok.harvest.HarvestService;
 
 public interface SamsokProtocolHandler {

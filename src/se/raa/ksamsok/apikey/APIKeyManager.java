@@ -14,8 +14,8 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.statistic.APIKey;
 
 public class APIKeyManager extends DBBasedManagerImpl {

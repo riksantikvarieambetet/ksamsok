@@ -1,15 +1,8 @@
 package se.raa.ksamsok.lucene;
 
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,17 +14,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.jrdf.graph.AnySubjectNode;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.SubjectNode;
-import org.jrdf.graph.Triple;
-import org.jrdf.graph.URIReference;
-import org.junit.Test;
 import org.w3c.dom.Document;
-
-import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
 @SuppressWarnings("unused")
 public class Protocol_1_11_Test {

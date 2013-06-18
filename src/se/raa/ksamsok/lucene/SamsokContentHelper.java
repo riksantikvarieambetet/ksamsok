@@ -2,10 +2,12 @@ package se.raa.ksamsok.lucene;
 
 import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uriPrefix;
+
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.LinkedList;
+
 import javax.vecmath.Point2d;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
