@@ -50,13 +50,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#ContextSuperType"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#contextSuperType"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#ContextSuperType"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -67,13 +60,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#ContextType"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#contextType"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#ContextType"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -84,13 +70,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#Continent"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Country"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#continent"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#Continent"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -101,13 +80,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#Country"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#country"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#Country"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -118,13 +90,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#DataQuality"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
-        <rdfs:range>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#dataQuality"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#DataQuality"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:range>
     </owl:ObjectProperty>
     
 
@@ -165,13 +130,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#License"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemLicense"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#Subject"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -232,13 +190,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#EntitySuperType"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemSuperType"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#EntitySuperType"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -249,13 +200,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#EntityType"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemType"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#EntityType"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -266,13 +210,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Image"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#License"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#mediaLicense"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#License"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -283,13 +220,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#Subject"/>
-        <rdfs:range>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#subject"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#Subject"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:range>
     </owl:ObjectProperty>
     
 
@@ -339,13 +269,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Country"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#alpha2"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -356,13 +279,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Country"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#alpha3"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -409,13 +325,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#buildDate"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -444,13 +353,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Image"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#byline"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -461,13 +363,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#cadastralUnit"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -497,13 +392,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#collection"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -560,13 +448,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#contextLabel">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ContextType"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#contextLabel"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -577,13 +458,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#continentName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -593,12 +467,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#coordinates">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&rdfs;Literal"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#coordinates"/>
-                <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -608,13 +476,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#copyright">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Image"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#copyright"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -625,13 +486,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#countryName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -642,13 +496,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#countyName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -659,13 +506,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#createdDate"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -685,13 +525,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemDescription"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#desc"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -710,13 +543,6 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Subject"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Theme"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -781,13 +607,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#eventAuth"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -798,13 +617,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#eventName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -842,13 +654,6 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <owl:propertyDisjointWith rdf:resource="http://kulturarvsdata.se/ksamsok#organization"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#firstName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -859,13 +664,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#fromPeriodId"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -876,13 +674,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#fromPeriodName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -893,13 +684,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#fromTime"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -911,13 +695,6 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <owl:propertyDisjointWith rdf:resource="http://kulturarvsdata.se/ksamsok#organization"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#gender"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1005,13 +782,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Image"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#highresSource"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1138,13 +908,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemForIndexing"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1165,13 +928,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemLabel"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1181,13 +937,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#itemLicenseUrl">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemLicenseUrl"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1246,13 +995,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;float"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#ksamsokVersion"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;float"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1262,13 +1004,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#label">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ClassName"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#label"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1296,13 +1031,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Image"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#lowresSource"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1330,13 +1058,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#material">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMaterial"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#material"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1357,13 +1078,6 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Image"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#mediaType"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1391,13 +1105,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#municipalityName">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#municipalityName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1408,13 +1115,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#museumdatUrl"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1443,22 +1143,7 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#License"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Subject"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Theme"/>
-        <rdfs:range rdf:resource="&rdf;PlainLiteral"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
-                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&rdf;PlainLiteral"/>
-            </owl:Restriction>
-        </rdfs:domain>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1470,13 +1155,6 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#nameAuth"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1487,13 +1165,6 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#nameId"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1504,22 +1175,7 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Country"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemNumber"/>
-        <rdfs:range rdf:resource="&xsd;integer"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#number"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;integer"/>
-            </owl:Restriction>
-        </rdfs:domain>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#number"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1531,13 +1187,6 @@
         <owl:propertyDisjointWith rdf:resource="http://kulturarvsdata.se/ksamsok#surname"/>
         <owl:propertyDisjointWith rdf:resource="http://kulturarvsdata.se/ksamsok#title"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#organization"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1566,13 +1215,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#parishName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1592,13 +1234,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#periodAuth"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1653,13 +1288,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#placeTermId"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1670,13 +1298,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&rdf;XMLLiteral"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#presentation"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&rdf;XMLLiteral"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1705,13 +1326,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#provinceName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1740,13 +1354,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMeasurement"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#qualifier"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1793,13 +1400,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#serviceName"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1810,13 +1410,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#serviceOrganization"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1836,13 +1429,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemSpecification"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#spec"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1853,13 +1439,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#surname"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1878,13 +1457,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#thumbnail">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#thumbnail"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1895,13 +1467,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Image"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#thumbnailSource"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1912,13 +1477,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#timeText"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1928,13 +1486,6 @@
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#title">
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#title"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1945,13 +1496,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#toPeriodId"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1962,13 +1506,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#toPeriodName"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -1979,13 +1516,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#toTime"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -2000,13 +1530,6 @@
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemNumber"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemSpecification"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#type"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -2017,13 +1540,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMeasurement"/>
         <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#unit"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -2034,13 +1550,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#url"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -2060,13 +1569,6 @@
         <rdfs:comment></rdfs:comment>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMeasurement"/>
         <rdfs:range rdf:resource="&xsd;float"/>
-        <rdfs:domain>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#value"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;float"/>
-            </owl:Restriction>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -2095,6 +1597,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ClassName -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ClassName">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#label"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2103,6 +1619,173 @@
     <!-- http://kulturarvsdata.se/ksamsok#Context -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#Context">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#toTime"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#contextType"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#ContextType"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#provinceName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#nameAuth"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#placeTermId"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#periodAuth"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#eventAuth"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#municipalityName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#nameId"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#parishName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#toPeriodName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#countyName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#continentName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#country"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#Country"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#coordinates"/>
+                <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#timeText"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#countryName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#contextSuperType"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#ContextSuperType"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#eventName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#fromPeriodName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#cadastralUnit"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#fromTime"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#toPeriodId"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#fromPeriodId"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2111,6 +1794,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ContextSuperType -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ContextSuperType">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2119,6 +1816,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ContextType -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ContextType">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#contextLabel"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2127,6 +1838,13 @@
     <!-- http://kulturarvsdata.se/ksamsok#Continent -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#Continent">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2135,6 +1853,41 @@
     <!-- http://kulturarvsdata.se/ksamsok#Country -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#Country">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#alpha2"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#alpha3"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#continent"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#Continent"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#number"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2143,6 +1896,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#DataQuality -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#DataQuality">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2151,6 +1918,188 @@
     <!-- http://kulturarvsdata.se/ksamsok#Entity -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#Entity">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemLabel"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#ksamsokVersion"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemLicenseUrl"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#buildDate"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#presentation"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&rdf;XMLLiteral"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#serviceName"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#firstName"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemSuperType"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#EntitySuperType"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#lastChangedDate"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#url"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemType"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#EntityType"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#museumdatUrl"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#dataQuality"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#DataQuality"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#title"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#organization"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#nameAuth"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemForIndexing"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#mediaType"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#collection"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#createdDate"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#serviceOrganization"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#gender"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#nameId"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#surname"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#thumbnail"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#itemLicense"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#License"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2159,6 +2108,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#EntitySuperType -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#EntitySuperType">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2167,6 +2130,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#EntityType -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#EntityType">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2175,6 +2152,55 @@
     <!-- http://kulturarvsdata.se/ksamsok#Image -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#Image">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#copyright"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#thumbnailSource"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#lowresSource"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#mediaLicense"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/ksamsok#License"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#mediaType"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#byline"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#highresSource"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2183,6 +2209,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ItemDescription -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ItemDescription">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#type"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#desc"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2191,6 +2231,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ItemMaterial -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ItemMaterial">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#type"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#material"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2199,6 +2253,34 @@
     <!-- http://kulturarvsdata.se/ksamsok#ItemMeasurement -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ItemMeasurement">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#type"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#unit"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#value"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#qualifier"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2207,6 +2289,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ItemName -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ItemName">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#type"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2215,6 +2311,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ItemNumber -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ItemNumber">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#number"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#type"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2223,6 +2333,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#ItemSpecification -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#ItemSpecification">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#spec"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#type"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2231,8 +2355,22 @@
     <!-- http://kulturarvsdata.se/ksamsok#License -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#License">
-        <rdfs:seeAlso></rdfs:seeAlso>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
+        <rdfs:seeAlso></rdfs:seeAlso>
     </owl:Class>
     
 
@@ -2240,6 +2378,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#Subject -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#Subject">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
     
@@ -2248,6 +2400,20 @@
     <!-- http://kulturarvsdata.se/ksamsok#Theme -->
 
     <owl:Class rdf:about="http://kulturarvsdata.se/ksamsok#Theme">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kulturarvsdata.se/ksamsok#name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
     </owl:Class>
 </rdf:RDF>
