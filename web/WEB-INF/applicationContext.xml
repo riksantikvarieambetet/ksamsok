@@ -55,5 +55,29 @@
 	<bean id="organizationManager" class="se.raa.ksamsok.organization.OrganizationManager">
 		<constructor-arg ref="dataSource" />
 	</bean>
+	<bean id="ugcHubManager" class="se.raa.ksamsok.ugchub.UGCHubManager" init-method="init" destroy-method="destroy">
+	    <!--
+	    TODO !! få det att funka med laddning av values från apiconnect.properties !!
+        <property name="scheme" value="http" />        
+        <property name="host" value="lx-ra-ugchubtest:8080" />
+        <property name="path" value="/UGC-hub/api" />
+        <property name="key" value="st4609gu77" />
+        <property name="method" value="retrieve" />
+        <property name="objectUri" value="all" />
+        <property name="scope" value="all" />
+        <property name="format" value="json" />
+        
+        
+        <property name="scheme" value="${ugchub.scheme}" />        
+        <property name="host" value="${ugchub.host}" />
+        <property name="path" value="${ugchub.path}" />
+        <property name="key" value="${ugchub.key}" />
+        <property name="method" value="${ugchub.method}" />
+        <property name="objecturi" value="${ugchub.objecturi}" />
+        <property name="scope" value="${ugchub.scope}" />
+        <property name="format" value="${ugchub.format}" />
+        <property name="limit" value="${ugchub.limit}" />
+         -->
+    </bean>
 
 </beans>

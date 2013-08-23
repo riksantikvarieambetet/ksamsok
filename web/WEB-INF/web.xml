@@ -6,113 +6,143 @@
     <display-name>K-Samsök</display-name>
 
 <!-- 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
-	</context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
 -->
-	<!-- init av spring, använder WEB-INF/applicationContext.xml som default, kan overridas med ovan-->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+    <!-- init av spring, använder WEB-INF/applicationContext.xml som default, kan overridas med ovan-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
-	<!-- ladda skördeservleten vid uppstart först -->
+    <!-- ladda skördeservleten vid uppstart först -->
     <servlet>
         <servlet-name>Harvester</servlet-name>
         <servlet-class>se.raa.ksamsok.harvest.HarvesterServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
-	<!-- och sen api-servleten -->
-	<servlet>
-		<servlet-name>API</servlet-name>
-		<servlet-class>se.raa.ksamsok.api.APIServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
+    <!-- och sen api-servleten -->
+    <servlet>
+        <servlet-name>API</servlet-name>
+        <servlet-class>se.raa.ksamsok.api.APIServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
 
-	<!-- resten laddas vid användning -->
+    <!-- resten laddas vid användning -->
     <servlet>
         <servlet-name>SRU</servlet-name>
         <servlet-class>se.raa.ksamsok.sru.SRUServlet</servlet-class>
     </servlet>
     
     <servlet>
-    	<servlet-name>APIKey</servlet-name>
-    	<servlet-class>se.raa.ksamsok.apikey.APIKeyServlet</servlet-class>
+        <servlet-name>APIKey</servlet-name>
+        <servlet-class>se.raa.ksamsok.apikey.APIKeyServlet</servlet-class>
     </servlet>
     
     
     <servlet>
-    	<servlet-name>Manipulator</servlet-name>
-    	<servlet-class>se.raa.ksamsok.manipulator.ManipulatorServlet</servlet-class>
+        <servlet-name>Manipulator</servlet-name>
+        <servlet-class>se.raa.ksamsok.manipulator.ManipulatorServlet</servlet-class>
     </servlet>
     
     
     <servlet>
-    	<servlet-name>sitemap</servlet-name>
-    	<servlet-class>se.raa.ksamsok.sitemap.SitemapServlet</servlet-class>
+        <servlet-name>sitemap</servlet-name>
+        <servlet-class>se.raa.ksamsok.sitemap.SitemapServlet</servlet-class>
     </servlet>
     
     <servlet>
-    	<servlet-name>externalOrgAdmin</servlet-name>
-    	<servlet-class>se.raa.ksamsok.organization.ExternalOrganizationServlet</servlet-class>
+        <servlet-name>externalOrgAdmin</servlet-name>
+        <servlet-class>se.raa.ksamsok.organization.ExternalOrganizationServlet</servlet-class>
     </servlet>
     
     <servlet>
-    	<servlet-name>statistic</servlet-name>
-    	<servlet-class>se.raa.ksamsok.statistic.StatisticServlet</servlet-class>
+        <servlet-name>statistic</servlet-name>
+        <servlet-class>se.raa.ksamsok.statistic.StatisticServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>ugchub</servlet-name>
+        <servlet-class>se.raa.ksamsok.ugchub.UGCHubServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>editugc</servlet-name>
+        <servlet-class>se.raa.ksamsok.ugchub.UGCHubEditServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>deleteugc</servlet-name>
+        <servlet-class>se.raa.ksamsok.ugchub.UGCHubEditServlet</servlet-class>
     </servlet>
 
-	<!--
-		Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen
-		(pathInfo) matchar [/resurser]/*/*/*[/*]. Övriga requests skickas vidare till
-		namngivna dispatchers (jsp och default) vilka finns som default i tomcat.
-		Detta för att kunna hantera dynamisk uppslagning av uri:s där prefixen är okända,
-		men ändå kunna leverera jsp, js och bilder osv. 
-	 -->
+    <!--
+        Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen
+        (pathInfo) matchar [/resurser]/*/*/*[/*]. Övriga requests skickas vidare till
+        namngivna dispatchers (jsp och default) vilka finns som default i tomcat.
+        Detta för att kunna hantera dynamisk uppslagning av uri:s där prefixen är okända,
+        men ändå kunna leverera jsp, js och bilder osv. 
+     -->
     <servlet>
         <servlet-name>Resolver</servlet-name>
         <servlet-class>se.raa.ksamsok.resolve.ResolverServlet</servlet-class>
     </servlet>
     
     <servlet>
-    	<servlet-name>orgAdmin</servlet-name>
-    	<servlet-class>se.raa.ksamsok.organization.OrganizationServlet</servlet-class>
+        <servlet-name>orgAdmin</servlet-name>
+        <servlet-class>se.raa.ksamsok.organization.OrganizationServlet</servlet-class>
     </servlet>
 
-	<servlet-mapping>
-		<servlet-name>API</servlet-name>
-		<url-pattern>/api</url-pattern>
-	</servlet-mapping>
-
     <servlet-mapping>
-    	<servlet-name>APIKey</servlet-name>
-    	<url-pattern>/admin/apiKeyAdmin</url-pattern>
+        <servlet-name>API</servlet-name>
+        <url-pattern>/api</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-    	<servlet-name>Manipulator</servlet-name>
-    	<url-pattern>/admin/manipulate</url-pattern>
+        <servlet-name>APIKey</servlet-name>
+        <url-pattern>/admin/apiKeyAdmin</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-    	<servlet-name>sitemap</servlet-name>
-    	<url-pattern>/sitemap</url-pattern>
+        <servlet-name>Manipulator</servlet-name>
+        <url-pattern>/admin/manipulate</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-    	<servlet-name>externalOrgAdmin</servlet-name>
-    	<url-pattern>/userAdmin/orgAdmin</url-pattern>
+        <servlet-name>sitemap</servlet-name>
+        <url-pattern>/sitemap</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-    	<servlet-name>statistic</servlet-name>
-    	<url-pattern>/admin/statistic</url-pattern>
+        <servlet-name>externalOrgAdmin</servlet-name>
+        <url-pattern>/userAdmin/orgAdmin</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-    	<servlet-name>orgAdmin</servlet-name>
-    	<url-pattern>/admin/orgAdmin</url-pattern>
+        <servlet-name>statistic</servlet-name>
+        <url-pattern>/admin/statistic</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>ugchub</servlet-name>
+        <url-pattern>/admin/ugchub</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>editugc</servlet-name>
+        <url-pattern>/admin/editugc</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>deleteugc</servlet-name>
+        <url-pattern>/admin/deleteugc</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>orgAdmin</servlet-name>
+        <url-pattern>/admin/orgAdmin</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -120,36 +150,35 @@
         <url-pattern>/sru</url-pattern>
     </servlet-mapping>
 
-	<!--  matchar "allt" -->
+    <!--  matchar "allt" -->
     <servlet-mapping>
         <servlet-name>Resolver</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+    <resource-ref>
+        <description>Databasuppkoppling</description>
+        <res-ref-name>jdbc/harvestdb</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 
-	<resource-ref>
-		<description>Databasuppkoppling</description>
-		<res-ref-name>jdbc/harvestdb</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Administration</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ksamsok</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>K-Samsök, administration</realm-name>
+    </login-config>
 
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>Administration</web-resource-name>
-			<url-pattern>/admin/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>ksamsok</role-name>
-		</auth-constraint>
-	</security-constraint>
-	<login-config>
-		<auth-method>BASIC</auth-method>
-		<realm-name>K-Samsök, administration</realm-name>
-	</login-config>
-
-	<security-role>
-		<description>Administratörer, ksamsök</description>
-		<role-name>ksamsok</role-name>
-	</security-role>
+    <security-role>
+        <description>Administratörer, ksamsök</description>
+        <role-name>ksamsok</role-name>
+    </security-role>
 
 </web-app>

@@ -39,6 +39,7 @@
 			<a href="map.jsp">Sök med karta</a>
 			<a href="search.jsp">Sök utan karta</a>
 			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
+			<a href="ugchub">UGC-hubb</a>
 			<span class="servername"><%=request.getServerName() %></span>
 		</div>
 <%

@@ -5,8 +5,8 @@
         Ant-byggfil, ksamsok.
     </description>
 
-	<property name="project.build.dir" value="${basedir}/build"/>
-	
+    <property name="project.build.dir" value="${basedir}/build"/>
+    
     <target name="init" depends="clean">
         <tstamp/>
         <property environment="env"/>
@@ -25,8 +25,8 @@
             value="${project.name}.war"/>
 
         <!-- för rpm, öka vid ny version... -->
-		<property name="major.minor" 	value="0.2" />
-		<property name="release" 		value="1" />
+        <property name="major.minor"    value="0.2" />
+        <property name="release"        value="1" />
 
         <property name="javac.debug" value="true"/>
         <property name="javac.optimize" value="true"/>
@@ -48,96 +48,96 @@
             <patternset id="deploy.jars.pattern" />
         </fileset>
 
-		<!-- Konfigurationsfiler -->
+        <!-- Konfigurationsfiler -->
         <patternset id="conf.files">
             <include name="**/*.properties"/>
             <include name="**/*.xml"/>
-        	<include name="**/*.sh"/>
+            <include name="**/*.sh"/>
             <include name="**/*.dtd"/>
             <!--  snowball/lucene, stopp-ordsfiler -->
             <include name="**/*_stop.txt"/>
             <!-- uri till namnuppslagning -->
             <include name="**/*.rdf"/>
-        	<include name="**/*.xsd"/>
+            <include name="**/*.xsd"/>
         </patternset>
 
         <mkdir dir="${project.build.dir}"/>
-		<mkdir dir="${project.build.dir}/lib"/>
-		<mkdir dir="${project.build.dir}/war"/>
+        <mkdir dir="${project.build.dir}/lib"/>
+        <mkdir dir="${project.build.dir}/war"/>
     </target>
 
     <target name="compile" depends="init"
-		description="Kompilerar java-klasser.">
+        description="Kompilerar java-klasser.">
         <javac srcdir="${project.src.dir}"
             destdir="${project.build.dir}"
             classpathref="project.classpath"
             debug="${javac.debug}" 
             optimize="${javac.optimize}"
             encoding="UTF-8"
-        	includeantruntime="false">
+            includeantruntime="false">
             <patternset>
                 <include name="**/*.java"/>
-            	<exclude name="**/*Test.java"/>
-            	<exclude name="**/CheckCountryCodes.java"/>
-            	<exclude name="**/UpdateParishRdfWithWikipediaLinks.java"/>
+                <exclude name="**/*Test.java"/>
+                <exclude name="**/CheckCountryCodes.java"/>
+                <exclude name="**/UpdateParishRdfWithWikipediaLinks.java"/>
             </patternset>
 
         </javac>
     </target>
 
-	<!-- Bygger en JAR -->
-	<target name="jar" depends="init,compile,conf-copy"
-		description="Skapar en JAR.">
-		<jar jarfile="${project.build.dir}/lib/${jar.name}"
-			basedir="${project.build.dir}"
-			update="false" duplicate="preserve" index="true">
-			<patternset>
-				<include name="**/*.class"/>
-				<include name="**/*.xsd"/>
-				<exclude name="test" />
-			</patternset>
-			<patternset refid="conf.files"/>
-		</jar>
-	</target>
+    <!-- Bygger en JAR -->
+    <target name="jar" depends="init,compile,conf-copy"
+        description="Skapar en JAR.">
+        <jar jarfile="${project.build.dir}/lib/${jar.name}"
+            basedir="${project.build.dir}"
+            update="false" duplicate="preserve" index="true">
+            <patternset>
+                <include name="**/*.class"/>
+                <include name="**/*.xsd"/>
+                <exclude name="test" />
+            </patternset>
+            <patternset refid="conf.files"/>
+        </jar>
+    </target>
 
-	<target name="prepare-war-slave" if="ksamsok.slave">
-		<echo> Patchar katalogstruktur för replikeringsslav </echo>
-		<!-- bort med admin och skriv över konf-filer med "slav-versioner" -->
-		<delete dir="${project.build.dir}/web/userAdmin" verbose="true" />
-		<delete dir="${project.build.dir}/web/admin" verbose="true" />
-		<copy overwrite="true" file="${basedir}/web/WEB-INF/slave.web.xml" tofile="${project.build.dir}/web/WEB-INF/web.xml" verbose="true"/>
-		<copy overwrite="true" file="${basedir}/web/WEB-INF/slave.applicationContext.xml" tofile="${project.build.dir}/web/WEB-INF/applicationContext.xml" verbose="true"/>
-	</target>
+    <target name="prepare-war-slave" if="ksamsok.slave">
+        <echo> Patchar katalogstruktur för replikeringsslav </echo>
+        <!-- bort med admin och skriv över konf-filer med "slav-versioner" -->
+        <delete dir="${project.build.dir}/web/userAdmin" verbose="true" />
+        <delete dir="${project.build.dir}/web/admin" verbose="true" />
+        <copy overwrite="true" file="${basedir}/web/WEB-INF/slave.web.xml" tofile="${project.build.dir}/web/WEB-INF/web.xml" verbose="true"/>
+        <copy overwrite="true" file="${basedir}/web/WEB-INF/slave.applicationContext.xml" tofile="${project.build.dir}/web/WEB-INF/applicationContext.xml" verbose="true"/>
+    </target>
 
-	<target name="prepare-war">
-		<!-- kopiera men ta inte med slavkonf, den kommer ev med i senare steg -->
-		<copy todir="${project.build.dir}/web">
-			<fileset dir="${basedir}/web">
-				<exclude name="WEB-INF/slave.web.xml" />
-				<exclude name="WEB-INF/slave.applicationContext.xml" />
-			</fileset>
-		</copy>
-	</target>
+    <target name="prepare-war">
+        <!-- kopiera men ta inte med slavkonf, den kommer ev med i senare steg -->
+        <copy todir="${project.build.dir}/web">
+            <fileset dir="${basedir}/web">
+                <exclude name="WEB-INF/slave.web.xml" />
+                <exclude name="WEB-INF/slave.applicationContext.xml" />
+            </fileset>
+        </copy>
+    </target>
 
-	<!-- Bygger en WAR -->
-	<target name="war" depends="jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
-		<war excludes="**/web.xml" basedir="${project.build.dir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${project.build.dir}/web/WEB-INF/web.xml">
-			<lib dir="${project.build.dir}/lib">
-				<include name="${jar.name}" />
-			</lib>
-			<lib dir="${project.src.lib.dir}">
-				<include name="*.jar" />
-				<exclude name="servlet-*.jar" />
-				<!-- oracle koppling används inte längre-->
-				<exclude name="ora10-*.jar" />
-				<exclude name="oracle-*.jar" />
-			</lib>
-			<zipfileset dir="${project.src.conf.context.dir}" includes="**/context.xml" prefix="META-INF"/>
-		</war>
-		<copy file="${project.build.dir}/war/${war.name}" tofile="${project.build.dir}/war/${short.war.name}"/>
-	</target>
+    <!-- Bygger en WAR -->
+    <target name="war" depends="jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
+        <war excludes="**/web.xml" basedir="${project.build.dir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${project.build.dir}/web/WEB-INF/web.xml">
+            <lib dir="${project.build.dir}/lib">
+                <include name="${jar.name}" />
+            </lib>
+            <lib dir="${project.src.lib.dir}">
+                <include name="*.jar" />
+                <exclude name="servlet-*.jar" />
+                <!-- oracle koppling används inte längre-->
+                <exclude name="ora10-*.jar" />
+                <exclude name="oracle-*.jar" />
+            </lib>
+            <zipfileset dir="${project.src.conf.context.dir}" includes="**/context.xml" prefix="META-INF"/>
+        </war>
+        <copy file="${project.build.dir}/war/${war.name}" tofile="${project.build.dir}/war/${short.war.name}"/>
+    </target>
 
-	<target name="conf-copy" depends="init">
+    <target name="conf-copy" depends="init">
         <copy todir="${project.build.dir}">
             <fileset dir="${project.src.dir}">
                 <patternset refid="conf.files"/>
@@ -151,20 +151,20 @@
     </target>
 
     <target name="clean" description="Tar bort build-katalogen.">
-    	<mkdir dir="${project.build.dir}"/>
+        <mkdir dir="${project.build.dir}"/>
         <delete includeemptydirs="true" >
             <fileset dir="${project.build.dir}">
                 <patternset>
-                	<exclude name="*/*.rpm"/>
+                    <exclude name="*/*.rpm"/>
                 </patternset>
             </fileset>
         </delete>
     </target>
 
     <target name="javadoc" depends="init"
-		description="Genererar javadoc.">
+        description="Genererar javadoc.">
         <javadoc sourcepath="${project.src.dir}"
-        	classpathref="project.classpath"
+            classpathref="project.classpath"
             destdir="${project.build.dir}/javadoc"
             packagenames="se.raa.ksamsok.*"
             defaultexcludes="yes"
@@ -175,132 +175,132 @@
         </javadoc>
     </target>
 
-	<target name="slave">
-		<!-- flagga att vi bygger en replikeringslav med bara api-funktioner, triggar specialhantering -->
-		<property name="ksamsok.slave" value="true" />
-	</target>
-	
-	<target name="updateSpecToSlave" if="ksamsok.slave">
-		<copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec" overwrite="true">
-			<filterset>
-				<filter token="RPM_SUFFIX" value="slave"/>
-			</filterset>
-		</copy>
-	</target>
-	
-	<target name="base-RAA-RPM" depends="war">
+    <target name="slave">
+        <!-- flagga att vi bygger en replikeringslav med bara api-funktioner, triggar specialhantering -->
+        <property name="ksamsok.slave" value="true" />
+    </target>
+    
+    <target name="updateSpecToSlave" if="ksamsok.slave">
+        <copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec" overwrite="true">
+            <filterset>
+                <filter token="RPM_SUFFIX" value="slave"/>
+            </filterset>
+        </copy>
+    </target>
+    
+    <target name="base-RAA-RPM" depends="war">
 
-		<!-- skapa RPM-struktur -->
-		<mkdir dir="${project.build.dir}/rpm/RPMS" />
-		<mkdir dir="${project.build.dir}/rpm/SPECS" />
-		<mkdir dir="${project.build.dir}/rpm/SOURCES" />
-		<mkdir dir="${project.build.dir}/rpm/BUILD" />
-		<mkdir dir="${project.build.dir}/rpm/SRPMS" />
-		<mkdir dir="${project.build.dir}/rpm/INSTALL" />
-		<copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec">
-			<filterset>
-				<filter token="RPM_SUFFIX" value="master"/>
-			</filterset>
-		</copy>
-		
-		<antcall target="updateSpecToSlave"/>
+        <!-- skapa RPM-struktur -->
+        <mkdir dir="${project.build.dir}/rpm/RPMS" />
+        <mkdir dir="${project.build.dir}/rpm/SPECS" />
+        <mkdir dir="${project.build.dir}/rpm/SOURCES" />
+        <mkdir dir="${project.build.dir}/rpm/BUILD" />
+        <mkdir dir="${project.build.dir}/rpm/SRPMS" />
+        <mkdir dir="${project.build.dir}/rpm/INSTALL" />
+        <copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec">
+            <filterset>
+                <filter token="RPM_SUFFIX" value="master"/>
+            </filterset>
+        </copy>
+        
+        <antcall target="updateSpecToSlave"/>
 
-		<!-- kopiera in så som det ska se ut sen efter installation -->
-		<copy todir="${project.build.dir}/rpm/SOURCES/">
-			<fileset dir="${project.build.dir}/war">
-				<include name="ksamsok.war"/>
-			</fileset>
-		</copy>
-		<copy todir="${project.build.dir}/rpm/SOURCES/">
-			<fileset dir="conf">
-				<include name="tomcat-users.xml"/>
-				<include name="setenv.sh"/>
-				<include name="ksamsok.javaopts"/>
-			</fileset>
-		</copy>
-		
-		<!-- Skapa själva rpm filen -->
-			    	<echo message="${project.build.dir}"/>
-					<rpm
-					        specFile="ksamsok.spec"
-					        topDir="${project.build.dir}/rpm"
-					        cleanBuildDir="true"
-					        failOnError="true"/>
-			    	
-			    	
-			    	<!-- Lägg upp rpm-filen i ${project.build.rpm.dir} -->
-			    	<copy todir="${project.build.dir}/rpm">
-			    		<fileset dir="${project.build.dir}/rpm/RPMS/x86_64">
-			    	    	<include name="*.rpm"/>
-			    	    </fileset>
-			    	</copy>
-			    	
-	</target>
+        <!-- kopiera in så som det ska se ut sen efter installation -->
+        <copy todir="${project.build.dir}/rpm/SOURCES/">
+            <fileset dir="${project.build.dir}/war">
+                <include name="ksamsok.war"/>
+            </fileset>
+        </copy>
+        <copy todir="${project.build.dir}/rpm/SOURCES/">
+            <fileset dir="conf">
+                <include name="tomcat-users.xml"/>
+                <include name="setenv.sh"/>
+                <include name="ksamsok.javaopts"/>
+            </fileset>
+        </copy>
+        
+        <!-- Skapa själva rpm filen -->
+                    <echo message="${project.build.dir}"/>
+                    <rpm
+                            specFile="ksamsok.spec"
+                            topDir="${project.build.dir}/rpm"
+                            cleanBuildDir="true"
+                            failOnError="true"/>
+                    
+                    
+                    <!-- Lägg upp rpm-filen i ${project.build.rpm.dir} -->
+                    <copy todir="${project.build.dir}/rpm">
+                        <fileset dir="${project.build.dir}/rpm/RPMS/x86_64">
+                            <include name="*.rpm"/>
+                        </fileset>
+                    </copy>
+                    
+    </target>
 
-	<!-- En slav och en master rpm byggs alltid -->
-	
-	<target name="RAA-RPM" depends="produktion,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
-		<!--Bygg en slav också -->
-		<antcall target="RAA-RPM-SLAVE"/>
-	</target>
-	
-	<target name="RAA-RPM-SLAVE" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
-	</target>
-		
-	<target name="RAA-UTV-RPM" depends="utveckling,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
-		<!--Bygg en slav också -->
-		<antcall target="RAA-UTV-RPM-SLAVE"/>
-	</target>
-	
-	<target name="RAA-UTV-RPM-SLAVE" depends="utveckling,slave,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
-	</target>
+    <!-- En slav och en master rpm byggs alltid -->
+    
+    <target name="RAA-RPM" depends="produktion,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+        <!--Bygg en slav också -->
+        <antcall target="RAA-RPM-SLAVE"/>
+    </target>
+    
+    <target name="RAA-RPM-SLAVE" depends="produktion,slave,base-RAA-RPM" description="Skapa rpm för raä:s driftmiljö">
+    </target>
+        
+    <target name="RAA-UTV-RPM" depends="utveckling,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
+        <!--Bygg en slav också -->
+        <antcall target="RAA-UTV-RPM-SLAVE"/>
+    </target>
+    
+    <target name="RAA-UTV-RPM-SLAVE" depends="utveckling,slave,base-RAA-RPM" description="Skapa rpm för raä:s utvecklings driftmiljö (slav)">
+    </target>
 
 
-	<target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
-		<mkdir dir="${project.build.dir}/test"/>
-		<mkdir dir="${project.build.dir}/test/reports"/>
+    <target name="test" depends="jar" description="Kör alla testfall och genererar en htmlrapport">
+        <mkdir dir="${project.build.dir}/test"/>
+        <mkdir dir="${project.build.dir}/test/reports"/>
         <javac srcdir="${basedir}/test/src"
             destdir="${project.build.dir}/test"
             debug="${javac.debug}" 
             optimize="${javac.optimize}"
             encoding="UTF-8"
-        	includeantruntime="false">
-        	<classpath>
-        		<path refid="project.test.classpath" />
-        		<pathelement location="${project.build.dir}" />
-        	</classpath>
+            includeantruntime="false">
+            <classpath>
+                <path refid="project.test.classpath" />
+                <pathelement location="${project.build.dir}" />
+            </classpath>
             <patternset>
                 <include name="**/*.java"/>
             </patternset>
 
         </javac>
 
-		<junit printsummary="no">
-			<classpath>
-				<path refid="project.test.classpath" />
-				<pathelement location="${project.build.dir}/test" />
-				<pathelement location="${project.build.dir}/lib/${jar.name}" />
-			</classpath>
-			<formatter type="xml"/>
-			<batchtest todir="build/test/reports">
-				<fileset dir="${basedir}/test/src">
-					<include name="**/*.java" />
-				</fileset>
-			</batchtest>
-		</junit>
-		<junitreport todir="build/test/reports" >
-		  <fileset dir="build/test/reports">
-		    <include name="TEST-*.xml"/>
-		  </fileset>
-		  <report format="frames" todir="build/test/htmlreport" />
-		</junitreport>
-	</target>
-	
-	<target name="utveckling">
-		<property name="project.src.conf.context.dir" value="${basedir}/conf/test"/>
-	</target>
-	
-	<target name="produktion">
-		<property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>
-	</target>
+        <junit printsummary="no">
+            <classpath>
+                <path refid="project.test.classpath" />
+                <pathelement location="${project.build.dir}/test" />
+                <pathelement location="${project.build.dir}/lib/${jar.name}" />
+            </classpath>
+            <formatter type="xml"/>
+            <batchtest todir="build/test/reports">
+                <fileset dir="${basedir}/test/src">
+                    <include name="**/*.java" />
+                </fileset>
+            </batchtest>
+        </junit>
+        <junitreport todir="build/test/reports" >
+          <fileset dir="build/test/reports">
+            <include name="TEST-*.xml"/>
+          </fileset>
+          <report format="frames" todir="build/test/htmlreport" />
+        </junitreport>
+    </target>
+    
+    <target name="utveckling">
+        <property name="project.src.conf.context.dir" value="${basedir}/conf/test"/>
+    </target>
+    
+    <target name="produktion">
+        <property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>
+    </target>
 </project>

@@ -612,3 +612,9 @@ body
 	background-repeat:no-repeat;
 }
 
+.currentPage
+{
+    color: red;	
+}
+}
+
