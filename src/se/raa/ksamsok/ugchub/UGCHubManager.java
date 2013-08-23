@@ -18,14 +18,14 @@ public class UGCHubManager extends HttpService {
 	private @Autowired ApplicationContext appContext;
 	private static final Logger logger = Logger.getLogger(UGCHubManager.class);
 	//TODO !! variabler skall få sina värden från apiconnect.properties via applicationContext.xml
-	private String scheme = "http";
-	private String host = "lx-ra-ugchubtest:8080";
-	private String path = "/UGC-hub/api";
-	private String key = "st4609gu77";
-	private String method = "retrieve";
-	private String objectUri = "all";
-	private String scope = "all";
-	private String format = "json";
+	private String scheme;// = "http";
+	private String host;// = "lx-ra-ugchubtest:8080";
+	private String path;// = "/UGC-hub/api";
+	private String key;// = "st4609gu77";
+	private String method;// = "retrieve";
+	private String objectUri;// = "all";
+	private String scope;// = "all";
+	private String format;// = "json";
 	private int limit = 20;
 	private int pageDisp = 5;
 	private String apiUri; 

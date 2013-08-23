@@ -82,7 +82,7 @@
         <property name="scope" value="all" />
         <property name="format" value="json" />
         
-        
+        -->
         <property name="scheme" value="${ugchub.scheme}" />        
         <property name="host" value="${ugchub.host}" />
         <property name="path" value="${ugchub.path}" />
@@ -92,7 +92,7 @@
         <property name="scope" value="${ugchub.scope}" />
         <property name="format" value="${ugchub.format}" />
         <property name="limit" value="${ugchub.limit}" />
-         -->
+         
     </bean>
 
 </beans>
