@@ -53,17 +53,26 @@ public class UGCHubEditServlet extends HttpServlet {
 			view = req.getRequestDispatcher("editUgc.jsp");
 			//TODO !! get one record from UGC-hub, requires implementations of an API-method in UGC-hub.
 			UGCHub ugcHub = new UGCHub();
-			ugcHub.setId(Integer.parseInt(id));
-			ugcHub.setObjectUri("some uri");
-			ugcHub.setCreateDate("2013-08-22");
-			ugcHub.setUserName("Johan");
-			ugcHub.setApplicationName("Kringla");
-			ugcHub.setTag("MyTextTag");
-			ugcHub.setCoordinate("32.754, 41.654");
-			ugcHub.setComment("Jo då så att");
-			ugcHub.setRelatedUri("some url");
-			ugcHub.setRelationType("sameAs");
-			ugcHub.setImageUrl("image url");
+			try {
+				ugcHub = ugcHubManager.getUGCHub(Integer.parseInt(id));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//			ugcHub.setId(Integer.parseInt(id));
+//			ugcHub.setObjectUri("some uri");
+//			ugcHub.setCreateDate("2013-08-22");
+//			ugcHub.setUserName("Johan");
+//			ugcHub.setApplicationName("Kringla");
+//			ugcHub.setTag("MyTextTag");
+//			ugcHub.setCoordinate("32.754, 41.654");
+//			ugcHub.setComment("Jo då så att");
+//			ugcHub.setRelatedUri("some url");
+//			ugcHub.setRelationType("sameAs");
+//			ugcHub.setImageUrl("image url");
 			req.setAttribute("ugchub", ugcHub);
 			
 		} else if (StringUtils.contains(pathInfo, "deleteugc")) {

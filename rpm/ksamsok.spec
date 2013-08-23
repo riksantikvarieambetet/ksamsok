@@ -1,5 +1,5 @@
 %define ver 1.0.2
-%define rel 42
+%define rel 43
 
 Summary: Raö K-Samsök, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@

@@ -1,5 +1,6 @@
 package se.raa.ksamsok.ugchub;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,25 +19,47 @@ public class UGCHubManager extends HttpService {
 	private @Autowired ApplicationContext appContext;
 	private static final Logger logger = Logger.getLogger(UGCHubManager.class);
 	//TODO !! variabler skall få sina värden från apiconnect.properties via applicationContext.xml
-	private String scheme;// = "http";
-	private String host;// = "lx-ra-ugchubtest:8080";
-	private String path;// = "/UGC-hub/api";
-	private String key;// = "st4609gu77";
-	private String method;// = "retrieve";
-	private String objectUri;// = "all";
-	private String scope;// = "all";
-	private String format;// = "json";
+	private String scheme = "http";
+	private String host = "lx-ra-ugchubtest:8080";
+	private String path = "/UGC-hub/api";
+	private String key = "st4609gu77";
+	private String method = "retrieve";
+	private String objectUri = "all";
+	private String scope = "all";
+	private String format = "json";
 	private int limit = 20;
 	private int pageDisp = 5;
 	private String apiUri; 
 	private String apiCount;
+	private String apiSingleRecord;
 	
 	public UGCHubManager() {
 		apiUri = scheme + "://" + host + path + "?x-api=" + key + "&method=" + method + "&objectUri=" + objectUri + "&scope=" + scope + "&format=" + format;
 		apiCount = scheme + "://" + host + path + "?x-api=" + key + "&method=" + method + "&objectUri=" + objectUri + "&scope=" + "count" + "&format=" + format;
+		apiSingleRecord = scheme + "://" + host + path + "?x-api=" + key + 
+				"&method=" + method + "&objectUri=" + objectUri + "&contentId={0}" + "&scope=" + "single" + "&format=" + format;
 	}
 	
 	/*init and destroy methods ärvs från se.raa.ksamsok.util.HttpService*/
+	public void init() {
+		
+	}
+	
+	public void destroy() {
+		
+	}
+	
+	public UGCHub getUGCHub(int contentId) throws Exception {
+		Gson gson = new Gson();
+		UGCHub ugcHub = new UGCHub();
+		
+		apiSingleRecord = MessageFormat.format(apiSingleRecord, String.valueOf(contentId));
+		String jsonResponse = basicJsonQuery(apiUri);
+		jsonResponse = jsonResponse.substring(jsonResponse.indexOf("["), jsonResponse.lastIndexOf("]") + 1);
+		ugcHub = gson.fromJson(jsonResponse, UGCHub.class);
+		
+		return ugcHub;
+	}
 
 	/**
 	 * Gets all ugchub-objects.
