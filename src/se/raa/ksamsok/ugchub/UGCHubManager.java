@@ -1,10 +1,6 @@
 package se.raa.ksamsok.ugchub;
 
 import java.util.List;
-import java.util.Properties;
-import java.util.Vector;
-
-import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import se.raa.ksamsok.util.HttpService;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;

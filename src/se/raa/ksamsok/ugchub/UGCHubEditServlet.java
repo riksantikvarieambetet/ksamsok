@@ -1,7 +1,6 @@
 package se.raa.ksamsok.ugchub;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -11,16 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import se.raa.ksamsok.ugchub.UGCHubManager;
 
 /**
  * Servlet implementation class UGCHubEditServlet
@@ -56,6 +51,7 @@ public class UGCHubEditServlet extends HttpServlet {
 		
 		if (StringUtils.contains(pathInfo, "editugc")) {
 			view = req.getRequestDispatcher("editUgc.jsp");
+			//TODO !! get one record from UGC-hub, requires implementations of an API-method in UGC-hub.
 			UGCHub ugcHub = new UGCHub();
 			ugcHub.setId(Integer.parseInt(id));
 			ugcHub.setObjectUri("some uri");
@@ -68,8 +64,8 @@ public class UGCHubEditServlet extends HttpServlet {
 			ugcHub.setRelatedUri("some url");
 			ugcHub.setRelationType("sameAs");
 			ugcHub.setImageUrl("image url");
-			//TODO !! get one record from UGC-hub, requires implementations of an API-method in UGC-hub.
 			req.setAttribute("ugchub", ugcHub);
+			
 		} else if (StringUtils.contains(pathInfo, "deleteugc")) {
 			view = req.getRequestDispatcher("deleteUgc.jsp");
 		}

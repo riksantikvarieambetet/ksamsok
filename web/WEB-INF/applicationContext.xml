@@ -13,6 +13,21 @@
 		notera att om nåt läggs till/ändras här så kanske man vill uppdatera
 		slav-versionen och vice versa
 	-->
+	<bean id="placeholderConfig"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!-- local.properties is just local so it might not exist and thus we need this flag -->
+        <property name="ignoreResourceNotFound" value="true" />
+        <!-- make sure all used variables in this context file can be resolved -->
+        <property name="ignoreUnresolvablePlaceholders" value="false" />
+        <property name="locations">
+            <list>
+                <value>classpath:apiconnect.properties</value>
+            </list>
+        </property>
+        <property name="systemPropertiesModeName">
+            <value>SYSTEM_PROPERTIES_MODE_OVERRIDE</value>
+        </property>
+    </bean>
 
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/harvestdb" />
