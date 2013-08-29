@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF 
 	xmlns="http://kulturarvsdata.se/ksamsok#" 
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -6,8 +6,8 @@
 	xmlns:owl="http://www.w3.org/2002/07/owl#">
 	
 	<Country rdf:ID="ad">
-		<name>Andorra</name>
-		<name>Andorra@en</name>
+		<name xml:lang="sv">Andorra</name>
+		<name xml:lang="en">Andorra</name>
 		<owl:sameAs>http://sws.geonames.org/3041565</owl:sameAs>
 		<alpha2>ad</alpha2>
 		<alpha3>and</alpha3>
@@ -16,8 +16,8 @@
 	</Country>
 
 	<Country rdf:ID="ae">
-		<name>Förenade arabemiraten</name>
-		<name>United Arab Emirates@en</name>
+		<name xml:lang="sv">Förenade arabemiraten</name>
+		<name xml:lang="en">United Arab Emirates</name>
 		<owl:sameAs>http://sws.geonames.org/290557</owl:sameAs>
 		<alpha2>ae</alpha2>
 		<alpha3>are</alpha3>
@@ -26,8 +26,8 @@
 	</Country>
 
 	<Country rdf:ID="af">
-		<name>Afghanistan</name>
-		<name>Afghanistan@en</name>
+		<name xml:lang="sv">Afghanistan</name>
+		<name xml:lang="en">Afghanistan</name>
 		<owl:sameAs>http://sws.geonames.org/1149361</owl:sameAs>
 		<alpha2>af</alpha2>
 		<alpha3>afg</alpha3>
@@ -36,8 +36,8 @@
 	</Country>
 
 	<Country rdf:ID="ag">
-		<name>Antigua och Barbuda</name>
-		<name>Antigua and Barbuda@en</name>
+		<name xml:lang="sv">Antigua och Barbuda</name>
+		<name xml:lang="en">Antigua and Barbuda</name>
 		<owl:sameAs>http://sws.geonames.org/3576396</owl:sameAs>
 		<alpha2>ag</alpha2>
 		<alpha3>atg</alpha3>
@@ -46,8 +46,8 @@
 	</Country>
 
 	<Country rdf:ID="ai">
-		<name>Anguilla</name>
-		<name>Anguilla@en</name>
+		<name xml:lang="sv">Anguilla</name>
+		<name xml:lang="en">Anguilla</name>
 		<owl:sameAs>http://sws.geonames.org/3573511</owl:sameAs>
 		<alpha2>ai</alpha2>
 		<alpha3>aia</alpha3>
@@ -56,8 +56,8 @@
 	</Country>
 
 	<Country rdf:ID="al">
-		<name>Albanien</name>
-		<name>Albania@en</name>
+		<name xml:lang="sv">Albanien</name>
+		<name xml:lang="en">Albania</name>
 		<owl:sameAs>http://sws.geonames.org/783754</owl:sameAs>
 		<alpha2>al</alpha2>
 		<alpha3>alb</alpha3>
@@ -66,8 +66,8 @@
 	</Country>
 
 	<Country rdf:ID="am">
-		<name>Armenien</name>
-		<name>Armenia@en</name>
+		<name xml:lang="sv">Armenien</name>
+		<name xml:lang="en">Armenia</name>
 		<owl:sameAs>http://sws.geonames.org/174982</owl:sameAs>
 		<alpha2>am</alpha2>
 		<alpha3>arm</alpha3>
@@ -76,8 +76,8 @@
 	</Country>
 
 	<Country rdf:ID="ao">
-		<name>Angola</name>
-		<name>Angola@en</name>
+		<name xml:lang="sv">Angola</name>
+		<name xml:lang="en">Angola</name>
 		<owl:sameAs>http://sws.geonames.org/3351879</owl:sameAs>
 		<alpha2>ao</alpha2>
 		<alpha3>ago</alpha3>
@@ -86,8 +86,8 @@
 	</Country>
 
 	<Country rdf:ID="aq">
-		<name>Antarktis</name>
-		<name>Antarctica@en</name>
+		<name xml:lang="sv">Antarktis</name>
+		<name xml:lang="en">Antarctica</name>
 		<owl:sameAs>http://sws.geonames.org/6697173</owl:sameAs>
 		<alpha2>aq</alpha2>
 		<alpha3>ata</alpha3>
@@ -96,8 +96,8 @@
 	</Country>
 
 	<Country rdf:ID="ar">
-		<name>Argentina</name>
-		<name>Argentina@en</name>
+		<name xml:lang="sv">Argentina</name>
+		<name xml:lang="en">Argentina</name>
 		<owl:sameAs>http://sws.geonames.org/3865483</owl:sameAs>
 		<alpha2>ar</alpha2>
 		<alpha3>arg</alpha3>
@@ -106,8 +106,8 @@
 	</Country>
 
 	<Country rdf:ID="as">
-		<name>Amerikanska Samoa</name>
-		<name>American Samoa@en</name>
+		<name xml:lang="sv">Amerikanska Samoa</name>
+		<name xml:lang="en">American Samoa</name>
 		<owl:sameAs>http://sws.geonames.org/5880801</owl:sameAs>
 		<alpha2>as</alpha2>
 		<alpha3>asm</alpha3>
@@ -116,8 +116,8 @@
 	</Country>
 
 	<Country rdf:ID="at">
-		<name>Österrike</name>
-		<name>Austria@en</name>
+		<name xml:lang="sv">Österrike</name>
+		<name xml:lang="en">Austria</name>
 		<owl:sameAs>http://sws.geonames.org/2782113</owl:sameAs>
 		<alpha2>at</alpha2>
 		<alpha3>aut</alpha3>
@@ -126,8 +126,8 @@
 	</Country>
 
 	<Country rdf:ID="au">
-		<name>Australien</name>
-		<name>Australia@en</name>
+		<name xml:lang="sv">Australien</name>
+		<name xml:lang="en">Australia</name>
 		<owl:sameAs>http://sws.geonames.org/2077456</owl:sameAs>
 		<alpha2>au</alpha2>
 		<alpha3>aus</alpha3>
@@ -136,8 +136,8 @@
 	</Country>
 
 	<Country rdf:ID="aw">
-		<name>Aruba</name>
-		<name>Aruba@en</name>
+		<name xml:lang="sv">Aruba</name>
+		<name xml:lang="en">Aruba</name>
 		<owl:sameAs>http://sws.geonames.org/3577279</owl:sameAs>
 		<alpha2>aw</alpha2>
 		<alpha3>abw</alpha3>
@@ -146,8 +146,8 @@
 	</Country>
 
 	<Country rdf:ID="ax">
-		<name>Åland</name>
-		<name>Aland Islands@en</name>
+		<name xml:lang="sv">Åland</name>
+		<name xml:lang="en">Aland Islands</name>
 		<owl:sameAs>http://sws.geonames.org/661882</owl:sameAs>
 		<alpha2>ax</alpha2>
 		<alpha3></alpha3>
@@ -156,8 +156,8 @@
 	</Country>
 
 	<Country rdf:ID="az">
-		<name>Azerbajdzjan</name>
-		<name>Azerbaijan@en</name>
+		<name xml:lang="sv">Azerbajdzjan</name>
+		<name xml:lang="en">Azerbaijan</name>
 		<owl:sameAs>http://sws.geonames.org/587116</owl:sameAs>
 		<alpha2>az</alpha2>
 		<alpha3>aze</alpha3>
@@ -166,8 +166,8 @@
 	</Country>
 
 	<Country rdf:ID="ba">
-		<name>Bosnien-Hercegovina</name>
-		<name>Bosnia and Herzegovina@en</name>
+		<name xml:lang="sv">Bosnien-Hercegovina</name>
+		<name xml:lang="en">Bosnia and Herzegovina</name>
 		<owl:sameAs>http://sws.geonames.org/3277605</owl:sameAs>
 		<alpha2>ba</alpha2>
 		<alpha3>bih</alpha3>
@@ -176,8 +176,8 @@
 	</Country>
 
 	<Country rdf:ID="bb">
-		<name>Barbados</name>
-		<name>Barbados@en</name>
+		<name xml:lang="sv">Barbados</name>
+		<name xml:lang="en">Barbados</name>
 		<owl:sameAs>http://sws.geonames.org/3374084</owl:sameAs>
 		<alpha2>bb</alpha2>
 		<alpha3>brb</alpha3>
@@ -186,8 +186,8 @@
 	</Country>
 
 	<Country rdf:ID="bd">
-		<name>Bangladesh</name>
-		<name>Bangladesh@en</name>
+		<name xml:lang="sv">Bangladesh</name>
+		<name xml:lang="en">Bangladesh</name>
 		<owl:sameAs>http://sws.geonames.org/1210997</owl:sameAs>
 		<alpha2>bd</alpha2>
 		<alpha3>bgd</alpha3>
@@ -196,8 +196,8 @@
 	</Country>
 
 	<Country rdf:ID="be">
-		<name>Belgien</name>
-		<name>Belgium@en</name>
+		<name xml:lang="sv">Belgien</name>
+		<name xml:lang="en">Belgium</name>
 		<owl:sameAs>http://sws.geonames.org/2802361</owl:sameAs>
 		<alpha2>be</alpha2>
 		<alpha3>bel</alpha3>
@@ -206,8 +206,8 @@
 	</Country>
 
 	<Country rdf:ID="bf">
-		<name>Burkina Faso</name>
-		<name>Burkina Faso@en</name>
+		<name xml:lang="sv">Burkina Faso</name>
+		<name xml:lang="en">Burkina Faso</name>
 		<owl:sameAs>http://sws.geonames.org/2361809</owl:sameAs>
 		<alpha2>bf</alpha2>
 		<alpha3>bfa</alpha3>
@@ -216,8 +216,8 @@
 	</Country>
 
 	<Country rdf:ID="bg">
-		<name>Bulgarien</name>
-		<name>Bulgaria@en</name>
+		<name xml:lang="sv">Bulgarien</name>
+		<name xml:lang="en">Bulgaria</name>
 		<owl:sameAs>http://sws.geonames.org/732800</owl:sameAs>
 		<alpha2>bg</alpha2>
 		<alpha3>bgr</alpha3>
@@ -226,8 +226,8 @@
 	</Country>
 
 	<Country rdf:ID="bh">
-		<name>Bahrain</name>
-		<name>Bahrain@en</name>
+		<name xml:lang="sv">Bahrain</name>
+		<name xml:lang="en">Bahrain</name>
 		<owl:sameAs>http://sws.geonames.org/290291</owl:sameAs>
 		<alpha2>bh</alpha2>
 		<alpha3>bhr</alpha3>
@@ -236,8 +236,8 @@
 	</Country>
 
 	<Country rdf:ID="bi">
-		<name>Burundi</name>
-		<name>Burundi@en</name>
+		<name xml:lang="sv">Burundi</name>
+		<name xml:lang="en">Burundi</name>
 		<owl:sameAs>http://sws.geonames.org/433561</owl:sameAs>
 		<alpha2>bi</alpha2>
 		<alpha3>bdi</alpha3>
@@ -246,8 +246,8 @@
 	</Country>
 
 	<Country rdf:ID="bj">
-		<name>Benin</name>
-		<name>Benin@en</name>
+		<name xml:lang="sv">Benin</name>
+		<name xml:lang="en">Benin</name>
 		<owl:sameAs>http://sws.geonames.org/2395170</owl:sameAs>
 		<alpha2>bj</alpha2>
 		<alpha3>ben</alpha3>
@@ -256,8 +256,8 @@
 	</Country>
 
 	<Country rdf:ID="bl">
-		<name>Saint Barthélemy</name>
-		<name>Saint Barthélemy@en</name>
+		<name xml:lang="sv">Saint Barthélemy</name>
+		<name xml:lang="en">Saint Barthélemy</name>
 		<owl:sameAs>http://sws.geonames.org/3578476</owl:sameAs>
 		<alpha2>bl</alpha2>
 		<alpha3></alpha3>
@@ -266,8 +266,8 @@
 	</Country>
 
 	<Country rdf:ID="bm">
-		<name>Bermuda</name>
-		<name>Bermuda@en</name>
+		<name xml:lang="sv">Bermuda</name>
+		<name xml:lang="en">Bermuda</name>
 		<owl:sameAs>http://sws.geonames.org/3573345</owl:sameAs>
 		<alpha2>bm</alpha2>
 		<alpha3>bmu</alpha3>
@@ -276,8 +276,8 @@
 	</Country>
 
 	<Country rdf:ID="bn">
-		<name>Brunei</name>
-		<name>Brunei@en</name>
+		<name xml:lang="sv">Brunei</name>
+		<name xml:lang="en">Brunei</name>
 		<owl:sameAs>http://sws.geonames.org/1820814</owl:sameAs>
 		<alpha2>bn</alpha2>
 		<alpha3>brn</alpha3>
@@ -286,8 +286,8 @@
 	</Country>
 
 	<Country rdf:ID="bo">
-		<name>Bolivia</name>
-		<name>Bolivia@en</name>
+		<name xml:lang="sv">Bolivia</name>
+		<name xml:lang="en">Bolivia</name>
 		<owl:sameAs>http://sws.geonames.org/3923057</owl:sameAs>
 		<alpha2>bo</alpha2>
 		<alpha3>bol</alpha3>
@@ -296,8 +296,8 @@
 	</Country>
 	
 	<Country rdf:ID="bq">
-		<name>Bonaire</name>
-		<name>Bonaire@en</name>
+		<name xml:lang="sv">Bonaire</name>
+		<name xml:lang="en">Bonaire</name>
 		<owl:sameAs>http://sws.geonames.org/7626844</owl:sameAs>
 		<alpha2>bq</alpha2>
 		<alpha3>bes</alpha3>
@@ -306,8 +306,8 @@
 	</Country>
 	
 	<Country rdf:ID="br">
-		<name>Brasilien</name>
-		<name>Brazil@en</name>
+		<name xml:lang="sv">Brasilien</name>
+		<name xml:lang="en">Brazil</name>
 		<owl:sameAs>http://sws.geonames.org/3469034</owl:sameAs>
 		<alpha2>br</alpha2>
 		<alpha3>bra</alpha3>
@@ -316,8 +316,8 @@
 	</Country>
 
 	<Country rdf:ID="bs">
-		<name>Bahamas</name>
-		<name>Bahamas@en</name>
+		<name xml:lang="sv">Bahamas</name>
+		<name xml:lang="en">Bahamas</name>
 		<owl:sameAs>http://sws.geonames.org/3572887</owl:sameAs>
 		<alpha2>bs</alpha2>
 		<alpha3>bhs</alpha3>
@@ -326,8 +326,8 @@
 	</Country>
 
 	<Country rdf:ID="bt">
-		<name>Bhutan</name>
-		<name>Bhutan@en</name>
+		<name xml:lang="sv">Bhutan</name>
+		<name xml:lang="en">Bhutan</name>
 		<owl:sameAs>http://sws.geonames.org/1252634</owl:sameAs>
 		<alpha2>bt</alpha2>
 		<alpha3>btn</alpha3>
@@ -336,8 +336,8 @@
 	</Country>
 
 	<Country rdf:ID="bv">
-		<name>Bouvetön</name>
-		<name>Bouvet island@en</name>
+		<name xml:lang="sv">Bouvetön</name>
+		<name xml:lang="en">Bouvet island</name>
 		<owl:sameAs>http://sws.geonames.org/3371123</owl:sameAs>
 		<alpha2>bv</alpha2>
 		<alpha3>bvt</alpha3>
@@ -346,8 +346,8 @@
 	</Country>
 
 	<Country rdf:ID="bw">
-		<name>Botswana</name>
-		<name>Botswana@en</name>
+		<name xml:lang="sv">Botswana</name>
+		<name xml:lang="en">Botswana</name>
 		<owl:sameAs>http://sws.geonames.org/933860</owl:sameAs>
 		<alpha2>bw</alpha2>
 		<alpha3>bwa</alpha3>
@@ -356,8 +356,8 @@
 	</Country>
 
 	<Country rdf:ID="by">
-		<name>Vitryssland</name>
-		<name>Belarus@en</name>
+		<name xml:lang="sv">Vitryssland</name>
+		<name xml:lang="en">Belarus</name>
 		<owl:sameAs>http://sws.geonames.org/630336</owl:sameAs>
 		<alpha2>by</alpha2>
 		<alpha3>blr</alpha3>
@@ -366,8 +366,8 @@
 	</Country>
 
 	<Country rdf:ID="bz">
-		<name>Belize</name>
-		<name>Belize@en</name>
+		<name xml:lang="sv">Belize</name>
+		<name xml:lang="en">Belize</name>
 		<owl:sameAs>http://sws.geonames.org/3582678</owl:sameAs>
 		<alpha2>bz</alpha2>
 		<alpha3>blz</alpha3>
@@ -376,8 +376,8 @@
 	</Country>
 
 	<Country rdf:ID="ca">
-		<name>Kanada</name>
-		<name>Canada@en</name>
+		<name xml:lang="sv">Kanada</name>
+		<name xml:lang="en">Canada</name>
 		<owl:sameAs>http://sws.geonames.org/6251999</owl:sameAs>
 		<alpha2>ca</alpha2>
 		<alpha3>can</alpha3>
@@ -386,8 +386,8 @@
 	</Country>
 
 	<Country rdf:ID="cc">
-		<name>Kokosöarna</name>
-		<name>Cocos Islands@en</name>
+		<name xml:lang="sv">Kokosöarna</name>
+		<name xml:lang="en">Cocos Islands</name>
 		<owl:sameAs>http://sws.geonames.org/1547376</owl:sameAs>
 		<alpha2>cc</alpha2>
 		<alpha3>cck</alpha3>
@@ -396,8 +396,8 @@
 	</Country>
 
 	<Country rdf:ID="cd">
-		<name>Kongo</name>
-		<name>Democratic Republic of the Congo@en</name>
+		<name xml:lang="sv">Kongo</name>
+		<name xml:lang="en">Democratic Republic of the Congo</name>
 		<owl:sameAs>http://sws.geonames.org/203312</owl:sameAs>
 		<alpha2>cd</alpha2>
 		<alpha3></alpha3>
@@ -406,8 +406,8 @@
 	</Country>
 
 	<Country rdf:ID="cf">
-		<name>Centralafrikanska republiken</name>
-		<name>Central African republic@en</name>
+		<name xml:lang="sv">Centralafrikanska republiken</name>
+		<name xml:lang="en">Central African republic</name>
 		<owl:sameAs>http://sws.geonames.org/239880</owl:sameAs>
 		<alpha2>cf</alpha2>
 		<alpha3>caf</alpha3>
@@ -416,8 +416,8 @@
 	</Country>
 
 	<Country rdf:ID="cg">
-		<name>Kongo-Brazzaville</name>
-		<name>Republic of the Congo@en</name>
+		<name xml:lang="sv">Kongo-Brazzaville</name>
+		<name xml:lang="en">Republic of the Congo</name>
 		<owl:sameAs>http://sws.geonames.org/2260494</owl:sameAs>
 		<alpha2>cg</alpha2>
 		<alpha3>cog</alpha3>
@@ -426,8 +426,8 @@
 	</Country>
 
 	<Country rdf:ID="ch">
-		<name>Schweiz</name>
-		<name>Switzerland@en</name>
+		<name xml:lang="sv">Schweiz</name>
+		<name xml:lang="en">Switzerland</name>
 		<owl:sameAs>http://sws.geonames.org/2658434</owl:sameAs>
 		<alpha2>ch</alpha2>
 		<alpha3>che</alpha3>
@@ -436,8 +436,8 @@
 	</Country>
 
 	<Country rdf:ID="ci">
-		<name>Elfenbenskusten</name>
-		<name>Ivory Coast@en</name>
+		<name xml:lang="sv">Elfenbenskusten</name>
+		<name xml:lang="en">Ivory Coast</name>
 		<owl:sameAs>http://sws.geonames.org/2287781</owl:sameAs>
 		<alpha2>ci</alpha2>
 		<alpha3>civ</alpha3>
@@ -446,8 +446,8 @@
 	</Country>
 
 	<Country rdf:ID="ck">
-		<name>Cooköarna</name>
-		<name>Cook Islands@en</name>
+		<name xml:lang="sv">Cooköarna</name>
+		<name xml:lang="en">Cook Islands</name>
 		<owl:sameAs>http://sws.geonames.org/1899402</owl:sameAs>
 		<alpha2>ck</alpha2>
 		<alpha3>cok</alpha3>
@@ -456,8 +456,8 @@
 	</Country>
 
 	<Country rdf:ID="cl">
-		<name>Chile</name>
-		<name>Chile@en</name>
+		<name xml:lang="sv">Chile</name>
+		<name xml:lang="en">Chile</name>
 		<owl:sameAs>http://sws.geonames.org/3895114</owl:sameAs>
 		<alpha2>cl</alpha2>
 		<alpha3>chl</alpha3>
@@ -466,8 +466,8 @@
 	</Country>
 
 	<Country rdf:ID="cm">
-		<name>Kamerun</name>
-		<name>Cameroon@en</name>
+		<name xml:lang="sv">Kamerun</name>
+		<name xml:lang="en">Cameroon</name>
 		<owl:sameAs>http://sws.geonames.org/2233387</owl:sameAs>
 		<alpha2>cm</alpha2>
 		<alpha3>cmr</alpha3>
@@ -476,8 +476,8 @@
 	</Country>
 
 	<Country rdf:ID="cn">
-		<name>Kina</name>
-		<name>China@en</name>
+		<name xml:lang="sv">Kina</name>
+		<name xml:lang="en">China</name>
 		<owl:sameAs>http://sws.geonames.org/1814991</owl:sameAs>
 		<alpha2>cn</alpha2>
 		<alpha3>chn</alpha3>
@@ -486,8 +486,8 @@
 	</Country>
 
 	<Country rdf:ID="co">
-		<name>Colombia</name>
-		<name>Colombia@en</name>
+		<name xml:lang="sv">Colombia</name>
+		<name xml:lang="en">Colombia</name>
 		<owl:sameAs>http://sws.geonames.org/3686110</owl:sameAs>
 		<alpha2>co</alpha2>
 		<alpha3>col</alpha3>
@@ -496,8 +496,8 @@
 	</Country>
 
 	<Country rdf:ID="cr">
-		<name>Costa Rica</name>
-		<name>Costa Rica@en</name>
+		<name xml:lang="sv">Costa Rica</name>
+		<name xml:lang="en">Costa Rica</name>
 		<owl:sameAs>http://sws.geonames.org/3624060</owl:sameAs>
 		<alpha2>cr</alpha2>
 		<alpha3>cri</alpha3>
@@ -506,8 +506,8 @@
 	</Country>
 
 	<Country rdf:ID="cu">
-		<name>Kuba</name>
-		<name>Cuba@en</name>
+		<name xml:lang="sv">Kuba</name>
+		<name xml:lang="en">Cuba</name>
 		<owl:sameAs>http://sws.geonames.org/3562981</owl:sameAs>
 		<alpha2>cu</alpha2>
 		<alpha3>cub</alpha3>
@@ -516,8 +516,8 @@
 	</Country>
 
 	<Country rdf:ID="cv">
-		<name>Kap Verde</name>
-		<name>Cape verde@en</name>
+		<name xml:lang="sv">Kap Verde</name>
+		<name xml:lang="en">Cape verde</name>
 		<owl:sameAs>http://sws.geonames.org/3374766</owl:sameAs>
 		<alpha2>cv</alpha2>
 		<alpha3>cpv</alpha3>
@@ -526,8 +526,8 @@
 	</Country>
 	
 	<Country rdf:ID="cw">
-		<name>Curacao</name>
-		<name>Curacao@en</name>
+		<name xml:lang="sv">Curacao</name>
+		<name xml:lang="en">Curacao</name>
 		<owl:sameAs>http://sws.geonames.org/7626836</owl:sameAs>
 		<alpha2>cw</alpha2>
 		<alpha3>cuw</alpha3>
@@ -536,8 +536,8 @@
 	</Country>
 	
 	<Country rdf:ID="cx">
-		<name>Julön</name>
-		<name>Christmas Island@en</name>
+		<name xml:lang="sv">Julön</name>
+		<name xml:lang="en">Christmas Island</name>
 		<owl:sameAs>http://sws.geonames.org/2078138</owl:sameAs>
 		<alpha2>cx</alpha2>
 		<alpha3>cxr</alpha3>
@@ -546,8 +546,8 @@
 	</Country>
 
 	<Country rdf:ID="cy">
-		<name>Cypern</name>
-		<name>Cyprus@en</name>
+		<name xml:lang="sv">Cypern</name>
+		<name xml:lang="en">Cyprus</name>
 		<owl:sameAs>http://sws.geonames.org/146669</owl:sameAs>
 		<alpha2>cy</alpha2>
 		<alpha3>cyp</alpha3>
@@ -556,8 +556,8 @@
 	</Country>
 
 	<Country rdf:ID="cz">
-		<name>Tjeckien</name>
-		<name>Czech Republic@en</name>
+		<name xml:lang="sv">Tjeckien</name>
+		<name xml:lang="en">Czech Republic</name>
 		<owl:sameAs>http://sws.geonames.org/3077311</owl:sameAs>
 		<alpha2>cz</alpha2>
 		<alpha3>cze</alpha3>
@@ -566,8 +566,8 @@
 	</Country>
 
 	<Country rdf:ID="de">
-		<name>Tyskland</name>
-		<name>Germany@en</name>
+		<name xml:lang="sv">Tyskland</name>
+		<name xml:lang="en">Germany</name>
 		<owl:sameAs>http://sws.geonames.org/2921044</owl:sameAs>
 		<alpha2>de</alpha2>
 		<alpha3>deu</alpha3>
@@ -576,8 +576,8 @@
 	</Country>
 
 	<Country rdf:ID="dj">
-		<name>Djibouti</name>
-		<name>Djibouti@en</name>
+		<name xml:lang="sv">Djibouti</name>
+		<name xml:lang="en">Djibouti</name>
 		<owl:sameAs>http://sws.geonames.org/223816</owl:sameAs>
 		<alpha2>dj</alpha2>
 		<alpha3>dji</alpha3>
@@ -586,8 +586,8 @@
 	</Country>
 
 	<Country rdf:ID="dk">
-		<name>Danmark</name>
-		<name>Denmark@en</name>
+		<name xml:lang="sv">Danmark</name>
+		<name xml:lang="en">Denmark</name>
 		<owl:sameAs>http://sws.geonames.org/2623032</owl:sameAs>
 		<alpha2>dk</alpha2>
 		<alpha3>dnk</alpha3>
@@ -596,8 +596,8 @@
 	</Country>
 
 	<Country rdf:ID="dm">
-		<name>Dominica</name>
-		<name>Dominica@en</name>
+		<name xml:lang="sv">Dominica</name>
+		<name xml:lang="en">Dominica</name>
 		<owl:sameAs>http://sws.geonames.org/3575830</owl:sameAs>
 		<alpha2>dm</alpha2>
 		<alpha3>dma</alpha3>
@@ -606,8 +606,8 @@
 	</Country>
 
 	<Country rdf:ID="do">
-		<name>Dominikanska republiken</name>
-		<name>Dominican Republic@en</name>
+		<name xml:lang="sv">Dominikanska republiken</name>
+		<name xml:lang="en">Dominican Republic</name>
 		<owl:sameAs>http://sws.geonames.org/3508796</owl:sameAs>
 		<alpha2>do</alpha2>
 		<alpha3>dom</alpha3>
@@ -616,8 +616,8 @@
 	</Country>
 
 	<Country rdf:ID="dz">
-		<name>Algeriet</name>
-		<name>Algeria@en</name>
+		<name xml:lang="sv">Algeriet</name>
+		<name xml:lang="en">Algeria</name>
 		<owl:sameAs>http://sws.geonames.org/2589581</owl:sameAs>
 		<alpha2>dz</alpha2>
 		<alpha3>dza</alpha3>
@@ -626,8 +626,8 @@
 	</Country>
 
 	<Country rdf:ID="ec">
-		<name>Ecuador</name>
-		<name>Ecuador@en</name>
+		<name xml:lang="sv">Ecuador</name>
+		<name xml:lang="en">Ecuador</name>
 		<owl:sameAs>http://sws.geonames.org/3658394</owl:sameAs>
 		<alpha2>ec</alpha2>
 		<alpha3>ecu</alpha3>
@@ -636,8 +636,8 @@
 	</Country>
 
 	<Country rdf:ID="ee">
-		<name>Estland</name>
-		<name>Estonia@en</name>
+		<name xml:lang="sv">Estland</name>
+		<name xml:lang="en">Estonia</name>
 		<owl:sameAs>http://sws.geonames.org/453733</owl:sameAs>
 		<alpha2>ee</alpha2>
 		<alpha3>est</alpha3>
@@ -646,8 +646,8 @@
 	</Country>
 
 	<Country rdf:ID="eg">
-		<name>Egypten</name>
-		<name>Egypt@en</name>
+		<name xml:lang="sv">Egypten</name>
+		<name xml:lang="en">Egypt</name>
 		<owl:sameAs>http://sws.geonames.org/357994</owl:sameAs>
 		<alpha2>eg</alpha2>
 		<alpha3>egy</alpha3>
@@ -656,8 +656,8 @@
 	</Country>
 
 	<Country rdf:ID="eh">
-		<name>Västsahara</name>
-		<name>Western Sahara@en</name>
+		<name xml:lang="sv">Västsahara</name>
+		<name xml:lang="en">Western Sahara</name>
 		<owl:sameAs>http://sws.geonames.org/2461445</owl:sameAs>
 		<alpha2>eh</alpha2>
 		<alpha3>esh</alpha3>
@@ -666,8 +666,8 @@
 	</Country>
 
 	<Country rdf:ID="er">
-		<name>Eritrea</name>
-		<name>Eritrea@en</name>
+		<name xml:lang="sv">Eritrea</name>
+		<name xml:lang="en">Eritrea</name>
 		<owl:sameAs>http://sws.geonames.org/338010</owl:sameAs>
 		<alpha2>er</alpha2>
 		<alpha3>eri</alpha3>
@@ -676,8 +676,8 @@
 	</Country>
 
 	<Country rdf:ID="es">
-		<name>Spanien</name>
-		<name>Spain@en</name>
+		<name xml:lang="sv">Spanien</name>
+		<name xml:lang="en">Spain</name>
 		<owl:sameAs>http://sws.geonames.org/2510769</owl:sameAs>
 		<alpha2>es</alpha2>
 		<alpha3>esp</alpha3>
@@ -686,8 +686,8 @@
 	</Country>
 
 	<Country rdf:ID="et">
-		<name>Etiopien</name>
-		<name>Ethiopia@en</name>
+		<name xml:lang="sv">Etiopien</name>
+		<name xml:lang="en">Ethiopia</name>
 		<owl:sameAs>http://sws.geonames.org/337996</owl:sameAs>
 		<alpha2>et</alpha2>
 		<alpha3>eth</alpha3>
@@ -696,8 +696,8 @@
 	</Country>
 
 	<Country rdf:ID="fi">
-		<name>Finland</name>
-		<name>Finland@en</name>
+		<name xml:lang="sv">Finland</name>
+		<name xml:lang="en">Finland</name>
 		<owl:sameAs>http://sws.geonames.org/660013</owl:sameAs>
 		<alpha2>fi</alpha2>
 		<alpha3>fin</alpha3>
@@ -706,8 +706,8 @@
 	</Country>
 
 	<Country rdf:ID="fj">
-		<name>Fiji</name>
-		<name>Fiji@en</name>
+		<name xml:lang="sv">Fiji</name>
+		<name xml:lang="en">Fiji</name>
 		<owl:sameAs>http://sws.geonames.org/2205218</owl:sameAs>
 		<alpha2>fj</alpha2>
 		<alpha3>fji</alpha3>
@@ -716,8 +716,8 @@
 	</Country>
 
 	<Country rdf:ID="fk">
-		<name>Falklandsöarna</name>
-		<name>Falkland Islands@en</name>
+		<name xml:lang="sv">Falklandsöarna</name>
+		<name xml:lang="en">Falkland Islands</name>
 		<owl:sameAs>http://sws.geonames.org/3474414</owl:sameAs>
 		<alpha2>fk</alpha2>
 		<alpha3>flk</alpha3>
@@ -726,8 +726,8 @@
 	</Country>
 
 	<Country rdf:ID="fm">
-		<name>Mikronesiens federerade stater</name>
-		<name>Micronesia@en</name>
+		<name xml:lang="sv">Mikronesiens federerade stater</name>
+		<name xml:lang="en">Micronesia</name>
 		<owl:sameAs>http://sws.geonames.org/2081918</owl:sameAs>
 		<alpha2>fm</alpha2>
 		<alpha3>fsm</alpha3>
@@ -736,8 +736,8 @@
 	</Country>
 
 	<Country rdf:ID="fo">
-		<name>Färöarna</name>
-		<name>Faroe Islands@en</name>
+		<name xml:lang="sv">Färöarna</name>
+		<name xml:lang="en">Faroe Islands</name>
 		<owl:sameAs>http://sws.geonames.org/2622320</owl:sameAs>
 		<alpha2>fo</alpha2>
 		<alpha3>fro</alpha3>
@@ -746,8 +746,8 @@
 	</Country>
 
 	<Country rdf:ID="fr">
-		<name>Frankrike</name>
-		<name>France@en</name>
+		<name xml:lang="sv">Frankrike</name>
+		<name xml:lang="en">France</name>
 		<owl:sameAs>http://sws.geonames.org/3017382</owl:sameAs>
 		<alpha2>fr</alpha2>
 		<alpha3>fra</alpha3>
@@ -756,8 +756,8 @@
 	</Country>
 
 	<Country rdf:ID="ga">
-		<name>Gabon</name>
-		<name>Gabon@en</name>
+		<name xml:lang="sv">Gabon</name>
+		<name xml:lang="en">Gabon</name>
 		<owl:sameAs>http://sws.geonames.org/2400553</owl:sameAs>
 		<alpha2>ga</alpha2>
 		<alpha3>gab</alpha3>
@@ -766,8 +766,8 @@
 	</Country>
 
 	<Country rdf:ID="gb">
-		<name>Storbritannien</name>
-		<name>United Kingdom@en</name>
+		<name xml:lang="sv">Storbritannien</name>
+		<name xml:lang="en">United Kingdom</name>
 		<owl:sameAs>http://sws.geonames.org/2635167</owl:sameAs>
 		<alpha2>gb</alpha2>
 		<alpha3>gbr</alpha3>
@@ -776,8 +776,8 @@
 	</Country>
 
 	<Country rdf:ID="gd">
-		<name>Grenada</name>
-		<name>Grenada@en</name>
+		<name xml:lang="sv">Grenada</name>
+		<name xml:lang="en">Grenada</name>
 		<owl:sameAs>http://sws.geonames.org/3580239</owl:sameAs>
 		<alpha2>gd</alpha2>
 		<alpha3>grd</alpha3>
@@ -786,8 +786,8 @@
 	</Country>
 
 	<Country rdf:ID="ge">
-		<name>Georgien</name>
-		<name>Georgia@en</name>
+		<name xml:lang="sv">Georgien</name>
+		<name xml:lang="en">Georgia</name>
 		<owl:sameAs>http://sws.geonames.org/614540</owl:sameAs>
 		<alpha2>ge</alpha2>
 		<alpha3>geo</alpha3>
@@ -796,8 +796,8 @@
 	</Country>
 
 	<Country rdf:ID="gf">
-		<name>Franska Guyana</name>
-		<name>French Guiana@en</name>
+		<name xml:lang="sv">Franska Guyana</name>
+		<name xml:lang="en">French Guiana</name>
 		<owl:sameAs>http://sws.geonames.org/3381670</owl:sameAs>
 		<alpha2>gf</alpha2>
 		<alpha3>guf</alpha3>
@@ -806,8 +806,8 @@
 	</Country>
 
 	<Country rdf:ID="gg">
-		<name>Guernsey</name>
-		<name>Guernsey@en</name>
+		<name xml:lang="sv">Guernsey</name>
+		<name xml:lang="en">Guernsey</name>
 		<owl:sameAs>http://sws.geonames.org/3042362</owl:sameAs>
 		<alpha2>gg</alpha2>
 		<alpha3></alpha3>
@@ -816,8 +816,8 @@
 	</Country>
 
 	<Country rdf:ID="gh">
-		<name>Ghana</name>
-		<name>Ghana@en</name>
+		<name xml:lang="sv">Ghana</name>
+		<name xml:lang="en">Ghana</name>
 		<owl:sameAs>http://sws.geonames.org/2300660</owl:sameAs>
 		<alpha2>gh</alpha2>
 		<alpha3>gha</alpha3>
@@ -826,8 +826,8 @@
 	</Country>
 
 	<Country rdf:ID="gi">
-		<name>Gibraltar</name>
-		<name>Gibraltar@en</name>
+		<name xml:lang="sv">Gibraltar</name>
+		<name xml:lang="en">Gibraltar</name>
 		<owl:sameAs>http://sws.geonames.org/2411586</owl:sameAs>
 		<alpha2>gi</alpha2>
 		<alpha3>gib</alpha3>
@@ -836,8 +836,8 @@
 	</Country>
 
 	<Country rdf:ID="gl">
-		<name>Grönland</name>
-		<name>Greenland@en</name>
+		<name xml:lang="sv">Grönland</name>
+		<name xml:lang="en">Greenland</name>
 		<owl:sameAs>http://sws.geonames.org/3425505</owl:sameAs>
 		<alpha2>gl</alpha2>
 		<alpha3>grl</alpha3>
@@ -846,8 +846,8 @@
 	</Country>
 
 	<Country rdf:ID="gm">
-		<name>Gambia</name>
-		<name>Gambia@en</name>
+		<name xml:lang="sv">Gambia</name>
+		<name xml:lang="en">Gambia</name>
 		<owl:sameAs>http://sws.geonames.org/2413451</owl:sameAs>
 		<alpha2>gm</alpha2>
 		<alpha3>gmb</alpha3>
@@ -856,8 +856,8 @@
 	</Country>
 
 	<Country rdf:ID="gn">
-		<name>Guinea</name>
-		<name>Guinea@en</name>
+		<name xml:lang="sv">Guinea</name>
+		<name xml:lang="en">Guinea</name>
 		<owl:sameAs>http://sws.geonames.org/2420477</owl:sameAs>
 		<alpha2>gn</alpha2>
 		<alpha3>gin</alpha3>
@@ -866,8 +866,8 @@
 	</Country>
 
 	<Country rdf:ID="gp">
-		<name>Guadeloupe</name>
-		<name>Guadeloupe@en</name>
+		<name xml:lang="sv">Guadeloupe</name>
+		<name xml:lang="en">Guadeloupe</name>
 		<owl:sameAs>http://sws.geonames.org/3579143</owl:sameAs>
 		<alpha2>gp</alpha2>
 		<alpha3>glp</alpha3>
@@ -876,8 +876,8 @@
 	</Country>
 
 	<Country rdf:ID="gq">
-		<name>Ekvatorialguinea</name>
-		<name>Equatorial Guinea@en</name>
+		<name xml:lang="sv">Ekvatorialguinea</name>
+		<name xml:lang="en">Equatorial Guinea</name>
 		<owl:sameAs>http://sws.geonames.org/2309096</owl:sameAs>
 		<alpha2>gq</alpha2>
 		<alpha3>gnq</alpha3>
@@ -886,8 +886,8 @@
 	</Country>
 
 	<Country rdf:ID="gr">
-		<name>Grekland</name>
-		<name>Greece@en</name>
+		<name xml:lang="sv">Grekland</name>
+		<name xml:lang="en">Greece</name>
 		<owl:sameAs>http://sws.geonames.org/390903</owl:sameAs>
 		<alpha2>gr</alpha2>
 		<alpha3>grc</alpha3>
@@ -896,8 +896,8 @@
 	</Country>
 
 	<Country rdf:ID="gs">
-		<name>Sydgeorgien och Sydsandwichöarna</name>
-		<name>South Georgia and the South Sandwich Islands@en</name>
+		<name xml:lang="sv">Sydgeorgien och Sydsandwichöarna</name>
+		<name xml:lang="en">South Georgia and the South Sandwich Islands</name>
 		<owl:sameAs>http://sws.geonames.org/3474415</owl:sameAs>
 		<alpha2>gs</alpha2>
 		<alpha3></alpha3>
@@ -906,8 +906,8 @@
 	</Country>
 
 	<Country rdf:ID="gt">
-		<name>Guatemala</name>
-		<name>Guatemala@en</name>
+		<name xml:lang="sv">Guatemala</name>
+		<name xml:lang="en">Guatemala</name>
 		<owl:sameAs>http://sws.geonames.org/3595528</owl:sameAs>
 		<alpha2>gt</alpha2>
 		<alpha3>gtm</alpha3>
@@ -916,8 +916,8 @@
 	</Country>
 
 	<Country rdf:ID="gu">
-		<name>Guam</name>
-		<name>Guam@en</name>
+		<name xml:lang="sv">Guam</name>
+		<name xml:lang="en">Guam</name>
 		<owl:sameAs>http://sws.geonames.org/4043988</owl:sameAs>
 		<alpha2>gu</alpha2>
 		<alpha3>gum</alpha3>
@@ -926,8 +926,8 @@
 	</Country>
 
 	<Country rdf:ID="gw">
-		<name>Guinea Bissau</name>
-		<name>Guinea-Bissau@en</name>
+		<name xml:lang="sv">Guinea Bissau</name>
+		<name xml:lang="en">Guinea-Bissau</name>
 		<owl:sameAs>http://sws.geonames.org/2372248</owl:sameAs>
 		<alpha2>gw</alpha2>
 		<alpha3>gnb</alpha3>
@@ -936,8 +936,8 @@
 	</Country>
 
 	<Country rdf:ID="gy">
-		<name>Guyana</name>
-		<name>Guyana@en</name>
+		<name xml:lang="sv">Guyana</name>
+		<name xml:lang="en">Guyana</name>
 		<owl:sameAs>http://sws.geonames.org/3378535</owl:sameAs>
 		<alpha2>gy</alpha2>
 		<alpha3>guy</alpha3>
@@ -946,8 +946,8 @@
 	</Country>
 
 	<Country rdf:ID="hk">
-		<name>Hongkong</name>
-		<name>Hong Kong@en</name>
+		<name xml:lang="sv">Hongkong</name>
+		<name xml:lang="en">Hong Kong</name>
 		<owl:sameAs>http://sws.geonames.org/1819730</owl:sameAs>
 		<alpha2>hk</alpha2>
 		<alpha3>hkg</alpha3>
@@ -956,8 +956,8 @@
 	</Country>
 
 	<Country rdf:ID="hm">
-		<name>Heard- och McDonaldsöarna</name>
-		<name>Heard Island and Mcdonald Islands@en</name>
+		<name xml:lang="sv">Heard- och McDonaldsöarna</name>
+		<name xml:lang="en">Heard Island and Mcdonald Islands</name>
 		<owl:sameAs>http://sws.geonames.org/1547314</owl:sameAs>
 		<alpha2>hm</alpha2>
 		<alpha3>hmd</alpha3>
@@ -966,8 +966,8 @@
 	</Country>
 
 	<Country rdf:ID="hn">
-		<name>Honduras</name>
-		<name>Honduras@en</name>
+		<name xml:lang="sv">Honduras</name>
+		<name xml:lang="en">Honduras</name>
 		<owl:sameAs>http://sws.geonames.org/3608932</owl:sameAs>
 		<alpha2>hn</alpha2>
 		<alpha3>hnd</alpha3>
@@ -976,8 +976,8 @@
 	</Country>
 
 	<Country rdf:ID="hr">
-		<name>Kroatien</name>
-		<name>Croatia@en</name>
+		<name xml:lang="sv">Kroatien</name>
+		<name xml:lang="en">Croatia</name>
 		<owl:sameAs>http://sws.geonames.org/3202326</owl:sameAs>
 		<alpha2>hr</alpha2>
 		<alpha3>hrv</alpha3>
@@ -986,8 +986,8 @@
 	</Country>
 
 	<Country rdf:ID="ht">
-		<name>Haiti</name>
-		<name>Haiti@en</name>
+		<name xml:lang="sv">Haiti</name>
+		<name xml:lang="en">Haiti</name>
 		<owl:sameAs>http://sws.geonames.org/3723988</owl:sameAs>
 		<alpha2>ht</alpha2>
 		<alpha3>hti</alpha3>
@@ -996,8 +996,8 @@
 	</Country>
 
 	<Country rdf:ID="hu">
-		<name>Ungern</name>
-		<name>Hungary@en</name>
+		<name xml:lang="sv">Ungern</name>
+		<name xml:lang="en">Hungary</name>
 		<owl:sameAs>http://sws.geonames.org/719819</owl:sameAs>
 		<alpha2>hu</alpha2>
 		<alpha3>hun</alpha3>
@@ -1006,8 +1006,8 @@
 	</Country>
 
 	<Country rdf:ID="id">
-		<name>Indonesien</name>
-		<name>Indonesia@en</name>
+		<name xml:lang="sv">Indonesien</name>
+		<name xml:lang="en">Indonesia</name>
 		<owl:sameAs>http://sws.geonames.org/1643084</owl:sameAs>
 		<alpha2>id</alpha2>
 		<alpha3>idn</alpha3>
@@ -1016,8 +1016,8 @@
 	</Country>
 
 	<Country rdf:ID="ie">
-		<name>Irland</name>
-		<name>Ireland@en</name>
+		<name xml:lang="sv">Irland</name>
+		<name xml:lang="en">Ireland</name>
 		<owl:sameAs>http://sws.geonames.org/2963597</owl:sameAs>
 		<alpha2>ie</alpha2>
 		<alpha3>irl</alpha3>
@@ -1026,8 +1026,8 @@
 	</Country>
 
 	<Country rdf:ID="il">
-		<name>Israel</name>
-		<name>Israel@en</name>
+		<name xml:lang="sv">Israel</name>
+		<name xml:lang="en">Israel</name>
 		<owl:sameAs>http://sws.geonames.org/294640</owl:sameAs>
 		<alpha2>il</alpha2>
 		<alpha3>isr</alpha3>
@@ -1036,8 +1036,8 @@
 	</Country>
 
 	<Country rdf:ID="im">
-		<name>Isle of Man</name>
-		<name>Isle of Man@en</name>
+		<name xml:lang="sv">Isle of Man</name>
+		<name xml:lang="en">Isle of Man</name>
 		<owl:sameAs>http://sws.geonames.org/3042225</owl:sameAs>
 		<alpha2>im</alpha2>
 		<alpha3></alpha3>
@@ -1046,8 +1046,8 @@
 	</Country>
 
 	<Country rdf:ID="in">
-		<name>Indien</name>
-		<name>India@en</name>
+		<name xml:lang="sv">Indien</name>
+		<name xml:lang="en">India</name>
 		<owl:sameAs>http://sws.geonames.org/1269750</owl:sameAs>
 		<alpha2>in</alpha2>
 		<alpha3>ind</alpha3>
@@ -1056,8 +1056,8 @@
 	</Country>
 
 	<Country rdf:ID="io">
-		<name>Brittiska territoriet i Indiska Oceanen</name>
-		<name>British Indian Ocean territory@en</name>
+		<name xml:lang="sv">Brittiska territoriet i Indiska Oceanen</name>
+		<name xml:lang="en">British Indian Ocean territory</name>
 		<owl:sameAs>http://sws.geonames.org/1282588</owl:sameAs>
 		<alpha2>io</alpha2>
 		<alpha3>iot</alpha3>
@@ -1066,8 +1066,8 @@
 	</Country>
 
 	<Country rdf:ID="iq">
-		<name>Irak</name>
-		<name>Iraq@en</name>
+		<name xml:lang="sv">Irak</name>
+		<name xml:lang="en">Iraq</name>
 		<owl:sameAs>http://sws.geonames.org/99237</owl:sameAs>
 		<alpha2>iq</alpha2>
 		<alpha3>irq</alpha3>
@@ -1076,8 +1076,8 @@
 	</Country>
 
 	<Country rdf:ID="ir">
-		<name>Iran</name>
-		<name>Iran@en</name>
+		<name xml:lang="sv">Iran</name>
+		<name xml:lang="en">Iran</name>
 		<owl:sameAs>http://sws.geonames.org/130758</owl:sameAs>
 		<alpha2>ir</alpha2>
 		<alpha3>irn</alpha3>
@@ -1086,8 +1086,8 @@
 	</Country>
 
 	<Country rdf:ID="is">
-		<name>Island</name>
-		<name>Iceland@en</name>
+		<name xml:lang="sv">Island</name>
+		<name xml:lang="en">Iceland</name>
 		<owl:sameAs>http://sws.geonames.org/2629691</owl:sameAs>
 		<alpha2>is</alpha2>
 		<alpha3>isl</alpha3>
@@ -1096,8 +1096,8 @@
 	</Country>
 
 	<Country rdf:ID="it">
-		<name>Italien</name>
-		<name>Italy@en</name>
+		<name xml:lang="sv">Italien</name>
+		<name xml:lang="en">Italy</name>
 		<owl:sameAs>http://sws.geonames.org/3175395</owl:sameAs>
 		<alpha2>it</alpha2>
 		<alpha3>ita</alpha3>
@@ -1106,8 +1106,8 @@
 	</Country>
 
 	<Country rdf:ID="je">
-		<name>Jersey</name>
-		<name>Jersey@en</name>
+		<name xml:lang="sv">Jersey</name>
+		<name xml:lang="en">Jersey</name>
 		<owl:sameAs>http://sws.geonames.org/3042142</owl:sameAs>
 		<alpha2>je</alpha2>
 		<alpha3></alpha3>
@@ -1116,8 +1116,8 @@
 	</Country>
 
 	<Country rdf:ID="jm">
-		<name>Jamaica</name>
-		<name>Jamaica@en</name>
+		<name xml:lang="sv">Jamaica</name>
+		<name xml:lang="en">Jamaica</name>
 		<owl:sameAs>http://sws.geonames.org/3489940</owl:sameAs>
 		<alpha2>jm</alpha2>
 		<alpha3>jam</alpha3>
@@ -1126,8 +1126,8 @@
 	</Country>
 
 	<Country rdf:ID="jo">
-		<name>Jordanien</name>
-		<name>Jordan@en</name>
+		<name xml:lang="sv">Jordanien</name>
+		<name xml:lang="en">Jordan</name>
 		<owl:sameAs>http://sws.geonames.org/248816</owl:sameAs>
 		<alpha2>jo</alpha2>
 		<alpha3>jor</alpha3>
@@ -1136,8 +1136,8 @@
 	</Country>
 
 	<Country rdf:ID="jp">
-		<name>Japan</name>
-		<name>Japan@en</name>
+		<name xml:lang="sv">Japan</name>
+		<name xml:lang="en">Japan</name>
 		<owl:sameAs>http://sws.geonames.org/1861060</owl:sameAs>
 		<alpha2>jp</alpha2>
 		<alpha3>jpn</alpha3>
@@ -1146,8 +1146,8 @@
 	</Country>
 
 	<Country rdf:ID="ke">
-		<name>Kenya</name>
-		<name>Kenya@en</name>
+		<name xml:lang="sv">Kenya</name>
+		<name xml:lang="en">Kenya</name>
 		<owl:sameAs>http://sws.geonames.org/192950</owl:sameAs>
 		<alpha2>ke</alpha2>
 		<alpha3>ken</alpha3>
@@ -1156,8 +1156,8 @@
 	</Country>
 
 	<Country rdf:ID="kg">
-		<name>Kirgizistan</name>
-		<name>Kyrgyzstan@en</name>
+		<name xml:lang="sv">Kirgizistan</name>
+		<name xml:lang="en">Kyrgyzstan</name>
 		<owl:sameAs>http://sws.geonames.org/1527747</owl:sameAs>
 		<alpha2>kg</alpha2>
 		<alpha3>kgz</alpha3>
@@ -1166,8 +1166,8 @@
 	</Country>
 
 	<Country rdf:ID="kh">
-		<name>Kambodja</name>
-		<name>Cambodia@en</name>
+		<name xml:lang="sv">Kambodja</name>
+		<name xml:lang="en">Cambodia</name>
 		<owl:sameAs>http://sws.geonames.org/1831722</owl:sameAs>
 		<alpha2>kh</alpha2>
 		<alpha3>khm</alpha3>
@@ -1176,8 +1176,8 @@
 	</Country>
 
 	<Country rdf:ID="ki">
-		<name>Kiribati</name>
-		<name>Kiribati@en</name>
+		<name xml:lang="sv">Kiribati</name>
+		<name xml:lang="en">Kiribati</name>
 		<owl:sameAs>http://sws.geonames.org/4030945</owl:sameAs>
 		<alpha2>ki</alpha2>
 		<alpha3>kir</alpha3>
@@ -1186,8 +1186,8 @@
 	</Country>
 
 	<Country rdf:ID="km">
-		<name>Comorerna</name>
-		<name>Comoros@en</name>
+		<name xml:lang="sv">Comorerna</name>
+		<name xml:lang="en">Comoros</name>
 		<owl:sameAs>http://sws.geonames.org/921929</owl:sameAs>
 		<alpha2>km</alpha2>
 		<alpha3>com</alpha3>
@@ -1196,8 +1196,8 @@
 	</Country>
 
 	<Country rdf:ID="kn">
-		<name>Saint Kitts och Nevis</name>
-		<name>Saint Kitts and Nevis@en</name>
+		<name xml:lang="sv">Saint Kitts och Nevis</name>
+		<name xml:lang="en">Saint Kitts and Nevis</name>
 		<owl:sameAs>http://sws.geonames.org/3575174</owl:sameAs>
 		<alpha2>kn</alpha2>
 		<alpha3>kna</alpha3>
@@ -1206,8 +1206,8 @@
 	</Country>
 
 	<Country rdf:ID="kp">
-		<name>Nordkorea</name>
-		<name>North Korea@en</name>
+		<name xml:lang="sv">Nordkorea</name>
+		<name xml:lang="en">North Korea</name>
 		<owl:sameAs>http://sws.geonames.org/1873107</owl:sameAs>
 		<alpha2>kp</alpha2>
 		<alpha3>prk</alpha3>
@@ -1216,8 +1216,8 @@
 	</Country>
 
 	<Country rdf:ID="kr">
-		<name>Sydkorea</name>
-		<name>South Korea@en</name>
+		<name xml:lang="sv">Sydkorea</name>
+		<name xml:lang="en">South Korea</name>
 		<owl:sameAs>http://sws.geonames.org/1835841</owl:sameAs>
 		<alpha2>kr</alpha2>
 		<alpha3>kor</alpha3>
@@ -1226,8 +1226,8 @@
 	</Country>
 
 	<Country rdf:ID="kw">
-		<name>Kuwait</name>
-		<name>Kuwait@en</name>
+		<name xml:lang="sv">Kuwait</name>
+		<name xml:lang="en">Kuwait</name>
 		<owl:sameAs>http://sws.geonames.org/285570</owl:sameAs>
 		<alpha2>kw</alpha2>
 		<alpha3>kwt</alpha3>
@@ -1236,8 +1236,8 @@
 	</Country>
 
 	<Country rdf:ID="ky">
-		<name>Caymanöarna</name>
-		<name>Cayman Islands@en</name>
+		<name xml:lang="sv">Caymanöarna</name>
+		<name xml:lang="en">Cayman Islands</name>
 		<owl:sameAs>http://sws.geonames.org/3580718</owl:sameAs>
 		<alpha2>ky</alpha2>
 		<alpha3>kym</alpha3>
@@ -1246,8 +1246,8 @@
 	</Country>
 
 	<Country rdf:ID="kz">
-		<name>Kazakstan</name>
-		<name>Kazakhstan@en</name>
+		<name xml:lang="sv">Kazakstan</name>
+		<name xml:lang="en">Kazakhstan</name>
 		<owl:sameAs>http://sws.geonames.org/1522867</owl:sameAs>
 		<alpha2>kz</alpha2>
 		<alpha3>kaz</alpha3>
@@ -1256,8 +1256,8 @@
 	</Country>
 
 	<Country rdf:ID="la">
-		<name>Laos</name>
-		<name>Laos@en</name>
+		<name xml:lang="sv">Laos</name>
+		<name xml:lang="en">Laos</name>
 		<owl:sameAs>http://sws.geonames.org/1655842</owl:sameAs>
 		<alpha2>la</alpha2>
 		<alpha3>lao</alpha3>
@@ -1266,8 +1266,8 @@
 	</Country>
 
 	<Country rdf:ID="lb">
-		<name>Libanon</name>
-		<name>Lebanon@en</name>
+		<name xml:lang="sv">Libanon</name>
+		<name xml:lang="en">Lebanon</name>
 		<owl:sameAs>http://sws.geonames.org/272103</owl:sameAs>
 		<alpha2>lb</alpha2>
 		<alpha3>lbn</alpha3>
@@ -1276,8 +1276,8 @@
 	</Country>
 
 	<Country rdf:ID="lc">
-		<name>Saint Lucia</name>
-		<name>Saint Lucia@en</name>
+		<name xml:lang="sv">Saint Lucia</name>
+		<name xml:lang="en">Saint Lucia</name>
 		<owl:sameAs>http://sws.geonames.org/3576468</owl:sameAs>
 		<alpha2>lc</alpha2>
 		<alpha3>lca</alpha3>
@@ -1286,8 +1286,8 @@
 	</Country>
 
 	<Country rdf:ID="li">
-		<name>Liechtenstein</name>
-		<name>Liechtenstein@en</name>
+		<name xml:lang="sv">Liechtenstein</name>
+		<name xml:lang="en">Liechtenstein</name>
 		<owl:sameAs>http://sws.geonames.org/3042058</owl:sameAs>
 		<alpha2>li</alpha2>
 		<alpha3>lie</alpha3>
@@ -1296,8 +1296,8 @@
 	</Country>
 
 	<Country rdf:ID="lk">
-		<name>Sri Lanka</name>
-		<name>Sri Lanka@en</name>
+		<name xml:lang="sv">Sri Lanka</name>
+		<name xml:lang="en">Sri Lanka</name>
 		<owl:sameAs>http://sws.geonames.org/1227603</owl:sameAs>
 		<alpha2>lk</alpha2>
 		<alpha3>lka</alpha3>
@@ -1306,8 +1306,8 @@
 	</Country>
 
 	<Country rdf:ID="lr">
-		<name>Liberia</name>
-		<name>Liberia@en</name>
+		<name xml:lang="sv">Liberia</name>
+		<name xml:lang="en">Liberia</name>
 		<owl:sameAs>http://sws.geonames.org/2275384</owl:sameAs>
 		<alpha2>lr</alpha2>
 		<alpha3>lbr</alpha3>
@@ -1316,8 +1316,8 @@
 	</Country>
 
 	<Country rdf:ID="ls">
-		<name>Lesotho</name>
-		<name>Lesotho@en</name>
+		<name xml:lang="sv">Lesotho</name>
+		<name xml:lang="en">Lesotho</name>
 		<owl:sameAs>http://sws.geonames.org/932692</owl:sameAs>
 		<alpha2>ls</alpha2>
 		<alpha3>lso</alpha3>
@@ -1326,8 +1326,8 @@
 	</Country>
 
 	<Country rdf:ID="lt">
-		<name>Litauen</name>
-		<name>Lithuania@en</name>
+		<name xml:lang="sv">Litauen</name>
+		<name xml:lang="en">Lithuania</name>
 		<owl:sameAs>http://sws.geonames.org/597427</owl:sameAs>
 		<alpha2>lt</alpha2>
 		<alpha3>ltu</alpha3>
@@ -1336,8 +1336,8 @@
 	</Country>
 
 	<Country rdf:ID="lu">
-		<name>Luxemburg</name>
-		<name>Luxembourg@en</name>
+		<name xml:lang="sv">Luxemburg</name>
+		<name xml:lang="en">Luxembourg</name>
 		<owl:sameAs>http://sws.geonames.org/2960313</owl:sameAs>
 		<alpha2>lu</alpha2>
 		<alpha3>lux</alpha3>
@@ -1346,8 +1346,8 @@
 	</Country>
 
 	<Country rdf:ID="lv">
-		<name>Lettland</name>
-		<name>Latvia@en</name>
+		<name xml:lang="sv">Lettland</name>
+		<name xml:lang="en">Latvia</name>
 		<owl:sameAs>http://sws.geonames.org/458258</owl:sameAs>
 		<alpha2>lv</alpha2>
 		<alpha3>lva</alpha3>
@@ -1356,8 +1356,8 @@
 	</Country>
 
 	<Country rdf:ID="ly">
-		<name>Libyen</name>
-		<name>Libya@en</name>
+		<name xml:lang="sv">Libyen</name>
+		<name xml:lang="en">Libya</name>
 		<owl:sameAs>http://sws.geonames.org/2215636</owl:sameAs>
 		<alpha2>ly</alpha2>
 		<alpha3>lby</alpha3>
@@ -1366,8 +1366,8 @@
 	</Country>
 
 	<Country rdf:ID="ma">
-		<name>Marocko</name>
-		<name>Morocco@en</name>
+		<name xml:lang="sv">Marocko</name>
+		<name xml:lang="en">Morocco</name>
 		<owl:sameAs>http://sws.geonames.org/2542007</owl:sameAs>
 		<alpha2>ma</alpha2>
 		<alpha3>mar</alpha3>
@@ -1376,8 +1376,8 @@
 	</Country>
 
 	<Country rdf:ID="mc">
-		<name>Monaco</name>
-		<name>Monaco@en</name>
+		<name xml:lang="sv">Monaco</name>
+		<name xml:lang="en">Monaco</name>
 		<owl:sameAs>http://sws.geonames.org/2993457</owl:sameAs>
 		<alpha2>mc</alpha2>
 		<alpha3>mco</alpha3>
@@ -1386,8 +1386,8 @@
 	</Country>
 
 	<Country rdf:ID="md">
-		<name>Moldavien</name>
-		<name>Moldova@en</name>
+		<name xml:lang="sv">Moldavien</name>
+		<name xml:lang="en">Moldova</name>
 		<owl:sameAs>http://sws.geonames.org/617790</owl:sameAs>
 		<alpha2>md</alpha2>
 		<alpha3>mda</alpha3>
@@ -1396,8 +1396,8 @@
 	</Country>
 
 	<Country rdf:ID="me">
-		<name>Montenegro</name>
-		<name>Montenegro@en</name>
+		<name xml:lang="sv">Montenegro</name>
+		<name xml:lang="en">Montenegro</name>
 		<owl:sameAs>http://sws.geonames.org/3194884</owl:sameAs>
 		<alpha2>me</alpha2>
 		<alpha3>mne</alpha3>
@@ -1406,8 +1406,8 @@
 	</Country>
 
 	<Country rdf:ID="mf">
-		<name>Saint Martin</name>
-		<name>Saint Martin@en</name>
+		<name xml:lang="sv">Saint Martin</name>
+		<name xml:lang="en">Saint Martin</name>
 		<owl:sameAs>http://sws.geonames.org/3578421</owl:sameAs>
 		<alpha2>mf</alpha2>
 		<alpha3></alpha3>
@@ -1416,8 +1416,8 @@
 	</Country>
 
 	<Country rdf:ID="mg">
-		<name>Madagaskar</name>
-		<name>Madagascar@en</name>
+		<name xml:lang="sv">Madagaskar</name>
+		<name xml:lang="en">Madagascar</name>
 		<owl:sameAs>http://sws.geonames.org/1062947</owl:sameAs>
 		<alpha2>mg</alpha2>
 		<alpha3>mdg</alpha3>
@@ -1426,8 +1426,8 @@
 	</Country>
 
 	<Country rdf:ID="mh">
-		<name>Marshallöarna</name>
-		<name>Marshall Islands@en</name>
+		<name xml:lang="sv">Marshallöarna</name>
+		<name xml:lang="en">Marshall Islands</name>
 		<owl:sameAs>http://sws.geonames.org/2080185</owl:sameAs>
 		<alpha2>mh</alpha2>
 		<alpha3>mhl</alpha3>
@@ -1436,8 +1436,8 @@
 	</Country>
 
 	<Country rdf:ID="mk">
-		<name>Makedonien</name>
-		<name>Macedonia@en</name>
+		<name xml:lang="sv">Makedonien</name>
+		<name xml:lang="en">Macedonia</name>
 		<owl:sameAs>http://sws.geonames.org/718075</owl:sameAs>
 		<alpha2>mk</alpha2>
 		<alpha3>mkd</alpha3>
@@ -1446,8 +1446,8 @@
 	</Country>
 
 	<Country rdf:ID="ml">
-		<name>Mali</name>
-		<name>Mali@en</name>
+		<name xml:lang="sv">Mali</name>
+		<name xml:lang="en">Mali</name>
 		<owl:sameAs>http://sws.geonames.org/2453866</owl:sameAs>
 		<alpha2>ml</alpha2>
 		<alpha3>mli</alpha3>
@@ -1456,8 +1456,8 @@
 	</Country>
 
 	<Country rdf:ID="mm">
-		<name>Burma (Myanmar)</name>
-		<name>Myanmar@en</name>
+		<name xml:lang="sv">Burma (Myanmar)</name>
+		<name xml:lang="en">Myanmar</name>
 		<owl:sameAs>http://sws.geonames.org/1327865</owl:sameAs>
 		<alpha2>mm</alpha2>
 		<alpha3>mmr</alpha3>
@@ -1466,8 +1466,8 @@
 	</Country>
 
 	<Country rdf:ID="mn">
-		<name>Mongoliet</name>
-		<name>Mongolia@en</name>
+		<name xml:lang="sv">Mongoliet</name>
+		<name xml:lang="en">Mongolia</name>
 		<owl:sameAs>http://sws.geonames.org/2029969</owl:sameAs>
 		<alpha2>mn</alpha2>
 		<alpha3>mng</alpha3>
@@ -1476,8 +1476,8 @@
 	</Country>
 
 	<Country rdf:ID="mo">
-		<name>Macau</name>
-		<name>Macao@en</name>
+		<name xml:lang="sv">Macau</name>
+		<name xml:lang="en">Macao</name>
 		<owl:sameAs>http://sws.geonames.org/1821275</owl:sameAs>
 		<alpha2>mo</alpha2>
 		<alpha3>mac</alpha3>
@@ -1486,8 +1486,8 @@
 	</Country>
 
 	<Country rdf:ID="mp">
-		<name>Nordmarianerna</name>
-		<name>Northern Mariana Islands@en</name>
+		<name xml:lang="sv">Nordmarianerna</name>
+		<name xml:lang="en">Northern Mariana Islands</name>
 		<owl:sameAs>http://sws.geonames.org/4041467</owl:sameAs>
 		<alpha2>mp</alpha2>
 		<alpha3>mnp</alpha3>
@@ -1496,8 +1496,8 @@
 	</Country>
 
 	<Country rdf:ID="mq">
-		<name>Martinique</name>
-		<name>Martinique@en</name>
+		<name xml:lang="sv">Martinique</name>
+		<name xml:lang="en">Martinique</name>
 		<owl:sameAs>http://sws.geonames.org/3570311</owl:sameAs>
 		<alpha2>mq</alpha2>
 		<alpha3>mtq</alpha3>
@@ -1506,8 +1506,8 @@
 	</Country>
 
 	<Country rdf:ID="mr">
-		<name>Mauretanien</name>
-		<name>Mauritania@en</name>
+		<name xml:lang="sv">Mauretanien</name>
+		<name xml:lang="en">Mauritania</name>
 		<owl:sameAs>http://sws.geonames.org/2378080</owl:sameAs>
 		<alpha2>mr</alpha2>
 		<alpha3>mrt</alpha3>
@@ -1516,8 +1516,8 @@
 	</Country>
 
 	<Country rdf:ID="ms">
-		<name>Montserrat</name>
-		<name>Montserrat@en</name>
+		<name xml:lang="sv">Montserrat</name>
+		<name xml:lang="en">Montserrat</name>
 		<owl:sameAs>http://sws.geonames.org/3578097</owl:sameAs>
 		<alpha2>ms</alpha2>
 		<alpha3>msr</alpha3>
@@ -1526,8 +1526,8 @@
 	</Country>
 
 	<Country rdf:ID="mt">
-		<name>Malta</name>
-		<name>Malta@en</name>
+		<name xml:lang="sv">Malta</name>
+		<name xml:lang="en">Malta</name>
 		<owl:sameAs>http://sws.geonames.org/2562770</owl:sameAs>
 		<alpha2>mt</alpha2>
 		<alpha3>mlt</alpha3>
@@ -1536,8 +1536,8 @@
 	</Country>
 
 	<Country rdf:ID="mu">
-		<name>Mauritius</name>
-		<name>Mauritius@en</name>
+		<name xml:lang="sv">Mauritius</name>
+		<name xml:lang="en">Mauritius</name>
 		<owl:sameAs>http://sws.geonames.org/934292</owl:sameAs>
 		<alpha2>mu</alpha2>
 		<alpha3>mus</alpha3>
@@ -1546,8 +1546,8 @@
 	</Country>
 
 	<Country rdf:ID="mv">
-		<name>Maldiverna</name>
-		<name>Maldives@en</name>
+		<name xml:lang="sv">Maldiverna</name>
+		<name xml:lang="en">Maldives</name>
 		<owl:sameAs>http://sws.geonames.org/1282028</owl:sameAs>
 		<alpha2>mv</alpha2>
 		<alpha3>mdv</alpha3>
@@ -1556,8 +1556,8 @@
 	</Country>
 
 	<Country rdf:ID="mw">
-		<name>Malawi</name>
-		<name>Malawi@en</name>
+		<name xml:lang="sv">Malawi</name>
+		<name xml:lang="en">Malawi</name>
 		<owl:sameAs>http://sws.geonames.org/927384</owl:sameAs>
 		<alpha2>mw</alpha2>
 		<alpha3>mwi</alpha3>
@@ -1566,8 +1566,8 @@
 	</Country>
 
 	<Country rdf:ID="mx">
-		<name>Mexiko</name>
-		<name>Mexico@en</name>
+		<name xml:lang="sv">Mexiko</name>
+		<name xml:lang="en">Mexico</name>
 		<owl:sameAs>http://sws.geonames.org/3996063</owl:sameAs>
 		<alpha2>mx</alpha2>
 		<alpha3>mex</alpha3>
@@ -1576,8 +1576,8 @@
 	</Country>
 
 	<Country rdf:ID="my">
-		<name>Malaysia</name>
-		<name>Malaysia@en</name>
+		<name xml:lang="sv">Malaysia</name>
+		<name xml:lang="en">Malaysia</name>
 		<owl:sameAs>http://sws.geonames.org/1733045</owl:sameAs>
 		<alpha2>my</alpha2>
 		<alpha3>mys</alpha3>
@@ -1586,8 +1586,8 @@
 	</Country>
 
 	<Country rdf:ID="mz">
-		<name>Moçambique</name>
-		<name>Mozambique@en</name>
+		<name xml:lang="sv">Moçambique</name>
+		<name xml:lang="en">Mozambique</name>
 		<owl:sameAs>http://sws.geonames.org/1036973</owl:sameAs>
 		<alpha2>mz</alpha2>
 		<alpha3>moz</alpha3>
@@ -1596,8 +1596,8 @@
 	</Country>
 
 	<Country rdf:ID="na">
-		<name>Namibia</name>
-		<name>Namibia@en</name>
+		<name xml:lang="sv">Namibia</name>
+		<name xml:lang="en">Namibia</name>
 		<owl:sameAs>http://sws.geonames.org/3355338</owl:sameAs>
 		<alpha2>na</alpha2>
 		<alpha3>nam</alpha3>
@@ -1606,8 +1606,8 @@
 	</Country>
 
 	<Country rdf:ID="nc">
-		<name>Nya Kaledonien</name>
-		<name>New Caledonia@en</name>
+		<name xml:lang="sv">Nya Kaledonien</name>
+		<name xml:lang="en">New Caledonia</name>
 		<owl:sameAs>http://sws.geonames.org/2139685</owl:sameAs>
 		<alpha2>nc</alpha2>
 		<alpha3>ncl</alpha3>
@@ -1616,8 +1616,8 @@
 	</Country>
 
 	<Country rdf:ID="ne">
-		<name>Niger</name>
-		<name>Niger@en</name>
+		<name xml:lang="sv">Niger</name>
+		<name xml:lang="en">Niger</name>
 		<owl:sameAs>http://sws.geonames.org/2440476</owl:sameAs>
 		<alpha2>ne</alpha2>
 		<alpha3>ner</alpha3>
@@ -1626,8 +1626,8 @@
 	</Country>
 
 	<Country rdf:ID="nf">
-		<name>Norfolkön</name>
-		<name>Norfolk Island@en</name>
+		<name xml:lang="sv">Norfolkön</name>
+		<name xml:lang="en">Norfolk Island</name>
 		<owl:sameAs>http://sws.geonames.org/2155115</owl:sameAs>
 		<alpha2>nf</alpha2>
 		<alpha3>nfk</alpha3>
@@ -1636,8 +1636,8 @@
 	</Country>
 
 	<Country rdf:ID="ng">
-		<name>Nigeria</name>
-		<name>Nigeria@en</name>
+		<name xml:lang="sv">Nigeria</name>
+		<name xml:lang="en">Nigeria</name>
 		<owl:sameAs>http://sws.geonames.org/2328926</owl:sameAs>
 		<alpha2>ng</alpha2>
 		<alpha3>nga</alpha3>
@@ -1646,8 +1646,8 @@
 	</Country>
 
 	<Country rdf:ID="ni">
-		<name>Nicaragua</name>
-		<name>Nicaragua@en</name>
+		<name xml:lang="sv">Nicaragua</name>
+		<name xml:lang="en">Nicaragua</name>
 		<owl:sameAs>http://sws.geonames.org/3617476</owl:sameAs>
 		<alpha2>ni</alpha2>
 		<alpha3>nic</alpha3>
@@ -1656,8 +1656,8 @@
 	</Country>
 
 	<Country rdf:ID="nl">
-		<name>Nederländerna</name>
-		<name>Netherlands@en</name>
+		<name xml:lang="sv">Nederländerna</name>
+		<name xml:lang="en">Netherlands</name>
 		<owl:sameAs>http://sws.geonames.org/2750405</owl:sameAs>
 		<alpha2>nl</alpha2>
 		<alpha3>nld</alpha3>
@@ -1666,8 +1666,8 @@
 	</Country>
 
 	<Country rdf:ID="no">
-		<name>Norge</name>
-		<name>Norway@en</name>
+		<name xml:lang="sv">Norge</name>
+		<name xml:lang="en">Norway</name>
 		<owl:sameAs>http://sws.geonames.org/3144096</owl:sameAs>
 		<alpha2>no</alpha2>
 		<alpha3>nor</alpha3>
@@ -1676,8 +1676,8 @@
 	</Country>
 
 	<Country rdf:ID="np">
-		<name>Nepal</name>
-		<name>Nepal@en</name>
+		<name xml:lang="sv">Nepal</name>
+		<name xml:lang="en">Nepal</name>
 		<owl:sameAs>http://sws.geonames.org/1282988</owl:sameAs>
 		<alpha2>np</alpha2>
 		<alpha3>npl</alpha3>
@@ -1686,8 +1686,8 @@
 	</Country>
 
 	<Country rdf:ID="nr">
-		<name>Nauru</name>
-		<name>Nauru@en</name>
+		<name xml:lang="sv">Nauru</name>
+		<name xml:lang="en">Nauru</name>
 		<owl:sameAs>http://sws.geonames.org/2110425</owl:sameAs>
 		<alpha2>nr</alpha2>
 		<alpha3>nru</alpha3>
@@ -1696,8 +1696,8 @@
 	</Country>
 
 	<Country rdf:ID="nu">
-		<name>Niue</name>
-		<name>Niue@en</name>
+		<name xml:lang="sv">Niue</name>
+		<name xml:lang="en">Niue</name>
 		<owl:sameAs>http://sws.geonames.org/4036232</owl:sameAs>
 		<alpha2>nu</alpha2>
 		<alpha3>niu</alpha3>
@@ -1706,8 +1706,8 @@
 	</Country>
 
 	<Country rdf:ID="nz">
-		<name>Nya Zeeland</name>
-		<name>New Zealand@en</name>
+		<name xml:lang="sv">Nya Zeeland</name>
+		<name xml:lang="en">New Zealand</name>
 		<owl:sameAs>http://sws.geonames.org/2186224</owl:sameAs>
 		<alpha2>nz</alpha2>
 		<alpha3>nzl</alpha3>
@@ -1716,8 +1716,8 @@
 	</Country>
 
 	<Country rdf:ID="om">
-		<name>Oman</name>
-		<name>Oman@en</name>
+		<name xml:lang="sv">Oman</name>
+		<name xml:lang="en">Oman</name>
 		<owl:sameAs>http://sws.geonames.org/286963</owl:sameAs>
 		<alpha2>om</alpha2>
 		<alpha3>omn</alpha3>
@@ -1726,8 +1726,8 @@
 	</Country>
 
 	<Country rdf:ID="pa">
-		<name>Panama</name>
-		<name>Panama@en</name>
+		<name xml:lang="sv">Panama</name>
+		<name xml:lang="en">Panama</name>
 		<owl:sameAs>http://sws.geonames.org/3703430</owl:sameAs>
 		<alpha2>pa</alpha2>
 		<alpha3>pan</alpha3>
@@ -1736,8 +1736,8 @@
 	</Country>
 
 	<Country rdf:ID="pe">
-		<name>Peru</name>
-		<name>Peru@en</name>
+		<name xml:lang="sv">Peru</name>
+		<name xml:lang="en">Peru</name>
 		<owl:sameAs>http://sws.geonames.org/3932488</owl:sameAs>
 		<alpha2>pe</alpha2>
 		<alpha3>per</alpha3>
@@ -1746,8 +1746,8 @@
 	</Country>
 
 	<Country rdf:ID="pf">
-		<name>Franska Polynesien</name>
-		<name>French Polynesia@en</name>
+		<name xml:lang="sv">Franska Polynesien</name>
+		<name xml:lang="en">French Polynesia</name>
 		<owl:sameAs>http://sws.geonames.org/4020092</owl:sameAs>
 		<alpha2>pf</alpha2>
 		<alpha3>pyf</alpha3>
@@ -1756,8 +1756,8 @@
 	</Country>
 
 	<Country rdf:ID="pg">
-		<name>Papua Nya Guinea</name>
-		<name>Papua New Guinea@en</name>
+		<name xml:lang="sv">Papua Nya Guinea</name>
+		<name xml:lang="en">Papua New Guinea</name>
 		<owl:sameAs>http://sws.geonames.org/2088628</owl:sameAs>
 		<alpha2>pg</alpha2>
 		<alpha3>png</alpha3>
@@ -1766,8 +1766,8 @@
 	</Country>
 
 	<Country rdf:ID="ph">
-		<name>Filippinerna</name>
-		<name>Philippines@en</name>
+		<name xml:lang="sv">Filippinerna</name>
+		<name xml:lang="en">Philippines</name>
 		<owl:sameAs>http://sws.geonames.org/1694008</owl:sameAs>
 		<alpha2>ph</alpha2>
 		<alpha3>phl</alpha3>
@@ -1776,8 +1776,8 @@
 	</Country>
 
 	<Country rdf:ID="pk">
-		<name>Pakistan</name>
-		<name>Pakistan@en</name>
+		<name xml:lang="sv">Pakistan</name>
+		<name xml:lang="en">Pakistan</name>
 		<owl:sameAs>http://sws.geonames.org/1168579</owl:sameAs>
 		<alpha2>pk</alpha2>
 		<alpha3>pak</alpha3>
@@ -1786,8 +1786,8 @@
 	</Country>
 
 	<Country rdf:ID="pl">
-		<name>Polen</name>
-		<name>Poland@en</name>
+		<name xml:lang="sv">Polen</name>
+		<name xml:lang="en">Poland</name>
 		<owl:sameAs>http://sws.geonames.org/798544</owl:sameAs>
 		<alpha2>pl</alpha2>
 		<alpha3>pol</alpha3>
@@ -1796,8 +1796,8 @@
 	</Country>
 
 	<Country rdf:ID="pm">
-		<name>Saint Pierre och Miquelon</name>
-		<name>Saint Pierre and Miquelon@en</name>
+		<name xml:lang="sv">Saint Pierre och Miquelon</name>
+		<name xml:lang="en">Saint Pierre and Miquelon</name>
 		<owl:sameAs>http://sws.geonames.org/3424932</owl:sameAs>
 		<alpha2>pm</alpha2>
 		<alpha3>spm</alpha3>
@@ -1806,8 +1806,8 @@
 	</Country>
 
 	<Country rdf:ID="pn">
-		<name>Pitcairn</name>
-		<name>Pitcairn@en</name>
+		<name xml:lang="sv">Pitcairn</name>
+		<name xml:lang="en">Pitcairn</name>
 		<owl:sameAs>http://sws.geonames.org/4030699</owl:sameAs>
 		<alpha2>pn</alpha2>
 		<alpha3>pcn</alpha3>
@@ -1816,8 +1816,8 @@
 	</Country>
 
 	<Country rdf:ID="pr">
-		<name>Puerto Rico</name>
-		<name>Puerto Rico@en</name>
+		<name xml:lang="sv">Puerto Rico</name>
+		<name xml:lang="en">Puerto Rico</name>
 		<owl:sameAs>http://sws.geonames.org/4566966</owl:sameAs>
 		<alpha2>pr</alpha2>
 		<alpha3>pri</alpha3>
@@ -1826,8 +1826,8 @@
 	</Country>
 
 	<Country rdf:ID="ps">
-		<name>Palestinska självstyret</name>
-		<name>Palestinian Territory@en</name>
+		<name xml:lang="sv">Palestinska självstyret</name>
+		<name xml:lang="en">Palestinian Territory</name>
 		<owl:sameAs>http://sws.geonames.org/6254930</owl:sameAs>
 		<alpha2>ps</alpha2>
 		<alpha3></alpha3>
@@ -1836,8 +1836,8 @@
 	</Country>
 
 	<Country rdf:ID="pt">
-		<name>Portugal</name>
-		<name>Portugal@en</name>
+		<name xml:lang="sv">Portugal</name>
+		<name xml:lang="en">Portugal</name>
 		<owl:sameAs>http://sws.geonames.org/2264397</owl:sameAs>
 		<alpha2>pt</alpha2>
 		<alpha3>prt</alpha3>
@@ -1846,8 +1846,8 @@
 	</Country>
 
 	<Country rdf:ID="pw">
-		<name>Palau</name>
-		<name>Palau@en</name>
+		<name xml:lang="sv">Palau</name>
+		<name xml:lang="en">Palau</name>
 		<owl:sameAs>http://sws.geonames.org/1559582</owl:sameAs>
 		<alpha2>pw</alpha2>
 		<alpha3>plw</alpha3>
@@ -1856,8 +1856,8 @@
 	</Country>
 
 	<Country rdf:ID="py">
-		<name>Paraguay</name>
-		<name>Paraguay@en</name>
+		<name xml:lang="sv">Paraguay</name>
+		<name xml:lang="en">Paraguay</name>
 		<owl:sameAs>http://sws.geonames.org/3437598</owl:sameAs>
 		<alpha2>py</alpha2>
 		<alpha3>pry</alpha3>
@@ -1866,8 +1866,8 @@
 	</Country>
 
 	<Country rdf:ID="qa">
-		<name>Qatar</name>
-		<name>Qatar@en</name>
+		<name xml:lang="sv">Qatar</name>
+		<name xml:lang="en">Qatar</name>
 		<owl:sameAs>http://sws.geonames.org/289688</owl:sameAs>
 		<alpha2>qa</alpha2>
 		<alpha3>qat</alpha3>
@@ -1876,8 +1876,8 @@
 	</Country>
 
 	<Country rdf:ID="re">
-		<name>Reunion</name>
-		<name>Reunion@en</name>
+		<name xml:lang="sv">Reunion</name>
+		<name xml:lang="en">Reunion</name>
 		<owl:sameAs>http://sws.geonames.org/935317</owl:sameAs>
 		<alpha2>re</alpha2>
 		<alpha3>reu</alpha3>
@@ -1886,8 +1886,8 @@
 	</Country>
 
 	<Country rdf:ID="ro">
-		<name>Rumänien</name>
-		<name>Romania@en</name>
+		<name xml:lang="sv">Rumänien</name>
+		<name xml:lang="en">Romania</name>
 		<owl:sameAs>http://sws.geonames.org/798549</owl:sameAs>
 		<alpha2>ro</alpha2>
 		<alpha3>rom</alpha3>
@@ -1896,8 +1896,8 @@
 	</Country>
 
 	<Country rdf:ID="rs">
-		<name>Serbien</name>
-		<name>Serbia@en</name>
+		<name xml:lang="sv">Serbien</name>
+		<name xml:lang="en">Serbia</name>
 		<owl:sameAs>http://sws.geonames.org/6290252</owl:sameAs>
 		<alpha2>rs</alpha2>
 		<alpha3>srb</alpha3>
@@ -1906,8 +1906,8 @@
 	</Country>
 
 	<Country rdf:ID="ru">
-		<name>Ryssland</name>
-		<name>Russia@en</name>
+		<name xml:lang="sv">Ryssland</name>
+		<name xml:lang="en">Russia</name>
 		<owl:sameAs>http://sws.geonames.org/2017370</owl:sameAs>
 		<alpha2>ru</alpha2>
 		<alpha3>rus</alpha3>
@@ -1916,8 +1916,8 @@
 	</Country>
 
 	<Country rdf:ID="rw">
-		<name>Rwanda</name>
-		<name>Rwanda@en</name>
+		<name xml:lang="sv">Rwanda</name>
+		<name xml:lang="en">Rwanda</name>
 		<owl:sameAs>http://sws.geonames.org/49518</owl:sameAs>
 		<alpha2>rw</alpha2>
 		<alpha3>rwa</alpha3>
@@ -1926,8 +1926,8 @@
 	</Country>
 
 	<Country rdf:ID="sa">
-		<name>Saudiarabien</name>
-		<name>Saudi Arabia@en</name>
+		<name xml:lang="sv">Saudiarabien</name>
+		<name xml:lang="en">Saudi Arabia</name>
 		<owl:sameAs>http://sws.geonames.org/102358</owl:sameAs>
 		<alpha2>sa</alpha2>
 		<alpha3>sau</alpha3>
@@ -1936,8 +1936,8 @@
 	</Country>
 
 	<Country rdf:ID="sb">
-		<name>Salomonöarna</name>
-		<name>Solomon Islands@en</name>
+		<name xml:lang="sv">Salomonöarna</name>
+		<name xml:lang="en">Solomon Islands</name>
 		<owl:sameAs>http://sws.geonames.org/2103350</owl:sameAs>
 		<alpha2>sb</alpha2>
 		<alpha3>slb</alpha3>
@@ -1946,8 +1946,8 @@
 	</Country>
 
 	<Country rdf:ID="sc">
-		<name>Seychellerna</name>
-		<name>Seychelles@en</name>
+		<name xml:lang="sv">Seychellerna</name>
+		<name xml:lang="en">Seychelles</name>
 		<owl:sameAs>http://sws.geonames.org/241170</owl:sameAs>
 		<alpha2>sc</alpha2>
 		<alpha3>syc</alpha3>
@@ -1956,8 +1956,8 @@
 	</Country>
 
 	<Country rdf:ID="sd">
-		<name>Sudan</name>
-		<name>Sudan@en</name>
+		<name xml:lang="sv">Sudan</name>
+		<name xml:lang="en">Sudan</name>
 		<owl:sameAs>http://sws.geonames.org/366755</owl:sameAs>
 		<alpha2>sd</alpha2>
 		<alpha3>sdn</alpha3>
@@ -1966,8 +1966,8 @@
 	</Country>
 
 	<Country rdf:ID="se">
-		<name>Sverige</name>
-		<name>Sweden@en</name>
+		<name xml:lang="sv">Sverige</name>
+		<name xml:lang="en">Sweden</name>
 		<owl:sameAs>http://sws.geonames.org/2661886</owl:sameAs>
 		<alpha2>se</alpha2>
 		<alpha3>swe</alpha3>
@@ -1976,8 +1976,8 @@
 	</Country>
 
 	<Country rdf:ID="sg">
-		<name>Singapore</name>
-		<name>Singapore@en</name>
+		<name xml:lang="sv">Singapore</name>
+		<name xml:lang="en">Singapore</name>
 		<owl:sameAs>http://sws.geonames.org/1880251</owl:sameAs>
 		<alpha2>sg</alpha2>
 		<alpha3>sgp</alpha3>
@@ -1986,8 +1986,8 @@
 	</Country>
 
 	<Country rdf:ID="sh">
-		<name>Sankta Helena</name>
-		<name>Saint Helena@en</name>
+		<name xml:lang="sv">Sankta Helena</name>
+		<name xml:lang="en">Saint Helena</name>
 		<owl:sameAs>http://sws.geonames.org/3370751</owl:sameAs>
 		<alpha2>sh</alpha2>
 		<alpha3>shn</alpha3>
@@ -1996,8 +1996,8 @@
 	</Country>
 
 	<Country rdf:ID="si">
-		<name>Slovenien</name>
-		<name>Slovenia@en</name>
+		<name xml:lang="sv">Slovenien</name>
+		<name xml:lang="en">Slovenia</name>
 		<owl:sameAs>http://sws.geonames.org/3190538</owl:sameAs>
 		<alpha2>si</alpha2>
 		<alpha3>svn</alpha3>
@@ -2006,8 +2006,8 @@
 	</Country>
 
 	<Country rdf:ID="sj">
-		<name>Svalbard och Jan Mayen</name>
-		<name>Svalbard and Jan Mayen@en</name>
+		<name xml:lang="sv">Svalbard och Jan Mayen</name>
+		<name xml:lang="en">Svalbard and Jan Mayen</name>
 		<owl:sameAs>http://sws.geonames.org/607072</owl:sameAs>
 		<alpha2>sj</alpha2>
 		<alpha3>sjm</alpha3>
@@ -2016,8 +2016,8 @@
 	</Country>
 
 	<Country rdf:ID="sk">
-		<name>Slovakien</name>
-		<name>Slovakia@en</name>
+		<name xml:lang="sv">Slovakien</name>
+		<name xml:lang="en">Slovakia</name>
 		<owl:sameAs>http://sws.geonames.org/3057568</owl:sameAs>
 		<alpha2>sk</alpha2>
 		<alpha3>svk</alpha3>
@@ -2026,8 +2026,8 @@
 	</Country>
 
 	<Country rdf:ID="sl">
-		<name>Sierra Leone</name>
-		<name>Sierra Leone@en</name>
+		<name xml:lang="sv">Sierra Leone</name>
+		<name xml:lang="en">Sierra Leone</name>
 		<owl:sameAs>http://sws.geonames.org/2403846</owl:sameAs>
 		<alpha2>sl</alpha2>
 		<alpha3>sle</alpha3>
@@ -2036,8 +2036,8 @@
 	</Country>
 
 	<Country rdf:ID="sm">
-		<name>San Marino</name>
-		<name>San Marino@en</name>
+		<name xml:lang="sv">San Marino</name>
+		<name xml:lang="en">San Marino</name>
 		<owl:sameAs>http://sws.geonames.org/3168068</owl:sameAs>
 		<alpha2>sm</alpha2>
 		<alpha3>smr</alpha3>
@@ -2046,8 +2046,8 @@
 	</Country>
 
 	<Country rdf:ID="sn">
-		<name>Senegal</name>
-		<name>Senegal@en</name>
+		<name xml:lang="sv">Senegal</name>
+		<name xml:lang="en">Senegal</name>
 		<owl:sameAs>http://sws.geonames.org/2245662</owl:sameAs>
 		<alpha2>sn</alpha2>
 		<alpha3>sen</alpha3>
@@ -2056,8 +2056,8 @@
 	</Country>
 
 	<Country rdf:ID="so">
-		<name>Somalia</name>
-		<name>Somalia@en</name>
+		<name xml:lang="sv">Somalia</name>
+		<name xml:lang="en">Somalia</name>
 		<owl:sameAs>http://sws.geonames.org/51537</owl:sameAs>
 		<alpha2>so</alpha2>
 		<alpha3>som</alpha3>
@@ -2066,8 +2066,8 @@
 	</Country>
 
 	<Country rdf:ID="sr">
-		<name>Surinam</name>
-		<name>Suriname@en</name>
+		<name xml:lang="sv">Surinam</name>
+		<name xml:lang="en">Suriname</name>
 		<owl:sameAs>http://sws.geonames.org/3382998</owl:sameAs>
 		<alpha2>sr</alpha2>
 		<alpha3>sur</alpha3>
@@ -2076,8 +2076,8 @@
 	</Country>
 	
 	<Country rdf:ID="ss">
-		<name>Sydsudan</name>
-		<name>South Sudan@en</name>
+		<name xml:lang="sv">Sydsudan</name>
+		<name xml:lang="en">South Sudan</name>
 		<owl:sameAs>http://sws.geonames.org/7909807</owl:sameAs>
 		<alpha2>ss</alpha2>
 		<alpha3>ssd</alpha3>
@@ -2086,8 +2086,8 @@
 	</Country>
 	
 	<Country rdf:ID="st">
-		<name>São Tomé och Príncipe</name>
-		<name>Sao Tome and Principe@en</name>
+		<name xml:lang="sv">São Tomé och Príncipe</name>
+		<name xml:lang="en">Sao Tome and Principe</name>
 		<owl:sameAs>http://sws.geonames.org/2410758</owl:sameAs>
 		<alpha2>st</alpha2>
 		<alpha3>stp</alpha3>
@@ -2096,8 +2096,8 @@
 	</Country>
 
 	<Country rdf:ID="sv">
-		<name>El Salvador</name>
-		<name>El salvador@en</name>
+		<name xml:lang="sv">El Salvador</name>
+		<name xml:lang="en">El salvador</name>
 		<owl:sameAs>http://sws.geonames.org/3585968</owl:sameAs>
 		<alpha2>sv</alpha2>
 		<alpha3>slv</alpha3>
@@ -2106,8 +2106,8 @@
 	</Country>
 	
 	<Country rdf:ID="sx">
-		<name>Sint Maarten</name>
-		<name>Sint Maarten@en</name>
+		<name xml:lang="sv">Sint Maarten</name>
+		<name xml:lang="en">Sint Maarten</name>
 		<owl:sameAs>http://sws.geonames.org/7609695</owl:sameAs>
 		<alpha2>sx</alpha2>
 		<alpha3>sxm</alpha3>
@@ -2116,8 +2116,8 @@
 	</Country>
 	
 	<Country rdf:ID="sy">
-		<name>Syrien</name>
-		<name>Syria@en</name>
+		<name xml:lang="sv">Syrien</name>
+		<name xml:lang="en">Syria</name>
 		<owl:sameAs>http://sws.geonames.org/163843</owl:sameAs>
 		<alpha2>sy</alpha2>
 		<alpha3>syr</alpha3>
@@ -2126,8 +2126,8 @@
 	</Country>
 
 	<Country rdf:ID="sz">
-		<name>Swaziland</name>
-		<name>Swaziland@en</name>
+		<name xml:lang="sv">Swaziland</name>
+		<name xml:lang="en">Swaziland</name>
 		<owl:sameAs>http://sws.geonames.org/934841</owl:sameAs>
 		<alpha2>sz</alpha2>
 		<alpha3>swz</alpha3>
@@ -2136,8 +2136,8 @@
 	</Country>
 
 	<Country rdf:ID="tc">
-		<name>Turks och Caicosöarna</name>
-		<name>Turks and Caicos Islands@en</name>
+		<name xml:lang="sv">Turks och Caicosöarna</name>
+		<name xml:lang="en">Turks and Caicos Islands</name>
 		<owl:sameAs>http://sws.geonames.org/3576916</owl:sameAs>
 		<alpha2>tc</alpha2>
 		<alpha3>tca</alpha3>
@@ -2146,8 +2146,8 @@
 	</Country>
 
 	<Country rdf:ID="td">
-		<name>Tchad</name>
-		<name>Chad@en</name>
+		<name xml:lang="sv">Tchad</name>
+		<name xml:lang="en">Chad</name>
 		<owl:sameAs>http://sws.geonames.org/2434508</owl:sameAs>
 		<alpha2>td</alpha2>
 		<alpha3>tcd</alpha3>
@@ -2156,8 +2156,8 @@
 	</Country>
 
 	<Country rdf:ID="tf">
-		<name>Franska södra territorierna</name>
-		<name>French Southern Territories@en</name>
+		<name xml:lang="sv">Franska södra territorierna</name>
+		<name xml:lang="en">French Southern Territories</name>
 		<owl:sameAs>http://sws.geonames.org/1546748</owl:sameAs>
 		<alpha2>tf</alpha2>
 		<alpha3>atf</alpha3>
@@ -2166,8 +2166,8 @@
 	</Country>
 
 	<Country rdf:ID="tg">
-		<name>Togo</name>
-		<name>Togo@en</name>
+		<name xml:lang="sv">Togo</name>
+		<name xml:lang="en">Togo</name>
 		<owl:sameAs>http://sws.geonames.org/2363686</owl:sameAs>
 		<alpha2>tg</alpha2>
 		<alpha3>tgo</alpha3>
@@ -2176,8 +2176,8 @@
 	</Country>
 
 	<Country rdf:ID="th">
-		<name>Thailand</name>
-		<name>Thailand@en</name>
+		<name xml:lang="sv">Thailand</name>
+		<name xml:lang="en">Thailand</name>
 		<owl:sameAs>http://sws.geonames.org/1605651</owl:sameAs>
 		<alpha2>th</alpha2>
 		<alpha3>tha</alpha3>
@@ -2186,8 +2186,8 @@
 	</Country>
 
 	<Country rdf:ID="tj">
-		<name>Tadzjikistan</name>
-		<name>Tajikistan@en</name>
+		<name xml:lang="sv">Tadzjikistan</name>
+		<name xml:lang="en">Tajikistan</name>
 		<owl:sameAs>http://sws.geonames.org/1220409</owl:sameAs>
 		<alpha2>tj</alpha2>
 		<alpha3>tjk</alpha3>
@@ -2196,8 +2196,8 @@
 	</Country>
 
 	<Country rdf:ID="tk">
-		<name>Tokelau</name>
-		<name>Tokelau@en</name>
+		<name xml:lang="sv">Tokelau</name>
+		<name xml:lang="en">Tokelau</name>
 		<owl:sameAs>http://sws.geonames.org/4031074</owl:sameAs>
 		<alpha2>tk</alpha2>
 		<alpha3>tkl</alpha3>
@@ -2206,8 +2206,8 @@
 	</Country>
 
 	<Country rdf:ID="tl">
-		<name>Östtimor</name>
-		<name>East Timor@en</name>
+		<name xml:lang="sv">Östtimor</name>
+		<name xml:lang="en">East Timor</name>
 		<owl:sameAs>http://sws.geonames.org/1966436</owl:sameAs>
 		<alpha2>tl</alpha2>
 		<alpha3></alpha3>
@@ -2216,8 +2216,8 @@
 	</Country>
 
 	<Country rdf:ID="tm">
-		<name>Turkmenistan</name>
-		<name>Turkmenistan@en</name>
+		<name xml:lang="sv">Turkmenistan</name>
+		<name xml:lang="en">Turkmenistan</name>
 		<owl:sameAs>http://sws.geonames.org/1218197</owl:sameAs>
 		<alpha2>tm</alpha2>
 		<alpha3>tkm</alpha3>
@@ -2226,8 +2226,8 @@
 	</Country>
 
 	<Country rdf:ID="tn">
-		<name>Tunisien</name>
-		<name>Tunisia@en</name>
+		<name xml:lang="sv">Tunisien</name>
+		<name xml:lang="en">Tunisia</name>
 		<owl:sameAs>http://sws.geonames.org/2464461</owl:sameAs>
 		<alpha2>tn</alpha2>
 		<alpha3>tun</alpha3>
@@ -2236,8 +2236,8 @@
 	</Country>
 
 	<Country rdf:ID="to">
-		<name>Tonga</name>
-		<name>Tonga@en</name>
+		<name xml:lang="sv">Tonga</name>
+		<name xml:lang="en">Tonga</name>
 		<owl:sameAs>http://sws.geonames.org/4032283</owl:sameAs>
 		<alpha2>to</alpha2>
 		<alpha3>ton</alpha3>
@@ -2246,8 +2246,8 @@
 	</Country>
 
 	<Country rdf:ID="tr">
-		<name>Turkiet</name>
-		<name>Turkey@en</name>
+		<name xml:lang="sv">Turkiet</name>
+		<name xml:lang="en">Turkey</name>
 		<owl:sameAs>http://sws.geonames.org/298795</owl:sameAs>
 		<alpha2>tr</alpha2>
 		<alpha3>tur</alpha3>
@@ -2256,8 +2256,8 @@
 	</Country>
 
 	<Country rdf:ID="tt">
-		<name>Trinidad och Tobago</name>
-		<name>Trinidad and Tobago@en</name>
+		<name xml:lang="sv">Trinidad och Tobago</name>
+		<name xml:lang="en">Trinidad and Tobago</name>
 		<owl:sameAs>http://sws.geonames.org/3573591</owl:sameAs>
 		<alpha2>tt</alpha2>
 		<alpha3>tto</alpha3>
@@ -2266,8 +2266,8 @@
 	</Country>
 
 	<Country rdf:ID="tv">
-		<name>Tuvalu</name>
-		<name>Tuvalu@en</name>
+		<name xml:lang="sv">Tuvalu</name>
+		<name xml:lang="en">Tuvalu</name>
 		<owl:sameAs>http://sws.geonames.org/2110297</owl:sameAs>
 		<alpha2>tv</alpha2>
 		<alpha3>tuv</alpha3>
@@ -2276,8 +2276,8 @@
 	</Country>
 
 	<Country rdf:ID="tw">
-		<name>Taiwan</name>
-		<name>Taiwan@en</name>
+		<name xml:lang="sv">Taiwan</name>
+		<name xml:lang="en">Taiwan</name>
 		<owl:sameAs>http://sws.geonames.org/1668284</owl:sameAs>
 		<alpha2>tw</alpha2>
 		<alpha3>twn</alpha3>
@@ -2286,8 +2286,8 @@
 	</Country>
 
 	<Country rdf:ID="tz">
-		<name>Tanzania</name>
-		<name>Tanzania@en</name>
+		<name xml:lang="sv">Tanzania</name>
+		<name xml:lang="en">Tanzania</name>
 		<owl:sameAs>http://sws.geonames.org/149590</owl:sameAs>
 		<alpha2>tz</alpha2>
 		<alpha3>tza</alpha3>
@@ -2296,8 +2296,8 @@
 	</Country>
 
 	<Country rdf:ID="ua">
-		<name>Ukraina</name>
-		<name>Ukraine@en</name>
+		<name xml:lang="sv">Ukraina</name>
+		<name xml:lang="en">Ukraine</name>
 		<owl:sameAs>http://sws.geonames.org/690791</owl:sameAs>
 		<alpha2>ua</alpha2>
 		<alpha3>ukr</alpha3>
@@ -2306,8 +2306,8 @@
 	</Country>
 
 	<Country rdf:ID="ug">
-		<name>Uganda</name>
-		<name>Uganda@en</name>
+		<name xml:lang="sv">Uganda</name>
+		<name xml:lang="en">Uganda</name>
 		<owl:sameAs>http://sws.geonames.org/226074</owl:sameAs>
 		<alpha2>ug</alpha2>
 		<alpha3>uga</alpha3>
@@ -2316,8 +2316,8 @@
 	</Country>
 
 	<Country rdf:ID="um">
-		<name>USA:s yttre öar</name>
-		<name>United States Minor Outlying Islands@en</name>
+		<name xml:lang="sv">USA:s yttre öar</name>
+		<name xml:lang="en">United States Minor Outlying Islands</name>
 		<owl:sameAs>http://sws.geonames.org/5854968</owl:sameAs>
 		<alpha2>um</alpha2>
 		<alpha3>umi</alpha3>
@@ -2326,8 +2326,8 @@
 	</Country>
 
 	<Country rdf:ID="us">
-		<name>USA</name>
-		<name>United States@en</name>
+		<name xml:lang="sv">USA</name>
+		<name xml:lang="en">United States</name>
 		<owl:sameAs>http://sws.geonames.org/6252001</owl:sameAs>
 		<alpha2>us</alpha2>
 		<alpha3>usa</alpha3>
@@ -2336,8 +2336,8 @@
 	</Country>
 
 	<Country rdf:ID="uy">
-		<name>Uruguay</name>
-		<name>Uruguay@en</name>
+		<name xml:lang="sv">Uruguay</name>
+		<name xml:lang="en">Uruguay</name>
 		<owl:sameAs>http://sws.geonames.org/3439705</owl:sameAs>
 		<alpha2>uy</alpha2>
 		<alpha3>ury</alpha3>
@@ -2346,8 +2346,8 @@
 	</Country>
 
 	<Country rdf:ID="uz">
-		<name>Uzbekistan</name>
-		<name>Uzbekistan@en</name>
+		<name xml:lang="sv">Uzbekistan</name>
+		<name xml:lang="en">Uzbekistan</name>
 		<owl:sameAs>http://sws.geonames.org/1512440</owl:sameAs>
 		<alpha2>uz</alpha2>
 		<alpha3>uzb</alpha3>
@@ -2356,8 +2356,8 @@
 	</Country>
 
 	<Country rdf:ID="va">
-		<name>Vatikanstaten</name>
-		<name>Vatican@en</name>
+		<name xml:lang="sv">Vatikanstaten</name>
+		<name xml:lang="en">Vatican</name>
 		<owl:sameAs>http://sws.geonames.org/3164670</owl:sameAs>
 		<alpha2>va</alpha2>
 		<alpha3>vat</alpha3>
@@ -2366,8 +2366,8 @@
 	</Country>
 
 	<Country rdf:ID="vc">
-		<name>Saint Vincent och Grenadinerna</name>
-		<name>Saint Vincent and the Grenadines@en</name>
+		<name xml:lang="sv">Saint Vincent och Grenadinerna</name>
+		<name xml:lang="en">Saint Vincent and the Grenadines</name>
 		<owl:sameAs>http://sws.geonames.org/3577815</owl:sameAs>
 		<alpha2>vc</alpha2>
 		<alpha3>vct</alpha3>
@@ -2376,8 +2376,8 @@
 	</Country>
 
 	<Country rdf:ID="ve">
-		<name>Venezuela</name>
-		<name>Venezuela@en</name>
+		<name xml:lang="sv">Venezuela</name>
+		<name xml:lang="en">Venezuela</name>
 		<owl:sameAs>http://sws.geonames.org/3625428</owl:sameAs>
 		<alpha2>ve</alpha2>
 		<alpha3>ven</alpha3>
@@ -2386,8 +2386,8 @@
 	</Country>
 
 	<Country rdf:ID="wf">
-		<name>Wallis- och Futunaöarna</name>
-		<name>Wallis and Futuna@en</name>
+		<name xml:lang="sv">Wallis- och Futunaöarna</name>
+		<name xml:lang="en">Wallis and Futuna</name>
 		<owl:sameAs>http://sws.geonames.org/4034749</owl:sameAs>
 		<alpha2>wf</alpha2>
 		<alpha3>wlf</alpha3>
@@ -2396,8 +2396,8 @@
 	</Country>
 
 	<Country rdf:ID="vg">
-		<name>Brittiska Jungfruöarna</name>
-		<name>British Virgin Islands@en</name>
+		<name xml:lang="sv">Brittiska Jungfruöarna</name>
+		<name xml:lang="en">British Virgin Islands</name>
 		<owl:sameAs>http://sws.geonames.org/3577718</owl:sameAs>
 		<alpha2>vg</alpha2>
 		<alpha3>vgb</alpha3>
@@ -2406,8 +2406,8 @@
 	</Country>
 
 	<Country rdf:ID="vi">
-		<name>Jungfruöarna USA</name>
-		<name>U.S. Virgin Islands@en</name>
+		<name xml:lang="sv">Jungfruöarna USA</name>
+		<name xml:lang="en">U.S. Virgin Islands</name>
 		<owl:sameAs>http://sws.geonames.org/4796775</owl:sameAs>
 		<alpha2>vi</alpha2>
 		<alpha3>vir</alpha3>
@@ -2416,8 +2416,8 @@
 	</Country>
 
 	<Country rdf:ID="vn">
-		<name>Vietnam</name>
-		<name>Vietnam@en</name>
+		<name xml:lang="sv">Vietnam</name>
+		<name xml:lang="en">Vietnam</name>
 		<owl:sameAs>http://sws.geonames.org/1562822</owl:sameAs>
 		<alpha2>vn</alpha2>
 		<alpha3>vnm</alpha3>
@@ -2426,8 +2426,8 @@
 	</Country>
 
 	<Country rdf:ID="vu">
-		<name>Vanuatu</name>
-		<name>Vanuatu@en</name>
+		<name xml:lang="sv">Vanuatu</name>
+		<name xml:lang="en">Vanuatu</name>
 		<owl:sameAs>http://sws.geonames.org/2134431</owl:sameAs>
 		<alpha2>vu</alpha2>
 		<alpha3>vut</alpha3>
@@ -2436,8 +2436,8 @@
 	</Country>
 	
 	<Country rdf:ID="ws">
-		<name>Samoa</name>
-		<name>Samoa@en</name>
+		<name xml:lang="sv">Samoa</name>
+		<name xml:lang="en">Samoa</name>
 		<owl:sameAs>http://sws.geonames.org/4034894</owl:sameAs>
 		<alpha2>ws</alpha2>
 		<alpha3>wsm</alpha3>
@@ -2446,8 +2446,8 @@
 	</Country>
 
 	<Country rdf:ID="XK">
-		<name>Republiken Kosovo</name>
-		<name>Kosovo@en</name>
+		<name xml:lang="sv">Republiken Kosovo</name>
+		<name xml:lang="en">Kosovo</name>
 		<owl:sameAs>http://sws.geonames.org/831053</owl:sameAs>
 		<alpha2>xk</alpha2>
 		<alpha3>xkx</alpha3>
@@ -2456,8 +2456,8 @@
 	</Country>
 	
 	<Country rdf:ID="ye">
-		<name>Jemen</name>
-		<name>Yemen@en</name>
+		<name xml:lang="sv">Jemen</name>
+		<name xml:lang="en">Yemen</name>
 		<owl:sameAs>http://sws.geonames.org/69543</owl:sameAs>
 		<alpha2>ye</alpha2>
 		<alpha3>yem</alpha3>
@@ -2466,8 +2466,8 @@
 	</Country>
 
 	<Country rdf:ID="yt">
-		<name>Mayotte</name>
-		<name>Mayotte@en</name>
+		<name xml:lang="sv">Mayotte</name>
+		<name xml:lang="en">Mayotte</name>
 		<owl:sameAs>http://sws.geonames.org/1024031</owl:sameAs>
 		<alpha2>yt</alpha2>
 		<alpha3>myt</alpha3>
@@ -2476,8 +2476,8 @@
 	</Country>
 
 	<Country rdf:ID="za">
-		<name>Sydafrika</name>
-		<name>South Africa@en</name>
+		<name xml:lang="sv">Sydafrika</name>
+		<name xml:lang="en">South Africa</name>
 		<owl:sameAs>http://sws.geonames.org/953987</owl:sameAs>
 		<alpha2>za</alpha2>
 		<alpha3>zaf</alpha3>
@@ -2486,8 +2486,8 @@
 	</Country>
 
 	<Country rdf:ID="zm">
-		<name>Zambia</name>
-		<name>Zambia@en</name>
+		<name xml:lang="sv">Zambia</name>
+		<name xml:lang="en">Zambia</name>
 		<owl:sameAs>http://sws.geonames.org/895949</owl:sameAs>
 		<alpha2>zm</alpha2>
 		<alpha3>zmb</alpha3>
@@ -2496,8 +2496,8 @@
 	</Country>
 
 	<Country rdf:ID="zw">
-		<name>Zimbabwe</name>
-		<name>Zimbabwe@en</name>
+		<name xml:lang="sv">Zimbabwe</name>
+		<name xml:lang="en">Zimbabwe</name>
 		<owl:sameAs>http://sws.geonames.org/878675</owl:sameAs>
 		<alpha2>zw</alpha2>
 		<alpha3>zwe</alpha3>
