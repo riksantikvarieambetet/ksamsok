@@ -93,9 +93,11 @@ public class APIServlet extends HttpServlet {
 					method.performMethod();
 					keyManager.updateUsage(apiKey);
 				} catch (APIException e) {
+					resp.setStatus(400);
 					logger.error("queryString i requesten: "+ req.getQueryString());					
 					diagnostic(writer, method, stylesheet, e);
 				} catch (Exception e) {
+					resp.setStatus(500);
 					logger.error("queryString i requesten: "+ req.getQueryString());
 					logger.error("In doGet", e);
 				}

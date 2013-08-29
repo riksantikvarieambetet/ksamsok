@@ -91,7 +91,7 @@ public class CQL2Solr {
 
 			String relation = ctn.getRelation().getBase();
 			String index = translateIndexName(ctn.getIndex());
-
+			
 			if (!index.equals("")) {
 				String term = ctn.getTerm();
 				// result sets stöds ej
@@ -103,6 +103,12 @@ public class CQL2Solr {
 				if (term.indexOf('^') != -1) {
 					throw new DiagnosticException("ankartecken stöds ej",
 							"CQL2Solr.makeQuery", "unsupported", false);
+				}
+				// Om söktermen är en tom sträng så måste relationen vara 'lika med'
+				// Denna sökningen betyder hämta alla dokument som inte har detta fältet.
+				if (term.isEmpty() && !relation.equals("=")){
+					throw new BadParameterException("okänd boolesk operation",
+							"CQL2Solr.makeQuery", node.toString(), true);
 				}
 				// hantera virtuellt index
 				if (ContentHelper.isSpatialVirtualIndex(index)) {
@@ -367,22 +373,25 @@ public class CQL2Solr {
 	private static String createEscapedTermQuery(String indexName, String value, boolean isExact) throws DiagnosticException {
 		String termQuery;
 		if (!isExact) {
-			if (value.indexOf("?") != -1 || value.indexOf("*") != -1) {
-				if (ContentHelper.isISO8601DateYearIndex(indexName) ||
-						ContentHelper.isSpatialCoordinateIndex(indexName)) {
-					// inget stöd för wildcards för dessa fält
-					throw new DiagnosticException("Wildcardtecken stöds ej" +
-							" för index: " + indexName,
-							"CQL2Solr.createTermQuery", null, true);
+			// Om value är tom sträng så vill man ha alla dokument som inte har något indexName fält 
+			if (value.isEmpty()){
+				// Se sista posten i http://www.gossamer-threads.com/lists/lucene/java-dev/64663 för lucene syntaxen
+				termQuery=String.format("*:* -%s:[* TO *]", indexName);
+			} else {
+				if (value.indexOf("?") != -1 || value.indexOf("*") != -1) {
+					if (ContentHelper.isISO8601DateYearIndex(indexName) || ContentHelper.isSpatialCoordinateIndex(indexName)) {
+						// inget stöd för wildcards för dessa fält
+						throw new DiagnosticException("Wildcardtecken stöds ej" + " för index: " + indexName,"CQL2Solr.createTermQuery", null, true);
+					}
+					// notera att är det ett wildcard med passerar frågan inte nån analyzer så då måste
+					// värdet vara som det är i indexet, dvs omgjort till lowercase för lowercase + analyserade index tex
+					value = transformValueForField(indexName, value);
 				}
-				// notera att är det ett wildcard med passerar frågan inte nån analyzer så då måste
-				// värdet vara som det är i indexet, dvs omgjort till lowercase för lowercase + analyserade index tex
-				value = transformValueForField(indexName, value);
+				// gör escape av hela värdet och sen "unescape" på ev wildcards
+				value = ClientUtils.escapeQueryChars(value).replace("\\*", "*").replace("\\?", "?");
+				// sätt ihop
+				termQuery = indexName + ":" + value;
 			}
-			// gör escape av hela värdet och sen "unescape" på ev wildcards
-			value = ClientUtils.escapeQueryChars(value).replace("\\*", "*").replace("\\?", "?");
-			// sätt ihop
-			termQuery = indexName + ":" + value;
 		} else {
 			// sätt ihop och använd quotes för en exakt matchning
 			termQuery = indexName + ":\"" + value + "\"";
