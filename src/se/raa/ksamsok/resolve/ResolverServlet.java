@@ -137,7 +137,7 @@ public class ResolverServlet extends HttpServlet {
 		resp.setContentType("application/rdf+xml; charset=UTF-8");
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(new File("../web/schema/ksamsok.owl")));
+			br = new BufferedReader(new FileReader(new File("../../../web/schema/ksamsok.owl")));
 		} catch (FileNotFoundException e) {
 			logger.error("Can not find ../web/schema/ksamsok.owl: "+ e.getMessage());
 
