@@ -78,11 +78,6 @@
         <servlet-class>se.raa.ksamsok.ugchub.UGCHubEditServlet</servlet-class>
     </servlet>
 
-    <servlet>
-    	<servlet-name>Schema</servlet-name>
-    	<servlet-class>se.raa.ksamsok.SchemaServlet</servlet-class>
-    </servlet>
-
     <!--
         Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen
         (pathInfo) matchar [/resurser]/*/*/*[/*]. Övriga requests skickas vidare till
@@ -99,7 +94,6 @@
         <servlet-name>orgAdmin</servlet-name>
         <servlet-class>se.raa.ksamsok.organization.OrganizationServlet</servlet-class>
     </servlet>
-    
 
     <servlet-mapping>
         <servlet-name>API</servlet-name>
@@ -156,11 +150,6 @@
         <url-pattern>/sru</url-pattern>
     </servlet-mapping>
 
-	<servlet-mapping>
-		<servlet-name>Schema</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
-	
     <!--  matchar "allt" -->
     <servlet-mapping>
         <servlet-name>Resolver</servlet-name>

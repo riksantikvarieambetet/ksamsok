@@ -1,7 +1,12 @@
 package se.raa.ksamsok.resolve;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.URI;
 
 import javax.servlet.RequestDispatcher;
@@ -101,8 +106,13 @@ public class ResolverServlet extends HttpServlet {
 		throws ServletException, IOException {
 		String path = req.getPathInfo();
 		// special då resolverservlet "käkar" upp default-sidehanteringen
-		if ("/admin/".equals(path) || "/".equals(path)) {
+		if ("/admin/".equals(path)){
 			resp.sendRedirect("index.jsp");
+			return null;
+		}
+		
+		if ("/".equals(path)){
+			getSchema(req,resp);
 			return null;
 		}
 		// hantera "specialfallet" med /resurser/a/b/c[/d]
@@ -120,6 +130,47 @@ public class ResolverServlet extends HttpServlet {
 			forwardRequest(req, resp);
 		}
 		return pathComponents;
+	}
+
+	private void getSchema(HttpServletRequest req, HttpServletResponse resp) {
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/rdf+xml; charset=UTF-8");
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(new File("../web/schema/ksamsok.owl")));
+		} catch (FileNotFoundException e) {
+			logger.error("Can not find ../web/schema/ksamsok.owl: "+ e.getMessage());
+
+		}
+		Writer w = null;
+		try {
+			w = resp.getWriter();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String currentLine;
+		try {
+			while ((currentLine = br.readLine()) != null){
+				w.write(currentLine);
+				w.flush();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			w.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	/**
