@@ -107,7 +107,7 @@ public class ResolverServlet extends HttpServlet {
 		}
 		// specialfall för att returnera schemat
 		if ("/".equals(path)){
-			path = "ksamsok.owl";
+			path = path+"ksamsok.owl";
 		}
 		// hantera "specialfallet" med /resurser/a/b/c[/d]
 		if (path != null && path.startsWith("/resurser")) {
