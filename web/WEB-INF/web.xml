@@ -89,11 +89,16 @@
         <servlet-name>Resolver</servlet-name>
         <servlet-class>se.raa.ksamsok.resolve.ResolverServlet</servlet-class>
     </servlet>
+    <servlet>
+    	<servlet-name>Schema</servlet-name>
+    	<servlet-class>se.raa.ksamsok.SchemaServlet</servlet-class>
+    </servlet>
     
     <servlet>
         <servlet-name>orgAdmin</servlet-name>
         <servlet-class>se.raa.ksamsok.organization.OrganizationServlet</servlet-class>
     </servlet>
+    
 
     <servlet-mapping>
         <servlet-name>API</servlet-name>
@@ -150,6 +155,11 @@
         <url-pattern>/sru</url-pattern>
     </servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>Schema</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
     <!--  matchar "allt" -->
     <servlet-mapping>
         <servlet-name>Resolver</servlet-name>
