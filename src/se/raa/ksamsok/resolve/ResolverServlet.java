@@ -105,10 +105,6 @@ public class ResolverServlet extends HttpServlet {
 			resp.sendRedirect("index.jsp");
 			return null;
 		}
-		// specialfall för att returnera schemat
-		if ("/".equals(path)){
-			path = path+"ksamsok.owl";
-		}
 		// hantera "specialfallet" med /resurser/a/b/c[/d]
 		if (path != null && path.startsWith("/resurser")) {
 			path = path.substring(9);
