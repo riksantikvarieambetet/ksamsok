@@ -192,7 +192,7 @@ public class Search extends AbstractSearchMethod {
 		} catch(SolrServerException e) {
 			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.performMethod", e.getMessage(), true);
 		} catch (BadParameterException e) {
-			throw new DiagnosticException("Oväntat parserfel uppstod", "Search.performMethod", e.getMessage(), true);
+			throw new DiagnosticException(e.getMessage(), "Search.performMethod", e.getMessage(), true);
 		}
 	}
 
