@@ -109,7 +109,7 @@
         <copy overwrite="true" file="${basedir}/web/WEB-INF/slave.applicationContext.xml" tofile="${project.build.dir}/web/WEB-INF/applicationContext.xml" verbose="true"/>
     </target>
 
-    <target name="prepare-war" depends="utveckling">
+    <target name="prepare-war">
         <!-- kopiera men ta inte med slavkonf, den kommer ev med i senare steg -->
         <copy todir="${project.build.dir}/web">
             <fileset dir="${basedir}/web">
