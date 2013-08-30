@@ -74,8 +74,18 @@
     </servlet>
     
     <servlet>
-        <servlet-name>deleteugc</servlet-name>
+        <servlet-name>saveedit</servlet-name>
         <servlet-class>se.raa.ksamsok.ugchub.UGCHubEditServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>deleteugc</servlet-name>
+        <servlet-class>se.raa.ksamsok.ugchub.UGCHubDeleteServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>deleteedit</servlet-name>
+        <servlet-class>se.raa.ksamsok.ugchub.UGCHubDeleteServlet</servlet-class>
     </servlet>
 
     <!--
@@ -136,8 +146,18 @@
     </servlet-mapping>
     
     <servlet-mapping>
+        <servlet-name>saveedit</servlet-name>
+        <url-pattern>/admin/saveedit</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
         <servlet-name>deleteugc</servlet-name>
         <url-pattern>/admin/deleteugc</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>deleteedit</servlet-name>
+        <url-pattern>/admin/deleteedit</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

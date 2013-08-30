@@ -10,7 +10,7 @@ public class UGCHub {
 	private String userName;
 	private String applicationName;
 	private String tag;
-	private String coordinate;
+	private String coordinateValue;
 	private String comment;
 	private String relatedUri;
 	private String relationType;
@@ -58,10 +58,10 @@ public class UGCHub {
 		return this.tag;
 	}
 	public void setCoordinate(String coordinate) {
-		this.coordinate = coordinate;
+		this.coordinateValue = coordinate;
 	}
 	public String getCoordinate() {
-		return this.coordinate;
+		return this.coordinateValue;
 	}
 	public void setComment(String comment) {
 		this.comment = comment;

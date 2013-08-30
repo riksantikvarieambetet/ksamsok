@@ -11,56 +11,11 @@
 <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script type="text/javascript">
-  var UGC_NS = {
-	init : function () {
-		UGC_NS.initEditLinks();
-	},
-	
-	initEditLinks : function () {
-		$('.edit-dialog').on('click', function (e){
-	         e.preventDefault();
-	         var url = $(this).attr('href'),
-	             width = 500,
-	             height = 500;
-	         UGC_NS.loadDialog(url, width, height);
-	      });
-	      
-	    $('.delete-dialog').on('click', function (e){
-	         e.preventDefault();
-	         var url = $(this).attr('href'),
-                 width = 400,
-                 height = 300;
-	         UGC_NS.loadDialog(url, width, height);
-	      });
-	},
-	
-	loadDialog : function (url, width, height) {
-		$('#manageDialog').dialog({
-	            autoOpen: false,
-	            modal: true,
-	            draggable: false,
-	            resizable: false,
-	            width: width,
-	            height: height
-// 	            ,
-// 	            close: function (event, ui){
-// 	            	$(this).close();
-// 	            	UGC_NS.initEditLinks();
-// 	            }
-          }).load(url, function(){
-		    	
-		    }).dialog('open');
-	}
-  };
-  $(function (){
-	  UGC_NS.init();
-  });
-</script>
+<script type="text/javascript" src="../jsapi/ugcmanage.js"></script>
 </head>
 <body>
  <%@include file="nav_and_services_i.jsp" %>
- <div id="page">
+ <div id="ugcPage">
     <table>
       <tr>
         <th>ContentId</th>
@@ -86,27 +41,34 @@
           <td>${ugchub.tag}</td>
           <td>${ugchub.coordinate}</td>
           <td>${ugchub.comment}</td>
-          <td>${ugchub.relatedUri}</td>
+          <td class="cellMaxWidth">${ugchub.relatedUri}</td>
           <td>${ugchub.relationType}</td>
           <td>${ugchub.updateDate}</td>
           <td>${ugchub.imageUrl}</td>
-          <td style="border: none; padding: 5px;"><a href="editugc?id=${ugchub.id}" class="edit-dialog">Redigera</a></td>
-          <td style="border: none; padding: 5px;"><a href="deleteugc?id=${ugchub.id}" class="delete-dialog">Ta bort</a></td>
+          <td class="cellLinks">
+              <a href="editugc?id=${ugchub.id}" data-title="Redigera UGC-objekt" class="edit-dialog">Redigera</a><br />
+              <a href="deleteugc?id=${ugchub.id}" data-title="Ta bort UGC-objekt" class="delete-dialog">Ta bort</a>
+          </td>
         </tr>
       </c:forEach>
     </table>
-    <c:set var="p" value="${pageNumber}" />
-    <c:set var="l" value="${requestScope.pageDisp}" />
-    <c:set var="r" value="${l / 2}" />
-    <c:set var="t" value="${sessionScope.tot}" />
+    <c:set var="p" value="${sessionScope.pageNumber}" /> <%-- current page (1-based) --%>
+    <c:set var="l" value="${requestScope.numberOfPageLinks}" /> <%-- amount of page links to be displayed --%>
+    <c:set var="r" value="${l / 2}" /> <%-- minimum link range ahead/behind --%>
+    <c:set var="t" value="${sessionScope.tot}" /> <%-- total amount of pages --%>
     <c:set var="begin" value="${((p - r) > 0 ? ((p - r) < (t - l + 1) ? (p - r) : (t - l)) : 0) + 1}" />
     <c:set var="end" value="${(p + r) < t ? ((p + r) > l ? (p + r) : l) : t}" />
-    <c:forEach begin="${begin}" end="${end}" var="page">
-      <c:if test="${p == page}">
-        <c:set value="currentPage" var="cssClass"></c:set>
-      </c:if>
-      <a href="ugchub?pageNumber=${page}" class="cssClass">${page}</a>
-    </c:forEach>
+    <div id="paginateBlock">
+	    <c:forEach begin="${begin}" end="${end}" var="page">
+	      <c:if test="${p == page}">
+	        <c:set value="currentPageLink" var="cssClass"></c:set>
+	      </c:if>
+	      <c:if test="${p != page}">
+	        <c:set value="notCurrentPageLink" var="cssClass"></c:set>
+	      </c:if>
+	      <a href="ugchub?pageNumber=${page}" class="${cssClass}">${page}</a>
+	    </c:forEach>
+    </div>
   </div> 
   <div id="manageDialog"></div> 
 </body>

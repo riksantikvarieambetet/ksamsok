@@ -10,6 +10,35 @@ body
 	margin: 0px 10px 0px 10px;
 }
 
+#ugcPage
+{
+	margin: 0px 40px 0px 20px;
+	padding: 0px 30px 0px 0px;
+}
+
+.cellMaxWidth /*TODO!! This is not pretty, make tablecells not exceed width in a more general way*/
+{
+	max-width: 346px;
+}
+
+.cellLinks 
+{
+	border: none; 
+	padding: 5px;
+}
+
+#paginateBlock
+{
+	float: right;
+	padding-right: 20px;
+}
+
+#editContent input[type="text"],
+#deleteContent input[type="text"]
+{
+    width: 90%;
+}
+
 #head
 {
 	margin-bottom: 10px;

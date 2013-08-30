@@ -21,6 +21,7 @@ table
 {
     border-collapse: collapse;
     border-spacing: 0;
+    word-wrap: break-word;
 }
 
 fieldset, img
@@ -612,9 +613,18 @@ body
 	background-repeat:no-repeat;
 }
 
-.currentPage
+.currentPageLink
 {
     color: red;	
 }
+
+.notCurrentPageLink
+{
+	color: blue;
+}
+
+.error
+{
+	color: red;
 }
 

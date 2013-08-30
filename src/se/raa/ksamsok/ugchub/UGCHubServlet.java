@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -24,6 +25,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class UGCHubServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = Logger.getLogger(UGCHubServlet.class);
   
     @Autowired
 	private UGCHubManager ugcHubManager;
@@ -44,29 +46,41 @@ public class UGCHubServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		int limit = ugcHubManager.getLimit();
-		int offset = Integer.parseInt(req.getParameter("pageNumber") != null ? req.getParameter("pageNumber") : "1");
-		req.setAttribute("pageNumber", offset);
-		offset = (offset - 1) * limit; 
+		int offset = 1;
+//		int offset = Integer.parseInt(req.getParameter("pageNumber") != null ? req.getParameter("pageNumber") : "1");
+//		req.setAttribute("pageNumber", offset);
+//		offset = (offset - 1) * limit; 
 		int tot = 0;
 		HttpSession session = req.getSession();
 		
 		if (session.getAttribute("numberOfRelations") == null) {
 			try {
-				int count = ugcHubManager.getCount();
-				tot = (int) Math.ceil(((double)count)/(double)limit);
+				tot = ugcHubManager.getNumOfPages();
 				session.setAttribute("tot", tot);
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}
 		}
 		
+		if (session.getAttribute("pageNumber") == null) {
+			offset = Integer.parseInt((String) (session.getAttribute("pageNumber") != null ? session.getAttribute("pageNumber") : "1"));
+			session.setAttribute("pageNumber", offset);
+		} else {
+			int sessionPageNumber = (Integer) session.getAttribute("pageNumber");
+//			int reqPageNumber = Integer.parseInt(req.getParameter("pageNumber") != null ? req.getParameter("pageNumber") : "1");
+//			offset = sessionPageNumber == reqPageNumber ? sessionPageNumber : reqPageNumber;
+			offset = req.getParameter("pageNumber") != null ? Integer.parseInt(req.getParameter("pageNumber")) : sessionPageNumber;
+			session.setAttribute("pageNumber", offset);
+		}
+		
+		offset = (offset - 1) * limit;
+		
 		RequestDispatcher view = req.getRequestDispatcher("ugchub.jsp");
-		req.setAttribute("pageDisp", ugcHubManager.getPageDisp());
+		req.setAttribute("numberOfPageLinks", ugcHubManager.getPageDisp());
 		try {
 			req.setAttribute("ugcHubs", ugcHubManager.getUGCHubsPaginate(String.valueOf(limit), String.valueOf(offset)));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info("Got an error fetching paginated UGC-objects ", e);
 		}
 		
 		view.forward(req, resp);
