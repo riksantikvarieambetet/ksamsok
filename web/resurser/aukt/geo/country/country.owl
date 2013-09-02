@@ -15,7 +15,7 @@
  xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
     <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
-        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent/continent"/>
+        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent"/>
     </owl:Ontology>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ad">
         <rdf:type rdf:resource="&ksamsok;Country"/>
