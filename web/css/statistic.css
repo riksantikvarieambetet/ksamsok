@@ -33,6 +33,19 @@ body
 	padding-right: 20px;
 }
 
+.basePaginationLink,
+.basePaginationLink:hover
+{
+	text-decoration: none; 
+    font-size: 140%;
+}
+
+.passivePaginationLink
+{
+	cursor: none; 
+	color: grey;
+}
+
 #editContent input[type="text"],
 #deleteContent input[type="text"]
 {

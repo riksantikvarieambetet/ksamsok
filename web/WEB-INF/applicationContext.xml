@@ -5,9 +5,10 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:property-placeholder />
+	<context:property-placeholder location="classpath:apiconnect.properties" />
+	
 	<context:annotation-config />
-
+	
 	<!--
 		applikationskonf för en master/replikeringsmasternod
 		notera att om nåt läggs till/ändras här så kanske man vill uppdatera
@@ -56,28 +57,21 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 	<bean id="ugcHubManager" class="se.raa.ksamsok.ugchub.UGCHubManager" init-method="init" destroy-method="destroy">
-	    <!--
-	    TODO !! få det att funka med laddning av values från apiconnect.properties !!
-        <property name="scheme" value="http" />        
-        <property name="host" value="lx-ra-ugchubtest:8080" />
-        <property name="path" value="/UGC-hub/api" />
-        <property name="key" value="st4609gu77" />
-        <property name="method" value="retrieve" />
-        <property name="objectUri" value="all" />
-        <property name="scope" value="all" />
-        <property name="format" value="json" />
-        
-        
-        <property name="scheme" value="${ugchub.scheme}" />        
-        <property name="host" value="${ugchub.host}" />
-        <property name="path" value="${ugchub.path}" />
-        <property name="key" value="${ugchub.key}" />
-        <property name="method" value="${ugchub.method}" />
-        <property name="objecturi" value="${ugchub.objecturi}" />
-        <property name="scope" value="${ugchub.scope}" />
-        <property name="format" value="${ugchub.format}" />
-        <property name="limit" value="${ugchub.limit}" />
-         -->
+	    <constructor-arg index="0"><value>${ugchub.scheme}</value></constructor-arg>
+	    <constructor-arg index="1"><value>${ugchub.host}</value></constructor-arg>
+	    <constructor-arg index="2"><value>${ugchub.path}</value></constructor-arg>
+	    <constructor-arg index="3"><value>${ugchub.key}</value></constructor-arg>
+	    <constructor-arg index="4"><value>${ugchub.format}</value></constructor-arg>
+	    <constructor-arg index="5"><value>${ugchub.limit}</value></constructor-arg>
+	    <constructor-arg index="6"><value>${ugchub.method.retrieve}</value></constructor-arg>
+	    <constructor-arg index="7"><value>${ugchub.method.delete}</value></constructor-arg>
+	    <constructor-arg index="8"><value>${ugchub.method.update}</value></constructor-arg>
+	    <constructor-arg index="9"><value>${ugchub.method.objectall}</value></constructor-arg>
+	    <constructor-arg index="10"><value>${ugchub.method.scopeall}</value></constructor-arg>
+	    <constructor-arg index="11"><value>${ugchub.method.scopecount}</value></constructor-arg>
+	    <constructor-arg index="12"><value>${ugchub.method.relationall}</value></constructor-arg>
+	    <constructor-arg index="13"><value>${ugchub.method.scopesingle}</value></constructor-arg>
+	    <constructor-arg index="14"><value>${ugchub.method.pagedisp}</value></constructor-arg>
     </bean>
 
 </beans>

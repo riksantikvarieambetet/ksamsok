@@ -59,6 +59,18 @@
     <c:set var="begin" value="${((p - r) > 0 ? ((p - r) < (t - l + 1) ? (p - r) : (t - l)) : 0) + 1}" />
     <c:set var="end" value="${(p + r) < t ? ((p + r) > l ? (p + r) : l) : t}" />
     <div id="paginateBlock">
+        <c:if test="${p > 1}">
+          <a href="ugchub?pageNumber=1" class="basePaginationLink">‹</a>
+        </c:if>
+        <c:if test="${p == 1}">
+          <a href="#" class="basePaginationLink passivePaginationLink">‹</a>
+        </c:if>
+        <c:if test="${p > 1}">
+          <a href="ugchub?pageNumber=${p - 1}" class="basePaginationLink">«</a>
+        </c:if>
+        <c:if test="${p == 1}">
+          <a href="#" class="basePaginationLink passivePaginationLink">«</a>
+        </c:if>
 	    <c:forEach begin="${begin}" end="${end}" var="page">
 	      <c:if test="${p == page}">
 	        <c:set value="currentPageLink" var="cssClass"></c:set>
@@ -68,6 +80,18 @@
 	      </c:if>
 	      <a href="ugchub?pageNumber=${page}" class="${cssClass}">${page}</a>
 	    </c:forEach>
+	    <c:if test="${p < t}">
+	      <a href="ugchub?pageNumber=${p + 1}" class="basePaginationLink">»</a>
+	    </c:if>
+	    <c:if test="${p == t}">
+          <a href="#" class="basePaginationLink passivePaginationLink">»</a>
+        </c:if>
+        <c:if test="${p < t}">
+          <a href="ugchub?pageNumber=${t}" class="basePaginationLink">›</a>
+        </c:if>
+        <c:if test="${p == t}">
+          <a href="#" class="basePaginationLink passivePaginationLink">›</a>
+        </c:if>
     </div>
   </div> 
   <div id="manageDialog"></div> 

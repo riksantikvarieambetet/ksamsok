@@ -46,14 +46,11 @@ public class UGCHubServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		int limit = ugcHubManager.getLimit();
-		int offset = 1;
-//		int offset = Integer.parseInt(req.getParameter("pageNumber") != null ? req.getParameter("pageNumber") : "1");
-//		req.setAttribute("pageNumber", offset);
-//		offset = (offset - 1) * limit; 
+		int offset = 1; 
 		int tot = 0;
 		HttpSession session = req.getSession();
 		
-		if (session.getAttribute("numberOfRelations") == null) {
+		if (session.getAttribute("tot") == null) {
 			try {
 				tot = ugcHubManager.getNumOfPages();
 				session.setAttribute("tot", tot);
@@ -67,8 +64,6 @@ public class UGCHubServlet extends HttpServlet {
 			session.setAttribute("pageNumber", offset);
 		} else {
 			int sessionPageNumber = (Integer) session.getAttribute("pageNumber");
-//			int reqPageNumber = Integer.parseInt(req.getParameter("pageNumber") != null ? req.getParameter("pageNumber") : "1");
-//			offset = sessionPageNumber == reqPageNumber ? sessionPageNumber : reqPageNumber;
 			offset = req.getParameter("pageNumber") != null ? Integer.parseInt(req.getParameter("pageNumber")) : sessionPageNumber;
 			session.setAttribute("pageNumber", offset);
 		}

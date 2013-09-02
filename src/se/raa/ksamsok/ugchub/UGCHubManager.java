@@ -18,33 +18,49 @@ public class UGCHubManager extends HttpService {
 
 	private @Autowired ApplicationContext appContext;
 	private static final Logger logger = Logger.getLogger(UGCHubManager.class);
-	//TODO !! variabler skall få sina värden från apiconnect.properties via applicationContext.xml
-	private String scheme = "http";
-	private String host = "lx-ra-ugchubtest:8080";
-	private String path = "/UGC-hub/api";
-	private String key = "st4609gu77";
-	private String methodRetrieve = "retrieve";
-	private String methodDelete = "delete";
-	private String methodUpdate = "update";
-	private String objectUriAll = "all";
-	private String scopeAll = "all";
-	private String scopeCount = "count";
-	private String scopeRelationAll = "relationAll";
-	private String scopeSingle = "single";
-	private String format = "json";
-	private int limit = 15;
-	private int pageDisp = 5;
+	private String scheme;
+	private String host;
+	private String path;
+	private String key;
+	private String format;
+	private int limit;
+	private String methodRetrieve;
+	private String methodDelete;
+	private String methodUpdate;
+	private String objectUriAll;
+	private String scopeAll;
+	private String scopeCount;
+	private String scopeRelationAll;
+	private String scopeSingle;
+	private int pageDisp;
 	private String apiUri; 
 	
-	public UGCHubManager() {
-		apiUri = scheme + "://" + host + path + "?x-api=" + key + "&format=" + format;
+	public UGCHubManager(String scheme, String host, String path, String key, String format, int limit,
+			String methodRetrieve, String methodDelete, String methodUpdate, String objectUriAll,
+			String scopeAll, String scopeCount, String scopeRelationAll, String scopeSingle, int pageDisp) {
+		this.scheme = scheme;
+		this.host = host;
+		this.path = path;
+		this.key = key;
+		this.format = format;
+		this.limit = limit;
+		this.methodRetrieve = methodRetrieve;
+		this.methodDelete = methodDelete;
+		this.methodUpdate = methodUpdate;
+		this.objectUriAll = objectUriAll;
+		this.scopeAll = scopeAll;
+		this.scopeCount = scopeCount;
+		this.scopeRelationAll = scopeRelationAll;
+		this.scopeSingle = scopeSingle;
+		this.pageDisp = pageDisp;
+		apiUri = this.scheme + "://" + this.host + this.path + "?x-api=" + this.key + "&format=" + this.format;
 	}
 	
 	/*init and destroy methods ärvs från se.raa.ksamsok.util.HttpService*/
 	
 	/**
 	 * Get a single UGC-Hub record using api-method
-	 * @param contentId id of the ugc-hub object.
+	 * @param contentId id of the ugc-hub obload properties file valuesject.
 	 * @return a UGCHub-bean.
 	 * @throws Exception
 	 */
@@ -52,8 +68,8 @@ public class UGCHubManager extends HttpService {
 		Gson gson = new Gson();
 		UGCHub ugcHub = new UGCHub();
 		
-		apiUri += "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" + scopeSingle + "&contentId=" + String.valueOf(contentId);
-		String jsonResponse = basicJsonQuery(apiUri);
+		String gethub = apiUri + "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" + scopeSingle + "&contentId=" + String.valueOf(contentId);
+		String jsonResponse = basicJsonQuery(gethub);
 		jsonResponse = jsonResponse.substring(jsonResponse.indexOf("[") + 1, jsonResponse.lastIndexOf("]"));
 		ugcHub = gson.fromJson(jsonResponse, UGCHub.class);
 		
@@ -69,8 +85,8 @@ public class UGCHubManager extends HttpService {
 	public boolean deleteUGCHub(int contentId) throws Exception {
 		JsonParser parser = new JsonParser();
 		
-		apiUri += "&method=" + methodDelete + "&objectId=" + String.valueOf(contentId);
-		String jsonResponse = basicJsonQuery(apiUri);
+		String deletehub = apiUri + "&method=" + methodDelete + "&objectId=" + String.valueOf(contentId);
+		String jsonResponse = basicJsonQuery(deletehub);
 		JsonObject object = parser.parse(jsonResponse).getAsJsonObject();
 		JsonObject response = object.get("response").getAsJsonObject();
 		String result = response.get("result").getAsString();
@@ -86,8 +102,8 @@ public class UGCHubManager extends HttpService {
 	public List<UGCHub> getUGCHubs() throws Exception {
 		Gson gson = new Gson();
 		
-		apiUri += "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" + scopeAll;
-		String jsonResponse = basicJsonQuery(apiUri);
+		String gethubs = apiUri + "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" + scopeAll;
+		String jsonResponse = basicJsonQuery(gethubs);
 		jsonResponse = jsonResponse.substring(jsonResponse.indexOf("["), jsonResponse.lastIndexOf("]") + 1);
 		List<UGCHub> ugcHubs = gson.fromJson(jsonResponse, new TypeToken<List<UGCHub>>(){}.getType());
 		
@@ -104,10 +120,10 @@ public class UGCHubManager extends HttpService {
 	public List<UGCHub> getUGCHubsPaginate(String limit, String offset) throws Exception {
 		Gson gson = new Gson();
 		
-		apiUri += "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" 
-		       + scopeAll + "&maxCount=" + limit + "&selectFrom=" + offset;
+		String paginate = apiUri + "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" 
+			       + scopeAll + "&maxCount=" + limit + "&selectFrom=" + offset;
 		
-		String jsonResponse = basicJsonQuery(apiUri);
+		String jsonResponse = basicJsonQuery(paginate);
 		jsonResponse = jsonResponse.substring(jsonResponse.indexOf("["), jsonResponse.lastIndexOf("]") + 1);
 		List<UGCHub> ugcHubs = gson.fromJson(jsonResponse, new TypeToken<List<UGCHub>>(){}.getType());
 		
@@ -122,8 +138,8 @@ public class UGCHubManager extends HttpService {
 	public int getCount() throws Exception {
 		JsonParser parser = new JsonParser();
 		
-		apiUri += "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" + scopeCount;
-		String jsonResponse = basicJsonQuery(apiUri);
+		String count = apiUri + "&method=" + methodRetrieve + "&objectUri=" + objectUriAll + "&scope=" + scopeCount;
+		String jsonResponse = basicJsonQuery(count);
 		
 		JsonObject jo = parser.parse(jsonResponse).getAsJsonObject();
 		jo = jo.getAsJsonObject("response");
@@ -153,13 +169,13 @@ public class UGCHubManager extends HttpService {
 	public boolean updateUGCHub(UGCHub ugcHub) throws Exception {
 		JsonParser parser = new JsonParser();
 		
-		apiUri += "&method=" + methodUpdate + "&objectUri=" + ugcHub.getObjectUri() 
+		String update = apiUri + "&method=" + methodUpdate + "&objectUri=" + ugcHub.getObjectUri() 
 				        + "&tag=" + ugcHub.getTag() + "&coordinate=" + ugcHub.getCoordinate() 
 				        + "&comment=" + ugcHub.getComment() + "&relatedTo=" + ugcHub.getRelatedUri() 
 				        + "&relationType=" + ugcHub.getRelationType() + "&imageUrl=" + ugcHub.getImageUrl() 
 				        + "&objectId=" + String.valueOf(ugcHub.getId()) + "&scope=" + scopeRelationAll;
 		
-		String jsonResponse = basicJsonQuery(apiUri);
+		String jsonResponse = basicJsonQuery(update);
 		JsonObject jo = parser.parse(jsonResponse).getAsJsonObject();
 		jo = jo.getAsJsonObject("response");
 		String result = jo.get("result").getAsString();		
