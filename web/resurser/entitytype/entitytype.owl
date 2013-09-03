@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY ksamsok "http://kulturarvsdata.se/ksamsok#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/entitytype/entitytype#"
+     xml:base="http://kulturarvsdata.se/resurser/entitytype/entitytype"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype">
+        <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
+    </owl:Ontology>
+    
+
+
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#object">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Objekt/föremål</ksamsok:name>
+        <ksamsok:description>Information om t.ex. museiföremål. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#photo">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Foto</ksamsok:name>
+        <ksamsok:description>Information om fotografier. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#interactiveResource">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Bearbetning/interaktiv resurs</ksamsok:name>
+        <ksamsok:description>Information om en interaktiv resurs som texter, Internet-sidor och multimedia. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#video">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Film/video</ksamsok:name>
+        <ksamsok:description>Information om rörlig bild. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#sound">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Ljud</ksamsok:name>
+        <ksamsok:description>Information om ljudupptagning/inspelning. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#document">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Dokument</ksamsok:name>
+        <ksamsok:description>Information om ett dokument eller arkivhandling som finns tillgänglig i fulltextformat. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#book">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Bok</ksamsok:name>
+        <ksamsok:description>Information om en publikation som finns tillgänglig i fulltextformat. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#drawing">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Teckning</ksamsok:name>
+        <ksamsok:description>Information om en teckning. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#art">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Konstverk</ksamsok:name>
+        <ksamsok:description>Information om ett konstverk. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#blueprint">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Ritning</ksamsok:name>
+        <ksamsok:description>Information om en ritning t.ex. en arkitektritning. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#map">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Karta</ksamsok:name>
+        <ksamsok:description>Information om en karta. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#collection">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Samling</ksamsok:name>
+        <ksamsok:description>Information om en samling eller annat urval. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#site">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Miljö</ksamsok:name>
+        <ksamsok:description>Ersätts av Kulturmiljö men finns kvar för bakåtkompatibilitet. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#culturallandscape">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Kulturmiljö</ksamsok:name>
+        <ksamsok:description>Information om en större miljö som t.ex. innefattar fornlämningar och/eller bebyggelse (exempelvis en kyrkomiljö eller ett riksintresse). Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#monument">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Kulturlämning</ksamsok:name>
+        <ksamsok:description>Information om en kulturlämning i kulturlandskapet t.ex. en husgrund eller ett fornminne. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#building">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Byggnad</ksamsok:name>
+        <ksamsok:description>Information om en byggnad. Underkategori till Fysiskt ting.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#person">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Person</ksamsok:name>
+        <ksamsok:description>Information om en person. Underkategori till Agent.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#organization">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Organisation</ksamsok:name>
+        <ksamsok:description>Information om en organisation. Underkategori till Agent.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#group">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Grupp</ksamsok:name>
+        <ksamsok:description>Information om en grupp personer (t.ex. konstnärsgrupp). Underkategori till Agent.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#event">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Historisk händelse</ksamsok:name>
+        <ksamsok:description>Information om en händelse, historisk eller nutida. Underkategori till Event.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#display">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Utställning</ksamsok:name>
+        <ksamsok:description>Information om en fysisk eller digital utställning. Underkategori till Event.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#concept">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Koncept</ksamsok:name>
+        <ksamsok:description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</ksamsok:description>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
