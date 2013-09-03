@@ -1010,7 +1010,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#hu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ungern</ksamsok:name>
-        <ksamsok:name xml:lang="s&gt;">Hungary</ksamsok:name>
+        <ksamsok:name xml:lang="en">Hungary</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/719819</rdfs:seeAlso>
         <ksamsok:alpha2>hu</ksamsok:alpha2>
         <ksamsok:alpha3>hun</ksamsok:alpha3>
