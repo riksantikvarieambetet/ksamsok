@@ -23,30 +23,63 @@
     
 
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/subject/subject#site">
-        <rdf:type rdf:resource="&ksamsok;EntityType"/>
-        <ksamsok:name>Miljö</ksamsok:name>
-        <ksamsok:description>Anger att objektet/tjänsten innehåller miljö- eller platsbeskrivningar eller geografiska företeelser som fornlämningar eller bebyggelse.</ksamsok:description>
-    </owl:NamedIndividual>
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kulturarvsdata.se/resurser/subject/subject#archaeology -->
+
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/subject/subject#archaeology">
-        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <rdf:type rdf:resource="&ksamsok;Subject"/>
         <ksamsok:name>Arkeologi</ksamsok:name>
         <ksamsok:description>Anger att objektet/tjänsten innehåller information om arkeologiskt (jordfunnet) material.</ksamsok:description>
     </owl:NamedIndividual>
+    
+
+
+    <!-- http://kulturarvsdata.se/resurser/subject/subject#art -->
+
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/subject/subject#art">
-        <rdf:type rdf:resource="&ksamsok;EntityType"/>
-        <ksamsok:name>Konst</ksamsok:name>
+        <rdf:type rdf:resource="&ksamsok;Subject"/>
         <ksamsok:description>Anger att objektet/tjänsten innehåller konst.</ksamsok:description>
+        <ksamsok:name>Konst</ksamsok:name>
     </owl:NamedIndividual>
+    
+
+
+    <!-- http://kulturarvsdata.se/resurser/subject/subject#culturalHistory -->
+
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/subject/subject#culturalHistory">
-        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <rdf:type rdf:resource="&ksamsok;Subject"/>
         <ksamsok:name>Kulturhistoria</ksamsok:name>
         <ksamsok:description>Anger att objektet/tjänsten innehåller kulturhistoria.</ksamsok:description>
     </owl:NamedIndividual>
+    
+
+
+    <!-- http://kulturarvsdata.se/resurser/subject/subject#naturalHistory -->
+
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/subject/subject#naturalHistory">
-        <rdf:type rdf:resource="&ksamsok;EntityType"/>
-        <ksamsok:name>Natur</ksamsok:name>
+        <rdf:type rdf:resource="&ksamsok;Subject"/>
         <ksamsok:description>Anger att objektet/tjänsten innehåller information om naturlämningar eller ekofakter.</ksamsok:description>
+        <ksamsok:name>Natur</ksamsok:name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://kulturarvsdata.se/resurser/subject/subject#site -->
+
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/subject/subject#site">
+        <rdf:type rdf:resource="&ksamsok;Subject"/>
+        <ksamsok:name>Miljö</ksamsok:name>
+        <ksamsok:description>Anger att objektet/tjänsten innehåller miljö- eller platsbeskrivningar eller geografiska företeelser som fornlämningar eller bebyggelse.</ksamsok:description>
     </owl:NamedIndividual>
 </rdf:RDF>
 
