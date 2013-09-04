@@ -1,1 +1,1 @@
--Xmx1536m -XX:MaxPermSize=128m -XX:SoftRefLRUPolicyMSPerMB=1000 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:+CMSIncrementalPacing -XX:CMSIncrementalDutyCycleMin=0 -XX:CMSIncrementalDutyCycle=10
+-Xmx1536m -XX:MaxPermSize=128m
