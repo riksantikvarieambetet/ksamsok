@@ -5,10 +5,9 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:property-placeholder location="classpath:ugcconnect.properties" />
-	
+	<context:property-placeholder />
 	<context:annotation-config />
-	
+
 	<!--
 		applikationskonf för en master/replikeringsmasternod
 		notera att om nåt läggs till/ändras här så kanske man vill uppdatera
@@ -56,10 +55,5 @@
 	<bean id="organizationManager" class="se.raa.ksamsok.organization.OrganizationManager">
 		<constructor-arg ref="dataSource" />
 	</bean>
-	<bean id="ugcHubManager" class="se.raa.ksamsok.ugchub.UGCHubManager">
-	    <constructor-arg index="0"><value>${ugchub.scheme}</value></constructor-arg>
-	    <constructor-arg index="1"><value>${ugchub.host}</value></constructor-arg>
-	    <constructor-arg index="2"><value>${ugchub.path}</value></constructor-arg>
-    </bean>
 
 </beans>
