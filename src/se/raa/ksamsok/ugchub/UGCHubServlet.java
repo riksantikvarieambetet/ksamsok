@@ -45,38 +45,9 @@ public class UGCHubServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		int limit = ugcHubManager.getLimit();
-		int offset = 1; 
-		int tot = 0;
-		HttpSession session = req.getSession();
-		
-		if (session.getAttribute("tot") == null) {
-			try {
-				tot = ugcHubManager.getNumOfPages();
-				session.setAttribute("tot", tot);
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}
-		}
-		
-		if (session.getAttribute("pageNumber") == null) {
-			offset = Integer.parseInt((String) (session.getAttribute("pageNumber") != null ? session.getAttribute("pageNumber") : "1"));
-			session.setAttribute("pageNumber", offset);
-		} else {
-			int sessionPageNumber = (Integer) session.getAttribute("pageNumber");
-			offset = req.getParameter("pageNumber") != null ? Integer.parseInt(req.getParameter("pageNumber")) : sessionPageNumber;
-			session.setAttribute("pageNumber", offset);
-		}
-		
-		offset = (offset - 1) * limit;
-		
+		String ugcUrl = ugcHubManager.getScheme() + "://" + ugcHubManager.getHost() + ugcHubManager.getPath();
+		req.setAttribute("ugcUrl", ugcUrl);
 		RequestDispatcher view = req.getRequestDispatcher("ugchub.jsp");
-		req.setAttribute("numberOfPageLinks", ugcHubManager.getPageDisp());
-		try {
-			req.setAttribute("ugcHubs", ugcHubManager.getUGCHubsPaginate(String.valueOf(limit), String.valueOf(offset)));
-		} catch (Exception e) {
-			logger.info("Got an error fetching paginated UGC-objects ", e);
-		}
 		
 		view.forward(req, resp);
 	}
