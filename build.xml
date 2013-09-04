@@ -117,8 +117,6 @@
                 <exclude name="WEB-INF/slave.applicationContext.xml" />
             </fileset>
         </copy>
-    	<!--Flyttar schemat så att man kommer åt det ifrån kulturarvsdata.se/ksamsok -->
-    	<move file="${project.build.dir}/web/schema/ksamsok.owl" tofile="${project.build.dir}/web/ksamsok" />
     </target>
 
     <!-- Bygger en WAR -->
