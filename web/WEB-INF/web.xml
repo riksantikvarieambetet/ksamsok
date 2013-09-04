@@ -63,11 +63,6 @@
         <servlet-class>se.raa.ksamsok.statistic.StatisticServlet</servlet-class>
     </servlet>
     
-    <servlet>
-        <servlet-name>ugchub</servlet-name>
-        <servlet-class>se.raa.ksamsok.ugchub.UGCHubServlet</servlet-class>
-    </servlet>
-
     <!--
         Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen
         (pathInfo) matchar [/resurser]/*/*/*[/*]. Övriga requests skickas vidare till
@@ -115,11 +110,6 @@
         <url-pattern>/admin/statistic</url-pattern>
     </servlet-mapping>
     
-    <servlet-mapping>
-        <servlet-name>ugchub</servlet-name>
-        <url-pattern>/admin/ugchub</url-pattern>
-    </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>orgAdmin</servlet-name>
         <url-pattern>/admin/orgAdmin</url-pattern>
