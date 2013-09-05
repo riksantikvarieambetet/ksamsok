@@ -7,20 +7,20 @@
     <!ENTITY ksamsok "http://kulturarvsdata.se/ksamsok#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-    <!ENTITY municipality "http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#" >
+    <!ENTITY municipality "http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#" >
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#"
-     xml:base="http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#"
+     xml:base="http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:municipality="http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#"
+     xmlns:municipality="http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality">
-        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aut/geo/county/county"/>
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality">
+        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county/county"/>
     </owl:Ontology>
     
 
@@ -36,11 +36,11 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#county -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#county -->
 
     <owl:ObjectProperty rdf:about="&municipality;county">
         <rdfs:comment></rdfs:comment>
-        <rdfs:range rdf:resource="http://kulturarvsdata.se/resurser/aut/geo/county/county#County"/>
+        <rdfs:range rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county/county#County"/>
         <rdfs:domain rdf:resource="&municipality;Municipality"/>
     </owl:ObjectProperty>
     
@@ -57,13 +57,13 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#Municipality -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#Municipality -->
 
     <owl:Class rdf:about="&municipality;Municipality">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&municipality;county"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/resurser/aut/geo/county/county#County"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county/county#County"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -89,7 +89,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0114 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0114 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0114">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -99,7 +99,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0115 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0115 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0115">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -109,7 +109,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0117 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0117 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0117">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -119,7 +119,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0120 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0120 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0120">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -129,7 +129,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0123 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0123 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0123">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -139,7 +139,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0125 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0125 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0125">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -149,7 +149,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0126 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0126 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0126">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -159,7 +159,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0127 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0127 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0127">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -169,7 +169,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0128 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0128 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0128">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -179,7 +179,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0136 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0136 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0136">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -189,7 +189,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0138 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0138 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0138">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -199,7 +199,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0139 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0139 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0139">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -209,7 +209,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0140 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0140 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0140">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -219,7 +219,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0160 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0160 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0160">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -229,7 +229,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0162 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0162 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0162">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -239,7 +239,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0163 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0163 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0163">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -249,7 +249,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0180 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0180 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0180">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -259,7 +259,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0181 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0181 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0181">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -269,7 +269,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0182 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0182 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0182">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -279,7 +279,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0183 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0183 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0183">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -289,7 +289,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0184 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0184 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0184">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -299,7 +299,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0186 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0186 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0186">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -309,7 +309,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0187 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0187 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0187">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -319,7 +319,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0188 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0188 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0188">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -329,7 +329,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0191 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0191 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0191">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -339,7 +339,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0192 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0192 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0192">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -349,7 +349,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0305 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0305 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0305">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -359,7 +359,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0319 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0319 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0319">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -369,7 +369,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0330 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0330 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0330">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -379,7 +379,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0331 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0331 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0331">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -389,7 +389,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0360 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0360 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0360">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -399,7 +399,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0380 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0380 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0380">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -409,7 +409,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0381 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0381 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0381">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -419,7 +419,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0382 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0382 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0382">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -429,7 +429,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0428 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0428 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0428">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -439,7 +439,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0461 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0461 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0461">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -449,7 +449,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0480 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0480 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0480">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -459,7 +459,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0481 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0481 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0481">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -469,7 +469,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0482 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0482 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0482">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -479,7 +479,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0483 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0483 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0483">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -489,7 +489,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0484 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0484 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0484">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -499,7 +499,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0486 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0486 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0486">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -509,7 +509,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0488 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0488 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0488">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -519,7 +519,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0509 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0509 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0509">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -529,7 +529,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0512 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0512 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0512">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -539,7 +539,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0513 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0513 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0513">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -549,7 +549,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0560 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0560 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0560">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -559,7 +559,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0561 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0561 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0561">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -569,7 +569,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0562 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0562 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0562">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -579,7 +579,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0563 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0563 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0563">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -589,7 +589,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0580 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0580 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0580">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -599,7 +599,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0581 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0581 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0581">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -609,7 +609,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0582 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0582 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0582">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -619,7 +619,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0583 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0583 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0583">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -629,7 +629,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0584 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0584 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0584">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -639,7 +639,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0586 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0586 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0586">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -649,7 +649,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0604 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0604 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0604">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -659,7 +659,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0617 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0617 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0617">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -669,7 +669,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0642 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0642 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0642">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -679,7 +679,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0643 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0643 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0643">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -689,7 +689,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0662 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0662 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0662">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -699,7 +699,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0665 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0665 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0665">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -709,7 +709,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0680 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0680 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0680">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -719,7 +719,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0682 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0682 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0682">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -729,7 +729,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0683 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0683 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0683">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -739,7 +739,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0684 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0684 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0684">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -749,7 +749,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0685 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0685 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0685">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -759,7 +759,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0686 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0686 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0686">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -769,7 +769,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0687 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0687 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0687">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -779,7 +779,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0760 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0760 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0760">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -789,7 +789,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0761 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0761 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0761">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -799,7 +799,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0763 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0763 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0763">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -809,7 +809,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0764 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0764 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0764">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -819,7 +819,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0765 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0765 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0765">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -829,7 +829,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0767 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0767 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0767">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -839,7 +839,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0780 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0780 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0780">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -849,7 +849,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0781 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0781 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0781">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -859,7 +859,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0821 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0821 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0821">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -869,7 +869,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0834 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0834 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0834">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -879,7 +879,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0840 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0840 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0840">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -889,7 +889,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0860 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0860 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0860">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -899,7 +899,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0861 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0861 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0861">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -909,7 +909,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0862 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0862 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0862">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -919,7 +919,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0880 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0880 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0880">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -929,7 +929,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0881 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0881 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0881">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -939,7 +939,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0882 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0882 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0882">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -949,7 +949,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0883 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0883 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0883">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -959,7 +959,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0884 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0884 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0884">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -969,7 +969,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0885 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0885 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0885">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -979,7 +979,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#0980 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#0980 -->
 
     <owl:NamedIndividual rdf:about="&municipality;0980">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -989,7 +989,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1060 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1060 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1060">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -999,7 +999,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1080 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1080 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1080">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1009,7 +1009,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1081 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1081 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1081">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1019,7 +1019,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1082 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1082 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1082">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1029,7 +1029,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1083 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1083 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1083">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1039,7 +1039,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1214 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1214 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1214">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1049,7 +1049,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1230 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1230 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1230">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1059,7 +1059,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1231 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1231 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1231">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1069,7 +1069,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1233 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1233 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1233">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1079,7 +1079,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1256 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1256 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1256">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1089,7 +1089,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1257 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1257 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1257">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1099,7 +1099,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1260 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1260 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1260">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1109,7 +1109,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1261 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1261 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1261">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1119,7 +1119,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1262 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1262 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1262">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1129,7 +1129,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1263 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1263 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1263">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1139,7 +1139,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1264 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1264 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1264">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1149,7 +1149,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1265 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1265 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1265">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1159,7 +1159,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1266 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1266 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1266">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1169,7 +1169,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1267 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1267 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1267">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1179,7 +1179,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1270 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1270 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1270">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1189,7 +1189,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1272 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1272 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1272">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1199,7 +1199,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1273 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1273 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1273">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1209,7 +1209,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1275 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1275 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1275">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1219,7 +1219,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1276 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1276 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1276">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1229,7 +1229,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1277 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1277 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1277">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1239,7 +1239,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1278 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1278 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1278">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1249,7 +1249,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1280 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1280 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1280">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1259,7 +1259,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1281 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1281 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1281">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1269,7 +1269,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1282 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1282 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1282">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1279,7 +1279,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1283 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1283 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1283">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1289,7 +1289,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1284 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1284 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1284">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1299,7 +1299,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1285 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1285 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1285">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1309,7 +1309,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1286 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1286 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1286">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1319,7 +1319,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1287 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1287 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1287">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1329,7 +1329,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1290 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1290 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1290">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1339,7 +1339,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1291 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1291 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1291">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1349,7 +1349,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1292 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1292 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1292">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1359,7 +1359,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1293 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1293 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1293">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1369,7 +1369,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1315 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1315 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1315">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1379,7 +1379,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1380 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1380 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1380">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1389,7 +1389,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1381 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1381 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1381">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1399,7 +1399,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1382 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1382 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1382">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1409,7 +1409,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1383 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1383 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1383">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1419,7 +1419,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1384 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1384 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1384">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1429,7 +1429,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1401 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1401 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1401">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1439,7 +1439,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1402 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1402 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1402">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1449,7 +1449,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1407 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1407 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1407">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1459,7 +1459,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1415 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1415 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1415">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1469,7 +1469,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1419 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1419 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1419">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1479,7 +1479,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1421 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1421 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1421">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1489,7 +1489,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1427 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1427 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1427">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1499,7 +1499,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1430 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1430 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1430">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1509,7 +1509,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1435 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1435 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1435">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1519,7 +1519,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1438 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1438 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1438">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1529,7 +1529,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1439 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1439 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1439">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1539,7 +1539,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1440 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1440 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1440">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1549,7 +1549,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1441 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1441 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1441">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1559,7 +1559,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1442 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1442 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1442">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1569,7 +1569,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1443 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1443 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1443">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1579,7 +1579,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1444 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1444 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1444">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1589,7 +1589,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1445 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1445 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1445">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1599,7 +1599,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1446 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1446 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1446">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1609,7 +1609,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1447 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1447 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1447">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1619,7 +1619,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1452 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1452 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1452">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1629,7 +1629,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1460 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1460 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1460">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1639,7 +1639,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1461 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1461 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1461">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1649,7 +1649,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1462 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1462 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1462">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1659,7 +1659,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1463 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1463 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1463">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1669,7 +1669,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1465 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1465 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1465">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1679,7 +1679,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1466 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1466 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1466">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1689,7 +1689,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1470 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1470 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1470">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1699,7 +1699,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1471 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1471 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1471">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1709,7 +1709,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1472 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1472 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1472">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1719,7 +1719,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1473 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1473 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1473">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1729,7 +1729,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1480 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1480 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1480">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1739,7 +1739,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1481 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1481 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1481">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1749,7 +1749,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1482 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1482 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1482">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1759,7 +1759,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1484 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1484 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1484">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1769,7 +1769,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1485 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1485 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1485">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1779,7 +1779,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1486 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1486 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1486">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1789,7 +1789,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1487 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1487 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1487">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1799,7 +1799,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1488 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1488 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1488">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1809,7 +1809,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1489 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1489 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1489">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1819,7 +1819,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1490 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1490 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1490">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1829,7 +1829,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1491 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1491 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1491">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1839,7 +1839,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1492 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1492 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1492">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1849,7 +1849,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1493 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1493 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1493">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1859,7 +1859,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1494 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1494 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1494">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1869,7 +1869,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1495 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1495 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1495">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1879,7 +1879,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1496 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1496 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1496">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1889,7 +1889,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1497 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1497 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1497">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1899,7 +1899,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1498 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1498 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1498">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1909,7 +1909,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1499 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1499 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1499">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1919,7 +1919,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1715 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1715 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1715">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1929,7 +1929,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1730 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1730 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1730">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1939,7 +1939,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1737 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1737 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1737">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1949,7 +1949,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1760 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1760 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1760">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1959,7 +1959,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1761 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1761 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1761">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1969,7 +1969,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1762 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1762 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1762">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1979,7 +1979,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1763 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1763 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1763">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1989,7 +1989,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1764 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1764 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1764">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -1999,7 +1999,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1765 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1765 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1765">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2009,7 +2009,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1766 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1766 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1766">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2019,7 +2019,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1780 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1780 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1780">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2029,7 +2029,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1781 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1781 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1781">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2039,7 +2039,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1782 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1782 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1782">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2049,7 +2049,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1783 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1783 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1783">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2059,7 +2059,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1784 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1784 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1784">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2069,7 +2069,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1785 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1785 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1785">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2079,7 +2079,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1814 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1814 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1814">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2089,7 +2089,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1860 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1860 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1860">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2099,7 +2099,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1861 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1861 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1861">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2109,7 +2109,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1862 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1862 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1862">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2119,7 +2119,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1863 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1863 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1863">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2129,7 +2129,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1864 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1864 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1864">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2139,7 +2139,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1880 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1880 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1880">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2149,7 +2149,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1881 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1881 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1881">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2159,7 +2159,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1882 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1882 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1882">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2169,7 +2169,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1883 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1883 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1883">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2179,7 +2179,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1884 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1884 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1884">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2189,7 +2189,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1885 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1885 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1885">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2199,7 +2199,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1904 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1904 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1904">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2209,7 +2209,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1907 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1907 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1907">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2219,7 +2219,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1960 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1960 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1960">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2229,7 +2229,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1961 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1961 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1961">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2239,7 +2239,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1962 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1962 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1962">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2249,7 +2249,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1980 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1980 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1980">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2259,7 +2259,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1981 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1981 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1981">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2269,7 +2269,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1982 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1982 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1982">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2279,7 +2279,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1983 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1983 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1983">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2289,7 +2289,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#1984 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#1984 -->
 
     <owl:NamedIndividual rdf:about="&municipality;1984">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2299,7 +2299,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2021 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2021 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2021">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2309,7 +2309,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2023 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2023 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2023">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2319,7 +2319,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2026 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2026 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2026">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2329,7 +2329,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2029 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2029 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2029">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2339,7 +2339,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2031 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2031 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2031">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2349,7 +2349,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2034 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2034 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2034">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2359,7 +2359,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2039 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2039 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2039">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2369,7 +2369,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2061 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2061 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2061">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2379,7 +2379,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2062 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2062 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2062">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2389,7 +2389,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2080 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2080 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2080">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2399,7 +2399,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2081 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2081 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2081">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2409,7 +2409,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2082 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2082 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2082">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2419,7 +2419,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2083 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2083 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2083">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2429,7 +2429,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2084 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2084 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2084">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2439,7 +2439,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2085 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2085 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2085">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2449,7 +2449,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2101 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2101 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2101">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2459,7 +2459,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2104 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2104 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2104">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2469,7 +2469,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2121 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2121 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2121">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2479,7 +2479,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2132 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2132 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2132">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2489,7 +2489,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2161 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2161 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2161">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2499,7 +2499,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2180 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2180 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2180">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2509,7 +2509,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2181 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2181 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2181">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2519,7 +2519,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2182 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2182 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2182">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2529,7 +2529,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2183 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2183 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2183">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2539,7 +2539,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2184 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2184 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2184">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2549,7 +2549,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2260 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2260 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2260">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2559,7 +2559,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2262 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2262 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2262">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2569,7 +2569,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2280 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2280 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2280">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2579,7 +2579,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2281 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2281 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2281">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2589,7 +2589,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2282 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2282 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2282">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2599,7 +2599,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2283 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2283 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2283">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2609,7 +2609,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2284 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2284 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2284">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2619,7 +2619,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2303 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2303 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2303">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2629,7 +2629,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2305 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2305 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2305">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2639,7 +2639,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2309 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2309 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2309">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2649,7 +2649,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2313 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2313 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2313">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2659,7 +2659,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2321 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2321 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2321">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2669,7 +2669,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2326 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2326 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2326">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2679,7 +2679,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2361 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2361 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2361">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2689,7 +2689,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2380 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2380 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2380">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2699,7 +2699,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2401 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2401 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2401">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2709,7 +2709,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2403 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2403 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2403">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2719,7 +2719,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2404 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2404 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2404">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2729,7 +2729,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2409 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2409 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2409">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2739,7 +2739,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2417 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2417 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2417">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2749,7 +2749,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2418 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2418 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2418">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2759,7 +2759,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2421 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2421 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2421">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2769,7 +2769,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2422 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2422 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2422">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2779,7 +2779,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2425 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2425 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2425">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2789,7 +2789,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2460 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2460 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2460">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2799,7 +2799,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2462 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2462 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2462">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2809,7 +2809,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2463 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2463 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2463">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2819,7 +2819,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2480 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2480 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2480">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2829,7 +2829,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2481 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2481 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2481">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2839,7 +2839,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2482 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2482 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2482">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2849,7 +2849,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2505 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2505 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2505">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2859,7 +2859,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2506 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2506 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2506">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2869,7 +2869,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2510 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2510 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2510">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2879,7 +2879,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2513 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2513 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2513">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2889,7 +2889,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2514 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2514 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2514">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2899,7 +2899,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2518 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2518 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2518">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2909,7 +2909,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2521 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2521 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2521">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2919,7 +2919,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2523 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2523 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2523">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2929,7 +2929,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2560 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2560 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2560">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2939,7 +2939,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2580 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2580 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2580">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2949,7 +2949,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2581 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2581 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2581">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2959,7 +2959,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2582 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2582 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2582">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2969,7 +2969,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2583 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2583 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2583">
         <rdf:type rdf:resource="&municipality;Municipality"/>
@@ -2979,7 +2979,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/autk/geo/municipality/municipality#2584 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality#2584 -->
 
     <owl:NamedIndividual rdf:about="&municipality;2584">
         <rdf:type rdf:resource="&municipality;Municipality"/>
