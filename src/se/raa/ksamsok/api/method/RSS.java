@@ -23,22 +23,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
-import org.jrdf.JRDFFactory;
-import org.jrdf.SortedMemoryJRDFFactory;
-import org.jrdf.collection.MemMapFactory;
-import org.jrdf.graph.AnyObjectNode;
-import org.jrdf.graph.AnySubjectNode;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.GraphElementFactoryException;
-import org.jrdf.graph.GraphException;
-import org.jrdf.graph.Literal;
-import org.jrdf.graph.PredicateNode;
-import org.jrdf.graph.SubjectNode;
-import org.jrdf.graph.Triple;
-import org.jrdf.graph.URIReference;
-import org.jrdf.parser.StatementHandlerException;
-import org.jrdf.parser.rdfxml.GraphRdfXmlParser;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -46,6 +30,18 @@ import org.xml.sax.SAXException;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
+import com.hp.hpl.jena.rdf.arp.impl.URIReference;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Selector;
+import com.hp.hpl.jena.rdf.model.SimpleSelector;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -90,7 +86,6 @@ public class RSS extends AbstractSearchMethod {
 	
 	//fabriker
 	private static final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-	private static final JRDFFactory jrdfFactory = SortedMemoryJRDFFactory.getFactory();
 	
 	//URIs för att navigera RDF
 	private static final String URI_PREFIX = "http://kulturarvsdata.se/";
@@ -285,32 +280,27 @@ public class RSS extends AbstractSearchMethod {
 		throws DiagnosticException
 	{
 		RssObject data = new RssObject();
-		Graph graph = null;
-		try {
-			graph = getGraph(content);
-			GraphElementFactory elementFactory = graph.getElementFactory();
-			URIReference rRdfType = elementFactory.createURIReference(URI_RDF_TYPE);
-			URIReference rKsamsokEntity = elementFactory.createURIReference(URI_KSAMSOK_ENTITY);
-			URIReference rPresentation = elementFactory.createURIReference(URI_PRESENTATION);
-			URIReference rItemTitle = elementFactory.createURIReference(URI_ITEM_TITLE);
-			URIReference rItemKeyWord = elementFactory.createURIReference(URI_ITEM_KEY_WORD);
-			URIReference rBuildDate = elementFactory.createURIReference(URI_BUILD_DATE);
-			SubjectNode s = getSubjectNode(graph, rRdfType, rKsamsokEntity);
-			data.setIdentifier(s.toString());
-			data.setTitle(getValueFromGraph(graph, s, rItemTitle, null));
-			data = getDataFromPresentationBlock(getSingleValueFromGraph(graph, s, rPresentation), data);
-			String itemKeyWordsString = getValueFromGraph(graph, s, rItemKeyWord, null);
-			String[] itemKeyWords = new String[0];
-			if(itemKeyWordsString != null) {
-				itemKeyWords = itemKeyWordsString.split(" ");
-			}
-			for(int i = 0; i < itemKeyWords.length; i ++) {
-				data.addKeyWord(itemKeyWords[i]);
-			}
-			data.setPublishDate(getSingleValueFromGraph(graph, s, rBuildDate));
-		}catch (GraphElementFactoryException e) {
-			throw new DiagnosticException("Internt fel uppstod", "RSS.getData", e.getMessage(), true);
+		Model model = null;
+		model = getModel(content);
+		Property rRdfType = ResourceFactory.createProperty(URI_RDF_TYPE.toString());
+		RDFNode rKsamsokEntity = ResourceFactory.createResource(URI_KSAMSOK_ENTITY.toString());
+		Property rPresentation = ResourceFactory.createProperty(URI_PRESENTATION.toString());
+		Property rItemTitle = ResourceFactory.createProperty(URI_ITEM_TITLE.toString());//elementFactory.createURIReference(URI_ITEM_TITLE);
+		Property rItemKeyWord = ResourceFactory.createProperty(URI_ITEM_KEY_WORD.toString());
+		Property rBuildDate = ResourceFactory.createProperty(URI_BUILD_DATE.toString());
+		Resource subject = getSubjectNode(model, rRdfType, rKsamsokEntity);
+		data.setIdentifier(subject.toString());
+		data.setTitle(getValueFromGraph(model, subject, rItemTitle, (Property) null));
+		data = getDataFromPresentationBlock(getSingleValueFromGraph(model, subject, rPresentation), data);
+		String itemKeyWordsString = getValueFromGraph(model, subject, rItemKeyWord, null);
+		String[] itemKeyWords = new String[0];
+		if(itemKeyWordsString != null) {
+			itemKeyWords = itemKeyWordsString.split(" ");
 		}
+		for(int i = 0; i < itemKeyWords.length; i ++) {
+			data.addKeyWord(itemKeyWords[i]);
+		}
+		data.setPublishDate(getSingleValueFromGraph(model, subject, rBuildDate));
 		return data;
 	}
 	
@@ -320,57 +310,49 @@ public class RSS extends AbstractSearchMethod {
 	 * @return RDF graf
 	 * @throws DiagnosticException
 	 */
-	private Graph getGraph(String content) 
+	private Model getModel(String content) 
 		throws DiagnosticException
 	{
-		Graph g = null;
+		Model m = null;
 		StringReader reader = null;
 		try {
 			reader = new StringReader(content);
-			g = jrdfFactory.getNewGraph();
-			GraphRdfXmlParser parser = new GraphRdfXmlParser(g, new MemMapFactory());
-			parser.parse(reader, "");
-		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO-fel uppstod", "RSS.getGraph", e.getMessage(), true);
-		} catch (org.jrdf.parser.ParseException e) {
-			throw new DiagnosticException("Oväntat parser fel uppstod", "RSS.getGraph", e.getMessage(), true);
-		} catch (StatementHandlerException e) {
-			throw new DiagnosticException("Internt fel uppstod", "RSS.getGraph", e.getMessage(), true);
+			m = ModelFactory.createDefaultModel();
+			m.read(reader, "");
 		}finally {
 			if(reader != null) {
 				reader.close();
 			}
 		}
-		return g;
+		return m;
 	}
 	
 	/**
 	 * returnerar root subject noden
-	 * @param graph - grafen som noden skall hämtas ur
+	 * @param model - grafen som noden skall hämtas ur
 	 * @param rRdfType - URI referens till rdfType
 	 * @param rKsamsokEntity - URI referens till ksamsokEntity
 	 * @return en subject node
 	 * @throws DiagnosticException om något fel uppstår när subject noden skall hämtas ur grafen
 	 */
-	private SubjectNode getSubjectNode(Graph graph, URIReference rRdfType, URIReference rKsamsokEntity) 
+	//TODO! Ska rKsamsokEntity vara URIReference?
+	private Resource getSubjectNode(Model model, Property rRdfType, RDFNode rKsamsokEntity) 
 		throws DiagnosticException
 	{
-		SubjectNode s = null;
-		try {
-			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rRdfType, rKsamsokEntity)) {
-				if (s != null) {
-					throw new DiagnosticException("Ska bara finnas en entity i rdf-grafen", "se.raa.ksamsok.api.method.RSS.getSubjectNode", null, true);
-				}
-				s = triple.getSubject();
+		Selector selector = new SimpleSelector((Resource) null, rRdfType, rKsamsokEntity);
+		StmtIterator iter = model.listStatements(selector);
+		Resource subject = null;
+		while (iter.hasNext()){
+			if (subject != null) {
+				throw new DiagnosticException("Ska bara finnas en entity i rdf-grafen", "se.raa.ksamsok.api.method.RSS.getSubjectNode", null, true);
 			}
-			if (s == null) {
-				logger.error("Hittade ingen entity i rdf-grafen:\n" + graph);
-				throw new DiagnosticException("Hittade ingen entity i rdf-grafen", "se.raa.ksamsok.api.method.RSS.getSubjectNode", null, true);
-			}
-		}catch(GraphException e) {
-			throw new DiagnosticException("Internt fel uppstod", "se.raa.ksamsok.api.method.RSS.getSubjectNode", "Fel uppstod vid hantering av RDF graf", true);
+			subject = iter.next().getResource();
 		}
-		return s;
+		if (subject == null) {
+			logger.error("Hittade ingen entity i rdf-grafen:\n" + model);
+			throw new DiagnosticException("Hittade ingen entity i rdf-grafen", "se.raa.ksamsok.api.method.RSS.getSubjectNode", null, true);
+		}
+		return subject;
 	}
 	
 	/**
@@ -455,74 +437,73 @@ public class RSS extends AbstractSearchMethod {
 	
 	/**
 	 * Hämtar ett värde från RDF graf
-	 * @param g - grafen som värdet skall hämtas ur
+	 * @param m - grafen som värdet skall hämtas ur
 	 * @param sn - subject nod
 	 * @param pn - predicate nod
 	 * @return värde från graf som textsträng
 	 */
-	private String getSingleValueFromGraph(Graph g, SubjectNode sn, PredicateNode pn)
+	private String getSingleValueFromGraph(Model m, Resource sn, Property pn)
 		throws DiagnosticException
 	{
+		Selector selector = new SimpleSelector(sn, pn, (RDFNode) null);
+		StmtIterator iter = m.listStatements(selector);
 		String value = null;
-		try {
-			for(Triple t : g.find(sn, pn, AnyObjectNode.ANY_OBJECT_NODE)) {
-				if (t.getObject() instanceof Literal) {
-					value = StringUtils.trimToNull(((Literal) t.getObject()).getValue().toString()) + " ";
-				}else if (t.getObject() instanceof URIReference) {
-					value = StringUtils.trimToNull( ((URIReference) t.getObject()).getURI().toString());
-				}
+		while (iter.hasNext()){
+			Statement s = iter.next();
+			if (s.getObject().isLiteral()){
+				value = StringUtils.trimToNull(s.getObject().asLiteral().getString()) + " ";
+			} else if (s.getObject().isURIResource()) {
+				value = StringUtils.trimToNull(s.getObject().asResource().getURI());
 			}
-		} catch (GraphException e) {
-			throw new DiagnosticException("Internt fel", "RSS.getSingleValueFromGraph", e.getMessage(), true);
 		}
 		return value;
 	}
 	
 	/**
 	 * Hämtar ett eller flera värden från given RDF graf
-	 * @param graph - RDF graf
-	 * @param s - subject nod
+	 * @param model - RDF graf
+	 * @param subject - subject nod
 	 * @param ref - URI referens till 
 	 * @param refRef - URI referens till eventuella subnoder
 	 * @return värden som textsträng
 	 */
-	private String getValueFromGraph(Graph graph, SubjectNode s, URIReference ref, URIReference refRef)
+	private String getValueFromGraph(Model model, Resource subject, Property ref, Property refRef)
 		throws DiagnosticException
 	{
 		final String sep = " ";
 		StringBuffer buf = new StringBuffer();
 		String value = null;
-		try {
-			for (Triple t: graph.find(s, ref, AnyObjectNode.ANY_OBJECT_NODE)) {
-				if (t.getObject() instanceof Literal) {
-					Literal l = (Literal) t.getObject();
+		Selector selector = new SimpleSelector(subject, ref, (RDFNode) null);
+		StmtIterator iter = model.listStatements(selector);
+		while (iter.hasNext()){
+			Statement s = iter.next();
+			if (s.getObject().isLiteral()){
+				Literal l = s.getObject().asLiteral();
+				if (buf.length() > 0) {
+					buf.append(sep);
+				}
+				value = l.getString();
+				buf.append(value);
+			} else if (s.getObject().isURIResource()){
+				Resource r =s.getObject().asResource();
+				value = StringUtils.trimToNull(r.getURI());
+				// lägg till i buffer bara om detta är en uri vi ska slå upp värde för
+				if (value != null) {
 					if (buf.length() > 0) {
 						buf.append(sep);
 					}
-					value = l.getValue().toString();
 					buf.append(value);
-				} else if (t.getObject() instanceof URIReference) {
-					value = StringUtils.trimToNull(((URIReference) t.getObject()).getURI().toString());
-					// lägg till i buffer bara om detta är en uri vi ska slå upp värde för
-					if (value != null) {
-						if (buf.length() > 0) {
-							buf.append(sep);
-						}
-						buf.append(value);
+				}
+			} else if (s.getObject().isResource()){
+				Resource r = s.getObject().asResource();
+				value = getSingleValueFromGraph(model, r, refRef);
+				if (value != null) {
+					if (buf.length() > 0) {
+						buf.append(sep);
 					}
-				} else if (refRef != null && t.getObject() instanceof SubjectNode) {
-					SubjectNode resSub = (SubjectNode) t.getObject();
-					value = getSingleValueFromGraph(graph, resSub, refRef);
-					if (value != null) {
-						if (buf.length() > 0) {
-							buf.append(sep);
-						}
-						buf.append(value);
-					}
+					buf.append(value);
 				}
 			}
-		}catch(GraphException e) {
-			throw new DiagnosticException("Internt fel", "RSS.getValueFromGraph", e.getMessage(), true);
 		}
 		return buf.length() > 0 ? StringUtils.trimToNull(buf.toString()) : null;
 	}
