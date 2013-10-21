@@ -17,18 +17,20 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocumentList;
-import org.jrdf.graph.AnyObjectNode;
-import org.jrdf.graph.AnySubjectNode;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.Triple;
-import org.jrdf.graph.TripleFactory;
-import org.jrdf.graph.URIReference;
-import org.jrdf.graph.local.LiteralImpl;
-import org.jrdf.util.ClosableIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Selector;
+import com.hp.hpl.jena.rdf.model.SimpleSelector;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -349,16 +351,13 @@ public class ResolverServlet extends HttpServlet {
 	private String getRedirectUrl(String content) {
 		String redirectUrl = null;
 		try {
-			Graph graph = RDFUtil.parseGraph(content);
-			URIReference uriPredicate=graph.getElementFactory().createURIReference(URI.create("http://kulturarvsdata.se/ksamsok#url"));
-			TripleFactory tripleFactory = graph.getTripleFactory();
-			Triple uriTriple = tripleFactory.createTriple(AnySubjectNode.ANY_SUBJECT_NODE ,uriPredicate, AnyObjectNode.ANY_OBJECT_NODE);
-			ClosableIterable<Triple> foundTriples=graph.find(uriTriple);
-			if (foundTriples.iterator().hasNext())
-			{
-				Triple t=foundTriples.iterator().next();
-				LiteralImpl uri=(LiteralImpl) t.getObject();
-				redirectUrl=(String) uri.getValue();
+			Model model = RDFUtil.parseModel(content);
+			Property uriPredicate=ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#url");
+			Selector selector = new SimpleSelector((Resource) null, uriPredicate, (RDFNode) null);
+			StmtIterator iter = model.listStatements(selector);
+			if (iter.hasNext()){
+				Statement s = iter.next();
+				redirectUrl=s.getObject().asLiteral().getString();
 			}
 		} catch (Exception e) {
 			logger.error(e);
