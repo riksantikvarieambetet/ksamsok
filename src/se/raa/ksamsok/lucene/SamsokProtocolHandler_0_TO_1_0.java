@@ -44,6 +44,9 @@ import org.apache.log4j.Logger;
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.SubjectNode;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
+
 public class SamsokProtocolHandler_0_TO_1_0 extends BaseSamsokProtocolHandler {
 
 	private static final Logger classLogger = getClassLogger();
@@ -101,8 +104,8 @@ public class SamsokProtocolHandler_0_TO_1_0 extends BaseSamsokProtocolHandler {
 		relationsMap_0_TO_1_0 = Collections.unmodifiableMap(relMap);
 	}
 
-	protected SamsokProtocolHandler_0_TO_1_0(Graph graph, SubjectNode s) {
-		super(graph, s);
+	protected SamsokProtocolHandler_0_TO_1_0(Model model, Resource subject) {
+		super(model, subject);
 	}
 
 	@Override

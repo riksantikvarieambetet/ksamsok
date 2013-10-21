@@ -161,15 +161,17 @@ import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
+
 import se.raa.ksamsok.harvest.HarvestService;
 
 public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler, RelationToIndexMapper {
 
 	protected final Logger logger;
 
-	protected final Graph graph;
-	protected final GraphElementFactory elementFactory;
-	protected final SubjectNode s;
+	protected final Model model;
+	protected final Resource subject;
 	protected final IndexProcessor ip;
 	protected final SolrInputDocument luceneDoc;
 
@@ -182,11 +184,11 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	protected boolean timeInfoExists = false;
 	protected boolean geoDataExists = false;
 
-	protected BaseSamsokProtocolHandler(Graph graph, SubjectNode s) {
+	
+	protected BaseSamsokProtocolHandler(Model model, Resource subject) {
 		logger = getLogger();
-		this.graph = graph;
-		this.elementFactory = graph.getElementFactory();
-		this.s = s;
+		this.model = model;
+		this.subject = subject;
 		this.luceneDoc = new SolrInputDocument();
 		this.ip = new IndexProcessor(luceneDoc, getURIValues(), this);
 	}
@@ -224,7 +226,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			List<String> relations, List<String> gmlGeometries)
 			throws Exception {
 
-		String identifier = s.toString();
+		String identifier = subject.toString();
 
 		extractServiceInformation();
 
@@ -266,10 +268,10 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 */
 	protected void extractServiceInformation() throws Exception {
 		ip.setCurrent(IX_SERVICENAME);
-		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rServiceName), ip);
+		extractSingleValue(model, subject, getURIRef(elementFactory, uri_rServiceName), ip);
 		// hämta ut serviceOrganization (01, fast 11 egentligen?)
 		ip.setCurrent(IX_SERVICEORGANISATION);
-		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rServiceOrganization), ip);
+		extractSingleValue(model, subject, getURIRef(elementFactory, uri_rServiceOrganization), ip);
 	}
 
 	/**
@@ -284,7 +286,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		luceneDoc.addField(IX_GEODATAEXISTS, geoDataExists ? "j" : "n");
 		luceneDoc.addField(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n");
 		// lägg till specialindex för om tumnagel existerar eller ej (j/n), IndexType.TOLOWERCASE
-		boolean thumbnailExists = extractSingleValue(graph, s, getURIRef(elementFactory, uri_rThumbnail), null) != null;
+		boolean thumbnailExists = extractSingleValue(model, subject, getURIRef(elementFactory, uri_rThumbnail), null) != null;
 		luceneDoc.addField(IX_THUMBNAILEXISTS, thumbnailExists ? "j" : "n");
 
 	}
@@ -303,7 +305,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// hämta ut createdDate (01, fast 11 egentligen? speciellt om man vill ha ut info
 		// om nya objekt i indexet)
 		Date created = null;
-		String createdDate = extractSingleValue(graph, s, getURIRef(elementFactory, uri_rCreatedDate), null);
+		String createdDate = extractSingleValue(model, subject, getURIRef(elementFactory, uri_rCreatedDate), null);
 		if (createdDate != null) {
 			created = TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_CREATEDDATE, createdDate, ip);
 		} else {
@@ -319,7 +321,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_ADDEDTOINDEXDATE);
 		ip.addToDoc(formatDate(addedToIndex, false));
 		// hämta ut lastChangedDate (01, fast 11 egentligen?)
-		String lastChangedDate = extractSingleValue(graph, s, getURIRef(elementFactory, uri_rLastChangedDate), null);
+		String lastChangedDate = extractSingleValue(model, subject, getURIRef(elementFactory, uri_rLastChangedDate), null);
 		if (lastChangedDate != null) {
 			TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_LASTCHANGEDDATE, lastChangedDate, ip);
 		} else {
@@ -340,19 +342,19 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// TODO: subject inte rätt, är bara en uri-pekare nu(?)
 		// hämta ut subject (0m)
 		ip.setCurrent(IX_SUBJECT);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rSubject), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rSubject), null, ip);
 		// hämta ut collection (0m)
 		ip.setCurrent(IX_COLLECTION);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rCollection), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rCollection), null, ip);
 		// hämta ut dataQuality (1)
 		ip.setCurrent(IX_DATAQUALITY);
-		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rDataQuality), ip);
+		extractSingleValue(model, subject, getURIRef(elementFactory, uri_rDataQuality), ip);
 		// hämta ut mediaType (0n)
 		ip.setCurrent(IX_MEDIATYPE);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rMediaType), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rMediaType), null, ip);
 		// hämta ut tema (0n)
 		ip.setCurrent(IX_THEME);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rTheme), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rTheme), null, ip);
 	}
 
 	/**
@@ -365,52 +367,52 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	protected void extractItemInformation() throws Exception {
 		// hämta ut itemTitle (0m)
 		ip.setCurrent(IX_ITEMTITLE);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemTitle), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemTitle), null, ip);
 		// hämta ut itemLabel (11)
 		ip.setCurrent(IX_ITEMLABEL);
-		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rItemLabel), ip);
+		extractSingleValue(model, subject, getURIRef(elementFactory, uri_rItemLabel), ip);
 		// hämta ut itemType (1)
 		ip.setCurrent(IX_ITEMTYPE);
-		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rItemType), ip);
+		extractSingleValue(model, subject, getURIRef(elementFactory, uri_rItemType), ip);
 		// hämta ut itemClass (0m)
 		ip.setCurrent(IX_ITEMCLASS, false); // slå inte upp uri
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemClass), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemClass), null, ip);
 		// hämta ut itemClassName (0m)
 		ip.setCurrent(IX_ITEMCLASSNAME);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemClassName), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemClassName), null, ip);
 		// hämta ut itemName (1m)
 		ip.setCurrent(IX_ITEMNAME);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemName), getURIRef(elementFactory, uri_r__Name), ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemName), getURIRef(elementFactory, uri_r__Name), ip);
 		// hämta ut itemSpecification (0m)
 		ip.setCurrent(IX_ITEMSPECIFICATION);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemSpecification), getURIRef(elementFactory, uri_r__Spec), ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemSpecification), getURIRef(elementFactory, uri_r__Spec), ip);
 		// hämta ut itemKeyWord (0m)
 		ip.setCurrent(IX_ITEMKEYWORD);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemKeyWord), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemKeyWord), null, ip);
 		// hämta ut itemMotiveWord (0m)
 		ip.setCurrent(IX_ITEMMOTIVEWORD);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemMotiveWord), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemMotiveWord), null, ip);
 		// hämta ut itemMaterial (0m)
 		ip.setCurrent(IX_ITEMMATERIAL);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemMaterial), getURIRef(elementFactory, uri_rMaterial), ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemMaterial), getURIRef(elementFactory, uri_rMaterial), ip);
 		// hämta ut itemTechnique (0m)
 		ip.setCurrent(IX_ITEMTECHNIQUE);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemTechnique), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemTechnique), null, ip);
 		// hämta ut itemStyle (0m)
 		ip.setCurrent(IX_ITEMSTYLE);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemStyle), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemStyle), null, ip);
 		// hämta ut itemColor (0m)
 		ip.setCurrent(IX_ITEMCOLOR);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemColor), null, ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemColor), null, ip);
 		// hämta ut itemNumber (0m)
 		ip.setCurrent(IX_ITEMNUMBER);
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemNumber), getURIRef(elementFactory, uri_rNumber), ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemNumber), getURIRef(elementFactory, uri_rNumber), ip);
 		// hämta ut itemDescription, resursnod (0m)
 		ip.setCurrent(IX_ITEMDESCRIPTION); // fritext
-		extractValue(graph, s, getURIRef(elementFactory, uri_rItemDescription), getURIRef(elementFactory, uri_r__Desc), ip);
+		extractValue(model, subject, getURIRef(elementFactory, uri_rItemDescription), getURIRef(elementFactory, uri_r__Desc), ip);
 		// hämta ut itemLicense (01)
 		ip.setCurrent(IX_ITEMLICENSE, false); // uri, ingen uppslagning fn
-		extractSingleValue(graph, s, getURIRef(elementFactory, uri_rItemLicense), ip);
+		extractSingleValue(model, subject, getURIRef(elementFactory, uri_rItemLicense), ip);
 	}
 
 	/**
@@ -422,7 +424,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 */
 	protected void extractImageNodes() throws Exception {
 		// läs in värden från Image-noder
-		for (Triple triple: graph.find(s, getURIRef(elementFactory, uri_rImage), AnyObjectNode.ANY_OBJECT_NODE)) {
+		for (Triple triple: model.find(subject, getURIRef(elementFactory, uri_rImage), AnyObjectNode.ANY_OBJECT_NODE)) {
 			if (triple.getObject() instanceof SubjectNode) {
 				SubjectNode cS = (SubjectNode) triple.getObject();
 
@@ -441,9 +443,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 */
 	protected void extractImageNodeInformation(SubjectNode cS) throws Exception {
 		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
-		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicense), null, ip);
+		extractValue(model, cS, getURIRef(elementFactory, uri_rMediaLicense), null, ip);
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
-		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaMotiveWord), null, ip);
+		extractValue(model, cS, getURIRef(elementFactory, uri_rMediaMotiveWord), null, ip);
 	}
 
 	/**
@@ -468,7 +470,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * @throws Exception vid fel
 	 */
 	protected void extractContextNodes(String identifier, List<String> relations, List<String> gmlGeometries) throws Exception {
-		for (Triple triple: graph.find(s, getURIRef(elementFactory, uri_rContext), AnyObjectNode.ANY_OBJECT_NODE)) {
+		for (Triple triple: model.find(subject, getURIRef(elementFactory, uri_rContext), AnyObjectNode.ANY_OBJECT_NODE)) {
 			if (triple.getObject() instanceof SubjectNode) {
 				SubjectNode cS = (SubjectNode) triple.getObject();
 
@@ -515,7 +517,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// hämta ut vilket kontext vi är i
 		// OBS! Använder inte contexttype.rdf för uppslagning av denna utan lägger
 		// det uppslagna värde i contextLabel
-		String contextType = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContextType), null);
+		String contextType = extractSingleValue(model, cS, getURIRef(elementFactory, uri_rContextType), null);
 		if (contextType != null) {
 			String contextLabel = lookupURIValue(contextType);
 			contextType = restIfStartsWith(contextType, context_pre);
@@ -539,7 +541,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 				ip.addToDoc(contextLabel);
 			} else {
 				ip.setCurrent(IX_CONTEXTLABEL);
-				extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContextLabel), ip);
+				extractSingleValue(model, cS, getURIRef(elementFactory, uri_rContextLabel), ip);
 			}
 		}
 		return contextType != null ? new String[] { contextType } : null;
@@ -559,52 +561,52 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 		// 0-m
 		ip.setCurrent(IX_PLACENAME, contextTypes);
-		extractValue(graph, cS, getURIRef(elementFactory, uri_rPlaceName), null, ip);
+		extractValue(model, cS, getURIRef(elementFactory, uri_rPlaceName), null, ip);
 
 		ip.setCurrent(IX_CADASTRALUNIT, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCadastralUnit), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rCadastralUnit), ip);
 
 		ip.setCurrent(IX_PLACETERMID, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rPlaceTermId), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rPlaceTermId), ip);
 
 		ip.setCurrent(IX_PLACETERMAUTH, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rPlaceTermAuth), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rPlaceTermAuth), ip);
 
 		ip.setCurrent(IX_CONTINENTNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rContinentName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rContinentName), ip);
 
 		ip.setCurrent(IX_COUNTRYNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCountryName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rCountryName), ip);
 
 		ip.setCurrent(IX_COUNTYNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCountyName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rCountyName), ip);
 
 		ip.setCurrent(IX_MUNICIPALITYNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMunicipalityName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rMunicipalityName), ip);
 
 		ip.setCurrent(IX_PROVINCENAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rProvinceName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rProvinceName), ip);
 
 		ip.setCurrent(IX_PARISHNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rParishName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rParishName), ip);
 
 		ip.setCurrent(IX_COUNTRY, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCountry), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rCountry), ip);
 
 		ip.setCurrent(IX_COUNTY, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCounty), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rCounty), ip);
 
 		ip.setCurrent(IX_MUNICIPALITY, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rMunicipality), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rMunicipality), ip);
 
 		ip.setCurrent(IX_PROVINCE, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rProvince), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rProvince), ip);
 
 		ip.setCurrent(IX_PARISH, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rParish), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rParish), ip);
 
 		// hämta ut gml
-		String gml = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rCoordinates), null);
+		String gml = extractSingleValue(model, cS, getURIRef(elementFactory, uri_rCoordinates), null);
 		if (gml != null && gml.length() > 0) {
 			gmlGeometries.add(gml);
 			// flagga att det finns geodata
@@ -625,13 +627,13 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// actor
 
 		ip.setCurrent(IX_FIRSTNAME, contextTypes);
-		String firstName = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFirstName), ip);
+		String firstName = extractSingleValue(model, cS, getURIRef(elementFactory, uri_rFirstName), ip);
 
 		ip.setCurrent(IX_SURNAME, contextTypes);
-		String lastName = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rSurname), ip);
+		String lastName = extractSingleValue(model, cS, getURIRef(elementFactory, uri_rSurname), ip);
 
 		ip.setCurrent(IX_FULLNAME, contextTypes);
-		String fullName = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFullName), ip);
+		String fullName = extractSingleValue(model, cS, getURIRef(elementFactory, uri_rFullName), ip);
 
 		// om vi inte har fått ett fullName men har ett förnamn och ett efternamn så lägger vi in det i IX_FULLNAME
 		if (fullName == null && firstName != null && lastName != null) {
@@ -640,25 +642,25 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		}
 
 		ip.setCurrent(IX_NAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rName), ip);
 
 		// TODO: bara vissa värden? http://xmlns.com/foaf/spec/#term_gender:
 		// "In most cases the value will be the string 'female' or 'male' (in
 		//  lowercase without surrounding quotes or spaces)."
 		ip.setCurrent(IX_GENDER, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rGender), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rGender), ip);
 
 		ip.setCurrent(IX_ORGANIZATION, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rOrganization), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rOrganization), ip);
 
 		ip.setCurrent(IX_TITLE, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rTitle), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rTitle), ip);
 
 		ip.setCurrent(IX_NAMEID, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rNameId), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rNameId), ip);
 
 		ip.setCurrent(IX_NAMEAUTH, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rNameAuth), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rNameAuth), ip);
 	}
 
 	/**
@@ -674,10 +676,10 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// time
 
 		ip.setCurrent(IX_FROMTIME, contextTypes);
-		String fromTime = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFromTime), ip);
+		String fromTime = extractSingleValue(model, cS, getURIRef(elementFactory, uri_rFromTime), ip);
 
 		ip.setCurrent(IX_TOTIME, contextTypes);
-		String toTime = extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rToTime), ip);
+		String toTime = extractSingleValue(model, cS, getURIRef(elementFactory, uri_rToTime), ip);
 
 		// hantera ? i tidsfälten
 		if (fromTime != null && fromTime.startsWith("?")) {
@@ -695,25 +697,25 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		TimeUtil.expandDecadeAndCentury(fromTime, toTime, contextTypes, ip);
 
 		ip.setCurrent(IX_FROMPERIODNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFromPeriodName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rFromPeriodName), ip);
 
 		ip.setCurrent(IX_TOPERIODNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rToPeriodName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rToPeriodName), ip);
 
 		ip.setCurrent(IX_FROMPERIODID, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rFromPeriodId), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rFromPeriodId), ip);
 
 		ip.setCurrent(IX_TOPERIODID, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rToPeriodId), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rToPeriodId), ip);
 
 		ip.setCurrent(IX_PERIODAUTH, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rPeriodAuth), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rPeriodAuth), ip);
 
 		ip.setCurrent(IX_EVENTNAME, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rEventName), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rEventName), ip);
 
 		ip.setCurrent(IX_EVENTAUTH, contextTypes);
-		extractSingleValue(graph, cS, getURIRef(elementFactory, uri_rEventAuth), ip);
+		extractSingleValue(model, cS, getURIRef(elementFactory, uri_rEventAuth), ip);
 	}
 
 	/**
@@ -734,7 +736,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 */
 	protected void extractTopLevelRelations(List<String> relations) throws Exception {
 		Map<String, URI> relationsMap = getTopLevelRelationsMap();
-		extractRelationsFromNode(s, relationsMap, relations);
+		extractRelationsFromNode(subject, relationsMap, relations);
 	}
 
 	/**
@@ -751,7 +753,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		for (Entry<String, URI> entry: relationsMap.entrySet()) {
 			relIx[0] = entry.getKey();
 			ip.setCurrent(relIx, false);
-			extractValue(graph, subjectNode, getURIRef(elementFactory, entry.getValue()), null, ip, relations);
+			extractValue(model, subjectNode, getURIRef(elementFactory, entry.getValue()), null, ip, relations);
 		}
 	}
 

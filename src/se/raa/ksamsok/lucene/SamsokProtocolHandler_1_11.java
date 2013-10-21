@@ -8,18 +8,17 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaLicense;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaMotiveWord;
 
 import org.apache.log4j.Logger;
-import org.jrdf.graph.AnyObjectNode;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.SubjectNode;
-import org.jrdf.graph.Triple;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 		implements SamsokProtocolHandler {
 
 	private static final Logger classLogger = getClassLogger();
 
-	protected SamsokProtocolHandler_1_11(Graph graph, SubjectNode s) {
-		super(graph, s);
+	protected SamsokProtocolHandler_1_11(Model model, Resource subject) {
+		super(model, subject);
 	}
 
 	/**
@@ -33,7 +32,7 @@ public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 	 */
 	protected void extractMediaNodes() throws Exception {
 		// läs in värden från medianoder
-		for (Triple triple: graph.find(s, getURIRef(elementFactory, uri_rMedia), AnyObjectNode.ANY_OBJECT_NODE)) {
+		for (Triple triple: model.find(subject, getURIRef(elementFactory, uri_rMedia), AnyObjectNode.ANY_OBJECT_NODE)) {
 			if (triple.getObject() instanceof SubjectNode) {
 				SubjectNode cS = (SubjectNode) triple.getObject();
 
@@ -53,9 +52,9 @@ public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 	protected void extractMediaNodeInformation(SubjectNode cS) throws Exception {
 		// samma som image-noder i protokoll < 1.11
 		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
-		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaLicense), null, ip);
+		extractValue(model, cS, getURIRef(elementFactory, uri_rMediaLicense), null, ip);
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
-		extractValue(graph, cS, getURIRef(elementFactory, uri_rMediaMotiveWord), null, ip);
+		extractValue(model, cS, getURIRef(elementFactory, uri_rMediaMotiveWord), null, ip);
 	}
 
 	@Override

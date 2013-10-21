@@ -23,15 +23,18 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.util.Base64;
-import org.jrdf.graph.AnyObjectNode;
-import org.jrdf.graph.AnySubjectNode;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.SubjectNode;
-import org.jrdf.graph.Triple;
-import org.jrdf.graph.URIReference;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Selector;
+import com.hp.hpl.jena.rdf.model.SimpleSelector;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
@@ -54,52 +57,53 @@ public class SamsokContentHelper extends ContentHelper {
 	@Override
 	public SolrInputDocument createSolrDocument(HarvestService service,
 			String xmlContent, Date added) throws Exception {
-		Graph graph = null;
+		Model model = null;
 		String identifier = null;
 		SolrInputDocument luceneDoc = null;
 		try {
-			graph = RDFUtil.parseGraph(xmlContent);
+			model = RDFUtil.parseModel(xmlContent);
 
-			GraphElementFactory elementFactory = graph.getElementFactory();
 			// grund
-			URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
-			URIReference samsokEntity = elementFactory.createURIReference(SamsokProtocol.uri_samsokEntity);
-			URIReference rPres = elementFactory.createURIReference(SamsokProtocol.uri_rPres);
+			Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+			Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+			Property rPres = ResourceFactory.createProperty(SamsokProtocol.uri_rPres.toString());
 			// url
-			URIReference rURL = elementFactory.createURIReference(SamsokProtocol.uri_rURL);
-			URIReference rMuseumdatURL = elementFactory.createURIReference(SamsokProtocol.uri_rMuseumdatURL);
+			Property rURL = ResourceFactory.createProperty(SamsokProtocol.uri_rURL.toString());
+			Property rMuseumdatURL = ResourceFactory.createProperty(SamsokProtocol.uri_rMuseumdatURL.toString());
 			// special
-			URIReference rItemForIndexing = elementFactory.createURIReference(SamsokProtocol.uri_rItemForIndexing);
-			URIReference rProtocolVersion = elementFactory.createURIReference(SamsokProtocol.uri_rKsamsokVersion);
+			Property rItemForIndexing = ResourceFactory.createProperty(SamsokProtocol.uri_rItemForIndexing.toString());
+			Property rProtocolVersion = ResourceFactory.createProperty(SamsokProtocol.uri_rKsamsokVersion.toString());
 
-			SubjectNode s = null;
-			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
-				if (s != null) {
+			Resource subject = null;
+			Selector selector = new SimpleSelector((Resource) null, rdfType, samsokEntity);
+			StmtIterator iter = model.listStatements(selector);
+			while (iter.hasNext()){
+				if (subject != null) {
 					throw new Exception("Ska bara finnas en entity i rdf-grafen");
 				}
-				s = triple.getSubject();
+				subject = iter.next().getSubject();
 			}
-			if (s == null) {
-				logger.error("Hittade ingen entity i rdf-grafen:\n" + graph);
+			if (subject == null) {
+				logger.error("Hittade ingen entity i rdf-grafen:\n" + model);
 				throw new Exception("Hittade ingen entity i rdf-grafen");
 			}
-			identifier = s.toString();
+			identifier = subject.toString();
 			// kolla om denna post inte ska indexeras och returnera i så fall null
 			// notera att detta gör att inte posten indexeras alls vilket kräver ett
 			// specialfall i resolverservleten då den främst jobbar mot lucene-indexet
-			String itemForIndexing = RDFUtil.extractSingleValue(graph, s, rItemForIndexing, null);
+			String itemForIndexing = RDFUtil.extractSingleValue(model, subject, rItemForIndexing, null);
 			if ("n".equals(itemForIndexing)) {
 				return null;
 			}
-			String protocolVersion = RDFUtil.extractSingleValue(graph, s, rProtocolVersion, null);
+			String protocolVersion = RDFUtil.extractSingleValue(model, subject, rProtocolVersion, null);
 			if (protocolVersion == null) {
-				logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + graph);
+				logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + model);
 				throw new Exception("Hittade ingen protokollversion i rdf-grafen");
 			}
 
 			LinkedList<String> gmlGeometries = new LinkedList<String>();
 			LinkedList<String> relations = new LinkedList<String>();
-			SamsokProtocolHandler sph = getProtocolHandlerForVersion(protocolVersion, graph, s);
+			SamsokProtocolHandler sph = getProtocolHandlerForVersion(protocolVersion, model, subject);
 			luceneDoc = sph.handle(service, added, relations, gmlGeometries);
 
 			// den unika identifieraren och protokollversionen
@@ -112,7 +116,7 @@ public class SamsokContentHelper extends ContentHelper {
 			luceneDoc.addField(I_IX_SERVICE, service.getId());
 
 			// html-url
-			String url = extractSingleValue(graph, s, rURL, null);
+			String url = extractSingleValue(model, subject, rURL, null);
 			if (url != null) {
 				if (url.toLowerCase().startsWith(uriPrefix)) {
 					addProblemMessage("HTML URL starts with " + uriPrefix);
@@ -120,7 +124,7 @@ public class SamsokContentHelper extends ContentHelper {
 				luceneDoc.addField(I_IX_HTML_URL, url);
 			}
 			// museumdat-url
-			url = extractSingleValue(graph, s, rMuseumdatURL, null);
+			url = extractSingleValue(model, subject, rMuseumdatURL, null);
 			if (url != null) {
 				if (url.toLowerCase().startsWith(uriPrefix)) {
 					addProblemMessage("Museumdat URL starts with " + uriPrefix);
@@ -154,7 +158,7 @@ public class SamsokContentHelper extends ContentHelper {
 			}
 
 			// hämta ut presentationsblocket
-			String pres = extractSingleValue(graph, s, rPres, null);
+			String pres = extractSingleValue(model, subject, rPres, null);
 			if (pres != null && pres.length() > 0) {
 				// verifiera att det är xml
 				// TODO: kontrollera korrekt schema också
@@ -175,15 +179,15 @@ public class SamsokContentHelper extends ContentHelper {
 			logger.error("Fel vid skapande av lucenedokument för " + identifier + ": " + e.getMessage());
 			throw e;
 		} finally {
-			if (graph != null) {
-				graph.close();
+			if (model != null) {
+				model.close();
 			}
 		}
 		return luceneDoc;
 	}
 
 	private SamsokProtocolHandler getProtocolHandlerForVersion(String protocolVersion,
-			Graph graph, SubjectNode s)  throws Exception {
+			Model model, Resource subject)  throws Exception {
 		Double protocol;
 		SamsokProtocolHandler handler = null;
 		try {
@@ -194,11 +198,11 @@ public class SamsokContentHelper extends ContentHelper {
 		}
 		final double latest = 1.11;
 		if (protocol == latest) {
-			handler = new SamsokProtocolHandler_1_11(graph, s);
+			handler = new SamsokProtocolHandler_1_11(model, subject);
 		} else if (protocol >= 1.1 && protocol < latest) {
-			handler = new SamsokProtocolHandler_1_1(graph, s);
+			handler = new SamsokProtocolHandler_1_1(model, subject);
 		} else if (protocol > 0 && protocol <= 1.0) {
-			handler = new SamsokProtocolHandler_0_TO_1_0(graph, s);
+			handler = new SamsokProtocolHandler_0_TO_1_0(model, subject);
 		} else {
 			logger.error("Ej hanterat versionsnummer: " + protocolVersion);
 			throw new Exception("Ej hanterat versionsnummer: " + protocolVersion);
@@ -211,23 +215,24 @@ public class SamsokContentHelper extends ContentHelper {
 			GMLInfoHolder gmlInfoHolder) throws Exception {
 		String identifier = null;
 		String htmlURL = null;
-		Graph graph = null;
+		Model model = null;
 		ExtractedInfo info = new ExtractedInfo();
 		try {
-			graph = RDFUtil.parseGraph(xmlContent);
+			model = RDFUtil.parseModel(xmlContent);
 	
-			GraphElementFactory elementFactory = graph.getElementFactory();
-			URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
-			URIReference samsokEntity = elementFactory.createURIReference(SamsokProtocol.uri_samsokEntity);
-			URIReference rURL = elementFactory.createURIReference(SamsokProtocol.uri_rURL);
-			SubjectNode s = null;
-			for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
+			Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+			Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+			Property rURL = ResourceFactory.createProperty(SamsokProtocol.uri_rURL.toString());
+			Resource subject = null;
+			Selector selector = new SimpleSelector((Resource) null, rdfType, samsokEntity);
+			StmtIterator iter = model.listStatements(selector);
+			while (iter.hasNext()){
 				if (identifier != null) {
 					throw new Exception("Ska bara finnas en entity");
 				}
-				s = triple.getSubject();
-				identifier = s.toString();
-				htmlURL = RDFUtil.extractSingleValue(graph, s, rURL, null);
+				subject = iter.next().getResource();
+				identifier=subject.toString();
+				htmlURL=RDFUtil.extractSingleValue(model, subject, rURL, null);
 			}
 			if (identifier == null) {
 				logger.error("Kunde inte extrahera identifierare ur rdf-grafen:\n" + xmlContent);
@@ -240,14 +245,17 @@ public class SamsokContentHelper extends ContentHelper {
 					// sätt identifier först då den används för deletes etc även om det går
 					// fel nedan
 					gmlInfoHolder.setIdentifier(identifier);
-					URIReference rCoordinates = elementFactory.createURIReference(SamsokProtocol.uri_rCoordinates);
-					URIReference rContext = elementFactory.createURIReference(SamsokProtocol.uri_rContext);
+					Property rCoordinates = ResourceFactory.createProperty(SamsokProtocol.uri_rCoordinates.toString());
+					Property rContext = ResourceFactory.createProperty(SamsokProtocol.uri_rContext.toString());
 					// hämta ev gml från kontext-noder
 					LinkedList<String> gmlGeometries = new LinkedList<String>();
-					for (Triple triple: graph.find(s, rContext, AnyObjectNode.ANY_OBJECT_NODE)) {
-						if (triple.getObject() instanceof SubjectNode) {
-							SubjectNode cS = (SubjectNode) triple.getObject();
-							String gml = RDFUtil.extractSingleValue(graph, cS, rCoordinates, null);
+					selector = new SimpleSelector(subject, rContext, (RDFNode) null);
+					iter = model.listStatements(selector);
+					while (iter.hasNext()){
+						Statement s = iter.next();
+						if (s.getObject().isResource()){
+							Resource cS = s.getObject().asResource();
+							String gml = RDFUtil.extractSingleValue(model, cS, rCoordinates, null);
 							if (gml != null && gml.length() > 0) {
 								// vi konverterar till SWEREF 99 TM då det är vårt standardformat
 								// dessutom fungerar konverteringen som en kontroll av om gml:en är ok
@@ -259,22 +267,22 @@ public class SamsokContentHelper extends ContentHelper {
 					gmlInfoHolder.setGmlGeometries(gmlGeometries);
 					// itemTitle kan vara 0M så om den saknas försöker vi ta itemName och
 					// om den saknas, itemType
-					URIReference rItemTitle = elementFactory.createURIReference(SamsokProtocol.uri_rItemTitle);
-					String name = StringUtils.trimToNull(RDFUtil.extractValue(graph, s, rItemTitle, null, null));
+					Property rItemTitle = ResourceFactory.createProperty(SamsokProtocol.uri_rItemTitle.toString());
+					String name = StringUtils.trimToNull(RDFUtil.extractValue(model, subject, rItemTitle, null, null));
 					if (name == null) {
-						URIReference rItemName = elementFactory.createURIReference(SamsokProtocol.uri_rItemName);
-						name = StringUtils.trimToNull(RDFUtil.extractValue(graph, s, rItemName, null, null));
+						Property rItemName = ResourceFactory.createProperty(SamsokProtocol.uri_rItemName.toString());
+						name = StringUtils.trimToNull(RDFUtil.extractValue(model, subject, rItemName, null, null));
 						if (name == null) {
-							URIReference rItemType = elementFactory.createURIReference(SamsokProtocol.uri_rItemType);
-							String typeUri = RDFUtil.extractSingleValue(graph, s, rItemType, null);
+							Property rItemType = ResourceFactory.createProperty(SamsokProtocol.uri_rItemType.toString());
+							String typeUri = RDFUtil.extractSingleValue(model, subject, rItemType, null);
 							if (typeUri != null) {
-								URIReference rProtocolVersion = elementFactory.createURIReference(SamsokProtocol.uri_rKsamsokVersion);
-								String protocolVersion = RDFUtil.extractSingleValue(graph, s, rProtocolVersion, null);
+								Property rProtocolVersion = ResourceFactory.createProperty(SamsokProtocol.uri_rKsamsokVersion.toString());
+								String protocolVersion = RDFUtil.extractSingleValue(model, subject, rProtocolVersion, null);
 								if (protocolVersion == null) {
-									logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + graph);
+									logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + model);
 									throw new Exception("Hittade ingen protokollversion i rdf-grafen");
 								}
-								SamsokProtocolHandler handler = getProtocolHandlerForVersion(protocolVersion, graph, s);
+								SamsokProtocolHandler handler = getProtocolHandlerForVersion(protocolVersion, model, subject);
 								name = handler.lookupURIValue(typeUri);
 								//name = uriValues.get(typeUri);
 							}
@@ -292,8 +300,8 @@ public class SamsokContentHelper extends ContentHelper {
 				}
 			}
 		} finally {
-			if (graph != null) {
-				graph.close();
+			if (model != null) {
+				model.close();
 			}
 		}
 		return info;
