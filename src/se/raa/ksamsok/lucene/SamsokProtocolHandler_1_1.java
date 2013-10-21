@@ -8,8 +8,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.SubjectNode;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -195,7 +193,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		// TODO: kontrollera hierarkin också?
 		ip.setCurrent(ContentHelper.IX_ITEMSUPERTYPE, true);
 		String superType = RDFUtil.extractSingleValue(model, subject,
-				getURIRef(elementFactory, SamsokProtocol.uri_rItemSuperType), ip);
+				getURIRef(SamsokProtocol.uri_rItemSuperType), ip);
 		if (superType == null) {
 			throw new Exception("No item supertype for item with identifier " + subject.toString());
 		}
@@ -203,28 +201,28 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		//       (supertype==agent ovan kan tex användas)
 		// nya index för agenter på toppnivå
 		ip.setCurrent(ContentHelper.IX_NAMEAUTH);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rNameAuth), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rNameAuth), ip);
 		ip.setCurrent(ContentHelper.IX_NAMEID);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rNameId), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rNameId), ip);
 		// TODO: foaf:name innehåller även alternativa namn men man kanske vill ha ett separat
 		//       index för detta? foaf innehåller inget sånt tyvärr så det var därför jag stoppade
 		//       in alternativa namn i namn-fältet enligt http://viaf.org/viaf/59878606/rdf.xml
 		//       skos har alternativt namn som man skulle kunna använda men egentligen berör ju det
 		//       koncept, men det kommer vi ju också lägga in framöver så..
 		ip.setCurrent(ContentHelper.IX_NAME);
-		RDFUtil.extractValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rName), null, ip);
+		RDFUtil.extractValue(model, subject, getURIRef(SamsokProtocol.uri_rName), null, ip);
 		ip.setCurrent(ContentHelper.IX_FIRSTNAME);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rFirstName), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rFirstName), ip);
 		ip.setCurrent(ContentHelper.IX_SURNAME);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rSurname), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rSurname), ip);
 		ip.setCurrent(ContentHelper.IX_FULLNAME);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rFullName), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rFullName), ip);
 		ip.setCurrent(ContentHelper.IX_GENDER);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rGender), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rGender), ip);
 		ip.setCurrent(ContentHelper.IX_TITLE);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rTitle), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rTitle), ip);
 		ip.setCurrent(ContentHelper.IX_ORGANIZATION);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(elementFactory, SamsokProtocol.uri_rOrganization), ip);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rOrganization), ip);
 	}
 	/**
 	 * Extraherar och indexerar typinformation ur en kontextnod.
@@ -237,11 +235,11 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	 * @throws Exception vid fel
 	 */
 	@Override
-	protected String[] extractContextTypeAndLabelInformation(SubjectNode cS, String identifier) throws Exception {
+	protected String[] extractContextTypeAndLabelInformation(Resource cS, String identifier) throws Exception {
 
 		// TODO: kontrollera hierarkin också (att produce bara får finnas under create tex)?
 		String contextSuperTypeURI = RDFUtil.extractSingleValue(model, cS,
-				getURIRef(elementFactory, SamsokProtocol.uri_rContextSuperType), null);
+				getURIRef(SamsokProtocol.uri_rContextSuperType), null);
 		if (contextSuperTypeURI == null) {
 			throw new Exception("No supertype for context for item with identifier " + identifier);
 		}
@@ -257,7 +255,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		// hämta ut vilket kontext vi är i 
 		String contextType;
 		String contextTypeURI = RDFUtil.extractSingleValue(model, cS,
-				getURIRef(elementFactory, SamsokProtocol.uri_rContextType), null);
+				getURIRef(SamsokProtocol.uri_rContextType), null);
 		if (contextTypeURI != null) {
 			String defaultLabel = contextTypes_1_1_TO.get(contextTypeURI);
 			if (defaultLabel == null) {
@@ -273,7 +271,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 			ip.addToDoc(contextType);
 			// ta först en inskickad label, och annars defaultvärdet
 			String contextLabel = RDFUtil.extractSingleValue(model, cS,
-					getURIRef(elementFactory, SamsokProtocol.uri_rContextLabel), ip);
+					getURIRef(SamsokProtocol.uri_rContextLabel), ip);
 			if (contextLabel == null) {
 				contextLabel = defaultLabel;
 			}
@@ -286,14 +284,14 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	}
 
 	@Override
-	protected void extractContextActorInformation(SubjectNode cS,
+	protected void extractContextActorInformation(Resource cS,
 			String[] contextTypes, List<String> relations) throws Exception {
 		super.extractContextActorInformation(cS, contextTypes, relations);
 		// hantera relationer i kontexten
 		extractContextRelationInformation(cS, contextTypes, relations);
 	}
 
-	protected void extractContextRelationInformation(SubjectNode cS, String[] contextTypes,
+	protected void extractContextRelationInformation(Resource cS, String[] contextTypes,
 			List<String> relations) throws Exception {
 		extractContextLevelRelations(cS, relations);
 	}
@@ -317,7 +315,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	 * @param relations lista med relationer för specialrelationsindexet
 	 * @throws Exception vid fel
 	 */
-	protected void extractContextLevelRelations(SubjectNode cS, List<String> relations) throws Exception {
+	protected void extractContextLevelRelations(Resource cS, List<String> relations) throws Exception {
 		Map<String, URI> relationsMap = getContextLevelRelationsMap();
 		extractRelationsFromNode(cS, relationsMap, relations);
 	}
