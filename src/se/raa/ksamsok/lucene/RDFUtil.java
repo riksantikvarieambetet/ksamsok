@@ -168,7 +168,7 @@ String value = null;
 			StmtIterator iter = model.listStatements(selector);
 			while (iter.hasNext()){
 				Statement s = iter.next();
-				uriValues.put(s.getResource().toString(), StringUtils.trimToNull(s.getObject().asLiteral().getString()));
+				uriValues.put(s.getString(), StringUtils.trimToNull(s.getObject().asLiteral().getString()));
 			}
 			if (logger.isInfoEnabled()) {
 				logger.info("Läste in " + iter.toList().size() + " uris/värden från " + fileName);
