@@ -198,28 +198,30 @@ public class Search extends AbstractSearchMethod {
 
 	/**
 	 * skriver ut nedre del av XML svar
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeFootExtra() {	
-		writer.println("<echo>");
-		writer.println("<startRecord>" + startRecord + "</startRecord>");
-		writer.println("<hitsPerPage>" + hitsPerPage + "</hitsPerPage>");
-		writer.println("<query>" + StaticMethods.xmlEscape(queryString) + "</query>");
-		writer.println("</echo>");
+	protected void writeFootExtra() throws IOException {
+		xmlWriter.writeEntity("echo");
+		xmlWriter.writeEntityWithText("startRecord", startRecord);
+		xmlWriter.writeEntityWithText("hitsPerPage", hitsPerPage);
+		xmlWriter.writeEntityWithText("query", queryString);
+		xmlWriter.endEntity();
 	}
 
 	/**
 	 * skriver ut övre del av XML svar
 	 * @param numberOfDocs
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeHeadExtra() {
-		writer.println("<totalHits>" + hitList.getNumFound() + "</totalHits>");
+	protected void writeHeadExtra() throws IOException {
+		xmlWriter.writeEntityWithText("totalHits", hitList.getNumFound());
 	}
 
 	@Override
-	protected void writeResult() {
-		writer.println("<records>");
+	protected void writeResult() throws IOException {
+		xmlWriter.writeEntity("records");
 		try {
 			for (SolrDocument d: hitList) {
 				Float score = (Float) d.getFieldValue("score");
@@ -227,7 +229,7 @@ public class Search extends AbstractSearchMethod {
 				writeContent(getContent(d, ident), score);
 			}
 		} finally {
-			writer.println("</records>");
+			xmlWriter.endEntity();
 		}
 	}
 
@@ -235,15 +237,17 @@ public class Search extends AbstractSearchMethod {
 	 * skriver ut content
 	 * @param content
 	 * @param score
+	 * @throws IOException 
 	 */
-	protected void writeContent(String content, double score) {
+	protected void writeContent(String content, double score) throws IOException {
 		if (content == null) {
 			return;
 		}
-		writer.println("<record>");
-		writer.println(content);
-		writer.println("<rel:score xmlns:rel=\"info:srw/extension/2/relevancy-1.0\">" + score + "</rel:score>");
-		writer.println("</record>");
+		xmlWriter.writeEntity("record");
+		xmlWriter.getWriter().write(content+"\n");
+		xmlWriter.writeEntityWithText("rel:score", score);
+		xmlWriter.writeAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+		xmlWriter.endEntity();
 	}
 	
 	/**

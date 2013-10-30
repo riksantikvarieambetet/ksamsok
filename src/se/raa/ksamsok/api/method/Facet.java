@@ -90,14 +90,14 @@ public class Facet extends StatisticSearch {
 	}
 
 	@Override
-	protected void writeFootExtra() {
-		writer.println("<echo>");
-		writer.println("<method>" + METHOD_NAME + "</method>");
-		for(String index : indexMap.keySet()) {	
-			writer.println("<index>" + index + "</index>");
+	protected void writeFootExtra() throws IOException {
+		xmlWriter.writeEntity("echo");
+		xmlWriter.writeEntityWithText("method", METHOD_NAME);
+		for(String index : indexMap.keySet()) {
+			xmlWriter.writeEntityWithText("index", index);
 		}
-		writer.println("<query>" + StaticMethods.xmlEscape(queryString) + "</query>");
-		writer.println("</echo>");
+		xmlWriter.writeEntityWithText("query", queryString);
+		xmlWriter.endEntity();
 	}
 
 }

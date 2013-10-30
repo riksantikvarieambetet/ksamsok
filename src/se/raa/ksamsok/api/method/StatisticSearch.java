@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -93,14 +94,14 @@ public class StatisticSearch extends Statistic {
 	}
 
 	@Override
-	protected void writeFootExtra() {
-		writer.println("<echo>");
-		writer.println("<method>" + METHOD_NAME + "</method>");
+	protected void writeFootExtra() throws IOException {
+		xmlWriter.writeEntity("echo");
+		xmlWriter.writeEntityWithText("method", METHOD_NAME);
 		for (String index : indexMap.keySet()) {
-			writer.println("<index>" + index + "=" + indexMap.get(index) + "</index>");
+			xmlWriter.writeEntityWithText("index", index + "=" + indexMap.get(index));
 		}
-		writer.println("<query>" + StaticMethods.xmlEscape(queryString) + "</query>");
-		writer.println("</echo>");
+		xmlWriter.writeEntityWithText("query", queryString);
+		xmlWriter.endEntity();
 	}
 
 }

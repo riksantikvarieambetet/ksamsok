@@ -17,7 +17,6 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.jrdf.graph.GraphException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -30,7 +29,7 @@ public class UpdateParishRdfWithWikipediaLinks {
 	private static String queryUrl="http://toolserver.org/~kolossos/templatetiger/tt-table4.php?lang=svwiki&template=Infobox socken Sverige&where=sockenkod&is=%04d";
 	private static HashMap<Integer,String> parishUrl=new HashMap<Integer,String>();
 	
-	public static void main(String argv[]) throws GraphException{
+	public static void main(String argv[]){
 		 /* **
 		 * This inner class parses the rdf for the parish codes
 		 */

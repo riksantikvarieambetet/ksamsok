@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -260,54 +261,48 @@ public class Statistic extends AbstractAPIMethod {
 
 	/**
 	 * skriver ut nedre delen av svars XML
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeFootExtra() {
-		writer.println("<echo>");
-		writer.println("<method>" + Statistic.METHOD_NAME + "</method>");
+	protected void writeFootExtra() throws IOException {
+		xmlWriter.writeEntity("echo");
+		xmlWriter.writeEntityWithText("method", Statistic.METHOD_NAME);
 		for(String index : indexMap.keySet()) {
-			writer.println("<index>" + index + "=" + indexMap.get(index) + "</index>");
+			xmlWriter.writeEntityWithText("index", index + "=" + indexMap.get(index));
 		}
-		writer.println("</echo>");
+		xmlWriter.endEntity();
 	}
 
 	/**
 	 * skriver ut resultat
 	 * @param queryResults
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeResult() {
+	protected void writeResult() throws IOException {
 		for(int i = 0; i < queryResults.size(); i++) {
 			QueryContent queryContent = queryResults.get(i);
+			xmlWriter.writeEntity("term");
 			writer.println("<term>");
 			for(String index : queryContent.getTermMap().keySet()) {
-				writer.println("<indexFields>");
-				writer.print("<index>");
-				writer.print(index);
-				writer.println("</index>");
-				writer.print("<value>");
-				//xmlEscape snodde jag ur SRUServlet
-				writer.print(StaticMethods.xmlEscape(
-						queryContent.getTermMap().get(index)));
-				writer.println("</value>");
-				writer.println("</indexFields>");
+				xmlWriter.writeEntity("indexFields");
+				xmlWriter.writeEntityWithText("index", index);
+				xmlWriter.writeEntityWithText("value", queryContent.getTermMap().get(index));
+				xmlWriter.endEntity();
 			}
-			writer.print("<records>");
-			writer.print(queryContent.getHits());
-			writer.println("</records>");
-			writer.println("</term>");
+			xmlWriter.writeEntityWithText("records", queryContent.getHits());
+			xmlWriter.endEntity();
 		}
 	}
 
 	/**
 	 * skriver ut övre del av svars XML
 	 * @param queryResults
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeHeadExtra() {
-		//skriver ut hur många värden det blev
-		writer.println("<numberOfTerms>" + queryResults.size() +
-				"</numberOfTerms>");
+	protected void writeHeadExtra() throws IOException {
+		xmlWriter.writeEntityWithText("numberOfTerms", queryResults.size());
 	}
 
 	/**

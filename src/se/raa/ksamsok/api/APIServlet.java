@@ -17,10 +17,11 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.java.generationjava.io.xml.SimpleXmlWriter;
+
 import se.raa.ksamsok.api.exception.APIException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.method.APIMethod;
-import se.raa.ksamsok.api.util.StartEndWriter;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -115,17 +116,30 @@ public class APIServlet extends HttpServlet {
 	 * skriver ut felmeddelanden
 	 * @param writer
 	 * @param e
+	 * @throws IOException 
 	 */
-	private void diagnostic(PrintWriter writer, APIMethod method, String stylesheet, APIException e) {
+	private void diagnostic(PrintWriter writer, APIMethod method, String stylesheet, APIException e) throws IOException {
 		logger.warn(e.getClassName() + " - " + e.getDetails());
 		// TODO: inte riktigt bra detta med header- och footer-kontrollerna men...
 		boolean writeHead = true;
 		boolean writeFoot = true;
+		SimpleXmlWriter xmlWriter=new SimpleXmlWriter(writer);
 		if (method != null) {
 			writeHead = !method.isHeadWritten();
 			writeFoot = !method.isFootWritten();
 		}
-		StartEndWriter.writeError(writer, writeHead, writeFoot, stylesheet,	e);
+		if (writeHead){
+			xmlWriter.writeXmlVersion("1.0", "UTF-8");
+			if(stylesheet!=null && stylesheet.trim().length()>0){
+				xmlWriter.writeXmlStyleSheet(stylesheet,"text/xsl");
+			}
+			xmlWriter.writeEntity("result");
+			xmlWriter.writeEntityWithText("version", APIMethod.API_VERSION);
+		}
+		xmlWriter.writeEntityWithText("error", e.getMessage());
+		if (writeFoot){
+			xmlWriter.endEntity();
+		}
 	}
 
 	@Override

@@ -1,17 +1,20 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
+import com.java.generationjava.io.xml.SimpleXmlWriter;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.util.StartEndWriter;
 
 /**
  * Basklass för api-metoder.
@@ -19,9 +22,12 @@ import se.raa.ksamsok.api.util.StartEndWriter;
  */
 public abstract class AbstractAPIMethod implements APIMethod {
 
+	protected static final Logger logger = Logger.getLogger(AbstractAPIMethod.class);
+
 	protected APIServiceProvider serviceProvider;
 	protected Map<String, String> params;
 	protected PrintWriter writer;
+	protected SimpleXmlWriter xmlWriter;
 	protected String stylesheet;
 	protected boolean headWritten;
 	protected boolean footWritten;
@@ -46,49 +52,64 @@ public abstract class AbstractAPIMethod implements APIMethod {
 		extractParameters();
 		// utför operationen
 		performMethodLogic();
-		// skriv huvud
-		writeHead();
-		writer.flush();
-		// skriv data
-		writeResult();
-		writer.flush();
-		// skriv fot
-		writeFoot();
+		try {
+			// skriv huvud
+			writeHead();
+			// skriv data
+			writeResult();
+			// skriv fot
+			writeFoot();
+		} catch (IOException e) {
+			logger.error("writeXmlResult: "+e.getMessage());
+			throw new DiagnosticException(e.getMessage(),AbstractAPIMethod.class.getName(),e.getCause().getMessage(),false);
+		}
 	}
 
 	/**
 	 * Skriver huvud och anropar sen {@linkplain #writeHeadExtra()}.
+	 * @throws IOException 
+	 * @throws DiagnosticException 
 	 */
-	protected void writeHead() {
-		StartEndWriter.writeStart(writer, stylesheet);
-		headWritten = true;
+	protected void writeHead() throws IOException {
+		xmlWriter=new SimpleXmlWriter(writer);
+		xmlWriter.writeXmlVersion("1.0", "UTF-8");
+		if(stylesheet!=null && stylesheet.trim().length()>0){
+			xmlWriter.writeXmlStyleSheet(stylesheet,"text/xsl");
+		}
+		xmlWriter.writeEntity("result");
+		xmlWriter.writeEntityWithText("version", APIMethod.API_VERSION);
 		writeHeadExtra();
+		headWritten = true;
 	}
 
 	/**
 	 * Extrasaker att skriva ut efter huvudet, överlagra i subklasser.
+	 * @throws IOException 
 	 */
-	protected void writeHeadExtra() {}
+	protected void writeHeadExtra() throws IOException {}
 
 	/**
 	 * Skriver resultat av metod.
 	 * @throws DiagnosticException vid fel
+	 * @throws IOException 
 	 */
-	protected void writeResult() throws DiagnosticException {}
+	protected void writeResult() throws IOException {}
 
 	/**
 	 * Anropar {@linkplain #writeFootExtra()} och skriver sen ut fot.
+	 * @throws IOException 
 	 */
-	protected void writeFoot() {
+	protected void writeFoot() throws IOException {
 		writeFootExtra();
-		StartEndWriter.writeEnd(writer);
+		xmlWriter.endEntity();
 		footWritten = true;
 	}
 
 	/**
 	 * Extrasaker att skriva ut före foten, överlagra i subklasser.
+	 * @throws IOException 
 	 */
-	protected void writeFootExtra() {}
+	protected void writeFootExtra() throws IOException {}
 
 
 	@Override

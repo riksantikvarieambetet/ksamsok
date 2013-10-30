@@ -55,36 +55,37 @@ public class Stem extends AbstractAPIMethod {
 	/**
 	 * Skriver ut början av svaret
 	 * @param stemList
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeHeadExtra(){
-		writer.println("<numberOfStems>" + stems.size() + "</numberOfStems>");
-		writer.println("<stems>");
+	protected void writeHeadExtra() throws IOException{
+		xmlWriter.writeEntityWithText("numberOfStems", stems.size());
+		xmlWriter.writeEntity("stems");
 	}
 	
 	/**
 	 * skriver ut resultatet av svaret
 	 * @param termList
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeResult() {
+	protected void writeResult() throws IOException {
 		for (String stem: stems) {
-			writer.print("<stem>");
-			writer.print(StaticMethods.xmlEscape(stem));
-			writer.println("</stem>");
+			xmlWriter.writeEntityWithText("stem", stem);
 		}
 	}
 	
 	/**
 	 * Skriver ut foten av svaret
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeFootExtra() {
-		writer.println("</stems>");
-		writer.println("<echo>");
-		writer.println("<method>" + METHOD_NAME + "</method>");
-		writer.println("<words>" + StaticMethods.xmlEscape(words) + "</words>");
-		writer.println("</echo>");
+	protected void writeFootExtra() throws IOException {
+		xmlWriter.endEntity();
+		xmlWriter.writeEntity("echo");
+		xmlWriter.writeEntityWithText("method", METHOD_NAME);
+		xmlWriter.writeEntityWithText("words", words);
+		xmlWriter.endEntity();
 	}
 
 }

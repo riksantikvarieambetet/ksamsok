@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collection;
@@ -382,20 +383,16 @@ public class GetRelations extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() throws DiagnosticException {
-		String source;
-		//String originalRelationType;
-		writer.println("<relations count=\"" + relations.size() + "\">");
+	protected void writeResult() throws IOException {
+		xmlWriter.writeEntity("relations");
+		xmlWriter.writeAttribute("count", relations.size());
 		for (Relation rel: relations) {
-			source = rel.getSource();
-			//originalRelationType = rel.getOriginalRelationType();
-			writer.print("<relation type=\"" + rel.getRelationType() + "\"" +
-					(source != null ? " source=\"" + source + "\"" : "") +
-					//(originalRelationType != null ? " originalType=\"" + originalRelationType + "\"" : "") +
-					">");
-			writer.print(StringEscapeUtils.escapeXml(rel.getTargetUri()));
-			writer.println("</relation>");
+			xmlWriter.writeEntityWithText("relation",rel.getTargetUri());
+			xmlWriter.writeAttribute("type", rel.getRelationType());
+			if (rel.getSource()!=null){
+				xmlWriter.writeAttribute("source", rel.getSource());
+			}
 		}
-		writer.println("</relations>");
+		xmlWriter.endEntity();
 	}
 }

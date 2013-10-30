@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,40 +83,43 @@ public class SearchHelp extends AbstractAPIMethod {
 	
 	/**
 	 * skriver ut början av svaret
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeHeadExtra() {
-		writer.println("<numberOfTerms>" + termList.size() + "</numberOfTerms>");
+	protected void writeHeadExtra() throws IOException {
+		xmlWriter.writeEntityWithText("numberOfTerms", termList.size());
 	}
 	
 	/**
 	 * skriver ut resultatet av svaret
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeResult() {
-		writer.println("<terms>");
+	protected void writeResult() throws IOException {
+		xmlWriter.writeEntity("terms");
 		for (Term t: termList) {
-			writer.println("<term>");
-			writer.println("<value>" + StaticMethods.xmlEscape(t.getValue()) + "</value>");
-			writer.println("<count>" + t.getCount() + "</count>");
-			writer.println("</term>");
+			xmlWriter.writeEntity("term");
+			xmlWriter.writeEntityWithText("value", t.getValue());
+			xmlWriter.writeEntityWithText("count", t.getCount());
+			xmlWriter.endEntity();
 		}
-		writer.println("</terms>");
+		xmlWriter.endEntity();
 	}
 	
 	/**
 	 * skriver ut foten av svaret
+	 * @throws IOException 
 	 */
 	@Override
-	protected void writeFootExtra() {
-		writer.println("<echo>");
-		writer.println("<method>" + METHOD_NAME + "</method>");
+	protected void writeFootExtra() throws IOException {
+		xmlWriter.writeEntity("echo");
+		xmlWriter.writeEntityWithText("method", METHOD_NAME);
 		for(int i = 0; i < indexList.size(); i++) {
-			writer.println("<index>" + indexList.get(i) + "</index>");
+			xmlWriter.writeEntityWithText("index", indexList.get(i));
 		}
-		writer.println("<maxValueCount>" + maxValueCount  + "</maxValueCount>");
-		writer.println("<prefix>" + StaticMethods.xmlEscape(prefix) + "</prefix>");
-		writer.println("</echo>");
+		xmlWriter.writeEntityWithText("maxValueCount", maxValueCount);
+		xmlWriter.writeEntityWithText("prefix", prefix);
+		xmlWriter.endEntity();
 	}
 
 	/**

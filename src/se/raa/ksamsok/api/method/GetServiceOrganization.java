@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +63,7 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() {
+	protected void writeResult() throws IOException {
 		for (Organization org: orgList) {
 			writeInstitution(org);
 		}
@@ -71,32 +72,33 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	/**
 	 * Skriver ut xml data om en institution
 	 * @param org organisationen som skall skrivas ut
+	 * @throws IOException 
 	 */
-	protected void writeInstitution(Organization org) {
-		writer.println("<institution>");
-		writer.println("<kortnamn>" + StaticMethods.xmlEscape(org.getServ_org() != null ? org.getServ_org() : "") + "</kortnamn>");
-		writer.println("<namnswe>" + StaticMethods.xmlEscape(org.getNamnSwe() != null ? org.getNamnSwe() : "") + "</namnswe>");
-		writer.println("<namneng>" + StaticMethods.xmlEscape(org.getNamnEng() != null ? org.getNamnEng() : "") + "</namneng>");
-		writer.println("<beskrivswe>" + StaticMethods.xmlEscape(org.getBeskrivSwe() != null ? org.getBeskrivSwe() : "") + "</beskrivswe>");
-		writer.println("<beskriveng>" + StaticMethods.xmlEscape(org.getBeskrivEng() != null ? org.getBeskrivEng() : "") + "</beskriveng>");
-		writer.println("<adress1>" + StaticMethods.xmlEscape(org.getAdress1() != null ? org.getAdress1() : "") + "</adress1>");
-		writer.println("<adress2>" + StaticMethods.xmlEscape(org.getAdress2() != null ? org.getAdress2() : "") + "</adress2>");
-		writer.println("<postadress>" + StaticMethods.xmlEscape(org.getPostadress() != null ? org.getPostadress() : "") + "</postadress>");
-		writer.println("<kontaktperson>" + StaticMethods.xmlEscape(org.getKontaktperson() != null ? org.getKontaktperson() : "") + "</kontaktperson>");
-		writer.println("<epostkontaktperson>" + StaticMethods.xmlEscape(org.getEpostKontaktperson() != null ? org.getEpostKontaktperson() : "") + "</epostkontaktperson>");
-		writer.println("<websida>" + StaticMethods.xmlEscape(org.getWebsida() != null ? org.getWebsida() : "") + "</websida>");
-		writer.println("<websidaks>" + StaticMethods.xmlEscape(org.getWebsidaKS() !=  null ? org.getWebsidaKS() : "") + "</websidaks>");
-		writer.println("<lowressurl>" + StaticMethods.xmlEscape(org.getLowressUrl() != null ? org.getLowressUrl() : "") + "</lowressurl>");
-		writer.println("<thumbnailurl>" + StaticMethods.xmlEscape(org.getThumbnailUrl() != null ? org.getThumbnailUrl() : "") + "</thumbnailurl>");
-		writer.println("<services>");
+	protected void writeInstitution(Organization org) throws IOException {
+		xmlWriter.writeEntity("institution");
+		xmlWriter.writeEntityWithText("kortnamn",org.getServ_org() != null ? org.getServ_org() : "");
+		xmlWriter.writeEntityWithText("namnswe", org.getNamnSwe() != null ? org.getNamnSwe() : "");
+		xmlWriter.writeEntityWithText("namneng", org.getNamnEng() != null ? org.getNamnEng() : "");
+		xmlWriter.writeEntityWithText("beskrivswe", org.getBeskrivSwe() != null ? org.getBeskrivSwe() : "");
+		xmlWriter.writeEntityWithText("beskriveng", org.getBeskrivEng() != null ? org.getBeskrivEng() : "");
+		xmlWriter.writeEntityWithText("adress1", org.getAdress1() != null ? org.getAdress1() : "");
+		xmlWriter.writeEntityWithText("adress2", org.getAdress2() != null ? org.getAdress2() : "");
+		xmlWriter.writeEntityWithText("postadress", org.getPostadress() != null ? org.getPostadress() : "");
+		xmlWriter.writeEntityWithText("kontaktperson", org.getKontaktperson() != null ? org.getKontaktperson() : "");
+		xmlWriter.writeEntityWithText("epostkontaktperson", org.getEpostKontaktperson() != null ? org.getEpostKontaktperson() : "");
+		xmlWriter.writeEntityWithText("websida", org.getWebsida() != null ? org.getWebsida() : "");
+		xmlWriter.writeEntityWithText("websidaks", org.getWebsidaKS() !=  null ? org.getWebsidaKS() : "");
+		xmlWriter.writeEntityWithText("lowressurl", org.getLowressUrl() != null ? org.getLowressUrl() : "");
+		xmlWriter.writeEntityWithText("thumbnailurl", org.getThumbnailUrl() != null ? org.getThumbnailUrl() : "");
+		xmlWriter.writeEntity("services");
 		for (int i = 0; org.getServiceList() != null && i < org.getServiceList().size(); i++) {
 			Service service = org.getServiceList().get(i);
-			writer.println("<service>");
-			writer.println("<namn>" + StaticMethods.xmlEscape(service.getNamn() != null ? service.getNamn() : "") + "</namn>");
-			writer.println("<beskrivning>" + StaticMethods.xmlEscape(service.getBeskrivning() != null ? service.getBeskrivning() : "") + "</beskrivning>");
-			writer.println("</service>");
+			xmlWriter.writeEntity("service");
+			xmlWriter.writeEntityWithText("namn", service.getNamn() != null ? service.getNamn() : "");
+			xmlWriter.writeEntityWithText("beskrivning", service.getBeskrivning() != null ? service.getBeskrivning() : "");
+			xmlWriter.endEntity();
 		}
-		writer.println("</services>");
-		writer.println("</institution>");
+		xmlWriter.endEntity();
+		xmlWriter.endEntity();
 	}
 }

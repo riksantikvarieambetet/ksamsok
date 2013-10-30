@@ -1,7 +1,10 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +16,13 @@ import javax.sql.DataSource;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -259,28 +269,27 @@ public class GetGeoResource extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() throws DiagnosticException {
-		writer.print("<rdf:RDF");
-		writer.print(" xmlns=\"http://kulturarvsdata.se/schema/ksamsok-rdf#\"");
-		writer.println(" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">");
-
-		writer.println("<" + tagName + " rdf:about=\"" + uri + "\">");
-		writer.println(" <name>" + nameResult + "</name>");
+	protected void writeResult() throws IOException {
+		Model m = ModelFactory.createDefaultModel();
+		Resource about = ResourceFactory.createResource(uri);
+		Property ksamsokName = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", "name");
+		m.add(about, ksamsokName, nameResult);
 		// har vi en parent-uri använder vi den, annars tar vi sverige
-		if (parentURI != null) {
-			writer.println(" <" + parentTagName + " rdf:resource=\"" + parentURI + "\"/>");
+		if (parentURI != null){
+			Resource parURI = ResourceFactory.createResource(parentURI);
+			Property parentProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", parentTagName);
+			m.add(about,parentProperty,parURI);
 		} else {
-			writer.println(" <country rdf:resource=\"" + URI_SVERIGE + "\"/>");
+			Resource parURI = ResourceFactory.createResource(URI_SVERIGE);
+			Property parentProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", "country");
+			m.add(about, parentProperty, parURI);
 		}
 		//Om det finns koordinater skriv ut dem annars inte
-		if (gmlResult!=null)
-		{
-			writer.println(" <coordinates rdf:parseType=\"Literal\">");
-			writer.println(gmlResult);
-			writer.println(" </coordinates>");
+		if (gmlResult != null){
+			Property coordProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", "coordinates");
+			Literal coords = ResourceFactory.createPlainLiteral(gmlResult);
+			m.addLiteral(about, coordProperty, coords);
 		}
-		writer.println("</" + tagName + ">");
-
-		writer.println("</rdf:RDF>");
+		m.write(xmlWriter.getWriter(), "RDF/XML", "http://kulturarvsdata.se/ksamsok");
 	}
 }

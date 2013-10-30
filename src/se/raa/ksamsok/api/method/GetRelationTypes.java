@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Map;
@@ -64,8 +65,9 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() throws DiagnosticException {
-		writer.println("<relationTypes count=\"" + relationTypes.size() + "\">");
+	protected void writeResult() throws IOException {
+		xmlWriter.writeEntity("relationTypes");
+		xmlWriter.writeAttribute("count", relationTypes.size());
 		Index index;
 		String indexTitle;
 		for (Entry<String, String> rel: relationTypes.entrySet()) {
@@ -83,12 +85,12 @@ public class GetRelationTypes extends AbstractAPIMethod {
 					indexTitle = rel.getKey();
 				}
 			}
-			writer.print("<relationType name=\"" + rel.getKey() + "\"" +
-					" title=\"" + StringEscapeUtils.escapeXml(indexTitle) + "\"" +
-					" reverse=\"" + rel.getValue() + "\">");
-			writer.println("</relationType>");
+			xmlWriter.writeEmptyEntity("relationType");
+			xmlWriter.writeAttribute("name", rel.getKey());
+			xmlWriter.writeAttribute("title", indexTitle);
+			xmlWriter.writeAttribute("reverse",rel.getValue());
 		}
-		writer.println("</relationTypes>");
+		xmlWriter.endEntity();
 	}
 
 }
