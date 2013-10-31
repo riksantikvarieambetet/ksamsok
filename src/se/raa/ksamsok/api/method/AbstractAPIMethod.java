@@ -41,6 +41,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	protected AbstractAPIMethod(APIServiceProvider serviceProvider, PrintWriter writer, Map<String, String> params) {
 		this.serviceProvider = serviceProvider;
 		this.writer = writer;
+		this.xmlWriter=new SimpleXmlWriter(writer);
 		this.params = params;
 		this.stylesheet = params.get("stylesheet");
 	}
@@ -71,7 +72,6 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @throws DiagnosticException 
 	 */
 	protected void writeHead() throws IOException {
-		xmlWriter=new SimpleXmlWriter(writer);
 		xmlWriter.writeXmlVersion("1.0", "UTF-8");
 		if(stylesheet!=null && stylesheet.trim().length()>0){
 			xmlWriter.writeXmlStyleSheet(stylesheet,"text/xsl");
