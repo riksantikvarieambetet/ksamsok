@@ -282,7 +282,6 @@ public class Statistic extends AbstractAPIMethod {
 		for(int i = 0; i < queryResults.size(); i++) {
 			QueryContent queryContent = queryResults.get(i);
 			xmlWriter.writeEntity("term");
-			writer.println("<term>");
 			for(String index : queryContent.getTermMap().keySet()) {
 				xmlWriter.writeEntity("indexFields");
 				xmlWriter.writeEntityWithText("index", index);
