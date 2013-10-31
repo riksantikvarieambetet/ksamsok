@@ -386,11 +386,13 @@ public class GetRelations extends AbstractAPIMethod {
 		xmlWriter.writeEntity("relations");
 		xmlWriter.writeAttribute("count", relations.size());
 		for (Relation rel: relations) {
-			xmlWriter.writeEntityWithText("relation",rel.getTargetUri());
+			xmlWriter.writeEntity("relation");
 			xmlWriter.writeAttribute("type", rel.getRelationType());
 			if (rel.getSource()!=null){
 				xmlWriter.writeAttribute("source", rel.getSource());
 			}
+			xmlWriter.writeText(rel.getTargetUri());
+			xmlWriter.endEntity();
 		}
 		xmlWriter.endEntity();
 	}

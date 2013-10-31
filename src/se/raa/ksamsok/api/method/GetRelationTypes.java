@@ -84,10 +84,11 @@ public class GetRelationTypes extends AbstractAPIMethod {
 					indexTitle = rel.getKey();
 				}
 			}
-			xmlWriter.writeEmptyEntity("relationType");
+			xmlWriter.writeEntity("relationType");
 			xmlWriter.writeAttribute("name", rel.getKey());
 			xmlWriter.writeAttribute("title", indexTitle);
 			xmlWriter.writeAttribute("reverse",rel.getValue());
+			xmlWriter.endEntity();
 		}
 		xmlWriter.endEntity();
 	}
