@@ -244,7 +244,7 @@ public class Search extends AbstractSearchMethod {
 			return;
 		}
 		xmlWriter.writeEntity("record");
-		xmlWriter.writeText(content);
+		xmlWriter.writeXml(content);
 		xmlWriter.writeEntity("rel:score");
 		xmlWriter.writeAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
 		xmlWriter.writeText(score);

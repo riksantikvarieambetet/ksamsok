@@ -44,6 +44,10 @@ import java.util.Stack;
  * @author <a href="mailto:pete@fingertipsoft.com">Peter Cassetta</a>
  * @version 1.0
  */
+/**
+ * @author alwik
+ *
+ */
 public class SimpleXmlWriter extends AbstractXmlWriter {
 
     private Writer writer;      // underlying writer
@@ -236,6 +240,17 @@ public class SimpleXmlWriter extends AbstractXmlWriter {
     
     public XmlWriter writeXmlStyleSheet(String href, String type) throws IOException{
     	writeChunk("<?xml-stylesheet type=\""+XmlUtils.escapeXml(type)+"\" href=\""+XmlUtils.escapeXml(href)+"\"?>");
+    	return this;
+    }
+    
+    /**
+     * This method writes the xmldata without any escaping of charachters.
+     * @param xmlData
+     * @return
+     * @throws IOException
+     */
+    public XmlWriter writeXml(String xmlData) throws IOException{
+    	writeChunk(xmlData);
     	return this;
     }
 
