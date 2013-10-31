@@ -21,7 +21,9 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.github.jsonldjava.jena.JenaJSONLD;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -30,7 +32,9 @@ import com.hp.hpl.jena.rdf.model.Selector;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.java.generationjava.io.xml.SimpleXmlWriter;
 
+import se.raa.ksamsok.api.method.AbstractAPIMethod;
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.RDFUtil;
@@ -57,7 +61,7 @@ public class ResolverServlet extends HttpServlet {
 	 * Enum för de olika formaten som stöds.
 	 */
 	private enum Format {
-		RDF, HTML, MUSEUMDAT, XML;
+		RDF, HTML, MUSEUMDAT, XML, JSON_LD;
 
 		/**
 		 * Parsar en sträng med formatet och ger motsvarande konstant.
@@ -75,6 +79,8 @@ public class ResolverServlet extends HttpServlet {
 				format = MUSEUMDAT;
 			} else if ("xml".equals(formatString)) {
 				format = XML;
+			} else if ("jsonld".equals(formatString)) {
+				format = JSON_LD;
 			}
 			return format;
 		}
@@ -174,8 +180,40 @@ public class ResolverServlet extends HttpServlet {
 			}
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[3];
 		} else {
-			format = Format.RDF;
+			//Check which format the respond should be
+			String acceptFormat=req.getHeader("Accept").toLowerCase();
+			if (acceptFormat.contains("rdf")){
+				format = Format.RDF;
+			} else if (acceptFormat.contains("xml")) {
+				format = Format.XML;
+			} else if (acceptFormat.contains("json")) {
+				format = Format.JSON_LD;
+			} else if (acceptFormat.contains("html")){
+				format = Format.HTML;
+			} else {
+				format = Format.RDF;
+			}
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[2];
+		}
+		switch (format){
+		case HTML:
+			resp.setContentType("text/html; charset=UTF-8");
+			break;
+		case JSON_LD:
+			resp.setContentType("application/json; charset=UTF-8");
+			break;
+		case MUSEUMDAT:
+			resp.setContentType("application/xml; charset=UTF-8");
+			break;
+		case RDF:
+			resp.setContentType("application/rdf+xml; charset=UTF-8");
+			break;
+		case XML:
+			resp.setContentType("application/xml; charset=UTF-8");
+			break;
+		default:
+			resp.setContentType("text/html; charset=UTF-8");
+			break;
 		}
 		try {
 			PrintWriter writer;
@@ -188,6 +226,7 @@ public class ResolverServlet extends HttpServlet {
 			q.setRows(1);
 			// hämta bara nödvändigt fält
 			switch (format) {
+			case JSON_LD:
 			case RDF:
 				q.setFields(ContentHelper.I_IX_RDF);
 				break;
@@ -250,6 +289,7 @@ public class ResolverServlet extends HttpServlet {
 				return;
 			}
 			switch (format) {
+			case JSON_LD:
 			case RDF:
 				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
 				// hämta ev från hack-cachen
@@ -269,12 +309,16 @@ public class ResolverServlet extends HttpServlet {
 					resp.sendError(404, "No rdf for record");
 					return;
 				}
-				resp.setContentType("application/rdf+xml; charset=UTF-8");
-				writer = resp.getWriter();
-				// xml-header
-				writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-				writer.println(content);
-				writer.flush();
+				if (format == Format.RDF){
+					SimpleXmlWriter xmlWriter = new SimpleXmlWriter(resp.getWriter());
+					xmlWriter.writeXmlVersion("1.0", "UTF-8");
+					xmlWriter.writeXml(content);
+				} else {
+					Model m = ModelFactory.createDefaultModel();
+					m.read(content);
+					JenaJSONLD.init();
+					m.write(resp.getWriter(), "JSON-LD");
+				}
 				break;
 
 			case XML:
@@ -287,7 +331,6 @@ public class ResolverServlet extends HttpServlet {
 					resp.sendError(404, "No presentation xml for record");
 					return;
 				}
-				resp.setContentType("text/xml; charset=UTF-8");
 				writer = resp.getWriter();
 				// xml-header
 				writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");

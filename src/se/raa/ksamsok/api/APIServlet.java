@@ -24,6 +24,7 @@ import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.method.AbstractAPIMethod;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -93,6 +94,7 @@ public class APIServlet extends HttpServlet {
 						if(reqParams.get("maxCount") == null) {
 							reqParams.put("maxCount", "10000");
 						}
+						
 						method = apiMethodFactory.getAPIMethod(reqParams, writer);
 						method.performMethod();
 						keyManager.updateUsage(apiKey);
