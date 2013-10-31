@@ -96,11 +96,19 @@ public class APIServlet extends HttpServlet {
 						method = apiMethodFactory.getAPIMethod(reqParams, writer);
 						method.performMethod();
 						keyManager.updateUsage(apiKey);
-					} catch (MissingParameterException | BadParameterException | DiagnosticException e) {
+					} catch (MissingParameterException e) {
 						resp.setStatus(400);
 						logger.error("queryString i requesten: "+ req.getQueryString());					
 						diagnostic(writer, method, stylesheet, e);
-					}
+					} catch (BadParameterException e) {
+						resp.setStatus(400);
+						logger.error("queryString i requesten: "+ req.getQueryString());					
+						diagnostic(writer, method, stylesheet, e);
+					} catch (DiagnosticException e) {
+						resp.setStatus(400);
+						logger.error("queryString i requesten: "+ req.getQueryString());					
+						diagnostic(writer, method, stylesheet, e);
+					} 
 			} else if (apiKey == null){
 				resp.setStatus(400);
 				diagnostic(writer, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
