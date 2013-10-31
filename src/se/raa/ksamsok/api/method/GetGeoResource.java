@@ -271,21 +271,21 @@ public class GetGeoResource extends AbstractAPIMethod {
 		Model m = ModelFactory.createDefaultModel();
 		m.setNsPrefix("ksamsok", "http://kulturarvsdata.se/ksamsok");
 		Resource about = ResourceFactory.createResource(uri);
-		Property ksamsokName = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", "name");
+		Property ksamsokName = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#", "name");
 		m.add(about, ksamsokName, nameResult);
 		// har vi en parent-uri använder vi den, annars tar vi sverige
 		if (parentURI != null){
 			Resource parURI = ResourceFactory.createResource(parentURI);
-			Property parentProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", parentTagName);
+			Property parentProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#", parentTagName);
 			m.add(about,parentProperty,parURI);
 		} else {
 			Resource parURI = ResourceFactory.createResource(URI_SVERIGE);
-			Property parentProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", "country");
+			Property parentProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#", "country");
 			m.add(about, parentProperty, parURI);
 		}
 		//Om det finns koordinater skriv ut dem annars inte
 		if (gmlResult != null){
-			Property coordProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", "coordinates");
+			Property coordProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#", "coordinates");
 			Literal coords = ResourceFactory.createPlainLiteral(gmlResult);
 			m.addLiteral(about, coordProperty, coords);
 		}
