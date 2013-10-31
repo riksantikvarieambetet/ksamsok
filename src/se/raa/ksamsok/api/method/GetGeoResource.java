@@ -202,7 +202,6 @@ public class GetGeoResource extends AbstractAPIMethod {
 					bodyReader =new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
 					while((respString=bodyReader.readLine())!=null)
 					{
-						System.out.println(respString);
 						if(respString.contains("<raa:geometri>"))
 						{
 							isGmlBlock=true;
