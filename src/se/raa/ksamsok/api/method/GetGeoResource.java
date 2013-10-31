@@ -255,9 +255,9 @@ public class GetGeoResource extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeHead() {
+	protected void writeHead() throws IOException {
 		// överlagrad för att bara få ren rdf
-		writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		xmlWriter.writeXmlVersion("1.0", "UTF-8");
 	}
 
 	@Override
