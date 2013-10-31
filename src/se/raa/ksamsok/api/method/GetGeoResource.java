@@ -269,6 +269,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 	@Override
 	protected void writeResult() throws IOException {
 		Model m = ModelFactory.createDefaultModel();
+		m.setNsPrefix("ksamsok", "http://kulturarvsdata.se/ksamsok");
 		Resource about = ResourceFactory.createResource(uri);
 		Property ksamsokName = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok", "name");
 		m.add(about, ksamsokName, nameResult);
