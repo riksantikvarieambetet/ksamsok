@@ -12,7 +12,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import se.raa.ksamsok.harvest.DBUtil;
@@ -93,13 +92,5 @@ public class SitemapBuilder
 			return null;
 		}
 		return date;
-	}
-	
-	@Deprecated
-	private String getUri(String uri)
-	{
-		int index = StringUtils.lastIndexOf(uri, "/");
-		uri = new StringBuffer(uri).insert(index + 1, "html/").toString();
-		return uri;
 	}
 }

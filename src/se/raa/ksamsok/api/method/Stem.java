@@ -12,7 +12,6 @@ import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.util.StaticMethods;
 
 /**
  * Uför ordstammning av inskickad sträng och ger tillbaka en lista med unika ordstammar.

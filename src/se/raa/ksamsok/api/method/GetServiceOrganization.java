@@ -13,7 +13,6 @@ import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.organization.Organization;
 import se.raa.ksamsok.organization.Service;
 

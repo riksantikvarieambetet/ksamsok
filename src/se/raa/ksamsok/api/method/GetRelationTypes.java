@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
 import se.raa.ksamsok.api.APIServiceProvider;

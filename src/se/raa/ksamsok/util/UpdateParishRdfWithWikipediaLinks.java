@@ -120,9 +120,10 @@ public class UpdateParishRdfWithWikipediaLinks {
 	 * the rdf-file as a normal text-file...
 	 */
 	private static void parishRDFUpdater(){
+		BufferedReader in=null;
 		try {
 			FileReader fInStream=new FileReader(parishRDF);
-			BufferedReader in = new BufferedReader(fInStream);
+			in = new BufferedReader(fInStream);
 			FileWriter fstream=new FileWriter(new File(parishRDF.getParent(),"parish_wiki.rdf"),true);
 			BufferedWriter out = new BufferedWriter(fstream);
 			String inString;
@@ -173,6 +174,14 @@ public class UpdateParishRdfWithWikipediaLinks {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (in != null){
+				try {
+					in.close();
+				} catch (IOException e) {
+					//Ignore
+				}
+			}
 		}
 		
 	}

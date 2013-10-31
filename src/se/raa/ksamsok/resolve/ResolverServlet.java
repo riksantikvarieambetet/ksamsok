@@ -2,7 +2,6 @@ package se.raa.ksamsok.resolve;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;

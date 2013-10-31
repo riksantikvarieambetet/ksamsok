@@ -1,5 +1,6 @@
 package se.raa.ksamsok.lucene;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -895,9 +896,9 @@ public abstract class ContentHelper {
 	 * för sru/cql.
 	 * @param qs querysträng
 	 * @return map med avkodade parametrar och värden
-	 * @throws Exception vid fel med avkodning eller annat
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static Map<String, String> extractUTF8Params(String qs) throws Exception {
+	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException{
 		HashMap<String, String> params = new HashMap<String, String>();
 		if (qs != null && qs.length() > 0) {
 			StringTokenizer tok = new StringTokenizer(qs, "&");

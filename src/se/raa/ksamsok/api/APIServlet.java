@@ -20,7 +20,9 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.java.generationjava.io.xml.SimpleXmlWriter;
 
 import se.raa.ksamsok.api.exception.APIException;
+import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.apikey.APIKeyManager;
@@ -71,44 +73,48 @@ public class APIServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {	
+			throws ServletException {	
 		//sätter contentType och character encoding
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
 		Map<String,String> reqParams = null;
 		APIMethod method = null;
-		PrintWriter writer = resp.getWriter();
+		PrintWriter writer = null;
 		try {
+			writer = resp.getWriter();
 			String stylesheet = null;
 			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
 			if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
 			if (apiKey != null && keyManager.contains(apiKey)) {
-				try {
-					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-					stylesheet = reqParams.get("stylesheet");
-					//Kollar om frågan till ksamsök har en maxCount satt, och sätter en om frågan inte har maxCount satt.
-					if(reqParams.get("maxCount") == null) {
-						reqParams.put("maxCount", "10000");
+					try {
+						reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+						stylesheet = reqParams.get("stylesheet");
+						//Kollar om frågan till ksamsök har en maxCount satt, och sätter en om frågan inte har maxCount satt.
+						if(reqParams.get("maxCount") == null) {
+							reqParams.put("maxCount", "10000");
+						}
+						method = apiMethodFactory.getAPIMethod(reqParams, writer);
+						method.performMethod();
+						keyManager.updateUsage(apiKey);
+					} catch (MissingParameterException | BadParameterException | DiagnosticException e) {
+						resp.setStatus(400);
+						logger.error("queryString i requesten: "+ req.getQueryString());					
+						diagnostic(writer, method, stylesheet, e);
 					}
-					method = apiMethodFactory.getAPIMethod(reqParams, writer);
-					method.performMethod();
-					keyManager.updateUsage(apiKey);
-				} catch (APIException e) {
-					resp.setStatus(400);
-					logger.error("queryString i requesten: "+ req.getQueryString());					
-					diagnostic(writer, method, stylesheet, e);
-				} catch (Exception e) {
-					resp.setStatus(500);
-					logger.error("queryString i requesten: "+ req.getQueryString());
-					logger.error("In doGet", e);
-				}
 			} else if (apiKey == null){
+				resp.setStatus(400);
 				diagnostic(writer, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
 			} else {
+				resp.setStatus(400);
 				diagnostic(writer, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 			}
+		} catch (IOException e2) {
+			resp.setStatus(500);
+			logger.error("In doGet", e2);
 		} finally {
-			writer.close();
+			if (writer != null){
+				writer.close();
+			}
 		}
 	}
 

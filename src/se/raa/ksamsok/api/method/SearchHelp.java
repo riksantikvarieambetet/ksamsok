@@ -14,7 +14,6 @@ import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.api.util.Term;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;

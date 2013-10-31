@@ -93,7 +93,6 @@ public class OrganizationServlet extends HttpServlet {
 	 * @param req request objekt som innehåller parametrarna
 	 * @return Organization böna med de data som skall uppdateras
 	 */
-	@SuppressWarnings("unchecked")
 	public static Organization getOrganizationValues(HttpServletRequest req) {
 		Organization o = new Organization();
 		o.setKortnamn(req.getParameter("kortnamn"));

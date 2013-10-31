@@ -93,7 +93,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @throws DiagnosticException vid fel
 	 * @throws IOException 
 	 */
-	protected void writeResult() throws IOException {}
+	protected void writeResult() throws IOException, DiagnosticException {}
 
 	/**
 	 * Anropar {@linkplain #writeFootExtra()} och skriver sen ut fot.
