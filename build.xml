@@ -74,7 +74,9 @@
             debug="${javac.debug}" 
             optimize="${javac.optimize}"
             encoding="UTF-8"
-            includeantruntime="false">
+            includeantruntime="false"
+        	source="1.7"
+        	target="1.7">
             <patternset>
                 <include name="**/*.java"/>
                 <exclude name="**/*Test.java"/>
