@@ -289,6 +289,6 @@ public class GetGeoResource extends AbstractAPIMethod {
 			Literal coords = ResourceFactory.createPlainLiteral(gmlResult);
 			m.addLiteral(about, coordProperty, coords);
 		}
-		m.write(xmlWriter.getWriter(), "RDF/XML", "http://kulturarvsdata.se/ksamsok");
+		m.write(xmlWriter.getWriter());
 	}
 }
