@@ -315,7 +315,7 @@ public class ResolverServlet extends HttpServlet {
 					xmlWriter.writeXml(content);
 				} else {
 					Model m = ModelFactory.createDefaultModel();
-					m.read(content);
+					m.read("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+content);
 					JenaJSONLD.init();
 					m.write(resp.getWriter(), "JSON-LD");
 				}
