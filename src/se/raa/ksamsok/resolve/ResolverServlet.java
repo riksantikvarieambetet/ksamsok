@@ -174,9 +174,7 @@ public class ResolverServlet extends HttpServlet {
 		if (pathComponents.length == 4) {
 			format = Format.parseFormat(pathComponents[2].toLowerCase());
 			if (format == null) {
-				if (logger.isDebugEnabled()) {
-					logger.debug("Invalid format: " + pathComponents[2]);
-				}
+				logger.debug("Invalid format: " + pathComponents[2]);
 				resp.sendError(404, "Invalid format " + pathComponents[2]);
 				return;
 			}
@@ -219,7 +217,7 @@ public class ResolverServlet extends HttpServlet {
 		}
 		try {
 			PrintWriter writer;
-			String urli, urle;
+			String urli, urle = null;
 			String content = null;
 			byte[] xmlContent;
 			urli = "http://kulturarvsdata.se/" + path;
@@ -242,145 +240,109 @@ public class ResolverServlet extends HttpServlet {
 				q.setFields(ContentHelper.I_IX_MUSEUMDAT_URL);
 				break;
 			}
-			if (logger.isDebugEnabled()) {
-				logger.debug("resolve of (" + format + ") uri: " + urli);
-			}
+			logger.debug("resolve of (" + format + ") uri: " + urli);
+			//Get data
 			QueryResponse response = searchService.query(q);
-			SolrDocumentList hits = response.getResults();
+			SolrDocumentList hits = response.getResults();			
 			if (hits.getNumFound() != 1) {
-				if (logger.isDebugEnabled()) {
-					logger.debug("Could not find record for q: " + q);
-				}
+				logger.debug("Could not find record for q: " + q);
 				// specialfall för att hantera itemForIndexing=n, bara för rdf och html
 				// vid detta fall ligger rdf:en bara i databasen och inte i lucene
 				// men det är ett undantagsfall så vi provar alltid lucene först
-				if (format == Format.RDF) {
+				if (format == Format.RDF || format == Format.JSON_LD) {
 					content = hrm.getXMLData(urli);
-					if (content != null) {
-						resp.setContentType("application/rdf+xml; charset=UTF-8");
-						writer = resp.getWriter();
-						// xml-header
-						writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-						writer.println(content);
-						writer.flush();
-						return;
-					}
-				}
-				else if (format == Format.HTML){
-					content=hrm.getXMLData(urli);
+				} else if (format == Format.HTML){
+					content = hrm.getXMLData(urli);
 					if (content != null){
 						urle = getRedirectUrl(content);
-						if (urle != null) {
-							if (urle.toLowerCase().startsWith(badURLPrefix)) {
-								logger.warn("HTML link is wrong, points to " + badURLPrefix +
-										" for " + urli + ": " + urle);
-								resp.sendError(404, "Invalid html url to pass on to");
-							} else {
-								resp.sendRedirect(urle);
-							}
-						} else {
-							if (logger.isDebugEnabled()) {
-								logger.debug("Could not find html url for record with uri: " + urli);
-							}
-							resp.sendError(404, "Could not find html url to pass on to");
-						}
-						return;
 					}
 				}
-				resp.sendError(404, "Could not find record for path");
-				return;
-			}
-			switch (format) {
-			case JSON_LD:
-			case RDF:
-				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-				// hämta ev från hack-cachen
-				if (ShmSiteCacherHackTicket3419.useCache(req.getParameter(ShmSiteCacherHackTicket3419.KRINGLA), urli)) {
-					content = ShmSiteCacherHackTicket3419.getOrRecache(urli, xmlContent);
-				} else {
+			} else {
+				switch (format) {
+				case JSON_LD:
+				case RDF:
+					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
+					// hämta ev från hack-cachen
+					if (ShmSiteCacherHackTicket3419.useCache(req.getParameter(ShmSiteCacherHackTicket3419.KRINGLA), urli)) {
+						content = ShmSiteCacherHackTicket3419.getOrRecache(urli, xmlContent);
+					} else {
+						if (xmlContent != null) {
+							content = new String(xmlContent, "UTF-8");
+						}
+						// TODO: NEK ta bort när allt är omindexerat
+						if (content == null) {
+							content = hrm.getXMLData(urli);
+						}
+					}
+					break;
+				case HTML:
+					urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
+					break;
+				case MUSEUMDAT:
+					urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
+					break;
+				case XML:
+					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
 					if (xmlContent != null) {
 						content = new String(xmlContent, "UTF-8");
 					}
-					// TODO: NEK ta bort när allt är omindexerat
-					if (content == null) {
-						content = hrm.getXMLData(urli);
-					}
+					break;
+				default:
+					break;
 				}
-				if (content == null) {
-					logger.warn("Could not find rdf for record with uri: " + urli);
-					resp.sendError(404, "No rdf for record");
-					return;
-				}
-				if (format == Format.RDF){
-					SimpleXmlWriter xmlWriter = new SimpleXmlWriter(resp.getWriter());
-					xmlWriter.writeXmlVersion("1.0", "UTF-8");
-					xmlWriter.writeXml(content);
-				} else {
+			}
+			//Make responde
+			switch (format) {
+			case JSON_LD:
+				if (content != null){
 					Model m = ModelFactory.createDefaultModel();
 					m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
 					JenaJSONLD.init();
 					m.write(resp.getWriter(), "JSON-LD");
+				} else {
+					resp.sendError(404, "Could not find record for path");
 				}
 				break;
-
+			case RDF:
 			case XML:
-				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
-				if (xmlContent != null) {
-					content = new String(xmlContent, "UTF-8");
-				}
-				if (content == null) {
+				if (content != null) {
+					SimpleXmlWriter xmlWriter = new SimpleXmlWriter(resp.getWriter());
+					xmlWriter.writeXmlVersion("1.0", "UTF-8");
+					xmlWriter.writeXml(content);
+				} else if (format == Format.RDF){
+					logger.warn("Could not find rdf for record with uri: " + urli);
+					resp.sendError(404, "No rdf for record");
+				} else {
 					logger.warn("Could not find xml for record with uri: " + urli);
 					resp.sendError(404, "No presentation xml for record");
-					return;
 				}
-				writer = resp.getWriter();
-				// xml-header
-				writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-				writer.println(content);
-				writer.flush();
 				break;
-
 			case HTML:
-				urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
-				if (urle != null) {
-					if (urle.toLowerCase().startsWith(badURLPrefix)) {
-						logger.warn("HTML link is wrong, points to " + badURLPrefix +
-								" for " + urli + ": " + urle);
-						resp.sendError(404, "Invalid html url to pass on to");
-					} else {
-						resp.sendRedirect(urle);
-					}
-				} else {
-					if (logger.isDebugEnabled()) {
-						logger.debug("Could not find html url for record with uri: " + urli);
-					}
-					resp.sendError(404, "Could not find html url to pass on to");
-				}
-				break;
-
 			case MUSEUMDAT:
-				urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
 				if (urle != null) {
 					if (urle.toLowerCase().startsWith(badURLPrefix)) {
-						logger.warn("Museumdat link is wrong, points to " + badURLPrefix +
-								" för " + urli + ": " + urle);
-						resp.sendError(404, "Invalid museumdat url to pass on to");
+						if (format == Format.HTML){
+							logger.warn("HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + urle);
+							resp.sendError(404, "Invalid html url to pass on to");
+						} else {
+							logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " + urle);
+							resp.sendError(404, "Invalid museumdat url to pass on to");
+						}
 					} else {
 						resp.sendRedirect(urle);
 					}
+				} else if (format == Format.HTML){
+					logger.debug("Could not find html url for record with uri: " + urli);
+					resp.sendError(404, "Could not find html url to pass on to");
 				} else {
-					if (logger.isDebugEnabled()) {
-						logger.debug("Could not find museumdat url for record with uri: " + urli);
-					}
+					logger.debug("Could not find museumdat url for record with uri: " + urli);
 					resp.sendError(404, "Could not find museumdat url to pass on to");
 				}
 				break;
-
-				default:
-					logger.warn("Invalid format: " + format);
-					resp.sendError(404, "Invalid format");
+			default:
+				logger.warn("Invalid format: " + format);
+				resp.sendError(404, "Invalid format");
 			}
-
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
