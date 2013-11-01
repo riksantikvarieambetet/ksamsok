@@ -1,7 +1,9 @@
 package se.raa.ksamsok.resolve;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -315,7 +317,7 @@ public class ResolverServlet extends HttpServlet {
 					xmlWriter.writeXml(content);
 				} else {
 					Model m = ModelFactory.createDefaultModel();
-					m.read("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+content);
+					m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
 					JenaJSONLD.init();
 					m.write(resp.getWriter(), "JSON-LD");
 				}
