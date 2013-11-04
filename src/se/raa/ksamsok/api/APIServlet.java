@@ -3,6 +3,8 @@ package se.raa.ksamsok.api;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.github.jsonldjava.jena.JenaJSONLD;
 import com.java.generationjava.io.xml.SimpleXmlWriter;
 
 import se.raa.ksamsok.api.exception.APIException;
@@ -24,10 +27,10 @@ import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
-import se.raa.ksamsok.api.method.AbstractAPIMethod;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 
 /**
  * Hanterar förfrågningar till K-samsöks API
@@ -56,6 +59,7 @@ public class APIServlet extends HttpServlet {
 		AutowireCapableBeanFactory awcb = ctx.getAutowireCapableBeanFactory();
 		awcb.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 		awcb.autowireBeanProperties(apiMethodFactory, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		JenaJSONLD.init();
 		if (logger.isInfoEnabled()) {
 			logger.info("APIServlet startad");
 		}
@@ -96,6 +100,27 @@ public class APIServlet extends HttpServlet {
 						}
 						
 						method = apiMethodFactory.getAPIMethod(reqParams, writer);
+						
+						//Check which format the respond should be
+						String acceptFormat=req.getHeader("Accept").toLowerCase();
+						if (acceptFormat.contains("json")){
+							method.setFormat(Format.JSON_LD);
+							resp.setContentType("application/json; charset=UTF-8");
+						} else {
+							method.setFormat(Format.XML);
+							resp.setContentType("application/xml; charset=UTF-8");
+						}
+						Pattern p = Pattern.compile("prettyPrint=(\\w*)&?");
+						Matcher m = p.matcher(req.getQueryString());
+						Boolean prettyPrint = false;
+						if (m.find()) {
+							if (m.groupCount()>1){
+								if (m.group(2).contains("true")){
+									prettyPrint=true;
+								}
+							}
+						}
+						method.setPrettyPrint(prettyPrint);
 						method.performMethod();
 						keyManager.updateUsage(apiKey);
 					} catch (MissingParameterException e) {

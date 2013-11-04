@@ -31,7 +31,10 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	protected String stylesheet;
 	protected boolean headWritten;
 	protected boolean footWritten;
-
+	
+	protected Format format = Format.XML;
+	protected Boolean prettyPrint = false;
+	
 	/**
 	 * Skapar ny instans.
 	 * @param serviceProvider tillhandahåller tjänster etc
@@ -186,5 +189,13 @@ public abstract class AbstractAPIMethod implements APIMethod {
 					infoClassName, infoDetails, logIfMissing);
 		}
 		return value;
+	}
+	
+	public void setFormat(Format format){
+		this.format=format;
+	}
+	
+	public void setPrettyPrint(Boolean prettyPrint){
+		this.prettyPrint=prettyPrint;
 	}
 }

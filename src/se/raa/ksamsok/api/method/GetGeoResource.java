@@ -14,7 +14,10 @@ import javax.sql.DataSource;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.jena.riot.RDFDataMgr;
 
+import com.github.jsonldjava.core.JSONLD;
+import com.github.jsonldjava.jena.JenaJSONLD;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -255,13 +258,10 @@ public class GetGeoResource extends AbstractAPIMethod {
 
 	@Override
 	protected void writeHead() throws IOException {
-		// överlagrad för att bara få ren rdf
-		xmlWriter.writeXmlVersion("1.0", "UTF-8");
 	}
 
 	@Override
 	protected void writeFoot() {
-		headWritten = true;
 		footWritten = true;
 	}
 
@@ -288,6 +288,13 @@ public class GetGeoResource extends AbstractAPIMethod {
 			Literal coords = ResourceFactory.createPlainLiteral(gmlResult);
 			m.addLiteral(about, coordProperty, coords);
 		}
-		m.write(xmlWriter.getWriter());
+		if (format== Format.XML){
+			// överlagrad för att bara få ren rdf
+			xmlWriter.writeXmlVersion("1.0", "UTF-8");
+			headWritten = true;
+			m.write(xmlWriter.getWriter());
+		} else {
+			RDFDataMgr.write(writer, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
+		}
 	}
 }

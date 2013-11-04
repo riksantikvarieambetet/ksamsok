@@ -19,6 +19,11 @@ public interface APIMethod
 	/** delare för att dela query strängar */
 	public static final String DELIMITER = "|";
 	
+	public enum Format {
+		RDF, HTML, MUSEUMDAT, XML, JSON_LD;
+	}
+
+	
 	/**
 	 * utför API metod
 	 * @throws MissingParameterException om obligatorisk parameter saknas
@@ -40,4 +45,8 @@ public interface APIMethod
 	 * @return sant om fot har skrivits
 	 */
 	public boolean isFootWritten();
+	
+	public void setFormat(Format format);
+	
+	public void setPrettyPrint(Boolean prettyPrint);
 }

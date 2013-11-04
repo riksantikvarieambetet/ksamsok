@@ -1,11 +1,16 @@
 package se.raa.ksamsok.resolve;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -15,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -223,7 +229,18 @@ public class ResolverServlet extends HttpServlet {
 			//Get content from solr or db
 			String response = prepareResponse(urli, format, req);
 			//Make responde
-			makeResponse(response, format, urli, resp);
+			
+			Pattern p = Pattern.compile("prettyPrint=(\\w*)&?");
+			Matcher m = p.matcher(req.getQueryString());
+			Boolean prettyPrint = false;
+			if (m.find()) {
+				if (m.groupCount()>1){
+					if (m.group(2).contains("true")){
+						prettyPrint=true;
+					}
+				}
+			}
+			makeResponse(response, format, urli, prettyPrint, resp);
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
@@ -317,14 +334,14 @@ public class ResolverServlet extends HttpServlet {
 	 * @param resp - The http servlet response
 	 * @throws IOException
 	 */
-	private void makeResponse(String response, Format format, String urli, HttpServletResponse resp) throws IOException {
+	private void makeResponse(String response, Format format, String urli, Boolean prettyPrint, HttpServletResponse resp) throws IOException {
 		switch (format) {
 		case JSON_LD:
 			if (response != null){
 				Model m = ModelFactory.createDefaultModel();
 				m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
-				JenaJSONLD.init();
-				m.write(resp.getWriter(), "JSON-LD");
+				//It is done in APIServlet.init JenaJSONLD.init();
+				RDFDataMgr.write(resp.getOutputStream(), m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
 			} else {
 				resp.sendError(404, "Could not find record for path");
 			}
