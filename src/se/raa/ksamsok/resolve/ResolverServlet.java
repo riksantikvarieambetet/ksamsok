@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocumentList;
@@ -80,7 +83,7 @@ public class ResolverServlet extends HttpServlet {
 			} else if ("museumdat".equals(formatString)) {
 				format = MUSEUMDAT;
 			} else if ("xml".equals(formatString)) {
-				format = XML;
+				format = RDF; // Should be XML??
 			} else if ("jsonld".equals(formatString)) {
 				format = JSON_LD;
 			}
@@ -216,138 +219,158 @@ public class ResolverServlet extends HttpServlet {
 			break;
 		}
 		try {
-			PrintWriter writer;
-			String urli, urle = null;
-			String content = null;
-			byte[] xmlContent;
-			urli = "http://kulturarvsdata.se/" + path;
-			SolrQuery q = new SolrQuery();
-			q.setQuery(ContentHelper.IX_ITEMID + ":" + ClientUtils.escapeQueryChars(urli));
-			q.setRows(1);
-			// hämta bara nödvändigt fält
-			switch (format) {
-			case JSON_LD:
-			case RDF:
-				q.setFields(ContentHelper.I_IX_RDF);
-				break;
-			case XML:
-				q.setFields(ContentHelper.I_IX_PRES);
-				break;
-			case HTML:
-				q.setFields(ContentHelper.I_IX_HTML_URL);
-				break;
-			case MUSEUMDAT:
-				q.setFields(ContentHelper.I_IX_MUSEUMDAT_URL);
-				break;
-			}
-			logger.debug("resolve of (" + format + ") uri: " + urli);
-			//Get data
-			QueryResponse response = searchService.query(q);
-			SolrDocumentList hits = response.getResults();			
-			if (hits.getNumFound() != 1) {
-				logger.debug("Could not find record for q: " + q);
-				// specialfall för att hantera itemForIndexing=n, bara för rdf och html
-				// vid detta fall ligger rdf:en bara i databasen och inte i lucene
-				// men det är ett undantagsfall så vi provar alltid lucene först
-				if (format == Format.RDF || format == Format.JSON_LD) {
-					content = hrm.getXMLData(urli);
-				} else if (format == Format.HTML){
-					content = hrm.getXMLData(urli);
-					if (content != null){
-						urle = getRedirectUrl(content);
-					}
-				}
-			} else {
-				switch (format) {
-				case JSON_LD:
-				case RDF:
-					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-					// hämta ev från hack-cachen
-					if (ShmSiteCacherHackTicket3419.useCache(req.getParameter(ShmSiteCacherHackTicket3419.KRINGLA), urli)) {
-						content = ShmSiteCacherHackTicket3419.getOrRecache(urli, xmlContent);
-					} else {
-						if (xmlContent != null) {
-							content = new String(xmlContent, "UTF-8");
-						}
-						// TODO: NEK ta bort när allt är omindexerat
-						if (content == null) {
-							content = hrm.getXMLData(urli);
-						}
-					}
-					break;
-				case HTML:
-					urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
-					break;
-				case MUSEUMDAT:
-					urle = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
-					break;
-				case XML:
-					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
-					if (xmlContent != null) {
-						content = new String(xmlContent, "UTF-8");
-					}
-					break;
-				default:
-					break;
-				}
-			}
+			String urli = "http://kulturarvsdata.se/" + path;
+			//Get content from solr or db
+			String response = prepareResponse(urli, format, req);
 			//Make responde
-			switch (format) {
-			case JSON_LD:
-				if (content != null){
-					Model m = ModelFactory.createDefaultModel();
-					m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
-					JenaJSONLD.init();
-					m.write(resp.getWriter(), "JSON-LD");
-				} else {
-					resp.sendError(404, "Could not find record for path");
-				}
-				break;
-			case RDF:
-			case XML:
-				if (content != null) {
-					SimpleXmlWriter xmlWriter = new SimpleXmlWriter(resp.getWriter());
-					xmlWriter.writeXmlVersion("1.0", "UTF-8");
-					xmlWriter.writeXml(content);
-				} else if (format == Format.RDF){
-					logger.warn("Could not find rdf for record with uri: " + urli);
-					resp.sendError(404, "No rdf for record");
-				} else {
-					logger.warn("Could not find xml for record with uri: " + urli);
-					resp.sendError(404, "No presentation xml for record");
-				}
-				break;
-			case HTML:
-			case MUSEUMDAT:
-				if (urle != null) {
-					if (urle.toLowerCase().startsWith(badURLPrefix)) {
-						if (format == Format.HTML){
-							logger.warn("HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + urle);
-							resp.sendError(404, "Invalid html url to pass on to");
-						} else {
-							logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " + urle);
-							resp.sendError(404, "Invalid museumdat url to pass on to");
-						}
-					} else {
-						resp.sendRedirect(urle);
-					}
-				} else if (format == Format.HTML){
-					logger.debug("Could not find html url for record with uri: " + urli);
-					resp.sendError(404, "Could not find html url to pass on to");
-				} else {
-					logger.debug("Could not find museumdat url for record with uri: " + urli);
-					resp.sendError(404, "Could not find museumdat url to pass on to");
-				}
-				break;
-			default:
-				logger.warn("Invalid format: " + format);
-				resp.sendError(404, "Invalid format");
-			}
+			makeResponse(response, format, urli, resp);
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
 		}
 	}
+
+	/**
+	 * This method gets the data from Solr or in some cases from db
+	 * 
+	 * @param urli - The path to the request, i.e. which object shoud we get
+	 * @param format - The requested response format
+	 * @param req - The http servlet request
+	 * @return - A string with the found content or null
+	 * @throws Exception
+	 */
+	private String prepareResponse(String urli, Format format, HttpServletRequest req) throws Exception{
+		String prepResp = null;
+		byte[] xmlContent;
+		SolrQuery q = new SolrQuery();
+		q.setQuery(ContentHelper.IX_ITEMID + ":" + ClientUtils.escapeQueryChars(urli));
+		q.setRows(1);
+		// hämta bara nödvändigt fält
+		switch (format) {
+		case JSON_LD:
+		case RDF:
+			q.setFields(ContentHelper.I_IX_RDF);
+			break;
+		case XML:
+			q.setFields(ContentHelper.I_IX_PRES);
+			break;
+		case HTML:
+			q.setFields(ContentHelper.I_IX_HTML_URL);
+			break;
+		case MUSEUMDAT:
+			q.setFields(ContentHelper.I_IX_MUSEUMDAT_URL);
+			break;
+		}
+		logger.debug("resolve of (" + format + ") uri: " + urli);
+		//Get data
+		QueryResponse response = searchService.query(q);
+		SolrDocumentList hits = response.getResults();			
+		if (hits.getNumFound() != 1) {
+			logger.debug("Could not find record for q: " + q);
+			// specialfall för att hantera itemForIndexing=n, bara för rdf och html
+			// vid detta fall ligger rdf:en bara i databasen och inte i lucene
+			// men det är ett undantagsfall så vi provar alltid lucene först
+			if (format == Format.RDF || format == Format.JSON_LD || format == Format.HTML) {
+				String content = hrm.getXMLData(urli);
+				if (content != null){
+					prepResp = content;
+					if (format == Format.HTML){
+						prepResp = getRedirectUrl(content);
+					}
+				}
+			}
+		} else {
+			switch (format) {
+			case JSON_LD:
+			case RDF:
+			case XML:
+				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
+				// hämta ev från hack-cachen
+				if (format != Format.XML && ShmSiteCacherHackTicket3419.useCache(req.getParameter(ShmSiteCacherHackTicket3419.KRINGLA), urli)) {
+					prepResp = ShmSiteCacherHackTicket3419.getOrRecache(urli, xmlContent);
+				} else {
+					if (xmlContent != null) {
+						prepResp = new String(xmlContent, "UTF-8");
+					} else if (format != Format.XML  && xmlContent == null) {
+						prepResp = hrm.getXMLData(urli);
+					}
+				}
+				break;
+			case HTML:
+				prepResp = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
+				break;
+			case MUSEUMDAT:
+				prepResp = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
+				break;
+			default:
+				break;
+			}
+		}
+		return prepResp;
+	}
+	
+	/**
+	 * This method writes the response
+	 * @param response - The content from solr or db
+	 * @param format - The requested response format
+	 * @param urli - The path to the request, i.e. which object shoud we get
+	 * @param resp - The http servlet response
+	 * @throws IOException
+	 */
+	private void makeResponse(String response, Format format, String urli, HttpServletResponse resp) throws IOException {
+		switch (format) {
+		case JSON_LD:
+			if (response != null){
+				Model m = ModelFactory.createDefaultModel();
+				m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
+				JenaJSONLD.init();
+				m.write(resp.getWriter(), "JSON-LD");
+			} else {
+				resp.sendError(404, "Could not find record for path");
+			}
+			break;
+		case RDF:
+		case XML:
+			if (response != null) {
+				SimpleXmlWriter xmlWriter = new SimpleXmlWriter(resp.getWriter());
+				xmlWriter.writeXmlVersion("1.0", "UTF-8");
+				xmlWriter.writeXml(response);
+			} else if (format == Format.RDF){
+				logger.warn("Could not find rdf for record with uri: " + urli);
+				resp.sendError(404, "No rdf for record");
+			} else {
+				logger.warn("Could not find xml for record with uri: " + urli);
+				resp.sendError(404, "No presentation xml for record");
+			}
+			break;
+		case HTML:
+		case MUSEUMDAT:
+			if (response != null) {
+				if (response.toLowerCase().startsWith(badURLPrefix)) {
+					if (format == Format.HTML){
+						logger.warn("HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + response);
+						resp.sendError(404, "Invalid html url to pass on to");
+					} else {
+						logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " + response);
+						resp.sendError(404, "Invalid museumdat url to pass on to");
+					}
+				} else {
+					resp.sendRedirect(response);
+				}
+			} else if (format == Format.HTML){
+				logger.debug("Could not find html url for record with uri: " + urli);
+				resp.sendError(404, "Could not find html url to pass on to");
+			} else {
+				logger.debug("Could not find museumdat url for record with uri: " + urli);
+				resp.sendError(404, "Could not find museumdat url to pass on to");
+			}
+			break;
+		default:
+			logger.warn("Invalid format: " + format);
+			resp.sendError(404, "Invalid format");
+		}
+	}
+
 
 	/**
 	 * This method gets the url to the the original storage of the rdf data
