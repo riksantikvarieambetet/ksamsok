@@ -111,11 +111,11 @@ public class APIServlet extends HttpServlet {
 							resp.setContentType("application/xml; charset=UTF-8");
 						}
 						Pattern p = Pattern.compile("prettyPrint=(\\w*)&?");
-						Matcher m = p.matcher(req.getQueryString());
+						Matcher m = p.matcher(req.getQueryString() != null ? req.getQueryString() : "");
 						Boolean prettyPrint = false;
 						if (m.find()) {
-							if (m.groupCount()>1){
-								if (m.group(2).contains("true")){
+							if (m.groupCount()>0){
+								if (m.group(1).contains("true")){
 									prettyPrint=true;
 								}
 							}
