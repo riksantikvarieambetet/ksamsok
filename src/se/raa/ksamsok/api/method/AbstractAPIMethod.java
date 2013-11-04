@@ -105,6 +105,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	protected void writeFoot() throws IOException {
 		writeFootExtra();
 		xmlWriter.endEntity();
+		xmlWriter.close();
 		footWritten = true;
 	}
 

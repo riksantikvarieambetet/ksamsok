@@ -145,15 +145,16 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 	 */
 	@Override
 	protected void writeResult() throws IOException {
-		for (FacetField ff: facetFields) {
-			int vc = ff.getValueCount();
-			if (vc > 0) {
-				xmlWriter.writeEntity("index");
-				xmlWriter.writeEntityWithText("name", ff.getName());
-				xmlWriter.writeEntityWithText("uniqueValues", vc);
-				xmlWriter.endEntity();
+		if (format != Format.JSON_LD){
+			for (FacetField ff: facetFields) {
+				int vc = ff.getValueCount();
+				if (vc > 0) {
+					xmlWriter.writeEntity("index");
+					xmlWriter.writeEntityWithText("name", ff.getName());
+					xmlWriter.writeEntityWithText("uniqueValues", vc);
+					xmlWriter.endEntity();
+				}
 			}
 		}
-
 	}
 }

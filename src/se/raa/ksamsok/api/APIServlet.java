@@ -181,6 +181,7 @@ public class APIServlet extends HttpServlet {
 		if (writeFoot){
 			xmlWriter.endEntity();
 		}
+		xmlWriter.close();
 	}
 
 	@Override

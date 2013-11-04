@@ -352,6 +352,7 @@ public class ResolverServlet extends HttpServlet {
 				SimpleXmlWriter xmlWriter = new SimpleXmlWriter(resp.getWriter());
 				xmlWriter.writeXmlVersion("1.0", "UTF-8");
 				xmlWriter.writeXml(response);
+				xmlWriter.close();
 			} else if (format == Format.RDF){
 				logger.warn("Could not find rdf for record with uri: " + urli);
 				resp.sendError(404, "No rdf for record");
