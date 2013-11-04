@@ -83,7 +83,7 @@ public class ResolverServlet extends HttpServlet {
 			} else if ("museumdat".equals(formatString)) {
 				format = MUSEUMDAT;
 			} else if ("xml".equals(formatString)) {
-				format = RDF; // Should be XML??
+				format = XML; 
 			} else if ("jsonld".equals(formatString)) {
 				format = JSON_LD;
 			}
@@ -188,7 +188,7 @@ public class ResolverServlet extends HttpServlet {
 			if (acceptFormat.contains("rdf")){
 				format = Format.RDF;
 			} else if (acceptFormat.contains("xml")) {
-				format = Format.XML;
+				format = Format.RDF; // Should be XML??
 			} else if (acceptFormat.contains("json")) {
 				format = Format.JSON_LD;
 			} else if (acceptFormat.contains("html")){
