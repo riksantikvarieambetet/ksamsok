@@ -38,7 +38,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
  */
 public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.method.AllIndexUniqueValueCount");
+	private static final Logger logger = Logger.getLogger(AllIndexUniqueValueCount.class);
 
 	/** metodens namn */
 	public static final String METHOD_NAME = "allIndexUniqueValueCount";
