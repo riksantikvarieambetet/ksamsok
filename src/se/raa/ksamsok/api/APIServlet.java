@@ -102,8 +102,8 @@ public class APIServlet extends HttpServlet {
 						method = apiMethodFactory.getAPIMethod(reqParams, writer);
 						
 						//Check which format the respond should be
-						String acceptFormat=req.getHeader("Accept").toLowerCase();
-						if (acceptFormat.contains("json")){
+						String acceptFormat=req.getHeader("Accept");
+						if (acceptFormat!= null && acceptFormat.toLowerCase().contains("json")){
 							method.setFormat(Format.JSON_LD);
 							resp.setContentType("application/json; charset=UTF-8");
 						} else {
