@@ -169,10 +169,6 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 					json.addProperty("name", ff.getName());
 					json.addProperty("uniqueValues", vc);
 					indexArr.add(json);
-					xmlWriter.writeEntity("index");
-					xmlWriter.writeEntityWithText("name", ff.getName());
-					xmlWriter.writeEntityWithText("uniqueValues", vc);
-					xmlWriter.endEntity();
 				}
 			}
 			JsonObject result = new JsonObject();

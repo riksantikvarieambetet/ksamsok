@@ -82,12 +82,15 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @throws DiagnosticException 
 	 */
 	protected void writeHead() throws IOException {
-		xmlWriter.writeXmlVersion("1.0", "UTF-8");
-		if(stylesheet!=null && stylesheet.trim().length()>0){
-			xmlWriter.writeXmlStyleSheet(stylesheet,"text/xsl");
+		if (format != Format.JSON_LD){
+			xmlWriter.writeXmlVersion("1.0", "UTF-8");
+			if(stylesheet!=null && stylesheet.trim().length()>0){
+				xmlWriter.writeXmlStyleSheet(stylesheet,"text/xsl");
+			}
+			xmlWriter.writeEntity("result");
+			xmlWriter.writeEntityWithText("version", APIMethod.API_VERSION);
+
 		}
-		xmlWriter.writeEntity("result");
-		xmlWriter.writeEntityWithText("version", APIMethod.API_VERSION);
 		writeHeadExtra();
 		headWritten = true;
 	}
@@ -111,8 +114,10 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 */
 	protected void writeFoot() throws IOException {
 		writeFootExtra();
-		xmlWriter.endEntity();
-		xmlWriter.close();
+		if (format != Format.JSON_LD){
+			xmlWriter.endEntity();
+			xmlWriter.close();
+		}
 		footWritten = true;
 	}
 
