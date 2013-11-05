@@ -24,6 +24,11 @@ import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonWriter;
+
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -155,6 +160,27 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 					xmlWriter.endEntity();
 				}
 			}
+		} else {
+			JsonArray indexArr = new JsonArray();
+			for (FacetField ff: facetFields) {
+				int vc = ff.getValueCount();
+				if (vc > 0) {
+					JsonObject json = new JsonObject();
+					json.addProperty("name", ff.getName());
+					json.addProperty("uniqueValues", vc);
+					indexArr.add(json);
+					xmlWriter.writeEntity("index");
+					xmlWriter.writeEntityWithText("name", ff.getName());
+					xmlWriter.writeEntityWithText("uniqueValues", vc);
+					xmlWriter.endEntity();
+				}
+			}
+			JsonObject result = new JsonObject();
+			result.addProperty("version", APIMethod.API_VERSION);
+			result.add("index", indexArr);
+			JsonObject resp = new JsonObject();
+			resp.add("result", result);
+			new Gson().toJson(resp, jsonWriter);
 		}
 	}
 }

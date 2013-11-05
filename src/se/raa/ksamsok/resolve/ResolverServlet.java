@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -204,6 +205,12 @@ public class ResolverServlet extends HttpServlet {
 			}
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[2];
 		}
+		//Check if json should be in pretty print
+		Map<String, String> reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+		Boolean prettyPrint = false;
+		if (reqParams.get("prettyPrint") != null && reqParams.get("prettyPrint").equalsIgnoreCase("true")){
+			prettyPrint=true;
+		}
 		switch (format){
 		case HTML:
 			resp.setContentType("text/html; charset=UTF-8");
@@ -229,17 +236,6 @@ public class ResolverServlet extends HttpServlet {
 			//Get content from solr or db
 			String response = prepareResponse(urli, format, req);
 			//Make responde
-			
-			Pattern p = Pattern.compile("prettyPrint=(\\w*)&?");
-			Matcher m = p.matcher(req.getQueryString() != null ? req.getQueryString() : "");
-			Boolean prettyPrint = false;
-			if (m.find()) {
-				if (m.groupCount()>0){
-					if (m.group(1).contains("true")){
-						prettyPrint=true;
-					}
-				}
-			}
 			makeResponse(response, format, urli, prettyPrint, resp);
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);

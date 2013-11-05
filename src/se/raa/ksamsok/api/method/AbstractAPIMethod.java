@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.google.gson.stream.JsonWriter;
 import com.java.generationjava.io.xml.SimpleXmlWriter;
 
 import se.raa.ksamsok.api.APIServiceProvider;
@@ -28,12 +29,14 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	protected Map<String, String> params;
 	protected PrintWriter writer;
 	protected SimpleXmlWriter xmlWriter;
+	protected JsonWriter jsonWriter;
 	protected String stylesheet;
 	protected boolean headWritten;
 	protected boolean footWritten;
 	
 	protected Format format = Format.XML;
 	protected Boolean prettyPrint = false;
+	
 	
 	/**
 	 * Skapar ny instans.
@@ -45,6 +48,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 		this.serviceProvider = serviceProvider;
 		this.writer = writer;
 		this.xmlWriter=new SimpleXmlWriter(writer);
+		this.jsonWriter=new JsonWriter(writer);
 		this.params = params;
 		this.stylesheet = params.get("stylesheet");
 	}
@@ -54,6 +58,9 @@ public abstract class AbstractAPIMethod implements APIMethod {
 			BadParameterException, DiagnosticException {
 		// läs ut parametrar och kasta ex vid problem
 		extractParameters();
+		if(prettyPrint){
+			jsonWriter.setIndent("    ");
+		}
 		// utför operationen
 		performMethodLogic();
 		try {

@@ -110,15 +110,10 @@ public class APIServlet extends HttpServlet {
 							method.setFormat(Format.XML);
 							resp.setContentType("application/xml; charset=UTF-8");
 						}
-						Pattern p = Pattern.compile("prettyPrint=(\\w*)&?");
-						Matcher m = p.matcher(req.getQueryString() != null ? req.getQueryString() : "");
+						//Check if the json responde should be in pretty print
 						Boolean prettyPrint = false;
-						if (m.find()) {
-							if (m.groupCount()>0){
-								if (m.group(1).contains("true")){
-									prettyPrint=true;
-								}
-							}
+						if (reqParams.get("prettyPrint") != null && reqParams.get("prettyPrint").equalsIgnoreCase("true")){
+							prettyPrint=true;
 						}
 						method.setPrettyPrint(prettyPrint);
 						method.performMethod();
