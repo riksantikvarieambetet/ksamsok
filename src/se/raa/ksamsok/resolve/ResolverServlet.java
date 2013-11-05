@@ -190,7 +190,7 @@ public class ResolverServlet extends HttpServlet {
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[3];
 		} else {
 			//Check which format the respond should be
-			String acceptFormat=req.getHeader("Accept").toLowerCase();
+			String acceptFormat=req.getHeader("Accept") != null ? req.getHeader("Accept").toLowerCase() : "";
 			if (acceptFormat.contains("rdf")){
 				format = Format.RDF;
 			} else if (acceptFormat.contains("xml")) {
