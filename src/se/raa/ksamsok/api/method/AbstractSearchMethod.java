@@ -1,7 +1,10 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.solr.common.SolrDocumentList;
 
@@ -28,8 +31,8 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 
 	protected SolrDocumentList hitList;
 
-	protected AbstractSearchMethod(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	protected AbstractSearchMethod(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override

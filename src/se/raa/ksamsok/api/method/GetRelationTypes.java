@@ -1,12 +1,16 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Element;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -35,11 +39,12 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	/**
 	 * Skapa ny instans.
 	 * @param serviceProvider tjänstetillhandahållare
-	 * @param writer writer
+	 * @param out writer
 	 * @param params parametrar
+	 * @throws ParserConfigurationException 
 	 */
-	public GetRelationTypes(APIServiceProvider serviceProvider, PrintWriter writer, Map<String, String> params) {
-		super(serviceProvider, writer, params);
+	public GetRelationTypes(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -64,9 +69,12 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() throws IOException {
-		xmlWriter.writeEntity("relationTypes");
-		xmlWriter.writeAttribute("count", relationTypes.size());
+	protected void generateDocument() {
+		Element result = super.generateBaseDocument();
+		// relation types
+		Element relationTypesEl = doc.createElement("relationTypes");
+		relationTypesEl.setAttribute("count", Integer.toString(relationTypes.size(), 10));
+		result.appendChild(relationTypesEl);
 		Index index;
 		String indexTitle;
 		for (Entry<String, String> rel: relationTypes.entrySet()) {
@@ -84,13 +92,12 @@ public class GetRelationTypes extends AbstractAPIMethod {
 					indexTitle = rel.getKey();
 				}
 			}
-			xmlWriter.writeEntity("relationType");
-			xmlWriter.writeAttribute("name", rel.getKey());
-			xmlWriter.writeAttribute("title", indexTitle);
-			xmlWriter.writeAttribute("reverse",rel.getValue());
-			xmlWriter.endEntity();
+			Element relationTypeEl = doc.createElement("relationType");
+			relationTypeEl.setAttribute("name", rel.getKey());
+			relationTypeEl.setAttribute("title", indexTitle);
+			relationTypeEl.setAttribute("reverse", rel.getValue());
+			relationTypesEl.appendChild(relationTypeEl);
 		}
-		xmlWriter.endEntity();
 	}
 
 }

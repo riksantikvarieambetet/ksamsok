@@ -1,17 +1,21 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.w3c.dom.Element;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
@@ -36,11 +40,12 @@ public class Facet extends StatisticSearch {
 	/**
 	 * skapar ett objekt av Facet
 	 * @param indexMap de index som skall ingå i facetten
-	 * @param writer för att skriva resultatet
+	 * @param out för att skriva resultatet
 	 * @param queryString filtrerar resultatet efter query
+	 * @throws ParserConfigurationException 
 	 */
-	public Facet(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params); 
+	public Facet(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params); 
 	}
 
 	protected Map<String, String> extractIndexMap() throws MissingParameterException, BadParameterException {
@@ -87,16 +92,35 @@ public class Facet extends StatisticSearch {
 			throw new DiagnosticException("Oväntat parserfel uppstod - detta beror troligen på att query strängen inte följer CQL syntax. Var god kontrollera query-strängen eller kontakta systemadministratören för systemet du använder dig av.", "Facet.performMethod", null, false);
 		}
 	}
-
 	@Override
-	protected void writeFootExtra() throws IOException {
-		xmlWriter.writeEntity("echo");
-		xmlWriter.writeEntityWithText("method", METHOD_NAME);
-		for(String index : indexMap.keySet()) {
-			xmlWriter.writeEntityWithText("index", index);
+	protected void generateDocument(){
+		Element result = super.generateBaseDocument();
+		Element echo = doc.createElement("echo");
+		result.appendChild(echo);
+		// method
+		Element method = doc.createElement("method");
+		method.appendChild(doc.createTextNode(METHOD_NAME));
+		echo.appendChild(method);
+		for(String indexKey : indexMap.keySet()) {
+			// index
+			Element index = doc.createElement("index");
+			index.appendChild(doc.createTextNode(indexKey));
+			echo.appendChild(index);
 		}
-		xmlWriter.writeEntityWithText("query", queryString);
-		xmlWriter.endEntity();
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(queryString));
+		echo.appendChild(query);
 	}
+
+//	@Override
+//	protected void writeFootExtra() throws IOException {
+//		xmlWriter.writeEntity("echo");
+//		xmlWriter.writeEntityWithText("method", METHOD_NAME);
+//		for(String index : indexMap.keySet()) {
+//			xmlWriter.writeEntityWithText("index", index);
+//		}
+//		xmlWriter.writeEntityWithText("query", queryString);
+//		xmlWriter.endEntity();
+//	}
 
 }

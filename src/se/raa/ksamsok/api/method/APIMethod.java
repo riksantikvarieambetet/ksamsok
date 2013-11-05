@@ -1,8 +1,16 @@
 package se.raa.ksamsok.api.method;
 
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.json.JSONException;
+
+import com.sun.syndication.io.FeedException;
+
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 
 /**
  * Interface för API metoder
@@ -19,9 +27,12 @@ public interface APIMethod
 	/** delare för att dela query strängar */
 	public static final String DELIMITER = "|";
 	
+	/** De olika formatent*/
 	public enum Format {
 		RDF, HTML, MUSEUMDAT, XML, JSON_LD;
 	}
+	/** Pretty print indrag för json*/
+	public static final int indentFactor = 4;
 
 	
 	/**
@@ -29,24 +40,18 @@ public interface APIMethod
 	 * @throws MissingParameterException om obligatorisk parameter saknas
 	 * @throws BadParameterException om parameter är felformaterad
 	 * @throws DiagnosticException vid oväntat fel
+	 * @throws TransformerConfigurationException 
+	 * @throws JSONException 
+	 * @throws TransformerException 
+	 * @throws FeedException 
 	 */
 	public void performMethod()
 		throws MissingParameterException, BadParameterException,
-			DiagnosticException;
+			DiagnosticException, TransformerConfigurationException, TransformerException, JSONException, FeedException;
 
-	/**
-	 * Ger om huvud har skrivits.
-	 * @return sant om huvud har skrivits
-	 */
-	public boolean isHeadWritten();
 
-	/**
-	 * Ger om fot har skrivits.
-	 * @return sant om fot har skrivits
-	 */
-	public boolean isFootWritten();
-	
 	public void setFormat(Format format);
-	
+
 	public void setPrettyPrint(Boolean prettyPrint);
+
 }

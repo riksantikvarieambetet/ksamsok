@@ -1,21 +1,40 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.XML;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.ProcessingInstruction;
 
 import com.google.gson.stream.JsonWriter;
 import com.java.generationjava.io.xml.SimpleXmlWriter;
+import com.sun.syndication.io.FeedException;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 
 /**
  * Basklass för api-metoder.
@@ -27,15 +46,11 @@ public abstract class AbstractAPIMethod implements APIMethod {
 
 	protected APIServiceProvider serviceProvider;
 	protected Map<String, String> params;
-	protected PrintWriter writer;
-	protected SimpleXmlWriter xmlWriter;
-	protected JsonWriter jsonWriter;
+	protected OutputStream out;
 	protected String stylesheet;
-	protected boolean headWritten;
-	protected boolean footWritten;
-	
+	protected Document doc;
 	protected Format format = Format.XML;
-	protected Boolean prettyPrint = false;
+	protected boolean prettyPrint = false;
 	
 	
 	/**
@@ -43,33 +58,28 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @param serviceProvider tillhandahåller tjänster etc
 	 * @param writer writer
 	 * @param params parametrar
+	 * @throws ParserConfigurationException 
 	 */
-	protected AbstractAPIMethod(APIServiceProvider serviceProvider, PrintWriter writer, Map<String, String> params) {
+	protected AbstractAPIMethod(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws ParserConfigurationException {
 		this.serviceProvider = serviceProvider;
-		this.writer = writer;
-		this.xmlWriter=new SimpleXmlWriter(writer);
-		this.jsonWriter=new JsonWriter(writer);
 		this.params = params;
 		this.stylesheet = params.get("stylesheet");
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();;
+		this.doc = docBuilder.newDocument(); 
+		this.out=out;
 	}
 
 	@Override
 	public void performMethod() throws MissingParameterException,
-			BadParameterException, DiagnosticException {
+			BadParameterException, DiagnosticException, TransformerException, JSONException, FeedException {
 		// läs ut parametrar och kasta ex vid problem
 		extractParameters();
-		if(prettyPrint){
-			jsonWriter.setIndent("    ");
-		}
 		// utför operationen
 		performMethodLogic();
+		generateDocument();
 		try {
-			// skriv huvud
-			writeHead();
-			// skriv data
 			writeResult();
-			// skriv fot
-			writeFoot();
 		} catch (IOException e) {
 			logger.error("writeXmlResult: "+e.getMessage());
 			throw new DiagnosticException(e.getMessage(),AbstractAPIMethod.class.getName(),e.getCause().getMessage(),false);
@@ -77,65 +87,35 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	}
 
 	/**
-	 * Skriver huvud och anropar sen {@linkplain #writeHeadExtra()}.
-	 * @throws IOException 
-	 * @throws DiagnosticException 
-	 */
-	protected void writeHead() throws IOException {
-		if (format != Format.JSON_LD){
-			xmlWriter.writeXmlVersion("1.0", "UTF-8");
-			if(stylesheet!=null && stylesheet.trim().length()>0){
-				xmlWriter.writeXmlStyleSheet(stylesheet,"text/xsl");
-			}
-			xmlWriter.writeEntity("result");
-			xmlWriter.writeEntityWithText("version", APIMethod.API_VERSION);
-
-		}
-		writeHeadExtra();
-		headWritten = true;
-	}
-
-	/**
-	 * Extrasaker att skriva ut efter huvudet, överlagra i subklasser.
-	 * @throws IOException 
-	 */
-	protected void writeHeadExtra() throws IOException {}
-
-	/**
 	 * Skriver resultat av metod.
 	 * @throws DiagnosticException vid fel
 	 * @throws IOException 
+	 * @throws TransformerConfigurationException 
+	 * @throws TransformerException 
+	 * @throws JSONException 
+	 * @throws FeedException 
 	 */
-	protected void writeResult() throws IOException, DiagnosticException {}
-
-	/**
-	 * Anropar {@linkplain #writeFootExtra()} och skriver sen ut fot.
-	 * @throws IOException 
-	 */
-	protected void writeFoot() throws IOException {
-		writeFootExtra();
-		if (format != Format.JSON_LD){
-			xmlWriter.endEntity();
-			xmlWriter.close();
+	protected void writeResult() throws IOException, TransformerException, JSONException, DiagnosticException, FeedException {
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transform = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		StreamResult strResult;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		if (format == Format.JSON_LD){
+			strResult = new StreamResult(baos);
+		} else {
+			strResult = new StreamResult(out);
 		}
-		footWritten = true;
-	}
-
-	/**
-	 * Extrasaker att skriva ut före foten, överlagra i subklasser.
-	 * @throws IOException 
-	 */
-	protected void writeFootExtra() throws IOException {}
-
-
-	@Override
-	public boolean isHeadWritten() {
-		return headWritten;
-	}
-
-	@Override
-	public boolean isFootWritten() {
-		return footWritten;
+		transform.transform(source, strResult);
+		if (format == Format.JSON_LD){
+			String json;
+			if (prettyPrint){
+				json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
+			} else {
+				json=XML.toJSONObject(baos.toString("UTF-8")).toString();
+			}
+			out.write(json.getBytes("UTF-8"));
+		}
 	}
 
 	/**
@@ -150,6 +130,27 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @throws DiagnosticException vid problem
 	 */
 	abstract protected void performMethodLogic() throws DiagnosticException;
+
+	/**
+	 * Denna metod genererar xml dokumentet som är grund för api-svaret
+	 */
+	abstract protected void generateDocument();
+	
+	protected Element generateBaseDocument(){
+		//Root element
+		Element result = doc.createElement("result");
+		doc.appendChild(result);
+		// Stylesheet
+		if(stylesheet!=null && stylesheet.trim().length()>0){
+			ProcessingInstruction pi = doc.createProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\""+ stylesheet +"\"");
+			doc.insertBefore(pi, result);
+		}
+		//Version
+		Element version = doc.createElement("version");
+		version.appendChild(doc.createTextNode(API_VERSION));
+		result.appendChild(version);
+		return result;
+	}
 
 	/**
 	 * Returnerar query-strängen eller kastar ett exception om värdet var null

@@ -1,9 +1,11 @@
 package se.raa.ksamsok.api;
 
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.sql.DataSource;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,9 +59,10 @@ public class APIMethodFactory implements APIServiceProvider {
 	 * @param params mottagna parametrar
 	 * @param writer för att skriva svaret
 	 * @return APIMethod en instans av någon subklass till APIMethod
+	 * @throws ParserConfigurationException 
 	 */
-	public APIMethod getAPIMethod(Map<String, String> params, PrintWriter writer)
-			throws MissingParameterException, BadParameterException {
+	public APIMethod getAPIMethod(Map<String, String> params, OutputStream out)
+			throws MissingParameterException, BadParameterException, ParserConfigurationException {
 		//hämtar ut metodnamnet från parametermappen
 		String method = params.get(APIMethod.METHOD);
 		if (method == null) { //måste alltid finnas en metod
@@ -67,7 +70,7 @@ public class APIMethodFactory implements APIServiceProvider {
 					APIMethod.METHOD + " saknas",
 					"APIMethodFactory.getAPIMethod", "metod saknas", false);
 		}
-		return getMethod(method, params, writer);
+		return getMethod(method, params, out);
 	}
 	
 	/**
@@ -77,36 +80,36 @@ public class APIMethodFactory implements APIServiceProvider {
 	 * @param writer
 	 * @return
 	 * @throws MissingParameterException
+	 * @throws ParserConfigurationException 
 	 * @throws BadParameterException
 	 */
-	private APIMethod getMethod(String method, Map<String,String> params,
-			PrintWriter writer) throws MissingParameterException {
+	private APIMethod getMethod(String method, Map<String,String> params, OutputStream out) throws MissingParameterException, ParserConfigurationException {
 		APIMethod m = null;
 		//en ny if-sats läggs till för varje ny metod
 		if (method.equals(Search.METHOD_NAME)) {
-			m = new Search(this, writer, params);
+			m = new Search(this, out, params);
 		} else if (method.equals(Statistic.METHOD_NAME)) {
-			m = new Statistic(this, writer, params);
+			m = new Statistic(this, out, params);
 		} else if (method.equals(StatisticSearch.METHOD_NAME)) {
-			m = new StatisticSearch(this, writer, params);
+			m = new StatisticSearch(this, out, params);
 		} else if (method.equals(AllIndexUniqueValueCount.METHOD_NAME)) {
-			m = new AllIndexUniqueValueCount(this, writer, params);
+			m = new AllIndexUniqueValueCount(this, out, params);
 		} else if (method.equals(Facet.METHOD_NAME)) {
-			m = new Facet(this, writer, params);
+			m = new Facet(this, out, params);
 		} else if (method.equals(SearchHelp.METHOD_NAME)) {
-			m = new SearchHelp(this, writer, params);
+			m = new SearchHelp(this, out, params);
 		} else if (method.equals(RSS.METHOD_NAME)) {
-			m = new RSS(this, writer, params);
+			m = new RSS(this, out, params);
 		} else if (method.equals(GetServiceOrganization.METHOD_NAME)) {
-			m = new GetServiceOrganization(this, writer, params);
+			m = new GetServiceOrganization(this, out, params);
 		} else if (method.equals(Stem.METHOD_NAME)) {
-			m = new Stem(this, writer, params);
+			m = new Stem(this, out, params);
 		} else if (method.equals(GetRelations.METHOD_NAME)) {
-			m = new GetRelations(this, writer, params);
+			m = new GetRelations(this, out, params);
 		} else if (method.equals(GetGeoResource.METHOD_NAME)) {
-			m = new GetGeoResource(this, writer, params);
+			m = new GetGeoResource(this, out, params);
 		} else if (method.equals(GetRelationTypes.METHOD_NAME)) {
-			m = new GetRelationTypes(this, writer, params);
+			m = new GetRelationTypes(this, out, params);
 		} else {
 			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod", "felaktig metod", false);
 		}

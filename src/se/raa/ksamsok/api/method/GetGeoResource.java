@@ -3,6 +3,7 @@ package se.raa.ksamsok.api.method;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +11,13 @@ import java.sql.ResultSet;
 import java.util.Map;
 
 import javax.sql.DataSource;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 
 import com.github.jsonldjava.core.JSONLD;
 import com.github.jsonldjava.jena.JenaJSONLD;
@@ -92,6 +95,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 	String parentColumn;
 	String parentURI;
 	String parentTagName;
+	Model m;
 
 	// resultatvariabler
 	String nameResult;
@@ -100,12 +104,13 @@ public class GetGeoResource extends AbstractAPIMethod {
 	/**
 	 * Skapa ny instans.
 	 * @param serviceProvider tjänstetillhandahållare
-	 * @param writer writer
+	 * @param out writer
 	 * @param params parametrar
+	 * @throws ParserConfigurationException 
 	 */
 	public GetGeoResource(APIServiceProvider serviceProvider,
-			PrintWriter writer, Map<String, String> params) {
-		super(serviceProvider, writer, params);
+			OutputStream out, Map<String, String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -257,17 +262,17 @@ public class GetGeoResource extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeHead() throws IOException {
-	}
-
-	@Override
-	protected void writeFoot() {
-		footWritten = true;
-	}
-
-	@Override
 	protected void writeResult() throws IOException {
-		Model m = ModelFactory.createDefaultModel();
+		if (format== Format.XML){
+			RDFDataMgr.write(out, m, prettyPrint ? RDFFormat.RDFXML_PRETTY : RDFFormat.RDFXML);
+		} else {
+			RDFDataMgr.write(out, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
+		}
+	}
+
+	@Override
+	protected void generateDocument() {
+		m = ModelFactory.createDefaultModel();
 		m.setNsPrefix("ksamsok", "http://kulturarvsdata.se/ksamsok#");
 		Resource about = ResourceFactory.createResource(uri);
 		Property ksamsokName = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#", "name");
@@ -287,14 +292,6 @@ public class GetGeoResource extends AbstractAPIMethod {
 			Property coordProperty = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#", "coordinates");
 			Literal coords = ResourceFactory.createPlainLiteral(gmlResult);
 			m.addLiteral(about, coordProperty, coords);
-		}
-		if (format== Format.XML){
-			// överlagrad för att bara få ren rdf
-			xmlWriter.writeXmlVersion("1.0", "UTF-8");
-			headWritten = true;
-			m.write(xmlWriter.getWriter());
-		} else {
-			RDFDataMgr.write(writer, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,12 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.w3c.dom.Element;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -172,11 +176,12 @@ public class GetRelations extends AbstractAPIMethod {
 	/**
 	 * Skapa ny instans.
 	 * @param serviceProvider tjänstetillhandahållare
-	 * @param writer writer
+	 * @param out writer
 	 * @param params parametrar
+	 * @throws ParserConfigurationException 
 	 */
-	public GetRelations(APIServiceProvider serviceProvider, PrintWriter writer, Map<String, String> params) {
-		super(serviceProvider, writer, params);
+	public GetRelations(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -382,18 +387,21 @@ public class GetRelations extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() throws IOException {
-		xmlWriter.writeEntity("relations");
-		xmlWriter.writeAttribute("count", relations.size());
-		for (Relation rel: relations) {
-			xmlWriter.writeEntity("relation");
-			xmlWriter.writeAttribute("type", rel.getRelationType());
-			if (rel.getSource()!=null){
-				xmlWriter.writeAttribute("source", rel.getSource());
+	protected void generateDocument() {
+		Element result = super.generateBaseDocument();
+		// Relations
+		Element relationsElement = doc.createElement("relations");
+		relationsElement.setAttribute("count", Integer.toString(relations.size(),10));
+		result.appendChild(relationsElement);
+		for (Relation rel : relations){
+			// Relation
+			Element relationElement = doc.createElement("relation");
+			relationElement.setAttribute("type", rel.getRelationType());
+			if (rel.getSource() != null){
+				relationElement.setAttribute("source", rel.getSource());
 			}
-			xmlWriter.writeText(rel.getTargetUri());
-			xmlWriter.endEntity();
+			relationElement.appendChild(doc.createTextNode(rel.getTargetUri()));
+			relationsElement.appendChild(relationElement);
 		}
-		xmlWriter.endEntity();
 	}
 }

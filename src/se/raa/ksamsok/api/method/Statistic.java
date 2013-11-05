@@ -1,6 +1,7 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,9 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.w3c.dom.Element;
+import org.w3c.dom.ProcessingInstruction;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -46,10 +51,11 @@ public class Statistic extends AbstractAPIMethod {
 	/**
 	 * Skapar ett nytt statistic objekt
 	 * @param indexes de index som skall scannas
-	 * @param writer används för att skriva ut svaret
+	 * @param out används för att skriva ut svaret
+	 * @throws ParserConfigurationException 
 	 */
-	public Statistic(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public Statistic(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 		queryResults = Collections.emptyList();
 	}
 
@@ -257,51 +263,101 @@ public class Statistic extends AbstractAPIMethod {
 		return termMap;
 	}
 
-
-	/**
-	 * skriver ut nedre delen av svars XML
-	 * @throws IOException 
-	 */
 	@Override
-	protected void writeFootExtra() throws IOException {
-		xmlWriter.writeEntity("echo");
-		xmlWriter.writeEntityWithText("method", Statistic.METHOD_NAME);
-		for(String index : indexMap.keySet()) {
-			xmlWriter.writeEntityWithText("index", index + "=" + indexMap.get(index));
+	protected void generateDocument() {
+		Element result = generateBaseDocument();
+		// echo
+		Element echo = doc.createElement("echo");
+		result.appendChild(echo);
+		// method
+		Element method = doc.createElement("method");
+		method.appendChild(doc.createTextNode(METHOD_NAME));
+		echo.appendChild(method);
+		for(String indexKey : indexMap.keySet()) {
+			// index
+			Element index = doc.createElement("index");
+			index.appendChild(doc.createTextNode(indexKey + "=" + indexMap.get(indexKey)));
+			echo.appendChild(index);
 		}
-		xmlWriter.endEntity();
 	}
-
-	/**
-	 * skriver ut resultat
-	 * @param queryResults
-	 * @throws IOException 
-	 */
-	@Override
-	protected void writeResult() throws IOException {
+	
+	protected Element generateBaseDocument(){
+		//Root element
+		Element result = super.generateBaseDocument();
+		//Number of terms
+		Element numberOfTerms = doc.createElement("numberOfTerms");
+		numberOfTerms.appendChild(doc.createTextNode(Integer.toString(queryResults.size(),10)));
+		result.appendChild(numberOfTerms);
 		for(int i = 0; i < queryResults.size(); i++) {
 			QueryContent queryContent = queryResults.get(i);
-			xmlWriter.writeEntity("term");
-			for(String index : queryContent.getTermMap().keySet()) {
-				xmlWriter.writeEntity("indexFields");
-				xmlWriter.writeEntityWithText("index", index);
-				xmlWriter.writeEntityWithText("value", queryContent.getTermMap().get(index));
-				xmlWriter.endEntity();
+			// term
+			Element term = doc.createElement("term");
+			for(String indexKey : queryContent.getTermMap().keySet()) {
+				// indexFields
+				Element indexFields = doc.createElement("indexFields");
+				// index
+				Element index = doc.createElement("index");
+				index.appendChild(doc.createTextNode(indexKey));
+				indexFields.appendChild(index);
+				// value
+				Element value = doc.createElement("value");
+				value.appendChild(doc.createTextNode(queryContent.getTermMap().get(indexKey)));
+				indexFields.appendChild(value);
+				term.appendChild(indexFields);
 			}
-			xmlWriter.writeEntityWithText("records", queryContent.getHits());
-			xmlWriter.endEntity();
+			// records
+			Element records = doc.createElement("records");
+			records.appendChild(doc.createTextNode(Integer.toString(queryContent.getHits(),10)));
+			term.appendChild(records);
+			result.appendChild(term);
 		}
+		return result;
 	}
 
-	/**
-	 * skriver ut övre del av svars XML
-	 * @param queryResults
-	 * @throws IOException 
-	 */
-	@Override
-	protected void writeHeadExtra() throws IOException {
-		xmlWriter.writeEntityWithText("numberOfTerms", queryResults.size());
-	}
+//	/**
+//	 * skriver ut nedre delen av svars XML
+//	 * @throws IOException 
+//	 */
+//	@Override
+//	protected void writeFootExtra() throws IOException {
+//		xmlWriter.writeEntity("echo");
+//		xmlWriter.writeEntityWithText("method", Statistic.METHOD_NAME);
+//		for(String index : indexMap.keySet()) {
+//			xmlWriter.writeEntityWithText("index", index + "=" + indexMap.get(index));
+//		}
+//		xmlWriter.endEntity();
+//	}
+//
+//	/**
+//	 * skriver ut resultat
+//	 * @param queryResults
+//	 * @throws IOException 
+//	 */
+//	@Override
+//	protected void writeResult() throws IOException {
+//		for(int i = 0; i < queryResults.size(); i++) {
+//			QueryContent queryContent = queryResults.get(i);
+//			xmlWriter.writeEntity("term");
+//			for(String index : queryContent.getTermMap().keySet()) {
+//				xmlWriter.writeEntity("indexFields");
+//				xmlWriter.writeEntityWithText("index", index);
+//				xmlWriter.writeEntityWithText("value", queryContent.getTermMap().get(index));
+//				xmlWriter.endEntity();
+//			}
+//			xmlWriter.writeEntityWithText("records", queryContent.getHits());
+//			xmlWriter.endEntity();
+//		}
+//	}
+//
+//	/**
+//	 * skriver ut övre del av svars XML
+//	 * @param queryResults
+//	 * @throws IOException 
+//	 */
+//	@Override
+//	protected void writeHeadExtra() throws IOException {
+//		xmlWriter.writeEntityWithText("numberOfTerms", queryResults.size());
+//	}
 
 	/**
 	 * returnerar remove Below
@@ -354,4 +410,5 @@ public class Statistic extends AbstractAPIMethod {
 		}
 		return indexMap;
 	}
+
 }

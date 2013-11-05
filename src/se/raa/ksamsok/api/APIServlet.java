@@ -1,6 +1,8 @@
 package se.raa.ksamsok.api;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -12,15 +14,30 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.ProcessingInstruction;
 
 import com.github.jsonldjava.jena.JenaJSONLD;
 import com.java.generationjava.io.xml.SimpleXmlWriter;
+import com.sun.syndication.io.FeedException;
 
 import se.raa.ksamsok.api.exception.APIException;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -46,6 +63,10 @@ public class APIServlet extends HttpServlet {
 
 	// fabrik
 	private APIMethodFactory apiMethodFactory;
+	
+	private Format format = Format.XML;
+	private boolean prettyPrint = false;
+	private int indentFactor = 4;
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -84,9 +105,9 @@ public class APIServlet extends HttpServlet {
 		resp.setContentType("text/xml; charset=UTF-8");
 		Map<String,String> reqParams = null;
 		APIMethod method = null;
-		PrintWriter writer = null;
+		OutputStream out = null;
 		try {
-			writer = resp.getWriter();
+			out = resp.getOutputStream();
 			String stylesheet = null;
 			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
 			if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
@@ -99,19 +120,20 @@ public class APIServlet extends HttpServlet {
 							reqParams.put("maxCount", "10000");
 						}
 						
-						method = apiMethodFactory.getAPIMethod(reqParams, writer);
+						method = apiMethodFactory.getAPIMethod(reqParams, out);
 						
 						//Check which format the respond should be
 						String acceptFormat=req.getHeader("Accept");
 						if (acceptFormat!= null && acceptFormat.toLowerCase().contains("json")){
+							format=Format.JSON_LD;
 							method.setFormat(Format.JSON_LD);
 							resp.setContentType("application/json; charset=UTF-8");
 						} else {
+							format=Format.XML;
 							method.setFormat(Format.XML);
 							resp.setContentType("application/xml; charset=UTF-8");
 						}
 						//Check if the json responde should be in pretty print
-						Boolean prettyPrint = false;
 						if (reqParams.get("prettyPrint") != null && reqParams.get("prettyPrint").equalsIgnoreCase("true")){
 							prettyPrint=true;
 						}
@@ -121,62 +143,104 @@ public class APIServlet extends HttpServlet {
 					} catch (MissingParameterException e) {
 						resp.setStatus(400);
 						logger.error("queryString i requesten: "+ req.getQueryString());					
-						diagnostic(writer, method, stylesheet, e);
+						diagnostic(out, method, stylesheet, e);
 					} catch (BadParameterException e) {
 						resp.setStatus(400);
 						logger.error("queryString i requesten: "+ req.getQueryString());					
-						diagnostic(writer, method, stylesheet, e);
+						diagnostic(out, method, stylesheet, e);
 					} catch (DiagnosticException e) {
 						resp.setStatus(400);
 						logger.error("queryString i requesten: "+ req.getQueryString());					
-						diagnostic(writer, method, stylesheet, e);
-					} 
+						diagnostic(out, method, stylesheet, e);
+					}
 			} else if (apiKey == null){
 				resp.setStatus(400);
-				diagnostic(writer, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
+				diagnostic(out, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
 			} else {
 				resp.setStatus(400);
-				diagnostic(writer, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
+				diagnostic(out, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 			}
 		} catch (IOException e2) {
 			resp.setStatus(500);
 			logger.error("In doGet", e2);
-		} finally {
-			if (writer != null){
-				writer.close();
+		} catch (TransformerConfigurationException e) {
+			resp.setStatus(500);
+			logger.error("In doGet", e);
+		} catch (TransformerException e) {
+			resp.setStatus(500);
+			logger.error("In doGet", e);
+		} catch (JSONException e) {
+			resp.setStatus(500);
+			logger.error("In doGet", e);
+		} catch (ParserConfigurationException e) {
+			resp.setStatus(500);
+			logger.error("In doGet", e);
+		} catch (FeedException e) {
+			resp.setStatus(500);
+			logger.error("In doGet", e);
+		}finally {
+			if (out != null){
+				try {
+					out.close();
+				} catch (IOException e) {
+					// Ignore
+				}
 			}
 		}
 	}
 
 	/**
 	 * skriver ut felmeddelanden
-	 * @param writer
+	 * @param out
 	 * @param e
 	 * @throws IOException 
+	 * @throws ParserConfigurationException 
+	 * @throws TransformerException 
+	 * @throws JSONException 
 	 */
-	private void diagnostic(PrintWriter writer, APIMethod method, String stylesheet, APIException e) throws IOException {
+	private void diagnostic(OutputStream out, APIMethod method, String stylesheet, APIException e) throws IOException, ParserConfigurationException, TransformerException, JSONException {
 		logger.warn(e.getClassName() + " - " + e.getDetails());
-		// TODO: inte riktigt bra detta med header- och footer-kontrollerna men...
-		boolean writeHead = true;
-		boolean writeFoot = true;
-		SimpleXmlWriter xmlWriter=new SimpleXmlWriter(writer);
-		if (method != null) {
-			writeHead = !method.isHeadWritten();
-			writeFoot = !method.isFootWritten();
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		Document doc = docBuilder.newDocument();
+		// Root element
+		Element result = doc.createElement("result");
+		doc.appendChild(result);
+		// Stylesheet
+		if(stylesheet!=null && stylesheet.trim().length()>0){
+			ProcessingInstruction pi = doc.createProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\""+ stylesheet +"\"");
+			doc.insertBefore(pi, result);
 		}
-		if (writeHead){
-			xmlWriter.writeXmlVersion("1.0", "UTF-8");
-			if(stylesheet!=null && stylesheet.trim().length()>0){
-				xmlWriter.writeXmlStyleSheet(stylesheet,"text/xsl");
+		// Version
+		Element version = doc.createElement("version");
+		version.appendChild(doc.createTextNode(APIMethod.API_VERSION));
+		result.appendChild(version);
+		// Error
+		Element error = doc.createElement("error");
+		error.appendChild(doc.createTextNode(e.getMessage()));
+		result.appendChild(error);
+		//Write result
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transform = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		StreamResult strResult;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		if (format == Format.JSON_LD){
+			strResult = new StreamResult(baos);
+		} else {
+			strResult = new StreamResult(out);
+		}
+		transform.transform(source, strResult);
+		if (format == Format.JSON_LD){
+			String json;
+			if (prettyPrint){
+				json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
+			} else {
+				json=XML.toJSONObject(baos.toString("UTF-8")).toString();
 			}
-			xmlWriter.writeEntity("result");
-			xmlWriter.writeEntityWithText("version", APIMethod.API_VERSION);
+			out.write(json.getBytes("UTF-8"));
 		}
-		xmlWriter.writeEntityWithText("error", e.getMessage());
-		if (writeFoot){
-			xmlWriter.endEntity();
-		}
-		xmlWriter.close();
+
 	}
 
 	@Override

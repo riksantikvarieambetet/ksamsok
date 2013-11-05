@@ -1,12 +1,16 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Element;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -25,8 +29,8 @@ public class Stem extends AbstractAPIMethod {
 	private String words;
 	private Set<String> stems;
 
-	public Stem(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public Stem(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 		stems = Collections.emptySet();
 	}
 
@@ -51,40 +55,27 @@ public class Stem extends AbstractAPIMethod {
 		}
 	}
 
-	/**
-	 * Skriver ut början av svaret
-	 * @param stemList
-	 * @throws IOException 
-	 */
 	@Override
-	protected void writeHeadExtra() throws IOException{
-		xmlWriter.writeEntityWithText("numberOfStems", stems.size());
-		xmlWriter.writeEntity("stems");
-	}
-	
-	/**
-	 * skriver ut resultatet av svaret
-	 * @param termList
-	 * @throws IOException 
-	 */
-	@Override
-	protected void writeResult() throws IOException {
-		for (String stem: stems) {
-			xmlWriter.writeEntityWithText("stem", stem);
+	protected void generateDocument() {
+		Element result = super.generateBaseDocument();
+		Element numberOfStems = doc.createElement("numberOfStems");
+		numberOfStems.appendChild(doc.createTextNode(Integer.toString(stems.size(), 10)));
+		result.appendChild(numberOfStems);
+		Element stemsEl = doc.createElement("stems");
+		result.appendChild(stemsEl);
+		for (String s : stems){
+			Element stemEl = doc.createElement("stem");
+			stemEl.appendChild(doc.createTextNode(s));
+			stemsEl.appendChild(stemEl);
 		}
-	}
-	
-	/**
-	 * Skriver ut foten av svaret
-	 * @throws IOException 
-	 */
-	@Override
-	protected void writeFootExtra() throws IOException {
-		xmlWriter.endEntity();
-		xmlWriter.writeEntity("echo");
-		xmlWriter.writeEntityWithText("method", METHOD_NAME);
-		xmlWriter.writeEntityWithText("words", words);
-		xmlWriter.endEntity();
+		Element echo = doc.createElement("echo");
+		result.appendChild(echo);
+		Element method = doc.createElement("method");
+		method.appendChild(doc.createTextNode(METHOD_NAME));
+		echo.appendChild(method);
+		Element wordsEl = doc.createElement("words");
+		wordsEl.appendChild(doc.createTextNode(words));
+		echo.appendChild(wordsEl);
 	}
 
 }

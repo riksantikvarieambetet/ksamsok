@@ -1,12 +1,17 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParser;
 
@@ -32,12 +37,13 @@ public class StatisticSearch extends Statistic {
 
 	/**
 	 * skapar ett objekt av StatisticSearch
-	 * @param writer används för att skriva svar
+	 * @param out används för att skriva svar
 	 * @param queryString sträng med query
 	 * @param indexMap set med index namn
+	 * @throws ParserConfigurationException 
 	 */
-	public StatisticSearch(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public StatisticSearch(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -91,16 +97,33 @@ public class StatisticSearch extends Statistic {
 			throw new DiagnosticException("Oväntat fel uppstod", "Statistic.performMethod", null, false);
 		}
 	}
-
 	@Override
-	protected void writeFootExtra() throws IOException {
-		xmlWriter.writeEntity("echo");
-		xmlWriter.writeEntityWithText("method", METHOD_NAME);
-		for (String index : indexMap.keySet()) {
-			xmlWriter.writeEntityWithText("index", index + "=" + indexMap.get(index));
+	protected void generateDocument() {
+		super.generateDocument();
+		NodeList echoNodes = doc.getElementsByTagName("echo");
+		if (echoNodes.getLength()==1){
+			Element query = doc.createElement("query");
+			query.appendChild(doc.createTextNode(queryString));
+			echoNodes.item(0).appendChild(query);
+		} else if (echoNodes.getLength()<1){
+			logger.error("Did not find any echo node in the respond document");
+		} else {
+			logger.error("Found too many echo nodes in the respond document, number of echo-nodes: "+echoNodes.getLength());
 		}
-		xmlWriter.writeEntityWithText("query", queryString);
-		xmlWriter.endEntity();
 	}
+	protected Element generateBaseDocument(){
+		return super.generateBaseDocument();
+	}
+
+//	@Override
+//	protected void writeFootExtra() throws IOException {
+//		xmlWriter.writeEntity("echo");
+//		xmlWriter.writeEntityWithText("method", METHOD_NAME);
+//		for (String index : indexMap.keySet()) {
+//			xmlWriter.writeEntityWithText("index", index + "=" + indexMap.get(index));
+//		}
+//		xmlWriter.writeEntityWithText("query", queryString);
+//		xmlWriter.endEntity();
+//	}
 
 }

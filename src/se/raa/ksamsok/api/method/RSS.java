@@ -1,8 +1,10 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -101,10 +103,11 @@ public class RSS extends AbstractSearchMethod {
 	 * @param queryString CQL query sträng för att söka mot indexet
 	 * @param hitsPerPage hur många träffar som skall visas per sida
 	 * @param startRecord vart i resultatet sökningen skall starta
-	 * @param writer används för att skriva svaret
+	 * @param out används för att skriva svaret
+	 * @throws ParserConfigurationException 
 	 */
-	public RSS(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public RSS(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -133,27 +136,12 @@ public class RSS extends AbstractSearchMethod {
 	}
 
 	@Override
-	protected void writeHead() {
-		// vi gör inget här
-	}
-
-	@Override
-	protected void writeFoot() {
-		// vi gör inget här
-	}
-
-	@Override
-	protected void writeResult() throws DiagnosticException {
-		try {
-			SyndFeed feed = getFeed();
-			feed.setEntries(getEntries(hitList));
-			SyndFeedOutput output = new SyndFeedOutput();
-			output.output(feed, writer);
-		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO fel", "RSS.doSyndFeed", e.getMessage(), true);
-		} catch (FeedException e) {
-			throw new DiagnosticException("Något gick fel : /", "RSS.doSyndFeed", e.getMessage(), true);
-		}
+	protected void writeResult() throws DiagnosticException, IOException, FeedException {
+		SyndFeed feed = getFeed();
+		feed.setEntries(getEntries(hitList));
+		SyndFeedOutput output = new SyndFeedOutput();
+		PrintWriter w = new PrintWriter(out);
+		output.output(feed, w, prettyPrint);
 	}
 
 	/**
@@ -747,5 +735,11 @@ public class RSS extends AbstractSearchMethod {
 		public void setIdentifier(String identifier) {
 			this.identifier = identifier;
 		}
+	}
+
+	@Override
+	protected void generateDocument() {
+		// Här gör vi inget
+		
 	}
 }

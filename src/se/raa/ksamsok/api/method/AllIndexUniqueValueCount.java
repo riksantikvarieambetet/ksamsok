@@ -1,7 +1,9 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,13 +13,23 @@ import java.util.Map.Entry;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.json.JSONException;
+import org.json.XML;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.z3950.zing.cql.CQLNode;
@@ -42,6 +54,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
  * @author Henrik Hjalmarsson
  */
 public class AllIndexUniqueValueCount extends AbstractAPIMethod {
+
 
 	private static final Logger logger = Logger.getLogger(AllIndexUniqueValueCount.class);
 
@@ -83,14 +96,9 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 	protected List<FacetField> facetFields = Collections.emptyList();
 
-	/**
-	 * skapar ett objekt av AllIndexUniqueValueCount från given query sträng
-	 * och writer som skall skriva resultatet.
-	 * @param queryString
-	 * @param writer
-	 */
-	public AllIndexUniqueValueCount(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public AllIndexUniqueValueCount(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params)
+			throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -144,39 +152,31 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 		}
 	}
 
-	/**
-	 * skriver ut resultatet
-	 * @throws IOException 
-	 */
 	@Override
-	protected void writeResult() throws IOException {
-		if (format != Format.JSON_LD){
-			for (FacetField ff: facetFields) {
-				int vc = ff.getValueCount();
-				if (vc > 0) {
-					xmlWriter.writeEntity("index");
-					xmlWriter.writeEntityWithText("name", ff.getName());
-					xmlWriter.writeEntityWithText("uniqueValues", vc);
-					xmlWriter.endEntity();
-				}
+	protected void generateDocument() {
+		//Root element
+		Element result = doc.createElement("result");
+		doc.appendChild(result);
+		//Version element
+		Element version = doc.createElement("version");
+		version.appendChild(doc.createTextNode(APIMethod.API_VERSION));
+		result.appendChild(version);
+
+		for (FacetField ff: facetFields) {
+			int vc = ff.getValueCount();
+			if (vc > 0) {
+				//Index 
+				Element index = doc.createElement("index");
+				//Name of index
+				Element name = doc.createElement("name");
+				name.appendChild(doc.createTextNode(ff.getName()));
+				index.appendChild(name);
+				//Number of values of index
+				Element uniqueValues =  doc.createElement("uniqueValues");
+				uniqueValues.appendChild(doc.createTextNode(Integer.toString(vc, 10)));
+				index.appendChild(uniqueValues);
+				result.appendChild(index);
 			}
-		} else {
-			JsonArray indexArr = new JsonArray();
-			for (FacetField ff: facetFields) {
-				int vc = ff.getValueCount();
-				if (vc > 0) {
-					JsonObject json = new JsonObject();
-					json.addProperty("name", ff.getName());
-					json.addProperty("uniqueValues", vc);
-					indexArr.add(json);
-				}
-			}
-			JsonObject result = new JsonObject();
-			result.addProperty("version", APIMethod.API_VERSION);
-			result.add("index", indexArr);
-			JsonObject resp = new JsonObject();
-			resp.add("result", result);
-			new Gson().toJson(resp, jsonWriter);
 		}
 	}
 }
