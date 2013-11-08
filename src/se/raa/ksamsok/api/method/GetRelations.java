@@ -203,7 +203,8 @@ public class GetRelations extends AbstractAPIMethod {
 						"GetRelations.extractParameters", null, false);
 			}
 		} else {
-			maxCount = -1;
+			// Om ingen maxCount är satt så kan man få oändliga sökningar i solr-index vilket för att man till slut för en out-of-memory i jvm
+			maxCount = 10000;
 		}
 		String inferSameAsStr = getOptionalParameterValue(INFERSAMEAS_PARAMETER, "GetRelations.extractParameters", null, false);
 		if (inferSameAsStr != null) {
