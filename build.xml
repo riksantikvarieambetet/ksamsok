@@ -318,7 +318,7 @@
 				<include name="se/raa/**/*.rdf" />
 				<include name="se/raa/**/*.xml" />
 				<include name="*.properties" />
-				<exclude name="se/raa/util/*" />
+				<exclude name="se/raa/**/util/*" />
 			</fileset>
 		</copy>
 		<!--Test dir -->
