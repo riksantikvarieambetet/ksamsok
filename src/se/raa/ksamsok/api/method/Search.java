@@ -224,7 +224,7 @@ public class Search extends AbstractSearchMethod {
 				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 				Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
-				record.appendChild(contentDoc.getDocumentElement());
+				record.appendChild(contentDoc.getDocumentElement().cloneNode(true));
 //				for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
 //					Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
 //					record.appendChild(imp);
