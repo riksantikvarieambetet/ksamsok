@@ -1,13 +1,17 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Element;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -35,11 +39,12 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 
 	/**
 	 * Skapar ett objekt av GetServiceOrganization
-	 * @param writer Skrivaren som används för att skriva resultatet
+	 * @param out Skrivaren som används för att skriva resultatet
 	 * @param value kortnamn på organisationen som skall hämtas data om
+	 * @throws ParserConfigurationException 
 	 */
-	public GetServiceOrganization(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public GetServiceOrganization(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -62,42 +67,92 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() throws IOException {
+	protected void generateDocument() {
+		Element result = super.generateBaseDocument();
 		for (Organization org: orgList) {
-			writeInstitution(org);
+			result.appendChild(createInstitution(org));
 		}
 	}
 
 	/**
-	 * Skriver ut xml data om en institution
+	 * Skapar xml data om en institution
 	 * @param org organisationen som skall skrivas ut
-	 * @throws IOException 
 	 */
-	protected void writeInstitution(Organization org) throws IOException {
-		xmlWriter.writeEntity("institution");
-		xmlWriter.writeEntityWithText("kortnamn",org.getServ_org() != null ? org.getServ_org() : "");
-		xmlWriter.writeEntityWithText("namnswe", org.getNamnSwe() != null ? org.getNamnSwe() : "");
-		xmlWriter.writeEntityWithText("namneng", org.getNamnEng() != null ? org.getNamnEng() : "");
-		xmlWriter.writeEntityWithText("beskrivswe", org.getBeskrivSwe() != null ? org.getBeskrivSwe() : "");
-		xmlWriter.writeEntityWithText("beskriveng", org.getBeskrivEng() != null ? org.getBeskrivEng() : "");
-		xmlWriter.writeEntityWithText("adress1", org.getAdress1() != null ? org.getAdress1() : "");
-		xmlWriter.writeEntityWithText("adress2", org.getAdress2() != null ? org.getAdress2() : "");
-		xmlWriter.writeEntityWithText("postadress", org.getPostadress() != null ? org.getPostadress() : "");
-		xmlWriter.writeEntityWithText("kontaktperson", org.getKontaktperson() != null ? org.getKontaktperson() : "");
-		xmlWriter.writeEntityWithText("epostkontaktperson", org.getEpostKontaktperson() != null ? org.getEpostKontaktperson() : "");
-		xmlWriter.writeEntityWithText("websida", org.getWebsida() != null ? org.getWebsida() : "");
-		xmlWriter.writeEntityWithText("websidaks", org.getWebsidaKS() !=  null ? org.getWebsidaKS() : "");
-		xmlWriter.writeEntityWithText("lowressurl", org.getLowressUrl() != null ? org.getLowressUrl() : "");
-		xmlWriter.writeEntityWithText("thumbnailurl", org.getThumbnailUrl() != null ? org.getThumbnailUrl() : "");
-		xmlWriter.writeEntity("services");
+	protected Element createInstitution(Organization org) {
+		Element institution = doc.createElement("institution");
+		
+		Element kortNamn = doc.createElement("kortnamn");
+		kortNamn.appendChild(doc.createTextNode(org.getServ_org() != null ? org.getServ_org() : ""));
+		institution.appendChild(kortNamn);
+		
+		Element namnSwe = doc.createElement("namnswe");
+		namnSwe.appendChild(doc.createTextNode(org.getNamnSwe() != null ? org.getNamnSwe() : ""));
+		institution.appendChild(namnSwe);
+		
+		Element namnEng = doc.createElement("namneng");
+		namnEng.appendChild(doc.createTextNode(org.getNamnEng() != null ? org.getNamnEng() : ""));
+		institution.appendChild(namnEng);
+		
+		Element beskrivSwe = doc.createElement("beskrivswe");
+		beskrivSwe.appendChild(doc.createTextNode(org.getBeskrivSwe() != null ? org.getBeskrivSwe() : ""));
+		institution.appendChild(beskrivSwe);
+		
+		Element beskrivEng = doc.createElement("beskriveng");
+		beskrivEng.appendChild(doc.createTextNode(org.getBeskrivEng() != null ? org.getBeskrivEng() : ""));
+		institution.appendChild(beskrivEng);
+		
+		Element adress1 = doc.createElement("adress1");
+		adress1.appendChild(doc.createTextNode(org.getAdress1() != null ? org.getAdress1() : ""));
+		institution.appendChild(adress1);
+		
+		Element adress2 = doc.createElement("adress2");
+		adress2.appendChild(doc.createTextNode(org.getAdress2() != null ? org.getAdress2() : ""));
+		institution.appendChild(adress2);
+		
+		Element postAdress = doc.createElement("postadress");
+		postAdress.appendChild(doc.createTextNode(org.getPostadress() != null ? org.getPostadress() : ""));
+		institution.appendChild(postAdress);
+		
+		Element kontaktPerson = doc.createElement("kontaktperson");
+		kontaktPerson.appendChild(doc.createTextNode(org.getKontaktperson() != null ? org.getKontaktperson() : ""));
+		institution.appendChild(kontaktPerson);
+		
+		Element epostKontaktPerson = doc.createElement("epostkontaktperson");
+		epostKontaktPerson.appendChild(doc.createTextNode(org.getEpostKontaktperson() != null ? org.getEpostKontaktperson() : ""));
+		institution.appendChild(epostKontaktPerson);
+		
+		Element websida = doc.createElement("websida");
+		websida.appendChild(doc.createTextNode(org.getWebsida() != null ? org.getWebsida() : ""));
+		institution.appendChild(websida);
+		
+		Element websidaKS = doc.createElement("websidaKS");
+		websidaKS.appendChild(doc.createTextNode(org.getWebsidaKS() !=  null ? org.getWebsidaKS() : ""));
+		institution.appendChild(websidaKS);
+		
+		Element lowResUrl = doc.createElement("lowressurl");//Felstavat?
+		lowResUrl.appendChild(doc.createTextNode(org.getLowressUrl() != null ? org.getLowressUrl() : ""));
+		institution.appendChild(lowResUrl);
+		
+		Element thumbnailUrl = doc.createElement("thumbnailurl");
+		thumbnailUrl.appendChild(doc.createTextNode(org.getThumbnailUrl() != null ? org.getThumbnailUrl() : ""));
+		institution.appendChild(thumbnailUrl);
+		
+		Element services = doc.createElement("services");
 		for (int i = 0; org.getServiceList() != null && i < org.getServiceList().size(); i++) {
-			Service service = org.getServiceList().get(i);
-			xmlWriter.writeEntity("service");
-			xmlWriter.writeEntityWithText("namn", service.getNamn() != null ? service.getNamn() : "");
-			xmlWriter.writeEntityWithText("beskrivning", service.getBeskrivning() != null ? service.getBeskrivning() : "");
-			xmlWriter.endEntity();
+			Service s = org.getServiceList().get(i);
+			Element service = doc.createElement("service");
+			
+			Element namn = doc.createElement("namn");
+			namn.appendChild(doc.createTextNode(s.getNamn() != null ? s.getNamn() : ""));
+			service.appendChild(namn);
+			
+			Element beskrivning = doc.createElement("beskrvning");
+			beskrivning.appendChild(doc.createTextNode(s.getBeskrivning() != null ? s.getBeskrivning() : ""));
+			service.appendChild(beskrivning);
+			
+			services.appendChild(service);
 		}
-		xmlWriter.endEntity();
-		xmlWriter.endEntity();
+		institution.appendChild(services);
+		return institution;
 	}
 }
