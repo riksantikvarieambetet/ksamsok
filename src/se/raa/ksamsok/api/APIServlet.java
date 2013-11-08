@@ -181,7 +181,11 @@ public class APIServlet extends HttpServlet {
 		} catch (SAXException e) {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
-		}finally {
+		} catch (Exception e){
+			resp.setStatus(500);
+			logger.error("In doGet", e);
+			throw e;
+		} finally {
 			if (out != null){
 				try {
 					out.close();

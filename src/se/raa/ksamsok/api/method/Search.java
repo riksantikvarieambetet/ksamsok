@@ -224,7 +224,7 @@ public class Search extends AbstractSearchMethod {
 				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 				Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
 				for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
-					record.appendChild(contentDoc).getChildNodes().item(i);
+					record.appendChild(contentDoc.getChildNodes().item(i));
 					
 					Element relScore = doc.createElement("rel:score");
 					relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
