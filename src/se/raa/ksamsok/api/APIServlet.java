@@ -115,11 +115,6 @@ public class APIServlet extends HttpServlet {
 					try {
 						reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 						stylesheet = reqParams.get("stylesheet");
-						//Kollar om frågan till ksamsök har en maxCount satt, och sätter en om frågan inte har maxCount satt.
-						if(reqParams.get("maxCount") == null) {
-							reqParams.put("maxCount", "10000");
-						}
-						
 						method = apiMethodFactory.getAPIMethod(reqParams, out);
 						
 						//Check which format the respond should be
