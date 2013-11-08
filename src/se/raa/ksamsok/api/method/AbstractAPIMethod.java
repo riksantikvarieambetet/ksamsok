@@ -3,7 +3,6 @@ package se.raa.ksamsok.api.method;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,15 +27,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
 import org.xml.sax.SAXException;
 
-import com.google.gson.stream.JsonWriter;
-import com.java.generationjava.io.xml.SimpleXmlWriter;
 import com.sun.syndication.io.FeedException;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.method.APIMethod.Format;
 
 /**
  * Basklass för api-metoder.
