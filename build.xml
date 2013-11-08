@@ -303,4 +303,53 @@
     <target name="produktion">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>
     </target>
+	
+	<target name="generateSourcePackage" depends="clean, init" description="This target generates a source code package for public publishing">
+		<mkdir dir="${project.build.dir}/SOCH_Src_Code/src" />
+		<mkdir dir="${project.build.dir}/SOCH_Src_Code/test" />
+		<mkdir dir="${project.build.dir}/SOCH_Src_Code/sql" />
+		<mkdir dir="${project.build.dir}/SOCH_Src_Code/web" />
+		<!--Source dir -->
+		<copy todir="${project.build.dir}/SOCH_Src_Code/src">
+			<fileset dir="${project.src.dir}">
+				<include name="se/raa/**/*.java" />
+				<include name="se/raa/**/*.sql" />
+				<include name="se/raa/**/*.xsd" />
+				<include name="se/raa/**/*.rdf" />
+				<include name="se/raa/**/*.xml" />
+				<include name="*.properties" />
+				<exclude name="se/raa/util/*" />
+			</fileset>
+		</copy>
+		<!--Test dir -->
+		<copy todir="${project.build.dir}/SOCH_Src_Code/test">
+			<fileset dir="${basedir}/test">
+				<include name="**/*.java" />
+				<include name="**/*.xml" />
+				<include name="**/*.rdf" />
+			</fileset>
+		</copy>
+		<!-- SQL dir -->
+		<copy todir="${project.build.dir}/SOCH_Src_Code/sql">
+			<fileset dir="${basedir}/sql">
+				<include name="**/*sql" />
+			</fileset>
+		</copy>
+		<!-- WEB dir -->
+		<copy todir="${project.build.dir}/SOCH_Src_Code/web">
+			<fileset dir="${basedir}/web">
+				<include name="**/*.jsp" />
+				<include name="**/*.css" />
+				<include name="**/*.html" />
+				<include name="**/*.js" />
+				<include name="**/*.xml" />
+				<include name="**/*.rdf" />
+				<include name="**/*.owl" />
+				<include name="**/*.xsl" />
+				<include name="**/*.properties" />
+				<exclude name="**/google*" />
+				<exclude name="**/robots.txt" />
+			</fileset>
+		</copy>
+	</target>
 </project>
