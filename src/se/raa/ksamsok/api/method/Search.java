@@ -1,6 +1,7 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,6 +11,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -110,10 +113,11 @@ public class Search extends AbstractSearchMethod {
 	 * @param params sökparametrar
 	 * @param hitsPerPage träffar som skall visas per sida
 	 * @param startRecord startposition i sökningen
-	 * @param writer skrivaren som skall användas för att skriva svaret
+	 * @param out skrivaren som skall användas för att skriva svaret
+	 * @throws ParserConfigurationException 
 	 */
-	public Search(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public Search(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
