@@ -1,6 +1,7 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.solr.client.solrj.SolrServerException;
+import org.w3c.dom.Element;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -46,13 +50,14 @@ public class SearchHelp extends AbstractAPIMethod {
 
 	/**
 	 * skapar ett objekt av SearchHelp
-	 * @param writer
+	 * @param out
 	 * @param indexList
 	 * @param prefix
 	 * @param maxValueCount
+	 * @throws ParserConfigurationException 
 	 */
-	public SearchHelp(APIServiceProvider serviceProvider, PrintWriter writer, Map<String,String> params) {
-		super(serviceProvider, writer, params);
+	public SearchHelp(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+		super(serviceProvider, out, params);
 	}
 
 	@Override
@@ -79,46 +84,47 @@ public class SearchHelp extends AbstractAPIMethod {
 			throw new DiagnosticException("Oväntat IO fel uppstod", "SearchHelp.performMethod", e.getMessage(), true);
 		}
 	}
-	
-	/**
-	 * skriver ut början av svaret
-	 * @throws IOException 
-	 */
 	@Override
-	protected void writeHeadExtra() throws IOException {
-		xmlWriter.writeEntityWithText("numberOfTerms", termList.size());
-	}
-	
-	/**
-	 * skriver ut resultatet av svaret
-	 * @throws IOException 
-	 */
-	@Override
-	protected void writeResult() throws IOException {
-		xmlWriter.writeEntity("terms");
-		for (Term t: termList) {
-			xmlWriter.writeEntity("term");
-			xmlWriter.writeEntityWithText("value", t.getValue());
-			xmlWriter.writeEntityWithText("count", t.getCount());
-			xmlWriter.endEntity();
+	protected void generateDocument() {
+		Element result = super.generateBaseDocument();
+		
+		Element numberOfTerms = doc.createElement("numberOfTerms");
+		numberOfTerms.appendChild(doc.createTextNode(Integer.toString(termList.size(),10)));
+		result.appendChild(numberOfTerms);
+		
+		Element terms = doc.createElement("terms");
+		for (Term t : termList){
+			Element term = doc.createElement("term");
+			
+			Element value = doc.createElement("value");
+			value.appendChild(doc.createTextNode(t.getValue()));
+			term.appendChild(value);
+			
+			Element count = doc.createElement("count");
+			count.appendChild(doc.createTextNode(Long.toString(t.getCount(),10)));
+			term.appendChild(count);
+			
+			terms.appendChild(term);
 		}
-		xmlWriter.endEntity();
-	}
-	
-	/**
-	 * skriver ut foten av svaret
-	 * @throws IOException 
-	 */
-	@Override
-	protected void writeFootExtra() throws IOException {
-		xmlWriter.writeEntity("echo");
-		xmlWriter.writeEntityWithText("method", METHOD_NAME);
-		for(int i = 0; i < indexList.size(); i++) {
-			xmlWriter.writeEntityWithText("index", indexList.get(i));
+		Element echo = doc.createElement("echo");
+		
+		Element method = doc.createElement("method");
+		method.appendChild(doc.createTextNode(METHOD_NAME));
+		echo.appendChild(method);
+		
+		for (int i =0; i < indexList.size(); i++){
+			Element index = doc.createElement("index");
+			index.appendChild(doc.createTextNode(indexList.get(i)));
+			echo.appendChild(index);
 		}
-		xmlWriter.writeEntityWithText("maxValueCount", maxValueCount);
-		xmlWriter.writeEntityWithText("prefix", prefix);
-		xmlWriter.endEntity();
+		
+		Element maxValueCountEl = doc.createElement("maxValueCount");
+		maxValueCountEl.appendChild(doc.createTextNode(Integer.toString(maxValueCount,10)));
+		echo.appendChild(maxValueCountEl);
+		
+		Element prefixEl = doc.createElement("prefix");
+		prefixEl.appendChild(doc.createTextNode(prefix));
+		echo.appendChild(prefixEl);
 	}
 
 	/**
@@ -172,5 +178,4 @@ public class SearchHelp extends AbstractAPIMethod {
 		}
 		return maxValueCount;
 	}
-
 }
