@@ -224,14 +224,15 @@ public class Search extends AbstractSearchMethod {
 				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 				Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
-				for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
-					Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
-					record.appendChild(imp);
+				record.appendChild(contentDoc.getDocumentElement());
+//				for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
+//					Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
+//					record.appendChild(imp);
 					Element relScore = doc.createElement("rel:score");
 					relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
 					relScore.appendChild(doc.createTextNode(Float.toString(score)));
 					record.appendChild(relScore);
-				}
+//				}
 				records.appendChild(record);
 			}
 		}
