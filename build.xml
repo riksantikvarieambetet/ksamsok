@@ -351,5 +351,6 @@
 				<exclude name="**/robots.txt" />
 			</fileset>
 		</copy>
+		<tar destfile="${project.build.dir}/SOCH_Src_Code.tgz" basedir="${project.build.dir}/SOCH_Src_Code" compression="gzip" />
 	</target>
 </project>
