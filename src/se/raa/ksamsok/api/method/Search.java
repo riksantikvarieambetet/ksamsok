@@ -27,6 +27,7 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
@@ -224,8 +225,8 @@ public class Search extends AbstractSearchMethod {
 				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 				Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
 				for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
-					record.appendChild(contentDoc.getChildNodes().item(i));
-					
+					Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
+					record.appendChild(imp);
 					Element relScore = doc.createElement("rel:score");
 					relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
 					relScore.appendChild(doc.createTextNode(Float.toString(score)));
