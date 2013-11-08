@@ -34,6 +34,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
+import org.xml.sax.SAXException;
 
 import com.github.jsonldjava.jena.JenaJSONLD;
 import com.java.generationjava.io.xml.SimpleXmlWriter;
@@ -98,8 +99,7 @@ public class APIServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException {	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp){	
 		//sätter contentType och character encoding
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
@@ -176,6 +176,9 @@ public class APIServlet extends HttpServlet {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
 		} catch (FeedException e) {
+			resp.setStatus(500);
+			logger.error("In doGet", e);
+		} catch (SAXException e) {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
 		}finally {

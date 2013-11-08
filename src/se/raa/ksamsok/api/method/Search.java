@@ -1,8 +1,9 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
@@ -22,6 +25,9 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
+import org.w3c.dom.Element;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
@@ -199,63 +205,53 @@ public class Search extends AbstractSearchMethod {
 			throw new DiagnosticException(e.getMessage(), "Search.performMethod", e.getMessage(), true);
 		}
 	}
-
-	/**
-	 * skriver ut nedre del av XML svar
-	 * @throws IOException 
-	 */
 	@Override
-	protected void writeFootExtra() throws IOException {
-		xmlWriter.writeEntity("echo");
-		xmlWriter.writeEntityWithText("startRecord", startRecord);
-		xmlWriter.writeEntityWithText("hitsPerPage", hitsPerPage);
-		xmlWriter.writeEntityWithText("query", queryString);
-		xmlWriter.endEntity();
-	}
-
-	/**
-	 * skriver ut övre del av XML svar
-	 * @param numberOfDocs
-	 * @throws IOException 
-	 */
-	@Override
-	protected void writeHeadExtra() throws IOException {
-		xmlWriter.writeEntityWithText("totalHits", hitList.getNumFound());
-	}
-
-	@Override
-	protected void writeResult() throws IOException {
-		xmlWriter.writeEntity("records");
-		try {
-			for (SolrDocument d: hitList) {
-				Float score = (Float) d.getFieldValue("score");
-				String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
-				writeContent(getContent(d, ident), score);
+	protected void generateDocument() throws ParserConfigurationException, SAXException, IOException {
+		Element result = super.generateBaseDocument();
+		
+		Element totalHits = doc.createElement("totalHits");
+		totalHits.appendChild(doc.createTextNode(Long.toString(hitList.getNumFound(),10)));
+		result.appendChild(totalHits);
+		
+		Element records = doc.createElement("records");
+		for (SolrDocument d : hitList){
+			Float score = (Float) d.getFieldValue("score");
+			String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
+			String content = getContent(d, ident);
+			if (content!=null){
+				Element record = doc.createElement("record");
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+				Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
+				for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
+					record.appendChild(contentDoc).getChildNodes().item(i);
+					
+					Element relScore = doc.createElement("rel:score");
+					relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+					relScore.appendChild(doc.createTextNode(Float.toString(score)));
+					record.appendChild(relScore);
+				}
+				records.appendChild(record);
 			}
-		} finally {
-			xmlWriter.endEntity();
 		}
+		
+		Element echo = doc.createElement("echo");
+		result.appendChild(echo);
+		
+		Element startRecordEl = doc.createElement("startRecord");
+		startRecordEl.appendChild(doc.createTextNode(Integer.toString(startRecord,10)));
+		echo.appendChild(startRecordEl);
+		
+		Element hitsPerPageEl = doc.createElement("hitsPerPage");
+		hitsPerPageEl.appendChild(doc.createTextNode(Integer.toString(hitsPerPage, 10)));
+		echo.appendChild(hitsPerPageEl);
+		
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(queryString));
+		echo.appendChild(query);
 	}
 
-	/**
-	 * skriver ut content
-	 * @param content
-	 * @param score
-	 * @throws IOException 
-	 */
-	protected void writeContent(String content, double score) throws IOException {
-		if (content == null) {
-			return;
-		}
-		xmlWriter.writeEntity("record");
-		xmlWriter.writeXml(content);
-		xmlWriter.writeEntity("rel:score");
-		xmlWriter.writeAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
-		xmlWriter.writeText(score);
-		xmlWriter.endEntity();
-		xmlWriter.endEntity();
-	}
-	
+
 	/**
 	 * Hämtar xml-innehåll (fragment) från ett lucene-dokument som en sträng.
 	 * @param doc solrdokument
@@ -395,5 +391,4 @@ public class Search extends AbstractSearchMethod {
 			}
 		}
 	}
-
 }

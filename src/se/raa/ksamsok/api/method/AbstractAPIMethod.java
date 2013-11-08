@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -25,6 +26,7 @@ import org.json.XML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
+import org.xml.sax.SAXException;
 
 import com.google.gson.stream.JsonWriter;
 import com.java.generationjava.io.xml.SimpleXmlWriter;
@@ -72,7 +74,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 
 	@Override
 	public void performMethod() throws MissingParameterException,
-			BadParameterException, DiagnosticException, TransformerException, JSONException, FeedException {
+			BadParameterException, DiagnosticException, TransformerException, JSONException, FeedException, ParserConfigurationException, SAXException, IOException {
 		// läs ut parametrar och kasta ex vid problem
 		extractParameters();
 		// utför operationen
@@ -133,8 +135,12 @@ public abstract class AbstractAPIMethod implements APIMethod {
 
 	/**
 	 * Denna metod genererar xml dokumentet som är grund för api-svaret
+	 * @throws ParserConfigurationException 
+	 * @throws UnsupportedEncodingException 
+	 * @throws IOException 
+	 * @throws SAXException 
 	 */
-	abstract protected void generateDocument();
+	abstract protected void generateDocument() throws ParserConfigurationException, UnsupportedEncodingException, SAXException, IOException;
 	
 	protected Element generateBaseDocument(){
 		//Root element
