@@ -235,6 +235,7 @@ public class Search extends AbstractSearchMethod {
 				records.appendChild(record);
 			}
 		}
+		result.appendChild(records);
 		
 		Element echo = doc.createElement("echo");
 		result.appendChild(echo);
