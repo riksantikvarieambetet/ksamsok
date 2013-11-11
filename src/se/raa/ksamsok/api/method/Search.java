@@ -287,7 +287,7 @@ public class Search extends AbstractSearchMethod {
 					m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
 					// Create JSON-LD 
 					RDFDataMgr.write(jsonLDRDF, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
-					record.append("record", jsonLDRDF.toString("UTF-8"));
+					record.append("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
 					JSONObject relScore = new JSONObject();
 					relScore.append("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
 					relScore.append("#text", score);
