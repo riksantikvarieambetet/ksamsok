@@ -23,14 +23,15 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.solr.common.SolrInputDocument;
-import org.jrdf.graph.AnySubjectNode;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.SubjectNode;
-import org.jrdf.graph.Triple;
-import org.jrdf.graph.URIReference;
 import org.junit.Test;
 import org.w3c.dom.Document;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.SimpleSelector;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
@@ -49,9 +50,9 @@ public class Protocol_0_TO_1_0_Test {
 	@Test
 	public void testURILookup() throws Exception {
 		// "null"-graf
-		Graph graph = RDFUtil.parseGraph("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"></rdf:RDF>");
+		Model m = RDFUtil.parseModel("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"></rdf:RDF>");
 
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_0_TO_1_0(graph, null);
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_0_TO_1_0(m, null);
 		lookupNotNull(handler, "http://kulturarvsdata.se/resurser/DataQuality#raw");
 		lookupNotNull(handler, "http://kulturarvsdata.se/resurser/ContextType#exist");
 		lookupNotNull(handler, "http://kulturarvsdata.se/resurser/EntityType#photo");
@@ -63,21 +64,23 @@ public class Protocol_0_TO_1_0_Test {
 	@Test
 	public void testParse1() throws Exception {
 		String rdf = loadTestFileAsString("hjalm_0.99.rdf");
-		Graph graph = RDFUtil.parseGraph(rdf);
-		assertNotNull("Ingen graf, fel på rdf:en?", graph);
-		GraphElementFactory elementFactory = graph.getElementFactory();
+		Model model = RDFUtil.parseModel(rdf);
+		assertNotNull("Ingen graf, fel på rdf:en?", model);
 		// grund
-		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
-		URIReference samsokEntity = elementFactory.createURIReference(SamsokProtocol.uri_samsokEntity);
+		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
 
-		SubjectNode s = null;
-		for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
-			if (s != null) {
+		//SubjectNode s = null;
+		SimpleSelector selector = new SimpleSelector(null, rdfType, samsokEntity);
+		StmtIterator iter = model.listStatements(selector);
+		Resource s = null;
+		while (iter.hasNext()){
+			if (s != null){
 				throw new Exception("Ska bara finnas en entity i rdf-grafen");
 			}
-			s = triple.getSubject();
+			s = iter.next().getSubject();
 		}
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_0_TO_1_0(graph, s);
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_0_TO_1_0(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
 		LinkedList<String> relations = new LinkedList<String>();
