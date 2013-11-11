@@ -274,7 +274,6 @@ public class Search extends AbstractSearchMethod {
 		if (format != Format.JSON_LD){
 			super.writeResult();
 		} else {
-			
 			JSONArray records = new JSONArray();
 			for (SolrDocument d : hitList){
 				Float score = (Float) d.getFieldValue("score");
@@ -287,25 +286,25 @@ public class Search extends AbstractSearchMethod {
 					m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
 					// Create JSON-LD 
 					RDFDataMgr.write(jsonLDRDF, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
-					record.append("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
+					record.put("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
 					JSONObject relScore = new JSONObject();
-					relScore.append("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
-					relScore.append("#text", score);
-					record.append("rel:score", relScore);
+					relScore.put("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+					relScore.put("#text", score);
+					record.put("rel:score", relScore);
 					records.put(record);
 				}
 			}
 			// Create echo object
 			JSONObject echo = new JSONObject();
-			echo.append("startRecord", startRecord);
-			echo.append("hitsPerPage", hitsPerPage);
-			echo.append("query", queryString);
+			echo.put("startRecord", startRecord);
+			echo.put("hitsPerPage", hitsPerPage);
+			echo.put("query", queryString);
 			// Create the result object
 			JSONObject result = new JSONObject();
-			result.append("version", API_VERSION);
-			result.append("totalHits", hitList.getNumFound());
-			result.append("records", records);
-			result.append("echo", echo);
+			result.put("version", API_VERSION);
+			result.put("totalHits", hitList.getNumFound());
+			result.put("records", records);
+			result.put("echo", echo);
 			// Write the result
 			out.write(prettyPrint ? result.toString(indentFactor).getBytes() : result.toString().getBytes());
 		}
