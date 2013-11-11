@@ -33,6 +33,7 @@ import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 
 /**
  * Basklass för api-metoder.
@@ -121,7 +122,12 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @throws MissingParameterException om parameter saknas
 	 * @throws BadParameterException om parameter är felaktig
 	 */
-	abstract protected void extractParameters() throws MissingParameterException, BadParameterException;
+	protected void extractParameters() throws MissingParameterException, BadParameterException{
+		//Check if the response should be in pretty print
+		if (params.get("prettyPrint") != null && params.get("prettyPrint").equalsIgnoreCase("true")){
+			prettyPrint=true;
+		}
+	}
 
 	/**
 	 * Utför metodens logik.

@@ -128,11 +128,6 @@ public class APIServlet extends HttpServlet {
 							method.setFormat(Format.XML);
 							resp.setContentType("application/xml; charset=UTF-8");
 						}
-						//Check if the json responde should be in pretty print
-						if (reqParams.get("prettyPrint") != null && reqParams.get("prettyPrint").equalsIgnoreCase("true")){
-							prettyPrint=true;
-						}
-						method.setPrettyPrint(prettyPrint);
 						method.performMethod();
 						keyManager.updateUsage(apiKey);
 					} catch (MissingParameterException e) {

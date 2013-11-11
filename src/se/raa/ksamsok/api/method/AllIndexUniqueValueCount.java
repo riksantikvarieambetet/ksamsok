@@ -89,6 +89,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
+		super.extractParameters();
 		queryString = getQueryString(params.get(QUERY_PARAMS));
 		String indexString = params.get(INDEX_PARAMETER);
 		if (indexString != null) {

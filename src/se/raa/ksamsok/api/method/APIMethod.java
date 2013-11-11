@@ -61,6 +61,4 @@ public interface APIMethod
 
 	public void setFormat(Format format);
 
-	public void setPrettyPrint(Boolean prettyPrint);
-
 }

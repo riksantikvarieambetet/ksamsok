@@ -63,6 +63,7 @@ public class SearchHelp extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
+		super.extractParameters();
 		indexList = getIndexList(params.get(INDEX_PARAMETER));
 		prefix = getPrefix(params.get(PREFIX_PARAMETER));
 		maxValueCount = getMaxValueCount(params.get(MAX_VALUE_COUNT_PARAMETER));

@@ -62,6 +62,7 @@ public class Statistic extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
+		super.extractParameters();
 		this.indexMap = extractIndexMap();
 		this.removeBelow = getRemoveBelow(params.get(REMOVE_BELOW));
 	}

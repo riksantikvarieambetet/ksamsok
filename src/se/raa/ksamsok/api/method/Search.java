@@ -1,8 +1,10 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,8 +18,10 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -25,6 +29,9 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -34,6 +41,11 @@ import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
+
+import com.github.jsonldjava.jena.JenaJSONLD;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.sun.syndication.io.FeedException;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -208,51 +220,96 @@ public class Search extends AbstractSearchMethod {
 	}
 	@Override
 	protected void generateDocument() throws ParserConfigurationException, SAXException, IOException {
-		Element result = super.generateBaseDocument();
-		
-		Element totalHits = doc.createElement("totalHits");
-		totalHits.appendChild(doc.createTextNode(Long.toString(hitList.getNumFound(),10)));
-		result.appendChild(totalHits);
-		
-		Element records = doc.createElement("records");
-		for (SolrDocument d : hitList){
-			Float score = (Float) d.getFieldValue("score");
-			String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
-			String content = getContent(d, ident);
-			if (content!=null){
-				Element record = doc.createElement("record");
-				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-				Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
-				for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
-					Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
-					record.appendChild(imp);
-					Element relScore = doc.createElement("rel:score");
-					relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
-					relScore.appendChild(doc.createTextNode(Float.toString(score)));
-					record.appendChild(relScore);
+		// Do not create a xml document if the format is JSON (JSON-LD). If the format is JSON then the result
+		// should be a json with json-ld rdfs. The method xmlToJson does not creates json-ld.
+		if (format != Format.JSON_LD){
+			Element result = super.generateBaseDocument();
+			
+			Element totalHits = doc.createElement("totalHits");
+			totalHits.appendChild(doc.createTextNode(Long.toString(hitList.getNumFound(),10)));
+			result.appendChild(totalHits);
+			
+			Element records = doc.createElement("records");
+			for (SolrDocument d : hitList){
+				Float score = (Float) d.getFieldValue("score");
+				String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
+				String content = getContent(d, ident);
+				if (content!=null){
+					Element record = doc.createElement("record");
+					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+					DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+					Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
+					for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
+						//Import all child nodes from rdf document l to result document
+						Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
+						record.appendChild(imp);
+						Element relScore = doc.createElement("rel:score");
+						relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+						relScore.appendChild(doc.createTextNode(Float.toString(score)));
+						record.appendChild(relScore);
+					}
+					records.appendChild(record);
 				}
-				records.appendChild(record);
 			}
+			result.appendChild(records);
+			
+			Element echo = doc.createElement("echo");
+			result.appendChild(echo);
+			
+			Element startRecordEl = doc.createElement("startRecord");
+			startRecordEl.appendChild(doc.createTextNode(Integer.toString(startRecord,10)));
+			echo.appendChild(startRecordEl);
+			
+			Element hitsPerPageEl = doc.createElement("hitsPerPage");
+			hitsPerPageEl.appendChild(doc.createTextNode(Integer.toString(hitsPerPage, 10)));
+			echo.appendChild(hitsPerPageEl);
+			
+			Element query = doc.createElement("query");
+			query.appendChild(doc.createTextNode(queryString));
+			echo.appendChild(query);
 		}
-		result.appendChild(records);
-		
-		Element echo = doc.createElement("echo");
-		result.appendChild(echo);
-		
-		Element startRecordEl = doc.createElement("startRecord");
-		startRecordEl.appendChild(doc.createTextNode(Integer.toString(startRecord,10)));
-		echo.appendChild(startRecordEl);
-		
-		Element hitsPerPageEl = doc.createElement("hitsPerPage");
-		hitsPerPageEl.appendChild(doc.createTextNode(Integer.toString(hitsPerPage, 10)));
-		echo.appendChild(hitsPerPageEl);
-		
-		Element query = doc.createElement("query");
-		query.appendChild(doc.createTextNode(queryString));
-		echo.appendChild(query);
 	}
 
+	protected void writeResult() throws DiagnosticException, IOException, TransformerException, JSONException, FeedException{
+		if (format != Format.JSON_LD){
+			super.writeResult();
+		} else {
+			
+			JSONArray records = new JSONArray();
+			for (SolrDocument d : hitList){
+				Float score = (Float) d.getFieldValue("score");
+				String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
+				String content = getContent(d, ident);
+				if (content!=null){
+					JSONObject record = new JSONObject();
+					ByteArrayOutputStream jsonLDRDF = new ByteArrayOutputStream();
+					Model m = ModelFactory.createDefaultModel();
+					m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
+					// Create JSON-LD 
+					RDFDataMgr.write(jsonLDRDF, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
+					record.append("record", jsonLDRDF.toString("UTF-8"));
+					JSONObject relScore = new JSONObject();
+					relScore.append("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+					relScore.append("#text", score);
+					record.append("rel:score", relScore);
+					records.put(record);
+				}
+			}
+			// Create echo object
+			JSONObject echo = new JSONObject();
+			echo.append("startRecord", startRecord);
+			echo.append("hitsPerPage", hitsPerPage);
+			echo.append("query", queryString);
+			// Create the result object
+			JSONObject result = new JSONObject();
+			result.append("version", API_VERSION);
+			result.append("totalHits", hitList.getNumFound());
+			result.append("records", records);
+			result.append("echo", echo);
+			// Write the result
+			out.write(prettyPrint ? result.toString(indentFactor).getBytes() : result.toString().getBytes());
+		}
+	}
 
 	/**
 	 * Hämtar xml-innehåll (fragment) från ett lucene-dokument som en sträng.

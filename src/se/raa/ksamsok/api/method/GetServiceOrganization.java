@@ -50,6 +50,7 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
+		super.extractParameters();
 		value = StringUtils.defaultIfEmpty(params.get(GetServiceOrganization.VALUE), ALL);
 	}
 

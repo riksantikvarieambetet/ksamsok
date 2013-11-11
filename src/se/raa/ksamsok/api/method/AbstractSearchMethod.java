@@ -38,6 +38,7 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
+		super.extractParameters();
 		this.queryString = getQueryString(params.get(SEARCH_PARAMS));
 		//sätter valfria parametrar
 		int hitsPerPage = getHitsPerPage(params.get(HITS_PER_PAGE));
