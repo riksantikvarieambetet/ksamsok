@@ -26,9 +26,7 @@ import org.json.XML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
-import org.xml.sax.SAXException;
 
-import com.sun.syndication.io.FeedException;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -78,55 +76,62 @@ public abstract class AbstractAPIMethod implements APIMethod {
 
 	@Override
 	public void performMethod() throws MissingParameterException,
-			BadParameterException, DiagnosticException, TransformerException, JSONException, FeedException, ParserConfigurationException, SAXException, IOException {
+			BadParameterException, DiagnosticException {
 		// läs ut parametrar och kasta ex vid problem
 		extractParameters();
 		// utför operationen
 		performMethodLogic();
 		generateDocument();
-		try {
-			writeResult();
-		} catch (IOException e) {
-			logger.error("writeXmlResult: "+e.getMessage());
-			throw new DiagnosticException(e.getMessage(),AbstractAPIMethod.class.getName(),e.getCause().getMessage(),false);
-		}
+		writeResult();
 	}
+
 
 	/**
 	 * Skriver resultat av metod.
 	 * @throws DiagnosticException vid fel
-	 * @throws IOException 
 	 * @throws TransformerConfigurationException 
-	 * @throws TransformerException 
-	 * @throws JSONException 
-	 * @throws FeedException 
 	 */
-	protected void writeResult() throws IOException, TransformerException, JSONException, DiagnosticException, FeedException {
+	protected void writeResult() throws DiagnosticException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transform = transformerFactory.newTransformer();
-		
-		DOMSource source = new DOMSource(doc);
-		StreamResult strResult;
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		// Connect the stream to a byte array output stream, for further processing, if the format is json
-		// otherwise connect the stream to the http response
-		if (format == Format.JSON_LD){
-			strResult = new StreamResult(baos);
-			transform.transform(source, strResult);
-			String json;
-			if (prettyPrint){
-				json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
+		Transformer transform;
+		try {
+			transform = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult strResult;
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			// Connect the stream to a byte array output stream, for further processing, if the format is json
+			// otherwise connect the stream to the http response
+			if (format == Format.JSON_LD){
+				strResult = new StreamResult(baos);
+				transform.transform(source, strResult);
+				String json;
+				if (prettyPrint){
+					json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
+				} else {
+					json=XML.toJSONObject(baos.toString("UTF-8")).toString();
+				}
+				out.write(json.getBytes("UTF-8"));
 			} else {
-				json=XML.toJSONObject(baos.toString("UTF-8")).toString();
+				strResult = new StreamResult(out);
+				if (prettyPrint){
+					transform.setOutputProperty(OutputKeys.INDENT, "yes");
+					transform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+				}
+				transform.transform(source, strResult);
 			}
-			out.write(json.getBytes("UTF-8"));
-		} else {
-			strResult = new StreamResult(out);
-			if (prettyPrint){
-				transform.setOutputProperty(OutputKeys.INDENT, "yes");
-				transform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-			}
-			transform.transform(source, strResult);
+		} catch (TransformerException e) {
+			logger.error(e);
+			throw new DiagnosticException("Det är problem med att initiera xml konverteraren", this.getClass().getName(), e.getMessage(), false);
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e);
+			throw new DiagnosticException("Det är problem med att initiera json konverteraren", this.getClass().getName(), e.getMessage(), false);
+		} catch (JSONException e) {
+			logger.error(e);
+			logger.error("Request param:" + params.toString());
+			throw new DiagnosticException("Det är problem med att konvertera xml till json", this.getClass().getName(), e.getMessage(), false);
+		} catch (IOException e) {
+			logger.error(e);
+			throw new DiagnosticException("Det är problem med att skriva resultatet till utströmmen", this.getClass().getName(), e.getMessage(), false);
 		}
 	}
 
@@ -150,12 +155,9 @@ public abstract class AbstractAPIMethod implements APIMethod {
 
 	/**
 	 * Denna metod genererar xml dokumentet som är grund för api-svaret
-	 * @throws ParserConfigurationException 
-	 * @throws UnsupportedEncodingException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws DiagnosticException 
 	 */
-	abstract protected void generateDocument() throws ParserConfigurationException, UnsupportedEncodingException, SAXException, IOException;
+	abstract protected void generateDocument() throws DiagnosticException;
 	
 	protected Element generateBaseDocument(){
 		//Root element

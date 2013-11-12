@@ -136,12 +136,20 @@ public class RSS extends AbstractSearchMethod {
 	}
 
 	@Override
-	protected void writeResult() throws DiagnosticException, IOException, FeedException {
+	protected void writeResult() throws DiagnosticException {
 		SyndFeed feed = getFeed();
 		feed.setEntries(getEntries(hitList));
 		SyndFeedOutput output = new SyndFeedOutput();
 		PrintWriter w = new PrintWriter(out);
-		output.output(feed, w, prettyPrint);
+		try {
+			output.output(feed, w, prettyPrint);
+		} catch (FeedException e) {
+			logger.error(e);
+			throw new DiagnosticException("Det är problem med att generera ett RSS-flöde", this.getClass().getName(), e.getMessage(), false);
+		} catch (IOException e) {
+			logger.error(e);
+			throw new DiagnosticException("Det är problem med att skriva resultatet till utströmmen", this.getClass().getName(), e.getMessage(), false);
+		}
 	}
 
 	/**

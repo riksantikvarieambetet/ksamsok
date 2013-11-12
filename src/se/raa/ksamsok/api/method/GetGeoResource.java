@@ -1,7 +1,6 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -262,7 +261,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void writeResult() throws IOException {
+	protected void writeResult() {
 		if (format== Format.XML){
 			RDFDataMgr.write(out, m, prettyPrint ? RDFFormat.RDFXML_PRETTY : RDFFormat.RDFXML);
 		} else {

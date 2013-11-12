@@ -3,11 +3,7 @@ package se.raa.ksamsok.api;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,7 +14,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -34,12 +29,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
-import org.xml.sax.SAXException;
-
 import com.github.jsonldjava.jena.JenaJSONLD;
-import com.java.generationjava.io.xml.SimpleXmlWriter;
-import com.sun.syndication.io.FeedException;
-
 import se.raa.ksamsok.api.exception.APIException;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -140,7 +130,7 @@ public class APIServlet extends HttpServlet {
 						logger.error("queryString i requesten: "+ req.getQueryString());					
 						diagnostic(out, method, stylesheet, e);
 					} catch (DiagnosticException e) {
-						resp.setStatus(400);
+						resp.setStatus(500);
 						logger.error("queryString i requesten: "+ req.getQueryString());					
 						diagnostic(out, method, stylesheet, e);
 					}
@@ -151,24 +141,6 @@ public class APIServlet extends HttpServlet {
 				resp.setStatus(400);
 				diagnostic(out, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 			}
-		} catch (IOException e2) {
-			resp.setStatus(500);
-			logger.error("In doGet", e2);
-		} catch (TransformerConfigurationException e) {
-			resp.setStatus(500);
-			logger.error("In doGet", e);
-		} catch (TransformerException e) {
-			resp.setStatus(500);
-			logger.error("In doGet", e);
-		} catch (JSONException e) {
-			resp.setStatus(500);
-			logger.error("In doGet", e);
-		} catch (FeedException e) {
-			resp.setStatus(500);
-			logger.error("In doGet", e);
-		} catch (SAXException e) {
-			resp.setStatus(500);
-			logger.error("In doGet", e);
 		} catch (Exception e){
 			resp.setStatus(500);
 			logger.error("In doGet", e);

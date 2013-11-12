@@ -1,16 +1,8 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 
-import org.json.JSONException;
-import org.xml.sax.SAXException;
 
-import com.sun.syndication.io.FeedException;
 
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -45,18 +37,10 @@ public interface APIMethod
 	 * @throws MissingParameterException om obligatorisk parameter saknas
 	 * @throws BadParameterException om parameter är felformaterad
 	 * @throws DiagnosticException vid oväntat fel
-	 * @throws TransformerConfigurationException 
-	 * @throws JSONException 
-	 * @throws TransformerException 
-	 * @throws FeedException 
-	 * @throws ParserConfigurationException 
-	 * @throws UnsupportedEncodingException 
-	 * @throws IOException 
-	 * @throws SAXException 
 	 */
 	public void performMethod()
 		throws MissingParameterException, BadParameterException,
-			DiagnosticException, TransformerConfigurationException, TransformerException, JSONException, FeedException, ParserConfigurationException, UnsupportedEncodingException, SAXException, IOException;
+			DiagnosticException;
 
 
 	public void setFormat(Format format);

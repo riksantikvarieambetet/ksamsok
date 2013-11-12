@@ -18,7 +18,6 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.jena.riot.RDFDataMgr;
@@ -45,7 +44,6 @@ import org.z3950.zing.cql.CQLTermNode;
 import com.github.jsonldjava.jena.JenaJSONLD;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.sun.syndication.io.FeedException;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -219,7 +217,7 @@ public class Search extends AbstractSearchMethod {
 		}
 	}
 	@Override
-	protected void generateDocument() throws ParserConfigurationException, SAXException, IOException {
+	protected void generateDocument() throws DiagnosticException {
 		// Do not create a xml document if the format is JSON (JSON-LD). If the format is JSON then the result
 		// should be a json with json-ld rdfs. The method xmlToJson does not creates json-ld.
 		if (format != Format.JSON_LD){
@@ -237,16 +235,33 @@ public class Search extends AbstractSearchMethod {
 				if (content!=null){
 					Element record = doc.createElement("record");
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-					DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-					Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
-					for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
-						//Import all child nodes from rdf document l to result document
-						Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
-						record.appendChild(imp);
-						Element relScore = doc.createElement("rel:score");
-						relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
-						relScore.appendChild(doc.createTextNode(Float.toString(score)));
-						record.appendChild(relScore);
+					DocumentBuilder docBuilder=null;
+					try {
+						docBuilder = docFactory.newDocumentBuilder();
+						Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
+						for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
+							//Import all child nodes from rdf document l to result document
+							Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
+							record.appendChild(imp);
+							Element relScore = doc.createElement("rel:score");
+							relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+							relScore.appendChild(doc.createTextNode(Float.toString(score)));
+							record.appendChild(relScore);
+						}
+
+					} catch (ParserConfigurationException e) {
+						logger.error(e);
+						throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+					} catch (UnsupportedEncodingException e) {
+						logger.error(e);
+						throw new DiagnosticException("Det är problem med att konvertera en sträng till output ström", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+					} catch (SAXException e) {
+						logger.error("Kontent som ska konverteras till ett xml-dokument: "+ content);
+						logger.error(e);
+						throw new DiagnosticException("Det är problem med att konvertera en sträng till ett xml-dokument", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+					} catch (IOException e) {
+						logger.error(e);
+						throw new DiagnosticException("Det är problem med att konvertera en sträng till output ström", AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					}
 					records.appendChild(record);
 				}
@@ -270,43 +285,59 @@ public class Search extends AbstractSearchMethod {
 		}
 	}
 
-	protected void writeResult() throws DiagnosticException, IOException, TransformerException, JSONException, FeedException{
+	protected void writeResult() throws DiagnosticException{
 		if (format != Format.JSON_LD){
 			super.writeResult();
 		} else {
-			JSONArray records = new JSONArray();
-			for (SolrDocument d : hitList){
-				Float score = (Float) d.getFieldValue("score");
-				String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
-				String content = getContent(d, ident);
-				if (content!=null){
-					JSONObject record = new JSONObject();
-					ByteArrayOutputStream jsonLDRDF = new ByteArrayOutputStream();
-					Model m = ModelFactory.createDefaultModel();
-					m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
-					// Create JSON-LD 
-					RDFDataMgr.write(jsonLDRDF, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
-					record.put("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
-					JSONObject relScore = new JSONObject();
-					relScore.put("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
-					relScore.put("#text", score);
-					record.put("rel:score", relScore);
-					records.put(record);
+			String content = "";
+			try {
+				JSONArray records = new JSONArray();
+				for (SolrDocument d : hitList){
+					Float score = (Float) d.getFieldValue("score");
+					String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
+					content = getContent(d, ident);
+					if (content!=null){
+						JSONObject record = new JSONObject();
+						ByteArrayOutputStream jsonLDRDF = new ByteArrayOutputStream();
+						Model m = ModelFactory.createDefaultModel();
+						m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
+						// Create JSON-LD 
+						RDFDataMgr.write(jsonLDRDF, m, prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
+						record.put("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
+						JSONObject relScore = new JSONObject();
+						relScore.put("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+						relScore.put("#text", score);
+						record.put("rel:score", relScore);
+						records.put(record);
+					}
 				}
+				// Create echo object
+				JSONObject echo = new JSONObject();
+				echo.put("startRecord", startRecord);
+				echo.put("hitsPerPage", hitsPerPage);
+				echo.put("query", queryString);
+				// Create the result object
+				JSONObject result = new JSONObject();
+				result.put("version", API_VERSION);
+				result.put("totalHits", hitList.getNumFound());
+				result.put("records", records);
+				result.put("echo", echo);
+				// Write the result
+				out.write(prettyPrint ? result.toString(indentFactor).getBytes() : result.toString().getBytes());
+
+			} catch (UnsupportedEncodingException e) {
+				logger.error(e);
+				throw new DiagnosticException("Det är problem med att konvertera en sträng till output ström", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+			} catch (JSONException e) {
+				logger.error("Kontent som ska konverteras till ett json objekt: "+ content);
+				logger.error(e);
+				throw new DiagnosticException("Det är problem med att skapa en json från resultatet", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+			} catch (IOException e) {
+				logger.error(e);
+				throw new DiagnosticException("Det är problem med att skriva resultatet till utströmmen", this.getClass().getName(), e.getMessage(), false);
+			} finally {
+				
 			}
-			// Create echo object
-			JSONObject echo = new JSONObject();
-			echo.put("startRecord", startRecord);
-			echo.put("hitsPerPage", hitsPerPage);
-			echo.put("query", queryString);
-			// Create the result object
-			JSONObject result = new JSONObject();
-			result.put("version", API_VERSION);
-			result.put("totalHits", hitList.getNumFound());
-			result.put("records", records);
-			result.put("echo", echo);
-			// Write the result
-			out.write(prettyPrint ? result.toString(indentFactor).getBytes() : result.toString().getBytes());
 		}
 	}
 
