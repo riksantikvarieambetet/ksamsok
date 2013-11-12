@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -97,16 +98,15 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	protected void writeResult() throws IOException, TransformerException, JSONException, DiagnosticException, FeedException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transform = transformerFactory.newTransformer();
+		
 		DOMSource source = new DOMSource(doc);
 		StreamResult strResult;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		// Connect the stream to a byte array output stream, for further processing, if the format is json
+		// otherwise connect the stream to the http response
 		if (format == Format.JSON_LD){
 			strResult = new StreamResult(baos);
-		} else {
-			strResult = new StreamResult(out);
-		}
-		transform.transform(source, strResult);
-		if (format == Format.JSON_LD){
+			transform.transform(source, strResult);
 			String json;
 			if (prettyPrint){
 				json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
@@ -114,6 +114,13 @@ public abstract class AbstractAPIMethod implements APIMethod {
 				json=XML.toJSONObject(baos.toString("UTF-8")).toString();
 			}
 			out.write(json.getBytes("UTF-8"));
+		} else {
+			strResult = new StreamResult(out);
+			if (prettyPrint){
+				transform.setOutputProperty(OutputKeys.INDENT, "yes");
+				transform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			}
+			transform.transform(source, strResult);
 		}
 	}
 
