@@ -81,8 +81,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 	protected List<FacetField> facetFields = Collections.emptyList();
 
-	public AllIndexUniqueValueCount(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params)
-			throws ParserConfigurationException {
+	public AllIndexUniqueValueCount(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws DiagnosticException{
 		super(serviceProvider, out, params);
 	}
 

@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
@@ -41,9 +40,9 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	 * @param serviceProvider tjänstetillhandahållare
 	 * @param out writer
 	 * @param params parametrar
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException
 	 */
-	public GetRelationTypes(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws ParserConfigurationException {
+	public GetRelationTypes(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
 	}
 

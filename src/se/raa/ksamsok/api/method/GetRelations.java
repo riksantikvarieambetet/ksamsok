@@ -178,9 +178,9 @@ public class GetRelations extends AbstractAPIMethod {
 	 * @param serviceProvider tjänstetillhandahållare
 	 * @param out writer
 	 * @param params parametrar
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException 
 	 */
-	public GetRelations(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws ParserConfigurationException {
+	public GetRelations(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
 	}
 

@@ -5,12 +5,11 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.sql.DataSource;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
@@ -59,10 +58,10 @@ public class APIMethodFactory implements APIServiceProvider {
 	 * @param params mottagna parametrar
 	 * @param writer för att skriva svaret
 	 * @return APIMethod en instans av någon subklass till APIMethod
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException TODO
 	 */
 	public APIMethod getAPIMethod(Map<String, String> params, OutputStream out)
-			throws MissingParameterException, BadParameterException, ParserConfigurationException {
+			throws MissingParameterException, DiagnosticException {
 		//hämtar ut metodnamnet från parametermappen
 		String method = params.get(APIMethod.METHOD);
 		if (method == null) { //måste alltid finnas en metod
@@ -80,10 +79,9 @@ public class APIMethodFactory implements APIServiceProvider {
 	 * @param writer
 	 * @return
 	 * @throws MissingParameterException
-	 * @throws ParserConfigurationException 
-	 * @throws BadParameterException
+	 * @throws DiagnosticException 
 	 */
-	private APIMethod getMethod(String method, Map<String,String> params, OutputStream out) throws MissingParameterException, ParserConfigurationException {
+	private APIMethod getMethod(String method, Map<String,String> params, OutputStream out) throws MissingParameterException, DiagnosticException {
 		APIMethod m = null;
 		//en ny if-sats läggs till för varje ny metod
 		if (method.equals(Search.METHOD_NAME)) {

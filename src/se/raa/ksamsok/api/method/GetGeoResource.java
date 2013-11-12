@@ -106,10 +106,9 @@ public class GetGeoResource extends AbstractAPIMethod {
 	 * @param serviceProvider tjänstetillhandahållare
 	 * @param out writer
 	 * @param params parametrar
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException 
 	 */
-	public GetGeoResource(APIServiceProvider serviceProvider,
-			OutputStream out, Map<String, String> params) throws ParserConfigurationException {
+	public GetGeoResource(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws DiagnosticException{
 		super(serviceProvider, out, params);
 	}
 

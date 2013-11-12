@@ -133,9 +133,9 @@ public class Search extends AbstractSearchMethod {
 	 * @param hitsPerPage träffar som skall visas per sida
 	 * @param startRecord startposition i sökningen
 	 * @param out skrivaren som skall användas för att skriva svaret
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException TODO
 	 */
-	public Search(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public Search(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
 	}
 

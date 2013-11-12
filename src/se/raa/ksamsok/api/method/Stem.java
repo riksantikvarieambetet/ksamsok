@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
@@ -29,7 +28,7 @@ public class Stem extends AbstractAPIMethod {
 	private String words;
 	private Set<String> stems;
 
-	public Stem(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public Stem(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
 		stems = Collections.emptySet();
 	}

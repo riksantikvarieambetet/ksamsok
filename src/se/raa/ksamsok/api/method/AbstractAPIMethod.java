@@ -58,15 +58,21 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @param serviceProvider tillhandahåller tjänster etc
 	 * @param writer writer
 	 * @param params parametrar
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException 
 	 */
-	protected AbstractAPIMethod(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws ParserConfigurationException {
+	protected AbstractAPIMethod(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws DiagnosticException {
 		this.serviceProvider = serviceProvider;
 		this.params = params;
 		this.stylesheet = params.get("stylesheet");
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();;
-		this.doc = docBuilder.newDocument(); 
+		DocumentBuilder docBuilder;
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			this.doc = docBuilder.newDocument();
+		} catch (ParserConfigurationException e) {
+			logger.error(e);
+			throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+		}
 		this.out=out;
 	}
 

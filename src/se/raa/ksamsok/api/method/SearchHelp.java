@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.solr.client.solrj.SolrServerException;
 import org.w3c.dom.Element;
@@ -54,9 +53,9 @@ public class SearchHelp extends AbstractAPIMethod {
 	 * @param indexList
 	 * @param prefix
 	 * @param maxValueCount
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException TODO
 	 */
-	public SearchHelp(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public SearchHelp(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
 	}
 

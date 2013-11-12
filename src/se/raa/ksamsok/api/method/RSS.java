@@ -104,9 +104,9 @@ public class RSS extends AbstractSearchMethod {
 	 * @param hitsPerPage hur många träffar som skall visas per sida
 	 * @param startRecord vart i resultatet sökningen skall starta
 	 * @param out används för att skriva svaret
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException TODO
 	 */
-	public RSS(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public RSS(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
 	}
 

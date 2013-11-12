@@ -81,6 +81,7 @@ public class APIServlet extends HttpServlet {
 		AutowireCapableBeanFactory awcb = ctx.getAutowireCapableBeanFactory();
 		awcb.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 		awcb.autowireBeanProperties(apiMethodFactory, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		// This method subscribes the Json-ld writers to Jena-RDF writer
 		JenaJSONLD.init();
 		if (logger.isInfoEnabled()) {
 			logger.info("APIServlet startad");
@@ -160,9 +161,6 @@ public class APIServlet extends HttpServlet {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
 		} catch (JSONException e) {
-			resp.setStatus(500);
-			logger.error("In doGet", e);
-		} catch (ParserConfigurationException e) {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
 		} catch (FeedException e) {

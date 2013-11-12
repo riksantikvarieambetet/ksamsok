@@ -10,6 +10,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 
 public abstract class AbstractSearchMethod extends AbstractAPIMethod {
@@ -31,7 +32,7 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 
 	protected SolrDocumentList hitList;
 
-	protected AbstractSearchMethod(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	protected AbstractSearchMethod(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException{
 		super(serviceProvider, out, params);
 	}
 

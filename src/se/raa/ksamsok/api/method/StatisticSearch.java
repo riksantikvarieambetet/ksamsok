@@ -40,9 +40,9 @@ public class StatisticSearch extends Statistic {
 	 * @param out används för att skriva svar
 	 * @param queryString sträng med query
 	 * @param indexMap set med index namn
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException 
 	 */
-	public StatisticSearch(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public StatisticSearch(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException{
 		super(serviceProvider, out, params);
 	}
 

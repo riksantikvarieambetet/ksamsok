@@ -52,9 +52,9 @@ public class Statistic extends AbstractAPIMethod {
 	 * Skapar ett nytt statistic objekt
 	 * @param indexes de index som skall scannas
 	 * @param out används för att skriva ut svaret
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException 
 	 */
-	public Statistic(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public Statistic(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException{
 		super(serviceProvider, out, params);
 		queryResults = Collections.emptyList();
 	}

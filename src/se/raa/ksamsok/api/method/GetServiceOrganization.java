@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
@@ -41,9 +40,9 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	 * Skapar ett objekt av GetServiceOrganization
 	 * @param out Skrivaren som används för att skriva resultatet
 	 * @param value kortnamn på organisationen som skall hämtas data om
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException
 	 */
-	public GetServiceOrganization(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public GetServiceOrganization(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
 	}
 

@@ -42,9 +42,9 @@ public class Facet extends StatisticSearch {
 	 * @param indexMap de index som skall ingå i facetten
 	 * @param out för att skriva resultatet
 	 * @param queryString filtrerar resultatet efter query
-	 * @throws ParserConfigurationException 
+	 * @throws DiagnosticException 
 	 */
-	public Facet(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws ParserConfigurationException {
+	public Facet(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException{
 		super(serviceProvider, out, params); 
 	}
 
