@@ -46,8 +46,8 @@ public class SearchServiceImpl implements SearchService {
 	}
 	@Override
 	public QueryResponse query(SolrQuery query) throws SolrServerException {
-		if (logger.isInfoEnabled()) {
-			logger.info("Söker med \"" + query.getQuery() + "\" sort: " + query.getSortField() + " start: " + query.getStart() + " rows: " + query.getRows());
+		if (logger.isDebugEnabled()) {
+			logger.debug("Söker med \"" + query.getQuery() + "\" sort: " + query.getSortField() + " start: " + query.getStart() + " rows: " + query.getRows());
 		}
 		return solr.query(query, METHOD.POST);
 	}
@@ -55,7 +55,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Set<String> analyze(String words) throws SolrServerException, IOException {
 		if (logger.isInfoEnabled()) {
-			logger.info("Analyserar " + words);
+			logger.debug("Analyserar " + words);
 		}
 		Set<String> stems = new HashSet<String>();
 		FieldAnalysisRequest far = new FieldAnalysisRequest();
@@ -87,8 +87,8 @@ public class SearchServiceImpl implements SearchService {
 	public List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException {
 		// * tolkas som del av termen så sådana kan vi inte ha med
 		prefix = prefix.replace("*", "");
-		if (logger.isInfoEnabled()) {
-			logger.info("Hämtar termer för index: " + index + ", prefix: " + prefix);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Hämtar termer för index: " + index + ", prefix: " + prefix);
 		}
 		// TODO: kommer finnas bättre sätt att göra detta i senare solr/solrj-versioner
 		List<Term> terms = new LinkedList<Term>();
@@ -120,8 +120,8 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public long getIndexCount(String serviceName) throws SolrServerException {
-		if (logger.isInfoEnabled()) {
-			logger.info("Hämtar antal för tjänsten " + (serviceName != null ? serviceName : "*"));
+		if (logger.isDebugEnabled()) {
+			logger.debug("Hämtar antal för tjänsten " + (serviceName != null ? serviceName : "*"));
 		}
 
 		SolrQuery query = new SolrQuery();
@@ -133,8 +133,8 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public Map<String, Long> getIndexCounts() throws SolrServerException {
-		if (logger.isInfoEnabled()) {
-			logger.info("Hämtar antal för alla tjänster");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Hämtar antal för alla tjänster");
 		}
 		Map<String, Long> countMap = new HashMap<String, Long>();
 		SolrQuery query = new SolrQuery();
