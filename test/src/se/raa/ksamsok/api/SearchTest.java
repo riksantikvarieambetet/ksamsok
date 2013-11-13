@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
@@ -47,6 +48,13 @@ public class SearchTest extends AbstractBaseTest{
 			docBuilder = docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			assertBaseDocProp(resultDoc);
+			// Travel trough the document
+			// Result, version and totalHits
+			Node totalHits = assertResultAndVersion(resultDoc.getDocumentElement());
+			assertParent(totalHits,"totalHits");
+			// total hits value
+			Node totalHitsValue = totalHits.getFirstChild();
+			int numberOfHits = Integer.parseInt(assertChild(totalHitsValue));
 		} catch (Exception e){
 			e.printStackTrace();
 			fail(e.getMessage());

@@ -18,6 +18,11 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.jena.riot.RDFDataMgr;
@@ -34,6 +39,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
@@ -239,16 +245,23 @@ public class Search extends AbstractSearchMethod {
 					try {
 						docBuilder = docFactory.newDocumentBuilder();
 						Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
-						for (int i = 0; i < contentDoc.getChildNodes().getLength(); i++){
-							//Import all child nodes from rdf document l to result document
-							Node imp = doc.importNode(contentDoc.getChildNodes().item(i),true);
+						NodeList childNodes;
+						if (contentDoc.getFirstChild().getNodeName().equals("recordSchema")){
+							childNodes = contentDoc.getFirstChild().getChildNodes();
+						} else {
+							childNodes = contentDoc.getChildNodes();
+						}
+						for (int i = 0; i < childNodes.getLength(); i++){
+							//Import all child nodes from rdf document to result document
+							Node imp = doc.importNode(childNodes.item(i),true);
 							record.appendChild(imp);
+						}
+						if (childNodes.getLength()>0){
 							Element relScore = doc.createElement("rel:score");
 							relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
 							relScore.appendChild(doc.createTextNode(Float.toString(score)));
 							record.appendChild(relScore);
 						}
-
 					} catch (ParserConfigurationException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren", AbstractAPIMethod.class.getName(), e.getMessage(), false);
@@ -384,6 +397,19 @@ public class Search extends AbstractSearchMethod {
 					}
 				}
 				content = "";
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder;
+				Document contentDoc;
+				Element recordSchema;
+				try {
+					docBuilder = docFactory.newDocumentBuilder();
+					contentDoc = docBuilder.newDocument();
+					recordSchema = contentDoc.createElement("recordSchema");
+					contentDoc.appendChild(recordSchema);
+				} catch (ParserConfigurationException e) {
+					logger.error(e);
+					throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren", this.getClass().getName(), e.getMessage(), false);
+				}
 				for (String field: fields) {
 					String docField;
 					// översätt fält vid behov
@@ -401,16 +427,29 @@ public class Search extends AbstractSearchMethod {
 						String fieldValue;
 						for (Object value: fieldValues) {
 							if (value != null && (fieldValue = StringUtils.trimToNull(value.toString())) != null) {
-								content += "<field name=\"" + field + "\">";
-								content += StaticMethods.xmlEscape(fieldValue);
-								content += "</field>\n";
+								Element fieldEl = contentDoc.createElement("field");
+								fieldEl.setAttribute("name", field);
+								fieldEl.appendChild(contentDoc.createTextNode(fieldValue));
+								recordSchema.appendChild(fieldEl);
 							}
+						}
+						TransformerFactory transformerFactory = TransformerFactory.newInstance();
+						Transformer transform;
+						try {
+							transform = transformerFactory.newTransformer();
+							DOMSource source = new DOMSource(contentDoc);
+							ByteArrayOutputStream baos = new ByteArrayOutputStream();
+							transform.transform(source, new StreamResult(baos));
+							content=baos.toString("UTF-8");
+						} catch (TransformerException e) {
+							logger.error(e);
+							throw new DiagnosticException("Det är problem med att initiera xml konverteraren", this.getClass().getName(), e.getMessage(), false);
 						}
 					}
 				}
 			}
-
 		} catch (Exception e) {
+			logger.error(e);
 			logger.error("Fel vid hämtande av xml-data (" + binDataField + ") för " + uri);
 		}
 		return content;

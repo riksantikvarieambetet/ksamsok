@@ -19,7 +19,6 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
@@ -59,18 +58,9 @@ public class FacetTest extends AbstractBaseTest{
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			assertBaseDocProp(resultDoc);
 			// Travel trough the document
-			// The result tag
-			Element result = resultDoc.getDocumentElement();
-			assertParent(result,"result");
-			// The version tag
-			Node version = result.getFirstChild();
-			assertParent(version,"version");
-			// The version value
-			Node versionValue = version.getFirstChild();
-			assertEquals(Float.parseFloat(APIMethod.API_VERSION),Float.parseFloat(assertChild(versionValue)),0);
-			assertTrue(version.getFirstChild().equals(version.getLastChild()));
+			// The result and version tag
+			Node numberOfTerms = assertResultAndVersion(resultDoc.getDocumentElement());
 			// Number of terms
-			Node numberOfTerms = version.getNextSibling();
 			assertParent(numberOfTerms,"numberOfTerms");
 			// Number of terms value
 			Node numberOfTermsValue = numberOfTerms.getFirstChild();
@@ -138,7 +128,7 @@ public class FacetTest extends AbstractBaseTest{
 			// The echo element
 			Node echo = term.getNextSibling();
 			assertParent(echo,"echo");
-			assertTrue(result.getLastChild().equals(echo));
+			assertTrue(resultDoc.getDocumentElement().getLastChild().equals(echo));
 			// The method element
 			Node method = echo.getFirstChild();
 			assertParent(method,"method");

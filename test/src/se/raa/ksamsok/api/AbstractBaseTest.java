@@ -17,6 +17,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.ProcessingInstruction;
 
+import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.solr.SearchServiceImpl;
 import se.raa.ksamsok.statistic.StatisticsManager;
 
@@ -83,6 +84,24 @@ public class AbstractBaseTest {
 		assertNull(node.getNodeValue());
 		assertTrue(node.getNodeType()==Element.ELEMENT_NODE);
 		assertTrue(node.getChildNodes().getLength()>0);
+	}
+
+	/**
+	 * This method assert the result and version tag in the response and returns the sibling to the version tag
+	 * @param result - the document element
+	 * @return - the first sibling to the version tag
+	 */
+	protected Node assertResultAndVersion(Element result) {
+		// The result tag
+		assertParent(result,"result");
+		// The version tag
+		Node version = result.getFirstChild();
+		assertParent(version,"version");
+		// The version value
+		Node versionValue = version.getFirstChild();
+		assertEquals(Float.parseFloat(APIMethod.API_VERSION),Float.parseFloat(assertChild(versionValue)),0);
+		assertTrue(version.getFirstChild().equals(version.getLastChild()));
+		return version.getNextSibling();
 	}
 
 }
