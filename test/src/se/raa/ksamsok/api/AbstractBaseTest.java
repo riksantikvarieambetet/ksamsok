@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 
+
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -17,6 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.ProcessingInstruction;
 
 import se.raa.ksamsok.solr.SearchServiceImpl;
+import se.raa.ksamsok.statistic.StatisticsManager;
 
 import com.github.jsonldjava.jena.JenaJSONLD;
 
@@ -33,8 +35,11 @@ public class AbstractBaseTest {
 		apiMethodFactory = new APIMethodFactory();
 		// The searchService is @Autowired in the project. It is necessary to set up it by hand in the test cases
 		ReflectionTestUtils.setField(apiMethodFactory,"searchService", searchService);
+		// The statisticsManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
+		// In this case the data source will be null, i.e. no statistic will be logged :-)
+		StatisticsManager statisticsManager = new StatisticsManager(null);
+		ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
 		JenaJSONLD.init();
-		
 	}
 
 	/**
