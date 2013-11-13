@@ -94,7 +94,7 @@ public class Statistic extends AbstractAPIMethod {
 				QueryResponse qr = serviceProvider.getSearchService().query(query);
 
 				if (qr.getResults().getNumFound() >= removeBelow) {
-					content.setHits((int) qr.getResults().getNumFound());
+					content.setHits(qr.getResults().getNumFound());
 					queryResults.set(i, content);
 				} else {
 					queryResults.remove(i);
@@ -308,7 +308,7 @@ public class Statistic extends AbstractAPIMethod {
 			}
 			// records
 			Element records = doc.createElement("records");
-			records.appendChild(doc.createTextNode(Integer.toString(queryContent.getHits(),10)));
+			records.appendChild(doc.createTextNode(Long.toString(queryContent.getHits(),10)));
 			term.appendChild(records);
 			result.appendChild(term);
 		}

@@ -72,11 +72,12 @@ public class Facet extends StatisticSearch {
 				queryResults = new LinkedList<QueryContent>();
 				for (FacetField ff: facetFields) {
 					List<Count> facetValues = ff.getValues();
+				
 					if (facetValues != null && facetValues.size() > 0) {
 						for (Count value: facetValues) {
 							QueryContent qc = new QueryContent();
 							qc.addTerm(ff.getName(), value.getName());
-							qc.setHits((int) value.getCount()); // TODO: int/long
+							qc.setHits(value.getCount());
 							queryResults.add(qc);
 						}
 					}
@@ -103,24 +104,15 @@ public class Facet extends StatisticSearch {
 		echo.appendChild(method);
 		for(String indexKey : indexMap.keySet()) {
 			// index
-			Element index = doc.createElement("index");
+			Element index = doc.createElement(INDEX_PARAMETER);
 			index.appendChild(doc.createTextNode(indexKey));
 			echo.appendChild(index);
 		}
+		Element removeBelowEl = doc.createElement(REMOVE_BELOW);
+		removeBelowEl.appendChild(doc.createTextNode(Integer.toString(removeBelow)));
+		echo.appendChild(removeBelowEl);
 		Element query = doc.createElement("query");
 		query.appendChild(doc.createTextNode(queryString));
 		echo.appendChild(query);
 	}
-
-//	@Override
-//	protected void writeFootExtra() throws IOException {
-//		xmlWriter.writeEntity("echo");
-//		xmlWriter.writeEntityWithText("method", METHOD_NAME);
-//		for(String index : indexMap.keySet()) {
-//			xmlWriter.writeEntityWithText("index", index);
-//		}
-//		xmlWriter.writeEntityWithText("query", queryString);
-//		xmlWriter.endEntity();
-//	}
-
 }

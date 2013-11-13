@@ -11,7 +11,7 @@ import java.util.Set;
 public class QueryContent
 {
 	private HashMap<String,String> terms;
-	private int hits;
+	private Long hits;
 	
 	/**
 	 * skapar ett objekt av QueryContent
@@ -19,7 +19,7 @@ public class QueryContent
 	public QueryContent()
 	{
 		terms = new HashMap<String,String>();
-		hits = 0;
+		hits = 0L;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class QueryContent
 	 * sätter antalet träffar för query
 	 * @param hits träffar
 	 */
-	public void setHits(int hits)
+	public void setHits(Long hits)
 	{
 		this.hits = hits;
 	}
@@ -45,7 +45,7 @@ public class QueryContent
 	 * returnerar antalet träffar för query
 	 * @return antal träffar
 	 */
-	public int getHits()
+	public Long getHits()
 	{
 		return hits;
 	}

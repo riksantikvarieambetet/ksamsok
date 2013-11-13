@@ -84,7 +84,7 @@ public class StatisticSearch extends Statistic {
 				QueryResponse qr = serviceProvider.getSearchService().query(query);
 
 				if (qr.getResults().getNumFound() >= removeBelow) {
-					content.setHits((int) qr.getResults().getNumFound());
+					content.setHits(qr.getResults().getNumFound());
 					queryResults.set(i, content);
 				} else {
 					queryResults.remove(i);
