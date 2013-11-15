@@ -1,6 +1,8 @@
 package se.raa.ksamsok.api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -15,6 +17,10 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +28,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -48,10 +59,7 @@ public class SearchTest extends AbstractBaseTest{
 		reqParams.put("recordSchema","xml");
 		try{
 			// Assert the base search document structure
-			Node records = assertBaseSearchDocument(Format.XML);
-			// The record
-			NodeList recordList = records.getChildNodes();
-			assertEquals(numberOfHits,recordList.getLength());
+			NodeList recordList = assertBaseSearchDocument(Format.XML);
 			for (int i = 0; i < recordList.getLength(); i++){
 				Node record = recordList.item(i);
 				NodeList fieldList = record.getChildNodes();
@@ -75,7 +83,17 @@ public class SearchTest extends AbstractBaseTest{
 	public void testSearchWithRecordSchemaPresentationResponse(){
 		reqParams.put("recordSchema","presentation");
 		try{
-			Node records = assertBaseSearchDocument(Format.XML);
+			// Assert the base search document structure
+			NodeList recordList = assertBaseSearchDocument(Format.XML);
+			for (int i = 0; i < recordList.getLength(); i++){
+				assertEquals(2, recordList.item(i).getChildNodes().getLength());
+				Node pres = recordList.item(i).getFirstChild();
+				assertTrue(pres.getNodeName().equals("pres:item"));
+				assertNotNull(pres.getFirstChild());
+				//rel:score
+				Node relScore = recordList.item(i).getLastChild();
+				assertRelScore(relScore);
+			}
 		} catch (Exception e){
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -86,7 +104,25 @@ public class SearchTest extends AbstractBaseTest{
 	public void testSearchWithRecordSchemaRDFResponse(){
 		reqParams.put("recordSchema","RDF");
 		try{
-			Node records = assertBaseSearchDocument(Format.RDF);
+			NodeList recordList= assertBaseSearchDocument(Format.RDF);
+			for (int i = 0; i < recordList.getLength(); i++){
+				assertEquals(2, recordList.item(i).getChildNodes().getLength());
+				//Try to creat an model from the embedded rdf
+				Node rdf = recordList.item(i).getFirstChild();
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer	transform = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(rdf);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				StreamResult strResult = new StreamResult(baos);
+				transform.transform(source, strResult);
+				Model m = ModelFactory.createDefaultModel();
+				m.read(new ByteArrayInputStream(baos.toByteArray()),"");
+				// Assert that the model is not empty
+				assertFalse(m.isEmpty());
+				//rel:score
+				Node relScore = recordList.item(i).getLastChild();
+				assertRelScore(relScore);
+			}
 		} catch (Exception e){
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -134,7 +170,7 @@ public class SearchTest extends AbstractBaseTest{
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	private Node assertBaseSearchDocument(Format format) throws MissingParameterException, DiagnosticException, BadParameterException, ParserConfigurationException, SAXException, IOException{
+	private NodeList assertBaseSearchDocument(Format format) throws MissingParameterException, DiagnosticException, BadParameterException, ParserConfigurationException, SAXException, IOException{
 		out = new ByteArrayOutputStream();
 		APIMethod search = apiMethodFactory.getAPIMethod(reqParams, out);
 		search.setFormat(format);
@@ -181,6 +217,10 @@ public class SearchTest extends AbstractBaseTest{
 			numberOfHits=Integer.parseInt(assertChild(hitsPerPageValue));
 			assertTrue(numberOfHits>1);
 		}
+		// The record
+		NodeList recordList = records.getChildNodes();
+		assertEquals(numberOfHits,recordList.getLength());
+		
 		// query
 		Node query = hitsPerPage.getNextSibling();
 		assertParent(query, "query");
@@ -188,6 +228,7 @@ public class SearchTest extends AbstractBaseTest{
 		// query value
 		Node queryValue = query.getFirstChild();
 		assertTrue(reqParams.get("query").equals(assertChild(queryValue)));
-		return records;
+		
+		return recordList;
 	}
 }
