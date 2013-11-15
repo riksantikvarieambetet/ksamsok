@@ -28,7 +28,6 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.util.ShmSiteCacherHackTicket3419;
 
 public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements HarvestServiceManager {
 
@@ -508,8 +507,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			if (logger.isInfoEnabled()) {
 				logger.info("Updated date for service with ID: " + service.getId());
 			}
-			// rensa cache för shm site
-			ShmSiteCacherHackTicket3419.clearCache(service);
 	    } catch (Exception e) {
 	    	DBUtil.rollback(c);
 	    	logger.error("Error when updating date for service with ID: " + service.getId(), e);
