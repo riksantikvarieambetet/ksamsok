@@ -221,9 +221,9 @@ public class Search extends AbstractSearchMethod {
 	}
 	@Override
 	protected void generateDocument() throws DiagnosticException {
-		// Do not create a xml document if the format is JSON (JSON-LD). If the format is JSON then the result
-		// should be a json with json-ld rdfs. The method xmlToJson does not creates json-ld.
-		if (format != Format.JSON_LD){
+		// Always create a xml document unless the accept format is json and record schema is not set. 
+		// If this is the case then should the result be a json with json-ld rdfs. The method xmlToJson does not creates json-ld
+		if (format != Format.JSON_LD || recordSchema != null){
 			Element result = super.generateBaseDocument();
 			
 			Element totalHits = doc.createElement("totalHits");
@@ -296,7 +296,7 @@ public class Search extends AbstractSearchMethod {
 	}
 
 	protected void writeResult() throws DiagnosticException{
-		if (format != Format.JSON_LD || NS_SAMSOK_PRES.equals(recordSchema) || NS_SAMSOK_XML.equals(recordSchema)){
+		if (format != Format.JSON_LD || recordSchema != null){
 			super.writeResult();
 		} else {
 			String content = "";
