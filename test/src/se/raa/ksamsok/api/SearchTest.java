@@ -9,6 +9,7 @@ import static org.junit.Assert.fail;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,6 +23,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -31,8 +34,6 @@ import org.xml.sax.SAXException;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -80,7 +81,29 @@ public class SearchTest extends AbstractBaseTest{
 	}
 
 	@Test
-	public void testSearchWithRecordSchemaPresentationResponse(){
+	public void testSearchWithRecordSchemaXMLJSONResponse(){
+		reqParams.put("recordSchema","xml");
+		try{
+			assertBaseSearchJSON();
+		} catch (Exception e){
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testSearchWithJSONResponse(){
+		reqParams.remove("recordSchema");
+		try{
+			assertBaseSearchJSON();
+		} catch (Exception e){
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testSearchWithRecordSchemaPresResponse(){
 		reqParams.put("recordSchema","presentation");
 		try{
 			// Assert the base search document structure
@@ -99,6 +122,18 @@ public class SearchTest extends AbstractBaseTest{
 			fail(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void testSearchWithRecordSchemaPresJSONResponse(){
+		reqParams.put("recordSchema","presentation");
+		try{
+			assertBaseSearchJSON();
+		} catch (Exception e){
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+
 
 	@Test
 	public void testSearchWithRecordSchemaRDFResponse(){
@@ -126,6 +161,18 @@ public class SearchTest extends AbstractBaseTest{
 		} catch (Exception e){
 			e.printStackTrace();
 			fail(e.getMessage());
+		}
+	}
+	@Test
+	public void testSearchWithUnknownRecordSchema(){
+		reqParams.put("recordSchema","");
+		try {
+			assertBaseSearchDocument(Format.XML);
+			fail("No exception thrown, expected BadParameterException");
+		} catch (BadParameterException e) {
+			//Ignore. This exception is expected
+		} catch (Exception e) {
+			fail("Wrong exception thrown, expected BadParameterException");
 		}
 	}
 
@@ -230,5 +277,25 @@ public class SearchTest extends AbstractBaseTest{
 		assertTrue(reqParams.get("query").equals(assertChild(queryValue)));
 		
 		return recordList;
+	}
+	
+	/**
+	 * This method makes the search request and assert the base json structure of the search result
+	 * @throws UnsupportedEncodingException
+	 * @throws JSONException
+	 * @throws MissingParameterException
+	 * @throws DiagnosticException
+	 * @throws BadParameterException
+	 */
+	private void assertBaseSearchJSON() throws UnsupportedEncodingException, JSONException, MissingParameterException, DiagnosticException, BadParameterException{
+		out = new ByteArrayOutputStream();
+		APIMethod search = apiMethodFactory.getAPIMethod(reqParams, out);
+		search.setFormat(Format.JSON_LD);
+		search.performMethod();
+		JSONObject searchResult = new JSONObject(out.toString("UTF-8"));
+		System.out.println(searchResult.toString(4));
+		assertTrue(searchResult.has("result"));
+		JSONObject result  = searchResult.getJSONObject("result");
+		assertFalse(result.has("error"));
 	}
 }

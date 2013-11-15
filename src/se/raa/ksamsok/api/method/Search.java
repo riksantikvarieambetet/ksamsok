@@ -84,6 +84,9 @@ public class Search extends AbstractSearchMethod {
 	public static final String NS_SAMSOK_PRES =	"http://kulturarvsdata.se/presentation#";
 	/** record schema för valbara fält (xml) */
 	public static final String NS_SAMSOK_XML =	"http://kulturarvsdata.se/xml#";
+	/** record schema (rdf) */
+	public static final String NS_SAMSOK_RDF =	"http://kulturarvsdata.se/rdf#";
+	
 	/** parameternamn för record schema */
 	public static final String RECORD_SCHEMA = "recordSchema";
 	/** bas URL till record schema */
@@ -186,8 +189,10 @@ public class Search extends AbstractSearchMethod {
 					throw new BadParameterException("Det efterfrågade fältet/indexet " + field + " finns inte eller stöds inte.", "Search.performMethod", null, false);
 				}
 			}
-		} else {
+		} else if (recordSchema == null || NS_SAMSOK_RDF.equals(recordSchema)){
 			binDataField = ContentHelper.I_IX_RDF;
+		} else {
+			throw new BadParameterException("Det efterfrågade recordSchema " + recordSchema + " finns inte eller stöds inte.", "Search.performMethod", null, false);
 		}
 
 	}
@@ -332,8 +337,10 @@ public class Search extends AbstractSearchMethod {
 				result.put("totalHits", hitList.getNumFound());
 				result.put("records", records);
 				result.put("echo", echo);
+				JSONObject response = new JSONObject();
+				response.put("result", result);
 				// Write the result
-				out.write(prettyPrint ? result.toString(indentFactor).getBytes() : result.toString().getBytes());
+				out.write(prettyPrint ? response.toString(indentFactor).getBytes() : response.toString().getBytes());
 
 			} catch (UnsupportedEncodingException e) {
 				logger.error(e);
