@@ -3,6 +3,7 @@ package se.raa.ksamsok.api.method;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -26,6 +27,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -48,8 +50,16 @@ import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
 
 import com.github.jsonldjava.jena.JenaJSONLD;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.SimpleSelector;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
@@ -362,24 +372,17 @@ public class Search extends AbstractSearchMethod {
 	 */
 	protected String getContent(SolrDocument doc, String uri) {
 		String content = null;
+		//Hämta ut dokumentet från solr
 		byte[] xmlData = (byte[]) doc.getFieldValue(binDataField);
 
-//		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-//		DocumentBuilder docBuilder=null;
-//		docBuilder = docFactory.newDocumentBuilder();
-//		Document content = docBuilder.parse(new ByteArrayInputStream((byte[]) doc.getFieldValue(binDataField)));
 		try {
 			if (xmlData != null) {
 				content = new String(xmlData, "UTF-8");
 			}
-			// TODO: NEK: ta bort när allt är omindexerat
-			if (content == null && !NS_SAMSOK_PRES.equals(recordSchema)) {
-				content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
-			}
 			if (content == null) {
 				logger.warn("Hittade inte xml-data (" + binDataField + ") för " + uri);
-			}
-			if (content != null && NS_SAMSOK_XML.equals(recordSchema)) {
+			} else if (NS_SAMSOK_XML.equals(recordSchema)) {
+				// Filtrera ut den info du vill ha
 				SolrInputDocument resDoc = sch.createSolrDocument(dummyService, content, new Date());
 				// nödvändigt då createSolrDocument lägger in felmeddelanden mm
 				ContentHelper.getAndClearProblemMessages();
@@ -432,19 +435,19 @@ public class Search extends AbstractSearchMethod {
 								recordSchema.appendChild(fieldEl);
 							}
 						}
-						TransformerFactory transformerFactory = TransformerFactory.newInstance();
-						Transformer transform;
-						try {
-							transform = transformerFactory.newTransformer();
-							DOMSource source = new DOMSource(contentDoc);
-							ByteArrayOutputStream baos = new ByteArrayOutputStream();
-							transform.transform(source, new StreamResult(baos));
-							content=baos.toString("UTF-8");
-						} catch (TransformerException e) {
-							logger.error(e);
-							throw new DiagnosticException("Det är problem med att initiera xml konverteraren", this.getClass().getName(), e.getMessage(), false);
-						}
 					}
+				}
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transform;
+				try {
+					transform = transformerFactory.newTransformer();
+					DOMSource source = new DOMSource(contentDoc);
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					transform.transform(source, new StreamResult(baos));
+					content=baos.toString("UTF-8");
+				} catch (TransformerException e) {
+					logger.error(e);
+					throw new DiagnosticException("Det är problem med att initiera xml konverteraren", this.getClass().getName(), e.getMessage(), false);
 				}
 			}
 		} catch (Exception e) {

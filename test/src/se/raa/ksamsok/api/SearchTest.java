@@ -102,7 +102,7 @@ public class SearchTest extends AbstractBaseTest{
 
 	@Test
 	public void testSearchWithRecordSchemaRDFResponse(){
-		reqParams.put("recordSchema","RDF");
+		reqParams.put("recordSchema","rdf");
 		try{
 			NodeList recordList= assertBaseSearchDocument(Format.RDF);
 			for (int i = 0; i < recordList.getLength(); i++){
