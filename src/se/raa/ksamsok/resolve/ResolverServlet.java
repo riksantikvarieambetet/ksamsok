@@ -295,12 +295,10 @@ public class ResolverServlet extends HttpServlet {
 			case RDF:
 			case XML:
 				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-				if (format == Format.XML) {
-					if (xmlContent != null) {
-						prepResp = new String(xmlContent, "UTF-8");
-					} else {
-						prepResp = hrm.getXMLData(urli);
-					}
+				if (xmlContent != null) {
+					prepResp = new String(xmlContent, "UTF-8");
+				} else if (format != Format.XML) {
+					prepResp = hrm.getXMLData(urli);
 				}
 				break;
 			case HTML:
