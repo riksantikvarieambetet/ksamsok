@@ -25,22 +25,24 @@ import com.github.jsonldjava.jena.JenaJSONLD;
 
 public class AbstractBaseTest {
 
-	APIMethodFactory apiMethodFactory;
+	static APIMethodFactory apiMethodFactory;
 	HashMap<String, String> reqParams;
 	
 	public void setUp() throws MalformedURLException{
-		SolrServer solr = new CommonsHttpSolrServer("http://lx-ra-ksamtest1:8080/solr");
-		SearchServiceImpl searchService = new SearchServiceImpl();
-		// The solr is @Autowired in the project. It is necessary to set up it by hand in the test cases
-		ReflectionTestUtils.setField(searchService,"solr", solr);
-		apiMethodFactory = new APIMethodFactory();
-		// The searchService is @Autowired in the project. It is necessary to set up it by hand in the test cases
-		ReflectionTestUtils.setField(apiMethodFactory,"searchService", searchService);
-		// The statisticsManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
-		// In this case the data source will be null, i.e. no statistic will be logged :-)
-		StatisticsManager statisticsManager = new StatisticsManager(null);
-		ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
-		JenaJSONLD.init();
+		if (apiMethodFactory == null){
+			SolrServer solr = new CommonsHttpSolrServer("http://lx-ra-ksamtest1:8080/solr");
+			SearchServiceImpl searchService = new SearchServiceImpl();
+			// The solr is @Autowired in the project. It is necessary to set up it by hand in the test cases
+			ReflectionTestUtils.setField(searchService,"solr", solr);
+			apiMethodFactory = new APIMethodFactory();
+			// The searchService is @Autowired in the project. It is necessary to set up it by hand in the test cases
+			ReflectionTestUtils.setField(apiMethodFactory,"searchService", searchService);
+			// The statisticsManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
+			// In this case the data source will be null, i.e. no statistic will be logged :-)
+			StatisticsManager statisticsManager = new StatisticsManager(null);
+			ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
+			JenaJSONLD.init();
+		}
 	}
 
 	/**
@@ -102,6 +104,23 @@ public class AbstractBaseTest {
 		assertEquals(Float.parseFloat(APIMethod.API_VERSION),Float.parseFloat(assertChild(versionValue)),0);
 		assertTrue(version.getFirstChild().equals(version.getLastChild()));
 		return version.getNextSibling();
+	}
+
+	/**
+	 * This method asserts the <rel:score> tag
+	 * @param node - The <rel:score> node
+	 */
+	protected void assertRelScore(Node node) {
+		assertTrue(node.getNodeName().equals("rel:score"));
+		// Check rel:score namespace
+		assertEquals(1,node.getAttributes().getLength());
+		assertTrue(node.getAttributes().item(0).getNodeName().equals("xmlns:rel"));
+		assertTrue(node.getAttributes().item(0).getNodeType()==Node.ATTRIBUTE_NODE);
+		String nameSpace = assertChild(node.getAttributes().item(0).getFirstChild());
+		assertTrue(nameSpace.equals("info:srw/extension/2/relevancy-1.0"));
+		// The first child is the attribute node
+		Node relScoreValue = node.getLastChild();
+		assertTrue(Float.parseFloat(assertChild(relScoreValue))>0);
 	}
 
 }
