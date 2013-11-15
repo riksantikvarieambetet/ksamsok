@@ -293,12 +293,17 @@ public class ResolverServlet extends HttpServlet {
 			switch (format) {
 			case JSON_LD:
 			case RDF:
-			case XML:
 				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
 				if (xmlContent != null) {
 					prepResp = new String(xmlContent, "UTF-8");
-				} else if (format != Format.XML) {
+				} else {
 					prepResp = hrm.getXMLData(urli);
+				}
+				break;
+			case XML:
+				xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
+				if (xmlContent != null) {
+					prepResp = new String(xmlContent, "UTF-8");
 				}
 				break;
 			case HTML:
