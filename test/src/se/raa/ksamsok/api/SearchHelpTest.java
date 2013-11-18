@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -74,7 +75,21 @@ public class SearchHelpTest extends AbstractBaseTest {
 		} catch (Exception e){
 			fail(e.getMessage());
 		}
-		
+	}
+	
+	@Test
+	public void testSearchHelpJSONResponse(){
+		try{
+			out = new ByteArrayOutputStream();
+			APIMethod serchHelp = apiMethodFactory.getAPIMethod(reqParams, out);
+			serchHelp.setFormat(Format.JSON_LD);
+			serchHelp.performMethod();
+			JSONObject response = new JSONObject(out.toString("UTF-8"));
+			System.out.println(response.toString(2));
+			assertBaseJSONProp(response);
+		} catch (Exception e){
+			fail(e.getMessage());
+		}
 	}
 
 }

@@ -13,6 +13,9 @@ import java.util.Iterator;
 
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -126,6 +129,10 @@ public class AbstractBaseTest {
 		assertTrue(Float.parseFloat(assertChild(relScoreValue))>0);
 	}
 	
+	/**
+	 * This method asserts the echo block
+	 * @param echo - The echo node
+	 */
 	protected void assertEcho(Node echo){
 		// Check that the echo block equals that input parameters
 		NodeList echoNodes = echo.getChildNodes();
@@ -152,5 +159,62 @@ public class AbstractBaseTest {
 				fail(nodeName + " not found in echo node");
 			}
 		}
+	}
+
+	/**
+	 * This method asserts the echo block
+	 * @param echo
+	 * @throws JSONException
+	 */
+	protected void assertEcho(JSONObject echo){
+		// Check that the echo block equals that input parameters
+		@SuppressWarnings("rawtypes")
+		Iterator keys = echo.keys();
+		while (keys.hasNext()){
+			String key = (String) keys.next();
+			assertTrue(reqParams.containsKey(key));
+			try {
+				assertTrue(reqParams.get(key).contains(echo.getString(key)));
+			} catch (JSONException e) {
+				//The key is not a string it can also be an array
+				JSONArray echoArray;
+				try {
+					echoArray = echo.getJSONArray(key);
+					for (int i = 0; i < echoArray.length(); i++){
+						assertTrue(reqParams.get(key).contains(echoArray.getString(i)));
+					}
+				} catch (JSONException e1) {
+					// The key can also be a integer
+					try {
+						assertTrue(reqParams.get(key).contains(Integer.toString(echo.getInt(key))));
+					} catch (JSONException e2) {
+						fail("Unhandled json type: "+e2.getMessage());
+					}
+				}
+			}
+		}
+		// Check that all parameters are in the echo block
+		Iterator<String> reqKeys = reqParams.keySet().iterator();
+		while(reqKeys.hasNext()){
+			String keyName = reqKeys.next();
+			assertTrue(echo.has(keyName));
+		}
+	}
+	/**
+	 * This method assert the base json response properties like result, version and echo
+	 * @param response
+	 * @throws JSONException
+	 */
+	protected void assertBaseJSONProp(JSONObject response) throws JSONException {
+		assertEquals(1,response.length());
+		// The result 
+		assertTrue(response.has("result"));
+		JSONObject result = response.getJSONObject("result");
+		// Version
+		assertTrue(result.has("version"));
+		assertEquals(Double.parseDouble(APIMethod.API_VERSION),result.getDouble("version"),0);
+		// Echo
+		assertTrue(result.has("echo"));
+		assertEcho(result.getJSONObject("echo"));
 	}
 }
