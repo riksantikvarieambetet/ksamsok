@@ -1,17 +1,8 @@
 package se.raa.ksamsok.resolve;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -20,11 +11,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocumentList;
@@ -32,6 +32,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import com.github.jsonldjava.jena.JenaJSONLD;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -44,8 +46,8 @@ import com.hp.hpl.jena.rdf.model.Selector;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.java.generationjava.io.xml.SimpleXmlWriter;
 
+import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.method.AbstractAPIMethod;
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -218,6 +220,7 @@ public class ResolverServlet extends HttpServlet {
 		case MUSEUMDAT:
 			resp.setContentType("application/xml; charset=UTF-8");
 			break;
+			
 		case RDF:
 			resp.setContentType("application/rdf+xml; charset=UTF-8");
 			break;
@@ -326,8 +329,9 @@ public class ResolverServlet extends HttpServlet {
 	 * @param urli - The path to the request, i.e. which object shoud we get
 	 * @param resp - The http servlet response
 	 * @throws IOException
+	 * @throws DiagnosticException 
 	 */
-	private void makeResponse(String response, Format format, String urli, Boolean prettyPrint, HttpServletResponse resp) throws IOException {
+	private void makeResponse(String response, Format format, String urli, Boolean prettyPrint, HttpServletResponse resp) throws IOException, DiagnosticException {
 		switch (format) {
 		case JSON_LD:
 			if (response != null){
@@ -342,10 +346,35 @@ public class ResolverServlet extends HttpServlet {
 		case RDF:
 		case XML:
 			if (response != null) {
-				SimpleXmlWriter xmlWriter = new SimpleXmlWriter(resp.getWriter());
-				xmlWriter.writeXmlVersion("1.0", "UTF-8");
-				xmlWriter.writeXml(response);
-				xmlWriter.close();
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder;
+				Document doc;
+				try {
+					docBuilder = docFactory.newDocumentBuilder();
+					doc = docBuilder.parse(new ByteArrayInputStream(response.getBytes("UTF-8")));
+					TransformerFactory transformerFactory = TransformerFactory.newInstance();
+					Transformer transform;
+					transform = transformerFactory.newTransformer();
+					DOMSource source = new DOMSource(doc);
+					StreamResult strResult = new StreamResult(resp.getOutputStream());
+					if (prettyPrint){
+						transform.setOutputProperty(OutputKeys.INDENT, "yes");
+						transform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+					}
+					transform.transform(source, strResult);
+				} catch (ParserConfigurationException e) {
+					logger.error(e);
+					throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+				} catch (SAXException e) {
+					logger.error(e);
+					throw new DiagnosticException("Det är problem med att skapa xml svaret", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+				} catch (TransformerConfigurationException e) {
+					logger.error(e);
+					throw new DiagnosticException("Det är problem med att initiera xml dokument transformeraren", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+				} catch (TransformerException e) {
+					logger.error(e);
+					throw new DiagnosticException("Det är problem med att skriva xml dokument till ut-strömmen", AbstractAPIMethod.class.getName(), e.getMessage(), false);
+				}
 			} else if (format == Format.RDF){
 				logger.warn("Could not find rdf for record with uri: " + urli);
 				resp.sendError(404, "No rdf for record");
