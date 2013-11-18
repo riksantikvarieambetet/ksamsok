@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
@@ -85,11 +89,39 @@ public class SearchHelpTest extends AbstractBaseTest {
 			serchHelp.setFormat(Format.JSON_LD);
 			serchHelp.performMethod();
 			JSONObject response = new JSONObject(out.toString("UTF-8"));
-			System.out.println(response.toString(2));
-			assertBaseJSONProp(response);
+			JSONObject result = assertBaseJSONProp(response);
+			assertTrue(result.has("numberOfTerms"));
+			assertEquals(Integer.parseInt(reqParams.get("maxValueCount")), result.getInt("numberOfTerms"));
+			assertTrue(result.has("terms"));
+			JSONObject terms = result.getJSONObject("terms");
+			assertTrue(terms.has("term"));
+			JSONArray termArray = terms.getJSONArray("term");
+			assertEquals(5,termArray.length());
+			for (int i = 0; i < termArray.length(); i++){
+				JSONObject term = termArray.getJSONObject(i);
+				assertTrue(term.has("value"));
+				assertTrue(term.getString("value").toLowerCase().contains("sto"));
+				assertTrue(term.has("count"));
+				assertTrue(term.getInt("count")>1);
+			}
 		} catch (Exception e){
 			fail(e.getMessage());
 		}
 	}
 
+	@Test
+	public void testSearchHelpWithoutIndexParam(){
+		reqParams.remove("index");
+		out = new ByteArrayOutputStream();
+		try {
+			APIMethod serchHelp = apiMethodFactory.getAPIMethod(reqParams, out);
+			serchHelp.setFormat(Format.XML);
+			serchHelp.performMethod();
+			fail("No exception was thrown, expected MissingParameterException");
+		} catch (MissingParameterException e) {
+			// Ignore, correct exception was thrown
+		} catch (Exception e) {
+			fail("Wrong exception was thrown, expected MissingParameterException: "+e.getMessage());
+		}
+	}
 }

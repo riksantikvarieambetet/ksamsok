@@ -202,10 +202,11 @@ public class AbstractBaseTest {
 	}
 	/**
 	 * This method assert the base json response properties like result, version and echo
-	 * @param response
+	 * @param response - The response JSONObject
+	 * @return result - The result JSONObject
 	 * @throws JSONException
 	 */
-	protected void assertBaseJSONProp(JSONObject response) throws JSONException {
+	protected JSONObject assertBaseJSONProp(JSONObject response) throws JSONException {
 		assertEquals(1,response.length());
 		// The result 
 		assertTrue(response.has("result"));
@@ -216,5 +217,6 @@ public class AbstractBaseTest {
 		// Echo
 		assertTrue(result.has("echo"));
 		assertEcho(result.getJSONObject("echo"));
+		return result;
 	}
 }
