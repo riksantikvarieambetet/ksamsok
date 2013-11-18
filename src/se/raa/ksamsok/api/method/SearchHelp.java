@@ -93,6 +93,7 @@ public class SearchHelp extends AbstractAPIMethod {
 		result.appendChild(numberOfTerms);
 		
 		Element terms = doc.createElement("terms");
+		result.appendChild(terms);
 		for (Term t : termList){
 			Element term = doc.createElement("term");
 			
@@ -107,6 +108,7 @@ public class SearchHelp extends AbstractAPIMethod {
 			terms.appendChild(term);
 		}
 		Element echo = doc.createElement("echo");
+		result.appendChild(echo);
 		
 		Element method = doc.createElement("method");
 		method.appendChild(doc.createTextNode(METHOD_NAME));

@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 import org.apache.solr.client.solrj.SolrServer;
@@ -15,6 +17,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 
 import se.raa.ksamsok.api.method.APIMethod;
@@ -122,5 +125,36 @@ public class AbstractBaseTest {
 		Node relScoreValue = node.getLastChild();
 		assertTrue(Float.parseFloat(assertChild(relScoreValue))>0);
 	}
-
+	
+	/**
+	 * This method assert the echo block
+	 * @param echo - The echo node
+	 */
+	protected void assertEcho(Node echo){
+		// Check that the echo block equals that input parameters
+		NodeList echoNodes = echo.getChildNodes();
+		for (int i = 0; i < echoNodes.getLength(); i++){
+			Node echoChildNode = echoNodes.item(i);
+			assertTrue(reqParams.containsKey(echoChildNode.getNodeName()));
+			assertParent(echoChildNode, echoChildNode.getNodeName());
+			Node echoChildNodeValue = echoChildNode.getFirstChild();
+			assertTrue(reqParams.get(echoChildNode.getNodeName()).contains(assertChild(echoChildNodeValue)));
+		}
+		// Check that all parameters are in the echo block
+		Iterator<String> keys = reqParams.keySet().iterator();
+		while(keys.hasNext()){
+			String nodeName = keys.next();
+			boolean found=false;
+			for (int i = 0; i < echoNodes.getLength(); i++){
+				Node echoChildNode = echoNodes.item(i);
+				if (echoChildNode.getNodeName().equals(nodeName)){
+					found=true;
+					break;
+				}
+			}
+			if (!found){
+				fail(nodeName + " not found in echo node");
+			}
+		}
+	}
 }
