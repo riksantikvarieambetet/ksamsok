@@ -3,6 +3,7 @@ package se.raa.ksamsok.lucene;
 import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uriPrefix;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.LinkedList;
 import javax.vecmath.Point2d;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -25,6 +27,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.util.Base64;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -308,16 +311,28 @@ public class SamsokContentHelper extends ContentHelper {
 	}
 
 	// hjälpmetod som parsar ett xml-dokument och ger en dom tillbaka
-	static Document parseDocument(String xmlContent) throws Exception {
+	static Document parseDocument(String xmlContent) throws ParserConfigurationException, SAXException, IOException{
         // records måste matcha schema
         //xmlFact.setSchema(schema);
-        DocumentBuilder builder = xmlFact.newDocumentBuilder();
+        DocumentBuilder builder;
+		try {
+			builder = xmlFact.newDocumentBuilder();
+		} catch (ParserConfigurationException e1) {
+			logger.error("Det är problem att konfigurerar xml-parser");
+			throw e1;
+		}
         StringReader sr = null;
         Document doc;
         try {
         	sr = new StringReader(xmlContent);
         	doc = builder.parse(new InputSource(sr));
-        } finally {
+        } catch (SAXException e) {
+        	logger.error("Det är problem att parse följande sträng: "+xmlContent);
+        	throw e;
+		} catch (IOException e) {
+			logger.error("Det är problem med att läsa från in-strömmen");
+			throw e;
+		} finally {
         	if (sr != null) {
         		try {
         			sr.close();
