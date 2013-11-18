@@ -5,16 +5,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import se.raa.ksamsok.lucene.ContentHelper;
 import ORG.oclc.oai.harvester2.verb.Identify;
@@ -185,100 +190,132 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		int tryNum = 0;
 		int completeListSize = -1;
 		long start = System.currentTimeMillis();
-		os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes("UTF-8"));
-		os.write("<harvest>\n".getBytes("UTF-8"));
-        ListRecords listRecords = null;
-       	while (listRecords == null) {
-       		++tryNum;
-       		try {
-        		listRecords = new ListRecords(url, fromDate, toDate, setSpec, metadataPrefix);
-            } catch (IOException ioe) {
-            	failedTry(tryNum, null, ioe, ss, service);
-        	}
-        }
-        while (listRecords != null) {
-			// kolla om vi ska avbryta
-        	checkInterrupt(ss, service);
-
-            NodeList errors = listRecords.getErrors();
-            if (errors != null && errors.getLength() > 0) {
-            	// inga records är inte ett "fel" egentligen
-            	if ("noRecordsMatch".equals(errors.item(0).getAttributes().getNamedItem("code").getNodeValue())) {
-            		c = 0;
-            		break;
-            	}
-            	if (logger != null) {
-            		logger.error("Found " + errors.getLength() + " errors");
-            	}
-                throw new Exception(listRecords.toString());
-            }
-            os.write(listRecords.toString().getBytes("UTF-8"));
-            os.write("\n".getBytes("UTF-8"));
-            // om token är "" betyder det ingen resumption
-            String resumptionToken = listRecords.getResumptionToken();
-            // hämta totala antalet (om det skickas) fast bara första gången
-            if (completeListSize < 0 && c == 0 && StringUtils.isNotBlank(resumptionToken)) {
-            	try {
-            		completeListSize = Integer.parseInt(listRecords.getSingleString(
-            				"/oai20:OAI-PMH/oai20:ListRecords/oai20:resumptionToken/@completeListSize"));
-            	} catch (Exception e) {
-            		if (logger != null && logger.isDebugEnabled()) {
-            			logger.debug("Error when fetching completeListSize", e);
-            		}
-            	}
-            }
-            // räkna antal
-            c += Integer.parseInt(listRecords.getSingleString("count(/oai20:OAI-PMH/oai20:ListRecords/oai20:record)"));
-            // beräkna ungefär kvarvarande hämtningstid
-            long deltaMillis = System.currentTimeMillis() - start;
-            long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(
-            		deltaMillis, c, completeListSize);
-
-            if (logger != null && logger.isDebugEnabled()) {
-            	logger.debug((service != null ? service.getId() + ": " : "" ) +
-            			"fetched " + c + (completeListSize > 0 ? "/" + completeListSize : "")
-            			+ " records so far in " + ContentHelper.formatRunTime(deltaMillis) +
-            			(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
-            					ContentHelper.formatRunTime(aproxMillisLeft) + ")": "") +
-            			", resumptionToken: " + resumptionToken);
-            }
-			if (ss != null) {
-
-				// vi uppdaterar bara status här, logg är inte intressant för dessa
-				ss.setStatusText(service, "Fetching data to temp file (fetched " + c +
-						(completeListSize > 0 ? "/" + completeListSize : "") + " records)" +
-						(aproxMillisLeft >= 0 ? ", estimated time remaining: " +
-								ContentHelper.formatRunTime(aproxMillisLeft) : ""));
+		String resumptionToken = null;
+		try{
+			try {
+				os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes("UTF-8"));
+				os.write("<harvest>\n".getBytes("UTF-8"));
+			} catch (IOException e) {
+				logger.error("Det är problem med att skriva till ut-strömmen");
+				throw e;
 			}
-            if (resumptionToken == null || resumptionToken.length() == 0) {
-                listRecords = null;
-            } else {
-            	listRecords = null;
-            	tryNum = 0;
-            	while (listRecords == null) {
-            		++tryNum;
-	            	try {
-	            		listRecords = new ListRecords(url, resumptionToken);
-	            	} catch (IOException ioe) {
-	            		failedTry(tryNum, resumptionToken, ioe, ss, service);
-	            	}
-            	}
-            }
-        }
-        os.write("</harvest>\n".getBytes("UTF-8"));
-        os.flush();
-    	long durationMillis = System.currentTimeMillis() - start;
-    	String msg = "Fetched " + c + " records, time: " +
-    		ContentHelper.formatRunTime(durationMillis) +
-    		" (" + ContentHelper.formatSpeedPerSec(c, durationMillis) + ")";
-    	if (ss != null) {
-    		ss.setStatusTextAndLog(service, msg);
-    	}
 
-        if (logger != null && logger.isInfoEnabled()) {
-        	logger.info((service != null ? service.getId() + ": " : "" ) + msg);
-        }
-        return c;
+			ListRecords listRecords = null;
+			while (listRecords == null) {
+				++tryNum;
+				listRecords = new ListRecords(url, fromDate, toDate, setSpec, metadataPrefix);
+			}
+			while (listRecords != null) {
+				// kolla om vi ska avbryta
+				checkInterrupt(ss, service);//TODO
+
+				NodeList errors = listRecords.getErrors();
+				if (errors != null && errors.getLength() > 0) {
+					// inga records är inte ett "fel" egentligen
+					if ("noRecordsMatch".equals(errors.item(0).getAttributes().getNamedItem("code").getNodeValue())) {
+						c = 0;
+						break;
+					}
+					if (logger != null) {
+						logger.error("Found " + errors.getLength() + " errors");
+					}
+					throw new Exception(listRecords.toString());
+				}
+				try {
+					os.write(listRecords.toString().getBytes("UTF-8"));
+					os.write("\n".getBytes("UTF-8"));
+				} catch (IOException e) {
+					logger.error("Det är problem med att skriva till ut-strömmen");
+					throw e;
+				}
+				// om token är "" betyder det ingen resumption
+				resumptionToken = listRecords.getResumptionToken();
+				// hämta totala antalet (om det skickas) fast bara första gången
+				if (completeListSize < 0 && c == 0 && StringUtils.isNotBlank(resumptionToken)) {
+					try {
+						completeListSize = Integer.parseInt(listRecords.getSingleString(
+							"/oai20:OAI-PMH/oai20:ListRecords/oai20:resumptionToken/@completeListSize"));
+					} catch (Exception e) {
+						if (logger != null && logger.isDebugEnabled()) {
+							logger.debug("Error when fetching completeListSize", e);
+						}
+					}
+				}
+				// räkna antal
+				c += Integer.parseInt(listRecords.getSingleString("count(/oai20:OAI-PMH/oai20:ListRecords/oai20:record)"));
+				// beräkna ungefär kvarvarande hämtningstid
+				long deltaMillis = System.currentTimeMillis() - start;
+				long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(
+						deltaMillis, c, completeListSize);
+
+				if (logger != null && logger.isDebugEnabled()) {
+					logger.debug((service != null ? service.getId() + ": " : "" ) +
+							"fetched " + c + (completeListSize > 0 ? "/" + completeListSize : "")
+							+ " records so far in " + ContentHelper.formatRunTime(deltaMillis) +
+							(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
+									ContentHelper.formatRunTime(aproxMillisLeft) + ")": "") +
+									", resumptionToken: " + resumptionToken);
+				}
+				if (ss != null) {
+
+					// vi uppdaterar bara status här, logg är inte intressant för dessa
+					ss.setStatusText(service, "Fetching data to temp file (fetched " + c +
+							(completeListSize > 0 ? "/" + completeListSize : "") + " records)" +
+							(aproxMillisLeft >= 0 ? ", estimated time remaining: " +
+									ContentHelper.formatRunTime(aproxMillisLeft) : ""));
+				}
+				if (resumptionToken == null || resumptionToken.length() == 0) {
+					listRecords = null;
+				} else {
+					listRecords = null;
+					tryNum = 0;
+					while (listRecords == null) {
+						++tryNum;
+						listRecords = new ListRecords(url, resumptionToken);
+					}
+				}
+			}
+			try {
+				os.write("</harvest>\n".getBytes("UTF-8"));
+				os.flush();
+			} catch (IOException e) {
+				logger.error("Det är problem med att skriva till ut-strömmen");
+				throw e;
+			}
+			long durationMillis = System.currentTimeMillis() - start;
+			String msg = "Fetched " + c + " records, time: " +
+					ContentHelper.formatRunTime(durationMillis) +
+					" (" + ContentHelper.formatSpeedPerSec(c, durationMillis) + ")";
+			if (ss != null) {
+				ss.setStatusTextAndLog(service, msg);
+			}
+
+			if (logger != null && logger.isInfoEnabled()) {
+				logger.info((service != null ? service.getId() + ": " : "" ) + msg);
+			}
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Det är problem med sträng konvertering");
+			throw e;
+		} catch (IOException e) {
+			failedTry(tryNum, null, e, ss, service);
+		} catch (ParserConfigurationException e) {
+			logger.error("Det är problem med att initiera oai-pmh parser");
+			throw e;
+		} catch (SAXException e) {
+			logger.error("Det är problem att parsa skördningen;");
+			logger.error("Url: " +url+", fromDate:"+ fromDate+", toDate: "+ toDate + ", resumptionToken: "+resumptionToken);
+			logger.error(e.getMessage());
+			throw e;
+		} catch (TransformerException e) {
+			logger.error("Det är problem med att initiera oai-pmh transformern");
+			throw e;
+		} catch (NoSuchFieldException e) {
+			logger.error("Hittade inget resumption token");
+			throw e;
+		} finally {
+
+		}
+		return c;
 	}
 
 	// hantering av flera försök med viss tid mellan varje försök
