@@ -126,10 +126,6 @@ public class AbstractBaseTest {
 		assertTrue(Float.parseFloat(assertChild(relScoreValue))>0);
 	}
 	
-	/**
-	 * This method assert the echo block
-	 * @param echo - The echo node
-	 */
 	protected void assertEcho(Node echo){
 		// Check that the echo block equals that input parameters
 		NodeList echoNodes = echo.getChildNodes();
