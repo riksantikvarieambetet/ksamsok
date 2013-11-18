@@ -1,10 +1,13 @@
 package se.raa.ksamsok.harvest;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -302,9 +305,12 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			logger.error("Det är problem med att initiera oai-pmh parser");
 			throw e;
 		} catch (SAXException e) {
-			logger.error("Det är problem att parsa skördningen;");
-			logger.error("Url: " +url+", fromDate:"+ fromDate+", toDate: "+ toDate + ", resumptionToken: "+resumptionToken);
-			logger.error(e.getMessage());
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			e.printStackTrace(new PrintStream(new ByteArrayOutputStream()));
+			String message ="Det är problem att parsa skördningen\n";
+			message = message + "Url: " +url+", metadataPrefix=" + metadataPrefix + ", fromDate:"+ fromDate+", toDate: "+ toDate + ", resumptionToken="+resumptionToken +"\n";
+			message = message + baos.toString("UTF-8");
+			ss.setErrorTextAndLog(service, message);
 			throw e;
 		} catch (TransformerException e) {
 			logger.error("Det är problem med att initiera oai-pmh transformern");
