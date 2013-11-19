@@ -51,9 +51,7 @@ public class SearchHelpTest extends AbstractBaseTest {
 			DocumentBuilder docBuilder=null;
 			docBuilder = docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
-			assertBaseDocProp(resultDoc);
-			Element result = resultDoc.getDocumentElement();
-			Node numberOfTerms = assertResultAndVersion(result);
+			Node numberOfTerms = assertBaseDocProp(resultDoc);
 			assertParent(numberOfTerms, "numberOfTerms");
 			Node numberOfTermsValue = numberOfTerms.getFirstChild();
 			assertEquals(Integer.parseInt(reqParams.get("maxValueCount")), Integer.parseInt(assertChild(numberOfTermsValue)));
@@ -73,9 +71,6 @@ public class SearchHelpTest extends AbstractBaseTest {
 				Node countValue = count.getFirstChild();
 				assertTrue(Integer.parseInt(assertChild(countValue))>1);
 			}
-			Node echo = terms.getNextSibling();
-			assertTrue(echo.equals(result.getLastChild()));
-			assertEcho(echo);
 		} catch (Exception e){
 			fail(e.getMessage());
 		}

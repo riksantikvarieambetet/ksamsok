@@ -280,6 +280,9 @@ public class Statistic extends AbstractAPIMethod {
 			index.appendChild(doc.createTextNode(indexKey + "=" + indexMap.get(indexKey)));
 			echo.appendChild(index);
 		}
+		Element removeBelowEl = doc.createElement(REMOVE_BELOW);
+		removeBelowEl.appendChild(doc.createTextNode(Integer.toString(removeBelow)));
+		echo.appendChild(removeBelowEl);
 	}
 	
 	protected Element generateBaseDocument(){

@@ -52,11 +52,11 @@ public class SearchTest extends AbstractBaseTest{
 		reqParams = new HashMap<String,String>();
 		reqParams.put("method", "search");
 		reqParams.put("query","text=yxa");
-		reqParams.put("fields","itemLabel,itemDescription,thumbnail,url");
 	}
 
 	@Test
 	public void testSearchWithRecordSchemaXMLResponse(){
+		reqParams.put("fields","itemId,itemLabel,itemDescription,thumbnail,url");
 		reqParams.put("recordSchema","xml");
 		try{
 			// Assert the base search document structure
@@ -82,6 +82,7 @@ public class SearchTest extends AbstractBaseTest{
 
 	@Test
 	public void testSearchWithRecordSchemaXMLJSONResponse(){
+		reqParams.put("fields","itemId,itemLabel,itemDescription,thumbnail,url");
 		reqParams.put("recordSchema","xml");
 		try{
 			assertBaseSearchJSON();
@@ -226,10 +227,10 @@ public class SearchTest extends AbstractBaseTest{
 		DocumentBuilder docBuilder=null;
 		docBuilder = docFactory.newDocumentBuilder();
 		Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
-		assertBaseDocProp(resultDoc);
+		//System.out.println(out.toString("UTF-8"));
 		// Travel trough the document
 		// Result, version and totalHits
-		Node totalHits = assertResultAndVersion(resultDoc.getDocumentElement());
+		Node totalHits = assertBaseDocProp(resultDoc);
 		assertParent(totalHits,"totalHits");
 		// total hits value
 		Node totalHitsValue = totalHits.getFirstChild();
@@ -243,39 +244,8 @@ public class SearchTest extends AbstractBaseTest{
 		// Records
 		Node records = totalHits.getNextSibling();
 		assertParent(records,"records");
-		// Echo 
-		Node echo = records.getNextSibling();
-		assertParent(echo,"echo");
-		// StartRecord
-		Node startRecord = echo.getFirstChild();
-		assertParent(startRecord,"startRecord");
-		// Start record value
-		Node startRecordValue = startRecord.getFirstChild();
-		assertEquals(1,Integer.parseInt(assertChild(startRecordValue)));
-		// hitsPerPage
-		Node hitsPerPage = startRecord.getNextSibling();
-		assertParent(hitsPerPage,"hitsPerPage");
-		// hitsPerPage value
-		Node hitsPerPageValue = hitsPerPage.getFirstChild();
-		if (numberOfHits>0){
-			// Compare with the previous result if other test has been running
-			assertEquals(numberOfHits, Integer.parseInt(assertChild(hitsPerPageValue)));
-		} else {
-			numberOfHits=Integer.parseInt(assertChild(hitsPerPageValue));
-			assertTrue(numberOfHits>1);
-		}
 		// The record
 		NodeList recordList = records.getChildNodes();
-		assertEquals(numberOfHits,recordList.getLength());
-		
-		// query
-		Node query = hitsPerPage.getNextSibling();
-		assertParent(query, "query");
-		assertTrue(echo.getLastChild().equals(query));
-		// query value
-		Node queryValue = query.getFirstChild();
-		assertTrue(reqParams.get("query").equals(assertChild(queryValue)));
-		
 		return recordList;
 	}
 	
@@ -293,7 +263,7 @@ public class SearchTest extends AbstractBaseTest{
 		search.setFormat(Format.JSON_LD);
 		search.performMethod();
 		JSONObject searchResult = new JSONObject(out.toString("UTF-8"));
-		System.out.println(searchResult.toString(4));
+		//System.out.println(searchResult.toString(4));
 		assertTrue(searchResult.has("result"));
 		JSONObject result  = searchResult.getJSONObject("result");
 		assertFalse(result.has("error"));

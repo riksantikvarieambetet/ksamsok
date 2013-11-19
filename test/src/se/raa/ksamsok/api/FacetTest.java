@@ -56,10 +56,9 @@ public class FacetTest extends AbstractBaseTest{
 			DocumentBuilder docBuilder=null;
 			docBuilder = docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
-			assertBaseDocProp(resultDoc);
 			// Travel trough the document
-			// The result and version tag
-			Node numberOfTerms = assertResultAndVersion(resultDoc.getDocumentElement());
+			// The base doc properties, result, version and echo tag
+			Node numberOfTerms = assertBaseDocProp(resultDoc);;
 			// Number of terms
 			assertParent(numberOfTerms,"numberOfTerms");
 			// Number of terms value
@@ -125,41 +124,6 @@ public class FacetTest extends AbstractBaseTest{
 					assertEquals((int) indexRecords.get(indexNameValue),indexNameRecord);
 				}
 			}
-			// The echo element
-			Node echo = term.getNextSibling();
-			assertParent(echo,"echo");
-			assertTrue(resultDoc.getDocumentElement().getLastChild().equals(echo));
-			// The method element
-			Node method = echo.getFirstChild();
-			assertParent(method,"method");
-			// The method value
-			Node methodValue = method.getFirstChild();
-			assertTrue(reqParams.get("method").equals(assertChild(methodValue)));
-			// The first index
-			Node index1 = method.getNextSibling();
-			assertParent(index1,"index");
-			// The first index's value
-			Node index1Value = index1.getFirstChild();
-			assertTrue(reqParams.get("index").contains(assertChild(index1Value)));
-			// The second index
-			Node index2 = index1.getNextSibling();
-			assertParent(index2,"index");
-			// The second index's value
-			Node index2Value = index2.getFirstChild();
-			assertTrue(reqParams.get("index").contains(assertChild(index2Value)));
-			// The removeBelow element
-			Node removeBelow = index2.getNextSibling();
-			assertParent(removeBelow,"removeBelow");
-			// The removeBelow value
-			Node removeBelowValue = removeBelow.getFirstChild();
-			assertEquals(Integer.parseInt(reqParams.get("removeBelow")),Integer.parseInt(assertChild(removeBelowValue)));
-			// The query element
-			Node query = removeBelow.getNextSibling();
-			assertParent(query,"query");
-			assertTrue(echo.getLastChild().equals(query));
-			// The query value
-			Node queryValue = query.getFirstChild();
-			assertTrue(reqParams.get("query").equals(assertChild(queryValue)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());

@@ -286,6 +286,22 @@ public class Search extends AbstractSearchMethod {
 			Element echo = doc.createElement("echo");
 			result.appendChild(echo);
 			
+			Element method = doc.createElement("method");
+			method.appendChild(doc.createTextNode(METHOD_NAME));
+			echo.appendChild(method);
+			if( params.containsKey(Search.RECORD_SCHEMA)){
+				Element recordSchemaEl = doc.createElement(Search.RECORD_SCHEMA);
+				recordSchemaEl.appendChild(doc.createTextNode(params.get(Search.RECORD_SCHEMA)));
+				echo.appendChild(recordSchemaEl);
+			}
+			if (params.containsKey("fields") && NS_SAMSOK_XML.equals(recordSchema)){
+				for (String field : fields){
+					Element fieldEl = doc.createElement("fields");
+					fieldEl.appendChild(doc.createTextNode(field));
+					echo.appendChild(fieldEl);
+				}
+			}
+			
 			Element startRecordEl = doc.createElement("startRecord");
 			startRecordEl.appendChild(doc.createTextNode(Integer.toString(startRecord,10)));
 			echo.appendChild(startRecordEl);
@@ -328,6 +344,7 @@ public class Search extends AbstractSearchMethod {
 				}
 				// Create echo object
 				JSONObject echo = new JSONObject();
+				echo.put("method", METHOD_NAME);
 				echo.put("startRecord", startRecord);
 				echo.put("hitsPerPage", hitsPerPage);
 				echo.put("query", queryString);

@@ -55,7 +55,7 @@ public class AbstractBaseTest {
 	 * This method assert the base properties of the xml document like verions, encoding and stylesheet
 	 * @param doc - The document to assert
 	 */
-	protected void assertBaseDocProp(Document doc) {
+	protected Node assertBaseDocProp(Document doc) {
 		// Check encoding
 		assertTrue(doc.getXmlEncoding().equalsIgnoreCase("UTF-8"));
 		// Check version
@@ -68,6 +68,8 @@ public class AbstractBaseTest {
 		} else {
 			assertNull(doc.getDocumentElement().getPreviousSibling());
 		}
+		assertEcho(doc.getDocumentElement().getLastChild());
+		return assertResultAndVersion(doc.getDocumentElement());
 	}
 
 	/**
@@ -138,25 +140,28 @@ public class AbstractBaseTest {
 		NodeList echoNodes = echo.getChildNodes();
 		for (int i = 0; i < echoNodes.getLength(); i++){
 			Node echoChildNode = echoNodes.item(i);
-			assertTrue(reqParams.containsKey(echoChildNode.getNodeName()));
-			assertParent(echoChildNode, echoChildNode.getNodeName());
-			Node echoChildNodeValue = echoChildNode.getFirstChild();
-			assertTrue(reqParams.get(echoChildNode.getNodeName()).contains(assertChild(echoChildNodeValue)));
+			if(reqParams.containsKey(echoChildNode.getNodeName())){
+				assertParent(echoChildNode, echoChildNode.getNodeName());
+				Node echoChildNodeValue = echoChildNode.getFirstChild();
+				assertTrue(reqParams.get(echoChildNode.getNodeName()).contains(assertChild(echoChildNodeValue)));
+			}
 		}
 		// Check that all parameters are in the echo block
 		Iterator<String> keys = reqParams.keySet().iterator();
 		while(keys.hasNext()){
 			String nodeName = keys.next();
-			boolean found=false;
-			for (int i = 0; i < echoNodes.getLength(); i++){
-				Node echoChildNode = echoNodes.item(i);
-				if (echoChildNode.getNodeName().equals(nodeName)){
-					found=true;
-					break;
+			if (!nodeName.equals("stylesheet")){
+				boolean found=false;
+				for (int i = 0; i < echoNodes.getLength(); i++){
+					Node echoChildNode = echoNodes.item(i);
+					if (echoChildNode.getNodeName().equals(nodeName)){
+						found=true;
+						break;
+					}
 				}
-			}
-			if (!found){
-				fail(nodeName + " not found in echo node");
+				if (!found){
+					fail(nodeName + " not found in echo node");
+				}
 			}
 		}
 	}
