@@ -165,12 +165,14 @@ String value = null;
 			Property rName = ResourceFactory.createProperty(predicateURI.toString());
 			Selector selector = new SimpleSelector((Resource) null, rName, (RDFNode) null);
 			StmtIterator iter = model.listStatements(selector);
+			int statementCnt=0;
 			while (iter.hasNext()){
 				Statement s = iter.next();
 				uriValues.put(s.getSubject().getURI(), StringUtils.trimToNull(s.getObject().asLiteral().getString()));
+				statementCnt++;
 			}
-			if (logger.isInfoEnabled()) {
-				logger.info("Läste in " + iter.toList().size() + " uris/värden från " + fileName);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Läste in " + statementCnt + " uris/värden från " + fileName);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Problem att läsa in uri-översättningsfil " +
