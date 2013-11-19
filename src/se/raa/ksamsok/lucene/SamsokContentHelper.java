@@ -233,7 +233,8 @@ public class SamsokContentHelper extends ContentHelper {
 				if (identifier != null) {
 					throw new Exception("Ska bara finnas en entity");
 				}
-				subject = iter.next().getResource();
+				Statement s = iter.next();
+				subject = s.getSubject();
 				identifier=subject.toString();
 				htmlURL=RDFUtil.extractSingleValue(model, subject, rURL, null);
 			}
