@@ -13,11 +13,16 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
@@ -34,7 +39,7 @@ public class StatisticTest extends AbstractBaseTest {
 	}
 
 	@Test
-	public void testFacetXMLResponse(){
+	public void testStatisticXMLResponse(){
 		try {
 			out = new ByteArrayOutputStream();
 			APIMethod statistic = apiMethodFactory.getAPIMethod(reqParams, out);
@@ -119,5 +124,56 @@ public class StatisticTest extends AbstractBaseTest {
 		}catch (Exception e){
 			fail(e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testStatisticJSONResponse(){
+		try {
+			out = new ByteArrayOutputStream();
+			APIMethod statistic = apiMethodFactory.getAPIMethod(reqParams, out);
+			statistic.setFormat(Format.JSON_LD);
+			statistic.performMethod();
+			JSONObject response = new JSONObject(out.toString("UTF-8"));
+			//System.out.println(response.toString(1));
+			JSONObject result = assertBaseJSONProp(response);
+			assertTrue(result.has("term"));
+			JSONArray terms = result.getJSONArray("term");
+			for (int i = 0; i < terms.length(); i++){
+				JSONObject term = terms.getJSONObject(i);
+				assertEquals(2,term.length());
+				assertTrue(term.has("indexFields"));
+				JSONArray indexFields = term.getJSONArray("indexFields");
+				for (int j = 0; j < indexFields.length(); j++){
+					JSONObject indexField = indexFields.getJSONObject(j);
+					assertEquals(2,indexField.length());
+					assertTrue(indexField.has("index"));
+					assertTrue(indexField.has("value"));
+					assertTrue(reqParams.get("index").contains(indexField.getString("index")));
+				}
+				assertTrue(term.has("records"));
+				assertTrue(term.getInt("records") > Integer.parseInt(reqParams.get("removeBelow")));
+			}
+		}catch (Exception e){
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testStatisticsRespWithoutIndex(){
+		out = new ByteArrayOutputStream();
+		APIMethod statistic;
+		reqParams.remove("index");
+		try {
+			statistic = apiMethodFactory.getAPIMethod(reqParams, out);
+			statistic.setFormat(Format.JSON_LD);
+			statistic.performMethod();
+			System.out.println(new JSONObject(out.toString("UTF-8")).toString(1));
+			fail("No excption thrown, expected MissingParameterException");
+		} catch (MissingParameterException e) {
+			//Ignore this exception is expected
+		} catch (Exception e) {
+			fail("Wrong excption thrown, expected MissingParameterException");
+		}
+		
 	}
 }
