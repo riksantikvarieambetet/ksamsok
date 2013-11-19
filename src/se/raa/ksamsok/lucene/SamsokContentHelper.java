@@ -236,6 +236,7 @@ public class SamsokContentHelper extends ContentHelper {
 				Statement s = iter.next();
 				subject = s.getSubject();
 				identifier=subject.toString();
+				logger.debug("Identifier: " + identifier);
 				htmlURL=RDFUtil.extractSingleValue(model, subject, rURL, null);
 			}
 			if (identifier == null) {
