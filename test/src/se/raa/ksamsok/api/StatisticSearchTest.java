@@ -23,20 +23,21 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
-public class StatisticTest extends AbstractBaseTest {
+public class StatisticSearchTest extends AbstractBaseTest {
 	ByteArrayOutputStream out;
 	static int numberOfTermsVal;
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
 		reqParams = new HashMap<String,String>();
-		reqParams.put("method", "statistic");
-		reqParams.put("index", "mediaType=*|itemName=yxa*");
+		reqParams.put("method", "statisticSearch");
+		reqParams.put("index", "serviceOrganization=*");
+		reqParams.put("query","itemLabel>talk and itemLabel<talm");
 		reqParams.put("removeBelow","10");
 	}
 
 	@Test
-	public void testStatisticXMLResponse(){
+	public void testStatisticSearchXMLResponse(){
 		try {
 			out = new ByteArrayOutputStream();
 			APIMethod statistic = apiMethodFactory.getAPIMethod(reqParams, out);
@@ -85,28 +86,9 @@ public class StatisticTest extends AbstractBaseTest {
 				Node valueValue = value.getFirstChild();
 				assertTrue(value.getFirstChild().equals(value.getLastChild()));
 				assertChild(valueValue);
-				//*******************************************
-				// The index2 fields tag
-				Node indexFields2 = indexFields.getNextSibling();
-				assertParent(indexFields2,"indexFields");
-				// The index tag
-				Node index2 = indexFields2.getFirstChild();
-				assertParent(index2,"index");
-				//The index value
-				Node indexValue2 = index2.getFirstChild();
-				assertTrue(index2.getFirstChild().equals(index2.getLastChild()));
-				assertTrue(reqParams.get("index").contains(assertChild(indexValue2)));;
-				// The value tag
-				Node value2 = index2.getNextSibling();
-				assertParent(value2,"value");
-				assertTrue(indexFields2.getLastChild().equals(value2));
-				// The value tag's value
-				Node valueValue2 = value.getFirstChild();
-				assertTrue(value2.getFirstChild().equals(value2.getLastChild()));
-				assertChild(valueValue2);
 
 				// The records tag
-				Node records = indexFields2.getNextSibling();
+				Node records = indexFields.getNextSibling();
 				assertParent(records,"records");
 				assertTrue(term.getLastChild().equals(records));
 				// The records tags value
@@ -124,7 +106,7 @@ public class StatisticTest extends AbstractBaseTest {
 	}
 	
 	@Test
-	public void testStatisticJSONResponse(){
+	public void testStatisticSearchJSONResponse(){
 		try {
 			out = new ByteArrayOutputStream();
 			APIMethod statistic = apiMethodFactory.getAPIMethod(reqParams, out);
@@ -139,16 +121,13 @@ public class StatisticTest extends AbstractBaseTest {
 				JSONObject term = terms.getJSONObject(i);
 				assertEquals(2,term.length());
 				assertTrue(term.has("indexFields"));
-				JSONArray indexFields = term.getJSONArray("indexFields");
-				for (int j = 0; j < indexFields.length(); j++){
-					JSONObject indexField = indexFields.getJSONObject(j);
-					assertEquals(2,indexField.length());
-					assertTrue(indexField.has("index"));
-					assertTrue(indexField.has("value"));
-					assertTrue(reqParams.get("index").contains(indexField.getString("index")));
-				}
+				JSONObject indexFields = term.getJSONObject("indexFields");
+				assertEquals(2,indexFields.length());
+				assertTrue(indexFields.has("index"));
+				assertTrue(indexFields.has("value"));
+				assertTrue(reqParams.get("index").contains(indexFields.getString("index")));
 				assertTrue(term.has("records"));
-				assertTrue(term.getInt("records") > Integer.parseInt(reqParams.get("removeBelow")));
+				assertTrue(term.getInt("records") >= Integer.parseInt(reqParams.get("removeBelow")));
 			}
 		}catch (Exception e){
 			fail(e.getMessage());
@@ -156,7 +135,7 @@ public class StatisticTest extends AbstractBaseTest {
 	}
 	
 	@Test
-	public void testStatisticsRespWithoutIndex(){
+	public void testStatisticsSearchRespWithoutIndex(){
 		out = new ByteArrayOutputStream();
 		APIMethod statistic;
 		reqParams.remove("index");
