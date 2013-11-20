@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -163,5 +164,21 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 				result.appendChild(index);
 			}
 		}
+		
+		//Echo
+		Node echo = doc.createElement("echo");
+		Node method = doc.createElement(METHOD);
+		method.appendChild(doc.createTextNode(METHOD_NAME));
+		echo.appendChild(method);
+		Iterator<String> keys = indexMap.keySet().iterator();
+		while (keys.hasNext()){
+			Node index = doc.createElement("index");
+			index.appendChild(doc.createTextNode(keys.next()));
+			echo.appendChild(index);
+		}
+		Node query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(queryString));
+		echo.appendChild(query);
+		result.appendChild(echo);
 	}
 }
