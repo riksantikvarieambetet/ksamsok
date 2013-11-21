@@ -98,6 +98,20 @@ public class GetRelationTypes extends AbstractAPIMethod {
 			relationTypeEl.setAttribute("reverse", rel.getValue());
 			relationTypesEl.appendChild(relationTypeEl);
 		}
+		
+		// Echo
+		Element echo = doc.createElement("echo");
+		result.appendChild(echo);
+		
+		//Method
+		Element methodEl = doc.createElement(METHOD);
+		methodEl.appendChild(doc.createTextNode(METHOD_NAME));
+		echo.appendChild(methodEl);
+
+		//Relation
+		Element relEl = doc.createElement(RELATION_PARAMETER);
+		relEl.appendChild(doc.createTextNode(relation));
+		echo.appendChild(relEl);
 	}
 
 }
