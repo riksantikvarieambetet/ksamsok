@@ -187,6 +187,7 @@ public class GetRelations extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
+		super.extractParameters();
 		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null, false);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !relationXlate.containsKey(relation)) {
@@ -397,12 +398,36 @@ public class GetRelations extends AbstractAPIMethod {
 		for (Relation rel : relations){
 			// Relation
 			Element relationElement = doc.createElement("relation");
-			relationElement.setAttribute("type", rel.getRelationType());
 			if (rel.getSource() != null){
 				relationElement.setAttribute("source", rel.getSource());
 			}
+			relationElement.setAttribute("type", rel.getRelationType());
 			relationElement.appendChild(doc.createTextNode(rel.getTargetUri()));
 			relationsElement.appendChild(relationElement);
 		}
+		
+		//Echo
+		 Element echo = doc.createElement("echo");
+		 Element method = doc.createElement(METHOD);
+		 method.appendChild(doc.createTextNode(METHOD_NAME));
+		 echo.appendChild(method);
+		 
+		 Element relationEl = doc.createElement(RELATION_PARAMETER);
+		 relationEl.appendChild(doc.createTextNode(relation));
+		 echo.appendChild(relationEl);
+		 
+		 Element objectId = doc.createElement(IDENTIFIER_PARAMETER);
+		 objectId.appendChild(doc.createTextNode(partialIdentifier));
+		 echo.appendChild(objectId);
+		 
+		 Element maxCountEl = doc.createElement(MAXCOUNT_PARAMETER);
+		 maxCountEl.appendChild(doc.createTextNode(Integer.toString(maxCount)));
+		 echo.appendChild(maxCountEl);
+		 
+		 Element inferSameAsEl = doc.createElement(INFERSAMEAS_PARAMETER);
+		 inferSameAsEl.appendChild(doc.createTextNode(inferSameAs.name()));
+		 echo.appendChild(inferSameAsEl);
+		 
+		 result.appendChild(echo);
 	}
 }

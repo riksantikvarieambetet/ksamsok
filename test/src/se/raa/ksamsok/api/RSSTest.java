@@ -39,7 +39,7 @@ public class RSSTest extends AbstractBaseTest {
 		reqParams.put("sort","itemName");
 		reqParams.put("sortConfig","asc");
 		// Setting pretty print will make the junit test fail because /n will be extra nodes in the DOM
-		reqParams.put("prettyPrint","true");
+		//reqParams.put("prettyPrint","true");
 	}
 
 	@Test
@@ -49,7 +49,7 @@ public class RSSTest extends AbstractBaseTest {
 		try {
 			rss = apiMethodFactory.getAPIMethod(reqParams, out);
 			rss.performMethod();
-			System.out.println(out.toString("UTF-8"));
+			//System.out.println(out.toString("UTF-8"));
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder=null;
 			docBuilder = docFactory.newDocumentBuilder();

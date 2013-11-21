@@ -178,25 +178,26 @@ public class AbstractBaseTest {
 		Iterator keys = echo.keys();
 		while (keys.hasNext()){
 			String key = (String) keys.next();
-			assertTrue(reqParams.containsKey(key));
-			try {
-				assertTrue(reqParams.get(key).contains(echo.getString(key)));
-			} catch (JSONException e) {
-				//The key is not a string it can also be an array
-				JSONArray echoArray;
+			if (reqParams.containsKey(key)) {
 				try {
-					echoArray = echo.getJSONArray(key);
-					for (int i = 0; i < echoArray.length(); i++){
-						assertTrue(reqParams.get(key).contains(echoArray.getString(i)));
-					}
-				} catch (JSONException e1) {
-					// The key can also be a integer
+					assertTrue(reqParams.get(key).contains(echo.getString(key)));
+				} catch (JSONException e) {
+					//The key is not a string it can also be an array
+					JSONArray echoArray;
 					try {
-						assertTrue(reqParams.get(key).contains(Integer.toString(echo.getInt(key))));
-					} catch (JSONException e2) {
-						fail("Unhandled json type: "+e2.getMessage());
+						echoArray = echo.getJSONArray(key);
+						for (int i = 0; i < echoArray.length(); i++){
+							assertTrue(reqParams.get(key).contains(echoArray.getString(i)));
+						}
+					} catch (JSONException e1) {
+						// The key can also be a integer
+						try {
+							assertTrue(reqParams.get(key).contains(Integer.toString(echo.getInt(key))));
+						} catch (JSONException e2) {
+							fail("Unhandled json type: "+e2.getMessage());
+						}
 					}
-				}
+				}	
 			}
 		}
 		// Check that all parameters are in the echo block

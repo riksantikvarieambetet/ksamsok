@@ -187,23 +187,16 @@ public class SearchTest extends AbstractBaseTest{
 		assertTrue(node.getAttributes().item(0).getNodeName().equals("name"));
 		String fieldName=node.getAttributes().item(0).getNodeValue();
 		Node fieldValue = node.getFirstChild();
-		switch (fieldName){
-		case "itemId" :
-		case "thumbnail" :
-		case "url" :
+		if (fieldName.equals("itemId") || fieldName.equals("thumbnail") || fieldName.equals("url")){
 			try {
 				new URI(assertChild(fieldValue));
 			} catch (URISyntaxException e) {
 				fail("Non valid url: "+fieldValue);
 			}
-			break;
-		case "itemLabel" :
-		case "itemDescription" :
+		} else if (fieldName.equals("itemLabel") || fieldName.equals("itemDescription")){
 			assertChild(fieldValue);
-			break;
-		default :
+		} else {
 			fail("Found a field value that should not be here: " +fieldName);
-			break;
 		}
 	}
 
