@@ -10,12 +10,17 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,8 +34,12 @@ import se.raa.ksamsok.statistic.StatisticsManager;
 
 import com.github.jsonldjava.jena.JenaJSONLD;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:test/resources/testContext.xml")
 public class AbstractBaseTest {
 
+	@Resource
+	private DataSource dataSource;
 	static APIMethodFactory apiMethodFactory;
 	HashMap<String, String> reqParams;
 	
@@ -47,6 +56,8 @@ public class AbstractBaseTest {
 			// In this case the data source will be null, i.e. no statistic will be logged :-)
 			StatisticsManager statisticsManager = new StatisticsManager(null);
 			ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
+			//Wire a database connection, made available for using ApiMethod classes , right here.
+			ReflectionTestUtils.setField(apiMethodFactory,"dataSource", dataSource);
 			JenaJSONLD.init();
 		}
 	}

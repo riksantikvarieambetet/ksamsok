@@ -58,7 +58,7 @@ public class FacetTest extends AbstractBaseTest{
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			// Travel trough the document
 			// The base doc properties, result, version and echo tag
-			Node numberOfTerms = assertBaseDocProp(resultDoc);;
+			Node numberOfTerms = assertBaseDocProp(resultDoc);
 			// Number of terms
 			assertParent(numberOfTerms,"numberOfTerms");
 			// Number of terms value
