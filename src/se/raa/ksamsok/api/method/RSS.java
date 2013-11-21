@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -138,6 +137,7 @@ public class RSS extends AbstractSearchMethod {
 	@Override
 	protected void writeResult() throws DiagnosticException {
 		SyndFeed feed = getFeed();
+		
 		feed.setEntries(getEntries(hitList));
 		SyndFeedOutput output = new SyndFeedOutput();
 		PrintWriter w = new PrintWriter(out);
@@ -194,10 +194,6 @@ public class RSS extends AbstractSearchMethod {
 				if (xmlData != null) {
 					content = new String(xmlData, "UTF-8");
 				}
-				// TODO: NEK ta bort när allt är omindexerat
-				if (content == null) {
-					content = serviceProvider.getHarvestRepositoryManager().getXMLData(uri);
-				}
 				if (content != null) {
 					entries.add(getEntry(content));	
 				} else {
@@ -226,6 +222,7 @@ public class RSS extends AbstractSearchMethod {
 			entry.setTitle(data.getTitle());
 			entry.setLink(data.getLink());
 			entry.setUri(data.getIdentifier());
+			
 			SyndContent syndContent = new SyndContentImpl();
 			syndContent.setType("text/plain");
 			syndContent.setValue(data.getDescription());
@@ -287,6 +284,7 @@ public class RSS extends AbstractSearchMethod {
 		data.setIdentifier(subject.toString());
 		data.setTitle(getValueFromGraph(model, subject, rItemTitle, (Property) null));
 		data = getDataFromPresentationBlock(getSingleValueFromGraph(model, subject, rPresentation), data);
+	
 		String itemKeyWordsString = getValueFromGraph(model, subject, rItemKeyWord, null);
 		String[] itemKeyWords = new String[0];
 		if(itemKeyWordsString != null) {
@@ -341,7 +339,7 @@ public class RSS extends AbstractSearchMethod {
 			if (subject != null) {
 				throw new DiagnosticException("Ska bara finnas en entity i rdf-grafen", "se.raa.ksamsok.api.method.RSS.getSubjectNode", null, true);
 			}
-			subject = iter.next().getResource();
+			subject = iter.next().getSubject();
 		}
 		if (subject == null) {
 			logger.error("Hittade ingen entity i rdf-grafen:\n" + model);
@@ -514,6 +512,7 @@ public class RSS extends AbstractSearchMethod {
 		feed.setTitle("K-samsök sökresultat");
 		feed.setLink(getFeedLinkProperty());
 		feed.setDescription("Sökresultat av en sökning mot K-samsök API");
+		
 		
 		return feed;
 	}

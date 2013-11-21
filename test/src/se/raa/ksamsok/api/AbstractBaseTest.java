@@ -52,8 +52,9 @@ public class AbstractBaseTest {
 	}
 
 	/**
-	 * This method assert the base properties of the xml document like verions, encoding and stylesheet
+	 * This method assert the base properties of the xml document like verions, encoding, stylesheet and the result, version and echo tag
 	 * @param doc - The document to assert
+	 * @return - Returns the result tag
 	 */
 	protected Node assertBaseDocProp(Document doc) {
 		// Check encoding
