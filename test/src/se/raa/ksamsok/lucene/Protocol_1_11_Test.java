@@ -14,6 +14,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 @SuppressWarnings("unused")
@@ -27,6 +28,10 @@ public class Protocol_1_11_Test {
 	    xformerFact = TransformerFactory.newInstance();
 	}
 
+	@Test
+	public void dummy(){
+		//This is a dummy test to be able to run junit in ant-task
+	}
 
 /* 1.11 ändrades så att mediaLicense och mediaLicenseUrl inte är obligatoriska trots allt
     vilket gör detta testfall felaktigt, men det får ligga kvar bortkommenterat tillsammans

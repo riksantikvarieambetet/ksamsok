@@ -18,6 +18,7 @@ import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -54,12 +55,17 @@ public class AbstractBaseTest {
 			ReflectionTestUtils.setField(apiMethodFactory,"searchService", searchService);
 			// The statisticsManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
 			// In this case the data source will be null, i.e. no statistic will be logged :-)
-			StatisticsManager statisticsManager = new StatisticsManager(null);
+			StatisticsManager statisticsManager = new StatisticsManager(dataSource);
 			ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
 			//Wire a database connection, made available for using ApiMethod classes , right here.
 			ReflectionTestUtils.setField(apiMethodFactory,"dataSource", dataSource);
 			JenaJSONLD.init();
 		}
+	}
+	
+	@Test
+	public void dummy(){
+		//This is a dummy test to be able to run junit in ant-task
 	}
 
 	/**
