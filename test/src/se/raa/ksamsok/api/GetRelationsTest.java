@@ -22,6 +22,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
@@ -96,4 +98,44 @@ public class GetRelationsTest extends AbstractBaseTest {
 			fail(e.getMessage());
 		}
 	}
+	@Test
+	public void testGetRelationsMissingReqParam(){
+		reqParams.remove("relation");
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		APIMethod getRelations;
+		try {
+			getRelations = apiMethodFactory.getAPIMethod(reqParams, out);
+			getRelations.setFormat(Format.JSON_LD);
+			getRelations.performMethod();
+			//System.out.println(out.toString("UTF-8"));
+			JSONObject response = new JSONObject(out.toString("UTF-8"));
+			assertBaseJSONProp(response);
+			fail("No exception was thrown, expected MissingParameterException");
+		} catch (MissingParameterException e){
+			//Correct exception was thrown
+		} catch (Exception e) {
+			fail("Wrong exception was thrown, expected MissingParameterException: "+e.getCause().toString());
+		}
+	}
+	@Test
+	public void testGetRelationsInvalidReqParam(){
+		reqParams.remove("relation");
+		reqParams.put("relation","asklödfjlö");
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		APIMethod getRelations;
+		try {
+			getRelations = apiMethodFactory.getAPIMethod(reqParams, out);
+			getRelations.setFormat(Format.JSON_LD);
+			getRelations.performMethod();
+			System.out.println(out.toString("UTF-8"));
+			JSONObject response = new JSONObject(out.toString("UTF-8"));
+			assertBaseJSONProp(response);
+			fail("No exception was thrown, expected BadParameterException");
+		} catch (BadParameterException e){
+			//Correct exception was thrown
+		} catch (Exception e) {
+			fail("Wrong exception was thrown, expected BadParameterException: "+e.getCause().toString());
+		}
+	}
+
 }
