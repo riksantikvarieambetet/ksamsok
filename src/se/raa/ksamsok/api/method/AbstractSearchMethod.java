@@ -1,10 +1,7 @@
 package se.raa.ksamsok.api.method;
 
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.solr.common.SolrDocumentList;
 

@@ -7,7 +7,6 @@ package se.raa.ksamsok.api.method;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.method.APIMethod.Format;
 
 /**
  * Interface för API metoder

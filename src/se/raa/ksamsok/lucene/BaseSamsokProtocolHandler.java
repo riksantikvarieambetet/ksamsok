@@ -154,6 +154,8 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 
+import se.raa.ksamsok.harvest.HarvestService;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -163,8 +165,6 @@ import com.hp.hpl.jena.rdf.model.Selector;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-
-import se.raa.ksamsok.harvest.HarvestService;
 
 public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler, RelationToIndexMapper {
 

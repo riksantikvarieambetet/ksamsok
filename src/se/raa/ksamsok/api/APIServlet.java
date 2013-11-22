@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -29,16 +30,18 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
-import com.github.jsonldjava.jena.JenaJSONLD;
+
 import se.raa.ksamsok.api.exception.APIException;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.api.method.APIMethod.Format;
+
+import com.github.jsonldjava.jena.JenaJSONLD;
 
 /**
  * Hanterar förfrågningar till K-samsöks API

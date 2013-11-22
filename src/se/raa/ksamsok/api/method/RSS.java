@@ -31,6 +31,14 @@ import org.xml.sax.SAXException;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
+
+import se.raa.ksamsok.api.APIServiceProvider;
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.util.StaticMethods;
+import se.raa.ksamsok.api.util.parser.CQL2Solr;
+import se.raa.ksamsok.lucene.ContentHelper;
+
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -42,14 +50,6 @@ import com.hp.hpl.jena.rdf.model.Selector;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-
-import se.raa.ksamsok.api.APIServiceProvider;
-import se.raa.ksamsok.api.exception.BadParameterException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.api.util.parser.CQL2Solr;
-import se.raa.ksamsok.lucene.ContentHelper;
-
 import com.sun.syndication.feed.module.georss.GeoRSSModule;
 import com.sun.syndication.feed.module.georss.W3CGeoModuleImpl;
 import com.sun.syndication.feed.module.georss.geometries.Position;

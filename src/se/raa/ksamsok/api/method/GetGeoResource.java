@@ -3,14 +3,12 @@ package se.raa.ksamsok.api.method;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Map;
 
 import javax.sql.DataSource;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -18,7 +16,12 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
 
-import com.github.jsonldjava.core.JSONLD;
+import se.raa.ksamsok.api.APIServiceProvider;
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.harvest.DBUtil;
+
 import com.github.jsonldjava.jena.JenaJSONLD;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -26,12 +29,6 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-
-import se.raa.ksamsok.api.APIServiceProvider;
-import se.raa.ksamsok.api.exception.BadParameterException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.harvest.DBUtil;
 
 /**
  * Metod som hämtar rdf för en geo-resurs, dvs län, kommun, landskap eller socken från databas.

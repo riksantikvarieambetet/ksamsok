@@ -29,6 +29,11 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import se.raa.ksamsok.harvest.ExtractedInfo;
+import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
+import se.raa.ksamsok.spatial.GMLUtil;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -38,11 +43,6 @@ import com.hp.hpl.jena.rdf.model.Selector;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-
-import se.raa.ksamsok.harvest.ExtractedInfo;
-import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
-import se.raa.ksamsok.spatial.GMLUtil;
 
 public class SamsokContentHelper extends ContentHelper {
 

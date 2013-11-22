@@ -1,7 +1,6 @@
 package se.raa.ksamsok.api;
 
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.sql.DataSource;

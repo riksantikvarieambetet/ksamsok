@@ -28,16 +28,15 @@ import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.harvest.HarvestServiceImpl;
+
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-
-import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
 public class Protocol_1_1_Test {
 

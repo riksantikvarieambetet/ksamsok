@@ -13,14 +13,12 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
 
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -90,7 +88,7 @@ public class FacetTest extends AbstractBaseTest{
 				//The index value
 				Node indexValue = index.getFirstChild();
 				assertTrue(index.getFirstChild().equals(index.getLastChild()));
-				String indexName = assertChild(indexValue);;
+				String indexName = assertChild(indexValue);
 				// The value tag
 				Node value = index.getNextSibling();
 				assertParent(value,"value");

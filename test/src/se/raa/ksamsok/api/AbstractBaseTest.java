@@ -57,7 +57,7 @@ public class AbstractBaseTest {
 			// In this case the data source will be null, i.e. no statistic will be logged :-)
 			StatisticsManager statisticsManager = new StatisticsManager(dataSource);
 			ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
-			//Wire a database connection, made available for using ApiMethod classes , right here.
+			//Wire a database connection right here, made available for use in classes extending the AbstractBaseTest.
 			ReflectionTestUtils.setField(apiMethodFactory,"dataSource", dataSource);
 			JenaJSONLD.init();
 		}
@@ -75,6 +75,7 @@ public class AbstractBaseTest {
 	 */
 	protected Node assertBaseDocProp(Document doc) {
 		// Check encoding
+		System.out.println(doc);
 		assertTrue(doc.getXmlEncoding().equalsIgnoreCase("UTF-8"));
 		// Check version
 		assertTrue(doc.getXmlVersion().equalsIgnoreCase("1.0"));

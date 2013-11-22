@@ -35,6 +35,13 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.method.AbstractAPIMethod;
+import se.raa.ksamsok.harvest.HarvestRepositoryManager;
+import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.RDFUtil;
+import se.raa.ksamsok.solr.SearchService;
+
 import com.github.jsonldjava.jena.JenaJSONLD;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -46,13 +53,6 @@ import com.hp.hpl.jena.rdf.model.Selector;
 import com.hp.hpl.jena.rdf.model.SimpleSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.method.AbstractAPIMethod;
-import se.raa.ksamsok.harvest.HarvestRepositoryManager;
-import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.RDFUtil;
-import se.raa.ksamsok.solr.SearchService;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect 
