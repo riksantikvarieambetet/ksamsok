@@ -69,6 +69,17 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 		for (Organization org: orgList) {
 			result.appendChild(createInstitution(org));
 		}
+		// Echo
+		Element echo = doc.createElement("echo");
+		result.appendChild(echo);
+		
+		Element methodEl = doc.createElement(METHOD);
+		methodEl.appendChild(doc.createTextNode(METHOD_NAME));
+		echo.appendChild(methodEl);
+		
+		Element valueEl = doc.createElement(VALUE);
+		valueEl.appendChild(doc.createTextNode(value));
+		echo.appendChild(valueEl);
 	}
 
 	/**
@@ -150,6 +161,7 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 			services.appendChild(service);
 		}
 		institution.appendChild(services);
+		
 		return institution;
 	}
 }

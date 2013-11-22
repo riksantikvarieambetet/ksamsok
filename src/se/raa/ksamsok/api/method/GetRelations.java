@@ -184,14 +184,14 @@ public class GetRelations extends AbstractAPIMethod {
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
 		super.extractParameters();
-		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null, false);
+		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !relationXlate.containsKey(relation)) {
 			throw new BadParameterException("Värdet för parametern " + RELATION_PARAMETER + " är ogiltigt",
 					"GetRelations.extractParameters", null, false);
 		}
-		partialIdentifier = getMandatoryParameterValue(IDENTIFIER_PARAMETER, "GetRelations.extractParameters", null, false);
-		String maxCountStr = getOptionalParameterValue(MAXCOUNT_PARAMETER, "GetRelations.extractParameters", null, false);
+		partialIdentifier = getMandatoryParameterValue(IDENTIFIER_PARAMETER, "GetRelations.extractParameters", null);
+		String maxCountStr = getOptionalParameterValue(MAXCOUNT_PARAMETER, "GetRelations.extractParameters", null);
 		if (maxCountStr != null) {
 			try {
 				maxCount = Integer.parseInt(maxCountStr); 
@@ -203,7 +203,7 @@ public class GetRelations extends AbstractAPIMethod {
 			// Om ingen maxCount är satt så kan man få oändliga sökningar i solr-index vilket för att man till slut för en out-of-memory i jvm
 			maxCount = 10000;
 		}
-		String inferSameAsStr = getOptionalParameterValue(INFERSAMEAS_PARAMETER, "GetRelations.extractParameters", null, false);
+		String inferSameAsStr = getOptionalParameterValue(INFERSAMEAS_PARAMETER, "GetRelations.extractParameters", null);
 		if (inferSameAsStr != null) {
 			try {
 				inferSameAs = InferSameAs.valueOf(inferSameAsStr);

@@ -112,7 +112,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
 		super.extractParameters();
-		uri = getMandatoryParameterValue("uri", "GetGeoResource", null, false);
+		uri = getMandatoryParameterValue("uri", "GetGeoResource", null);
 		// sätt lite interna tillstånd baserat på hur uri:n börjar
 		if (uri.startsWith(URI_PREFIX_COUNTY)) {
 			type = COUNTY;

@@ -171,7 +171,7 @@ public class Search extends AbstractSearchMethod {
 		} else if (NS_SAMSOK_XML.equals(recordSchema)) {
 			// valbara fält, använd rdf
 			binDataField = ContentHelper.I_IX_RDF;
-			String reqFields = getMandatoryParameterValue(FIELDS, "Search", null, false);
+			String reqFields = getMandatoryParameterValue(FIELDS, "Search", null);
 			String[] splitFields = StringUtils.split(reqFields, ",");
 			if (splitFields == null || splitFields.length == 0) {
 				throw new BadParameterException("Inga efterfrågade fält.", "Search.performMethod", null, false);

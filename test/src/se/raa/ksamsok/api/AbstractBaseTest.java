@@ -30,6 +30,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 
 import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchServiceImpl;
 import se.raa.ksamsok.statistic.StatisticsManager;
 
@@ -54,9 +55,11 @@ public class AbstractBaseTest {
 			// The searchService is @Autowired in the project. It is necessary to set up it by hand in the test cases
 			ReflectionTestUtils.setField(apiMethodFactory,"searchService", searchService);
 			// The statisticsManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
-			// In this case the data source will be null, i.e. no statistic will be logged :-)
 			StatisticsManager statisticsManager = new StatisticsManager(dataSource);
 			ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
+			// The organizationManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
+			OrganizationManager organizationManager = new OrganizationManager(dataSource);
+			ReflectionTestUtils.setField(apiMethodFactory,"organizationManager", organizationManager);
 			//Wire a database connection right here, made available for use in classes extending the AbstractBaseTest.
 			ReflectionTestUtils.setField(apiMethodFactory,"dataSource", dataSource);
 			JenaJSONLD.init();
@@ -75,7 +78,6 @@ public class AbstractBaseTest {
 	 */
 	protected Node assertBaseDocProp(Document doc) {
 		// Check encoding
-		System.out.println(doc);
 		assertTrue(doc.getXmlEncoding().equalsIgnoreCase("UTF-8"));
 		// Check version
 		assertTrue(doc.getXmlVersion().equalsIgnoreCase("1.0"));
