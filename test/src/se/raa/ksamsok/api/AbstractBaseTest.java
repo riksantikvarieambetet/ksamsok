@@ -44,10 +44,11 @@ public class AbstractBaseTest {
 	private DataSource dataSource;
 	static APIMethodFactory apiMethodFactory;
 	HashMap<String, String> reqParams;
+	private static final String COMMON_SOLR_SERVER = "http://lx-ra-ksamtest1:8080/solr";
 	
 	public void setUp() throws MalformedURLException{
 		if (apiMethodFactory == null){
-			SolrServer solr = new CommonsHttpSolrServer("http://lx-ra-ksamtest1:8080/solr");
+			SolrServer solr = new CommonsHttpSolrServer(COMMON_SOLR_SERVER);
 			SearchServiceImpl searchService = new SearchServiceImpl();
 			// The solr is @Autowired in the project. It is necessary to set up it by hand in the test cases
 			ReflectionTestUtils.setField(searchService,"solr", solr);
