@@ -19,4 +19,9 @@
     	<property name="password" value="ksamsok" />
      </bean>  
      
+     <bean id="COMMON_SOLR_SERVER" class="java.lang.String">
+     	<constructor-arg>
+     		<value>http://lx-ra-ksamtest1:8080/solr</value>
+     	</constructor-arg>
+     </bean>
 </beans>

@@ -256,7 +256,6 @@ public class SearchTest extends AbstractBaseTest{
 		search.setFormat(Format.JSON_LD);
 		search.performMethod();
 		JSONObject searchResult = new JSONObject(out.toString("UTF-8"));
-		System.out.println(searchResult.toString(4));
 		assertTrue(searchResult.has("result"));
 		JSONObject result  = searchResult.getJSONObject("result");
 		assertFalse(result.has("error"));
