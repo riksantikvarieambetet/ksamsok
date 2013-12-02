@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -44,7 +45,8 @@ public class AbstractBaseTest {
 	private DataSource dataSource;
 	static APIMethodFactory apiMethodFactory;
 	HashMap<String, String> reqParams;
-	private static final String COMMON_SOLR_SERVER = "http://lx-ra-ksamtest1:8080/solr";
+	@Autowired
+	private String COMMON_SOLR_SERVER;
 	
 	public void setUp() throws MalformedURLException{
 		if (apiMethodFactory == null){
