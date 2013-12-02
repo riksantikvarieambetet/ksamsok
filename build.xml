@@ -327,6 +327,8 @@
 				<include name="**/*.java" />
 				<include name="**/*.xml" />
 				<include name="**/*.rdf" />
+				<!-- This file contains the connection to the test database --> 
+				<exclude name="**/testContext.xml" />
 			</fileset>
 		</copy>
 		<!-- SQL dir -->
