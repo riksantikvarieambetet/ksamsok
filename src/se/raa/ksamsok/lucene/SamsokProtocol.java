@@ -176,7 +176,11 @@ public class SamsokProtocol {
 	static final URI uri_rProvince = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#province");
 	static final URI uri_rParish = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#parish");
 	static final URI uri_rCoordinates = URI.create(uriPrefixKSamsok + "coordinates");
-
+	
+	// TODO Det ska inte vara något # mellan slash och property, t.ex. firstName
+	// Ändrar man detta så kommer det beröra alla rdf:r som har implementarer
+	// foaf namespacet felaktig. De kommer inte indexeras
+	// Ett alternativ är att behålla det felaktiga och lägga till det riktiga och indexera "båda"
 	// vem-kontext
 	static final URI uri_rFirstName = URI.create("http://xmlns.com/foaf/0.1/#firstName");
 	static final URI uri_rSurname = URI.create("http://xmlns.com/foaf/0.1/#surname");
