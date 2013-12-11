@@ -17,8 +17,8 @@
         <property name="project.version" value="${DSTAMP}"/>
         <property name="project.src.dir" value="${basedir}/src"/>
         <property name="project.src.lib.dir" value="${basedir}/lib"/>
-        <property name="jar.name"
-            value="${project.name}-${project.version}.jar"/>
+    	<property name="jar.name"
+    	            value="${project.name}-${project.version}.jar"/>
         <property name="war.name"
             value="${project.name}-${project.version}.war"/>
         <property name="short.war.name"
@@ -120,7 +120,7 @@
     </target>
 
     <!-- Bygger en WAR -->
-    <target name="war" depends="jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
+    <target name="war" depends="utveckling,jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
         <war excludes="**/web.xml" basedir="${project.build.dir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${project.build.dir}/web/WEB-INF/web.xml">
             <lib dir="${project.build.dir}/lib">
                 <include name="${jar.name}" />
