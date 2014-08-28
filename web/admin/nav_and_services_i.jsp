@@ -35,7 +35,7 @@
 			<a href="apiKeyAdmin">API-nycklar</a>
 			<a href="orgAdmin">Admin org</a>
 			<a href="statistic">Statistik</a>
-			<a href="../sru">SRU-gränssnitt</a>
+			<!-- #4244 -->
 			<a href="map.jsp">Sök med karta</a>
 			<a href="search.jsp">Sök utan karta</a>
 			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>

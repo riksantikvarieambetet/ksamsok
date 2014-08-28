@@ -27,11 +27,6 @@
 
 	<!-- resten laddas vid användning -->
     <servlet>
-        <servlet-name>SRU</servlet-name>
-        <servlet-class>se.raa.ksamsok.sru.SRUServlet</servlet-class>
-    </servlet>
-    
-    <servlet>
     	<servlet-name>sitemap</servlet-name>
     	<servlet-class>se.raa.ksamsok.sitemap.SitemapServlet</servlet-class>
     </servlet>
@@ -56,11 +51,6 @@
     <servlet-mapping>
     	<servlet-name>sitemap</servlet-name>
     	<url-pattern>/sitemap</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>SRU</servlet-name>
-        <url-pattern>/sru</url-pattern>
     </servlet-mapping>
 
 	<!--  matchar "allt" -->

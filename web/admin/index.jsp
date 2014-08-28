@@ -128,9 +128,6 @@
 			}
 %>
 		<hr style="clear: both"/>
-		Enkla exempel med sru (i nytt fönster/flik):<br/>
-		<a target="_blank" href="../sru?operation=searchRetrieve&version=1.1&query=<%=ContentHelper.IX_TEXT%>%3Drunsten">Sökning på text=runsten</a>
-		<br/>
-		<a target="_blank" href="../sru?operation=scan&version=1.1&scanClause=<%=ContentHelper.IX_MUNICIPALITYNAME%>%3D*">Se antal indexerade poster per kommun</a>
+		
 	</body> 
 </html>

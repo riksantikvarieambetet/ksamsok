@@ -32,11 +32,6 @@
 
     <!-- resten laddas vid användning -->
     <servlet>
-        <servlet-name>SRU</servlet-name>
-        <servlet-class>se.raa.ksamsok.sru.SRUServlet</servlet-class>
-    </servlet>
-    
-    <servlet>
         <servlet-name>APIKey</servlet-name>
         <servlet-class>se.raa.ksamsok.apikey.APIKeyServlet</servlet-class>
     </servlet>
@@ -113,11 +108,6 @@
     <servlet-mapping>
         <servlet-name>orgAdmin</servlet-name>
         <url-pattern>/admin/orgAdmin</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>SRU</servlet-name>
-        <url-pattern>/sru</url-pattern>
     </servlet-mapping>
 
     <!--  matchar "allt" -->

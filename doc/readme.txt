@@ -98,10 +98,6 @@ träffarna som xml och på karta om de har koordinater.
 Admin-delen av centralnoden skyddas och användare måste ha rollen "ksamsok" för att få
 använda den vilket måste sättas upp i tomcat-konf på vanligt sätt.
 
-SRU-gränssnittet (som nu är deprecerat) nås genom URL:en http://[HOST][:PORT]/ksamsok/sru och i svaret från den URL:en
-finns info om vilka index som stödjs mm genom en "SRU explain". Se istället www.ksamsok.se för information om API, tex
-http://[HOST][:PORT]/ksamsok/api?method=search&query=text=bil&x-api=test.
-
 Uppslagning ("resolve") av URI/URL till html, museumdat och rdf stödjs också. Genom att anropa
 http://[HOST][:PORT]/ksamsok/[INSTITUTION]/[TJÄNST][/FORMAT]/[ID] kan man antingen i fallet
 rdf få innehållet direkt, eller i övriga bli skickad vidare mha en redirect till respektive

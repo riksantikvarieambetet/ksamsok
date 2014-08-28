@@ -49,8 +49,6 @@
 			</p>
 		</div>
 		<hr/>
-		Enkelt exempel med sru:<br/>
-		<a target="_blank" href="sru?operation=searchRetrieve&version=1.1&query=<%=ContentHelper.IX_TEXT%>%3Drunsten">Sökning på text=runsten</a>
-		<div style="position: absolute; bottom: 1px; right: 1px;"><a style="text-decoration: none; color: black;" title=":)" href="admin/">&#960;</a></div>
+		
 	</body> 
 </html>
