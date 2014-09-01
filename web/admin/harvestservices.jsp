@@ -152,7 +152,7 @@
 				<tr class="<%= className %>">
 					<td><a href="editservice.jsp?serviceId=<%= java.net.URLEncoder.encode(serviceId, "ISO-8859-1") %>"><%= serviceId %></a></td>
 					<td><%= service.getName() %></td>
-					<td><%= cronstring %></td>
+					<td><%= (service.getPaused() == true ? "PAUSAD SKÖRDN." : cronstring) %></td>
 					<td><%= service.getHarvestURL() + (service.getHarvestSetSpec() != null ? " (" + service.getHarvestSetSpec() + ")" : "") %></td>
 					<td><%= lastHarvest %></td>
 					<td><span title="Endast ändringar hämtas bara om tjänsten stödjer det"><%= service.getAlwaysHarvestEverything() ? "Alltid allt" : "Ändringar*" %></span></td>

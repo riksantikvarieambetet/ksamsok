@@ -27,6 +27,9 @@
 			<%= (serviceId == null ? "Ny" : "Redigera") + " tjänst" + uidString %>
 		</title>
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="../jsapi/jquery-cron/cron/jquery-cron.js"></script>
+		<script type="text/javascript" src="../jsapi/main.js"></script>
 	</head>
 	<body class="bgGrayUltraLight">
 <%
@@ -70,7 +73,7 @@
 					<button name="action" value="update">Spara</button>
 					<button name="action" value="delete" onclick="javascript:return confirm('Vill du verkligen ta bort denna tjänst?')">Ta bort</button>
 					<% if (!hsm.isRunning(service)) { %>
-						<button name="action" value="trigger" onclick="javascript:return confirm('Vill du verkligen köra denna tjänst nu?')">Kör</button>
+						<button name="action" id="runService" <%= (service.getPaused() == true ? "disabled" : "") %> value="trigger" onclick="javascript:return confirm('Vill du verkligen köra denna tjänst nu?')">Kör</button>
 						<% if (spoolFile.exists()) { %>
 							<button name="action" value="deletespool" onclick="javascript:return confirm('Vill du verkligen ta bort spoolfilen för denna tjänst och påtvinga ny hämtning av data?')">Ta bort spoolfil</button>
 						<% } %>	
@@ -87,6 +90,7 @@
 					<button name="action" value="new">Skapa</button>
 				<% } %>
 				<button onclick="javascript:window.location='harvestservices.jsp'; return false;">Tillbaka</button>
+				<label><input type="checkbox" <%= (service.getPaused() == true ? "checked" : "") %> class="pauseToggle"> Pausa skördning</label>
 			</div>
 			<hr/>
 			<table>
@@ -137,7 +141,10 @@
 					</tr>
 					<tr>
 						<td><label for="cronstring" class="bold">Cron-schema:</label></td>
-						<td><input id="cronstring" name="cronstring" type="text" value="<%= service.getCronString() %>"/></td>
+						<td>
+							<input id="cronstring" name="cronstring" type="text" value="<%= service.getCronString() %>"/>
+							<input id="paused" name="paused" type="hidden" value="<%= service.getPaused() %>"/>
+						</td>
 					</tr>
 					<tr>
 						<td><label for="harvestURL" class="bold">Skörde-URL:</label></td>

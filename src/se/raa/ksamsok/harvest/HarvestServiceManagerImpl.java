@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.quartz.CronTrigger;
 import org.quartz.InterruptableJob;
 import org.quartz.Job;
@@ -251,8 +252,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    try {
 	    	c = ds.getConnection();
 			pst = c.prepareStatement("insert into harvestservices " +
-					"(serviceId, name, cronstring, harvestURL, harvestSetSpec, serviceType, alwaysEverything, kortnamn) values " +
-					"(?, ?, ?, ?, ?, ?, ?, ?)");
+					"(serviceId, name, cronstring, harvestURL, harvestSetSpec, serviceType, alwaysEverything, kortnamn, paused) values " +
+					"(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			int i = 0;
 			pst.setString(++i, service.getId());
 			pst.setString(++i, service.getName());
@@ -262,6 +263,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setString(++i, service.getServiceType());
 			pst.setBoolean(++i, service.getAlwaysHarvestEverything());
 			pst.setString(++i, service.getShortName());
+			pst.setString(++i, "f");
 
 			pst.executeUpdate();
 			DBUtil.commit(c);
@@ -288,6 +290,15 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			return null;
 		}
 		return innerGetService(serviceId);
+	}
+
+	@Override
+	public JSONObject getServiceAsJSON(String serviceId) throws Exception {
+		if (!checkInit()) {
+			return null;
+		}
+		
+		return new JSONObject(innerGetService(serviceId));
 	}
 
 	/**
@@ -367,6 +378,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		service.setHarvestURL(rs.getString("harvestURL"));
 		service.setHarvestSetSpec(rs.getString("harvestSetSpec"));
 		service.setShortName(rs.getString("kortnamn"));
+		service.setPaused(rs.getBoolean("paused"));
 		Timestamp ts = rs.getTimestamp("lastHarvestDate");
 		if (ts != null) {
 			service.setLastHarvestDate(new Date(ts.getTime()));
@@ -437,7 +449,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					"serviceType = ?, " +
 					"lastHarvestDate = ?, " +
 					"alwaysEverything = ?, " +
-					"kortnamn = ?" +
+					"kortnamn = ?, " +
+					"paused = ?" +
 					"where serviceId = ?");
 			int i = 0;
 			pst.setString(++i, service.getName());
@@ -449,6 +462,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setTimestamp(++i, ts);
 			pst.setBoolean(++i, service.getAlwaysHarvestEverything());
 			pst.setString(++i, service.getShortName());
+			pst.setBoolean(++i, service.getPaused());
 			pst.setString(++i, service.getId());
 			pst.executeUpdate();
 			DBUtil.commit(c);
@@ -734,4 +748,5 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		}
 		return new JobDetail(service.getId(), jobGroup, clazz);
 	}
+	
 }

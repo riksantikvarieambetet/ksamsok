@@ -145,4 +145,16 @@ public interface HarvestService {
 	 * @param shortName kortnamn
 	 */
 	void setShortName(String shortName);
+	
+	/**
+	 * Returnerar pausad status.
+	 * @return
+	 */
+	boolean getPaused();
+	
+	/**
+	 * Sätter pausad för tjänst
+	 * @param pausad motsvarande boolean.
+	 */
+	void setPaused(boolean paused);
 }

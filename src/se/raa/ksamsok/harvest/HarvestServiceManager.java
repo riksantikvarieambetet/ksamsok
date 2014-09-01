@@ -3,6 +3,8 @@ package se.raa.ksamsok.harvest;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import se.raa.ksamsok.harvest.StatusService.Step;
 
 /**
@@ -36,6 +38,15 @@ public interface HarvestServiceManager {
 	 * @throws Exception
 	 */
 	HarvestService getService(String serviceId) throws Exception;
+	
+	/**
+	 * Hämtar böna i json-format för tjänst med inskickad id.
+	 * 
+	 * @param serviceId id
+	 * @return json-objekt eller null
+	 * @throws Exception
+	 */
+	JSONObject getServiceAsJSON(String serviceId) throws Exception;
 
 	/**
 	 * Uppdaterar tjänst i databasen.

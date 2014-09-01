@@ -1,3 +1,5 @@
+<%@page import="org.json.JSONObject"%>
+<%@page import="se.raa.ksamsok.util.AjaxChecker"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <%@page contentType="text/html;charset=UTF-8" %>   
@@ -8,9 +10,7 @@
 <%@page import="java.util.Date" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Locale" %>
-<%@page import="java.io.File"%><html>
-	<body>
-		Jobbar...
+<%@page import="java.io.File"%>
 <%
 	ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 	HarvestServiceManager hsm = ctx.getBean(HarvestServiceManager.class);
@@ -41,6 +41,8 @@
    		service.setHarvestSetSpec(StringUtils.trimToNull(request.getParameter("harvestSetSpec")));
    		service.setAlwaysHarvestEverything(Boolean.valueOf(request.getParameter("alwayseverything")));
    		service.setShortName(request.getParameter("shortName"));
+   		//TODO!!#4446implementera i db-tabell harvestservices paused-kolumn 0/1
+   		service.setPaused(Boolean.valueOf(request.getParameter("paused")));
    		String harvestDate = StringUtils.trimToNull(request.getParameter("harvestDate"));
    		if (harvestDate != null) {
 	   		try {
@@ -48,6 +50,7 @@
 	   		} catch (Exception ignore) {}
    		}
    		hsm.updateService(service);
+   		
    		redirTo = "editservice.jsp?serviceId=" + serviceId;
    	} else if ("new".equals(action)) {
    		service = hsm.newServiceInstance();
@@ -104,7 +107,13 @@
    	} else {
    		throw new RuntimeException("Felaktig action: " + action);
    	}
-   	response.sendRedirect(redirTo);
+   	//TODO!!#4446
+   	if (AjaxChecker.isAjax(request)) {
+		JSONObject json = new JSONObject();
+		json = hsm.getServiceAsJSON(serviceId);
+		out.println(json);
+		out.flush();
+   	} else {
+   		response.sendRedirect(redirTo);	
+   	}
 %>
-  </body> 
-</html>

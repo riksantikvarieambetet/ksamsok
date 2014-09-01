@@ -14,6 +14,7 @@ public class HarvestServiceImpl implements HarvestService {
 	Date firstIndexDate;
 	boolean alwaysHarvestEverything;
 	String shortName;
+	boolean paused;
 
 	public HarvestServiceImpl() {}
 
@@ -99,6 +100,16 @@ public class HarvestServiceImpl implements HarvestService {
 	public void setShortName(String shortName)
 	{
 		this.shortName = shortName;
+	}
+
+	@Override
+	public boolean getPaused() {
+		return paused;
+	}
+
+	@Override
+	public void setPaused(boolean paused) {
+		this.paused = paused;
 	}
 
 }

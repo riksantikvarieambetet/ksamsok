@@ -5,19 +5,18 @@ $(function(){
 	var pausCheck = $('.pauseToggle'),
 		cronValue = $('#cronstring'),
 		currCronValue = $('#cronstring').val(),
+		paused = $('#paused'),
 		formData;
 	
 	pausCheck.on('click', function(){
-		//denna bara en mockup
-		$(cronValue).val(pausCheck.is(':checked') ? "PAUSAD" : currCronValue);
 		$('#runService').prop('disabled', pausCheck.is(':checked') ? true : false);
-		formData = $('form').serialize();
-		formData += '&action=update';
-		console.log(formData);
-		$.post('serviceaction.jsp', formData)
-		.done(function(data){
-			updateForm(data);
-		});
+		$(paused).val(pausCheck.is(':checked') ? "true" : "false");
+//		formData = $('form').serialize();
+//		formData += '&action=update';		
+//		$.post('serviceaction.jsp', formData)
+//		.done(function(data){
+//			updateForm(data);
+//		});
 	});
 	
 	function updateForm (data) {
