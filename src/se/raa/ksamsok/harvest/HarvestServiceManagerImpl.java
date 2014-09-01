@@ -263,7 +263,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			pst.setString(++i, service.getServiceType());
 			pst.setBoolean(++i, service.getAlwaysHarvestEverything());
 			pst.setString(++i, service.getShortName());
-			pst.setString(++i, "f");
+			pst.setBoolean(++i, false);
 
 			pst.executeUpdate();
 			DBUtil.commit(c);
