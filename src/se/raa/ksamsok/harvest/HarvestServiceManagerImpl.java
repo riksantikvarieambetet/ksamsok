@@ -490,7 +490,19 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					logger.warn("Problem when scheduling job for service with ID: " +
 							service.getId(), e);
 				}
-			}			
+			}
+			//Om servicen är pausad (service.getPaused() == true), ta inte med den, i den schemalagda skördningen.
+			if (service.getPaused()) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Remove from schedualed harvest, paused service with ID: " + service.getId());
+				}
+				try {
+					unScheduleJob(service.getId());
+				} catch (Exception e) {
+					logger.warn("Problem when unscheduling paused job for service with ID: " +
+							service.getId(), e);
+				}
+			}
 	    } catch (Exception e) {
 	    	DBUtil.rollback(c);
 	    	logger.error("Error when updating service with ID: " + service.getId(), e);
