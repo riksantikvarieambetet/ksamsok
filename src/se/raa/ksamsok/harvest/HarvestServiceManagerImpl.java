@@ -18,14 +18,17 @@ import org.json.JSONObject;
 import org.quartz.CronTrigger;
 import org.quartz.InterruptableJob;
 import org.quartz.Job;
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.triggers.CronTriggerImpl;
 
 import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -172,7 +175,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void destroy() {
 		if (logger.isInfoEnabled()) {
 			logger.info("Stoppar HarvestServiceManager");
@@ -208,12 +210,12 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 						Job j = jce.getJobInstance();
 						if (j instanceof InterruptableJob) {
 							if (logger.isInfoEnabled()) {
-								logger.info("Destroy, aborting job (quartz): " + jce.getJobDetail().getName());
+								logger.info("Destroy, aborting job (quartz): " + jce.getJobDetail().getKey().getName());
 							}
 							((InterruptableJob) j).interrupt();
 						} else {
 							if (logger.isInfoEnabled()) {
-								logger.info("Destroy, job cannot be aborted: " + jce.getJobDetail().getName());
+								logger.info("Destroy, job cannot be aborted: " + jce.getJobDetail().getKey().getName());
 							}
 						}
 					}
@@ -408,8 +410,15 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	@Override
 	public void triggerReindexAll() throws Exception {
-		JobDetail jd = new JobDetail(SERVICE_INDEX_REINDEX, JOBGROUP_HARVESTERS, ReindexAllJob.class);
-		scheduler.scheduleJob(jd, new SimpleTrigger(SERVICE_INDEX_REINDEX + TRIGGER_SUFFIX, null));
+		JobDetail jd = JobBuilder.newJob(ReindexAllJob.class)
+				.withIdentity(SERVICE_INDEX_REINDEX, JOBGROUP_HARVESTERS)
+				.build();
+		
+		Trigger trigger = TriggerBuilder.newTrigger()
+				.withIdentity(SERVICE_INDEX_REINDEX + TRIGGER_SUFFIX, null)
+				.build();
+		
+		scheduler.scheduleJob(jd, trigger);
 	}
 
 	@Override
@@ -500,6 +509,19 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					unScheduleJob(service.getId());
 				} catch (Exception e) {
 					logger.warn("Problem when unscheduling paused job for service with ID: " +
+							service.getId(), e);
+				}
+			} else if (!service.getPaused()) {
+				try {
+					unScheduleJob(service.getId());
+				} catch (Exception e) {
+					logger.warn("Problem when unscheduling paused job for service with ID: " +
+							service.getId(), e);
+				}
+				try {
+					scheduleJob(service);
+				} catch (Exception e) {
+					logger.warn("Problem when scheduling paused job for service with ID: " +
 							service.getId(), e);
 				}
 			}
@@ -626,28 +648,31 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					}
 				}
 			}
-			Trigger t = new CronTrigger(service.getId() + TRIGGER_SUFFIX, null, cronString);
+			CronTriggerImpl t = new CronTriggerImpl();
+			t.setName(service.getId() + TRIGGER_SUFFIX);
+			t.setGroup(jobGroup);
+			t.setCronExpression(cronString);
+			
 			scheduler.scheduleJob(jd, t);
 		}
 	}
 	private void unScheduleJob(String serviceId) throws SchedulerException  {
-		scheduler.deleteJob(serviceId, JOBGROUP_HARVESTERS);
+		scheduler.deleteJob(getJobDetail(serviceId).getKey());
 	}
 
 	private void triggerJob(String serviceId) throws SchedulerException  {
-		scheduler.triggerJob(serviceId, JOBGROUP_HARVESTERS);
+		scheduler.triggerJob(getJobDetail(serviceId).getKey());
 	}
 
 	private void triggerJob(HarvestService service, Step step) throws SchedulerException  {
 		ss.setStartStep(service, step);
-		scheduler.triggerJob(service.getId(), JOBGROUP_HARVESTERS);
+		scheduler.triggerJob(createJobDetail(service).getKey());
 	}
 
 	private boolean interruptJob(String serviceId) throws SchedulerException  {
-		return scheduler.interrupt(serviceId, JOBGROUP_HARVESTERS);
+		return scheduler.interrupt(getJobDetail(serviceId).getKey());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public String getJobStatus(HarvestService service) {
 		if (scheduler == null) {
@@ -656,14 +681,17 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		CronTrigger t = null;
 		if (!SERVICE_INDEX_REINDEX.equals(service.getId())) {
 			JobDetail jd = null;
+			if (service.getPaused()) {
+				return "Job is paused";
+			}
 			try {
-				jd = scheduler.getJobDetail(service.getId(), JOBGROUP_HARVESTERS);
+				jd = scheduler.getJobDetail(createJobDetail(service).getKey());
 			} catch (Exception ignore) {}
 			if (jd == null) {
 				return "Missing job! Is cron string correct?";
 			}
 			try {
-				t = (CronTrigger) scheduler.getTrigger(service.getId() + TRIGGER_SUFFIX, null);
+				t = (CronTrigger) scheduler.getTrigger(new TriggerKey(service.getId() + TRIGGER_SUFFIX, JOBGROUP_HARVESTERS));
 			} catch (Exception ignore) {}
 			if (t == null) {
 				return "Not scheduled";
@@ -679,7 +707,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		try {
 			List<JobExecutionContext> running = scheduler.getCurrentlyExecutingJobs();
 			for (JobExecutionContext jce: running) {
-				if (service.getId().equals(jce.getJobDetail().getName())) {
+				if (service.getId().equals(jce.getJobDetail().getKey().getName())) {
 					isRunning = "Running since " + ContentHelper.formatDate(jce.getFireTime(), true) + " - ";
 					break;
 				}
@@ -719,14 +747,13 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	// hjälpmetod som kollar om ett jobb körs
-	@SuppressWarnings("unchecked")
 	private boolean isJobRunning(String serviceId) {
 		boolean isRunning = false;
 		if (scheduler != null) {
 			try {
 				List<JobExecutionContext> running = scheduler.getCurrentlyExecutingJobs();
 				for (JobExecutionContext jce: running) {
-					if (serviceId.equals(jce.getJobDetail().getName())) {
+					if (serviceId.equals(jce.getJobDetail().getKey().getName())) {
 						isRunning = true;
 						break;
 					}
@@ -758,7 +785,22 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			logger.error("Could not create job detail for " + service);
 			return null;
 		}
-		return new JobDetail(service.getId(), jobGroup, clazz);
+		return JobBuilder.newJob(clazz)
+				.withIdentity(service.getId(), jobGroup)
+				.build();
+	}
+	
+	// skapar en instans av JobDetail med rätt jobbklass beroende servicens id.
+	private JobDetail getJobDetail(String serviceId) {
+		JobDetail jd = null;
+		try {
+			HarvestService service = getService(serviceId);
+			jd = createJobDetail(service);
+		} catch (Exception e) {
+			logger.error("Could not create job detail for " + e + " from serviceId: " + serviceId);
+		}
+		
+		return jd;
 	}
 	
 }

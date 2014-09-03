@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.log4j.Logger;
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.PersistJobDataAfterExecution;
 import org.quartz.SchedulerException;
-import org.quartz.StatefulJob;
 import org.quartz.UnableToInterruptJobException;
 
 import se.raa.ksamsok.harvest.StatusService.Step;
@@ -28,7 +29,9 @@ import se.raa.ksamsok.lucene.ContentHelper;
 /**
  * Basklass för skördejobb.
  */
-public abstract class HarvestJob implements StatefulJob, InterruptableJob {
+@PersistJobDataAfterExecution
+@DisallowConcurrentExecution
+public abstract class HarvestJob implements InterruptableJob {
 
 	protected final Logger logger;
 	boolean interrupted;
@@ -156,7 +159,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 			HarvestServiceManager hsm = getHarvestServiceManager(ctx);
 			HarvestRepositoryManager hrm = getHarvestRepositoryManager(ctx);
 			ss = getStatusService(ctx);
-			String serviceId = jd.getName();
+			String serviceId = jd.getKey().getName();
 			if (logger.isInfoEnabled()) {
 				logger.info("Running job for " + serviceId);
 			}
@@ -237,7 +240,7 @@ public abstract class HarvestJob implements StatefulJob, InterruptableJob {
 				checkInterrupt(ss, service);
 
 				// skapa tempfil
-				temp = File.createTempFile(jd.getName().substring(0, Math.min(4, serviceId.length())), null);
+				temp = File.createTempFile(jd.getKey().getName().substring(0, Math.min(4, serviceId.length())), null);
 				// hämta data till tempfilen
 				ss.setStatusTextAndLog(service, "Fetching data to temp file");
 				numRecords = performGetRecords(service, sm, format, temp, ss);

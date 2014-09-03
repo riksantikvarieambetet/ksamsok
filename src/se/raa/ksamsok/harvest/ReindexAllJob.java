@@ -45,7 +45,7 @@ public class ReindexAllJob extends HarvestJob {
 			HarvestServiceManager hsm = getHarvestServiceManager(ctx);
 			HarvestRepositoryManager hrm = getHarvestRepositoryManager(ctx);
 			ss = getStatusService(ctx);
-			String serviceId = jd.getName();
+			String serviceId = jd.getKey().getName();
 			if (logger.isInfoEnabled()) {
 				logger.info("Running job to reindex from repo(" + serviceId + ")");
 			}
