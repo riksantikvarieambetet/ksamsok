@@ -55,6 +55,15 @@ public interface HarvestServiceManager {
 	 * @throws Exception
 	 */
 	void updateService(HarvestService service) throws Exception;
+	
+	/**
+	 * Uppdaterar pausat tillstånd för tjänster i databasen.
+	 * Denna metod kan bara köras då ksamsök initieras.
+	 * 
+	 * @param boolean paused
+	 * @throws Exception
+	 */
+	void togglePausedForServices(boolean paused) throws Exception;
 
 	/**
 	 * Uppdaterar endast datumfältet (senaste lyckade skörd) för tjänsten i databasen.
@@ -183,12 +192,6 @@ public interface HarvestServiceManager {
 	 * @return lista med meddelanden
 	 */
 	List<String> getJobLogHistory(HarvestService service);
-
-	/**
-	 * Ger om denna instans är konfad att påtvinga år när tjänster scheduleras
-	 * @return sant om år påtvingas
-	 */
-	boolean isForceYear();
 
 	/**
 	 * Ger om quartz-scheduleraren har startats. I princip är detta samma sak som

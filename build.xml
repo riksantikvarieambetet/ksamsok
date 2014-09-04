@@ -6,6 +6,7 @@
     </description>
 
     <property name="project.build.dir" value="${basedir}/build"/>
+	<property name="classes.dir" value="${basedir}/classes" />
     
     <target name="init" depends="clean">
         <tstamp/>
@@ -298,10 +299,20 @@
     
     <target name="utveckling">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/test"/>
+    	<copy file="${basedir}/conf/test/environment.properties.dev"  
+    	    						toFile="web/WEB-INF/classes/environment.properties" 
+    	    						failonerror="true" 
+    	    						overwrite="true" 
+    	    						verbose="true" />
     </target>
     
     <target name="produktion">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>
+    	<copy file="${basedir}/conf/prod/environment.properties.prod"  
+    						toFile="web/WEB-INF/classes/environment.properties" 
+    						failonerror="true" 
+    						overwrite="true" 
+    						verbose="true" />
     </target>
 	
 	<target name="generateSourcePackage" depends="clean, init" description="This target generates a source code package for public publishing">

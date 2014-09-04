@@ -38,13 +38,6 @@
 		<div>
 			<button onclick="javascript:window.location='editservice.jsp'; return false;">Ny tjänst</button>
 			<span class="paddingWideLeft">JVMInfo: <%=jvmInfo %>
-<%
-		if (hsm.isForceYear()) {
-%>
-			<b style='font-size: 85%;'>OBS! År påtvingas vid schedulering pga konf</b>
-<%
-		}
-%>
 			</span>
 		</div>
 <%

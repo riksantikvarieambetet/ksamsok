@@ -8,11 +8,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.quartz.CronTrigger;
@@ -44,14 +42,15 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	// hur ofta init-försök ska göras vid försenad init
 	private static final int INIT_RETRY_TIME_MS = 60000; // 1 min
 
-	// flagga för att påtvinga år på jobb när de schemaläggs i quartz för att förhindra att de körs på tex testmaskiner
-	// som använder en databas kopierad från drift
-	private boolean forceYear;
+	//flagga för att sätta skördningar till pausat/inte pausat tillstånd, beroende på prod/utv installation, 
+	//i utv. sätts skördning till pausad per default.
+	private String appstate;
+	//sätts till "true" om applikationen är i utveckling/test.
+	private boolean devState = true;
 
 	protected Scheduler scheduler;
 	protected HarvestRepositoryManager hrm;
 	protected StatusService ss;
-	protected String allowNoYearIfDbURLContains;
 
 	// hjälpvariabler för försenad init (db ej åtkomlig vid uppstart)
 	protected volatile long initLastFailedAt;
@@ -59,12 +58,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	protected Thread delayedInit;
 
 	protected HarvestServiceManagerImpl(DataSource ds, HarvestRepositoryManager hrm,
-			StatusService ss, String allowNoYearIfDbURLContains) {
+			StatusService ss, String appstate) {
 		super(ds);
 		this.hrm = hrm;
 		this.ss = ss;
-		this.allowNoYearIfDbURLContains = StringUtils.trimToEmpty(allowNoYearIfDbURLContains).toLowerCase();
-		this.forceYear = true; // default
+		this.appstate = appstate;
 	}
 
 	protected boolean checkInit() {
@@ -75,7 +73,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		if (logger.isInfoEnabled()) {
 			logger.info("Starting HarvestServiceManager");
 		}
-
 		try {
 			innerInit();
 		} catch (Throwable e) {
@@ -116,23 +113,16 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			try {
 				c = ds.getConnection();
 				if (c != null) {
-					String dbUrl = c.getMetaData().getURL();
-					if (dbUrl != null) {
-						forceYear = !dbUrl.toLowerCase().contains(allowNoYearIfDbURLContains);
+					devState = this.appstate.equals("development") ? true : false; 
+					if (devState) {
 						if (logger.isInfoEnabled()) {
 							logger.info("This has been determined to be a " +
-									(forceYear ? "development" : "production") + " instance based on " +
-									"the fact that the jdbc url:");
-							logger.info("'" + dbUrl + "' " + (forceYear ? "does not contain " : "contains ") +
-									"the configured string: '" + allowNoYearIfDbURLContains + "'");
-							logger.info("and the forcing of year when scheduling has thus " +
-									"been set to " + forceYear);
+									(devState ? "development" : "production") + " instance based on " +
+									"the fact that the is built as a such instance.");
+							logger.info("All services has been sat to paused state");
 						}
 					} else {
-						logger.warn("Cannot determine if this is a production or development instance since " +
-								"the jdbc url could not be read from database metadata - " +
-								"assuming development and forcing year when scheduling.");
-						forceYear = true;
+						logger.warn("We are now in production state, all services are 'live', not paused.");
 					}
 				}
 				// hämta ut tidigt (från inner-metoder) för att få ev fel här innan scheduleraren skapats och startats
@@ -149,6 +139,11 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				scheduler.getContext().put(HRM_KEY, hrm);
 				scheduler.start();
 
+				//Om applikationen är i test/utv. sätts alla servicear till pausade.
+				if (devState) {
+					togglePausedForServices(devState);
+				} 
+				
 				for (HarvestService service: services) {
 					scheduleJob(service);
 				}
@@ -240,11 +235,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			logger.error("Problem checking scheduler running status", e);
 		}
 		return result;
-	}
-
-	@Override
-	public boolean isForceYear() {
-		return forceYear;
 	}
 
 	@Override
@@ -533,6 +523,32 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    	DBUtil.closeDBResources(null, pst, c);
 	    }
 	}
+	
+	@Override
+	public void togglePausedForServices(boolean paused) throws Exception {
+		Connection c = null;
+	    PreparedStatement  pst = null;
+	    
+		try {
+			c = ds.getConnection();
+			pst = c.prepareStatement("update harvestservices set " +
+					"paused = ?");
+			int i = 0;
+			pst.setBoolean(++i, paused);
+			pst.executeUpdate();
+			DBUtil.commit(c);
+			if (logger.isInfoEnabled()) {
+				logger.info("Updated paused state for services.");
+			}
+	    } catch (Exception e) {
+	    	DBUtil.rollback(c);
+	    	logger.error("Error when updating paused state for services.", e);
+	    	throw e;
+	    } finally {
+	    	DBUtil.closeDBResources(null, pst, c);
+	    }
+		
+	}
 
 	@Override
 	public void updateServiceDate(HarvestService service, Date date) throws Exception {
@@ -638,16 +654,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		if (service.getCronString() != null) {
 			JobDetail jd = createJobDetail(service);
 			String cronString = service.getCronString();
-			if (forceYear && !SERVICE_INDEX_OPTIMIZE.equals(service.getId())) {
-				StringTokenizer tok = new StringTokenizer(cronString, " ");
-				if (tok.countTokens() == 6) {
-					// inget år
-					cronString += " 2029"; // TODO: räcker 2029..?! :)
-					if (logger.isInfoEnabled()) {
-						logger.info("Forcing year when scheduling service " + service.getId());
-					}
-				}
-			}
 			CronTriggerImpl t = new CronTriggerImpl();
 			t.setName(service.getId() + TRIGGER_SUFFIX);
 			t.setGroup(jobGroup);
@@ -717,7 +723,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		}
 		String extraInfo = "";
 		if (t != null && !t.getCronExpression().equals(service.getCronString())) {
-			if (forceYear && !SERVICE_INDEX_OPTIMIZE.equals(service.getId())) {
+			if (service.getPaused() && !SERVICE_INDEX_OPTIMIZE.equals(service.getId())) {
 				extraInfo = " (NOTE: scheduled with " + t.getCronExpression() + ") ";
 			} else {
 				return isRunning + "Not the same execution schema!";
