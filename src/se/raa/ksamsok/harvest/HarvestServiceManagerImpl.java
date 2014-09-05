@@ -142,22 +142,23 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				//Om applikationen är i test/utv. sätts alla servicear till pausade.
 				if (devState) {
 					togglePausedForServices(devState);
-				} 
+				} else if (!devState) {//Om applikationen är i prod, schemaläggs alla servicar.
+					for (HarvestService service: services) {
+						scheduleJob(service);
+					}
+					// skapa "tjänst" om den inte finns
+					if (indexOptimizeService != null) {
+						scheduleJob(indexOptimizeService);
+					} else {
+						HarvestService service = newServiceInstance();
+						service.setId(SERVICE_INDEX_OPTIMIZE);
+						service.setServiceType(OPTIMIZE_TYPE);
+						service.setName("Index optimizer");
+						service.setCronString("0 30 6 * * ? 2049");
+						createService(service);
+					}
+				}
 				
-				for (HarvestService service: services) {
-					scheduleJob(service);
-				}
-				// skapa "tjänst" om den inte finns
-				if (indexOptimizeService != null) {
-					scheduleJob(indexOptimizeService);
-				} else {
-					HarvestService service = newServiceInstance();
-					service.setId(SERVICE_INDEX_OPTIMIZE);
-					service.setServiceType(OPTIMIZE_TYPE);
-					service.setName("Index optimizer");
-					service.setCronString("0 30 6 * * ? 2049");
-					createService(service);
-				}
 				initOk = true;
 				initLastFailedAt = 0;
 			} catch (Throwable t) {
