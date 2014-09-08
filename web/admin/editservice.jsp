@@ -90,7 +90,10 @@
 					<button name="action" value="new">Skapa</button>
 				<% } %>
 				<button onclick="javascript:window.location='harvestservices.jsp'; return false;">Tillbaka</button>
-				<label><input type="checkbox" <%= (service.getPaused() == true ? "checked" : "") %> class="pauseToggle"> Pausa skördning</label>
+				<label><input type="checkbox" 
+				<%= (service.getPaused() == true ? "checked" : "") %> 
+				<%= (hsm.getJobStatus(service).contains("Running since") ? "disabled" : "") %>
+				class="pauseToggle"> Pausa skördning</label>
 			</div>
 			<hr/>
 			<table>
