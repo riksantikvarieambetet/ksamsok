@@ -37,13 +37,9 @@ $(function(){
 		$('#selector').cron({
 		    initial: "15 4 * * *",
 		    onChange: function() {
-		    	console.log($('#selector').text($(this).cron("value")));
-//		    	cron_field.cron("value", $('#selector').text($(this).cron("value")));
+		    	$('#cronstring').val($(this).cron("value"));
 		    }
 		});
-		
-//		cron_field.cron("value", valueMod);
-
 			
 		/*cron end*/
 		

@@ -149,7 +149,8 @@
 						<td>
 							<input id="cronstring" name="cronstring" type="text" value="<%= service.getCronString() %>"/>
 							<input id="paused" name="paused" type="hidden" value="<%= service.getPaused() %>"/>
-							<div id='selector'></div>
+							<div id='selector'>
+							</div>
 						</td>
 					</tr>
 					<tr>
