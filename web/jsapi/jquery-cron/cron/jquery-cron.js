@@ -157,12 +157,12 @@
     };
 
     var combinations = {
-        "minute" : /^(\*\s){4}\*$/,                    // "* * * * *"
-        "hour"   : /^\d{1,2}\s(\*\s){3}\*$/,           // "? * * * *"
-        "day"    : /^(\d{1,2}\s){2}(\*\s){2}\*$/,      // "? ? * * *"
-        "week"   : /^(\d{1,2}\s){2}(\*\s){2}\d{1,2}$/, // "? ? * * ?"
-        "month"  : /^(\d{1,2}\s){3}\*\s\*$/,           // "? ? ? * *"
-        "year"   : /^(\d{1,2}\s){4}\*$/                // "? ? ? ? *"
+        "minute" : /^(\*\s){2}(\*\s|\?\s)(\*\s)(\*|\?)$/,   //say what?	
+        "hour"   : /^\d{1,2}\s\*\s(\*\s|\?\s)\*\s(\*|\?)$/, //say what?      	
+        "day"    : /^(\d{1,2}\s){2}(\*\s|\?\s)\*\s(\*|\?)$/, 
+        "week"   : /^(\d{1,2}\s){2}(\?\s)\*\s\d{1,2}$/,  	//say what  		
+        "month"  : /^(\d{1,2}\s){3}\*\s\?$/,            	//say what	
+        "year"   : /^(\d{1,2}\s){4}\?$/                 	//say what
     };
 
     // ------------------ internal functions ---------------
@@ -184,7 +184,7 @@
         }
 
         // check format of initial cron value
-        var valid_cron = /^((\d{1,2}|\*)\s){4}(\d{1,2}|\*)$/
+        var valid_cron = /^((\d{1,2}|\*|\?)\s){4}(\d{1,2}|\*|\?)$/
         if (typeof cron_str != "string" || !valid_cron.test(cron_str)) {
             $.error("cron: invalid initial value");
             return undefined;
@@ -197,6 +197,7 @@
         var maxval = [59, 23, 31, 12,  6];
         for (var i = 0; i < d.length; i++) {
             if (d[i] == "*") continue;
+            if (d[i] == "?") continue;
             var v = parseInt(d[i]);
             if (defined(v) && v <= maxval[i] && v >= minval[i]) continue;
 

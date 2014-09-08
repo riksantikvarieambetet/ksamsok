@@ -3,10 +3,50 @@
  */
 $(function(){
 	var pausCheck = $('.pauseToggle'),
-		cronValue = $('#cronstring'),
-		currCronValue = $('#cronstring').val(),
 		paused = $('#paused'),
 		formData;
+	
+		/*cron begin*/
+		
+		
+		var cronStringValue = $('#cronstring').val();
+		var currentCronValueArray = cronStringValue.split(" ");
+		var length = currentCronValueArray.length;
+		var valueString;
+		var curr;
+		if (length == '5') {
+			valueString = currentCronValueArray.toString();
+		} else if (length == '6') {
+			curr = currentCronValueArray.slice(1);
+			valueString = curr.toString();
+			//ta bort sekunden i början
+		} else if (length == '7') {
+			//ta bort sekunden i början och året på slutet
+			curr = currentCronValueArray.slice(1, 5);
+			valueString = curr.toString();
+		}
+		
+		var valueMod = valueString.replace(/,/g, " ");
+		console.log("Pre: " + cronStringValue + "\nAfter: " + valueMod);
+		//database value
+		var dbValue = "1 " + valueMod;
+		
+		
+		var cron_field = $('#selector').cron();
+		
+		$('#selector').cron({
+		    initial: "15 4 * * *",
+		    onChange: function() {
+		    	console.log($('#selector').text($(this).cron("value")));
+//		    	cron_field.cron("value", $('#selector').text($(this).cron("value")));
+		    }
+		});
+		
+//		cron_field.cron("value", valueMod);
+
+			
+		/*cron end*/
+		
 	
 	pausCheck.on('click', function(){
 		$('#runService').prop('disabled', pausCheck.is(':checked') ? true : false);
