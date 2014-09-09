@@ -43,7 +43,7 @@
 		}
 	} else {
 		service = hsm.newServiceInstance();
-		service.setCronString("0 15 3 * * ?");
+		service.setCronString("15 3 * * ?");
 		service.setServiceType("OAI-PMH-SAMSOK");
 		service.setName("namn på tjänst");
 		service.setId("tjänste-id");
@@ -147,7 +147,7 @@
 					<tr>
 						<td><label for="cronstring" class="bold">Cron-schema:</label></td>
 						<td>
-							<input id="cronstring" name="cronstring" type="text" value="<%= service.getCronString() %>"/>
+							<input id="cronstring" name="cronstring" type="hidden" value="<%= service.getCronString() %>"/>
 							<input id="paused" name="paused" type="hidden" value="<%= service.getPaused() %>"/>
 							<div id='selector'>
 							</div>

@@ -47,7 +47,35 @@ public class HarvestServiceImpl implements HarvestService {
 	}
 
 	public void setCronString(String cronString) {
-		this.cronString = cronString;
+		// add seconds and add ? on either week or day
+		// #4445 to make cron string readable 
+		
+		String[] split = cronString.split(" ");
+		String modCronString = cronString;
+		
+		if (split.length == 5) {
+
+			String one = split[0];
+			String two = split[1];
+			String three = split[2];
+			String four = split[3];
+			String five = split[4];
+
+			if (three.equals("*") && (five.equals("*"))) {
+				modCronString = one + " " + two + " " + three + " " + four + " ?";
+			} else if ((three.equals("*")) && (!five.equals("?"))) {
+				// om four är * men six inte är ?, sätt four till ?
+				modCronString = one + " " + two + " ? " + four + " " + five;
+			} else if ((five.equals("*")) && (!three.equals("?"))) {
+				// om six är * men four inte är ?, sätt six till ?
+				modCronString = one + " " + two + " " + three + " " + four + " ?";
+			}
+			
+			modCronString = "0 " + modCronString;
+
+		}
+
+		this.cronString = modCronString;
 	}
 
 	public String getHarvestURL() {
