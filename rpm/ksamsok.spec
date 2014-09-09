@@ -1,4 +1,4 @@
-%define ver 1.1.2
+%define ver 1.1.3
 %define rel 01
 
 Summary: Raö K-Samsök, centralnod (@RPM_SUFFIX@)
