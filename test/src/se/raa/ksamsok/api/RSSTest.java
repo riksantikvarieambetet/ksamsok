@@ -80,7 +80,8 @@ public class RSSTest extends AbstractBaseTest {
 			// title
 			assertParent(channelList.item(0),"title");
 			Node titleValue = channelList.item(0).getFirstChild();
-			assertTrue("K-samsök sökresultat".equals(assertChild(titleValue)));
+			System.out.println("Titlevalue: " + assertChild(titleValue));
+			assertTrue("titleValue var: " + assertChild(titleValue), "K-samsök sökresultat".equals(assertChild(titleValue)));
 			// link
 			assertParent(channelList.item(1),"link");
 			Node linkValue = channelList.item(1).getFirstChild();
