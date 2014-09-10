@@ -5,7 +5,6 @@
         Ant-byggfil, ksamsok.
     </description>
 
-
     <property name="project.build.dir" value="${basedir}/build"/>
 	<property name="classes.dir" value="${basedir}/classes" />
 
