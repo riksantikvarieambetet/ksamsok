@@ -42,7 +42,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 
-public class SearchTest extends AbstractTestBase{
+public class SearchTest extends AbstractBaseTest{
 	ByteArrayOutputStream out;
 	int numberOfTotalHits;
 	int numberOfHits;
