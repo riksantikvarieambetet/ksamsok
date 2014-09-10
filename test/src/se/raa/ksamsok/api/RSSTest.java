@@ -25,7 +25,7 @@ import org.w3c.dom.ProcessingInstruction;
 
 import se.raa.ksamsok.api.method.APIMethod;
 
-public class RSSTest extends AbstractTstBase {
+public class RSSTest extends AbstractBaseTest {
 
 	@Before
 	public void setUp() throws MalformedURLException{

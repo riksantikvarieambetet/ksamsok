@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
-public class GetServiceOrganizationTest extends AbstractTstBase {
+public class GetServiceOrganizationTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();

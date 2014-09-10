@@ -26,7 +26,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
-public class FacetTest extends AbstractTstBase{
+public class FacetTest extends AbstractBaseTest{
 
 	ByteArrayOutputStream out;
 	static HashMap<String, HashMap<String, Integer>> indexes;
