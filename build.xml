@@ -2,7 +2,7 @@
 <project name="ksamsok" basedir="." default="RAA-UTV-RPM">
 
     <description>
-        Ant-byggfil, ksamsok.
+        Ant-byggfil, ksamsok
     </description>
 
     <property name="project.build.dir" value="${basedir}/build"/>
