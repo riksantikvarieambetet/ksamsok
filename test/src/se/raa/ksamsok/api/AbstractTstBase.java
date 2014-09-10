@@ -18,6 +18,7 @@ import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ import com.github.jsonldjava.jena.JenaJSONLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:test/resources/testContext.xml")
-public abstract class AbstractTstBase {
+abstract public class AbstractTstBase {
 
 	@Resource
 	private DataSource dataSource;
@@ -68,7 +69,7 @@ public abstract class AbstractTstBase {
 			JenaJSONLD.init();
 		}
 	}
-	
+
 	/**
 	 * This method assert the base properties of the xml document like verions, encoding, stylesheet and the result, version and echo tag
 	 * @param doc - The document to assert
