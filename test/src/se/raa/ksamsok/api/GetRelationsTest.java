@@ -27,7 +27,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
-public class GetRelationsTest extends AbstractBaseTest {
+public class GetRelationsTest extends AbstractTestBase {
 
 	@Before
 	public void setUp() throws MalformedURLException{
