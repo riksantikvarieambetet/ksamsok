@@ -276,7 +276,8 @@
 
         </javac>
 
-        <junit printsummary="no">
+        <junit printsummary="no" fork="yes">
+        	<jvmarg value="-Dfile.encoding=UTF-8"/>
             <classpath>
                 <path refid="project.test.classpath" />
                 <pathelement location="${project.build.dir}/test" />
