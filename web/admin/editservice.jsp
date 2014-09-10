@@ -29,7 +29,6 @@
 		<link media="all" href="../css/default.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="../jsapi/jquery-cron/cron/jquery-cron.js"></script>
-		<script type="text/javascript" src="../jsapi/jquery-cron/cron/jquery-cron.js"></script>
 		<script type="text/javascript" src="../jsapi/main.js"></script>
 		<link type="text/css" href="../jsapi/jquery-cron/cron/jquery-cron.css" rel="stylesheet" />
 	</head>
