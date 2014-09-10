@@ -29,8 +29,7 @@
         <property name="project.version" value="${DSTAMP}"/>
         <property name="project.src.dir" value="${basedir}/src"/>
         <property name="project.src.lib.dir" value="${basedir}/lib"/>
-    	<property name="jar.name"
-    	            value="${project.name}-${project.version}.jar"/>
+    	<property name="jar.name" value="${project.name}-${project.version}.jar"/>
         <property name="war.name" value="${project.name}-${project.version}.war"/>
         <property name="short.war.name" value="${project.name}.war"/>
 
