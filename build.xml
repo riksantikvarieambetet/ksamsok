@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ksamsok" basedir="." default="RAA-RPM">
+<project name="ksamsok" basedir="." default="RAA-UTV-RPM">
 
     <description>
         Ant-byggfil, ksamsok.
     </description>
 
+
     <property name="project.build.dir" value="${basedir}/build"/>
 	<property name="classes.dir" value="${basedir}/classes" />
-    
-    <target name="init" depends="clean">
+
+    <target name="clean" description="Tar bort build-katalogen.">
+        <mkdir dir="${project.build.dir}"/>
+        <delete includeemptydirs="true" >
+            <fileset dir="${project.build.dir}">
+                <patternset>
+                    <exclude name="*/*.rpm"/>
+                </patternset>
+            </fileset>
+        </delete>
+    </target>
+	
+    <target name="init">
         <tstamp/>
         <property environment="env"/>
 
@@ -18,12 +30,9 @@
         <property name="project.version" value="${DSTAMP}"/>
         <property name="project.src.dir" value="${basedir}/src"/>
         <property name="project.src.lib.dir" value="${basedir}/lib"/>
-    	<property name="jar.name"
-    	            value="${project.name}-${project.version}.jar"/>
-        <property name="war.name"
-            value="${project.name}-${project.version}.war"/>
-        <property name="short.war.name"
-            value="${project.name}.war"/>
+    	<property name="jar.name" value="${project.name}-${project.version}.jar"/>
+        <property name="war.name" value="${project.name}-${project.version}.war"/>
+        <property name="short.war.name" value="${project.name}.war"/>
 
         <!-- för rpm, öka vid ny version... -->
         <property name="major.minor"    value="0.2" />
@@ -121,7 +130,7 @@
     </target>
 
     <!-- Bygger en WAR -->
-    <target name="war" depends="utveckling,jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
+    <target name="war" depends="jar,prepare-war,prepare-war-slave" description="Skapar en WAR för deployment.">
         <war excludes="**/web.xml" basedir="${project.build.dir}/web" destfile="${project.build.dir}/war/${war.name}" webxml="${project.build.dir}/web/WEB-INF/web.xml">
             <lib dir="${project.build.dir}/lib">
                 <include name="${jar.name}" />
@@ -149,17 +158,6 @@
     <target name="build" depends="init" description="Bygger.">
         <antcall target="compile"/>
         <antcall target="conf-copy"/>
-    </target>
-
-    <target name="clean" description="Tar bort build-katalogen.">
-        <mkdir dir="${project.build.dir}"/>
-        <delete includeemptydirs="true" >
-            <fileset dir="${project.build.dir}">
-                <patternset>
-                    <exclude name="*/*.rpm"/>
-                </patternset>
-            </fileset>
-        </delete>
     </target>
 
     <target name="javadoc" depends="init"
