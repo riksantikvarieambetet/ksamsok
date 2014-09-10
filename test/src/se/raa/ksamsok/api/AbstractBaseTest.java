@@ -69,11 +69,6 @@ public class AbstractBaseTest {
 		}
 	}
 	
-	@Test
-	public void dummy(){
-		//This is a dummy test to be able to run junit in ant-task
-	}
-
 	/**
 	 * This method assert the base properties of the xml document like verions, encoding, stylesheet and the result, version and echo tag
 	 * @param doc - The document to assert
