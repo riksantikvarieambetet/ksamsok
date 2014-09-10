@@ -23,7 +23,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
-public class StatisticTest extends AbstractBaseTest {
+public class StatisticTest extends AbstractTestBase {
 	ByteArrayOutputStream out;
 	static int numberOfTermsVal;
 	@Before

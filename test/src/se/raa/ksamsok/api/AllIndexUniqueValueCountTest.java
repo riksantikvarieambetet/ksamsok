@@ -23,7 +23,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
-public class TestAllIndexUniqueValueCount extends AbstractBaseTest {
+public class AllIndexUniqueValueCountTest extends AbstractTestBase {
 	ByteArrayOutputStream out;
 
 	@Before
