@@ -39,7 +39,7 @@ import com.github.jsonldjava.jena.JenaJSONLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:test/resources/testContext.xml")
-public abstract class AbstractTestBase {
+public abstract class AbstractTstBase {
 
 	@Resource
 	private DataSource dataSource;

@@ -30,7 +30,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
-public class GetGeoResourceTest extends AbstractTestBase {
+public class GetGeoResourceTest extends AbstractTstBase {
 
 	
 	private ByteArrayOutputStream out;

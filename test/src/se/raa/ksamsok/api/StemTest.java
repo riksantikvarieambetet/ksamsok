@@ -23,7 +23,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
 
-public class StemTest extends AbstractTestBase {
+public class StemTest extends AbstractTstBase {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
