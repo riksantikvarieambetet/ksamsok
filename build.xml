@@ -34,8 +34,8 @@
         <property name="short.war.name" value="${project.name}.war"/>
 
         <!-- för rpm, öka vid ny version... -->
-        <property name="major.minor"    value="0.2" />
-        <property name="release"        value="1" />
+        <property name="version.major.minor"    value="0.2" />
+        <property name="version.release"        value="1" />
 
         <property name="javac.debug" value="true"/>
         <property name="javac.optimize" value="true"/>
@@ -182,6 +182,8 @@
         <copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec" overwrite="true">
             <filterset>
                 <filter token="RPM_SUFFIX" value="slave"/>
+                <filter token="RPM_VERSION_MAJOR_MINOR" value="${version.major.minor}"/>
+                <filter token="RPM_VERSION_RELEASE" value="${version.release}"/>
             </filterset>
         </copy>
     </target>
@@ -198,6 +200,8 @@
         <copy todir="${project.build.dir}/rpm/SPECS" file="rpm/ksamsok.spec">
             <filterset>
                 <filter token="RPM_SUFFIX" value="master"/>
+                <filter token="RPM_VERSION_MAJOR_MINOR" value="${version.major.minor}"/>
+                <filter token="RPM_VERSION_RELEASE" value="${version.release}"/>
             </filterset>
         </copy>
         

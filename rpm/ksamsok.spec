@@ -1,10 +1,11 @@
-%define ver 1.1.2
-%define rel 01
+#makan - tog bort dom, skjuts med från 
+#%define ver 1.1.2
+#%define rel 01
 
-Summary: Raö K-Samsök, centralnod (@RPM_SUFFIX@)
+Summary: Raa K-Samsök, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@
-Version: %{ver}
-Release: %{rel}
+Version: @RPM_VERSION_MAJOR_MINOR@
+Release: @RPM_VERSION_RELEASE@
 Packager: Börje Lewin <borje.lewin@raa.com>
 Vendor: Raa 
 URL: http://www.raa.se
