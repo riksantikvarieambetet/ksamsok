@@ -133,10 +133,10 @@
 
     // options for day of week
     var str_opt_dow = "";
-    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-                "Friday", "Saturday"];
+    var days = ["Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday", "Sunday"];
     for (var i = 0; i < days.length; i++) {
-        str_opt_dow += "<option value='"+i+"'>" + days[i] + "</option>\n";
+        str_opt_dow += "<option value='"+(i+1)+"'>" + days[i] + "</option>\n";
     }
 
     // options for period
@@ -157,12 +157,12 @@
     };
 
     var combinations = {
-        "minute" : /^(\*\s){2}(\*\s|\?\s)(\*\s)(\*|\?)$/,   //say what?	
-        "hour"   : /^\d{1,2}\s\*\s(\*\s|\?\s)\*\s(\*|\?)$/, //say what?      	
+        "minute" : /^(\*\s){2}(\*\s|\?\s)(\*\s)(\*|\?)$/,   	
+        "hour"   : /^\d{1,2}\s\*\s(\*\s|\?\s)\*\s(\*|\?)$/,       	
         "day"    : /^(\d{1,2}\s){2}(\*\s|\?\s)\*\s(\*|\?)$/, 
-        "week"   : /^(\d{1,2}\s){2}(\?\s)\*\s\d{1,2}$/,  	//say what  		
-        "month"  : /^(\d{1,2}\s){3}\*\s\?$/,            	//say what	
-        "year"   : /^(\d{1,2}\s){4}\?$/                 	//say what
+        "week"   : /^(\d{1,2}\s){2}(\?\s)\*\s\d{1,2}$/,  	  		
+        "month"  : /^(\d{1,2}\s){3}\*\s\?$/,            		
+        "year"   : /^(\d{1,2}\s){4}\?$/                 	
     };
 
     // ------------------ internal functions ---------------
@@ -194,7 +194,7 @@
         var d = cron_str.split(" ");
         //            mm, hh, DD, MM, DOW
         var minval = [ 0,  0,  1,  1,  0];
-        var maxval = [59, 23, 31, 12,  6];
+        var maxval = [59, 23, 31, 12,  7];
         for (var i = 0; i < d.length; i++) {
             if (d[i] == "*") continue;
             if (d[i] == "?") continue;

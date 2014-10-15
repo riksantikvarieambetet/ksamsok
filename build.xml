@@ -274,7 +274,6 @@
             <patternset>
                 <include name="**/*.java"/>
             </patternset>
-
         </javac>
 
         <junit printsummary="no" fork="yes">
