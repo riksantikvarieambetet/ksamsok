@@ -2,11 +2,13 @@ package se.raa.ksamsok.lucene;
 
 import java.net.URI;
 
-
 public class SamsokProtocol {
 
 	static final String uriPrefix = "http://kulturarvsdata.se/";
 	static final String uriPrefixKSamsok = uriPrefix + "ksamsok#";
+	
+	static final String uriPrefixFoaf = "http://xmlns.com/foaf/0.1/";
+	static final String uriPrefixMindswap = "http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#";
 
 	static final URI uri_rdfType = URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 	static final URI uri_samsokEntity = URI.create(uriPrefixKSamsok + "Entity");
@@ -170,25 +172,20 @@ public class SamsokProtocol {
 	static final URI uri_rMunicipalityName = URI.create(uriPrefixKSamsok + "municipalityName");
 	static final URI uri_rProvinceName = URI.create(uriPrefixKSamsok + "provinceName");
 	static final URI uri_rParishName = URI.create(uriPrefixKSamsok + "parishName");
-	static final URI uri_rCountry = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#country");
-	static final URI uri_rCounty = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#county");
-	static final URI uri_rMunicipality = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#municipality");
-	static final URI uri_rProvince = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#province");
-	static final URI uri_rParish = URI.create("http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#parish");
+	static final URI uri_rCountry = URI.create(uriPrefixMindswap + "country");
+	static final URI uri_rCounty = URI.create(uriPrefixMindswap + "county");
+	static final URI uri_rMunicipality = URI.create(uriPrefixMindswap + "municipality");
+	static final URI uri_rProvince = URI.create(uriPrefixMindswap + "province");
+	static final URI uri_rParish = URI.create(uriPrefixMindswap + "parish");
 	static final URI uri_rCoordinates = URI.create(uriPrefixKSamsok + "coordinates");
 	
-	// TODO Det ska inte vara något # mellan slash och property, t.ex. firstName
-	// Ändrar man detta så kommer det beröra alla rdf:r som har implementarer
-	// foaf namespacet felaktig. De kommer inte indexeras
-	// Ett alternativ är att behålla det felaktiga och lägga till det riktiga och indexera "båda"
-	// vem-kontext
-	static final URI uri_rFirstName = URI.create("http://xmlns.com/foaf/0.1/#firstName");
-	static final URI uri_rSurname = URI.create("http://xmlns.com/foaf/0.1/#surname");
-	static final URI uri_rFullName = URI.create("http://xmlns.com/foaf/0.1/#fullName");
-	static final URI uri_rName = URI.create("http://xmlns.com/foaf/0.1/#name");
-	static final URI uri_rGender = URI.create("http://xmlns.com/foaf/0.1/#gender");
-	static final URI uri_rOrganization = URI.create("http://xmlns.com/foaf/0.1/#organization");
-	static final URI uri_rTitle = URI.create("http://xmlns.com/foaf/0.1/#title");
+	static final URI uri_rFirstName = URI.create(uriPrefixFoaf + "firstName");
+	static final URI uri_rSurname = URI.create(uriPrefixFoaf + "surname");
+	static final URI uri_rFullName = URI.create(uriPrefixFoaf + "fullName");
+	static final URI uri_rName = URI.create(uriPrefixFoaf + "name");
+	static final URI uri_rGender = URI.create(uriPrefixFoaf + "gender");
+	static final URI uri_rOrganization = URI.create(uriPrefixFoaf + "organization");
+	static final URI uri_rTitle = URI.create(uriPrefixFoaf + "title");
 	static final URI uri_rNameId = URI.create(uriPrefixKSamsok + "nameId");
 	static final URI uri_rNameAuth = URI.create(uriPrefixKSamsok + "nameAuth");
 
