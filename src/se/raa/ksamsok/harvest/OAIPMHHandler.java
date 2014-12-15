@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.SamsokUriPrefix;
 import se.raa.ksamsok.spatial.GMLDBWriter;
 import se.raa.ksamsok.spatial.GMLInfoHolder;
 import se.raa.ksamsok.spatial.GMLUtil;
@@ -111,6 +112,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	public void startPrefixMapping(String prefix, String uri)
 			throws SAXException {
 		if (mode == COPY) {
+			// correct faulty uri:s from local nodes
+			uri = SamsokUriPrefix.lookupPrefix(uri);
 			prefixMap.put(prefix, uri);
 			try {
 				xxmlw.setPrefix(prefix, uri);
@@ -161,6 +164,8 @@ public class OAIPMHHandler extends DefaultHandler {
 			break;
 		case COPY:
 			// i "copy-mode" kopiera hela taggen som den är
+			// correct faulty uri:s from local nodes
+			uri = SamsokUriPrefix.lookupPrefix(uri);
 			try {
 				xxmlw.writeStartElement(uri, localName);
 			} catch (Exception e) {
@@ -200,6 +205,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String name)
 			throws SAXException {
+		// TODO: if uri is ever used in this method, it needs to be run through SamsokUriPrefix.lookupPrefix
 		switch (mode) {
 		case COPY:
 			if ("metadata".equals(name)) {
