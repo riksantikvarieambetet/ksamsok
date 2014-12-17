@@ -30,7 +30,7 @@ public enum SamsokUriPrefix {
 
 	/**
 	 * Given a uri prefix, looks up the correct one. This is to correct for example uri:s from
-	 * Tekniska muséet, where the foaf uri:s come with an extra "#" in the end.
+	 * Tekniska musÃ©et, where the foaf uri:s come with an extra "#" in the end.
 	 * 
 	 * @param uri a uri to check for correctness
 	 * @return the correct version of the uri
