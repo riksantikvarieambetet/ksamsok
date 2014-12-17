@@ -9,7 +9,7 @@
 	xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#" 
 	xmlns:pres="http://kulturarvsdata.se/presentation#" 
 	xmlns:georss="http://www.georss.org/georss" 
-	xmlns:foaf="http://xmlns.com/foaf/0.1/#" >
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" >
    
   <xs:import namespace="http://kulturarvsdata.se/presentation#" schemaLocation="pres.xsd"/>
   <xs:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
@@ -17,7 +17,7 @@
   <xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml.xsd"/>
   <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
   <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
-  <xs:import namespace="http://xmlns.com/foaf/0.1/#" schemaLocation="foaf.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="foaf.xsd"/>
   
   <!-- obs: maxOccurs="1" minOccurs="1" är defaultvärden -->
   <!-- Entitys struktur --> 
