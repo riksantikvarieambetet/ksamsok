@@ -1,5 +1,7 @@
-%define ver 1.1.2
-%define rel 04
+# define ver and rel via bamboo
+# %define ver 1.1.2
+# %define rel 04
+%define rel NOT_SET
 
 Summary: Raa K-Samsök, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@
