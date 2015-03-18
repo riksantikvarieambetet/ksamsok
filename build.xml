@@ -13,7 +13,7 @@
         <delete includeemptydirs="true" >
             <fileset dir="${project.build.dir}">
                 <patternset>
-                    <exclude name="*/*.rpm"/>
+                    <!--<exclude name="*/*.rpm"/>-->
                 </patternset>
             </fileset>
         </delete>
