@@ -5,8 +5,10 @@
 
 Summary: Raa K-Samsök, centralnod (@RPM_SUFFIX@)
 Name: raa-ksamsok_app_@RPM_SUFFIX@
-Version: @RPM_VERSION_MAJOR_MINOR@
-Release: @RPM_VERSION_RELEASE@
+Version: %{ver}
+Release: %{rel}
+# Version: @RPM_VERSION_MAJOR_MINOR@
+# Release: @RPM_VERSION_RELEASE@
 Packager: Börje Lewin <borje.lewin@raa.com>
 Vendor: Raa 
 URL: http://www.raa.se
