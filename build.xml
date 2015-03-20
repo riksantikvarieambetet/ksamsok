@@ -8,16 +8,18 @@
     <property name="project.build.dir" value="${basedir}/build"/>
 	<property name="classes.dir" value="${basedir}/classes" />
 
-    <target name="clean" description="Tar bort build-katalogen.">
-        <mkdir dir="${project.build.dir}"/>
-        <delete includeemptydirs="true" >
-            <fileset dir="${project.build.dir}">
-                <patternset>
-                    <!--<exclude name="*/*.rpm"/>-->
-                </patternset>
-            </fileset>
-        </delete>
-    </target>
+	<target name="clean" description="Tar bort build-katalogen." depends="builddirexists" if="build.dir.present">
+		<delete includeemptydirs="true">
+	    	<fileset dir="${project.build.dir}">
+	        </fileset>
+	    </delete>
+	</target>
+		
+	<target name="builddirexists">
+		<condition property="build.dir.present">
+			<available file="${project.build.dir}" type="dir"/>
+		</condition>
+	</target>
 	
     <target name="init">
         <tstamp/>

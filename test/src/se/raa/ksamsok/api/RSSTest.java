@@ -49,7 +49,6 @@ public class RSSTest extends AbstractBaseTest {
 		try {
 			rss = apiMethodFactory.getAPIMethod(reqParams, out);
 			rss.performMethod();
-			//System.out.println(out.toString("UTF-8"));
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder=null;
 			docBuilder = docFactory.newDocumentBuilder();
@@ -80,7 +79,6 @@ public class RSSTest extends AbstractBaseTest {
 			// title
 			assertParent(channelList.item(0),"title");
 			Node titleValue = channelList.item(0).getFirstChild();
-			System.out.println("Titlevalue: " + assertChild(titleValue));
 			assertTrue("titleValue var: " + assertChild(titleValue), "K-samsök sökresultat".equals(assertChild(titleValue)));
 			// link
 			assertParent(channelList.item(1),"link");
@@ -99,7 +97,8 @@ public class RSSTest extends AbstractBaseTest {
 				Node title = item.getFirstChild();
 				assertParent(title,"title");
 				Node titleValueEl = title.getFirstChild();
-				assertTrue(reqParams.get("query").contains(assertChild(titleValueEl)));
+				String queryValue = reqParams.get("query").split("=")[1];
+				assertTrue((assertChild(titleValueEl).contains(queryValue)));
 				Node link = title.getNextSibling();
 				assertParent(link,"link");
 				Node linkValueEl = link.getFirstChild();
