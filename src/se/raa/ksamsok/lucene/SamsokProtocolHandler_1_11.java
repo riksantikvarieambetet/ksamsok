@@ -2,6 +2,10 @@ package se.raa.ksamsok.lucene;
 
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIALICENSE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIAMOTIVEWORD;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIATYPE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_BYLINE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_COPYRIGHT;
+
 import static se.raa.ksamsok.lucene.RDFUtil.extractValue;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMedia;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaLicense;
@@ -61,6 +65,31 @@ public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 		extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip);
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
 		extractValue(model, cS, getURIRef(uri_rMediaMotiveWord), null, ip);
+		extractMediaAndImageNodeInformation(cS);
+	}
+	
+	/**
+	 * Extraherar och indexerar information ur en bildnod.
+	 * Överlagra i subklasser vid behov.
+	 * 
+	 * @param cS bildnod
+	 * @throws Exception vid fel
+	 */
+	@Override
+	protected void extractImageNodeInformation(Resource cS) throws Exception {
+		super.extractImageNodeInformation(cS);
+		extractMediaAndImageNodeInformation(cS);
+	}
+
+	private void extractMediaAndImageNodeInformation(Resource cS) throws Exception {
+		// imagenoder och medianoder ska få samma saker indexerat
+		// vi bör fundera på att slå ihop dem i framtida protokoll
+		ip.setCurrent(IX_MEDIATYPE, false); // uri, ingen uppslagning fn
+		extractValue(model, cS, getURIRef(SamsokProtocol.uri_rMediaType), null, ip);
+		ip.setCurrent(ContentHelper.IX_BYLINE, false); 
+		extractValue(model, cS, getURIRef(SamsokProtocol.uri_rByline), null, ip);
+		ip.setCurrent(ContentHelper.IX_COPYRIGHT, false); 
+		extractValue(model, cS, getURIRef(SamsokProtocol.uri_rCopyright), null, ip);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ RUNNING_PID
 .target/
 .cache
 .project
-
+.cached
 *.class
 *.jar
 *.war

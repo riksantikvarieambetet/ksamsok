@@ -208,6 +208,9 @@ public class SamsokProtocol {
 	static final URI uri_rMediaLicense = URI.create(uriPrefixKSamsok + "mediaLicense");
 	static final URI uri_rMediaLicenseUrl = URI.create(uriPrefixKSamsok + "mediaLicenseUrl"); // 1.11
 	static final URI uri_rMediaMotiveWord = URI.create(uriPrefixKSamsok + "mediaMotiveWord");
+	
+	static final URI uri_rByline = URI.create(uriPrefixKSamsok + "byline");
+	static final URI uri_rCopyright = URI.create(uriPrefixKSamsok + "copyright");
 
 	// geo
 	static final String aukt_country_pre = uriPrefix + "resurser/aukt/geo/country#";
