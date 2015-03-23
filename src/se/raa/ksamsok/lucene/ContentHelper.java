@@ -284,6 +284,8 @@ public abstract class ContentHelper {
 	// media-index
 	public static final String IX_MEDIALICENSE = "mediaLicense";
 	public static final String IX_MEDIAMOTIVEWORD = "mediaMotiveWord";
+	public static final String IX_BYLINE = "byline";
+	public static final String IX_COPYRIGHT = "copyright";
 
 	// spatiala specialindex
 	public static final String IX_BOUNDING_BOX = "boundingBox";
@@ -515,6 +517,8 @@ public abstract class ContentHelper {
 		// media
 		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.TOLOWERCASE);
 		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED);
+		addIndex(IX_BYLINE, "Byline för ingående bild/media(uri)", IndexType.TOLOWERCASE);
+		addIndex(IX_COPYRIGHT, "Copyright för ingående bild/media(uri)", IndexType.TOLOWERCASE);
 
 		// övriga
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);

@@ -1,8 +1,18 @@
 package se.raa.ksamsok.lucene;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,8 +24,19 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import org.w3c.dom.Document;
+
+import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.harvest.HarvestServiceImpl;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.SimpleSelector;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 @SuppressWarnings("unused")
 public class Protocol_1_11_Test {
@@ -69,6 +90,54 @@ public class Protocol_1_11_Test {
 		}
 	}
  */
+	
+	
+	@Test
+	public void testParseMedia() throws Exception {
+		String rdf = loadTestFileAsString("media.rdf");
+		Model model = RDFUtil.parseModel(rdf);
+		assertNotNull("Ingen graf, fel på rdf:en?", model);
+
+		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity); 
+				
+		Resource s = null;
+		StmtIterator iter = model.listStatements(selector);
+		while (iter.hasNext()){
+			if (s != null) {
+				throw new Exception("Ska bara finnas en entity i rdf-grafen");
+			}
+			s = iter.next().getSubject();
+		}
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_11(model, s);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		LinkedList<String> relations = new LinkedList<String>();
+		List<String> gmlGeometries = new LinkedList<String>();
+		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+		assertNotNull("Inget doc tillbaka", doc);
+		assertEquals("Fel antal relationer tillbaka", 0, relations.size());
+		
+//		// kontrollera exists-index
+		assertEquals("Felaktigt värde för geodataExists", "j", doc.getFieldValue(ContentHelper.IX_GEODATAEXISTS));
+		assertEquals("Felaktigt värde för thumbnailExists", "j", doc.getFieldValue(ContentHelper.IX_THUMBNAILEXISTS));
+		assertEquals("Felaktigt värde för timeInfoExists", "n", doc.getFieldValue(ContentHelper.IX_TIMEINFOEXISTS));
+		assertEquals("Felaktig objektsupertyp", "Fysiskt ting", doc.getFieldValue(ContentHelper.IX_ITEMSUPERTYPE));
+		Collection<Object> contextSuperTypes = doc.getFieldValues(ContentHelper.IX_CONTEXTSUPERTYPE);
+		assertNotNull("Kontextsupertyper saknas", contextSuperTypes);
+		assertTrue("Kontextsupertypen 'Tillverka' (create) saknas", contextSuperTypes.contains("create"));
+		
+		// kolla mediaindex
+		assertEquals("Felaktigt värde för mediaLicense", "http://kulturarvsdata.se/resurser/License#by", doc.getFieldValue(ContentHelper.IX_MEDIALICENSE));
+		assertEquals("Felaktigt värde för mediaMotiveWord", "Ett mediamotiv", doc.getFieldValue(ContentHelper.IX_MEDIAMOTIVEWORD));
+		assertEquals("Felaktigt värde för byline", "Arbetets Museum", doc.getFieldValue(ContentHelper.IX_BYLINE));
+		assertEquals("Felaktigt värde för copyright", "Arbetets Museum", doc.getFieldValue(ContentHelper.IX_COPYRIGHT));
+		
+	}
+
+
+	
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
 		InputStream is = null;

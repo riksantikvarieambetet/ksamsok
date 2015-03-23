@@ -122,9 +122,12 @@ public class Protocol_1_1_Test {
 		Collection<Object> contextSuperTypeIndexDecadeValues = doc.getFieldValues("create_" + ContentHelper.IX_DECADE);
 		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexDecadeValues);
 		Collection<Object> contextSuperTypeIndexCenturyValues = doc.getFieldValues("create_" + ContentHelper.IX_CENTURY);
-		assertNotNull("Indexet create_decade saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
+		assertNotNull("Indexet create_century saknar värden (kontextsupertyp_indexnamn)", contextSuperTypeIndexCenturyValues);
 	}
 
+		
+	
+	
 	@Test
 	public void testParse_Agent() throws Exception {
 		String rdf = loadTestFileAsString("kung_1.1.rdf");
