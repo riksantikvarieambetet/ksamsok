@@ -15,6 +15,7 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -42,7 +43,7 @@ public class RSSTest extends AbstractBaseTest {
 		//reqParams.put("prettyPrint","true");
 	}
 
-	//@Test
+	@Test
 	public void testRSSSearch(){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		APIMethod rss;
@@ -98,7 +99,11 @@ public class RSSTest extends AbstractBaseTest {
 				assertParent(title,"title");
 				Node titleValueEl = title.getFirstChild();
 				String queryValue = reqParams.get("query").split("=")[1];
-				assertTrue((assertChild(titleValueEl).contains(queryValue)));
+				String assertedChild = assertChild(titleValueEl);
+				
+				// ett av sökresultaten är "Yxa", till skillnad från "yxa"... 
+				assertedChild = StringUtils.lowerCase(assertedChild);
+				assertTrue("Förväntade mig värde " + queryValue + ", men fick " + assertedChild + ", 	i = " + i, (assertedChild.contains(queryValue)));
 				Node link = title.getNextSibling();
 				assertParent(link,"link");
 				Node linkValueEl = link.getFirstChild();
