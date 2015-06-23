@@ -42,7 +42,7 @@ public class RSSTest extends AbstractBaseTest {
 		//reqParams.put("prettyPrint","true");
 	}
 
-	@Test
+	//@Test
 	public void testRSSSearch(){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		APIMethod rss;
