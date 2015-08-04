@@ -12,7 +12,7 @@ import java.util.HashMap;
 public enum SamsokUriPrefix {
 
 	FOAF(SamsokProtocol.uriPrefixFoaf, "http://xmlns.com/foaf"),
-	MINDSWAP(SamsokProtocol.uriPrefixFoaf, "http://www.mindswap.org/2003/owl/geo"),
+	MINDSWAP(SamsokProtocol.uriPrefixMindswap, "http://www.mindswap.org/2003/owl/geo"),
 	KSAMSOK(SamsokProtocol.uriPrefixKSamsok, "http://kulturarvsdata.se/ksamsok"),
 	CIDOC(SamsokProtocol.uriPrefix_cidoc_crm, "http://www.cidoc-crm.org/rdfs/cidoc-crm"),
 	BIO(SamsokProtocol.uriPrefix_bio, "http://purl.org/vocab/bio/0.1");
