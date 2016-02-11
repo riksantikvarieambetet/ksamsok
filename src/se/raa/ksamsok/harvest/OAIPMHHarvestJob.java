@@ -23,11 +23,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import se.raa.ksamsok.lucene.ContentHelper;
 import ORG.oclc.oai.harvester2.verb.Identify;
 import ORG.oclc.oai.harvester2.verb.ListMetadataFormats;
 import ORG.oclc.oai.harvester2.verb.ListRecords;
 import ORG.oclc.oai.harvester2.verb.ListSets;
+import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
  * Basklass för att hantera skörd mha OAI-PMH-protokollet.
@@ -52,6 +52,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 
 	/**
 	 * Skapa med specifika värden (främst för test för att slippa vänta)
+	 * 
 	 * @param maxTries max antal försök
 	 * @param waitSecs sekunder att vänta mellan varje försök
 	 */
@@ -61,8 +62,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	@Override
-	protected List<ServiceFormat> performGetFormats(HarvestService service)
-			throws Exception {
+	protected List<ServiceFormat> performGetFormats(HarvestService service) throws Exception {
 		final List<ServiceFormat> list = new ArrayList<ServiceFormat>();
 		ListMetadataFormats formats = new ListMetadataFormats(service.getHarvestURL());
 		NodeList nodes = formats.getNodeList("/oai20:OAI-PMH/oai20:ListMetadataFormats/oai20:metadataFormat");
@@ -70,16 +70,14 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		for (int i = 0; i < nodes.getLength(); ++i) {
 			Node n = nodes.item(i);
 			f = new ServiceFormat(formats.getSingleString(n, "oai20:metadataPrefix"),
-					formats.getSingleString(n, "oai20:metadataNamespace"),
-					formats.getSingleString(n, "oai20:schema"));
+				formats.getSingleString(n, "oai20:metadataNamespace"), formats.getSingleString(n, "oai20:schema"));
 			list.add(f);
 		}
 		return list;
 	}
 
 	@Override
-	protected List<String> performGetSets(HarvestService service)
-			throws Exception {
+	protected List<String> performGetSets(HarvestService service) throws Exception {
 		final List<String> list = new ArrayList<String>();
 		ListSets sets = new ListSets(service.getHarvestURL());
 		NodeList nodes = sets.getNodeList("/oai20:OAI-PMH/oai20:ListSets/oai20:set");
@@ -93,8 +91,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	@Override
-	protected ServiceMetadata performIdentify(HarvestService service)
-			throws Exception {
+	protected ServiceMetadata performIdentify(HarvestService service) throws Exception {
 		Identify identify = new Identify(service.getHarvestURL());
 		if (!"2.0".equals(identify.getProtocolVersion())) {
 			throw new Exception("Service does not specify 2.0 but " + identify.getProtocolVersion());
@@ -114,17 +111,17 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			}
 		}
 		if (logger.isInfoEnabled()) {
-			logger.info(service.getId() + ", deletedRecord=" + deletedRecord +
-					", granularity=" + granularity);
+			logger.info(service.getId() + ", deletedRecord=" + deletedRecord + ", granularity=" + granularity);
 		}
 		return new ServiceMetadata(deletedRecord, granularity);
 	}
 
 	@Override
-	protected int performGetRecords(HarvestService service, ServiceMetadata sm, ServiceFormat f,
-			File storeTo, StatusService ss) throws Exception {
-		if (logger.isDebugEnabled()) {
-			logger.debug(service.getId() + " - Fetching " + service.getHarvestURL() + ", latest fetch: " + service.getLastHarvestDate());
+	protected int performGetRecords(HarvestService service, ServiceMetadata sm, ServiceFormat f, File storeTo,
+		StatusService ss) throws Exception {
+		if (logger.isInfoEnabled()) {
+			logger.info(service.getId() + " - Fetching " + service.getHarvestURL() + ", latest fetch: " +
+				service.getLastHarvestDate());
 		}
 		OutputStream os = null;
 		try {
@@ -135,19 +132,18 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				SimpleDateFormat df = new SimpleDateFormat(sm.getDateFormatString());
 				df.setTimeZone(TimeZone.getTimeZone("UTC"));
 				// TODO: öka/minska på datum eller tid då from/tom är inclusive? kanske bara
-				//       intressant för datum
-				//       kontrollera om timezone-användningen är korrekt map datumgränser mm
+				// intressant för datum
+				// kontrollera om timezone-användningen är korrekt map datumgränser mm
 				// url-kodning av timestamp behövs om tid är inblandat också
 				String fromDateStr = df.format(service.getLastHarvestDate());
 				fromDate = URLEncoder.encode(fromDateStr, "UTF-8");
 				if (ss != null) {
-					ss.setStatusTextAndLog(service, "Fetching changes since latest harvest (" +
-							fromDateStr + ")");
+					ss.setStatusTextAndLog(service, "Fetching changes since latest harvest (" + fromDateStr + ")");
 				}
 			}
 			os = new BufferedOutputStream(new FileOutputStream(storeTo));
-			return getRecords(service.getHarvestURL(), fromDate, null, f.getPrefix(),
-					service.getHarvestSetSpec(), os, logger, ss, service);
+			return getRecords(service.getHarvestURL(), fromDate, null, f.getPrefix(), service.getHarvestSetSpec(), os,
+				logger, ss, service);
 		} finally {
 			closeStream(os);
 		}
@@ -166,8 +162,8 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	 * @return antal hämtade poster
 	 * @throws Exception
 	 */
-	public int getRecords(String url, String fromDate, String toDate, String metadataPrefix,
-			String setSpec, OutputStream os, Logger logger) throws Exception {
+	public int getRecords(String url, String fromDate, String toDate, String metadataPrefix, String setSpec,
+		OutputStream os, Logger logger) throws Exception {
 		return getRecords(url, fromDate, toDate, metadataPrefix, setSpec, os, logger, null, null);
 	}
 
@@ -186,14 +182,14 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	 * @return antal hämtade poster
 	 * @throws Exception
 	 */
-	public int getRecords(String url, String fromDate, String toDate, String metadataPrefix,
-			String setSpec, OutputStream os, Logger logger, StatusService ss, HarvestService service) throws Exception {
+	public int getRecords(String url, String fromDate, String toDate, String metadataPrefix, String setSpec,
+		OutputStream os, Logger logger, StatusService ss, HarvestService service) throws Exception {
 		int c = 0;
 		int tryNum = 0;
 		int completeListSize = -1;
 		long start = System.currentTimeMillis();
 		String resumptionToken = null;
-		try{
+		try {
 			try {
 				os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes("UTF-8"));
 				os.write("<harvest>\n".getBytes("UTF-8"));
@@ -209,7 +205,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			}
 			while (listRecords != null) {
 				// kolla om vi ska avbryta
-				checkInterrupt(ss, service);//TODO
+				checkInterrupt(ss, service);// TODO
 
 				NodeList errors = listRecords.getErrors();
 				if (errors != null && errors.getLength() > 0) {
@@ -244,35 +240,44 @@ public class OAIPMHHarvestJob extends HarvestJob {
 					}
 				}
 				// räkna antal
-				c += Integer.parseInt(listRecords.getSingleString("count(/oai20:OAI-PMH/oai20:ListRecords/oai20:record)"));
+				c += Integer.parseInt(
+					listRecords.getSingleString("count(/oai20:OAI-PMH/oai20:ListRecords/oai20:record)"));
 				// beräkna ungefär kvarvarande hämtningstid
 				long deltaMillis = System.currentTimeMillis() - start;
-				long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(
-						deltaMillis, c, completeListSize);
+				long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(deltaMillis, c, completeListSize);
 
-				if (logger != null && logger.isDebugEnabled()) {
-					logger.debug((service != null ? service.getId() + ": " : "" ) +
-							"fetched " + c + (completeListSize > 0 ? "/" + completeListSize : "")
-							+ " records so far in " + ContentHelper.formatRunTime(deltaMillis) +
-							(aproxMillisLeft >= 0 ? " (estimated time remaining: " +
-									ContentHelper.formatRunTime(aproxMillisLeft) + ")": "") +
-									", resumptionToken: " + resumptionToken);
+				if (logger != null && logger.isInfoEnabled()) {
+					logger.info((service != null ? service.getId() + ": " : "") + "fetched " + c +
+						(completeListSize > 0 ? "/" + completeListSize : "") + " records so far in " +
+						ContentHelper.formatRunTime(deltaMillis) +
+						(aproxMillisLeft >= 0
+							? " (estimated time remaining: " + ContentHelper.formatRunTime(aproxMillisLeft) + ")"
+							: "") +
+						", resumptionToken: " + resumptionToken);
 				}
 				if (ss != null) {
 
 					// vi uppdaterar bara status här, logg är inte intressant för dessa
-					ss.setStatusText(service, "Fetching data to temp file (fetched " + c +
-							(completeListSize > 0 ? "/" + completeListSize : "") + " records)" +
-							(aproxMillisLeft >= 0 ? ", estimated time remaining: " +
-									ContentHelper.formatRunTime(aproxMillisLeft) : ""));
+					ss.setStatusText(service,
+						"Fetching data to temp file (fetched " + c +
+							(completeListSize > 0 ? "/" + completeListSize : "") + " records)" + (aproxMillisLeft >= 0
+								? ", estimated time remaining: " + ContentHelper.formatRunTime(aproxMillisLeft)
+								: ""));
 				}
 				if (resumptionToken == null || resumptionToken.length() == 0) {
+					if (logger.isInfoEnabled()) {
+						logger.info(service.getId() + " No resumption, harvest done");
+					}
 					listRecords = null;
 				} else {
 					listRecords = null;
 					tryNum = 0;
 					while (listRecords == null) {
 						++tryNum;
+						if (logger.isInfoEnabled()) {
+							logger.info(service.getId() + " Trying, attempt " + String.valueOf(tryNum) +
+								" resumption with token " + resumptionToken);
+						}
 						listRecords = new ListRecords(url, resumptionToken);
 					}
 				}
@@ -285,15 +290,14 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				throw e;
 			}
 			long durationMillis = System.currentTimeMillis() - start;
-			String msg = "Fetched " + c + " records, time: " +
-					ContentHelper.formatRunTime(durationMillis) +
-					" (" + ContentHelper.formatSpeedPerSec(c, durationMillis) + ")";
+			String msg = "Fetched " + c + " records, time: " + ContentHelper.formatRunTime(durationMillis) + " (" +
+				ContentHelper.formatSpeedPerSec(c, durationMillis) + ")";
 			if (ss != null) {
 				ss.setStatusTextAndLog(service, msg);
 			}
 
 			if (logger != null && logger.isInfoEnabled()) {
-				logger.info((service != null ? service.getId() + ": " : "" ) + msg);
+				logger.info((service != null ? service.getId() + ": " : "") + msg);
 			}
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Det är problem med sträng konvertering");
@@ -306,8 +310,9 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		} catch (SAXException e) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			e.printStackTrace(new PrintStream(new ByteArrayOutputStream()));
-			String message ="Det är problem att parsa skördningen\n";
-			message = message + "Url: " +url+", metadataPrefix=" + metadataPrefix + ", fromDate:"+ fromDate+", toDate: "+ toDate + ", resumptionToken="+resumptionToken +"\n";
+			String message = "Det är problem att parsa skördningen\n";
+			message = message + "Url: " + url + ", metadataPrefix=" + metadataPrefix + ", fromDate:" + fromDate +
+				", toDate: " + toDate + ", resumptionToken=" + resumptionToken + "\n";
 			message = message + baos.toString("UTF-8");
 			ss.setErrorTextAndLog(service, message);
 			throw e;
@@ -324,30 +329,32 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	// hantering av flera försök med viss tid mellan varje försök
-	private void failedTry(int tryNum, String resumptionToken, IOException ioe, StatusService ss, HarvestService service) throws Exception {
-    	// TODO: bättre konstanter/värden
-    	//       skilj på connect/error?
-    	//       olika värden per tjänst? smh/va är helt tillståndslösa, oiacat inte 
+	private void failedTry(int tryNum, String resumptionToken, IOException ioe, StatusService ss,
+		HarvestService service) throws Exception {
+		// TODO: bättre konstanter/värden
+		// skilj på connect/error?
+		// olika värden per tjänst? smh/va är helt tillståndslösa, oiacat inte
 		if (tryNum >= maxTries) {
-			throw new Exception("Problem when contacting the service, surrendered after " + maxTries + " tries" + (resumptionToken != null ? " with token: " +
-					resumptionToken : ""), ioe);
+			throw new Exception("Problem when contacting the service, surrendered after " + maxTries + " tries" +
+				(resumptionToken != null ? " with token: " + resumptionToken : ""), ioe);
 		}
-		// TODO: kan message vara så pass stor så att 4k-gränsen överskrids och ger nedanstående databasfel?
-		//       java.sql.SQLException: ORA-01461: can bind a LONG value only for insert into a LONG column
-		//       i så fall måste vi begränsa feltexten, se:
-		//       http://vsadilovskiy.wordpress.com/2007/10/19/ora-01461-can-bind-a-long-value-only-for-insert-into-a-long-column/
-		String msg = "Exception (" + ioe.getMessage() +
-			"), waiting " + waitSecs + " seconds and trying again";
-		logger.warn((service != null ? service.getId() + ": " : "" ) + msg);
+		// TODO: kan message vara så pass stor så att 4k-gränsen överskrids och ger nedanstående
+		// databasfel?
+		// java.sql.SQLException: ORA-01461: can bind a LONG value only for insert into a LONG
+		// column
+		// i så fall måste vi begränsa feltexten, se:
+		// http://vsadilovskiy.wordpress.com/2007/10/19/ora-01461-can-bind-a-long-value-only-for-insert-into-a-long-column/
+		String msg = "Exception (" + ioe.getMessage() + "), waiting " + waitSecs + " seconds and trying again";
+		logger.warn((service != null ? service.getId() + ": " : "") + msg);
 		if (ss != null) {
-    		ss.setStatusTextAndLog(service, msg);
+			ss.setStatusTextAndLog(service, msg);
 		}
 		// sov totalt waitSecs sekunder, men se till att vi är snabba på att avbryta
 		for (int i = 0; i < waitSecs; ++i) {
 			Thread.sleep(1000);
-        	if (ss != null) {
-        		checkInterrupt(ss, service);
-        	}
+			if (ss != null) {
+				checkInterrupt(ss, service);
+			}
 		}
 
 	}
@@ -359,66 +366,79 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		long start = System.currentTimeMillis();
 		try {
 			/*
-			fos = new FileOutputStream(new File("d:/temp/oaipmh.xml"));
-			j.getRecords("http://alcme.oclc.org/oaicat/OAIHandler", null, null, "oai_dc", null, fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/oaipmh.xml"));
+			 * j.getRecords("http://alcme.oclc.org/oaicat/OAIHandler", null, null, "oai_dc", null,
+			 * fos, logger);
+			 */
 			/*
-			fos = new FileOutputStream(new File("d:/temp/kthdiva.xml"));
-			j.getRecords("http://www.diva-portal.org/oai/kth/OAI", null, null, "oai_dc", null, fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/kthdiva.xml"));
+			 * j.getRecords("http://www.diva-portal.org/oai/kth/OAI", null, null, "oai_dc", null,
+			 * fos, logger);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/sudiva.xml"));
-			j.getRecords("http://www.diva-portal.org/oai/su/OAI", null, null, "oai_dc", null, fos, logger);
-			*/
-			
-			/* funkar ej ok - otroooligt seg i alla fall?
-			fos = new FileOutputStream(new File("d:/temp/usc.xml"));
-			j.getRecords("http://oai.usc.edu:8085/oaidp", null, null, "oai_dc", null, fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/sudiva.xml"));
+			 * j.getRecords("http://www.diva-portal.org/oai/su/OAI", null, null, "oai_dc", null,
+			 * fos, logger);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/brighton.xml"));
-			j.getRecords("http://eprints.brighton.ac.uk/perl/oai2", null, null, "oai_dc", null, fos, logger,);
-			*/
+			 * funkar ej ok - otroooligt seg i alla fall? fos = new FileOutputStream(new
+			 * File("d:/temp/usc.xml")); j.getRecords("http://oai.usc.edu:8085/oaidp", null, null,
+			 * "oai_dc", null, fos, logger);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/nils1.xml"));
-			j.getRecords("http://172.20.6.106:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf", "fmi", fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/brighton.xml"));
+			 * j.getRecords("http://eprints.brighton.ac.uk/perl/oai2", null, null, "oai_dc", null,
+			 * fos, logger,);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/utvnod.xml"));
-			j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf", "fmi", fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/nils1.xml"));
+			 * j.getRecords("http://172.20.6.106:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf",
+			 * "fmi", fos, logger);
+			 */
+
+			/*
+			 * fos = new FileOutputStream(new File("d:/temp/utvnod.xml"));
+			 * j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null,
+			 * "ksamsok-rdf", "fmi", fos, logger);
+			 */
 
 			fos = new FileOutputStream(new File("d:/temp/utvnod_kmb.xml"));
-			j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf", "kmb", fos, logger);
+			j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf", "kmb", fos,
+				logger);
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/utvnod_big2.xml"));
-			j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf", "fmi_big", fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/utvnod_big2.xml"));
+			 * j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null,
+			 * "ksamsok-rdf", "fmi_big", fos, logger);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/lokal_fmi2.xml"));
-			j.getRecords("http://127.0.0.1:8080/oaicat/OAIHandler", null, null, "ksamsok-rdf", "fmi", fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/lokal_fmi2.xml"));
+			 * j.getRecords("http://127.0.0.1:8080/oaicat/OAIHandler", null, null, "ksamsok-rdf",
+			 * "fmi", fos, logger);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/shm_context.xml"));
-			j.getRecords("http://mis.historiska.se/OAICat/SHM/context", null, null, "ksamsok-rdf", null, fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/shm_context.xml"));
+			 * j.getRecords("http://mis.historiska.se/OAICat/SHM/context", null, null,
+			 * "ksamsok-rdf", null, fos, logger);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/shm_media.xml"));
-			j.getRecords("http://mis.historiska.se/OAICat/SHM/media", null, null, "ksamsok-rdf", null, fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/shm_media.xml"));
+			 * j.getRecords("http://mis.historiska.se/OAICat/SHM/media", null, null, "ksamsok-rdf",
+			 * null, fos, logger);
+			 */
 
 			/*
-			fos = new FileOutputStream(new File("d:/temp/va_gnm_media.xml"));
-			j.getRecords("http://www9.vgregion.se/vastarvet/OAICat/gnm/media", null, null, "ksamsok-rdf", null, fos, logger);
-			*/
+			 * fos = new FileOutputStream(new File("d:/temp/va_gnm_media.xml"));
+			 * j.getRecords("http://www9.vgregion.se/vastarvet/OAICat/gnm/media", null, null,
+			 * "ksamsok-rdf", null, fos, logger);
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -426,7 +446,8 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			if (fos != null) {
 				try {
 					fos.close();
-				} catch (Exception ignore) {}
+				} catch (Exception ignore) {
+				}
 			}
 		}
 		long durationMillis = System.currentTimeMillis() - start;
