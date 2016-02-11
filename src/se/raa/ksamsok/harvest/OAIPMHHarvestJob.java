@@ -265,7 +265,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 								: ""));
 				}
 				if (resumptionToken == null || resumptionToken.length() == 0) {
-					if (logger.isInfoEnabled()) {
+					if (logger != null && logger.isInfoEnabled()) {
 						logger.info(service.getId() + " No resumption, harvest done");
 					}
 					listRecords = null;
@@ -274,7 +274,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 					tryNum = 0;
 					while (listRecords == null) {
 						++tryNum;
-						if (logger.isInfoEnabled()) {
+						if (logger != null && logger.isInfoEnabled()) {
 							logger.info(service.getId() + " Trying, attempt " + String.valueOf(tryNum) +
 								" resumption with token " + resumptionToken);
 						}
