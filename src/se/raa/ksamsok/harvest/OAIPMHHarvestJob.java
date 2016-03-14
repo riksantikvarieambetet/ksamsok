@@ -201,7 +201,11 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			ListRecords listRecords = null;
 			while (listRecords == null) {
 				++tryNum;
-				listRecords = new ListRecords(url, fromDate, toDate, setSpec, metadataPrefix);
+				try {
+					listRecords = new ListRecords(url, fromDate, toDate, setSpec, metadataPrefix);
+				} catch (IOException e) {
+					failedTry(tryNum, null, e, ss, service);
+				}
 			}
 			while (listRecords != null) {
 				// kolla om vi ska avbryta
@@ -278,7 +282,11 @@ public class OAIPMHHarvestJob extends HarvestJob {
 							logger.info(service.getId() + " Trying, attempt " + String.valueOf(tryNum) +
 								" resumption with token " + resumptionToken);
 						}
-						listRecords = new ListRecords(url, resumptionToken);
+						try {
+							listRecords = new ListRecords(url, resumptionToken);
+						} catch (IOException e) {
+							failedTry(tryNum, null, e, ss, service);
+						}
 					}
 				}
 			}
