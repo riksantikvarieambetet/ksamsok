@@ -752,6 +752,9 @@ public abstract class ContentHelper {
 	 */
 	public static boolean indexSortable(String indexName) {
 		Index index = getIndex(indexName);
+		logger.info((index == null)
+			? ("Sort index " + indexName + " not found")
+			: ("Sort index " + indexName + " is " + index.isSortable()));
 		return index != null && index.isSortable();
 	}
 
