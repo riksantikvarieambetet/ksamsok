@@ -24,14 +24,16 @@ import se.raa.ksamsok.spatial.GMLInfoHolder;
  */
 public abstract class ContentHelper {
 
-	// TODO: inför info om kardinalitet och uri:s ska slås upp eller ej... och automatifiera ip mfl mer?
+	// TODO: inför info om kardinalitet och uri:s ska slås upp eller ej... och automatifiera ip mfl
+	// mer?
 
 	// diverse systemtermer
 	public static final String CONTEXT_SET_SAMSOK = "samsok";
 	public static final String CONTEXT_SET_SAMSOK_IDENTIFIER = "http://kulturarvsdata.se/resurser/contextSets/samsok/1.0/";
 	public static final String CONTEXT_SET_REC = "rec";
 	public static final String CONTEXT_SET_REC_IDENTIFIER = "info:srw/cql-context-set/2/rec-1.1";
-	public static final String IX_REC_IDENTIFIER = "identifier"; // identifierare sru1.2 samma som itemId
+	public static final String IX_REC_IDENTIFIER = "identifier"; // identifierare sru1.2 samma som
+																	// itemId
 
 	// systeminterna indexnamn
 
@@ -43,7 +45,7 @@ public abstract class ContentHelper {
 	public static final String I_IX_LON = "_lon";
 	public static final String I_IX_LAT = "_lat";
 	public static final String I_IX_RELATIONS = "_relations";
-	
+
 	// generella
 
 	public static final String IX_TEXT = "text"; // fritext för "alla" fält
@@ -83,11 +85,13 @@ public abstract class ContentHelper {
 	public static final String IX_THEME = "theme";
 
 	// tider, platser, personer
-	//	Sammanhang enligt ändlig lista. Sammanhanget gäller för tider, platser och personer/organisationer. Listan på sammanhang hittar du här: http://kulturarvsdata.se/resurser/Context
+	// Sammanhang enligt ändlig lista. Sammanhanget gäller för tider, platser och
+	// personer/organisationer. Listan på sammanhang hittar du här:
+	// http://kulturarvsdata.se/resurser/Context
 	public static final String IX_CONTEXTLABEL = "contextLabel";
 	public static final String IX_CONTEXTTYPE = "contextType";
 	public static final String IX_CONTEXTSUPERTYPE = "contextSuperType";
-	
+
 	// tider
 	public static final String IX_TIME = "time"; // fritext i alla tidsfält
 	public static final String IX_FROMTIME = "fromTime";
@@ -99,7 +103,7 @@ public abstract class ContentHelper {
 	public static final String IX_PERIODAUTH = "periodAuth";
 	public static final String IX_EVENTNAME = "eventName";
 	public static final String IX_EVENTAUTH = "eventAuth";
-	//public static final String IX_TIMETEXT = "timeText";
+	// public static final String IX_TIMETEXT = "timeText";
 
 	// platser
 	public static final String IX_PLACE = "place"; // fritext i alla platsfält
@@ -118,7 +122,7 @@ public abstract class ContentHelper {
 	public static final String IX_CADASTRALUNIT = "cadastralUnit";
 	public static final String IX_PLACETERMID = "placeTermId";
 	public static final String IX_PLACETERMAUTH = "placeTermAuth";
-	//public static final String IX_COORDINATES = "coordinates";
+	// public static final String IX_COORDINATES = "coordinates";
 
 	// personer
 	public static final String IX_ACTOR = "actor"; // alla fält sammanslagna (ej fritext dock!)
@@ -204,7 +208,8 @@ public abstract class ContentHelper {
 	public static final String IX_PUBLISHER = "publisher";
 	public static final String IX_PUBLICIST = "publicist";
 	public static final String IX_MUSICIAN = "musician";
-	public static final String IX_ACTORACTRESS = "actorActress"; // ACTOR fanns redan så detta är en specialare...
+	public static final String IX_ACTORACTRESS = "actorActress"; // ACTOR fanns redan så detta är en
+																	// specialare...
 	public static final String IX_PRINTER = "printer";
 	public static final String IX_SIGNER = "signer";
 	public static final String IX_FINDER = "finder";
@@ -229,10 +234,10 @@ public abstract class ContentHelper {
 	public static final String IX_PICTUREEDITOR = "pictureEditor";
 	public static final String IX_EMPLOYER = "employer";
 	public static final String IX_MARRIEDTO = "marriedTo";
-	
-	//roller inverser inte index men konstanter
-	public static final String CLIENT_OF ="clientOf";
-	public static final String COMPOSER_OF ="composerOf";
+
+	// roller inverser inte index men konstanter
+	public static final String CLIENT_OF = "clientOf";
+	public static final String COMPOSER_OF = "composerOf";
 	public static final String AUTHOR_OF = "authorOf";
 	public static final String ARCHITECT_OF = "architectOf";
 	public static final String INVENTOR_OF = "inventorOf";
@@ -304,13 +309,13 @@ public abstract class ContentHelper {
 	public static final String IX_DECADE = "decade";
 
 	// alla index
-	private static final HashMap<String,Index> indices = new LinkedHashMap<String,Index>();
+	private static final HashMap<String, Index> indices = new LinkedHashMap<String, Index>();
 	// publika index
 	private static final List<Index> publicIndices = new ArrayList<Index>();
 
 	// meddelanden om eventuella problem vid tolkning av tjänsteinnehållet, tex att en konstant
 	// inte kunde slås upp etc, och antal ggr problemet förekom - främst för utv/debug
-	private static final ThreadLocal<Map<String,Integer>> problemMessages = new ThreadLocal<Map<String,Integer>>();
+	private static final ThreadLocal<Map<String, Integer>> problemMessages = new ThreadLocal<Map<String, Integer>>();
 
 	static {
 		// implementerade index
@@ -319,213 +324,231 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMID, "Identifierare", IndexType.VERBATIM);
 		addIndex(IX_SERVICENAME, "Ursprungstjänst", IndexType.TOLOWERCASE);
 		addIndex(IX_SERVICEORGANISATION, "Ursprungsorganisation", IndexType.TOLOWERCASE);
-		addIndex(IX_TEXT, "Fritext, generellt", IndexType.ANALYZED);
-		addIndex(IX_STRICT, "Fritext, generellt - ostammat", IndexType.TOLOWERCASE);
-		addIndex(IX_SUBJECT, "Ämnesavgränsning", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE);
+		addIndex(IX_TEXT, "Fritext, generellt", IndexType.ANALYZED, false);
+		addIndex(IX_STRICT, "Fritext, generellt - ostammat", IndexType.TOLOWERCASE, false);
+		addIndex(IX_SUBJECT, "Ämnesavgränsning", IndexType.TOLOWERCASE, false); // uri (översatt)
+		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE, false);
 		addIndex(IX_DATAQUALITY, "Beskrivningsnivå", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.TOLOWERCASE); // uri // TODO: detta stämmer ej(?)
+		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.TOLOWERCASE, false); // uri //
+																							// TODO:
+		// detta stämmer
+		// ej(?)
 		addIndex(IX_PROTOCOLVERSION, "Protokollversion för posten", IndexType.VERBATIM); // flyttal
 
 		// objekt
 		addIndex(IX_ITEM, "Fritext i entitetsfält", IndexType.ANALYZED);
 		addIndex(IX_ITEMTYPE, "Typ av objekt", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_ITEMSUPERTYPE, "Huvudtyp av objekt", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_ITEMCLASS, "Objektets klass, kategorisering eller klassifikation", IndexType.TOLOWERCASE); // uri
-		addIndex(IX_ITEMCLASSNAME, "Klass eller kategori, om det inte finns en klassificeringsresurs", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMNAME, "Objektets huvudsakliga benämning eller sakord", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMSPECIFICATION, "Modellbeteckning eller liknande", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMTITLE, "Titel eller verksnamn", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMLABEL, "Huvudsaklig beskrivning av objektet - klassifikation, sakord el dyl", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMDESCRIPTION, "Fritext i beskrivningsfält", IndexType.ANALYZED);
-		addIndex(IX_ITEMKEYWORD, "Nyckelord", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMMOTIVEWORD, "Ord som förekommer som beskrivning av ett motiv i ett bild- eller målningsobjekt", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMMATERIAL, "Material som objektet består av", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMTECHNIQUE, "Teknik för att producera objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMSTYLE, "Stil som präglar objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMCOLOR, "Färg som präglar objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMNUMBER, "Inventarienummer eller annan identifikation av objektet", IndexType.TOLOWERCASE);
-		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet (uri)", IndexType.TOLOWERCASE); // typ? uri -> verbatim, kod -> lowercase
+		addIndex(IX_ITEMCLASS, "Objektets klass, kategorisering eller klassifikation", IndexType.TOLOWERCASE, false); // uri
+		addIndex(IX_ITEMCLASSNAME, "Klass eller kategori, om det inte finns en klassificeringsresurs",
+			IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMNAME, "Objektets huvudsakliga benämning eller sakord", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMSPECIFICATION, "Modellbeteckning eller liknande", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMTITLE, "Titel eller verksnamn", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMLABEL, "Huvudsaklig beskrivning av objektet - klassifikation, sakord el dyl",
+			IndexType.TOLOWERCASE);
+		addIndex(IX_ITEMDESCRIPTION, "Fritext i beskrivningsfält", IndexType.ANALYZED, false);
+		addIndex(IX_ITEMKEYWORD, "Nyckelord", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMMOTIVEWORD, "Ord som förekommer som beskrivning av ett motiv i ett bild- eller målningsobjekt",
+			IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMMATERIAL, "Material som objektet består av", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMTECHNIQUE, "Teknik för att producera objektet", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMSTYLE, "Stil som präglar objektet", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMCOLOR, "Färg som präglar objektet", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ITEMNUMBER, "Inventarienummer eller annan identifikation av objektet", IndexType.TOLOWERCASE,
+			false);
+		addIndex(IX_ITEMLICENSE, "Licens för användning av objektet (uri)", IndexType.TOLOWERCASE); // typ?
+																									// uri
+																									// ->
+																									// verbatim,
+																									// kod
+																									// ->
+																									// lowercase
 		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
-		addIndex(IX_THEME, "Tema", IndexType.TOLOWERCASE);
-		
+		addIndex(IX_THEME, "Tema", IndexType.TOLOWERCASE, false);
+
 		// plats
-		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_PLACETERMID, "Plats-ID hos auktoritet [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_PLACETERMAUTH, "Auktoritet för plats-ID [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_CONTINENTNAME, "Kontinent [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_COUNTRYNAME, "Land, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_COUNTYNAME, "Län, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_MUNICIPALITYNAME, "Kommun, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_PROVINCENAME, "Landskap, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_PARISHNAME, "Socken, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_COUNTRY, "Land, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_COUNTY, "Län, kod [*]",IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_MUNICIPALITY, "Kommun, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_PROVINCE, "Landskap, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_PARISH, "Socken, kod [*]", IndexType.TOLOWERCASE); // uri (översatt)
-		addIndex(IX_PLACE, "Var - Fritext i geografiska data", IndexType.ANALYZED);
+		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_PLACETERMID, "Plats-ID hos auktoritet [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_PLACETERMAUTH, "Auktoritet för plats-ID [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_CONTINENTNAME, "Kontinent [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_COUNTRYNAME, "Land, namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_COUNTYNAME, "Län, namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_MUNICIPALITYNAME, "Kommun, namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_PROVINCENAME, "Landskap, namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_PARISHNAME, "Socken, namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_COUNTRY, "Land, kod [*]", IndexType.TOLOWERCASE, false); // uri (översatt)
+		addIndex(IX_COUNTY, "Län, kod [*]", IndexType.TOLOWERCASE, false); // uri (översatt)
+		addIndex(IX_MUNICIPALITY, "Kommun, kod [*]", IndexType.TOLOWERCASE, false); // uri
+																					// (översatt)
+		addIndex(IX_PROVINCE, "Landskap, kod [*]", IndexType.TOLOWERCASE, false); // uri (översatt)
+		addIndex(IX_PARISH, "Socken, kod [*]", IndexType.TOLOWERCASE, false); // uri (översatt)
+		addIndex(IX_PLACE, "Var - Fritext i geografiska data", IndexType.ANALYZED, false);
 
 		// spatiala virtuella index
 		String coordExplain = "koordinater separerade med mellanslag i (nästan) valfritt format " +
-		"((EPSG:3006 (SWEREF99 TM) är default, OBS att x,y förutsätts! Giltiga värden förutom " +
-		"EPSG:XXXX är '" + SWEREF99_3006 + "' (EPSG:3006 - SWEREF99 TM), " +
-		"'" + RT90_3021 + "' (EPSG:3021 - RT90 2.5 gon V) och " +
-		"'" + WGS84_4326 + "' (EPSG:4326))";
-		addIndex(IX_BOUNDING_BOX, "Spatial sökning med omslutande rektangel, " +
-				coordExplain + " - ex " +
-				IX_BOUNDING_BOX + "=/EPSG:3021 \"1628000.0 6585000.0 1628490.368 6585865.547\" eller " +
-				IX_BOUNDING_BOX + "=/" + RT90_3021 + "\"1628000.0 6585000.0 1628490.368 6585865.547\"",
-				IndexType.SPATIAL_VIRTUAL);
-		addIndex(IX_POINT_DISTANCE, "Spatial närhetssökning med angiven punkt och radie, " +
-				coordExplain + " och radien i km - ex " +
-				IX_POINT_DISTANCE + "=/EPSG:3021 \"1628000.0 6585000.0 3.5\" eller " +
-				IX_POINT_DISTANCE + "=/" + RT90_3021 + " \"1628000.0 6585000.0 3.5\"",
-				IndexType.SPATIAL_VIRTUAL);
+			"((EPSG:3006 (SWEREF99 TM) är default, OBS att x,y förutsätts! Giltiga värden förutom " + "EPSG:XXXX är '" +
+			SWEREF99_3006 + "' (EPSG:3006 - SWEREF99 TM), " + "'" + RT90_3021 + "' (EPSG:3021 - RT90 2.5 gon V) och " +
+			"'" + WGS84_4326 + "' (EPSG:4326))";
+		addIndex(IX_BOUNDING_BOX,
+			"Spatial sökning med omslutande rektangel, " + coordExplain + " - ex " + IX_BOUNDING_BOX +
+				"=/EPSG:3021 \"1628000.0 6585000.0 1628490.368 6585865.547\" eller " + IX_BOUNDING_BOX + "=/" +
+				RT90_3021 + "\"1628000.0 6585000.0 1628490.368 6585865.547\"",
+			IndexType.SPATIAL_VIRTUAL, false);
+		addIndex(IX_POINT_DISTANCE,
+			"Spatial närhetssökning med angiven punkt och radie, " + coordExplain + " och radien i km - ex " +
+				IX_POINT_DISTANCE + "=/EPSG:3021 \"1628000.0 6585000.0 3.5\" eller " + IX_POINT_DISTANCE + "=/" +
+				RT90_3021 + " \"1628000.0 6585000.0 3.5\"",
+			IndexType.SPATIAL_VIRTUAL, false);
 
 		// person
-		addIndex(IX_FIRSTNAME, "Förnamn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_SURNAME, "Efternamn [*]", IndexType.TOLOWERCASE);
-		//addIndex(IX_NAME, "Namn", IndexType.TOLOWERCASE); // ej index, bara i med fritext
-		addIndex(IX_GENDER, "Kön [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_FULLNAME, "Fullständigt namn ([förnamn] [efternamn]) [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_ORGANIZATION, "Organisation [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_TITLE, "Titel (person) [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_NAMEAUTH, "Auktoritet för namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_ACTOR, "Vem - Fritext i person- och organisationsdata", IndexType.ANALYZED);
+		addIndex(IX_FIRSTNAME, "Förnamn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_SURNAME, "Efternamn [*]", IndexType.TOLOWERCASE, false);
+		// addIndex(IX_NAME, "Namn", IndexType.TOLOWERCASE); // ej index, bara i med fritext
+		addIndex(IX_GENDER, "Kön [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_FULLNAME, "Fullständigt namn ([förnamn] [efternamn]) [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ORGANIZATION, "Organisation [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_TITLE, "Titel (person) [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_NAMEAUTH, "Auktoritet för namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_ACTOR, "Vem - Fritext i person- och organisationsdata", IndexType.ANALYZED, false);
 
 		// tid
-		addIndex(IX_FROMTIME, "Tidpunkt eller start på tidsintervall (årtal enligt ISO 8601) [*]", IndexType.ISO8601DATEYEAR);
-		addIndex(IX_TOTIME, "Tidpunkt eller slut på tidsintervall (årtal enligt ISO 8601) [*]", IndexType.ISO8601DATEYEAR);
-		addIndex(IX_FROMPERIODNAME, "Tidpunkt eller start på tidsintervall, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_TOPERIODNAME, "Tidpunkt eller slut på tidsintervall, namn [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_FROMPERIODID, "Tidpunkt eller start på tidsintervall, kod [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_TOPERIODID, "Tidpunkt eller slut på tidsintervall, kod [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_EVENTNAME, "Namn på en händelse [*]", IndexType.TOLOWERCASE);
-		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.TOLOWERCASE);
-		//addIndex(IX_TIMETEXT, "Annan tidsuppgift [*]", IndexType.ANALYZED);
-		addIndex(IX_TIME, "När - Fritext i tidsdata", IndexType.ANALYZED);
+		addIndex(IX_FROMTIME, "Tidpunkt eller start på tidsintervall (årtal enligt ISO 8601) [*]",
+			IndexType.ISO8601DATEYEAR, false);
+		addIndex(IX_TOTIME, "Tidpunkt eller slut på tidsintervall (årtal enligt ISO 8601) [*]",
+			IndexType.ISO8601DATEYEAR, false);
+		addIndex(IX_FROMPERIODNAME, "Tidpunkt eller start på tidsintervall, namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_TOPERIODNAME, "Tidpunkt eller slut på tidsintervall, namn [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_FROMPERIODID, "Tidpunkt eller start på tidsintervall, kod [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_TOPERIODID, "Tidpunkt eller slut på tidsintervall, kod [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_EVENTNAME, "Namn på en händelse [*]", IndexType.TOLOWERCASE, false);
+		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.TOLOWERCASE, false);
+		// addIndex(IX_TIMETEXT, "Annan tidsuppgift [*]", IndexType.ANALYZED);
+		addIndex(IX_TIME, "När - Fritext i tidsdata", IndexType.ANALYZED, false);
 
 		// context
-		addIndex(IX_CONTEXTLABEL, "Sammanhang enligt ändlig lista, beskrivning", IndexType.TOLOWERCASE);
-		addIndex(IX_CONTEXTTYPE, "Sammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE);
-		addIndex(IX_CONTEXTSUPERTYPE, "Huvudsammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE);
+		addIndex(IX_CONTEXTLABEL, "Sammanhang enligt ändlig lista, beskrivning", IndexType.TOLOWERCASE, false);
+		addIndex(IX_CONTEXTTYPE, "Sammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE, false);
+		addIndex(IX_CONTEXTSUPERTYPE, "Huvudsammanhang enligt ändlig lista, nyckelvärde", IndexType.TOLOWERCASE, false);
 
 		// relationer TODO: fixa beskrivningstexterna när Börje har skickat dem
-		addIndex(IX_RELURI, "Är relaterat på något sätt till annat objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_CONTAINSINFORMATIONABOUT, "Har information om (uri)", IndexType.VERBATIM);
-		addIndex(IX_CONTAINSOBJECT, "Innehåller objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISCONTAINEDIN, "Innehålls i objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASBEENUSEDIN, "Används i (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASCHILD, "Har underordnat objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASFIND, "Har fynd (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASIMAGE, "Har bild (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASOBJECTEXAMPLE, "Har objektexempel (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISOBJECTEXAMPLEFOR, "Är objektexempel för (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASPARENT, "Har överordnat objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASPART, "Har del (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISDESCRIBEDBY, "Beskrivs av (uri)", IndexType.VERBATIM);
-		addIndex(IX_DESCRIBES, "Beskriver (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISFOUNDIN, "Finns i (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISPARTOF, "Är del av annat objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISRELATEDTO, "Är relaterat till annat objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISVISUALIZEDBY, "Visualiseras av annat objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_SAMEAS, "Samma som (uri)", IndexType.VERBATIM);
-		addIndex(IX_VISUALIZES, "Visualiserar objekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISMENTIONEDBY, "Nämns av (uri)", IndexType.VERBATIM);
-		addIndex(IX_MENTIONS, "Nämner (uri)", IndexType.VERBATIM);
-		addIndex(IX_ADDEDTOINDEXDATE, "Datum posten lades till i indexet (yyyy-mm-dd) - " + 
+		addIndex(IX_RELURI, "Är relaterat på något sätt till annat objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_CONTAINSINFORMATIONABOUT, "Har information om (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_CONTAINSOBJECT, "Innehåller objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISCONTAINEDIN, "Innehålls i objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASBEENUSEDIN, "Används i (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASCHILD, "Har underordnat objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASFIND, "Har fynd (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASIMAGE, "Har bild (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASOBJECTEXAMPLE, "Har objektexempel (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISOBJECTEXAMPLEFOR, "Är objektexempel för (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASPARENT, "Har överordnat objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASPART, "Har del (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISDESCRIBEDBY, "Beskrivs av (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_DESCRIBES, "Beskriver (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISFOUNDIN, "Finns i (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISPARTOF, "Är del av annat objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISRELATEDTO, "Är relaterat till annat objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISVISUALIZEDBY, "Visualiseras av annat objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_SAMEAS, "Samma som (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_VISUALIZES, "Visualiserar objekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISMENTIONEDBY, "Nämns av (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_MENTIONS, "Nämner (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ADDEDTOINDEXDATE,
+			"Datum posten lades till i indexet (yyyy-mm-dd) - " +
 				"obs att detta datum är ungefärligt då det beror på skördefrekvens för " +
-				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " +
-				IX_CREATEDDATE + ")", IndexType.VERBATIM);
+				"källtjänsten, beräknas som max(källtjänstens första indexeringsdatum, " + IX_CREATEDDATE + ")",
+			IndexType.VERBATIM);
 
 		// cidoc-crm
-		addIndex(IX_HASFORMERORCURRENTOWNER, "Har nuvarande eller tidigare ägare (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASFORMERORCURRENTKEEPER, "Har nuvarande eller tidigare förvaltare (uri)", IndexType.VERBATIM);
-		addIndex(IX_WASCREATEDBY, "Skapades av (uri)", IndexType.VERBATIM);
-		addIndex(IX_RIGHTHELDBY, "Rättigheter ägs av (uri)", IndexType.VERBATIM);
-		addIndex(IX_WASPRESENTAT, "Var närvarande vid händelse (uri)", IndexType.VERBATIM);
-		addIndex(IX_OCCUREDINTHEPRESENCEOF, "Händelsen skedde i närvaro av (uri)", IndexType.VERBATIM);
-		addIndex(IX_HADPARTICIPANT, "Händelsen hade deltagare (uri)", IndexType.VERBATIM);
-		addIndex(IX_PARTICIPATEDIN, "Deltog i händelse (uri)", IndexType.VERBATIM);
-		addIndex(IX_ISCURRENTORFORMERMEMBEROF, "Är eller var tidigare medlem av (uri)", IndexType.VERBATIM);
-		addIndex(IX_HASCURRENTORFORMERMEMBER, "Har eller hade medlem (uri)", IndexType.VERBATIM);
+		addIndex(IX_HASFORMERORCURRENTOWNER, "Har nuvarande eller tidigare ägare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASFORMERORCURRENTKEEPER, "Har nuvarande eller tidigare förvaltare (uri)", IndexType.VERBATIM,
+			false);
+		addIndex(IX_WASCREATEDBY, "Skapades av (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_RIGHTHELDBY, "Rättigheter ägs av (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_WASPRESENTAT, "Var närvarande vid händelse (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_OCCUREDINTHEPRESENCEOF, "Händelsen skedde i närvaro av (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HADPARTICIPANT, "Händelsen hade deltagare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PARTICIPATEDIN, "Deltog i händelse (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ISCURRENTORFORMERMEMBEROF, "Är eller var tidigare medlem av (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_HASCURRENTORFORMERMEMBER, "Har eller hade medlem (uri)", IndexType.VERBATIM, false);
 
 		// bio
-		addIndex(IX_CHILD, "Var förälder till (uri)", IndexType.VERBATIM);
-		addIndex(IX_PARENT, "Var barn till (uri)", IndexType.VERBATIM);
-		addIndex(IX_MOTHER, "Har mor (uri)", IndexType.VERBATIM);
-		addIndex(IX_FATHER, "Har far (uri)", IndexType.VERBATIM);
+		addIndex(IX_CHILD, "Var förälder till (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PARENT, "Var barn till (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_MOTHER, "Har mor (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_FATHER, "Har far (uri)", IndexType.VERBATIM, false);
 
 		// roller
-		addIndex(IX_CLIENT, "Beställare (uri)", IndexType.VERBATIM);
-		addIndex(IX_COMPOSER, "Kompositör (uri)", IndexType.VERBATIM);
-		addIndex(IX_AUTHOR, "Författare (uri)", IndexType.VERBATIM);
-		addIndex(IX_ARCHITECT, "Arkitekt (uri)", IndexType.VERBATIM);
-		addIndex(IX_INVENTOR, "Uppfinnare (uri)", IndexType.VERBATIM);
-		addIndex(IX_SCENOGRAPHER, "Scenograf (uri)", IndexType.VERBATIM);
-		addIndex(IX_DESIGNER, "Designer (uri)", IndexType.VERBATIM);
-		addIndex(IX_PRODUCER, "Producent (uri)", IndexType.VERBATIM);
-		addIndex(IX_ORGANIZER, "Arrangör (uri)", IndexType.VERBATIM);
-		addIndex(IX_DIRECTOR, "Regissör (uri)", IndexType.VERBATIM);
-		addIndex(IX_PHOTOGRAPHER, "Fotograf (uri)", IndexType.VERBATIM);
-		addIndex(IX_PAINTER, "Målare (uri)", IndexType.VERBATIM);
-		addIndex(IX_BUILDER, "Byggare (uri)", IndexType.VERBATIM);
-		addIndex(IX_MASTERBUILDER, "Byggmästare (uri)", IndexType.VERBATIM);
-		addIndex(IX_CONSTRUCTIONCLIENT, "Byggherre (uri)", IndexType.VERBATIM);
-		addIndex(IX_ENGRAVER, "Gravör (uri)", IndexType.VERBATIM);
-		addIndex(IX_MINTMASTER, "Myntmästare (uri)", IndexType.VERBATIM);
-		addIndex(IX_ARTIST, "Konstnär (uri)", IndexType.VERBATIM);
-		addIndex(IX_DESIGNENGINEER, "Konstruktör (uri)", IndexType.VERBATIM);
-		addIndex(IX_CARPENTER, "Snickare (uri)", IndexType.VERBATIM);
-		addIndex(IX_MASON, "Murare (uri)", IndexType.VERBATIM);
-		addIndex(IX_TECHNICIAN, "Tekniker (uri)", IndexType.VERBATIM);
-		addIndex(IX_PUBLISHER, "Förläggare (uri)", IndexType.VERBATIM);
-		addIndex(IX_PUBLICIST, "Publicist (uri)", IndexType.VERBATIM);
-		addIndex(IX_MUSICIAN, "Musiker (uri)", IndexType.VERBATIM);
-		addIndex(IX_ACTORACTRESS, "Skådespelare (uri)", IndexType.VERBATIM);
-		addIndex(IX_PRINTER, "Tryckare (uri)", IndexType.VERBATIM);
-		addIndex(IX_SIGNER, "Påskrift av (uri)", IndexType.VERBATIM);
-		addIndex(IX_FINDER, "Upphittare (uri)", IndexType.VERBATIM);
-		addIndex(IX_ABANDONEE, "Förvärvare (uri)", IndexType.VERBATIM);
-		addIndex(IX_INTERMEDIARY, "Förmedlare (uri)", IndexType.VERBATIM);
-		addIndex(IX_BUYER, "Köpare (uri)", IndexType.VERBATIM);
-		addIndex(IX_SELLER, "Säljare (uri)", IndexType.VERBATIM);
-		addIndex(IX_GENERALAGENT, "Generalagent (uri)", IndexType.VERBATIM);
-		addIndex(IX_DONOR, "Givare (uri)", IndexType.VERBATIM);
-		addIndex(IX_DEPOSITOR, "Deponent (uri)", IndexType.VERBATIM);
-		addIndex(IX_RESELLER, "Återförsäljare (uri)", IndexType.VERBATIM);
-		addIndex(IX_INVENTORYTAKER, "Inventerare (uri)", IndexType.VERBATIM);
-		addIndex(IX_EXCAVATOR, "Grävare (uri)", IndexType.VERBATIM);
-		addIndex(IX_EXAMINATOR, "Undersökare (uri)", IndexType.VERBATIM);
-		addIndex(IX_CONSERVATOR, "Konservator (uri)", IndexType.VERBATIM);
-		addIndex(IX_ARCHIVECONTRIBUTOR, "Arkivbildare (uri)", IndexType.VERBATIM);
-		addIndex(IX_INTERVIEWER, "Intervjuare (uri)", IndexType.VERBATIM);
-		addIndex(IX_INFORMANT, "Informant (uri)", IndexType.VERBATIM);
-		addIndex(IX_PATENTHOLDER, "Patentinnehavare (uri)", IndexType.VERBATIM);
-		addIndex(IX_USER, "Brukare (uri)", IndexType.VERBATIM);
-		addIndex(IX_SCANNEROPERATOR, "Skanneroperatör (uri)", IndexType.VERBATIM);
-		addIndex(IX_PICTUREEDITOR, "Bildredaktör (uri)", IndexType.VERBATIM);
-		addIndex(IX_EMPLOYER, "Arbets- eller uppdragsgivare (uri)", IndexType.VERBATIM);
-		addIndex(IX_MARRIEDTO, "Gift med (uri)", IndexType.VERBATIM);
-		
+		addIndex(IX_CLIENT, "Beställare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_COMPOSER, "Kompositör (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_AUTHOR, "Författare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ARCHITECT, "Arkitekt (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_INVENTOR, "Uppfinnare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_SCENOGRAPHER, "Scenograf (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_DESIGNER, "Designer (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PRODUCER, "Producent (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ORGANIZER, "Arrangör (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_DIRECTOR, "Regissör (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PHOTOGRAPHER, "Fotograf (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PAINTER, "Målare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_BUILDER, "Byggare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_MASTERBUILDER, "Byggmästare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_CONSTRUCTIONCLIENT, "Byggherre (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ENGRAVER, "Gravör (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_MINTMASTER, "Myntmästare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ARTIST, "Konstnär (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_DESIGNENGINEER, "Konstruktör (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_CARPENTER, "Snickare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_MASON, "Murare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_TECHNICIAN, "Tekniker (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PUBLISHER, "Förläggare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PUBLICIST, "Publicist (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_MUSICIAN, "Musiker (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ACTORACTRESS, "Skådespelare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PRINTER, "Tryckare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_SIGNER, "Påskrift av (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_FINDER, "Upphittare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ABANDONEE, "Förvärvare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_INTERMEDIARY, "Förmedlare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_BUYER, "Köpare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_SELLER, "Säljare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_GENERALAGENT, "Generalagent (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_DONOR, "Givare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_DEPOSITOR, "Deponent (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_RESELLER, "Återförsäljare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_INVENTORYTAKER, "Inventerare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_EXCAVATOR, "Grävare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_EXAMINATOR, "Undersökare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_CONSERVATOR, "Konservator (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_ARCHIVECONTRIBUTOR, "Arkivbildare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_INTERVIEWER, "Intervjuare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_INFORMANT, "Informant (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PATENTHOLDER, "Patentinnehavare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_USER, "Brukare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_SCANNEROPERATOR, "Skanneroperatör (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_PICTUREEDITOR, "Bildredaktör (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_EMPLOYER, "Arbets- eller uppdragsgivare (uri)", IndexType.VERBATIM, false);
+		addIndex(IX_MARRIEDTO, "Gift med (uri)", IndexType.VERBATIM, false);
+
 
 		// media
-		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.TOLOWERCASE);
-		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED);
+		addIndex(IX_MEDIALICENSE, "Licens för ingående bild/media(uri)", IndexType.TOLOWERCASE, false);
+		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED, false);
 		addIndex(IX_BYLINE, "Byline för ingående bild/media(uri)", IndexType.TOLOWERCASE);
 		addIndex(IX_COPYRIGHT, "Copyright för ingående bild/media(uri)", IndexType.TOLOWERCASE);
 
 		// övriga
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
 		addIndex(IX_GEODATAEXISTS, "Om objektet har spatial data (j/n)", IndexType.TOLOWERCASE);
-		addIndex(IX_TIMEINFOEXISTS, "Om objektet har tidsangivelse (i " + IX_FROMTIME + "/" + IX_TOTIME + ") (j/n)", IndexType.TOLOWERCASE);
-		addIndex(IX_CENTURY, "De århundraden som objektet omfattar", IndexType.ISO8601DATEYEAR);
-		addIndex(IX_DECADE, "De årtionden som objektet omfattar", IndexType.ISO8601DATEYEAR);
+		addIndex(IX_TIMEINFOEXISTS, "Om objektet har tidsangivelse (i " + IX_FROMTIME + "/" + IX_TOTIME + ") (j/n)",
+			IndexType.TOLOWERCASE);
+		addIndex(IX_CENTURY, "De århundraden som objektet omfattar", IndexType.ISO8601DATEYEAR, false);
+		addIndex(IX_DECADE, "De årtionden som objektet omfattar", IndexType.ISO8601DATEYEAR, false);
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false);
@@ -537,10 +560,10 @@ public abstract class ContentHelper {
 		addIndex(I_IX_LAT, "latitud för centrumpunkt", IndexType.SPATIAL_COORDINATE, false);
 		addIndex(I_IX_RELATIONS, "relationer", IndexType.VERBATIM, false);
 		addIndex(CONTEXT_SET_REC + "." + IX_REC_IDENTIFIER, "identifierare", IndexType.VERBATIM, false);
-		//addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
+		// addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
 
 		// publika
-		for (Index index: indices.values()) {
+		for (Index index : indices.values()) {
 			if (index.isPublic()) {
 				publicIndices.add(index);
 			}
@@ -550,14 +573,13 @@ public abstract class ContentHelper {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(ContentHelper.class);
 
-	public ContentHelper() {
-	}
+	public ContentHelper() {}
 
 	// instansmetoder som måste implementeras i subklasser
 
 	/**
-	 * Extraherar identifierare mm ur xml-innehåll. För k-samsökstjänster ska identifieraren
-	 * vara en URI och xml-innehållet är en post med k-samsöks-xml (rdf).
+	 * Extraherar identifierare mm ur xml-innehåll. För k-samsökstjänster ska identifieraren vara en
+	 * URI och xml-innehållet är en post med k-samsöks-xml (rdf).
 	 * 
 	 * @param xmlContent xml-innehåll
 	 * @param gmlInfoHolder böna som fylls på med funna gml-geometrier mm om ej null
@@ -567,9 +589,9 @@ public abstract class ContentHelper {
 	public abstract ExtractedInfo extractInfo(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
 
 	/**
-	 * Skapar ett solr-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster
-	 * är xml-innehållet en post med k-samsöks-xml (rdf). Om metoden ger null har tjänsten
-	 * begärt att posten bara ska lagras och inte indexeras.
+	 * Skapar ett solr-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster är
+	 * xml-innehållet en post med k-samsöks-xml (rdf). Om metoden ger null har tjänsten begärt att
+	 * posten bara ska lagras och inte indexeras.
 	 * 
 	 * @param service tjänst
 	 * @param xmlContent xml-innehåll
@@ -577,13 +599,14 @@ public abstract class ContentHelper {
 	 * @return ett solr-dokument, eller null om inte posten ska indexeras
 	 * @throws Exception vid problem
 	 */
-	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent,
-			Date added) throws Exception;
+	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent, Date added)
+		throws Exception;
 
 	// statiska metoder
 
 	/**
 	 * Formaterar ett datum i svenskt standardformat med eller utan tid.
+	 * 
 	 * @param date datum
 	 * @param inclTime om tid ska med
 	 * @return formaterad sträng
@@ -622,8 +645,8 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett verbatim-index, dvs om värdet ej ändras
-	 * utan lagras exakt och måste sökas efter exakt.
+	 * Ger sant om indexnamnet är ett verbatim-index, dvs om värdet ej ändras utan lagras exakt och
+	 * måste sökas efter exakt.
 	 * 
 	 * @param indexName indexnamn
 	 * @return sant för index som är verbatim
@@ -634,8 +657,8 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett gemener-index, dvs om värdet görs
-	 * om till gemener vid indexering och sökning.
+	 * Ger sant om indexnamnet är ett gemener-index, dvs om värdet görs om till gemener vid
+	 * indexering och sökning.
 	 * 
 	 * @param indexName indexnamn
 	 * @return sant för index vars innehåll görs om till gemener
@@ -646,9 +669,9 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett spatialt virtuellt index. Denna typ är
-	 * ett specialfall som hanteras olika beroende på indexnamn då de kan ha
-	 * olika utseende på sina parametrar skapa frågor som söker i andra index etc.
+	 * Ger sant om indexnamnet är ett spatialt virtuellt index. Denna typ är ett specialfall som
+	 * hanteras olika beroende på indexnamn då de kan ha olika utseende på sina parametrar skapa
+	 * frågor som söker i andra index etc.
 	 * 
 	 * @param indexName indexnamn
 	 * @return sant för spatiala index
@@ -670,12 +693,11 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Ger sant om indexnamnet är ett iso8601-datum-index. Denna typ är ett specialfall
-	 * då invärdet i från lokalnoderna kan vara hela datum men då enbart årtalet ska
-	 * indexeras. Dvs görs värdet om till årtal och behandlas vid indexering med algoritm
-	 * från solr:s NumberUtils så att lucene kan göra intervallsökningar även med negativa
-	 * värden. Vid sökning appliceras samma algoritm på sökvärdet som då förutsätts
-	 * vara ett årtal.
+	 * Ger sant om indexnamnet är ett iso8601-datum-index. Denna typ är ett specialfall då invärdet
+	 * i från lokalnoderna kan vara hela datum men då enbart årtalet ska indexeras. Dvs görs värdet
+	 * om till årtal och behandlas vid indexering med algoritm från solr:s NumberUtils så att lucene
+	 * kan göra intervallsökningar även med negativa värden. Vid sökning appliceras samma algoritm
+	 * på sökvärdet som då förutsätts vara ett årtal.
 	 * 
 	 * @param indexName indexnamn
 	 * @return sant för index vars innehåll ska vara årtal och som görs om till strängvärden
@@ -689,19 +711,19 @@ public abstract class ContentHelper {
 	private static void addIndex(String indexName, String title, IndexType indexType) {
 		addIndex(indexName, title, indexType, true);
 	}
+
 	private static void addIndex(String indexName, String title, IndexType indexType, boolean isPublic) {
 		indices.put(indexName, new Index(indexName, title, indexType, isPublic));
 	}
-	
+
 	/**
-	 * Kollar om inskickat index existerar. Om indexet är ett "kontext-index", dvs
-	 * om det är på formen "[kontexttyp]_[indexnamn] kontrolleras endast att
-	 * indexnamn är ok då dessa index är dynamiska och inget register finns för att
-	 * kontrollera dessa.
+	 * Kollar om inskickat index existerar. Om indexet är ett "kontext-index", dvs om det är på
+	 * formen "[kontexttyp]_[indexnamn] kontrolleras endast att indexnamn är ok då dessa index är
+	 * dynamiska och inget register finns för att kontrollera dessa.
 	 * 
 	 * @param indexName index att kontrollera
-	 * @return sant om indexet finns eller om indexet är ett kontext-index och dess
-	 * suffix är ett giltigt index
+	 * @return sant om indexet finns eller om indexet är ett kontext-index och dess suffix är ett
+	 *         giltigt index
 	 */
 	public static boolean indexExists(String indexName) {
 		if (indexName == null) {
@@ -722,6 +744,18 @@ public abstract class ContentHelper {
 	}
 
 	/**
+	 * Kontrollerar om ett index kan användas för sortering (flervärda index, där en post kan ha
+	 * flera värden, går inte att sortera på)
+	 * 
+	 * @param indexName index att kontrollera
+	 * @return true om indexet kan användas för sortering, annars false
+	 */
+	public static boolean indexSortable(String indexName) {
+		Index index = getIndex(indexName);
+		return index != null && index.isSortable();
+	}
+
+	/**
 	 * Ger index-instans för givet indexnamn. OBS! hanterar ej "kontext-index".
 	 * 
 	 * @param indexName indexnamn
@@ -736,32 +770,42 @@ public abstract class ContentHelper {
 	 * 
 	 * @return lista med publikt sökbara index.
 	 */
-	public static List<Index>getPublicIndices() {
+	public static List<Index> getPublicIndices() {
 		return publicIndices;
 	}
 
 	/**
 	 * Enum för indextyp.
 	 */
-	public static enum IndexType { ANALYZED, VERBATIM, TOLOWERCASE, ISO8601DATEYEAR, SPATIAL_VIRTUAL, SPATIAL_COORDINATE };
+	public static enum IndexType {
+		ANALYZED, VERBATIM, TOLOWERCASE, ISO8601DATEYEAR, SPATIAL_VIRTUAL, SPATIAL_COORDINATE
+	};
 
 	/**
 	 * Klass som representerar ett index.
 	 */
 	public static final class Index {
+
 		private final String index;
 		private final String title;
 		private final IndexType indexType;
 		private final boolean isPublic;
+		private final boolean sortable;
 
 		Index(String index, String title, IndexType indexType) {
-			this(index, title, indexType, true);
+			this(index, title, indexType, true, true);
 		}
+
 		Index(String index, String title, IndexType indexType, boolean isPublic) {
+			this(index, title, indexType, isPublic, true);
+		}
+
+		Index(String index, String title, IndexType indexType, boolean isPublic, boolean sortable) {
 			this.index = index;
 			this.title = title;
 			this.indexType = indexType;
 			this.isPublic = isPublic;
+			this.sortable = sortable;
 		}
 
 		/**
@@ -799,6 +843,16 @@ public abstract class ContentHelper {
 		public boolean isPublic() {
 			return isPublic;
 		}
+
+		/**
+		 * Sant om indexet kan användas för sortering
+		 * 
+		 * @return sant för sorteringsgrundande index
+		 */
+		public boolean isSortable() {
+			return sortable;
+		}
+
 	}
 
 	/**
@@ -815,7 +869,7 @@ public abstract class ContentHelper {
 	 * @return problemmeddelanden eller null
 	 */
 	public static Map<String, Integer> getAndClearProblemMessages() {
-		Map<String,Integer> map = problemMessages.get();
+		Map<String, Integer> map = problemMessages.get();
 		problemMessages.remove();
 		return map;
 	}
@@ -828,7 +882,7 @@ public abstract class ContentHelper {
 	public static void addProblemMessage(String message) {
 		final int maxSize = 200;
 		final String xMessage = "There are more error messages, just listing max " + maxSize + " different";
-		Map<String,Integer> map = problemMessages.get();
+		Map<String, Integer> map = problemMessages.get();
 		if (map != null) {
 			Integer c = map.get(message);
 			if (c == null) {
@@ -853,21 +907,21 @@ public abstract class ContentHelper {
 	}
 
 	/**
-	 * Beräknar ungefärlig återstående tid utifrån hur lång tid det hittills har tagit
-	 * för en delmängd. Beräkningen antar att förloppet sker med konstant hastighet.
-	 *  
+	 * Beräknar ungefärlig återstående tid utifrån hur lång tid det hittills har tagit för en
+	 * delmängd. Beräkningen antar att förloppet sker med konstant hastighet.
+	 * 
 	 * @param deltaMillis tid det tog för delmängd att bli klar
 	 * @param deltaCount antal i delmängd
 	 * @param fullCount antal totalt
 	 * @return ungefärlig återstående tid i millisekunder
 	 */
 	public static long getRemainingRunTimeMillis(long deltaMillis, int deltaCount, int fullCount) {
-        long remainingTimeMillis = -1;
+		long remainingTimeMillis = -1;
 		if (fullCount > 0 && deltaCount > 0) {
 			long aproxRunTimeMillis = Math.round(fullCount * deltaMillis * 1.0 / deltaCount);
 			remainingTimeMillis = aproxRunTimeMillis - deltaMillis;
 		}
-		return remainingTimeMillis; 
+		return remainingTimeMillis;
 	}
 
 	/**
@@ -893,16 +947,17 @@ public abstract class ContentHelper {
 		return Math.round(10.0 * count / Math.max(durationMillis / 1000, 1)) / 10.0;
 	}
 
-	// 
+	//
 
 	/**
-	 * Hjälpmetod som extraherar parametrar kodade mha utf-8 från query-strängen, krävs bla
-	 * för sru/cql.
+	 * Hjälpmetod som extraherar parametrar kodade mha utf-8 från query-strängen, krävs bla för
+	 * sru/cql.
+	 * 
 	 * @param qs querysträng
 	 * @return map med avkodade parametrar och värden
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
-	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException{
+	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException {
 		HashMap<String, String> params = new HashMap<String, String>();
 		if (qs != null && qs.length() > 0) {
 			StringTokenizer tok = new StringTokenizer(qs, "&");
