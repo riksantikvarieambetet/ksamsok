@@ -21,3 +21,4 @@ RUNNING_PID
 *.war
 *.ear
 
+/local.properties

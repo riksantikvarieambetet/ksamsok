@@ -7,20 +7,20 @@
     <!ENTITY ksamsok "http://kulturarvsdata.se/ksamsok#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-    <!ENTITY parish "http://kulturarvsdata.se/resurser/aukt/geo/parish/parish#" >
+    <!ENTITY parish "http://kulturarvsdata.se/resurser/aukt/geo/parish#" >
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/parish/parish#"
-     xml:base="http://kulturarvsdata.se/resurser/aukt/geo/parish/parish"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/parish#"
+     xml:base="http://kulturarvsdata.se/resurser/aukt/geo/parish"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:parish="http://kulturarvsdata.se/resurser/aukt/geo/parish/parish#"
+     xmlns:parish="http://kulturarvsdata.se/resurser/aukt/geo/parish#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/parish/parish">
-        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province/province"/>
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/parish">
+        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province"/>
     </owl:Ontology>
     
 
@@ -36,11 +36,11 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/aukt/geo/parish/parish#province -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/parish#province -->
 
     <owl:ObjectProperty rdf:about="&parish;province">
         <rdfs:domain rdf:resource="&parish;Parish"/>
-        <rdfs:range rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province/province#Province"/>
+        <rdfs:range rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
     </owl:ObjectProperty>
     
 
@@ -75,7 +75,7 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/aukt/geo/parish/parish#Parish -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/parish#Parish -->
 
     <owl:Class rdf:about="&parish;Parish">
         <rdfs:subClassOf>
@@ -88,7 +88,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&parish;province"/>
-                <owl:onClass rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province/province#Province"/>
+                <owl:onClass rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -107,12 +107,12 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/aukt/geo/parish/parish#1 -->
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/parish#1 -->
 
     <owl:NamedIndividual rdf:about="&parish;1">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Adelsö</ksamsok:name>
-        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province/province#Up"/>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Adelsö socken</rdfs:seeAlso>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2">

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -112,8 +113,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	public void startPrefixMapping(String prefix, String uri)
 			throws SAXException {
 		if (mode == COPY) {
-			// correct faulty uri:s from local nodes
-			uri = SamsokUriPrefix.lookupPrefix(uri);
+			uri = correctFaultyUris(uri);
 			prefixMap.put(prefix, uri);
 			try {
 				xxmlw.setPrefix(prefix, uri);
@@ -165,7 +165,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		case COPY:
 			// i "copy-mode" kopiera hela taggen som den är
 			// correct faulty uri:s from local nodes
-			uri = SamsokUriPrefix.lookupPrefix(uri);
+				uri = correctFaultyUris(uri);
 			try {
 				xxmlw.writeStartElement(uri, localName);
 			} catch (Exception e) {
@@ -201,11 +201,29 @@ public class OAIPMHHandler extends DefaultHandler {
 			break;
 		}
 	}
+
+	private String correctFaultyUris(String uri) {
+		// correct the occasional "aut" into "aukt"
+		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/aut", "http://kulturarvsdata.se/resurser/aukt");
+		
+		// correcty faulty geography uris
+		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/aukt/geo/continent/continent", "http://kulturarvsdata.se/resurser/aukt/geo/continent");
+		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/aukt/geo/country/country", "http://kulturarvsdata.se/resurser/aukt/geo/country");
+		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/aukt/geo/county/county", "http://kulturarvsdata.se/resurser/aukt/geo/county");
+		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/aukt/geo/municipality/municipality", "http://kulturarvsdata.se/resurser/aukt/geo/municipality");
+		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/aukt/geo/parish/parish", "http://kulturarvsdata.se/resurser/aukt/geo/parish");
+		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/aukt/geo/province/province", "http://kulturarvsdata.se/resurser/aukt/geo/province");
+		
+		// correct other uris
+		uri = SamsokUriPrefix.lookupPrefix(uri);
+		return uri;
+	}
 	
 	@Override
 	public void endElement(String uri, String localName, String name)
 			throws SAXException {
-		// TODO: if uri is ever used in this method, it needs to be run through SamsokUriPrefix.lookupPrefix
+		// TODO: if uri is ever used in this method, it needs to be run through correctFaultyUris,
+		// but it's unnecessary as long as this method doesn't do anything with the uri:s
 		switch (mode) {
 		case COPY:
 			if ("metadata".equals(name)) {

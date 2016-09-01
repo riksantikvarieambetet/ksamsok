@@ -17,7 +17,6 @@ public enum SamsokUriPrefix {
 	CIDOC(SamsokProtocol.uriPrefix_cidoc_crm, "http://www.cidoc-crm.org/rdfs/cidoc-crm"),
 	BIO(SamsokProtocol.uriPrefix_bio, "http://purl.org/vocab/bio/0.1");
 
-
 	private final String correctPrefix;
 	private final String shortVersion;
 

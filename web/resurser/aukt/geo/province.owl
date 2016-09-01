@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY ksamsok "http://kulturarvsdata.se/ksamsok#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/province#"
+     xml:base="http://kulturarvsdata.se/resurser/aukt/geo/province"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province">
+        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kulturarvsdata.se/ksamsok#country -->
+
+    <rdf:Description rdf:about="&ksamsok;country">
+        <rdfs:domain rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kulturarvsdata.se/ksamsok#name -->
+
+    <rdf:Description rdf:about="&ksamsok;name">
+        <rdfs:domain rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/province#Province -->
+
+    <owl:Class rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Province">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&ksamsok;name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&ksamsok;country"/>
+                <owl:onClass rdf:resource="&ksamsok;Country"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kulturarvsdata.se/resurser/aukt/geo/province#Bl -->
+
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Bl">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Blekinge</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Bohuslän</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Dr">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Dalarna</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Ds">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Dalsland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Go">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Gotland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Gä">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Gästrikland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Ha">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Halland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Hs">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Hälsingland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Hr">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Härjedalen</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Jä">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Jämtland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#La">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Lappland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Me">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Medelpad</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Nb">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Norrbotten</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Nä">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Närke</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Skåne</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Småland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Södermanland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Up">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Uppland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Värmland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Vb">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Västerbotten</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Västergötland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Västmanland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Ån">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Ångermanland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Öl">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Öland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Province"/>
+        <ksamsok:name>Östergötland</ksamsok:name>
+        <ksamsok:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
