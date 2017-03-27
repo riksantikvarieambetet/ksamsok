@@ -31,6 +31,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ProcessingInstruction;
 
+import com.github.jsonldjava.jena.JenaJSONLD;
+
 import se.raa.ksamsok.api.exception.APIException;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -41,15 +43,14 @@ import se.raa.ksamsok.api.util.StaticMethods;
 import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 
-import com.github.jsonldjava.jena.JenaJSONLD;
-
 /**
  * Hanterar förfrågningar till K-samsöks API
+ * 
  * @author Henrik Hjalmarsson
  */
 public class APIServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
-	//klass specifik logger
+	// klass specifik logger
 	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.APIServlet");
 
 	@Autowired
@@ -57,11 +58,11 @@ public class APIServlet extends HttpServlet {
 
 	// fabrik
 	private APIMethodFactory apiMethodFactory;
-	
+
 	private Format format = Format.XML;
 	private boolean prettyPrint = false;
 	private int indentFactor = 4;
-	
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -93,62 +94,75 @@ public class APIServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp){	
-		//sätter contentType och character encoding
+	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Content-Type");
+		res.setHeader("Access-Control-Allow-Methods", "HEAD, GET, POST, TRACE, OPTIONS");
+		super.doOptions(req, res);
+	}
+
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		// sätter contentType och character encoding
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
-		Map<String,String> reqParams = null;
+		Map<String, String> reqParams = null;
 		APIMethod method = null;
 		OutputStream out = null;
 		try {
 			out = resp.getOutputStream();
 			String stylesheet = null;
 			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
-			if (apiKey != null) apiKey = StaticMethods.removeChar(apiKey, '"');
+			if (apiKey != null)
+				apiKey = StaticMethods.removeChar(apiKey, '"');
 			if (apiKey != null && keyManager.contains(apiKey)) {
-					try {
-						reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-						stylesheet = reqParams.get("stylesheet");
-						method = apiMethodFactory.getAPIMethod(reqParams, out);
-						logger.info("Reqparams " + reqParams + "\nStylesheet " + stylesheet + "\nMethod " + method);
-						//Check which format the respond should be
-						String acceptFormat=req.getHeader("Accept");
-						if (acceptFormat!= null && acceptFormat.toLowerCase().contains("json")){
-							format=Format.JSON_LD;
-							method.setFormat(Format.JSON_LD);
-							resp.setContentType("application/json; charset=UTF-8");
-						} else {
-							format=Format.XML;
-							method.setFormat(Format.XML);
-							resp.setContentType("application/xml; charset=UTF-8");
-						}
-						method.performMethod();
-						keyManager.updateUsage(apiKey);
-					} catch (MissingParameterException e) {
-						resp.setStatus(400);
-						logger.error("queryString i requesten: "+ req.getQueryString());					
-						diagnostic(out, method, stylesheet, e);
-					} catch (BadParameterException e) {
-						resp.setStatus(400);
-						logger.error("queryString i requesten: "+ req.getQueryString());					
-						diagnostic(out, method, stylesheet, e);
-					} catch (DiagnosticException e) {
-						resp.setStatus(500);
-						logger.error("queryString i requesten: "+ req.getQueryString());					
-						diagnostic(out, method, stylesheet, e);
+				try {
+					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+					stylesheet = reqParams.get("stylesheet");
+					method = apiMethodFactory.getAPIMethod(reqParams, out);
+					logger.info("Reqparams " + reqParams + "\nStylesheet " + stylesheet + "\nMethod " + method);
+					// Check which format the respond should be
+					String acceptFormat = req.getHeader("Accept");
+					if (acceptFormat != null && acceptFormat.toLowerCase().contains("json")) {
+						format = Format.JSON_LD;
+						method.setFormat(Format.JSON_LD);
+						resp.setContentType("application/json; charset=UTF-8");
+					} else {
+						format = Format.XML;
+						method.setFormat(Format.XML);
+						resp.setContentType("application/xml; charset=UTF-8");
 					}
-			} else if (apiKey == null){
+					resp.setHeader("Access-Control-Allow-Origin", "*");
+					method.performMethod();
+					keyManager.updateUsage(apiKey);
+				} catch (MissingParameterException e) {
+					resp.setStatus(400);
+					logger.error("queryString i requesten: " + req.getQueryString());
+					diagnostic(out, method, stylesheet, e);
+				} catch (BadParameterException e) {
+					resp.setStatus(400);
+					logger.error("queryString i requesten: " + req.getQueryString());
+					diagnostic(out, method, stylesheet, e);
+				} catch (DiagnosticException e) {
+					resp.setStatus(500);
+					logger.error("queryString i requesten: " + req.getQueryString());
+					diagnostic(out, method, stylesheet, e);
+				}
+			} else if (apiKey == null) {
 				resp.setStatus(400);
-				diagnostic(out, method, stylesheet, new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
+				diagnostic(out, method, stylesheet,
+					new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
 			} else {
 				resp.setStatus(400);
-				diagnostic(out, method, stylesheet, new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
+				diagnostic(out, method, stylesheet,
+					new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 			}
-		} catch (Exception e){
+		} catch (Exception e) {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
 		} finally {
-			if (out != null){
+			if (out != null) {
 				try {
 					out.close();
 				} catch (IOException e) {
@@ -160,14 +174,16 @@ public class APIServlet extends HttpServlet {
 
 	/**
 	 * skriver ut felmeddelanden
+	 * 
 	 * @param out
 	 * @param e
-	 * @throws IOException 
-	 * @throws ParserConfigurationException 
-	 * @throws TransformerException 
-	 * @throws JSONException 
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws JSONException
 	 */
-	private void diagnostic(OutputStream out, APIMethod method, String stylesheet, APIException e) throws IOException, ParserConfigurationException, TransformerException, JSONException {
+	private void diagnostic(OutputStream out, APIMethod method, String stylesheet, APIException e)
+		throws IOException, ParserConfigurationException, TransformerException, JSONException {
 		logger.warn(e.getClassName() + " - " + e.getDetails());
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -176,8 +192,9 @@ public class APIServlet extends HttpServlet {
 		Element result = doc.createElement("result");
 		doc.appendChild(result);
 		// Stylesheet
-		if(stylesheet!=null && stylesheet.trim().length()>0){
-			ProcessingInstruction pi = doc.createProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\""+ stylesheet +"\"");
+		if (stylesheet != null && stylesheet.trim().length() > 0) {
+			ProcessingInstruction pi = doc.createProcessingInstruction("xml-stylesheet",
+				"type=\"text/xsl\" href=\"" + stylesheet + "\"");
 			doc.insertBefore(pi, result);
 		}
 		// Version
@@ -188,24 +205,24 @@ public class APIServlet extends HttpServlet {
 		Element error = doc.createElement("error");
 		error.appendChild(doc.createTextNode(e.getMessage()));
 		result.appendChild(error);
-		//Write result
+		// Write result
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transform = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
 		StreamResult strResult;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		if (format == Format.JSON_LD){
+		if (format == Format.JSON_LD) {
 			strResult = new StreamResult(baos);
 		} else {
 			strResult = new StreamResult(out);
 		}
 		transform.transform(source, strResult);
-		if (format == Format.JSON_LD){
+		if (format == Format.JSON_LD) {
 			String json;
-			if (prettyPrint){
-				json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
+			if (prettyPrint) {
+				json = XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
 			} else {
-				json=XML.toJSONObject(baos.toString("UTF-8")).toString();
+				json = XML.toJSONObject(baos.toString("UTF-8")).toString();
 			}
 			out.write(json.getBytes("UTF-8"));
 		}
@@ -213,9 +230,8 @@ public class APIServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
-	
+
 }
