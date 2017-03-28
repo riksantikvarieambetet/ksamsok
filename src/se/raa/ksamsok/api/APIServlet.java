@@ -97,8 +97,8 @@ public class APIServlet extends HttpServlet {
 	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Content-Type");
-		res.setHeader("Access-Control-Allow-Methods", "HEAD, GET, POST, TRACE, OPTIONS");
-		super.doOptions(req, res);
+		res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+		// super.doOptions(req, res);
 	}
 
 
