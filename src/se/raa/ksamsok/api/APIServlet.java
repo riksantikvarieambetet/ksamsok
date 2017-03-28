@@ -95,9 +95,11 @@ public class APIServlet extends HttpServlet {
 
 	@Override
 	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		logger.info("doOptions called");
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Content-Type");
 		res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+		logger.info("header in doOptions: " + res.getHeader("Access-Control-Allow-Methods"));
 		// super.doOptions(req, res);
 	}
 
