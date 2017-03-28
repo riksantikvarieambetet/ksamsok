@@ -171,6 +171,12 @@ public class ResolverServlet extends HttpServlet {
 	}
 
 	@Override
+	protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doOptions(req, resp);
+		resp.setHeader("Access-Control-Allow-Origin", "*");
+	}
+
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String[] pathComponents = checkAndForwardRequests(req, resp);
 		if (pathComponents == null) {
