@@ -10,79 +10,79 @@
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/contexttyp/contexttype#"
-     xml:base="http://kulturarvsdata.se/resurser/contexttyp/contexttype"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/contexttype#"
+     xml:base="http://kulturarvsdata.se/resurser/contexttype"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/contexttyp/contexttype">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/contexttype">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
     </owl:Ontology>
     
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#design">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#design">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Designa</ksamsok:contextLabel>
         <ksamsok:description>Skapa förutsättningar för att något ska bli till, t.ex. formge eller skissa.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#produce">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#produce">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Producera</ksamsok:contextLabel>
         <ksamsok:description>Producera ett fysiskt ting, t.ex. fotografera eller måla.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#start">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#start">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Starta</ksamsok:contextLabel>
         <ksamsok:description>Anger när ett Event startar (t.ex. Andra världkriget) eller när en Agent(t.ex. person eller organisation) föds eller grundas.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#find">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#find">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Hitta</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har påträffats.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#transact">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#transact">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Överföra</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har förflyttats, t.ex. ge/skänka, förvärva, eller röva (krigsbyte).</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#explore">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#explore">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Undersöka och beforska</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har t.ex. inventerats, grävts ut eller konserverats.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#own">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#own">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Äga</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har t.ex. ägts eller förvaltats.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#use">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#use">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Använda</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har t.ex. brukats eller nyttjats.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#reproduce">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#reproduce">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Reproducera</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har t.ex. avbildats eller reprofotograferats.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#display">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#display">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Visa</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har t.ex. visats upp eller vid en utställning (Event) ställts ut.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#act">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#act">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Verka</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och med vem en Agent (t.ex. person eller organisation) har t.ex. regerat, varit gift eller haft ett uppdrag.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#dismiss">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#dismiss">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Avföra</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och av vem ett fysiskt ting har t.ex. förstörts, gallrats eller kasserats.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype/contexttype#stop">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contexttype#stop">
         <rdf:type rdf:resource="&ksamsok;ContextType"/>
         <ksamsok:contextLabel>Avsluta</ksamsok:contextLabel>
         <ksamsok:description>Anger var, när och med vem ett Event avslutas, Agenter (person) dör eller (organisationer) läggs ner.</ksamsok:description>

@@ -10,14 +10,14 @@
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#"
-     xml:base="http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/entitysupertype#"
+     xml:base="http://kulturarvsdata.se/resurser/entitysupertype"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/entitysupertype">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
     </owl:Ontology>
     
@@ -34,9 +34,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#agent -->
+    <!-- http://kulturarvsdata.se/resurser/entitysupertype#agent -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#agent">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype#agent">
         <rdf:type rdf:resource="&ksamsok;EntitySuperType"/>
         <ksamsok:description>Person, grupp och organisation.</ksamsok:description>
         <ksamsok:name>Agent</ksamsok:name>
@@ -44,9 +44,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#concept -->
+    <!-- http://kulturarvsdata.se/resurser/entitysupertype#concept -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#concept">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype#concept">
         <rdf:type rdf:resource="&ksamsok;EntitySuperType"/>
         <ksamsok:description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</ksamsok:description>
         <ksamsok:name>Fysiskt ting</ksamsok:name>
@@ -54,9 +54,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#event -->
+    <!-- http://kulturarvsdata.se/resurser/entitysupertype#event -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#event">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype#event">
         <rdf:type rdf:resource="&ksamsok;EntitySuperType"/>
         <ksamsok:name>Händelse</ksamsok:name>
         <ksamsok:description>Avgränsas av tid och rum t.ex. historisk händelse och utställning.</ksamsok:description>
@@ -64,9 +64,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#object -->
+    <!-- http://kulturarvsdata.se/resurser/entitysupertype#object -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype/entitysupertype#object">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype#object">
         <rdf:type rdf:resource="&ksamsok;EntitySuperType"/>
         <ksamsok:description>Föremål, fotografi, bearbetningar/interaktiv resurs, film/video, ljud, dokument, karta, byggnad, fornlämning, konstverk, bok, samling, ritning, teckning och kulturmiljö.</ksamsok:description>
         <ksamsok:name>Koncept</ksamsok:name>

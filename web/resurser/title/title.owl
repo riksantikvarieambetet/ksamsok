@@ -10,14 +10,14 @@
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/title/title#"
-     xml:base="http://kulturarvsdata.se/resurser/title/title"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/title#"
+     xml:base="http://kulturarvsdata.se/resurser/title"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/title/title">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/title">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
     </owl:Ontology>
     
@@ -37,7 +37,7 @@
     <!-- http://kulturarvsdata.se/ksamsok#description -->
 
     <rdf:Description rdf:about="&ksamsok;description">
-        <rdfs:domain rdf:resource="http://kulturarvsdata.se/resurser/title/title#Title"/>
+        <rdfs:domain rdf:resource="http://kulturarvsdata.se/resurser/title#Title"/>
     </rdf:Description>
     
 
@@ -45,7 +45,7 @@
     <!-- http://kulturarvsdata.se/ksamsok#name -->
 
     <rdf:Description rdf:about="&ksamsok;name">
-        <rdfs:domain rdf:resource="http://kulturarvsdata.se/resurser/title/title#Title"/>
+        <rdfs:domain rdf:resource="http://kulturarvsdata.se/resurser/title#Title"/>
     </rdf:Description>
     
 
@@ -61,9 +61,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/title/title#Title -->
+    <!-- http://kulturarvsdata.se/resurser/title#Title -->
 
-    <owl:Class rdf:about="http://kulturarvsdata.se/resurser/title/title#Title">
+    <owl:Class rdf:about="http://kulturarvsdata.se/resurser/title#Title">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&ksamsok;description"/>
@@ -93,10 +93,10 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/title/title#disp -->
+    <!-- http://kulturarvsdata.se/resurser/title#disp -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/title/title#disp">
-        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/title/title#Title"/>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/title#disp">
+        <rdf:type rdf:resource="http://kulturarvsdata.se/resurser/title#Title"/>
         <ksamsok:name>Disponent</ksamsok:name>
         <ksamsok:description>Exempel på titel för en person, den fullständiga listan är inte framtagen än.</ksamsok:description>
     </owl:NamedIndividual>
