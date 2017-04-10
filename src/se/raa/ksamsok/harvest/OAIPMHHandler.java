@@ -25,16 +25,16 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 
 /**
- * Handler för xml-parsning som lagrar poster i repositoryt och gör commit med jämna mellanrum
- * (för att inte oracle ska få spunk, derby klarar det). Formatet på xml:en ska vara samma som
- * för RawWrite, dvs i princip OAI-PMH med en omslutande tagg.
+ * Handler fÃ¶r xml-parsning som lagrar poster i repositoryt och gÃ¶r commit med jÃ¤mna mellanrum
+ * (fÃ¶r att inte oracle ska fÃ¥ spunk, derby klarar det). Formatet pÃ¥ xml:en ska vara samma som
+ * fÃ¶r RawWrite, dvs i princip OAI-PMH med en omslutande tagg.
  */
 public class OAIPMHHandler extends DefaultHandler {
 
-	// antal databasoperationer innan en commit görs
+	// antal databasoperationer innan en commit gÃ¶rs
 	private static final int XACT_LIMIT = 1000;
 
-	// en generisk iso 8601-parser som klarar "alla" isoformat - egentligen ska vi bara stödja två
+	// en generisk iso 8601-parser som klarar "alla" isoformat - egentligen ska vi bara stÃ¶dja tvÃ¥
 	// enl spec
 	private static DateTimeFormatter isoDateTimeParser = ISODateTimeFormat.dateTimeParser();
 
@@ -55,7 +55,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	private static final XMLOutputFactory xxmlf = XMLOutputFactory.newInstance();
 	private XMLStreamWriter xxmlw;
 	private StringWriter xsw;
-	// antal genomförda databasoperationer, totalt och i nuvarande transaktion
+	// antal genomfÃ¶rda databasoperationer, totalt och i nuvarande transaktion
 	private int numDeleted = 0, numDeletedXact = 0;
 	private int numInserted = 0, numInsertedXact = 0;
 	private int numUpdated = 0, numUpdatedXact = 0;
@@ -79,11 +79,11 @@ public class OAIPMHHandler extends DefaultHandler {
 		this.c = c;
 		this.sm = sm;
 		this.ts = ts;
-		// förbered några databas-statements som kommer användas frekvent
+		// fÃ¶rbered nÃ¥gra databas-statements som kommer anvÃ¤ndas frekvent
 		this.oai2uriPst = c.prepareStatement("select uri from content where oaiuri = ?");
 		this.updatePst = c.prepareStatement("update content set deleted = null, oaiuri = ?, " +
 			"serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ?, nativeURL = ? where uri = ?");
-		// TODO: stoppa in xmldata = null nedan för att rensa onödigt gammalt postinnehåll?
+		// TODO: stoppa in xmldata = null nedan fÃ¶r att rensa onÃ¶digt gammalt postinnehÃ¥ll?
 		this.deleteUpdatePst = c.prepareStatement("update content set status = ?, " +
 			"changed = ?, deleted = ?, datestamp = ? where serviceId = ? and oaiuri = ?");
 		this.insertPst = c.prepareStatement("insert into content " +
@@ -148,7 +148,7 @@ public class OAIPMHHandler extends DefaultHandler {
 						throw new SAXException(e);
 					}
 				} else if ("header".equals(name)) {
-					// kontrollera om status säger deleted, då ska denna post bort
+					// kontrollera om status sÃ¤ger deleted, dÃ¥ ska denna post bort
 					String status = attributes.getValue("", "status");
 					if ("deleted".equals(status)) {
 						if (!sm.canSendDeletes()) {
@@ -160,7 +160,7 @@ public class OAIPMHHandler extends DefaultHandler {
 				}
 				break;
 			case COPY:
-				// i "copy-mode" kopiera hela taggen som den är
+				// i "copy-mode" kopiera hela taggen som den Ã¤r
 				// correct faulty uri:s from local nodes
 				uri = correctFaultyUris(uri);
 				try {
@@ -184,7 +184,7 @@ public class OAIPMHHandler extends DefaultHandler {
 							String aUri = attributes.getURI(i);
 							String lName = attributes.getLocalName(i);
 							String value = attributes.getValue(i);
-							// Om ej rätt metod används blir det ett exception
+							// Om ej rÃ¤tt metod anvÃ¤nds blir det ett exception
 							if (aUri == null || "".equals(aUri)) {
 								xxmlw.writeAttribute(lName, value);
 							} else {
@@ -220,7 +220,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype",
 			"http://kulturarvsdata.se/resurser/contextsupertype");
 
-		// b�da dessa nedan f�rekommer och m�ste r�ttas
+		// båda dessa nedan förekommer och måste rättas
 		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/contexttyp/contexttype",
 			"http://kulturarvsdata.se/resurser/contexttype");
 		uri = StringUtils.replace(uri, "http://kulturarvsdata.se/resurser/contexttype/contexttype",
@@ -277,15 +277,15 @@ public class OAIPMHHandler extends DefaultHandler {
 						throw new SAXException(e);
 					}
 				}
-				// återställ char-buff
+				// Ã¥terstÃ¤ll char-buff
 				buf.setLength(0);
 				break;
 			case RECORD:
 				if ("identifier".equals(name)) {
-					// läs ut värde för identifier
+					// lÃ¤s ut vÃ¤rde fÃ¶r identifier
 					oaiURI = buf.toString().trim();
 				} else if ("datestamp".equals(name)) {
-					// läs ut och tolka värde för datum
+					// lÃ¤s ut och tolka vÃ¤rde fÃ¶r datum
 					String datestampStr = buf.toString().trim();
 					datestamp = parseDatestamp(datestampStr);
 					if (datestamp == null) {
@@ -297,7 +297,7 @@ public class OAIPMHHandler extends DefaultHandler {
 					// tillbaks till "normal-mode"
 					mode = NORMAL;
 					if (deleteRecord) {
-						// ta bort post nu om vi skulle göra det
+						// ta bort post nu om vi skulle gÃ¶ra det
 						try {
 							deleteRecord(oaiURI, datestamp);
 						} catch (Exception e) {
@@ -305,14 +305,14 @@ public class OAIPMHHandler extends DefaultHandler {
 						}
 					}
 				}
-				// återställ char-buff
+				// Ã¥terstÃ¤ll char-buff
 				buf.setLength(0);
 				break;
 			case NORMAL:
 				if ("error".equals(name)) {
 					throw new SAXException("Error in request, code=" + errorCode + ", text: " + buf.toString().trim());
 				}
-				// återställ char-buff
+				// Ã¥terstÃ¤ll char-buff
 				buf.setLength(0);
 				break;
 		}
@@ -325,8 +325,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Tar bort alla poster i repositoryt för tjänsten vi jobbar med. I praktiken tas inget bort
-	 * utan status-kolumnen sätts till 1 för att senare eventuellt ge att deleted-kolumnen sätts
+	 * Tar bort alla poster i repositoryt fÃ¶r tjÃ¤nsten vi jobbar med. I praktiken tas inget bort
+	 * utan status-kolumnen sÃ¤tts till 1 fÃ¶r att senare eventuellt ge att deleted-kolumnen sÃ¤tts
 	 * icke null.
 	 * 
 	 * @throws Exception
@@ -337,8 +337,8 @@ public class OAIPMHHandler extends DefaultHandler {
 		}
 		PreparedStatement pst = null;
 		try {
-			// OBS notera att geometrier inte tas bort här utan det görs inkrementellt
-			// för varje post som dyker upp, eller i slutsteget för de som ej har behandlats
+			// OBS notera att geometrier inte tas bort hÃ¤r utan det gÃ¶rs inkrementellt
+			// fÃ¶r varje post som dyker upp, eller i slutsteget fÃ¶r de som ej har behandlats
 			pst = c.prepareStatement("update content set status = ? where serviceId = ?");
 			pst.setInt(1, DBUtil.STATUS_PENDING);
 			pst.setString(2, service.getId());
@@ -366,14 +366,14 @@ public class OAIPMHHandler extends DefaultHandler {
 			logger.debug("* Removing oaiURI=" + oaiURI + " from service with ID: " + service.getId());
 		}
 
-		// OBS att antalet parametrar etc *måste* stämma med det statement som används
-		// och som skapas och förbereds i konstruktorn!
+		// OBS att antalet parametrar etc *mÃ¥ste* stÃ¤mma med det statement som anvÃ¤nds
+		// och som skapas och fÃ¶rbereds i konstruktorn!
 
 		ResultSet rs = null;
 		try {
 			// bort med ev spatialt data
 			if (gmlDBWriter != null) {
-				// hämta ut uri:n då oai-uri bara är intern identifierare
+				// hÃ¤mta ut uri:n dÃ¥ oai-uri bara Ã¤r intern identifierare
 				// select uri from content where oaiuri = ?
 				oai2uriPst.setString(1, oaiURI);
 				rs = oai2uriPst.executeQuery();
@@ -404,13 +404,13 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	/**
 	 * Stoppar in en ny post i repositoryt med angiven OAI-identifierare, identifierare och
-	 * xml-innehåll.
+	 * xml-innehÃ¥ll.
 	 * 
 	 * @param oaiURI OAI-identifierare
 	 * @param uri (rdf-)identifierare
-	 * @param xmlContent xml-innehåll
-	 * @param datestamp postens ändringsdatum (från oai-huvudet)
-	 * @param gmlInfoHolder hållare för geometrier mm
+	 * @param xmlContent xml-innehÃ¥ll
+	 * @param datestamp postens Ã¤ndringsdatum (frÃ¥n oai-huvudet)
+	 * @param gmlInfoHolder hÃ¥llare fÃ¶r geometrier mm
 	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
@@ -421,8 +421,8 @@ public class OAIPMHHandler extends DefaultHandler {
 				"* Entering data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " + service.getId());
 		}
 
-		// OBS att antalet parametrar etc *måste* stämma med det statement som används
-		// och som skapas och förbereds i konstruktorn!
+		// OBS att antalet parametrar etc *mÃ¥ste* stÃ¤mma med det statement som anvÃ¤nds
+		// och som skapas och fÃ¶rbereds i konstruktorn!
 
 		// insert into content
 		// (uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status, nativeURL)
@@ -437,7 +437,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		insertPst.setInt(8, DBUtil.STATUS_NORMAL);
 		insertPst.setString(9, nativeURL);
 		insertPst.executeUpdate();
-		// stoppa in ev spatialdata om vi har nåt
+		// stoppa in ev spatialdata om vi har nÃ¥t
 		if (gmlDBWriter != null && gmlInfoHolder != null && gmlInfoHolder.hasGeometries()) {
 			gmlDBWriter.insert(gmlInfoHolder);
 		}
@@ -454,9 +454,9 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * 
 	 * @param oaiURI OAI-identifierare
 	 * @param uri (rdf-)identifierare
-	 * @param xmlContent xml-innehåll
-	 * @param datestamp postens ändringsdatum (från oai-huvudet)
-	 * @param gmlInfoHolder hållare för geometrier mm
+	 * @param xmlContent xml-innehÃ¥ll
+	 * @param datestamp postens Ã¤ndringsdatum (frÃ¥n oai-huvudet)
+	 * @param gmlInfoHolder hÃ¥llare fÃ¶r geometrier mm
 	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
@@ -467,8 +467,8 @@ public class OAIPMHHandler extends DefaultHandler {
 				"* Updated data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " + service.getId());
 		}
 
-		// OBS att antalet parametrar etc *måste* stämma med det statement som används
-		// och som skapas och förbereds i konstruktorn!
+		// OBS att antalet parametrar etc *mÃ¥ste* stÃ¤mma med det statement som anvÃ¤nds
+		// och som skapas och fÃ¶rbereds i konstruktorn!
 
 		// update content set oaiuri = ?, deleted = null,
 		// serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ?, nativeURL = ? where
@@ -483,7 +483,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		updatePst.setString(8, uri);
 		boolean updated = updatePst.executeUpdate() > 0;
 		if (updated) {
-			// spara gml (obs, inget villkor på att det finns geometrier då det kanske
+			// spara gml (obs, inget villkor pÃ¥ att det finns geometrier dÃ¥ det kanske
 			// fanns gamla som nu ska tas bort)
 			if (gmlDBWriter != null && gmlInfoHolder != null) {
 				gmlDBWriter.update(gmlInfoHolder);
@@ -499,12 +499,12 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Uppdaterar en befintlig eller stoppar in en ny post i repositoryt beroende på om posten
-	 * finns och om tjänsten klarar av att skicka persistent deletes.
+	 * Uppdaterar en befintlig eller stoppar in en ny post i repositoryt beroende pÃ¥ om posten
+	 * finns och om tjÃ¤nsten klarar av att skicka persistent deletes.
 	 * 
 	 * @param oaiURI OAI-identifierare
-	 * @param xmlContent xml-innehåll
-	 * @param datestamp postens ändringsdatum (från oai-huvudet)
+	 * @param xmlContent xml-innehÃ¥ll
+	 * @param datestamp postens Ã¤ndringsdatum (frÃ¥n oai-huvudet)
 	 * @throws Exception
 	 */
 	protected void insertOrUpdateRecord(String oaiURI, String xmlContent, Timestamp datestamp) throws Exception {
@@ -512,7 +512,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		GMLInfoHolder gmlih = null;
 		String nativeURL = null;
 		if (gmlDBWriter != null) {
-			// om vi ska hantera spatiala data, skapa en datahållare att fylla på
+			// om vi ska hantera spatiala data, skapa en datahÃ¥llare att fylla pÃ¥
 			gmlih = new GMLInfoHolder();
 		}
 		try {
@@ -525,25 +525,25 @@ public class OAIPMHHandler extends DefaultHandler {
 			ss.signalRDFError(service);
 			return;
 		}
-		// bör/ska inte hända, men...
+		// bÃ¶r/ska inte hÃ¤nda, men...
 		if (uri == null) {
 			ContentHelper.addProblemMessage("No uri found for " + oaiURI + " --SKIPPING--");
 			return;
 		}
 
-		// gör update och om ingen post uppdaterades stoppa in en (istf för att kolla om post
-		// finns först)
+		// gÃ¶r update och om ingen post uppdaterades stoppa in en (istf fÃ¶r att kolla om post
+		// finns fÃ¶rst)
 		if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL)) {
 			insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL);
 		}
 	}
 
-	// gör commit och räkna up antalet lyckade åtgärder
+	// gÃ¶r commit och rÃ¤kna up antalet lyckade Ã¥tgÃ¤rder
 	private void commitIfLimitReached() throws Exception {
 		commitIfLimitReached(false);
 	}
 
-	// gör commit och räkna up antalet lyckade åtgärder, gör alltid commit om argumentet är
+	// gÃ¶r commit och rÃ¤kna up antalet lyckade Ã¥tgÃ¤rder, gÃ¶r alltid commit om argumentet Ã¤r
 	// true
 	private void commitIfLimitReached(boolean forceCommit) throws Exception {
 		int count = numInsertedXact + numUpdatedXact + numDeletedXact;
@@ -553,10 +553,10 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Uppdaterar obehandlade poster baserat på status och tjänst. Sätter deleted och
-	 * nollställer status.
+	 * Uppdaterar obehandlade poster baserat pÃ¥ status och tjÃ¤nst. SÃ¤tter deleted och
+	 * nollstÃ¤ller status.
 	 * 
-	 * @return antal databasförändringar
+	 * @return antal databasfÃ¶rÃ¤ndringar
 	 * @throws Exception
 	 */
 	protected int updateTmpStatus() throws Exception {
@@ -570,7 +570,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		PreparedStatement selPst = null;
 		ResultSet rs = null;
 		try {
-			// hämta kvarvarande poster under behandling och sätt deras deleted
+			// hÃ¤mta kvarvarande poster under behandling och sÃ¤tt deras deleted
 			// och ta bort deras geometrier i batchar
 			String sql = DBUtil.fetchFirst(c, "select uri from content where serviceid = ? and status <> ?",
 				BATCH_SIZE);
@@ -578,7 +578,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			selPst.setString(1, service.getId());
 			selPst.setInt(2, DBUtil.STATUS_NORMAL);
 
-			// behåll deleted om värdet finns, även för datestamp tas värdet från deleted
+			// behÃ¥ll deleted om vÃ¤rdet finns, Ã¤ven fÃ¶r datestamp tas vÃ¤rdet frÃ¥n deleted
 			updatePst = c.prepareStatement("update content set changed = ?, deleted = coalesce(deleted, ?), " +
 				"datestamp = coalesce(deleted, ?), status = ?, xmldata = null where uri = ?");
 			updatePst.setTimestamp(1, ts);
@@ -590,7 +590,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			long start = System.currentTimeMillis();
 			String uri;
 			int deltaRec = BATCH_SIZE;
-			// när vi får mindre än (och har behandlat dem) batch-storleken har vi nått slutet
+			// nÃ¤r vi fÃ¥r mindre Ã¤n (och har behandlat dem) batch-storleken har vi nÃ¥tt slutet
 			while (deltaRec == BATCH_SIZE) {
 				deltaRec = 0;
 				// kolla om vi ska avbryta
@@ -602,12 +602,12 @@ public class OAIPMHHandler extends DefaultHandler {
 					uri = rs.getString("uri");
 					updatePst.setString(5, uri);
 					deltaRec += updatePst.executeUpdate();
-					// uppdatera status/data för postens ev geometrier
+					// uppdatera status/data fÃ¶r postens ev geometrier
 					if (gmlDBWriter != null) {
 						totalGeo += gmlDBWriter.delete(uri);
 					}
 				}
-				// stäng (och nollställ) rs för återanvändning
+				// stÃ¤ng (och nollstÃ¤ll) rs fÃ¶r Ã¥teranvÃ¤ndning
 				DBUtil.closeDBResources(rs, null, null);
 				rs = null;
 				DBUtil.commit(c);
@@ -630,7 +630,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Återställer status-kolumnen och därmed status till ursprungligt så långt det går.
+	 * ÃterstÃ¤ller status-kolumnen och dÃ¤rmed status till ursprungligt sÃ¥ lÃ¥ngt det gÃ¥r.
 	 * 
 	 * @throws Exception vid fel
 	 */
@@ -666,8 +666,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Gör utestående commit och beräknar respektive återställer antal uppdaterade total och
-	 * för denna transaktion.
+	 * GÃ¶r utestÃ¥ende commit och berÃ¤knar respektive Ã¥terstÃ¤ller antal uppdaterade total och
+	 * fÃ¶r denna transaktion.
 	 * 
 	 * @throws Exception
 	 */
@@ -692,7 +692,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Hämtar antal poster som stoppades in.
+	 * HÃ¤mtar antal poster som stoppades in.
 	 * 
 	 * @return antal "nya" poster
 	 */
@@ -701,7 +701,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Hämtar antalet borttagna poster.
+	 * HÃ¤mtar antalet borttagna poster.
 	 * 
 	 * @return antal borttagna poster
 	 */
@@ -710,19 +710,19 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Hämtar antalet ändrade poster.
+	 * HÃ¤mtar antalet Ã¤ndrade poster.
 	 * 
-	 * @return antal ändrade poster
+	 * @return antal Ã¤ndrade poster
 	 */
 	public int getUpdated() {
 		return numUpdated;
 	}
 
 	/**
-	 * Tolkar värdet som ett iso8601-datum (med ev tid).
+	 * Tolkar vÃ¤rdet som ett iso8601-datum (med ev tid).
 	 * 
-	 * @param value sträng att tolka
-	 * @return tolkad timestamp eller null om värdet inte gick att tolka
+	 * @param value strÃ¤ng att tolka
+	 * @return tolkad timestamp eller null om vÃ¤rdet inte gick att tolka
 	 */
 	private Timestamp parseDatestamp(String value) {
 		DateTime dateTime = null;
@@ -759,11 +759,11 @@ public class OAIPMHHandler extends DefaultHandler {
 		 * 
 		 * IndexSearcher s = null; if (dir != null) { try { s = new IndexSearcher(dir); QueryParser
 		 * p = new QueryParser("dc_desc", new StandardAnalyzer()); String qs = (args.length == 0 ?
-		 * "chine" : args[0]); Query q = p.parse(qs); System.err.println("Söker med: " + qs); Hits
+		 * "chine" : args[0]); Query q = p.parse(qs); System.err.println("SÃ¶ker med: " + qs); Hits
 		 * hits = s.search(q); int antal = hits.length(); System.out.println("Fick " + antal +
-		 * " träffar"); Iterator iter = hits.iterator(); int i = 0; while (iter.hasNext()) { Hit h
+		 * " trÃ¤ffar"); Iterator iter = hits.iterator(); int i = 0; while (iter.hasNext()) { Hit h
 		 * = (Hit) iter.next(); ++i; org.apache.lucene.document.Document d = h.getDocument();
-		 * System.out.println("## träff " + i + "/" + antal + ", score: " + h.getScore() + " ##");
+		 * System.out.println("## trÃ¤ff " + i + "/" + antal + ", score: " + h.getScore() + " ##");
 		 * System.out.println("creator: " + d.get("dc_creator")); System.out.println("desc: " +
 		 * d.get("dc_desc")); System.out.println(""); } } catch (Exception e) { e.printStackTrace();
 		 * } finally { if (s != null) { try { s.close(); } catch (IOException e) {
