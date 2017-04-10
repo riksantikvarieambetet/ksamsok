@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
@@ -30,6 +29,7 @@ import se.raa.ksamsok.statistic.StatisticsManager;
 
 /**
  * Factory-klass som bygger APIMethod-objekt
+ * 
  * @author Henrik Hjalmarsson
  */
 public class APIMethodFactory implements APIServiceProvider {
@@ -45,44 +45,44 @@ public class APIMethodFactory implements APIServiceProvider {
 	@Autowired
 	StatisticsManager statisticsManager;
 	@Autowired
-	@Qualifier("dataSourceReader")
+	// @Qualifier("dataSourceReader")
 	DataSource dataSource;
 
-	public APIMethodFactory() {
-	}
+	public APIMethodFactory() {}
 
 	/**
-	 * returnerar en instans av APIMethod beroende på vilka parametrar som
-	 * kommer in
+	 * returnerar en instans av APIMethod beroende på vilka parametrar som kommer in
+	 * 
 	 * @param params mottagna parametrar
 	 * @param writer för att skriva svaret
 	 * @return APIMethod en instans av någon subklass till APIMethod
 	 * @throws DiagnosticException TODO
 	 */
 	public APIMethod getAPIMethod(Map<String, String> params, OutputStream out)
-			throws MissingParameterException, DiagnosticException {
-		//hämtar ut metodnamnet från parametermappen
+		throws MissingParameterException, DiagnosticException {
+		// hämtar ut metodnamnet från parametermappen
 		String method = params.get(APIMethod.METHOD);
-		if (method == null) { //måste alltid finnas en metod
-			throw new MissingParameterException("obligatorisk parameter " + 
-					APIMethod.METHOD + " saknas",
-					"APIMethodFactory.getAPIMethod", "metod saknas", false);
+		if (method == null) { // måste alltid finnas en metod
+			throw new MissingParameterException("obligatorisk parameter " + APIMethod.METHOD + " saknas",
+				"APIMethodFactory.getAPIMethod", "metod saknas", false);
 		}
 		return getMethod(method, params, out);
 	}
-	
+
 	/**
 	 * returnerar en APIMethod
+	 * 
 	 * @param method metodens namn
 	 * @param params
 	 * @param writer
 	 * @return
 	 * @throws MissingParameterException
-	 * @throws DiagnosticException 
+	 * @throws DiagnosticException
 	 */
-	private APIMethod getMethod(String method, Map<String,String> params, OutputStream out) throws MissingParameterException, DiagnosticException {
+	private APIMethod getMethod(String method, Map<String, String> params, OutputStream out)
+		throws MissingParameterException, DiagnosticException {
 		APIMethod m = null;
-		//en ny if-sats läggs till för varje ny metod
+		// en ny if-sats läggs till för varje ny metod
 		if (method.equals(Search.METHOD_NAME)) {
 			m = new Search(this, out, params);
 		} else if (method.equals(Statistic.METHOD_NAME)) {
@@ -108,7 +108,8 @@ public class APIMethodFactory implements APIServiceProvider {
 		} else if (method.equals(GetRelationTypes.METHOD_NAME)) {
 			m = new GetRelationTypes(this, out, params);
 		} else {
-			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod", "felaktig metod", false);
+			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod",
+				"felaktig metod", false);
 		}
 		return m;
 	}
