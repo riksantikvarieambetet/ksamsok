@@ -10,14 +10,14 @@
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#"
-     xml:base="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/continent#"
+     xml:base="http://kulturarvsdata.se/resurser/aukt/geo/continent"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
     </owl:Ontology>
     
@@ -36,7 +36,7 @@
 
     <!-- http://kulturarvsdata.se/resurser/aukt/geo/continentaf -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent#af">
         <rdf:type rdf:resource="&ksamsok;Continent"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6255146</rdfs:seeAlso>
         <ksamsok:name xml:lang="en">Africa</ksamsok:name>
@@ -47,7 +47,7 @@
 
     <!-- http://kulturarvsdata.se/resurser/aukt/geo/continentan -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#an">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent#an">
         <rdf:type rdf:resource="&ksamsok;Continent"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6255152</rdfs:seeAlso>
         <ksamsok:name xml:lang="en">Antarctica</ksamsok:name>
@@ -58,7 +58,7 @@
 
     <!-- http://kulturarvsdata.se/resurser/aukt/geo/continentas -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent#as">
         <rdf:type rdf:resource="&ksamsok;Continent"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6255147</rdfs:seeAlso>
         <ksamsok:name xml:lang="en">Asia</ksamsok:name>
@@ -69,7 +69,7 @@
 
     <!-- http://kulturarvsdata.se/resurser/aukt/geo/continenteu -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu">
         <rdf:type rdf:resource="&ksamsok;Continent"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6255148</rdfs:seeAlso>
         <ksamsok:name xml:lang="en">Europe</ksamsok:name>
@@ -80,7 +80,7 @@
 
     <!-- http://kulturarvsdata.se/resurser/aukt/geo/continentna -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent#na">
         <rdf:type rdf:resource="&ksamsok;Continent"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6255149</rdfs:seeAlso>
         <ksamsok:name xml:lang="en">North America</ksamsok:name>
@@ -91,7 +91,7 @@
 
     <!-- http://kulturarvsdata.se/resurser/aukt/geo/continentoc -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc">
         <rdf:type rdf:resource="&ksamsok;Continent"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6255151</rdfs:seeAlso>
         <ksamsok:name xml:lang="en">Oceania</ksamsok:name>
@@ -102,7 +102,7 @@
 
     <!-- http://kulturarvsdata.se/resurser/aukt/geo/continentsa -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa">
         <rdf:type rdf:resource="&ksamsok;Continent"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6255150</rdfs:seeAlso>
         <ksamsok:name xml:lang="en">South America</ksamsok:name>

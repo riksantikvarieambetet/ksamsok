@@ -21,3 +21,8 @@ RUNNING_PID
 *.war
 *.ear
 
+/local.properties
+
+ksamsok.iml
+test/test.iml
+.idea/

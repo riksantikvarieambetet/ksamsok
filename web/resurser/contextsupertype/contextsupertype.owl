@@ -10,14 +10,14 @@
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype#"
-     xml:base="http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/contextsupertype#"
+     xml:base="http://kulturarvsdata.se/resurser/contextsupertype"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/contextsupertype">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
     </owl:Ontology>
     
@@ -34,9 +34,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype#cease -->
+    <!-- http://kulturarvsdata.se/resurser/contextsupertype#cease -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype#cease">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contextsupertype#cease">
         <rdf:type rdf:resource="&ksamsok;ContextSuperType"/>
         <ksamsok:description>Anger händelser som avslutar ett fysiskt tings eller en agents livscykel.</ksamsok:description>
         <ksamsok:name>Upphöra</ksamsok:name>
@@ -44,9 +44,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype#create -->
+    <!-- http://kulturarvsdata.se/resurser/contextsupertype#create -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype#create">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contextsupertype#create">
         <rdf:type rdf:resource="&ksamsok;ContextSuperType"/>
         <ksamsok:description>Anger tillblivelse (början) av en persons liv, en händelses start eller ett fysiskt tings design, tillverkning eller uppförande.</ksamsok:description>
         <ksamsok:name>Skapa</ksamsok:name>
@@ -54,9 +54,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype#interact -->
+    <!-- http://kulturarvsdata.se/resurser/contextsupertype#interact -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contextsupertype/contextsupertype#interact">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/contextsupertype#interact">
         <rdf:type rdf:resource="&ksamsok;ContextSuperType"/>
         <ksamsok:description>Anger olika händelser i ett fysiskt tings livscykel.</ksamsok:description>
         <ksamsok:name>interact</ksamsok:name>

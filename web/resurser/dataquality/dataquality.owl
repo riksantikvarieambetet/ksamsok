@@ -10,14 +10,14 @@
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/dataquality/dataquality#"
-     xml:base="http://kulturarvsdata.se/resurser/dataquality/dataquality"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/dataquality#"
+     xml:base="http://kulturarvsdata.se/resurser/dataquality"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/dataquality/dataquality">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/dataquality">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
     </owl:Ontology>
     
@@ -34,9 +34,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/dataquality/dataquality#processed -->
+    <!-- http://kulturarvsdata.se/resurser/dataquality#processed -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/dataquality/dataquality#processed">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/dataquality#processed">
         <rdf:type rdf:resource="&ksamsok;DataQuality"/>
         <ksamsok:description>Tjänsten innehåller bearbetad, mer utförlig, information som är redaktionellt anpassad och kanske även medvetet utvald.</ksamsok:description>
         <ksamsok:name>Bearbetad</ksamsok:name>
@@ -44,9 +44,9 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/dataquality/dataquality#raw -->
+    <!-- http://kulturarvsdata.se/resurser/dataquality#raw -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/dataquality/dataquality#raw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/dataquality#raw">
         <rdf:type rdf:resource="&ksamsok;DataQuality"/>
         <ksamsok:name>Rådata</ksamsok:name>
         <ksamsok:description>Tjänsten innehåller i huvudsak rå, generell information som skapats för att tillgodose den egna organisationens behov.</ksamsok:description>

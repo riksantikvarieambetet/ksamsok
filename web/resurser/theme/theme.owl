@@ -10,14 +10,14 @@
 ]>
 
 
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/theme/theme#"
-     xml:base="http://kulturarvsdata.se/resurser/theme/theme"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/theme#"
+     xml:base="http://kulturarvsdata.se/resurser/theme"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/theme/theme">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/theme">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
     </owl:Ontology>
     
@@ -34,29 +34,29 @@
     
 
 
-    <!-- http://kulturarvsdata.se/resurser/theme/theme#theme01 -->
+    <!-- http://kulturarvsdata.se/resurser/theme#theme01 -->
 
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme/theme#theme01">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme#theme01">
         <rdf:type rdf:resource="&ksamsok;Theme"/>
         <ksamsok:name>2:a världskriget</ksamsok:name>
         <ksamsok:description>Exempel på ett tema som exempelvis kan märka upp data för användning i ett projekt för landets högstadieskolor.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme/theme#theme02">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme#theme02">
         <rdf:type rdf:resource="&ksamsok;Theme"/>
         <ksamsok:name>Modern konst</ksamsok:name>
         <ksamsok:description>Ett annat exempel.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme/theme#theme03">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme#theme03">
         <rdf:type rdf:resource="&ksamsok;Theme"/>
         <ksamsok:name>Utställd</ksamsok:name>
         <ksamsok:description>To be deprecated.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme/theme#exhibited">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme#exhibited">
         <rdf:type rdf:resource="&ksamsok;Theme"/>
         <ksamsok:name>Utställd</ksamsok:name>
         <ksamsok:description>Objektet finns i en pågående utställning.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme/theme#unstraight">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/theme#unstraight">
         <rdf:type rdf:resource="&ksamsok;Theme"/>
         <ksamsok:name>Unstraight</ksamsok:name>
         <ksamsok:description>Anyone or anything that is or was not part of the straight norm in society.</ksamsok:description>

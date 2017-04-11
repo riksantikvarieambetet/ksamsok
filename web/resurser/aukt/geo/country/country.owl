@@ -6,18 +6,18 @@
 <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
 <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
 ]>
-<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/country/country#"
- xml:base="http://kulturarvsdata.se/resurser/aukt/geo/country/country"
+<rdf:RDF xmlns="http://kulturarvsdata.se/resurser/aukt/geo/country#"
+ xml:base="http://kulturarvsdata.se/resurser/aukt/geo/country"
  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
  xmlns:owl="http://www.w3.org/2002/07/owl#"
  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
  xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country">
+    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country">
         <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
-        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent"/>
+        <owl:imports rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent"/>
     </owl:Ontology>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ad">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ad">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Andorra</ksamsok:name>
         <ksamsok:name xml:lang="en">Andorra</ksamsok:name>
@@ -25,9 +25,9 @@
         <ksamsok:alpha2>ad</ksamsok:alpha2>
         <ksamsok:alpha3>and</ksamsok:alpha3>
         <ksamsok:number>20</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ae">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ae">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Förenade arabemiraten</ksamsok:name>
         <ksamsok:name xml:lang="en">United Arab Emirates</ksamsok:name>
@@ -35,9 +35,9 @@
         <ksamsok:alpha2>ae</ksamsok:alpha2>
         <ksamsok:alpha3>are</ksamsok:alpha3>
         <ksamsok:number>784</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#af">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#af">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Afghanistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Afghanistan</ksamsok:name>
@@ -45,9 +45,9 @@
         <ksamsok:alpha2>af</ksamsok:alpha2>
         <ksamsok:alpha3>afg</ksamsok:alpha3>
         <ksamsok:number>4</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ag">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ag">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Antigua och Barbuda</ksamsok:name>
         <ksamsok:name xml:lang="en">Antigua and Barbuda</ksamsok:name>
@@ -55,9 +55,9 @@
         <ksamsok:alpha2>ag</ksamsok:alpha2>
         <ksamsok:alpha3>atg</ksamsok:alpha3>
         <ksamsok:number>28</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ai">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ai">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Anguilla</ksamsok:name>
         <ksamsok:name xml:lang="en">Anguilla</ksamsok:name>
@@ -65,9 +65,9 @@
         <ksamsok:alpha2>ai</ksamsok:alpha2>
         <ksamsok:alpha3>aia</ksamsok:alpha3>
         <ksamsok:number>660</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#al">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#al">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Albanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Albania</ksamsok:name>
@@ -75,9 +75,9 @@
         <ksamsok:alpha2>al</ksamsok:alpha2>
         <ksamsok:alpha3>alb</ksamsok:alpha3>
         <ksamsok:number>8</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#am">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#am">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Armenien</ksamsok:name>
         <ksamsok:name xml:lang="en">Armenia</ksamsok:name>
@@ -85,9 +85,9 @@
         <ksamsok:alpha2>am</ksamsok:alpha2>
         <ksamsok:alpha3>arm</ksamsok:alpha3>
         <ksamsok:number>51</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ao">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ao">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Angola</ksamsok:name>
         <ksamsok:name xml:lang="en">Angola</ksamsok:name>
@@ -95,9 +95,9 @@
         <ksamsok:alpha2>ao</ksamsok:alpha2>
         <ksamsok:alpha3>ago</ksamsok:alpha3>
         <ksamsok:number>24</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#aq">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#aq">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Antarktis</ksamsok:name>
         <ksamsok:name xml:lang="en">Antarctica</ksamsok:name>
@@ -105,9 +105,9 @@
         <ksamsok:alpha2>aq</ksamsok:alpha2>
         <ksamsok:alpha3>ata</ksamsok:alpha3>
         <ksamsok:number>10</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#an"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ar">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ar">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Argentina</ksamsok:name>
         <ksamsok:name xml:lang="en">Argentina</ksamsok:name>
@@ -115,9 +115,9 @@
         <ksamsok:alpha2>ar</ksamsok:alpha2>
         <ksamsok:alpha3>arg</ksamsok:alpha3>
         <ksamsok:number>32</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#as">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#as">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Amerikanska Samoa</ksamsok:name>
         <ksamsok:name xml:lang="en">American Samoa</ksamsok:name>
@@ -125,9 +125,9 @@
         <ksamsok:alpha2>as</ksamsok:alpha2>
         <ksamsok:alpha3>asm</ksamsok:alpha3>
         <ksamsok:number>16</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#at">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#at">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Österrike</ksamsok:name>
         <ksamsok:name xml:lang="en">Austria</ksamsok:name>
@@ -135,9 +135,9 @@
         <ksamsok:alpha2>at</ksamsok:alpha2>
         <ksamsok:alpha3>aut</ksamsok:alpha3>
         <ksamsok:number>40</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#au">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#au">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Australien</ksamsok:name>
         <ksamsok:name xml:lang="en">Australia</ksamsok:name>
@@ -145,9 +145,9 @@
         <ksamsok:alpha2>au</ksamsok:alpha2>
         <ksamsok:alpha3>aus</ksamsok:alpha3>
         <ksamsok:number>36</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#aw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#aw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Aruba</ksamsok:name>
         <ksamsok:name xml:lang="en">Aruba</ksamsok:name>
@@ -155,9 +155,9 @@
         <ksamsok:alpha2>aw</ksamsok:alpha2>
         <ksamsok:alpha3>abw</ksamsok:alpha3>
         <ksamsok:number>533</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ax">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ax">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Åland</ksamsok:name>
         <ksamsok:name xml:lang="en">Aland Islands</ksamsok:name>
@@ -165,9 +165,9 @@
         <ksamsok:alpha2>ax</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#az">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#az">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Azerbajdzjan</ksamsok:name>
         <ksamsok:name xml:lang="en">Azerbaijan</ksamsok:name>
@@ -175,9 +175,9 @@
         <ksamsok:alpha2>az</ksamsok:alpha2>
         <ksamsok:alpha3>aze</ksamsok:alpha3>
         <ksamsok:number>31</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ba">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ba">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bosnien-Hercegovina</ksamsok:name>
         <ksamsok:name xml:lang="en">Bosnia and Herzegovina</ksamsok:name>
@@ -185,9 +185,9 @@
         <ksamsok:alpha2>ba</ksamsok:alpha2>
         <ksamsok:alpha3>bih</ksamsok:alpha3>
         <ksamsok:number>70</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bb">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bb">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Barbados</ksamsok:name>
         <ksamsok:name xml:lang="en">Barbados</ksamsok:name>
@@ -195,9 +195,9 @@
         <ksamsok:alpha2>bb</ksamsok:alpha2>
         <ksamsok:alpha3>brb</ksamsok:alpha3>
         <ksamsok:number>52</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bd">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bd">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bangladesh</ksamsok:name>
         <ksamsok:name xml:lang="en">Bangladesh</ksamsok:name>
@@ -205,9 +205,9 @@
         <ksamsok:alpha2>bd</ksamsok:alpha2>
         <ksamsok:alpha3>bgd</ksamsok:alpha3>
         <ksamsok:number>50</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#be">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#be">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Belgien</ksamsok:name>
         <ksamsok:name xml:lang="en">Belgium</ksamsok:name>
@@ -215,9 +215,9 @@
         <ksamsok:alpha2>be</ksamsok:alpha2>
         <ksamsok:alpha3>bel</ksamsok:alpha3>
         <ksamsok:number>56</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Burkina Faso</ksamsok:name>
         <ksamsok:name xml:lang="en">Burkina Faso</ksamsok:name>
@@ -225,9 +225,9 @@
         <ksamsok:alpha2>bf</ksamsok:alpha2>
         <ksamsok:alpha3>bfa</ksamsok:alpha3>
         <ksamsok:number>854</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bulgarien</ksamsok:name>
         <ksamsok:name xml:lang="en">Bulgaria</ksamsok:name>
@@ -235,9 +235,9 @@
         <ksamsok:alpha2>bg</ksamsok:alpha2>
         <ksamsok:alpha3>bgr</ksamsok:alpha3>
         <ksamsok:number>100</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bh">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bahrain</ksamsok:name>
         <ksamsok:name xml:lang="en">Bahrain</ksamsok:name>
@@ -245,9 +245,9 @@
         <ksamsok:alpha2>bh</ksamsok:alpha2>
         <ksamsok:alpha3>bhr</ksamsok:alpha3>
         <ksamsok:number>48</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bi">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bi">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Burundi</ksamsok:name>
         <ksamsok:name xml:lang="en">Burundi</ksamsok:name>
@@ -255,9 +255,9 @@
         <ksamsok:alpha2>bi</ksamsok:alpha2>
         <ksamsok:alpha3>bdi</ksamsok:alpha3>
         <ksamsok:number>108</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bj">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bj">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Benin</ksamsok:name>
         <ksamsok:name xml:lang="en">Benin</ksamsok:name>
@@ -265,9 +265,9 @@
         <ksamsok:alpha2>bj</ksamsok:alpha2>
         <ksamsok:alpha3>ben</ksamsok:alpha3>
         <ksamsok:number>204</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bl">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Barthélemy</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Barthélemy</ksamsok:name>
@@ -275,9 +275,9 @@
         <ksamsok:alpha2>bl</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bermuda</ksamsok:name>
         <ksamsok:name xml:lang="en">Bermuda</ksamsok:name>
@@ -285,9 +285,9 @@
         <ksamsok:alpha2>bm</ksamsok:alpha2>
         <ksamsok:alpha3>bmu</ksamsok:alpha3>
         <ksamsok:number>60</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brunei</ksamsok:name>
         <ksamsok:name xml:lang="en">Brunei</ksamsok:name>
@@ -295,9 +295,9 @@
         <ksamsok:alpha2>bn</ksamsok:alpha2>
         <ksamsok:alpha3>brn</ksamsok:alpha3>
         <ksamsok:number>96</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bo">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bo">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bolivia</ksamsok:name>
         <ksamsok:name xml:lang="en">Bolivia</ksamsok:name>
@@ -305,9 +305,9 @@
         <ksamsok:alpha2>bo</ksamsok:alpha2>
         <ksamsok:alpha3>bol</ksamsok:alpha3>
         <ksamsok:number>68</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bq">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bq">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bonaire</ksamsok:name>
         <ksamsok:name xml:lang="en">Bonaire</ksamsok:name>
@@ -315,9 +315,9 @@
         <ksamsok:alpha2>bq</ksamsok:alpha2>
         <ksamsok:alpha3>bes</ksamsok:alpha3>
         <ksamsok:number>535</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#br">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#br">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brasilien</ksamsok:name>
         <ksamsok:name xml:lang="en">Brazil</ksamsok:name>
@@ -325,9 +325,9 @@
         <ksamsok:alpha2>br</ksamsok:alpha2>
         <ksamsok:alpha3>bra</ksamsok:alpha3>
         <ksamsok:number>76</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bs">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bs">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bahamas</ksamsok:name>
         <ksamsok:name xml:lang="en">Bahamas</ksamsok:name>
@@ -335,9 +335,9 @@
         <ksamsok:alpha2>bs</ksamsok:alpha2>
         <ksamsok:alpha3>bhs</ksamsok:alpha3>
         <ksamsok:number>44</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bt">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bt">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bhutan</ksamsok:name>
         <ksamsok:name xml:lang="en">Bhutan</ksamsok:name>
@@ -345,9 +345,9 @@
         <ksamsok:alpha2>bt</ksamsok:alpha2>
         <ksamsok:alpha3>btn</ksamsok:alpha3>
         <ksamsok:number>64</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bv">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bouvetön</ksamsok:name>
         <ksamsok:name xml:lang="en">Bouvet island</ksamsok:name>
@@ -355,9 +355,9 @@
         <ksamsok:alpha2>bv</ksamsok:alpha2>
         <ksamsok:alpha3>bvt</ksamsok:alpha3>
         <ksamsok:number>74</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#an"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Botswana</ksamsok:name>
         <ksamsok:name xml:lang="en">Botswana</ksamsok:name>
@@ -365,9 +365,9 @@
         <ksamsok:alpha2>bw</ksamsok:alpha2>
         <ksamsok:alpha3>bwa</ksamsok:alpha3>
         <ksamsok:number>72</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#by">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#by">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vitryssland</ksamsok:name>
         <ksamsok:name xml:lang="en">Belarus</ksamsok:name>
@@ -375,9 +375,9 @@
         <ksamsok:alpha2>by</ksamsok:alpha2>
         <ksamsok:alpha3>blr</ksamsok:alpha3>
         <ksamsok:number>112</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#bz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Belize</ksamsok:name>
         <ksamsok:name xml:lang="en">Belize</ksamsok:name>
@@ -385,9 +385,9 @@
         <ksamsok:alpha2>bz</ksamsok:alpha2>
         <ksamsok:alpha3>blz</ksamsok:alpha3>
         <ksamsok:number>84</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ca">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ca">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kanada</ksamsok:name>
         <ksamsok:name xml:lang="en">Canada</ksamsok:name>
@@ -395,9 +395,9 @@
         <ksamsok:alpha2>ca</ksamsok:alpha2>
         <ksamsok:alpha3>can</ksamsok:alpha3>
         <ksamsok:number>124</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kokosöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Cocos Islands</ksamsok:name>
@@ -405,9 +405,9 @@
         <ksamsok:alpha2>cc</ksamsok:alpha2>
         <ksamsok:alpha3>cck</ksamsok:alpha3>
         <ksamsok:number>166</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cd">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cd">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kongo</ksamsok:name>
         <ksamsok:name xml:lang="en">Democratic Republic of the Congo</ksamsok:name>
@@ -415,9 +415,9 @@
         <ksamsok:alpha2>cd</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Centralafrikanska republiken</ksamsok:name>
         <ksamsok:name xml:lang="en">Central African republic</ksamsok:name>
@@ -425,9 +425,9 @@
         <ksamsok:alpha2>cf</ksamsok:alpha2>
         <ksamsok:alpha3>caf</ksamsok:alpha3>
         <ksamsok:number>140</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kongo-Brazzaville</ksamsok:name>
         <ksamsok:name xml:lang="en">Republic of the Congo</ksamsok:name>
@@ -435,9 +435,9 @@
         <ksamsok:alpha2>cg</ksamsok:alpha2>
         <ksamsok:alpha3>cog</ksamsok:alpha3>
         <ksamsok:number>178</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ch">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ch">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Schweiz</ksamsok:name>
         <ksamsok:name xml:lang="en">Switzerland</ksamsok:name>
@@ -445,9 +445,9 @@
         <ksamsok:alpha2>ch</ksamsok:alpha2>
         <ksamsok:alpha3>che</ksamsok:alpha3>
         <ksamsok:number>756</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ci">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ci">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Elfenbenskusten</ksamsok:name>
         <ksamsok:name xml:lang="en">Ivory Coast</ksamsok:name>
@@ -455,9 +455,9 @@
         <ksamsok:alpha2>ci</ksamsok:alpha2>
         <ksamsok:alpha3>civ</ksamsok:alpha3>
         <ksamsok:number>384</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ck">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ck">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Cooköarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Cook Islands</ksamsok:name>
@@ -465,9 +465,9 @@
         <ksamsok:alpha2>ck</ksamsok:alpha2>
         <ksamsok:alpha3>cok</ksamsok:alpha3>
         <ksamsok:number>184</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cl">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Chile</ksamsok:name>
         <ksamsok:name xml:lang="en">Chile</ksamsok:name>
@@ -475,9 +475,9 @@
         <ksamsok:alpha2>cl</ksamsok:alpha2>
         <ksamsok:alpha3>chl</ksamsok:alpha3>
         <ksamsok:number>152</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kamerun</ksamsok:name>
         <ksamsok:name xml:lang="en">Cameroon</ksamsok:name>
@@ -485,9 +485,9 @@
         <ksamsok:alpha2>cm</ksamsok:alpha2>
         <ksamsok:alpha3>cmr</ksamsok:alpha3>
         <ksamsok:number>120</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kina</ksamsok:name>
         <ksamsok:name xml:lang="en">China</ksamsok:name>
@@ -495,9 +495,9 @@
         <ksamsok:alpha2>cn</ksamsok:alpha2>
         <ksamsok:alpha3>chn</ksamsok:alpha3>
         <ksamsok:number>156</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#co">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#co">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Colombia</ksamsok:name>
         <ksamsok:name xml:lang="en">Colombia</ksamsok:name>
@@ -505,9 +505,9 @@
         <ksamsok:alpha2>co</ksamsok:alpha2>
         <ksamsok:alpha3>col</ksamsok:alpha3>
         <ksamsok:number>170</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Costa Rica</ksamsok:name>
         <ksamsok:name xml:lang="en">Costa Rica</ksamsok:name>
@@ -515,9 +515,9 @@
         <ksamsok:alpha2>cr</ksamsok:alpha2>
         <ksamsok:alpha3>cri</ksamsok:alpha3>
         <ksamsok:number>188</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kuba</ksamsok:name>
         <ksamsok:name xml:lang="en">Cuba</ksamsok:name>
@@ -525,9 +525,9 @@
         <ksamsok:alpha2>cu</ksamsok:alpha2>
         <ksamsok:alpha3>cub</ksamsok:alpha3>
         <ksamsok:number>192</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cv">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kap Verde</ksamsok:name>
         <ksamsok:name xml:lang="en">Cape verde</ksamsok:name>
@@ -535,9 +535,9 @@
         <ksamsok:alpha2>cv</ksamsok:alpha2>
         <ksamsok:alpha3>cpv</ksamsok:alpha3>
         <ksamsok:number>132</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Curacao</ksamsok:name>
         <ksamsok:name xml:lang="en">Curacao</ksamsok:name>
@@ -545,9 +545,9 @@
         <ksamsok:alpha2>cw</ksamsok:alpha2>
         <ksamsok:alpha3>cuw</ksamsok:alpha3>
         <ksamsok:number>531</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cx">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cx">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Julön</ksamsok:name>
         <ksamsok:name xml:lang="en">Christmas Island</ksamsok:name>
@@ -555,9 +555,9 @@
         <ksamsok:alpha2>cx</ksamsok:alpha2>
         <ksamsok:alpha3>cxr</ksamsok:alpha3>
         <ksamsok:number>162</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cy">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cy">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Cypern</ksamsok:name>
         <ksamsok:name xml:lang="en">Cyprus</ksamsok:name>
@@ -565,9 +565,9 @@
         <ksamsok:alpha2>cy</ksamsok:alpha2>
         <ksamsok:alpha3>cyp</ksamsok:alpha3>
         <ksamsok:number>196</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#cz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tjeckien</ksamsok:name>
         <ksamsok:name xml:lang="en">Czech Republic</ksamsok:name>
@@ -575,9 +575,9 @@
         <ksamsok:alpha2>cz</ksamsok:alpha2>
         <ksamsok:alpha3>cze</ksamsok:alpha3>
         <ksamsok:number>203</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#de">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#de">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tyskland</ksamsok:name>
         <ksamsok:name xml:lang="en">Germany</ksamsok:name>
@@ -585,9 +585,9 @@
         <ksamsok:alpha2>de</ksamsok:alpha2>
         <ksamsok:alpha3>deu</ksamsok:alpha3>
         <ksamsok:number>276</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#dj">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#dj">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Djibouti</ksamsok:name>
         <ksamsok:name xml:lang="en">Djibouti</ksamsok:name>
@@ -595,9 +595,9 @@
         <ksamsok:alpha2>dj</ksamsok:alpha2>
         <ksamsok:alpha3>dji</ksamsok:alpha3>
         <ksamsok:number>262</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#dk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#dk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Danmark</ksamsok:name>
         <ksamsok:name xml:lang="en">Denmark</ksamsok:name>
@@ -605,9 +605,9 @@
         <ksamsok:alpha2>dk</ksamsok:alpha2>
         <ksamsok:alpha3>dnk</ksamsok:alpha3>
         <ksamsok:number>208</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#dm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#dm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Dominica</ksamsok:name>
         <ksamsok:name xml:lang="en">Dominica</ksamsok:name>
@@ -615,9 +615,9 @@
         <ksamsok:alpha2>dm</ksamsok:alpha2>
         <ksamsok:alpha3>dma</ksamsok:alpha3>
         <ksamsok:number>212</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#do">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#do">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Dominikanska republiken</ksamsok:name>
         <ksamsok:name xml:lang="en">Dominican Republic</ksamsok:name>
@@ -625,9 +625,9 @@
         <ksamsok:alpha2>do</ksamsok:alpha2>
         <ksamsok:alpha3>dom</ksamsok:alpha3>
         <ksamsok:number>214</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#dz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#dz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Algeriet</ksamsok:name>
         <ksamsok:name xml:lang="en">Algeria</ksamsok:name>
@@ -635,9 +635,9 @@
         <ksamsok:alpha2>dz</ksamsok:alpha2>
         <ksamsok:alpha3>dza</ksamsok:alpha3>
         <ksamsok:number>12</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ec">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ec">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ecuador</ksamsok:name>
         <ksamsok:name xml:lang="en">Ecuador</ksamsok:name>
@@ -645,9 +645,9 @@
         <ksamsok:alpha2>ec</ksamsok:alpha2>
         <ksamsok:alpha3>ecu</ksamsok:alpha3>
         <ksamsok:number>218</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ee">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ee">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Estland</ksamsok:name>
         <ksamsok:name xml:lang="en">Estonia</ksamsok:name>
@@ -655,9 +655,9 @@
         <ksamsok:alpha2>ee</ksamsok:alpha2>
         <ksamsok:alpha3>est</ksamsok:alpha3>
         <ksamsok:number>233</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#eg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#eg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Egypten</ksamsok:name>
         <ksamsok:name xml:lang="en">Egypt</ksamsok:name>
@@ -665,9 +665,9 @@
         <ksamsok:alpha2>eg</ksamsok:alpha2>
         <ksamsok:alpha3>egy</ksamsok:alpha3>
         <ksamsok:number>818</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#eh">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#eh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Västsahara</ksamsok:name>
         <ksamsok:name xml:lang="en">Western Sahara</ksamsok:name>
@@ -675,9 +675,9 @@
         <ksamsok:alpha2>eh</ksamsok:alpha2>
         <ksamsok:alpha3>esh</ksamsok:alpha3>
         <ksamsok:number>732</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#er">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#er">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Eritrea</ksamsok:name>
         <ksamsok:name xml:lang="en">Eritrea</ksamsok:name>
@@ -685,9 +685,9 @@
         <ksamsok:alpha2>er</ksamsok:alpha2>
         <ksamsok:alpha3>eri</ksamsok:alpha3>
         <ksamsok:number>232</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#es">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#es">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Spanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Spain</ksamsok:name>
@@ -695,9 +695,9 @@
         <ksamsok:alpha2>es</ksamsok:alpha2>
         <ksamsok:alpha3>esp</ksamsok:alpha3>
         <ksamsok:number>724</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#et">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#et">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Etiopien</ksamsok:name>
         <ksamsok:name xml:lang="en">Ethiopia</ksamsok:name>
@@ -705,9 +705,9 @@
         <ksamsok:alpha2>et</ksamsok:alpha2>
         <ksamsok:alpha3>eth</ksamsok:alpha3>
         <ksamsok:number>210</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#fi">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fi">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Finland</ksamsok:name>
         <ksamsok:name xml:lang="en">Finland</ksamsok:name>
@@ -715,9 +715,9 @@
         <ksamsok:alpha2>fi</ksamsok:alpha2>
         <ksamsok:alpha3>fin</ksamsok:alpha3>
         <ksamsok:number>246</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#fj">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fj">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Fiji</ksamsok:name>
         <ksamsok:name xml:lang="en">Fiji</ksamsok:name>
@@ -725,9 +725,9 @@
         <ksamsok:alpha2>fj</ksamsok:alpha2>
         <ksamsok:alpha3>fji</ksamsok:alpha3>
         <ksamsok:number>242</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#fk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Falklandsöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Falkland Islands</ksamsok:name>
@@ -735,9 +735,9 @@
         <ksamsok:alpha2>fk</ksamsok:alpha2>
         <ksamsok:alpha3>flk</ksamsok:alpha3>
         <ksamsok:number>238</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#fm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mikronesiens federerade stater</ksamsok:name>
         <ksamsok:name xml:lang="en">Micronesia</ksamsok:name>
@@ -745,9 +745,9 @@
         <ksamsok:alpha2>fm</ksamsok:alpha2>
         <ksamsok:alpha3>fsm</ksamsok:alpha3>
         <ksamsok:number>583</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#fo">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fo">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Färöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Faroe Islands</ksamsok:name>
@@ -755,9 +755,9 @@
         <ksamsok:alpha2>fo</ksamsok:alpha2>
         <ksamsok:alpha3>fro</ksamsok:alpha3>
         <ksamsok:number>234</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#fr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Frankrike</ksamsok:name>
         <ksamsok:name xml:lang="en">France</ksamsok:name>
@@ -765,9 +765,9 @@
         <ksamsok:alpha2>fr</ksamsok:alpha2>
         <ksamsok:alpha3>fra</ksamsok:alpha3>
         <ksamsok:number>250</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ga">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ga">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Gabon</ksamsok:name>
         <ksamsok:name xml:lang="en">Gabon</ksamsok:name>
@@ -775,9 +775,9 @@
         <ksamsok:alpha2>ga</ksamsok:alpha2>
         <ksamsok:alpha3>gab</ksamsok:alpha3>
         <ksamsok:number>266</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gb">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gb">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Storbritannien</ksamsok:name>
         <ksamsok:name xml:lang="en">United Kingdom</ksamsok:name>
@@ -785,9 +785,9 @@
         <ksamsok:alpha2>gb</ksamsok:alpha2>
         <ksamsok:alpha3>gbr</ksamsok:alpha3>
         <ksamsok:number>826</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gd">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gd">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Grenada</ksamsok:name>
         <ksamsok:name xml:lang="en">Grenada</ksamsok:name>
@@ -795,9 +795,9 @@
         <ksamsok:alpha2>gd</ksamsok:alpha2>
         <ksamsok:alpha3>grd</ksamsok:alpha3>
         <ksamsok:number>308</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ge">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ge">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Georgien</ksamsok:name>
         <ksamsok:name xml:lang="en">Georgia</ksamsok:name>
@@ -805,9 +805,9 @@
         <ksamsok:alpha2>ge</ksamsok:alpha2>
         <ksamsok:alpha3>geo</ksamsok:alpha3>
         <ksamsok:number>268</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Franska Guyana</ksamsok:name>
         <ksamsok:name xml:lang="en">French Guiana</ksamsok:name>
@@ -815,9 +815,9 @@
         <ksamsok:alpha2>gf</ksamsok:alpha2>
         <ksamsok:alpha3>guf</ksamsok:alpha3>
         <ksamsok:number>254</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guernsey</ksamsok:name>
         <ksamsok:name xml:lang="en">Guernsey</ksamsok:name>
@@ -825,9 +825,9 @@
         <ksamsok:alpha2>gg</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gh">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ghana</ksamsok:name>
         <ksamsok:name xml:lang="en">Ghana</ksamsok:name>
@@ -835,9 +835,9 @@
         <ksamsok:alpha2>gh</ksamsok:alpha2>
         <ksamsok:alpha3>gha</ksamsok:alpha3>
         <ksamsok:number>288</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gi">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gi">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Gibraltar</ksamsok:name>
         <ksamsok:name xml:lang="en">Gibraltar</ksamsok:name>
@@ -845,9 +845,9 @@
         <ksamsok:alpha2>gi</ksamsok:alpha2>
         <ksamsok:alpha3>gib</ksamsok:alpha3>
         <ksamsok:number>292</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gl">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Grönland</ksamsok:name>
         <ksamsok:name xml:lang="en">Greenland</ksamsok:name>
@@ -855,9 +855,9 @@
         <ksamsok:alpha2>gl</ksamsok:alpha2>
         <ksamsok:alpha3>grl</ksamsok:alpha3>
         <ksamsok:number>304</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Gambia</ksamsok:name>
         <ksamsok:name xml:lang="en">Gambia</ksamsok:name>
@@ -865,9 +865,9 @@
         <ksamsok:alpha2>gm</ksamsok:alpha2>
         <ksamsok:alpha3>gmb</ksamsok:alpha3>
         <ksamsok:number>270</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guinea</ksamsok:name>
         <ksamsok:name xml:lang="en">Guinea</ksamsok:name>
@@ -875,9 +875,9 @@
         <ksamsok:alpha2>gn</ksamsok:alpha2>
         <ksamsok:alpha3>gin</ksamsok:alpha3>
         <ksamsok:number>324</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gp">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gp">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guadeloupe</ksamsok:name>
         <ksamsok:name xml:lang="en">Guadeloupe</ksamsok:name>
@@ -885,9 +885,9 @@
         <ksamsok:alpha2>gp</ksamsok:alpha2>
         <ksamsok:alpha3>glp</ksamsok:alpha3>
         <ksamsok:number>312</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gq">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gq">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ekvatorialguinea</ksamsok:name>
         <ksamsok:name xml:lang="en">Equatorial Guinea</ksamsok:name>
@@ -895,9 +895,9 @@
         <ksamsok:alpha2>gq</ksamsok:alpha2>
         <ksamsok:alpha3>gnq</ksamsok:alpha3>
         <ksamsok:number>226</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Grekland</ksamsok:name>
         <ksamsok:name xml:lang="en">Greece</ksamsok:name>
@@ -905,9 +905,9 @@
         <ksamsok:alpha2>gr</ksamsok:alpha2>
         <ksamsok:alpha3>grc</ksamsok:alpha3>
         <ksamsok:number>300</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gs">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gs">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydgeorgien och Sydsandwichöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">South Georgia and the South Sandwich Islands</ksamsok:name>
@@ -915,9 +915,9 @@
         <ksamsok:alpha2>gs</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#an"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gt">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gt">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guatemala</ksamsok:name>
         <ksamsok:name xml:lang="en">Guatemala</ksamsok:name>
@@ -925,9 +925,9 @@
         <ksamsok:alpha2>gt</ksamsok:alpha2>
         <ksamsok:alpha3>gtm</ksamsok:alpha3>
         <ksamsok:number>320</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guam</ksamsok:name>
         <ksamsok:name xml:lang="en">Guam</ksamsok:name>
@@ -935,9 +935,9 @@
         <ksamsok:alpha2>gu</ksamsok:alpha2>
         <ksamsok:alpha3>gum</ksamsok:alpha3>
         <ksamsok:number>316</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guinea Bissau</ksamsok:name>
         <ksamsok:name xml:lang="en">Guinea-Bissau</ksamsok:name>
@@ -945,9 +945,9 @@
         <ksamsok:alpha2>gw</ksamsok:alpha2>
         <ksamsok:alpha3>gnb</ksamsok:alpha3>
         <ksamsok:number>624</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#gy">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gy">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guyana</ksamsok:name>
         <ksamsok:name xml:lang="en">Guyana</ksamsok:name>
@@ -955,9 +955,9 @@
         <ksamsok:alpha2>gy</ksamsok:alpha2>
         <ksamsok:alpha3>guy</ksamsok:alpha3>
         <ksamsok:number>328</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#hk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#hk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Hongkong</ksamsok:name>
         <ksamsok:name xml:lang="en">Hong Kong</ksamsok:name>
@@ -965,9 +965,9 @@
         <ksamsok:alpha2>hk</ksamsok:alpha2>
         <ksamsok:alpha3>hkg</ksamsok:alpha3>
         <ksamsok:number>344</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#hm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#hm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Heard- och McDonaldsöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Heard Island and Mcdonald Islands</ksamsok:name>
@@ -975,9 +975,9 @@
         <ksamsok:alpha2>hm</ksamsok:alpha2>
         <ksamsok:alpha3>hmd</ksamsok:alpha3>
         <ksamsok:number>334</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#an"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#hn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#hn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Honduras</ksamsok:name>
         <ksamsok:name xml:lang="en">Honduras</ksamsok:name>
@@ -985,9 +985,9 @@
         <ksamsok:alpha2>hn</ksamsok:alpha2>
         <ksamsok:alpha3>hnd</ksamsok:alpha3>
         <ksamsok:number>340</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#hr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#hr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kroatien</ksamsok:name>
         <ksamsok:name xml:lang="en">Croatia</ksamsok:name>
@@ -995,9 +995,9 @@
         <ksamsok:alpha2>hr</ksamsok:alpha2>
         <ksamsok:alpha3>hrv</ksamsok:alpha3>
         <ksamsok:number>191</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ht">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ht">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Haiti</ksamsok:name>
         <ksamsok:name xml:lang="en">Haiti</ksamsok:name>
@@ -1005,9 +1005,9 @@
         <ksamsok:alpha2>ht</ksamsok:alpha2>
         <ksamsok:alpha3>hti</ksamsok:alpha3>
         <ksamsok:number>332</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#hu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#hu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ungern</ksamsok:name>
         <ksamsok:name xml:lang="en">Hungary</ksamsok:name>
@@ -1015,9 +1015,9 @@
         <ksamsok:alpha2>hu</ksamsok:alpha2>
         <ksamsok:alpha3>hun</ksamsok:alpha3>
         <ksamsok:number>348</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#id">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#id">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Indonesien</ksamsok:name>
         <ksamsok:name xml:lang="en">Indonesia</ksamsok:name>
@@ -1025,9 +1025,9 @@
         <ksamsok:alpha2>id</ksamsok:alpha2>
         <ksamsok:alpha3>idn</ksamsok:alpha3>
         <ksamsok:number>360</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ie">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ie">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Irland</ksamsok:name>
         <ksamsok:name xml:lang="en">Ireland</ksamsok:name>
@@ -1035,9 +1035,9 @@
         <ksamsok:alpha2>ie</ksamsok:alpha2>
         <ksamsok:alpha3>irl</ksamsok:alpha3>
         <ksamsok:number>372</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#il">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#il">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Israel</ksamsok:name>
         <ksamsok:name xml:lang="en">Israel</ksamsok:name>
@@ -1045,9 +1045,9 @@
         <ksamsok:alpha2>il</ksamsok:alpha2>
         <ksamsok:alpha3>isr</ksamsok:alpha3>
         <ksamsok:number>376</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#im">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#im">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Isle of Man</ksamsok:name>
         <ksamsok:name xml:lang="en">Isle of Man</ksamsok:name>
@@ -1055,9 +1055,9 @@
         <ksamsok:alpha2>im</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#in">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#in">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Indien</ksamsok:name>
         <ksamsok:name xml:lang="en">India</ksamsok:name>
@@ -1065,9 +1065,9 @@
         <ksamsok:alpha2>in</ksamsok:alpha2>
         <ksamsok:alpha3>ind</ksamsok:alpha3>
         <ksamsok:number>356</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#io">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#io">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brittiska territoriet i Indiska Oceanen</ksamsok:name>
         <ksamsok:name xml:lang="en">British Indian Ocean territory</ksamsok:name>
@@ -1075,9 +1075,9 @@
         <ksamsok:alpha2>io</ksamsok:alpha2>
         <ksamsok:alpha3>iot</ksamsok:alpha3>
         <ksamsok:number>86</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#iq">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#iq">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Irak</ksamsok:name>
         <ksamsok:name xml:lang="en">Iraq</ksamsok:name>
@@ -1085,9 +1085,9 @@
         <ksamsok:alpha2>iq</ksamsok:alpha2>
         <ksamsok:alpha3>irq</ksamsok:alpha3>
         <ksamsok:number>368</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ir">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ir">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Iran</ksamsok:name>
         <ksamsok:name xml:lang="en">Iran</ksamsok:name>
@@ -1095,9 +1095,9 @@
         <ksamsok:alpha2>ir</ksamsok:alpha2>
         <ksamsok:alpha3>irn</ksamsok:alpha3>
         <ksamsok:number>364</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#is">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#is">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Island</ksamsok:name>
         <ksamsok:name xml:lang="en">Iceland</ksamsok:name>
@@ -1105,9 +1105,9 @@
         <ksamsok:alpha2>is</ksamsok:alpha2>
         <ksamsok:alpha3>isl</ksamsok:alpha3>
         <ksamsok:number>352</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#it">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#it">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Italien</ksamsok:name>
         <ksamsok:name xml:lang="en">Italy</ksamsok:name>
@@ -1115,9 +1115,9 @@
         <ksamsok:alpha2>it</ksamsok:alpha2>
         <ksamsok:alpha3>ita</ksamsok:alpha3>
         <ksamsok:number>380</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#je">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#je">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jersey</ksamsok:name>
         <ksamsok:name xml:lang="en">Jersey</ksamsok:name>
@@ -1125,9 +1125,9 @@
         <ksamsok:alpha2>je</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#jm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#jm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jamaica</ksamsok:name>
         <ksamsok:name xml:lang="en">Jamaica</ksamsok:name>
@@ -1135,9 +1135,9 @@
         <ksamsok:alpha2>jm</ksamsok:alpha2>
         <ksamsok:alpha3>jam</ksamsok:alpha3>
         <ksamsok:number>388</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#jo">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#jo">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jordanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Jordan</ksamsok:name>
@@ -1145,9 +1145,9 @@
         <ksamsok:alpha2>jo</ksamsok:alpha2>
         <ksamsok:alpha3>jor</ksamsok:alpha3>
         <ksamsok:number>400</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#jp">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#jp">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Japan</ksamsok:name>
         <ksamsok:name xml:lang="en">Japan</ksamsok:name>
@@ -1155,9 +1155,9 @@
         <ksamsok:alpha2>jp</ksamsok:alpha2>
         <ksamsok:alpha3>jpn</ksamsok:alpha3>
         <ksamsok:number>392</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ke">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ke">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kenya</ksamsok:name>
         <ksamsok:name xml:lang="en">Kenya</ksamsok:name>
@@ -1165,9 +1165,9 @@
         <ksamsok:alpha2>ke</ksamsok:alpha2>
         <ksamsok:alpha3>ken</ksamsok:alpha3>
         <ksamsok:number>404</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#kg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#kg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kirgizistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Kyrgyzstan</ksamsok:name>
@@ -1175,9 +1175,9 @@
         <ksamsok:alpha2>kg</ksamsok:alpha2>
         <ksamsok:alpha3>kgz</ksamsok:alpha3>
         <ksamsok:number>417</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#kh">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#kh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kambodja</ksamsok:name>
         <ksamsok:name xml:lang="en">Cambodia</ksamsok:name>
@@ -1185,9 +1185,9 @@
         <ksamsok:alpha2>kh</ksamsok:alpha2>
         <ksamsok:alpha3>khm</ksamsok:alpha3>
         <ksamsok:number>116</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ki">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ki">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kiribati</ksamsok:name>
         <ksamsok:name xml:lang="en">Kiribati</ksamsok:name>
@@ -1195,9 +1195,9 @@
         <ksamsok:alpha2>ki</ksamsok:alpha2>
         <ksamsok:alpha3>kir</ksamsok:alpha3>
         <ksamsok:number>296</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#km">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#km">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Comorerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Comoros</ksamsok:name>
@@ -1205,9 +1205,9 @@
         <ksamsok:alpha2>km</ksamsok:alpha2>
         <ksamsok:alpha3>com</ksamsok:alpha3>
         <ksamsok:number>174</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#kn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#kn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Kitts och Nevis</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Kitts and Nevis</ksamsok:name>
@@ -1215,9 +1215,9 @@
         <ksamsok:alpha2>kn</ksamsok:alpha2>
         <ksamsok:alpha3>kna</ksamsok:alpha3>
         <ksamsok:number>659</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#kp">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#kp">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nordkorea</ksamsok:name>
         <ksamsok:name xml:lang="en">North Korea</ksamsok:name>
@@ -1225,9 +1225,9 @@
         <ksamsok:alpha2>kp</ksamsok:alpha2>
         <ksamsok:alpha3>prk</ksamsok:alpha3>
         <ksamsok:number>408</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#kr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#kr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydkorea</ksamsok:name>
         <ksamsok:name xml:lang="en">South Korea</ksamsok:name>
@@ -1235,9 +1235,9 @@
         <ksamsok:alpha2>kr</ksamsok:alpha2>
         <ksamsok:alpha3>kor</ksamsok:alpha3>
         <ksamsok:number>410</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#kw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#kw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kuwait</ksamsok:name>
         <ksamsok:name xml:lang="en">Kuwait</ksamsok:name>
@@ -1245,9 +1245,9 @@
         <ksamsok:alpha2>kw</ksamsok:alpha2>
         <ksamsok:alpha3>kwt</ksamsok:alpha3>
         <ksamsok:number>414</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ky">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ky">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Caymanöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Cayman Islands</ksamsok:name>
@@ -1255,9 +1255,9 @@
         <ksamsok:alpha2>ky</ksamsok:alpha2>
         <ksamsok:alpha3>kym</ksamsok:alpha3>
         <ksamsok:number>136</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#kz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#kz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kazakstan</ksamsok:name>
         <ksamsok:name xml:lang="en">Kazakhstan</ksamsok:name>
@@ -1265,9 +1265,9 @@
         <ksamsok:alpha2>kz</ksamsok:alpha2>
         <ksamsok:alpha3>kaz</ksamsok:alpha3>
         <ksamsok:number>398</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#la">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#la">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Laos</ksamsok:name>
         <ksamsok:name xml:lang="en">Laos</ksamsok:name>
@@ -1275,9 +1275,9 @@
         <ksamsok:alpha2>la</ksamsok:alpha2>
         <ksamsok:alpha3>lao</ksamsok:alpha3>
         <ksamsok:number>418</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#lb">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#lb">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Libanon</ksamsok:name>
         <ksamsok:name xml:lang="en">Lebanon</ksamsok:name>
@@ -1285,9 +1285,9 @@
         <ksamsok:alpha2>lb</ksamsok:alpha2>
         <ksamsok:alpha3>lbn</ksamsok:alpha3>
         <ksamsok:number>422</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#lc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#lc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Lucia</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Lucia</ksamsok:name>
@@ -1295,9 +1295,9 @@
         <ksamsok:alpha2>lc</ksamsok:alpha2>
         <ksamsok:alpha3>lca</ksamsok:alpha3>
         <ksamsok:number>662</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#li">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#li">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Liechtenstein</ksamsok:name>
         <ksamsok:name xml:lang="en">Liechtenstein</ksamsok:name>
@@ -1305,9 +1305,9 @@
         <ksamsok:alpha2>li</ksamsok:alpha2>
         <ksamsok:alpha3>lie</ksamsok:alpha3>
         <ksamsok:number>438</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#lk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#lk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sri Lanka</ksamsok:name>
         <ksamsok:name xml:lang="en">Sri Lanka</ksamsok:name>
@@ -1315,9 +1315,9 @@
         <ksamsok:alpha2>lk</ksamsok:alpha2>
         <ksamsok:alpha3>lka</ksamsok:alpha3>
         <ksamsok:number>144</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#lr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#lr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Liberia</ksamsok:name>
         <ksamsok:name xml:lang="en">Liberia</ksamsok:name>
@@ -1325,9 +1325,9 @@
         <ksamsok:alpha2>lr</ksamsok:alpha2>
         <ksamsok:alpha3>lbr</ksamsok:alpha3>
         <ksamsok:number>430</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ls">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ls">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Lesotho</ksamsok:name>
         <ksamsok:name xml:lang="en">Lesotho</ksamsok:name>
@@ -1335,9 +1335,9 @@
         <ksamsok:alpha2>ls</ksamsok:alpha2>
         <ksamsok:alpha3>lso</ksamsok:alpha3>
         <ksamsok:number>426</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#lt">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#lt">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Litauen</ksamsok:name>
         <ksamsok:name xml:lang="en">Lithuania</ksamsok:name>
@@ -1345,9 +1345,9 @@
         <ksamsok:alpha2>lt</ksamsok:alpha2>
         <ksamsok:alpha3>ltu</ksamsok:alpha3>
         <ksamsok:number>440</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#lu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#lu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Luxemburg</ksamsok:name>
         <ksamsok:name xml:lang="en">Luxembourg</ksamsok:name>
@@ -1355,9 +1355,9 @@
         <ksamsok:alpha2>lu</ksamsok:alpha2>
         <ksamsok:alpha3>lux</ksamsok:alpha3>
         <ksamsok:number>442</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#lv">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#lv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Lettland</ksamsok:name>
         <ksamsok:name xml:lang="en">Latvia</ksamsok:name>
@@ -1365,9 +1365,9 @@
         <ksamsok:alpha2>lv</ksamsok:alpha2>
         <ksamsok:alpha3>lva</ksamsok:alpha3>
         <ksamsok:number>428</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ly">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ly">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Libyen</ksamsok:name>
         <ksamsok:name xml:lang="en">Libya</ksamsok:name>
@@ -1375,9 +1375,9 @@
         <ksamsok:alpha2>ly</ksamsok:alpha2>
         <ksamsok:alpha3>lby</ksamsok:alpha3>
         <ksamsok:number>434</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ma">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ma">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Marocko</ksamsok:name>
         <ksamsok:name xml:lang="en">Morocco</ksamsok:name>
@@ -1385,9 +1385,9 @@
         <ksamsok:alpha2>ma</ksamsok:alpha2>
         <ksamsok:alpha3>mar</ksamsok:alpha3>
         <ksamsok:number>504</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Monaco</ksamsok:name>
         <ksamsok:name xml:lang="en">Monaco</ksamsok:name>
@@ -1395,9 +1395,9 @@
         <ksamsok:alpha2>mc</ksamsok:alpha2>
         <ksamsok:alpha3>mco</ksamsok:alpha3>
         <ksamsok:number>492</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#md">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#md">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Moldavien</ksamsok:name>
         <ksamsok:name xml:lang="en">Moldova</ksamsok:name>
@@ -1405,9 +1405,9 @@
         <ksamsok:alpha2>md</ksamsok:alpha2>
         <ksamsok:alpha3>mda</ksamsok:alpha3>
         <ksamsok:number>498</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#me">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#me">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Montenegro</ksamsok:name>
         <ksamsok:name xml:lang="en">Montenegro</ksamsok:name>
@@ -1415,9 +1415,9 @@
         <ksamsok:alpha2>me</ksamsok:alpha2>
         <ksamsok:alpha3>mne</ksamsok:alpha3>
         <ksamsok:number>499</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Martin</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Martin</ksamsok:name>
@@ -1425,9 +1425,9 @@
         <ksamsok:alpha2>mf</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Madagaskar</ksamsok:name>
         <ksamsok:name xml:lang="en">Madagascar</ksamsok:name>
@@ -1435,9 +1435,9 @@
         <ksamsok:alpha2>mg</ksamsok:alpha2>
         <ksamsok:alpha3>mdg</ksamsok:alpha3>
         <ksamsok:number>450</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mh">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Marshallöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Marshall Islands</ksamsok:name>
@@ -1445,9 +1445,9 @@
         <ksamsok:alpha2>mh</ksamsok:alpha2>
         <ksamsok:alpha3>mhl</ksamsok:alpha3>
         <ksamsok:number>584</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Makedonien</ksamsok:name>
         <ksamsok:name xml:lang="en">Macedonia</ksamsok:name>
@@ -1455,9 +1455,9 @@
         <ksamsok:alpha2>mk</ksamsok:alpha2>
         <ksamsok:alpha3>mkd</ksamsok:alpha3>
         <ksamsok:number>807</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ml">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ml">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mali</ksamsok:name>
         <ksamsok:name xml:lang="en">Mali</ksamsok:name>
@@ -1465,9 +1465,9 @@
         <ksamsok:alpha2>ml</ksamsok:alpha2>
         <ksamsok:alpha3>mli</ksamsok:alpha3>
         <ksamsok:number>466</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Burma (Myanmar)</ksamsok:name>
         <ksamsok:name xml:lang="en">Myanmar</ksamsok:name>
@@ -1475,9 +1475,9 @@
         <ksamsok:alpha2>mm</ksamsok:alpha2>
         <ksamsok:alpha3>mmr</ksamsok:alpha3>
         <ksamsok:number>104</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mongoliet</ksamsok:name>
         <ksamsok:name xml:lang="en">Mongolia</ksamsok:name>
@@ -1485,9 +1485,9 @@
         <ksamsok:alpha2>mn</ksamsok:alpha2>
         <ksamsok:alpha3>mng</ksamsok:alpha3>
         <ksamsok:number>496</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mo">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mo">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Macau</ksamsok:name>
         <ksamsok:name xml:lang="en">Macao</ksamsok:name>
@@ -1495,9 +1495,9 @@
         <ksamsok:alpha2>mo</ksamsok:alpha2>
         <ksamsok:alpha3>mac</ksamsok:alpha3>
         <ksamsok:number>446</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mp">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mp">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nordmarianerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Northern Mariana Islands</ksamsok:name>
@@ -1505,9 +1505,9 @@
         <ksamsok:alpha2>mp</ksamsok:alpha2>
         <ksamsok:alpha3>mnp</ksamsok:alpha3>
         <ksamsok:number>580</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mq">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mq">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Martinique</ksamsok:name>
         <ksamsok:name xml:lang="en">Martinique</ksamsok:name>
@@ -1515,9 +1515,9 @@
         <ksamsok:alpha2>mq</ksamsok:alpha2>
         <ksamsok:alpha3>mtq</ksamsok:alpha3>
         <ksamsok:number>474</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mauretanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Mauritania</ksamsok:name>
@@ -1525,9 +1525,9 @@
         <ksamsok:alpha2>mr</ksamsok:alpha2>
         <ksamsok:alpha3>mrt</ksamsok:alpha3>
         <ksamsok:number>478</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ms">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ms">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Montserrat</ksamsok:name>
         <ksamsok:name xml:lang="en">Montserrat</ksamsok:name>
@@ -1535,9 +1535,9 @@
         <ksamsok:alpha2>ms</ksamsok:alpha2>
         <ksamsok:alpha3>msr</ksamsok:alpha3>
         <ksamsok:number>500</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mt">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mt">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Malta</ksamsok:name>
         <ksamsok:name xml:lang="en">Malta</ksamsok:name>
@@ -1545,9 +1545,9 @@
         <ksamsok:alpha2>mt</ksamsok:alpha2>
         <ksamsok:alpha3>mlt</ksamsok:alpha3>
         <ksamsok:number>470</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mauritius</ksamsok:name>
         <ksamsok:name xml:lang="en">Mauritius</ksamsok:name>
@@ -1555,9 +1555,9 @@
         <ksamsok:alpha2>mu</ksamsok:alpha2>
         <ksamsok:alpha3>mus</ksamsok:alpha3>
         <ksamsok:number>480</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mv">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Maldiverna</ksamsok:name>
         <ksamsok:name xml:lang="en">Maldives</ksamsok:name>
@@ -1565,9 +1565,9 @@
         <ksamsok:alpha2>mv</ksamsok:alpha2>
         <ksamsok:alpha3>mdv</ksamsok:alpha3>
         <ksamsok:number>462</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Malawi</ksamsok:name>
         <ksamsok:name xml:lang="en">Malawi</ksamsok:name>
@@ -1575,9 +1575,9 @@
         <ksamsok:alpha2>mw</ksamsok:alpha2>
         <ksamsok:alpha3>mwi</ksamsok:alpha3>
         <ksamsok:number>454</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mx">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mx">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mexiko</ksamsok:name>
         <ksamsok:name xml:lang="en">Mexico</ksamsok:name>
@@ -1585,9 +1585,9 @@
         <ksamsok:alpha2>mx</ksamsok:alpha2>
         <ksamsok:alpha3>mex</ksamsok:alpha3>
         <ksamsok:number>484</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#my">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#my">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Malaysia</ksamsok:name>
         <ksamsok:name xml:lang="en">Malaysia</ksamsok:name>
@@ -1595,9 +1595,9 @@
         <ksamsok:alpha2>my</ksamsok:alpha2>
         <ksamsok:alpha3>mys</ksamsok:alpha3>
         <ksamsok:number>458</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#mz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Moçambique</ksamsok:name>
         <ksamsok:name xml:lang="en">Mozambique</ksamsok:name>
@@ -1605,9 +1605,9 @@
         <ksamsok:alpha2>mz</ksamsok:alpha2>
         <ksamsok:alpha3>moz</ksamsok:alpha3>
         <ksamsok:number>508</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#na">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#na">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Namibia</ksamsok:name>
         <ksamsok:name xml:lang="en">Namibia</ksamsok:name>
@@ -1615,9 +1615,9 @@
         <ksamsok:alpha2>na</ksamsok:alpha2>
         <ksamsok:alpha3>nam</ksamsok:alpha3>
         <ksamsok:number>516</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#nc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#nc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nya Kaledonien</ksamsok:name>
         <ksamsok:name xml:lang="en">New Caledonia</ksamsok:name>
@@ -1625,9 +1625,9 @@
         <ksamsok:alpha2>nc</ksamsok:alpha2>
         <ksamsok:alpha3>ncl</ksamsok:alpha3>
         <ksamsok:number>540</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ne">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ne">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Niger</ksamsok:name>
         <ksamsok:name xml:lang="en">Niger</ksamsok:name>
@@ -1635,9 +1635,9 @@
         <ksamsok:alpha2>ne</ksamsok:alpha2>
         <ksamsok:alpha3>ner</ksamsok:alpha3>
         <ksamsok:number>562</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#nf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#nf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Norfolkön</ksamsok:name>
         <ksamsok:name xml:lang="en">Norfolk Island</ksamsok:name>
@@ -1645,9 +1645,9 @@
         <ksamsok:alpha2>nf</ksamsok:alpha2>
         <ksamsok:alpha3>nfk</ksamsok:alpha3>
         <ksamsok:number>574</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ng">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ng">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nigeria</ksamsok:name>
         <ksamsok:name xml:lang="en">Nigeria</ksamsok:name>
@@ -1655,9 +1655,9 @@
         <ksamsok:alpha2>ng</ksamsok:alpha2>
         <ksamsok:alpha3>nga</ksamsok:alpha3>
         <ksamsok:number>566</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ni">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ni">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nicaragua</ksamsok:name>
         <ksamsok:name xml:lang="en">Nicaragua</ksamsok:name>
@@ -1665,9 +1665,9 @@
         <ksamsok:alpha2>ni</ksamsok:alpha2>
         <ksamsok:alpha3>nic</ksamsok:alpha3>
         <ksamsok:number>558</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#nl">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#nl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nederländerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Netherlands</ksamsok:name>
@@ -1675,9 +1675,9 @@
         <ksamsok:alpha2>nl</ksamsok:alpha2>
         <ksamsok:alpha3>nld</ksamsok:alpha3>
         <ksamsok:number>528</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#no">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#no">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Norge</ksamsok:name>
         <ksamsok:name xml:lang="en">Norway</ksamsok:name>
@@ -1685,9 +1685,9 @@
         <ksamsok:alpha2>no</ksamsok:alpha2>
         <ksamsok:alpha3>nor</ksamsok:alpha3>
         <ksamsok:number>578</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#np">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#np">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nepal</ksamsok:name>
         <ksamsok:name xml:lang="en">Nepal</ksamsok:name>
@@ -1695,9 +1695,9 @@
         <ksamsok:alpha2>np</ksamsok:alpha2>
         <ksamsok:alpha3>npl</ksamsok:alpha3>
         <ksamsok:number>524</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#nr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#nr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nauru</ksamsok:name>
         <ksamsok:name xml:lang="en">Nauru</ksamsok:name>
@@ -1705,9 +1705,9 @@
         <ksamsok:alpha2>nr</ksamsok:alpha2>
         <ksamsok:alpha3>nru</ksamsok:alpha3>
         <ksamsok:number>520</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#nu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#nu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Niue</ksamsok:name>
         <ksamsok:name xml:lang="en">Niue</ksamsok:name>
@@ -1715,9 +1715,9 @@
         <ksamsok:alpha2>nu</ksamsok:alpha2>
         <ksamsok:alpha3>niu</ksamsok:alpha3>
         <ksamsok:number>570</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#nz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#nz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nya Zeeland</ksamsok:name>
         <ksamsok:name xml:lang="en">New Zealand</ksamsok:name>
@@ -1725,9 +1725,9 @@
         <ksamsok:alpha2>nz</ksamsok:alpha2>
         <ksamsok:alpha3>nzl</ksamsok:alpha3>
         <ksamsok:number>554</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#om">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#om">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Oman</ksamsok:name>
         <ksamsok:name xml:lang="en">Oman</ksamsok:name>
@@ -1735,9 +1735,9 @@
         <ksamsok:alpha2>om</ksamsok:alpha2>
         <ksamsok:alpha3>omn</ksamsok:alpha3>
         <ksamsok:number>512</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pa">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pa">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Panama</ksamsok:name>
         <ksamsok:name xml:lang="en">Panama</ksamsok:name>
@@ -1745,9 +1745,9 @@
         <ksamsok:alpha2>pa</ksamsok:alpha2>
         <ksamsok:alpha3>pan</ksamsok:alpha3>
         <ksamsok:number>591</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pe">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pe">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Peru</ksamsok:name>
         <ksamsok:name xml:lang="en">Peru</ksamsok:name>
@@ -1755,9 +1755,9 @@
         <ksamsok:alpha2>pe</ksamsok:alpha2>
         <ksamsok:alpha3>per</ksamsok:alpha3>
         <ksamsok:number>604</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Franska Polynesien</ksamsok:name>
         <ksamsok:name xml:lang="en">French Polynesia</ksamsok:name>
@@ -1765,9 +1765,9 @@
         <ksamsok:alpha2>pf</ksamsok:alpha2>
         <ksamsok:alpha3>pyf</ksamsok:alpha3>
         <ksamsok:number>258</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Papua Nya Guinea</ksamsok:name>
         <ksamsok:name xml:lang="en">Papua New Guinea</ksamsok:name>
@@ -1775,9 +1775,9 @@
         <ksamsok:alpha2>pg</ksamsok:alpha2>
         <ksamsok:alpha3>png</ksamsok:alpha3>
         <ksamsok:number>598</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ph">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ph">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Filippinerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Philippines</ksamsok:name>
@@ -1785,9 +1785,9 @@
         <ksamsok:alpha2>ph</ksamsok:alpha2>
         <ksamsok:alpha3>phl</ksamsok:alpha3>
         <ksamsok:number>608</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Pakistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Pakistan</ksamsok:name>
@@ -1795,9 +1795,9 @@
         <ksamsok:alpha2>pk</ksamsok:alpha2>
         <ksamsok:alpha3>pak</ksamsok:alpha3>
         <ksamsok:number>586</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pl">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Polen</ksamsok:name>
         <ksamsok:name xml:lang="en">Poland</ksamsok:name>
@@ -1805,9 +1805,9 @@
         <ksamsok:alpha2>pl</ksamsok:alpha2>
         <ksamsok:alpha3>pol</ksamsok:alpha3>
         <ksamsok:number>616</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Pierre och Miquelon</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Pierre and Miquelon</ksamsok:name>
@@ -1815,9 +1815,9 @@
         <ksamsok:alpha2>pm</ksamsok:alpha2>
         <ksamsok:alpha3>spm</ksamsok:alpha3>
         <ksamsok:number>666</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Pitcairn</ksamsok:name>
         <ksamsok:name xml:lang="en">Pitcairn</ksamsok:name>
@@ -1825,9 +1825,9 @@
         <ksamsok:alpha2>pn</ksamsok:alpha2>
         <ksamsok:alpha3>pcn</ksamsok:alpha3>
         <ksamsok:number>612</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Puerto Rico</ksamsok:name>
         <ksamsok:name xml:lang="en">Puerto Rico</ksamsok:name>
@@ -1835,9 +1835,9 @@
         <ksamsok:alpha2>pr</ksamsok:alpha2>
         <ksamsok:alpha3>pri</ksamsok:alpha3>
         <ksamsok:number>630</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ps">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ps">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Palestinska självstyret</ksamsok:name>
         <ksamsok:name xml:lang="en">Palestinian Territory</ksamsok:name>
@@ -1845,9 +1845,9 @@
         <ksamsok:alpha2>ps</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pt">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pt">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Portugal</ksamsok:name>
         <ksamsok:name xml:lang="en">Portugal</ksamsok:name>
@@ -1855,9 +1855,9 @@
         <ksamsok:alpha2>pt</ksamsok:alpha2>
         <ksamsok:alpha3>prt</ksamsok:alpha3>
         <ksamsok:number>620</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#pw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Palau</ksamsok:name>
         <ksamsok:name xml:lang="en">Palau</ksamsok:name>
@@ -1865,9 +1865,9 @@
         <ksamsok:alpha2>pw</ksamsok:alpha2>
         <ksamsok:alpha3>plw</ksamsok:alpha3>
         <ksamsok:number>585</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#py">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#py">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Paraguay</ksamsok:name>
         <ksamsok:name xml:lang="en">Paraguay</ksamsok:name>
@@ -1875,9 +1875,9 @@
         <ksamsok:alpha2>py</ksamsok:alpha2>
         <ksamsok:alpha3>pry</ksamsok:alpha3>
         <ksamsok:number>600</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#qa">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#qa">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Qatar</ksamsok:name>
         <ksamsok:name xml:lang="en">Qatar</ksamsok:name>
@@ -1885,9 +1885,9 @@
         <ksamsok:alpha2>qa</ksamsok:alpha2>
         <ksamsok:alpha3>qat</ksamsok:alpha3>
         <ksamsok:number>634</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#re">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#re">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Reunion</ksamsok:name>
         <ksamsok:name xml:lang="en">Reunion</ksamsok:name>
@@ -1895,9 +1895,9 @@
         <ksamsok:alpha2>re</ksamsok:alpha2>
         <ksamsok:alpha3>reu</ksamsok:alpha3>
         <ksamsok:number>638</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ro">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ro">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Rumänien</ksamsok:name>
         <ksamsok:name xml:lang="en">Romania</ksamsok:name>
@@ -1905,9 +1905,9 @@
         <ksamsok:alpha2>ro</ksamsok:alpha2>
         <ksamsok:alpha3>rom</ksamsok:alpha3>
         <ksamsok:number>642</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#rs">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#rs">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Serbien</ksamsok:name>
         <ksamsok:name xml:lang="en">Serbia</ksamsok:name>
@@ -1915,9 +1915,9 @@
         <ksamsok:alpha2>rs</ksamsok:alpha2>
         <ksamsok:alpha3>srb</ksamsok:alpha3>
         <ksamsok:number>688</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ru">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ru">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ryssland</ksamsok:name>
         <ksamsok:name xml:lang="en">Russia</ksamsok:name>
@@ -1925,9 +1925,9 @@
         <ksamsok:alpha2>ru</ksamsok:alpha2>
         <ksamsok:alpha3>rus</ksamsok:alpha3>
         <ksamsok:number>643</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#rw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#rw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Rwanda</ksamsok:name>
         <ksamsok:name xml:lang="en">Rwanda</ksamsok:name>
@@ -1935,9 +1935,9 @@
         <ksamsok:alpha2>rw</ksamsok:alpha2>
         <ksamsok:alpha3>rwa</ksamsok:alpha3>
         <ksamsok:number>646</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sa">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sa">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saudiarabien</ksamsok:name>
         <ksamsok:name xml:lang="en">Saudi Arabia</ksamsok:name>
@@ -1945,9 +1945,9 @@
         <ksamsok:alpha2>sa</ksamsok:alpha2>
         <ksamsok:alpha3>sau</ksamsok:alpha3>
         <ksamsok:number>682</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sb">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sb">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Salomonöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Solomon Islands</ksamsok:name>
@@ -1955,9 +1955,9 @@
         <ksamsok:alpha2>sb</ksamsok:alpha2>
         <ksamsok:alpha3>slb</ksamsok:alpha3>
         <ksamsok:number>90</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Seychellerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Seychelles</ksamsok:name>
@@ -1965,9 +1965,9 @@
         <ksamsok:alpha2>sc</ksamsok:alpha2>
         <ksamsok:alpha3>syc</ksamsok:alpha3>
         <ksamsok:number>690</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sd">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sd">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sudan</ksamsok:name>
         <ksamsok:name xml:lang="en">Sudan</ksamsok:name>
@@ -1975,9 +1975,9 @@
         <ksamsok:alpha2>sd</ksamsok:alpha2>
         <ksamsok:alpha3>sdn</ksamsok:alpha3>
         <ksamsok:number>736</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#se">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#se">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sverige</ksamsok:name>
         <ksamsok:name xml:lang="en">Sweden</ksamsok:name>
@@ -1985,9 +1985,9 @@
         <ksamsok:alpha2>se</ksamsok:alpha2>
         <ksamsok:alpha3>swe</ksamsok:alpha3>
         <ksamsok:number>752</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Singapore</ksamsok:name>
         <ksamsok:name xml:lang="en">Singapore</ksamsok:name>
@@ -1995,9 +1995,9 @@
         <ksamsok:alpha2>sg</ksamsok:alpha2>
         <ksamsok:alpha3>sgp</ksamsok:alpha3>
         <ksamsok:number>702</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sh">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sankta Helena</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Helena</ksamsok:name>
@@ -2005,9 +2005,9 @@
         <ksamsok:alpha2>sh</ksamsok:alpha2>
         <ksamsok:alpha3>shn</ksamsok:alpha3>
         <ksamsok:number>654</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#si">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#si">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Slovenien</ksamsok:name>
         <ksamsok:name xml:lang="en">Slovenia</ksamsok:name>
@@ -2015,9 +2015,9 @@
         <ksamsok:alpha2>si</ksamsok:alpha2>
         <ksamsok:alpha3>svn</ksamsok:alpha3>
         <ksamsok:number>705</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sj">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sj">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Svalbard och Jan Mayen</ksamsok:name>
         <ksamsok:name xml:lang="en">Svalbard and Jan Mayen</ksamsok:name>
@@ -2025,9 +2025,9 @@
         <ksamsok:alpha2>sj</ksamsok:alpha2>
         <ksamsok:alpha3>sjm</ksamsok:alpha3>
         <ksamsok:number>744</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Slovakien</ksamsok:name>
         <ksamsok:name xml:lang="en">Slovakia</ksamsok:name>
@@ -2035,9 +2035,9 @@
         <ksamsok:alpha2>sk</ksamsok:alpha2>
         <ksamsok:alpha3>svk</ksamsok:alpha3>
         <ksamsok:number>703</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sl">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sierra Leone</ksamsok:name>
         <ksamsok:name xml:lang="en">Sierra Leone</ksamsok:name>
@@ -2045,9 +2045,9 @@
         <ksamsok:alpha2>sl</ksamsok:alpha2>
         <ksamsok:alpha3>sle</ksamsok:alpha3>
         <ksamsok:number>694</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">San Marino</ksamsok:name>
         <ksamsok:name xml:lang="en">San Marino</ksamsok:name>
@@ -2055,9 +2055,9 @@
         <ksamsok:alpha2>sm</ksamsok:alpha2>
         <ksamsok:alpha3>smr</ksamsok:alpha3>
         <ksamsok:number>674</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Senegal</ksamsok:name>
         <ksamsok:name xml:lang="en">Senegal</ksamsok:name>
@@ -2065,9 +2065,9 @@
         <ksamsok:alpha2>sn</ksamsok:alpha2>
         <ksamsok:alpha3>sen</ksamsok:alpha3>
         <ksamsok:number>686</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#so">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#so">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Somalia</ksamsok:name>
         <ksamsok:name xml:lang="en">Somalia</ksamsok:name>
@@ -2075,9 +2075,9 @@
         <ksamsok:alpha2>so</ksamsok:alpha2>
         <ksamsok:alpha3>som</ksamsok:alpha3>
         <ksamsok:number>706</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Surinam</ksamsok:name>
         <ksamsok:name xml:lang="en">Suriname</ksamsok:name>
@@ -2085,9 +2085,9 @@
         <ksamsok:alpha2>sr</ksamsok:alpha2>
         <ksamsok:alpha3>sur</ksamsok:alpha3>
         <ksamsok:number>740</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ss">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ss">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydsudan</ksamsok:name>
         <ksamsok:name xml:lang="en">South Sudan</ksamsok:name>
@@ -2095,9 +2095,9 @@
         <ksamsok:alpha2>ss</ksamsok:alpha2>
         <ksamsok:alpha3>ssd</ksamsok:alpha3>
         <ksamsok:number>728</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#st">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#st">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">São Tomé och Príncipe</ksamsok:name>
         <ksamsok:name xml:lang="en">Sao Tome and Principe</ksamsok:name>
@@ -2105,9 +2105,9 @@
         <ksamsok:alpha2>st</ksamsok:alpha2>
         <ksamsok:alpha3>stp</ksamsok:alpha3>
         <ksamsok:number>678</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sv">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">El Salvador</ksamsok:name>
         <ksamsok:name xml:lang="en">El salvador</ksamsok:name>
@@ -2115,9 +2115,9 @@
         <ksamsok:alpha2>sv</ksamsok:alpha2>
         <ksamsok:alpha3>slv</ksamsok:alpha3>
         <ksamsok:number>222</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sx">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sx">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sint Maarten</ksamsok:name>
         <ksamsok:name xml:lang="en">Sint Maarten</ksamsok:name>
@@ -2125,9 +2125,9 @@
         <ksamsok:alpha2>sx</ksamsok:alpha2>
         <ksamsok:alpha3>sxm</ksamsok:alpha3>
         <ksamsok:number>534</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sy">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sy">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Syrien</ksamsok:name>
         <ksamsok:name xml:lang="en">Syria</ksamsok:name>
@@ -2135,9 +2135,9 @@
         <ksamsok:alpha2>sy</ksamsok:alpha2>
         <ksamsok:alpha3>syr</ksamsok:alpha3>
         <ksamsok:number>760</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#sz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Swaziland</ksamsok:name>
         <ksamsok:name xml:lang="en">Swaziland</ksamsok:name>
@@ -2145,9 +2145,9 @@
         <ksamsok:alpha2>sz</ksamsok:alpha2>
         <ksamsok:alpha3>swz</ksamsok:alpha3>
         <ksamsok:number>748</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Turks och Caicosöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Turks and Caicos Islands</ksamsok:name>
@@ -2155,9 +2155,9 @@
         <ksamsok:alpha2>tc</ksamsok:alpha2>
         <ksamsok:alpha3>tca</ksamsok:alpha3>
         <ksamsok:number>796</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#td">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#td">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tchad</ksamsok:name>
         <ksamsok:name xml:lang="en">Chad</ksamsok:name>
@@ -2165,9 +2165,9 @@
         <ksamsok:alpha2>td</ksamsok:alpha2>
         <ksamsok:alpha3>tcd</ksamsok:alpha3>
         <ksamsok:number>148</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Franska södra territorierna</ksamsok:name>
         <ksamsok:name xml:lang="en">French Southern Territories</ksamsok:name>
@@ -2175,9 +2175,9 @@
         <ksamsok:alpha2>tf</ksamsok:alpha2>
         <ksamsok:alpha3>atf</ksamsok:alpha3>
         <ksamsok:number>260</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#an"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Togo</ksamsok:name>
         <ksamsok:name xml:lang="en">Togo</ksamsok:name>
@@ -2185,9 +2185,9 @@
         <ksamsok:alpha2>tg</ksamsok:alpha2>
         <ksamsok:alpha3>tgo</ksamsok:alpha3>
         <ksamsok:number>768</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#th">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#th">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Thailand</ksamsok:name>
         <ksamsok:name xml:lang="en">Thailand</ksamsok:name>
@@ -2195,9 +2195,9 @@
         <ksamsok:alpha2>th</ksamsok:alpha2>
         <ksamsok:alpha3>tha</ksamsok:alpha3>
         <ksamsok:number>764</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tj">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tj">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tadzjikistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Tajikistan</ksamsok:name>
@@ -2205,9 +2205,9 @@
         <ksamsok:alpha2>tj</ksamsok:alpha2>
         <ksamsok:alpha3>tjk</ksamsok:alpha3>
         <ksamsok:number>762</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tk">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tokelau</ksamsok:name>
         <ksamsok:name xml:lang="en">Tokelau</ksamsok:name>
@@ -2215,9 +2215,9 @@
         <ksamsok:alpha2>tk</ksamsok:alpha2>
         <ksamsok:alpha3>tkl</ksamsok:alpha3>
         <ksamsok:number>772</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tl">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Östtimor</ksamsok:name>
         <ksamsok:name xml:lang="en">East Timor</ksamsok:name>
@@ -2225,9 +2225,9 @@
         <ksamsok:alpha2>tl</ksamsok:alpha2>
         <ksamsok:alpha3/>
         <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Turkmenistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Turkmenistan</ksamsok:name>
@@ -2235,9 +2235,9 @@
         <ksamsok:alpha2>tm</ksamsok:alpha2>
         <ksamsok:alpha3>tkm</ksamsok:alpha3>
         <ksamsok:number>795</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tunisien</ksamsok:name>
         <ksamsok:name xml:lang="en">Tunisia</ksamsok:name>
@@ -2245,9 +2245,9 @@
         <ksamsok:alpha2>tn</ksamsok:alpha2>
         <ksamsok:alpha3>tun</ksamsok:alpha3>
         <ksamsok:number>788</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#to">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#to">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tonga</ksamsok:name>
         <ksamsok:name xml:lang="en">Tonga</ksamsok:name>
@@ -2255,9 +2255,9 @@
         <ksamsok:alpha2>to</ksamsok:alpha2>
         <ksamsok:alpha3>ton</ksamsok:alpha3>
         <ksamsok:number>776</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tr">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tr">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Turkiet</ksamsok:name>
         <ksamsok:name xml:lang="en">Turkey</ksamsok:name>
@@ -2265,9 +2265,9 @@
         <ksamsok:alpha2>tr</ksamsok:alpha2>
         <ksamsok:alpha3>tur</ksamsok:alpha3>
         <ksamsok:number>792</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tt">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tt">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Trinidad och Tobago</ksamsok:name>
         <ksamsok:name xml:lang="en">Trinidad and Tobago</ksamsok:name>
@@ -2275,9 +2275,9 @@
         <ksamsok:alpha2>tt</ksamsok:alpha2>
         <ksamsok:alpha3>tto</ksamsok:alpha3>
         <ksamsok:number>780</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tv">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tuvalu</ksamsok:name>
         <ksamsok:name xml:lang="en">Tuvalu</ksamsok:name>
@@ -2285,9 +2285,9 @@
         <ksamsok:alpha2>tv</ksamsok:alpha2>
         <ksamsok:alpha3>tuv</ksamsok:alpha3>
         <ksamsok:number>798</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Taiwan</ksamsok:name>
         <ksamsok:name xml:lang="en">Taiwan</ksamsok:name>
@@ -2295,9 +2295,9 @@
         <ksamsok:alpha2>tw</ksamsok:alpha2>
         <ksamsok:alpha3>twn</ksamsok:alpha3>
         <ksamsok:number>158</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#tz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tanzania</ksamsok:name>
         <ksamsok:name xml:lang="en">Tanzania</ksamsok:name>
@@ -2305,9 +2305,9 @@
         <ksamsok:alpha2>tz</ksamsok:alpha2>
         <ksamsok:alpha3>tza</ksamsok:alpha3>
         <ksamsok:number>834</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ua">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ua">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ukraina</ksamsok:name>
         <ksamsok:name xml:lang="en">Ukraine</ksamsok:name>
@@ -2315,9 +2315,9 @@
         <ksamsok:alpha2>ua</ksamsok:alpha2>
         <ksamsok:alpha3>ukr</ksamsok:alpha3>
         <ksamsok:number>804</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ug">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ug">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Uganda</ksamsok:name>
         <ksamsok:name xml:lang="en">Uganda</ksamsok:name>
@@ -2325,9 +2325,9 @@
         <ksamsok:alpha2>ug</ksamsok:alpha2>
         <ksamsok:alpha3>uga</ksamsok:alpha3>
         <ksamsok:number>800</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#um">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#um">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">USA:s yttre öar</ksamsok:name>
         <ksamsok:name xml:lang="en">United States Minor Outlying Islands</ksamsok:name>
@@ -2335,9 +2335,9 @@
         <ksamsok:alpha2>um</ksamsok:alpha2>
         <ksamsok:alpha3>umi</ksamsok:alpha3>
         <ksamsok:number>581</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#us">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#us">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">USA</ksamsok:name>
         <ksamsok:name xml:lang="en">United States</ksamsok:name>
@@ -2345,9 +2345,9 @@
         <ksamsok:alpha2>us</ksamsok:alpha2>
         <ksamsok:alpha3>usa</ksamsok:alpha3>
         <ksamsok:number>840</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#uy">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#uy">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Uruguay</ksamsok:name>
         <ksamsok:name xml:lang="en">Uruguay</ksamsok:name>
@@ -2355,9 +2355,9 @@
         <ksamsok:alpha2>uy</ksamsok:alpha2>
         <ksamsok:alpha3>ury</ksamsok:alpha3>
         <ksamsok:number>858</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#uz">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#uz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Uzbekistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Uzbekistan</ksamsok:name>
@@ -2365,9 +2365,9 @@
         <ksamsok:alpha2>uz</ksamsok:alpha2>
         <ksamsok:alpha3>uzb</ksamsok:alpha3>
         <ksamsok:number>860</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#va">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#va">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vatikanstaten</ksamsok:name>
         <ksamsok:name xml:lang="en">Vatican</ksamsok:name>
@@ -2375,9 +2375,9 @@
         <ksamsok:alpha2>va</ksamsok:alpha2>
         <ksamsok:alpha3>vat</ksamsok:alpha3>
         <ksamsok:number>336</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#vc">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#vc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Vincent och Grenadinerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Vincent and the Grenadines</ksamsok:name>
@@ -2385,9 +2385,9 @@
         <ksamsok:alpha2>vc</ksamsok:alpha2>
         <ksamsok:alpha3>vct</ksamsok:alpha3>
         <ksamsok:number>670</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ve">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ve">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Venezuela</ksamsok:name>
         <ksamsok:name xml:lang="en">Venezuela</ksamsok:name>
@@ -2395,9 +2395,9 @@
         <ksamsok:alpha2>ve</ksamsok:alpha2>
         <ksamsok:alpha3>ven</ksamsok:alpha3>
         <ksamsok:number>862</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#sa"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#wf">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#wf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Wallis- och Futunaöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Wallis and Futuna</ksamsok:name>
@@ -2405,9 +2405,9 @@
         <ksamsok:alpha2>wf</ksamsok:alpha2>
         <ksamsok:alpha3>wlf</ksamsok:alpha3>
         <ksamsok:number>876</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#vg">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#vg">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brittiska Jungfruöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">British Virgin Islands</ksamsok:name>
@@ -2415,9 +2415,9 @@
         <ksamsok:alpha2>vg</ksamsok:alpha2>
         <ksamsok:alpha3>vgb</ksamsok:alpha3>
         <ksamsok:number>92</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#vi">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#vi">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jungfruöarna USA</ksamsok:name>
         <ksamsok:name xml:lang="en">U.S. Virgin Islands</ksamsok:name>
@@ -2425,9 +2425,9 @@
         <ksamsok:alpha2>vi</ksamsok:alpha2>
         <ksamsok:alpha3>vir</ksamsok:alpha3>
         <ksamsok:number>850</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#vn">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#vn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vietnam</ksamsok:name>
         <ksamsok:name xml:lang="en">Vietnam</ksamsok:name>
@@ -2435,9 +2435,9 @@
         <ksamsok:alpha2>vn</ksamsok:alpha2>
         <ksamsok:alpha3>vnm</ksamsok:alpha3>
         <ksamsok:number>704</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#vu">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#vu">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vanuatu</ksamsok:name>
         <ksamsok:name xml:lang="en">Vanuatu</ksamsok:name>
@@ -2445,9 +2445,9 @@
         <ksamsok:alpha2>vu</ksamsok:alpha2>
         <ksamsok:alpha3>vut</ksamsok:alpha3>
         <ksamsok:number>548</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ws">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ws">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Samoa</ksamsok:name>
         <ksamsok:name xml:lang="en">Samoa</ksamsok:name>
@@ -2455,9 +2455,9 @@
         <ksamsok:alpha2>ws</ksamsok:alpha2>
         <ksamsok:alpha3>wsm</ksamsok:alpha3>
         <ksamsok:number>882</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#oc"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#XK">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#XK">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Republiken Kosovo</ksamsok:name>
         <ksamsok:name xml:lang="en">Kosovo</ksamsok:name>
@@ -2465,9 +2465,9 @@
         <ksamsok:alpha2>xk</ksamsok:alpha2>
         <ksamsok:alpha3>xkx</ksamsok:alpha3>
         <ksamsok:number>0</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#ye">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ye">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jemen</ksamsok:name>
         <ksamsok:name xml:lang="en">Yemen</ksamsok:name>
@@ -2475,9 +2475,9 @@
         <ksamsok:alpha2>ye</ksamsok:alpha2>
         <ksamsok:alpha3>yem</ksamsok:alpha3>
         <ksamsok:number>887</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#yt">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#yt">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mayotte</ksamsok:name>
         <ksamsok:name xml:lang="en">Mayotte</ksamsok:name>
@@ -2485,9 +2485,9 @@
         <ksamsok:alpha2>yt</ksamsok:alpha2>
         <ksamsok:alpha3>myt</ksamsok:alpha3>
         <ksamsok:number>175</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#za">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#za">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydafrika</ksamsok:name>
         <ksamsok:name xml:lang="en">South Africa</ksamsok:name>
@@ -2495,9 +2495,9 @@
         <ksamsok:alpha2>za</ksamsok:alpha2>
         <ksamsok:alpha3>zaf</ksamsok:alpha3>
         <ksamsok:number>710</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#zm">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#zm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Zambia</ksamsok:name>
         <ksamsok:name xml:lang="en">Zambia</ksamsok:name>
@@ -2505,9 +2505,9 @@
         <ksamsok:alpha2>zm</ksamsok:alpha2>
         <ksamsok:alpha3>zmb</ksamsok:alpha3>
         <ksamsok:number>894</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country/country#zw">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#zw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Zimbabwe</ksamsok:name>
         <ksamsok:name xml:lang="en">Zimbabwe</ksamsok:name>
@@ -2515,6 +2515,6 @@
         <ksamsok:alpha2>zw</ksamsok:alpha2>
         <ksamsok:alpha3>zwe</ksamsok:alpha3>
         <ksamsok:number>716</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
 </rdf:RDF>
