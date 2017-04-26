@@ -174,6 +174,7 @@ public class ResolverServlet extends HttpServlet {
 	protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doOptions(req, resp);
 		resp.setHeader("Access-Control-Allow-Origin", "*");
+		resp.setHeader("Access-Control-Allow-Methods", "HEAD, GET, OPTIONS");
 	}
 
 	@Override
