@@ -49,7 +49,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype#concept">
         <rdf:type rdf:resource="&ksamsok;EntitySuperType"/>
         <ksamsok:description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</ksamsok:description>
-        <ksamsok:name>Fysiskt ting</ksamsok:name>
+        <ksamsok:name>Koncept</ksamsok:name>
     </owl:NamedIndividual>
     
 
@@ -69,7 +69,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype#object">
         <rdf:type rdf:resource="&ksamsok;EntitySuperType"/>
         <ksamsok:description>Föremål, fotografi, bearbetningar/interaktiv resurs, film/video, ljud, dokument, karta, byggnad, fornlämning, konstverk, bok, samling, ritning, teckning och kulturmiljö.</ksamsok:description>
-        <ksamsok:name>Koncept</ksamsok:name>
+        <ksamsok:name>Fysiskt ting</ksamsok:name>
     </owl:NamedIndividual>
 </rdf:RDF>
 
