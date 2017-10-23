@@ -58,8 +58,8 @@
 
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitysupertype#event">
         <rdf:type rdf:resource="&ksamsok;EntitySuperType"/>
-        <ksamsok:name>Händelse</ksamsok:name>
         <ksamsok:description>Avgränsas av tid och rum t.ex. historisk händelse och utställning.</ksamsok:description>
+        <ksamsok:name>Händelse</ksamsok:name>
     </owl:NamedIndividual>
     
 
