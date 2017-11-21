@@ -26,7 +26,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class UpdateParishRdfWithWikipediaLinks {
 	private static File parishRDF= new File("./web/resurser/aukt/geo/parish/parish.rdf");
-	private static String queryUrl="http://toolserver.org/~kolossos/templatetiger/tt-table4.php?lang=svwiki&template=Infobox socken Sverige&where=sockenkod&is=%04d";
+	private static final String QUERY_URL = "http://toolserver.org/~kolossos/templatetiger/tt-table4.php?lang=svwiki&template=Infobox socken Sverige&where=sockenkod&is=%04d";
 	private static HashMap<Integer,String> parishUrl=new HashMap<Integer,String>();
 	
 	public static void main(String argv[]){
@@ -85,7 +85,7 @@ public class UpdateParishRdfWithWikipediaLinks {
 			while (parishCodeIterator.hasNext())
 			{
 				parishCode=parishCodeIterator.next();
-				method=new GetMethod(String.format(queryUrl, parishCode).replace(" ", "%20"));
+				method=new GetMethod(String.format(QUERY_URL, parishCode).replace(" ", "%20"));
 				httpClient.executeMethod(method);
 				bodyReader =new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
 				while((respString=bodyReader.readLine())!=null)

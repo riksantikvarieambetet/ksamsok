@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class HarvestServiceImpl implements HarvestService {
 
-	String id;
-	String serviceType;
-	String name;
-	String cronString;
-	String harvestURL;
-	String harvestSetSpec;
-	Date lastHarvestDate;
-	Date firstIndexDate;
-	boolean alwaysHarvestEverything;
-	String shortName;
-	boolean paused;
+	private String id;
+	private String serviceType;
+	private String name;
+	private String cronString;
+	private String harvestURL;
+	private String harvestSetSpec;
+	private Date lastHarvestDate;
+	private Date firstIndexDate;
+	private boolean alwaysHarvestEverything;
+	private String shortName;
+	private boolean paused;
 
 	public HarvestServiceImpl() {}
 
@@ -95,19 +95,35 @@ public class HarvestServiceImpl implements HarvestService {
 	}
 
 	public Date getLastHarvestDate() {
-		return lastHarvestDate;
+		if (lastHarvestDate != null) {
+			return new Date(lastHarvestDate.getTime());
+		} else {
+			return null;
+		}
 	}
 
 	public void setLastHarvestDate(Date lastHarvestDate) {
-		this.lastHarvestDate = lastHarvestDate;
+		if (lastHarvestDate != null) {
+			this.lastHarvestDate = new Date(lastHarvestDate.getTime());
+		} else {
+			this.lastHarvestDate = null;
+		}
 	}
 
 	public Date getFirstIndexDate() {
-		return firstIndexDate;
+		if (firstIndexDate != null) {
+			return new Date(firstIndexDate.getTime());
+		} else {
+			return null;
+		}
 	}
 
 	public void setFirstIndexDate(Date date) {
-		this.firstIndexDate = date;
+		if (date != null) {
+			this.firstIndexDate = new Date(date.getTime());
+		} else {
+			this.firstIndexDate = null;
+		}
 	}
 
 	public boolean getAlwaysHarvestEverything() {

@@ -24,7 +24,6 @@ public class SitemapBuilder
 	private PrintWriter writer;
 	private DataSource ds;
 	private int batch;
-	private int batchSize = SitemapIndexBuilder.BATCH_SIZE;
 	private HttpServletRequest request;
 	
 	public SitemapBuilder(PrintWriter writer, DataSource ds, int batch, HttpServletRequest request) 
@@ -40,6 +39,7 @@ public class SitemapBuilder
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		int batchSize = SitemapIndexBuilder.BATCH_SIZE;
 		int offset = (batch - 1) * batchSize;
 		try {
 			c = ds.getConnection();

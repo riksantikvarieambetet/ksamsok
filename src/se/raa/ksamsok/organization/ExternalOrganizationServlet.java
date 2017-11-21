@@ -48,23 +48,28 @@ public class ExternalOrganizationServlet extends HttpServlet {
 		String operation = req.getParameter("operation");
 		RequestDispatcher view = req.getRequestDispatcher("userAdmin.jsp");
 		if (operation != null) {
-			if (operation.equals("authenticate")) {
-				String username = req.getParameter("username");
-				String password = req.getParameter("password");
-				if (organizationManager.Authenticate(username, password)) {
-					req.getSession().setAttribute("isAuthenticated", "j");
-					req.setAttribute("orgData", organizationManager.getOrganization(username, false));
-				} else {
-					req.getSession().setAttribute("isAuthenticated", "e");
-				}
-			} else if (operation.equals("logout")) {
-				req.getSession().removeAttribute("isAuthenticated");
-			} else if (operation.equals("update")) {
-				Organization org = OrganizationServlet.getOrganizationValues(req);
-				organizationManager.updateOrg(org);
-				req.setAttribute("orgData", organizationManager.getOrganization(org.getKortnamn(), false));
-			} else if (operation.equals("unAuthenticate")) {
-				req.getSession().removeAttribute("isAuthenticated");
+			switch (operation) {
+				case "authenticate":
+					String username = req.getParameter("username");
+					String password = req.getParameter("password");
+					if (organizationManager.Authenticate(username, password)) {
+						req.getSession().setAttribute("isAuthenticated", "j");
+						req.setAttribute("orgData", organizationManager.getOrganization(username, false));
+					} else {
+						req.getSession().setAttribute("isAuthenticated", "e");
+					}
+					break;
+				case "logout":
+					req.getSession().removeAttribute("isAuthenticated");
+					break;
+				case "update":
+					Organization org = OrganizationServlet.getOrganizationValues(req);
+					organizationManager.updateOrg(org);
+					req.setAttribute("orgData", organizationManager.getOrganization(org.getKortnamn(), false));
+					break;
+				case "unAuthenticate":
+					req.getSession().removeAttribute("isAuthenticated");
+					break;
 			}
 		}
 		view.forward(req, resp);

@@ -97,9 +97,9 @@ public class ResolverServlet extends HttpServlet {
 			}
 			return format;
 		}
-	};
+	}
 
-	@Override
+    @Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		ServletContext servletContext = config.getServletContext();

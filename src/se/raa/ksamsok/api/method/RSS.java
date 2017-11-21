@@ -290,8 +290,8 @@ public class RSS extends AbstractSearchMethod {
 		if(itemKeyWordsString != null) {
 			itemKeyWords = itemKeyWordsString.split(" ");
 		}
-		for(int i = 0; i < itemKeyWords.length; i ++) {
-			data.addKeyWord(itemKeyWords[i]);
+		for (String itemKeyWord : itemKeyWords) {
+			data.addKeyWord(itemKeyWord);
 		}
 		data.setPublishDate(getSingleValueFromGraph(model, subject, rBuildDate));
 		return data;
@@ -464,7 +464,7 @@ public class RSS extends AbstractSearchMethod {
 		throws DiagnosticException
 	{
 		final String sep = " ";
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		String value = null;
 		Selector selector = new SimpleSelector(subject, ref, (RDFNode) null);
 		StmtIterator iter = model.listStatements(selector);
@@ -620,8 +620,7 @@ public class RSS extends AbstractSearchMethod {
 	 */
 	protected String getFeedLinkProperty()
 	{
-		String link = "http://www.kulturarvsdata.se";
-		return link;
+        return "http://www.kulturarvsdata.se";
 	}
 	
 	/**

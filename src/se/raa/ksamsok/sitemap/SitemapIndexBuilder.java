@@ -67,22 +67,22 @@ public class SitemapIndexBuilder
 	 * Added at the end of a sqlquery to filter some domains
 	 */
 	public static String getFilterSitemapUrlsQuery(HttpServletRequest request){
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		List<String> urls = getFilteredUrls(request);
 		if(!CollectionUtils.isEmpty(urls)){
-			result = " AND (";
+			result = new StringBuilder(" AND (");
 			boolean firstLoop = true;
 			for(String url : urls){
 				if(!firstLoop){
-					result += " OR ";
+					result.append(" OR ");
 				} else {
 					firstLoop = false;
 				}
-				result += "nativeurl LIKE '%" + url + "%'";
+				result.append("nativeurl LIKE '%").append(url).append("%'");
 			}
-			result += ")";
+			result.append(")");
 		}
-		return result;
+		return result.toString();
 	}
 	
 	public SitemapIndexBuilder(PrintWriter writer, DataSource ds, HttpServletRequest request)

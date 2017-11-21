@@ -199,12 +199,12 @@ public class CQL2Solr {
 	 * @throws Exception
 	 */
 	public static String createTermQuery(String field, String value, String relation) throws DiagnosticException {
-		String termQuery = null;
+		StringBuilder termQuery = null;
 		// vi tillåter mellanslag i termerna, typ "Stockholm 1:1"
 		if (relation == null || relation.equals("=") ||
 				relation.equals("<>") || relation.equals("exact")) {
 			// för dessa relationer/operatorer, gör vanlig fråga även med mellanslag och låt solr hantera det
-			termQuery = createEscapedTermQuery(field, value, "exact".equals(relation));
+			termQuery = new StringBuilder(createEscapedTermQuery(field, value, "exact".equals(relation)));
 		} else if (relation.equals("any")) {
 			/**
 			 * any is an implicit OR
@@ -212,12 +212,12 @@ public class CQL2Solr {
 			StringTokenizer tokenizer = new StringTokenizer(value, " ");
 			if (tokenizer.hasMoreTokens()) {
 				String curValue = tokenizer.nextToken();
-				termQuery = "(" + createTermQuery(field, curValue, "=");
+				termQuery = new StringBuilder("(" + createTermQuery(field, curValue, "="));
 				while (tokenizer.hasMoreTokens()) {
 					curValue = tokenizer.nextToken();
-					termQuery += " OR " + createTermQuery(field, curValue, "=");
+					termQuery.append(" OR ").append(createTermQuery(field, curValue, "="));
 				}
-				termQuery += ")";
+				termQuery.append(")");
 			}
 		} else if (relation.equals("all")) {
 			/**
@@ -226,12 +226,12 @@ public class CQL2Solr {
 			StringTokenizer tokenizer = new StringTokenizer(value, " ");
 			if (tokenizer.hasMoreTokens()) {
 				String curValue = tokenizer.nextToken();
-				termQuery = "(" + createTermQuery(field, curValue, "=");
+				termQuery = new StringBuilder("(" + createTermQuery(field, curValue, "="));
 				while (tokenizer.hasMoreTokens()) {
 					curValue = tokenizer.nextToken();
-					termQuery += " AND " + createTermQuery(field, curValue, "=");
+					termQuery.append(" AND ").append(createTermQuery(field, curValue, "="));
 				}
-				termQuery += ")";
+				termQuery.append(")");
 			}
 		} else {
 			throw new DiagnosticException("relationen " + relation +
@@ -239,7 +239,7 @@ public class CQL2Solr {
 					"relationen " + relation + " stöds ej för phrase" +
 							" query", true);
 		}
-		return termQuery;
+		return termQuery.toString();
 	}
 
 	/**
@@ -378,7 +378,7 @@ public class CQL2Solr {
 				// Se sista posten i http://www.gossamer-threads.com/lists/lucene/java-dev/64663 för lucene syntaxen
 				termQuery=String.format("*:* -%s:[* TO *]", indexName);
 			} else {
-				if (value.indexOf("?") != -1 || value.indexOf("*") != -1) {
+				if (value.contains("?") || value.contains("*")) {
 					if (ContentHelper.isISO8601DateYearIndex(indexName) || ContentHelper.isSpatialCoordinateIndex(indexName)) {
 						// inget stöd för wildcards för dessa fält
 						throw new DiagnosticException("Wildcardtecken stöds ej" + " för index: " + indexName,"CQL2Solr.createTermQuery", null, true);
@@ -423,9 +423,9 @@ public class CQL2Solr {
 		String singleModifier = null;
 		List<Modifier> modifiers = ctn.getRelation().getModifiers();
 		if (modifiers.size() > 1) {
-			String diagData = modifiers.get(0).getType();
+			StringBuilder diagData = new StringBuilder(modifiers.get(0).getType());
 			for (int j = 1; j < modifiers.size(); ++j) {
-				diagData += "/" + modifiers.get(j).getType();
+				diagData.append("/").append(modifiers.get(j).getType());
 			}
 			throw new DiagnosticException("Kombinationen av relations " +
 					"modifierare stöds ej", "CQL2Solr.getSingleModifier",

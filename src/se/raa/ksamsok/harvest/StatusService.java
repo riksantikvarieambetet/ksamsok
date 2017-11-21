@@ -11,8 +11,8 @@ public interface StatusService {
 	/**
 	 * Enum för de olika steg en tjänst kan befinna sig i.
 	 */
-	public static enum Step { FETCH, STORE, EMPTYINDEX, INDEX, IDLE };
-	
+	enum Step { FETCH, STORE, EMPTYINDEX, INDEX, IDLE }
+
 	/**
 	 * Återställer status för tjänsten så att den är redo för en ny körning.
 	 * 

@@ -22,8 +22,8 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class CheckCountryCodes {
 	
-	private static String countryRDF="./web/resurser/aukt/geo/country/country.rdf";
-	private static String geonamesURL="http://ws.geonames.org/countryInfo";
+	private static final String COUNTRY_RDF = "./web/resurser/aukt/geo/country/country.rdf";
+	private static final String GEONAMES_URL = "http://ws.geonames.org/countryInfo";
 	
 	public static void main(String argv[])
 	{
@@ -79,9 +79,9 @@ public class CheckCountryCodes {
 		GEOnameHandler geonameHandler = new GEOnameHandler();
 		try {
 			SAXParser saxParser=parserFactory.newSAXParser();
-			saxParser.parse(new File(countryRDF).getAbsoluteFile(), rdfHandler);
+			saxParser.parse(new File(COUNTRY_RDF).getAbsoluteFile(), rdfHandler);
 			HttpClient httpClient=new HttpClient();
-			HttpMethod method = new GetMethod(geonamesURL);
+			HttpMethod method = new GetMethod(GEONAMES_URL);
 			httpClient.executeMethod(method);
 			saxParser.parse(method.getResponseBodyAsStream(), geonameHandler);
 			for(String s:rdfHandler.getCountryCodes())

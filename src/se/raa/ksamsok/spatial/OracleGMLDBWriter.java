@@ -26,13 +26,13 @@ public class OracleGMLDBWriter extends AbstractGMLDBWriter {
 	public void init(String serviceId, Connection c) throws Exception {
 		// måste vara en oracle-connection för att det ska funka med GML-klassen nedan
 		// hämta ut underliggande oracle-uppkopplingen med ett hack
-		if (c instanceof OracleConnection == false) {
+		if (!(c instanceof OracleConnection)) {
 			try {
 				c = c.getMetaData().getConnection();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (c instanceof OracleConnection == false) {
+			if (!(c instanceof OracleConnection)) {
 				c = find(c);
 			}
 		}
@@ -69,8 +69,7 @@ public class OracleGMLDBWriter extends AbstractGMLDBWriter {
 		parser.parse(new StringReader(gml));
 		Node geomNode = parser.getDocument().getFirstChild();
 		JGeometry jGeometry = GML.fromNodeToGeometry(geomNode);
-		Object g = JGeometry.store(jGeometry, c);
-		return g;
+		return JGeometry.store(jGeometry, c);
 	}
 
 }

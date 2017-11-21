@@ -115,7 +115,7 @@ public class StatisticsManager extends DBBasedManagerImpl {
 		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
-			String sql = null;
+			String sql;
 			if (apiKey.equals("ALL")) {
 				sql = "SELECT * FROM searches ORDER BY " + sortBy + " " + sortConf;
 				ps = c.prepareStatement(sql);
@@ -181,8 +181,8 @@ public class StatisticsManager extends DBBasedManagerImpl {
 	 * @param data som skall loggas
 	 */
 	private void storeData(StatisticLoggData data) {
-		data.setAPIKey(StaticMethods.removeChar(data.getAPIKey(), '"'));
 		if (data != null) {
+			data.setAPIKey(StaticMethods.removeChar(data.getAPIKey(), '"'));
 			if (logger.isDebugEnabled()) {
 				logger.debug("storing Logg Data: apikey=" + data.getAPIKey() + "; param=" + data.getParam() + "; query string=" + data.getQueryString());
 			}

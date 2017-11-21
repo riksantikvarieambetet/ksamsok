@@ -23,8 +23,7 @@ public class StaticMethods
 	 */
 	public static String escape(String s)
 	{
-		String escaped = ClientUtils.escapeQueryChars(s);
-		return escaped;
+        return ClientUtils.escapeQueryChars(s);
 	}
 	
 	/**
@@ -78,10 +77,10 @@ public class StaticMethods
 	 * @return den nya strängen
 	 */
 	public static String removeChar(String s, char c) {
-		   String r = "";
+		   StringBuilder r = new StringBuilder();
 		   for (int i = 0; i < s.length(); i ++) {
-		      if (s.charAt(i) != c) r += s.charAt(i);
+		      if (s.charAt(i) != c) r.append(s.charAt(i));
 		      }
-		   return r;
+		   return r.toString();
 		}
 }

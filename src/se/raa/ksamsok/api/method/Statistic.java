@@ -109,30 +109,28 @@ public class Statistic extends AbstractAPIMethod {
 	 * @return Kartesisk produkt av indata som en lista
 	 * @throws MissingParameterException
 	 */
-	protected static List<QueryContent> cartesian(Map<String,List<Term>> data)
-		throws MissingParameterException
-	{
+	protected static List<QueryContent> cartesian(Map<String, List<Term>> data)
+			throws MissingParameterException {
 		String index1 = null;
 		String index2 = null;
 		List<QueryContent> result = null;
 		//lite special cases ifall den bara gick 0 eller 1 varv
-		for(String index : data.keySet()) {
-			if(index1 == null) {//körs första varvet
+		for (String index : data.keySet()) {
+			if (index1 == null) {//körs första varvet
 				index1 = index;
-				continue;
-			}else if(index2 == null) {//körs andra varvet
+			} else if (index2 == null) {//körs andra varvet
 				index2 = index;
 				result = cartesian(index1, index2, data.get(index1),
 						data.get(index2));
 				continue;
-			}else {//körs resten av varven
+			} else {//körs resten av varven
 				index1 = index;
 				result = cartesian(index1, data.get(index1), result);
-			}		
+			}
 		}
-		if(index1 == null && index2 == null) {
+		if (index1 == null && index2 == null) {
 			throw new MissingParameterException("minst ett index behövs för denna operation", "Statistic.cartesian", null, false);
-		}else if(index1 != null && index2 == null) {
+		} else if (index1 != null && index2 == null) {
 			result = cartesianWithOneIndex(data, index1);
 		}
 		return result;
@@ -183,14 +181,11 @@ public class Statistic extends AbstractAPIMethod {
 			List<QueryContent> list)
 	{
 		List<QueryContent> result = new ArrayList<QueryContent>();
-		for(int i = 0; i < list.size(); i++)
-		{
-			for(Term term : set)
-			{
-				Map<String,String> map = list.get(i).getTermMap();
+		for (QueryContent aList : list) {
+			for (Term term : set) {
+				Map<String, String> map = aList.getTermMap();
 				QueryContent content = new QueryContent();
-				for(String index2 : map.keySet())
-				{	
+				for (String index2 : map.keySet()) {
 					content.addTerm(index2, map.get(index2));
 				}
 				content.addTerm(index, term.getValue());
@@ -245,7 +240,7 @@ public class Statistic extends AbstractAPIMethod {
 				List<Term> extractedTerms = new LinkedList<Term>();
 				String value = indexMap.get(index);
 				if (ContentHelper.isToLowerCaseIndex(indexValue) || ContentHelper.isAnalyzedIndex(indexValue)) {
-					value = value != null ? value.toLowerCase() : value;
+					value = value != null ? value.toLowerCase() : null;
 				}
 				// snabbfiltrering, finns det inte ens tillräckligt många träffar
 				// totalt så finns det ju inte sen i sökningen heller
@@ -287,11 +282,10 @@ public class Statistic extends AbstractAPIMethod {
 		Element numberOfTerms = doc.createElement("numberOfTerms");
 		numberOfTerms.appendChild(doc.createTextNode(Integer.toString(queryResults.size(),10)));
 		result.appendChild(numberOfTerms);
-		for(int i = 0; i < queryResults.size(); i++) {
-			QueryContent queryContent = queryResults.get(i);
+		for (QueryContent queryContent : queryResults) {
 			// term
 			Element term = doc.createElement("term");
-			for(String indexKey : queryContent.getTermMap().keySet()) {
+			for (String indexKey : queryContent.getTermMap().keySet()) {
 				// indexFields
 				Element indexFields = doc.createElement("indexFields");
 				// index
@@ -306,7 +300,7 @@ public class Statistic extends AbstractAPIMethod {
 			}
 			// records
 			Element records = doc.createElement("records");
-			records.appendChild(doc.createTextNode(Long.toString(queryContent.getHits(),10)));
+			records.appendChild(doc.createTextNode(Long.toString(queryContent.getHits(), 10)));
 			term.appendChild(records);
 			result.appendChild(term);
 		}

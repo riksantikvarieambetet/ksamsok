@@ -200,7 +200,7 @@ public class GetGeoResource extends AbstractAPIMethod {
 				BufferedReader bodyReader;
 				String respString;
 				Boolean isGmlBlock=false;
-				String gmlBlock="";
+				StringBuilder gmlBlock = new StringBuilder();
 				if (method.getStatusCode()==200)
 				{
 					bodyReader =new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
@@ -216,18 +216,20 @@ public class GetGeoResource extends AbstractAPIMethod {
 						}
 						else if(isGmlBlock)
 						{
-							gmlBlock=gmlBlock+respString;
+							gmlBlock.append(respString);
 						}
 					}
-					gmlResult=gmlBlock;
+					gmlResult= gmlBlock.toString();
 				}
 				else
 				{
 					throw new DiagnosticException("Error in communication with map server", "Http status code: "+method.getStatusCode(), null, false);
 				}
 			}
-			rs = pst.executeQuery();
-			if (rs.next()) {
+			if (pst != null) {
+				rs = pst.executeQuery();
+			}
+			if (rs != null && rs.next()) {
 				nameResult = rs.getString("namn");
 				if (type!=PARISH && type!=PROVINCE)
 					gmlResult = rs.getString("gml");

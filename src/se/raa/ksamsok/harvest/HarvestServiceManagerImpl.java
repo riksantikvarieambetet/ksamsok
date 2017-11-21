@@ -69,7 +69,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		return initOk;
 	}
 
-	protected void init() throws Exception {
+	protected void init()  {
 		if (logger.isInfoEnabled()) {
 			logger.info("Starting HarvestServiceManager");
 		}
@@ -94,7 +94,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 						}
 					}
 					logger.info("Exiting delayed init thread");
-				};
+				}
 			};
 			delayedInit.setDaemon(true);
 			delayedInit.start();
@@ -113,7 +113,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			try {
 				c = ds.getConnection();
 				if (c != null) {
-					devState = this.appstate.equals("development") ? true : false; 
+					devState = this.appstate.equals("development");
 					if (devState) {
 						if (logger.isInfoEnabled()) {
 							logger.info("This has been determined to be a " +
@@ -298,9 +298,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	 * Inre version av {@linkplain #getService(String)} som inte kontrollerar init-status.
 	 * @param serviceId id
 	 * @return tjänst eller null
-	 * @throws Exception
 	 */
-	protected HarvestService innerGetService(String serviceId) throws Exception {
+	protected HarvestService innerGetService(String serviceId)  {
 		HarvestService service = null;
 	    Connection c = null;
 	    PreparedStatement pst = null;
@@ -334,7 +333,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	 * @return lista med tjänster, eller null vid databasproblem
 	 * @throws Exception
 	 */
-	protected List<HarvestService> innerGetServices() throws Exception {
+	protected List<HarvestService> innerGetServices()  {
 	    Connection c = null;
 	    PreparedStatement  pst = null;
 	    ResultSet rs = null;
@@ -776,7 +775,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	private JobDetail createJobDetail(HarvestService service) {
 		String type = service.getServiceType();
 		Class<? extends HarvestJob> clazz = null;
-		String jobGroup = JOBGROUP_HARVESTERS;
 		if (type == null || "OAI-PMH".equalsIgnoreCase(type)) {
 			clazz = OAIPMHHarvestJob.class;
 		} else if ("SIMPLE".equalsIgnoreCase(type)) {
@@ -793,7 +791,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 			return null;
 		}
 		return JobBuilder.newJob(clazz)
-				.withIdentity(service.getId(), jobGroup)
+				.withIdentity(service.getId(), JOBGROUP_HARVESTERS)
 				.build();
 	}
 	

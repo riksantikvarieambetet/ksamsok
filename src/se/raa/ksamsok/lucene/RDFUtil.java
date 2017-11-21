@@ -55,7 +55,7 @@ public class RDFUtil {
 	// och lägger till värdet mha indexprocessorn och ev specialhanterar relationer
 	static String extractValue(Model model, Resource subject, Property ref, Property refRef, IndexProcessor ip, List<String> relations) throws Exception {
 		final String sep = " ";
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		String value = null;
 		Selector selector = new SimpleSelector(subject, ref, (RDFNode) null);
 		StmtIterator iter = model.listStatements(selector);

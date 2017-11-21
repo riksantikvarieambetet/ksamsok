@@ -194,7 +194,9 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes("UTF-8"));
 				os.write("<harvest>\n".getBytes("UTF-8"));
 			} catch (IOException e) {
-				logger.error("Det är problem med att skriva till ut-strömmen");
+				if (logger != null) {
+					logger.error("Det är problem med att skriva till ut-strömmen");
+				}
 				throw e;
 			}
 
@@ -227,7 +229,10 @@ public class OAIPMHHarvestJob extends HarvestJob {
 					os.write(listRecords.toString().getBytes("UTF-8"));
 					os.write("\n".getBytes("UTF-8"));
 				} catch (IOException e) {
-					logger.error("Det är problem med att skriva till ut-strömmen");
+					if (logger != null) {
+
+						logger.error("Det är problem med att skriva till ut-strömmen");
+					}
 					throw e;
 				}
 				// om token är "" betyder det ingen resumption
@@ -270,7 +275,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				}
 				if (resumptionToken == null || resumptionToken.length() == 0) {
 					if (logger != null && logger.isInfoEnabled()) {
-						logger.info(service.getId() + " No resumption, harvest done");
+						logger.info((service != null ? service.getId() : "") + " No resumption, harvest done");
 					}
 					listRecords = null;
 				} else {
@@ -279,7 +284,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 					while (listRecords == null) {
 						++tryNum;
 						if (logger != null && logger.isInfoEnabled()) {
-							logger.info(service.getId() + " Trying, attempt " + String.valueOf(tryNum) +
+							logger.info((service != null ? service.getId() : "") + " Trying, attempt " + String.valueOf(tryNum) +
 								" resumption with token " + resumptionToken);
 						}
 						try {
@@ -294,7 +299,9 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				os.write("</harvest>\n".getBytes("UTF-8"));
 				os.flush();
 			} catch (IOException e) {
-				logger.error("Det är problem med att skriva till ut-strömmen");
+				if (logger != null) {
+					logger.error("Det är problem med att skriva till ut-strömmen");
+				}
 				throw e;
 			}
 			long durationMillis = System.currentTimeMillis() - start;
@@ -308,12 +315,16 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				logger.info((service != null ? service.getId() + ": " : "") + msg);
 			}
 		} catch (UnsupportedEncodingException e) {
-			logger.error("Det är problem med sträng konvertering");
+			if (logger != null) {
+				logger.error("Det är problem med sträng konvertering");
+			}
 			throw e;
 		} catch (IOException e) {
 			failedTry(tryNum, null, e, ss, service);
 		} catch (ParserConfigurationException e) {
-			logger.error("Det är problem med att initiera oai-pmh parser");
+			if (logger != null) {
+				logger.error("Det är problem med att initiera oai-pmh parser");
+			}
 			throw e;
 		} catch (SAXException e) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -322,16 +333,20 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			message = message + "Url: " + url + ", metadataPrefix=" + metadataPrefix + ", fromDate:" + fromDate +
 				", toDate: " + toDate + ", resumptionToken=" + resumptionToken + "\n";
 			message = message + baos.toString("UTF-8");
-			ss.setErrorTextAndLog(service, message);
+			if (ss != null) {
+				ss.setErrorTextAndLog(service, message);
+			}
 			throw e;
 		} catch (TransformerException e) {
-			logger.error("Det är problem med att initiera oai-pmh transformern");
+			if (logger != null) {
+				logger.error("Det är problem med att initiera oai-pmh transformern");
+			}
 			throw e;
 		} catch (NoSuchFieldException e) {
-			logger.error("Hittade inget resumption token");
+			if (logger != null) {
+				logger.error("Hittade inget resumption token");
+			}
 			throw e;
-		} finally {
-
 		}
 		return c;
 	}

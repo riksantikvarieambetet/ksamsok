@@ -102,7 +102,7 @@ public interface HarvestRepositoryManager {
 	/**
 	 * Packar upp gzipfil med tidigare skörd till spool-xml-dokument
 	 */
-	public void extractGZipToSpool(HarvestService service);
+    void extractGZipToSpool(HarvestService service);
 
 	/**
 	 *  Kör optimering av indexet.

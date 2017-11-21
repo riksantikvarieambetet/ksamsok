@@ -2,6 +2,7 @@ package se.raa.ksamsok.harvest.validation;
 
 /**
  * Container for message and its information
+ * Should not be used in hashmap/hashtable
  * @author Martin Duveborg
  */
 public class Message{
@@ -22,5 +23,9 @@ public class Message{
 	
 	public boolean showAdditionalInformation(){
 		return firstOccuranceCol > 0 || firstOccuranceRow > 0 || totalOccurances > 1;
+	}
+
+	public int hashCode() {
+		return 42; // any arbitrary constant will do
 	}
 }

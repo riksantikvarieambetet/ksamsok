@@ -14,7 +14,8 @@ public class DBUtil {
 
 	private static final Logger logger = Logger.getLogger(DBUtil.class);
 	// stödda databastyper (nödvändigt då det är olika syntax för rownum/limit/offet etc)
-	private static enum DBType  { DERBY, ORACLE, POSTGRES };
+	private enum DBType  { DERBY, ORACLE, POSTGRES }
+
 	// instans för att komma ihåg vilken databastyp det var
 	private static volatile DBType dbType = null;
 

@@ -215,9 +215,9 @@ public class GMLUtil {
 						logger.error("Fel vid kontroll av innermost delegate för en dbcp connection", e);
 					}
 				}
-				if (extractedClassName.toLowerCase().indexOf("oracle") >= 0) {
+				if (extractedClassName.toLowerCase().contains("oracle")) {
 					gmlDBWriterClassName = "se.raa.ksamsok.spatial.OracleGMLDBWriter";
-				} else if (extractedClassName.toLowerCase().indexOf("postgres") >= 0) {
+				} else if (extractedClassName.toLowerCase().contains("postgres")) {
 					gmlDBWriterClassName = "se.raa.ksamsok.spatial.PostgresGMLDBWriter";
 				} else {
 					logger.info("Ingen spatial-kapabel (och känd) databas används(?), " +
@@ -332,7 +332,7 @@ public class GMLUtil {
 			public Translator createTranslator(
 					ContentHandler handler) {
 				// TODO: 8 decimaler ok?
-				GeometryTranslator gt = new GeometryTranslator(handler, 8) {
+				return new GeometryTranslator(handler, 8) {
 
 					@Override
 					public void encode(Geometry geometry,
@@ -350,7 +350,6 @@ public class GMLUtil {
 						return null;
 					}
 				};
-				return gt;
 			}
 		};
 		gt.setIndentation(4); // TODO: detta kan skippas men är trevligt vid debug

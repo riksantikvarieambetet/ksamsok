@@ -66,14 +66,14 @@ public class QueryContent
 	public String getQueryString()
 	{
 		Set<String> indexSet = terms.keySet();
-		String queryString = "";
+		StringBuilder queryString = new StringBuilder();
 		for(String index : indexSet)
 		{
 			String term = StaticMethods.escape(terms.get(index));
-			queryString += index + ":\"" + term + "\" AND ";
+			queryString.append(index).append(":\"").append(term).append("\" AND ");
 		}
-		queryString = queryString.substring(0, queryString.length() - 5);
-		return queryString;
+		queryString = new StringBuilder(queryString.substring(0, queryString.length() - 5));
+		return queryString.toString();
 	}
 
 	/**

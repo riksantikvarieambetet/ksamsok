@@ -101,8 +101,8 @@ public class TimeUtil {
 			// start=senaste av -2000 och fromTime, om fromTime==null så används -2000
 			// stop= tidigaste av 2010 och toTime, om toTime==null så används 2010
 			String myFromTime=null, myToTime=null;
-			if (fromTime!=null) myFromTime = new String(fromTime);
-			if (toTime!=null) myToTime = new String(toTime);
+			if (fromTime!=null) myFromTime = fromTime;
+			if (toTime!=null) myToTime = toTime;
 
 			// om bara ena värdet finns så är det en tidpunkt, inte ett tidsintervall
 			if (myFromTime==null) {
@@ -174,15 +174,13 @@ public class TimeUtil {
 	static String decadeString(Integer aInteger) {
 		Integer decadeFloor=(aInteger/10)*10;
 		if (decadeFloor<0) decadeFloor-=10;
-		String aDecade=String.valueOf(decadeFloor);
-		return aDecade;
+        return String.valueOf(decadeFloor);
 	}
 
 	static String centuryString(Integer aInteger) {
 		Integer centuryFloor=(aInteger/100)*100;
 		if (centuryFloor<0) centuryFloor-=100;
-		String aCentury=String.valueOf(centuryFloor);
-		return aCentury;
+        return String.valueOf(centuryFloor);
 	}
 	
 	static String tidyTimeString(String aString) throws Exception {

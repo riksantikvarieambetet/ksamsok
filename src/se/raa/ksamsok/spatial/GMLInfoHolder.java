@@ -15,7 +15,7 @@ public class GMLInfoHolder {
 	/**
 	 * Skapar ny tom instans.
 	 */
-	public GMLInfoHolder() {};
+	public GMLInfoHolder() {}
 
 	/**
 	 * Ger sant om instansen innehåller geometrier

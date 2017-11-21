@@ -32,8 +32,9 @@ public class GetRelations extends AbstractAPIMethod {
 	private static final Logger logger = Logger.getLogger(GetRelations.class);
 
 	// om och hur sameAs ska hanteras
-	private enum InferSameAs { yes, no, sourceOnly, targetsOnly };
-	/** Metodnamn */
+	private enum InferSameAs { yes, no, sourceOnly, targetsOnly }
+
+    /** Metodnamn */
 	public static final String METHOD_NAME = "getRelations";
 
 	/** Parameternamn för relation */
@@ -275,7 +276,7 @@ public class GetRelations extends AbstractAPIMethod {
 				if (searchStr.length() > 0) {
 					searchStr.append(" OR ");
 				}
-				searchStr.append(ContentHelper.IX_ITEMID + ":" + escapedItemId + " OR " + ContentHelper.IX_RELURI + ":"+ escapedItemId);
+				searchStr.append(ContentHelper.IX_ITEMID + ":").append(escapedItemId).append(" OR ").append(ContentHelper.IX_RELURI).append(":").append(escapedItemId);
 			}
 			// sök fram källposten/-erna och alla som har relation till den/dem
 			query.setQuery(searchStr.toString());
