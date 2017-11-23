@@ -103,11 +103,6 @@
         <ksamsok:name>Byggnad</ksamsok:name>
         <ksamsok:description>Information om en byggnad. Underkategori till Fysiskt ting.</ksamsok:description>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype/entitytype#story">
-        <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#EntityType"/>
-        <ksamsok:name>Berättelse</ksamsok:name>
-        <ksamsok:description> En berättelse om t ex ett föremål eller fristående. Underkategori till Fysiskt ting</ksamsok:description>
-    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#person">
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
         <ksamsok:name>Person</ksamsok:name>
@@ -137,6 +132,11 @@
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
         <ksamsok:name>Koncept</ksamsok:name>
         <ksamsok:description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</ksamsok:description>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#story">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>Berättelse</ksamsok:name>
+        <ksamsok:description>En berättelse om t ex ett föremål eller fristående. Underkategori till Informationsobjekt.</ksamsok:description>
     </owl:NamedIndividual>
 </rdf:RDF>
 
