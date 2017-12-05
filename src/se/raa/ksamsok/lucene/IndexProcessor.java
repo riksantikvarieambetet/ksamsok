@@ -97,8 +97,8 @@ class IndexProcessor {
 	 * @param value värde
 	 */
 	void addToDoc(String value) {
-		for (int i = 0; i < indexNames.length; ++i) {
-			addToDoc(indexNames[i], value);
+		for (String indexName : indexNames) {
+			addToDoc(indexName, value);
 		}
 	}
 

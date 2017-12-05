@@ -15,20 +15,20 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 public interface APIMethod 
 {
 	/** versionen för detta API */
-	public static final String API_VERSION = "1.0";
+    String API_VERSION = "1.0";
 	/** namnet på metod parametern */
-	public static final String METHOD = "method";
+    String METHOD = "method";
 	/** API nyckel parameter namn */
-	public static final String API_KEY_PARAM_NAME = "x-api";
+    String API_KEY_PARAM_NAME = "x-api";
 	/** delare för att dela query strängar */
-	public static final String DELIMITER = "|";
+    String DELIMITER = "|";
 	
 	/** De olika formatent*/
-	public enum Format {
-		RDF, HTML, MUSEUMDAT, XML, JSON_LD;
-	}
+    enum Format {
+		RDF, HTML, MUSEUMDAT, XML, JSON_LD
+    }
 	/** Pretty print indrag för json*/
-	public static final int indentFactor = 4;
+    int indentFactor = 4;
 
 	
 	/**
@@ -37,11 +37,11 @@ public interface APIMethod
 	 * @throws BadParameterException om parameter är felformaterad
 	 * @throws DiagnosticException vid oväntat fel
 	 */
-	public void performMethod()
+    void performMethod()
 		throws MissingParameterException, BadParameterException,
 			DiagnosticException;
 
 
-	public void setFormat(Format format);
+	void setFormat(Format format);
 
 }

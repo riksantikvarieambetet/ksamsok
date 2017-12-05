@@ -525,7 +525,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			contextType = restIfStartsWith(contextType, context_pre);
 			// TODO: verifiera från lista istället
 			if (contextType != null) {
-				if (contextType.indexOf("#") >= 0) {
+				if (contextType.contains("#")) {
 					// börjar den inte med rätt prefix och är en uri kan vi
 					// lika gärna strunta i den...
 					if (logger.isDebugEnabled()) {

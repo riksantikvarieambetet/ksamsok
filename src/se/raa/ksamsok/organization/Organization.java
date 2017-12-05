@@ -7,10 +7,9 @@ import java.util.List;
  * Böna som håller information om en organisation
  * @author Henrik Hjalmarsson
  */
-public class Organization implements Serializable
+public class Organization
 {
-	private static final long serialVersionUID = -1535227615889403676L;
-	
+
 	private String kortNamn;
 	private String serv_org;
 	private String namnSwe;

@@ -394,8 +394,6 @@ public class Search extends AbstractSearchMethod {
 				logger.error(e);
 				throw new DiagnosticException("Det är problem med att skriva resultatet till utströmmen",
 					this.getClass().getName(), e.getMessage(), false);
-			} finally {
-
 			}
 		}
 	}

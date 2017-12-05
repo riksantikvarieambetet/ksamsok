@@ -69,8 +69,7 @@ public class SearchHelp extends AbstractAPIMethod {
 	protected void performMethodLogic() throws DiagnosticException {
 		// TODO: detta är fel då endast ett index stöds, men det är exakt som innan funktionsmässigt, se TODO ovan
 		try {
-			for (int i = 0; i < indexList.size(); i++) {
-				String index = indexList.get(i);
+			for (String index : indexList) {
 				index = CQL2Solr.translateIndexName(index);
 				if (ContentHelper.isToLowerCaseIndex(index) || ContentHelper.isAnalyzedIndex(index)) {
 					prefix = prefix != null ? prefix.toLowerCase() : prefix;
@@ -110,10 +109,10 @@ public class SearchHelp extends AbstractAPIMethod {
 		Element method = doc.createElement("method");
 		method.appendChild(doc.createTextNode(METHOD_NAME));
 		echo.appendChild(method);
-		
-		for (int i =0; i < indexList.size(); i++){
+
+		for (String anIndexList : indexList) {
 			Element index = doc.createElement("index");
-			index.appendChild(doc.createTextNode(indexList.get(i)));
+			index.appendChild(doc.createTextNode(anIndexList));
 			echo.appendChild(index);
 		}
 		

@@ -746,7 +746,7 @@ public abstract class ContentHelper {
 		// sen om det (troligen) är ett kontextindex, "[contextType]_[indexName]"
 		if (indexName.indexOf("_") > 0) {
 			String[] parts = indexName.split("\\_");
-			if (parts != null && parts.length == 2) {
+			if (parts.length == 2) {
 				return indices.containsKey(parts[1]);
 			}
 		}
@@ -787,9 +787,9 @@ public abstract class ContentHelper {
 	/**
 	 * Enum för indextyp.
 	 */
-	public static enum IndexType {
+	public enum IndexType {
 		ANALYZED, VERBATIM, TOLOWERCASE, ISO8601DATEYEAR, SPATIAL_VIRTUAL, SPATIAL_COORDINATE
-	};
+	}
 
 	/**
 	 * Klass som representerar ett index.
@@ -979,7 +979,7 @@ public abstract class ContentHelper {
 					} else {
 						// vi är snälla och tillåter = okodat i parametrar för att enklare
 						// kunna testa
-						StringBuffer pVal = new StringBuffer();
+						StringBuilder pVal = new StringBuilder();
 						pVal.append(par[1]);
 						for (int i = 2; i < par.length; ++i) {
 							pVal.append("=").append(par[i]);

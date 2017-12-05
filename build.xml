@@ -308,6 +308,9 @@
     	    						overwrite="true" 
     	    						verbose="true" />
     </target>
+
+    <target name="utveckling-war" depends="utveckling,war" description="Skapa war för utvecklingsmiljö (ingen slave)">
+    </target>
     
     <target name="produktion">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>

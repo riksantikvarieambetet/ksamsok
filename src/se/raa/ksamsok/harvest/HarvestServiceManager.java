@@ -13,14 +13,14 @@ import se.raa.ksamsok.harvest.StatusService.Step;
 public interface HarvestServiceManager {
 
 	// nyckelvärden för att nå managers i skördejobb
-	public static final String HSM_KEY = "hsm";
-	public static final String HRM_KEY = "hrm";
-	public static final String SS_KEY = "ss";
+    String HSM_KEY = "hsm";
+	String HRM_KEY = "hrm";
+	String SS_KEY = "ss";
 
 	// namn på lucenespecifika interna tjänster (eg bara cronjobb)
 	// TODO: värdena kanske bör ändras då det är solr nu, men de ligger i db också
-	public static final String SERVICE_INDEX_OPTIMIZE = "_lucene_opt";
-	public static final String SERVICE_INDEX_REINDEX = "_lucene_reindex";
+    String SERVICE_INDEX_OPTIMIZE = "_lucene_opt";
+	String SERVICE_INDEX_REINDEX = "_lucene_reindex";
 
 	/**
 	 * Ger lista med alla användarskapade tjänster.
@@ -60,7 +60,7 @@ public interface HarvestServiceManager {
 	 * Uppdaterar pausat tillstånd för tjänster i databasen.
 	 * Denna metod kan bara köras då ksamsök initieras.
 	 * 
-	 * @param boolean paused
+	 * @param  paused
 	 * @throws Exception
 	 */
 	void togglePausedForServices(boolean paused) throws Exception;
@@ -134,7 +134,7 @@ public interface HarvestServiceManager {
 	 * 
 	 * @throws Exception
 	 */
-	public void triggerReindexAll() throws Exception;
+    void triggerReindexAll() throws Exception;
 
 	/**
 	 * Begär att en pågående skörd ska avbrytas.

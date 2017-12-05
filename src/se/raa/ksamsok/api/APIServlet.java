@@ -138,26 +138,22 @@ public class APIServlet extends HttpServlet {
 					resp.setHeader("Access-Control-Allow-Origin", "*");
 					method.performMethod();
 					keyManager.updateUsage(apiKey);
-				} catch (MissingParameterException e) {
+				} catch (MissingParameterException | BadParameterException e) {
 					resp.setStatus(400);
 					logger.error("queryString i requesten: " + req.getQueryString());
-					diagnostic(out, method, stylesheet, e);
-				} catch (BadParameterException e) {
-					resp.setStatus(400);
-					logger.error("queryString i requesten: " + req.getQueryString());
-					diagnostic(out, method, stylesheet, e);
+					diagnostic(out, stylesheet, e);
 				} catch (DiagnosticException e) {
 					resp.setStatus(500);
 					logger.error("queryString i requesten: " + req.getQueryString());
-					diagnostic(out, method, stylesheet, e);
+					diagnostic(out, stylesheet, e);
 				}
 			} else if (apiKey == null) {
 				resp.setStatus(400);
-				diagnostic(out, method, stylesheet,
+				diagnostic(out, stylesheet,
 					new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
 			} else {
 				resp.setStatus(400);
-				diagnostic(out, method, stylesheet,
+				diagnostic(out, stylesheet,
 					new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
 			}
 		} catch (Exception e) {
@@ -184,7 +180,7 @@ public class APIServlet extends HttpServlet {
 	 * @throws TransformerException
 	 * @throws JSONException
 	 */
-	private void diagnostic(OutputStream out, APIMethod method, String stylesheet, APIException e)
+	private void diagnostic(OutputStream out, String stylesheet, APIException e)
 		throws IOException, ParserConfigurationException, TransformerException, JSONException {
 		logger.warn(e.getClassName() + " - " + e.getDetails());
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

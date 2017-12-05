@@ -169,10 +169,9 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 		Node method = doc.createElement(METHOD);
 		method.appendChild(doc.createTextNode(METHOD_NAME));
 		echo.appendChild(method);
-		Iterator<String> keys = indexMap.keySet().iterator();
-		while (keys.hasNext()){
+		for (String s : indexMap.keySet()) {
 			Node index = doc.createElement("index");
-			index.appendChild(doc.createTextNode(keys.next()));
+			index.appendChild(doc.createTextNode(s));
 			echo.appendChild(index);
 		}
 		Node query = doc.createElement("query");

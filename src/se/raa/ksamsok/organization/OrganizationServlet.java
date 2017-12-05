@@ -49,32 +49,42 @@ public class OrganizationServlet extends HttpServlet {
 		RequestDispatcher view = req.getRequestDispatcher("serviceOrganizationAdmin.jsp");
 		String operation = req.getParameter("operation");
 		if (operation != null) {
-			if (operation.equals("passwordAdmin")) {
-				req.setAttribute("passwords", organizationManager.getPasswords());
-				view = req.getRequestDispatcher("passwordAdmin.jsp");
-			} else if (operation.equals("addOrg")) {
-				String kortnamn = req.getParameter("kortnamn");
-				String namnSwe = req.getParameter("namnSwe");
-				logger.debug("added: " + kortnamn + " : " + namnSwe);
-				organizationManager.addOrganization(kortnamn, namnSwe);
-			} else if (operation.equals("orgChoice")) {
-				String kortnamn = req.getParameter("orgChoice");
-				req.setAttribute("orgInfo", organizationManager.getOrganization(kortnamn, false));
-			} else if (operation.equals("update")) {
-				Organization org = getOrganizationValues(req);
-				organizationManager.updateOrg(org);
-				req.setAttribute("orgInfo", organizationManager.getOrganization(org.getKortnamn(), false));
-			} else if (operation.equals("remove")) {
-				String kortnamn = req.getParameter("kortnamn");
-				organizationManager.removeOrganization(kortnamn);
-			} else if (operation.equals("updatePasswords")){
-				Map<String, String> passwordMap = new HashMap<String, String>();
-				String[] passwords = req.getParameterValues("passwords");
-				String[] organizations = req.getParameterValues("organizations"); 
-				for (int i = 0; i < organizations.length; i++){
-					passwordMap.put(organizations[i], passwords[i]);
+			switch (operation) {
+				case "passwordAdmin":
+					req.setAttribute("passwords", organizationManager.getPasswords());
+					view = req.getRequestDispatcher("passwordAdmin.jsp");
+					break;
+				case "addOrg": {
+					String kortnamn = req.getParameter("kortnamn");
+					String namnSwe = req.getParameter("namnSwe");
+					logger.debug("added: " + kortnamn + " : " + namnSwe);
+					organizationManager.addOrganization(kortnamn, namnSwe);
+					break;
 				}
-				organizationManager.setPassword(passwordMap);
+				case "orgChoice": {
+					String kortnamn = req.getParameter("orgChoice");
+					req.setAttribute("orgInfo", organizationManager.getOrganization(kortnamn, false));
+					break;
+				}
+				case "update":
+					Organization org = getOrganizationValues(req);
+					organizationManager.updateOrg(org);
+					req.setAttribute("orgInfo", organizationManager.getOrganization(org.getKortnamn(), false));
+					break;
+				case "remove": {
+					String kortnamn = req.getParameter("kortnamn");
+					organizationManager.removeOrganization(kortnamn);
+					break;
+				}
+				case "updatePasswords":
+					Map<String, String> passwordMap = new HashMap<String, String>();
+					String[] passwords = req.getParameterValues("passwords");
+					String[] organizations = req.getParameterValues("organizations");
+					for (int i = 0; i < organizations.length; i++) {
+						passwordMap.put(organizations[i], passwords[i]);
+					}
+					organizationManager.setPassword(passwordMap);
+					break;
 			}
 		}
 		req.setAttribute("orgList", organizationManager.getServiceOrganizations());

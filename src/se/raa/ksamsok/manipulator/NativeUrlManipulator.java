@@ -149,7 +149,7 @@ public class NativeUrlManipulator implements Manipulator
 	
 	private String getFetchDataSQL()
 	{
-		String sql = null;
+		String sql;
 		if(manipulateAllPosts) {
 			sql = "select uri, nativeUrl, xmlData from content where deleted is null";
 		}else {
@@ -197,7 +197,7 @@ public class NativeUrlManipulator implements Manipulator
 	
 	private String getRecordCountSQL()
 	{
-		String sql = null;
+		String sql;
 		if(manipulateAllPosts) {
 			sql = "select count(*) from content where deleted is null";
 		}else {
@@ -248,8 +248,7 @@ public class NativeUrlManipulator implements Manipulator
 			long millisecPerRecord = elapsedTime / currentRecord;
 			long recordsRemaining = totalNumberOfRecords - currentRecord;
 			long estimatedTimeRemaining = recordsRemaining * millisecPerRecord;
-			String timeText = stopWatch.getTimeAsString(estimatedTimeRemaining / 1000);
-			return timeText;
+			return stopWatch.getTimeAsString(estimatedTimeRemaining / 1000);
 		}else{
 			return "waiting";
 		}
