@@ -84,8 +84,6 @@
 			}
 %>
 ]);
-<% System.out.println(new java.util.Date() + ": [jssearch.debug]: sökte med " + query + ", fick " + antal + " träffar"); %>
-// sökte med '<%=query%>', <%=antal%> träffar
 
 <%
 		} catch (Exception e) {
