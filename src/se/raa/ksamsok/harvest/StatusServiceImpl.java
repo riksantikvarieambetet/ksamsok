@@ -1,5 +1,10 @@
 package se.raa.ksamsok.harvest;
 
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.log4j.Logger;
+import se.raa.ksamsok.lucene.ContentHelper;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,15 +14,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.DataSource;
-
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Logger;
-
-import se.raa.ksamsok.lucene.ContentHelper;
+import java.util.Set;
 
 public class StatusServiceImpl implements StatusService {
 
@@ -36,6 +36,8 @@ public class StatusServiceImpl implements StatusService {
 	Map<String, Boolean> rdfErrors = Collections.synchronizedMap(new HashMap<String,Boolean>());
 
 	DataSource ds;
+
+	Set<HarvestService> servicesInitializedFromDb = Collections.synchronizedSet(new HashSet<HarvestService>());
 
 	StatusServiceImpl(DataSource ds) {
 		this.ds = ds;
@@ -66,6 +68,33 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public String getErrorText(HarvestService service) {
+		if (!servicesInitializedFromDb.contains(service)) {
+			// The server has just been started, check for error messages in the database
+
+			Connection c = null;
+			PreparedStatement pst = null;
+			ResultSet rs = null;
+			try {
+				c = ds.getConnection();
+				pst = c.prepareStatement("select * from servicelog where serviceId = ? " +
+						"order by eventTs desc");
+				pst.setString(1, service.getId());
+				rs = pst.executeQuery();
+				if (rs.next()) {
+					// we're only interested in the latest log entry, and only if it's type=error
+					if (rs.getInt("eventType") == LogEvent.EVENT_ERROR) {
+						errorTexts.put(service.getId(), rs.getString("message"));
+					}
+				}
+			} catch (Exception e) {
+				logger.error("Error when fetching old error messages for service " + service.getId(), e);
+				DBUtil.rollback(c);
+			} finally {
+				DBUtil.closeDBResources(rs, pst, c);
+			}
+
+			servicesInitializedFromDb.add(service);
+		}
 		return errorTexts.get(service.getId());
 	}
 
