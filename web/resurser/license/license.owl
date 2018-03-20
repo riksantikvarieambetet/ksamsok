@@ -1,99 +1,123 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE rdf:RDF [
-    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
-    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
-    <!ENTITY ksamsok "http://kulturarvsdata.se/ksamsok#" >
-    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+	<!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+	<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+	<!ENTITY ksamsok "http://kulturarvsdata.se/ksamsok#" >
+	<!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+	<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
 ]>
 
-
 <rdf:RDF xmlns="http://kulturarvsdata.se/resurser/license#"
-     xml:base="http://kulturarvsdata.se/resurser/license"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
-    <owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/license">
-        <owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
-    </owl:Ontology>
-    
+	 xml:base="http://kulturarvsdata.se/resurser/license"
+	 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	 xmlns:owl="http://www.w3.org/2002/07/owl#"
+	 xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	 xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#">
+	<owl:Ontology rdf:about="http://kulturarvsdata.se/resurser/license">
+		<owl:imports rdf:resource="http://kulturarvsdata.se/ksamsok"/>
+	</owl:Ontology>
 
-
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#pdmark">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Public Domain Mark</ksamsok:name>
-        <ksamsok:description>Objektet får kopieras, användas, spridas och ändras utan restriktioner</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/publicdomain/mark/1.0/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#unknown">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Okänd</ksamsok:name>
-        <ksamsok:description>Objektets upphovsman är okänd.</ksamsok:description>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#cc0">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Creative Commons - Zero</ksamsok:name>
-        <ksamsok:description>Objektet får återanvändas utan restriktioner.</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/publicdomain/zero/1.0/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Creative Commons - Erkännande</ksamsok:name>
-        <ksamsok:description>Upphovsman ska anges vid användning</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by/2.5/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nd">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Creative Commons - Erkännande-Inga bearbetningar</ksamsok:name>
-        <ksamsok:description>Upphovsman ska anges vid användning, objektet får inte bearbetas</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nd/2.5/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nc-nd">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Creative Commons - Erkännande-Ickekommersiell-Inga bearbetningar</ksamsok:name>
-        <ksamsok:description>Upphovsman ska anges vid användning, ej kommersiell användning, objektet får inte bearbetas</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nc-nd/2.5/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nc">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Creative Commons - Erkännande-Ickekommersiell</ksamsok:name>
-        <ksamsok:description>Upphovsman ska anges vid användning, ej kommersiell användning</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nc/2.5/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nc-sa">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Creative Commons - Erkännande-Ickekommersiell-Dela Lika</ksamsok:name>
-        <ksamsok:description>Upphovsman ska anges vid användning, ej kommersiell användning, bearbetningar delas med samma villkor</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nc-sa/2.5/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-sa">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Creative Commons - Erkännande-Dela Lika</ksamsok:name>
-        <ksamsok:description>Upphovsman ska anges vid användning, bearbetningar delas med samma villkor</ksamsok:description>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-sa/2.5/</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#rr-f">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Rights reserved – free access</ksamsok:name>
-        <ksamsok:description>Objektet finns tillgängligt för alla i sin helhet men får inte återanvändas utan tillstånd.</ksamsok:description>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#rr-p">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Rights reserved – paid access</ksamsok:name>
-        <ksamsok:description>Objektet finns tillgängligt på nätet men måste betala för att se det i sin helhet (t ex via en engångskostnad eller prenumeration).</ksamsok:description>
-    </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#rr-r">
-        <rdf:type rdf:resource="&ksamsok;License"/>
-        <ksamsok:name>Rights reserved – restricted access</ksamsok:name>
-        <ksamsok:description>Tillgången till objektet är begränsat på andra sätt än att användaren måste betala för det, t ex registrering eller annan kontrollerad tillgång.</ksamsok:description>
-    </owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#pdmark">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">Public Domain Mark</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Objektet får kopieras, användas, spridas och ändras utan restriktioner.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/publicdomain/mark/1.0/</rdfs:seeAlso>
+	<owl:sameAs rdf:resource="http://creativecommons.org/publicdomain/mark/1.0/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#unknown">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="sv">Okänd</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Objektets upphovsperson är okänd.</ksamsok:description>
+		<rdfs:comment xml:lang="en-GB">DEPRECATED. Do not apply to new resources. Existing resources should be marked up with the appropriate license.</rdfs:comment>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#cc0">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">Creative Commons - Zero</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Objektet får återanvändas utan restriktioner.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/publicdomain/zero/1.0/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="se">Creative Commons - Erkännande</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Upphovsperson ska anges vid användning.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by/2.5/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://creativecommons.org/licenses/by/2.5/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nd">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="sv">Creative Commons - Erkännande-Inga bearbetningar</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Upphovsperson ska anges vid användning, objektet får inte bearbetas.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nd/2.5/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://creativecommons.org/licenses/by-nd/2.5/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nc-nd">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="sv">Creative Commons - Erkännande-Ickekommersiell-Inga bearbetningar</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Upphovsperson ska anges vid användning, ej kommersiell användning, objektet får inte bearbetas.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nc-nd/2.5/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://creativecommons.org/licenses/by-nc-nd/2.5/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nc">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="sv">Creative Commons - Erkännande-Ickekommersiell</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Upphovsperson ska anges vid användning, ej kommersiell användning.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nc/2.5/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://creativecommons.org/licenses/by-nc/2.5/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-nc-sa">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="sv">Creative Commons - Erkännande-Ickekommersiell-Dela Lika</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Upphovsperson ska anges vid användning, ej kommersiell användning, bearbetningar delas med samma villkor.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-nc-sa/2.5/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.5/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#by-sa">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="sv">Creative Commons - Erkännande-Dela Lika</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Upphovsperson ska anges vid användning, bearbetningar delas med samma villkor.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://creativecommons.org/licenses/by-sa/2.5/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://creativecommons.org/licenses/by-sa/2.5/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#rr-f">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">Rights reserved – free access</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Objektet finns tillgängligt för alla i sin helhet men får inte återanvändas utan tillstånd.</ksamsok:description>
+		<rdfs:comment xml:lang="en-GB">DEPRECATED. Do not apply to new resources. Existing resources should use &lt;http://kulturarvsdata.se/resurser/license#inc&gt;, &lt;http://kulturarvsdata.se/resurser/license#inc-ow-eu&gt; or &lt;http://kulturarvsdata.se/resurser/license#inc-edu&gt; instead.</rdfs:comment>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#rr-p">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">Rights reserved – paid access</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Objektet finns tillgängligt på nätet men måste betala för att se det i sin helhet (t ex via en engångskostnad eller prenumeration).</ksamsok:description>
+		<rdfs:comment xml:lang="en-GB">DEPRECATED. Do not apply to new resources. Existing resources should use &lt;http://kulturarvsdata.se/resurser/license#inc&gt; instead.</rdfs:comment>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#rr-r">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">Rights reserved – restricted access</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Tillgången till objektet är begränsat på andra sätt än att användaren måste betala för det, t ex registrering eller annan kontrollerad tillgång.</ksamsok:description>
+		<rdfs:comment xml:lang="en-GB">DEPRECATED. Do not apply to new resources. Existing resources should use &lt;http://kulturarvsdata.se/resurser/license#inc&gt;, &lt;http://kulturarvsdata.se/resurser/license#inc-ow-eu&gt; or &lt;http://kulturarvsdata.se/resurser/license#inc-edu&gt; instead.</rdfs:comment>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#inc">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">In Copyright</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Objektet är upprovsrättsskyddat.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://rightsstatements.org/vocab/InC/1.0/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://rightsstatements.org/vocab/InC/1.0/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#inc-ow-euc">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">In Copyright – EU Orphan Work</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Herrelöst verk: objektet är upprovsrättsskyddat, men upphovspersonen är okänd.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://rightsstatements.org/vocab/InC-OW-EU/1.0/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://rightsstatements.org/vocab/InC-OW-EU/1.0/"/>
+	</owl:NamedIndividual>
+	<owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/license#inc-edu">
+		<rdf:type rdf:resource="&ksamsok;License"/>
+		<ksamsok:name xml:lang="en">In Copyright – Educational Use Permitted</ksamsok:name>
+		<ksamsok:description xml:lang="sv-SE">Objektet är upprovsrättsskyddat, men licensen tillåter bruk inom utbildningssammanhang.</ksamsok:description>
+		<rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://rightsstatements.org/vocab/InC-EDU/1.0/</rdfs:seeAlso>
+		<owl:sameAs rdf:resource="http://rightsstatements.org/vocab/InC-EDU/1.0/"/>
+	</owl:NamedIndividual>
 </rdf:RDF>
-
-
-
-<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
-
