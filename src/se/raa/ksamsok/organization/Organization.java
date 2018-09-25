@@ -19,7 +19,6 @@ public class Organization
 	private String adress1;
 	private String adress2;
 	private String postadress;
-	private String kontaktPerson;
 	private String epostKontaktPerson;
 	private String websida;
 	private String websidaKS;
@@ -114,17 +113,7 @@ public class Organization
 	{
 		this.postadress = postadress;
 	}
-	
-	public String getKontaktperson()
-	{
-		return kontaktPerson;
-	}
-	
-	public void setKontaktPerson(String kontaktPerson)
-	{
-		this.kontaktPerson = kontaktPerson;
-	}
-	
+
 	public String getEpostKontaktperson()
 	{
 		return epostKontaktPerson;

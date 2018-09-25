@@ -114,7 +114,6 @@ public class OrganizationServlet extends HttpServlet {
 		o.setAdress1(req.getParameter("adress1"));
 		o.setAdress2(req.getParameter("adress2"));
 		o.setPostadress(req.getParameter("postadress"));
-		o.setKontaktPerson(req.getParameter("kontaktperson"));
 		o.setEpostKontaktPerson(req.getParameter("epostKontaktperson"));
 		o.setWebsida(req.getParameter("websida"));
 		o.setWebsidaKS(req.getParameter("websidaKS"));
