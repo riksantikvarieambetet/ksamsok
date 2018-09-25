@@ -113,11 +113,7 @@ function remove()
 								<td><input type="text" name="postadress" value="${requestScope.orgInfo.postadress}"/></td>
 							</tr>
 							<tr>
-								<td class="title">Kontaktperson f&ouml;r organisationen:</td>
-								<td><input type="text" name="kontaktperson" value="${requestScope.orgInfo.kontaktperson}"/></td>
-							</tr>
-							<tr>
-								<td class="title">E-post till kontaktpersonen:</td>
+								<td class="title">E-post funktionsbrevlåda (ej personlig adress):</td>
 								<td><input type="text" name="epostKontaktperson" value="${requestScope.orgInfo.epostKontaktperson}"/></td>
 							</tr>
 							<tr>

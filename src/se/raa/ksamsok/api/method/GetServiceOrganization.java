@@ -121,10 +121,6 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 		postAdress.appendChild(doc.createTextNode(org.getPostadress() != null ? org.getPostadress() : ""));
 		institution.appendChild(postAdress);
 		
-		Element kontaktPerson = doc.createElement("kontaktperson");
-		kontaktPerson.appendChild(doc.createTextNode(org.getKontaktperson() != null ? org.getKontaktperson() : ""));
-		institution.appendChild(kontaktPerson);
-		
 		Element epostKontaktPerson = doc.createElement("epostkontaktperson");
 		epostKontaktPerson.appendChild(doc.createTextNode(org.getEpostKontaktperson() != null ? org.getEpostKontaktperson() : ""));
 		institution.appendChild(epostKontaktPerson);

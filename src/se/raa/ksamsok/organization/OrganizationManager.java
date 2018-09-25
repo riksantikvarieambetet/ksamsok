@@ -127,7 +127,6 @@ public class OrganizationManager extends DBBasedManagerImpl {
 			org.setAdress1(rs.getString("adress1"));
 			org.setAdress2(rs.getString("adress2"));
 			org.setPostadress(rs.getString("postadress"));
-			org.setKontaktPerson(rs.getString("kontaktperson"));
 			org.setEpostKontaktPerson(rs.getString("epostkontaktperson"));
 			org.setWebsida(rs.getString("websida"));
 			org.setWebsidaKS(rs.getString("websidaks"));
@@ -149,7 +148,7 @@ public class OrganizationManager extends DBBasedManagerImpl {
 		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
-			String sql = "UPDATE organisation SET namnswe=?, namneng=?, beskrivswe=?, beskriveng=?, adress1=?, adress2=?, postadress=?, kontaktperson=?, epostkontaktperson=?, websida=?, websidaks=?, lowressurl=?, thumbnailurl=?, serv_org=? WHERE kortnamn=?";
+			String sql = "UPDATE organisation SET namnswe=?, namneng=?, beskrivswe=?, beskriveng=?, adress1=?, adress2=?, postadress=?, epostkontaktperson=?, websida=?, websidaks=?, lowressurl=?, thumbnailurl=?, serv_org=? WHERE kortnamn=?";
 			ps = c.prepareStatement(sql);
 			setPsStrings(ps, org);
 			ps.executeUpdate();
@@ -188,14 +187,13 @@ public class OrganizationManager extends DBBasedManagerImpl {
 			ps.setString(5, org.getAdress1());
 			ps.setString(6, org.getAdress2());
 			ps.setString(7, org.getPostadress());
-			ps.setString(8, org.getKontaktperson());
-			ps.setString(9, org.getEpostKontaktperson());
-			ps.setString(10, org.getWebsida());
-			ps.setString(11, org.getWebsidaKS());
-			ps.setString(12, org.getLowressUrl());
-			ps.setString(13, org.getThumbnailUrl());
-			ps.setString(14, org.getServ_org());
-			ps.setString(15, org.getKortnamn());
+			ps.setString(8, org.getEpostKontaktperson());
+			ps.setString(9, org.getWebsida());
+			ps.setString(10, org.getWebsidaKS());
+			ps.setString(11, org.getLowressUrl());
+			ps.setString(12, org.getThumbnailUrl());
+			ps.setString(13, org.getServ_org());
+			ps.setString(14, org.getKortnamn());
 		} catch(SQLException e) {
 			logger.error("Problem setting ps strings", e);
 		}
