@@ -53,7 +53,7 @@ public class GetServiceOrganizationTest extends AbstractBaseTest {
 			while(institution.getNodeName().equals("institution")){
 				assertParent(institution,"institution");
 				NodeList instInfoList = institution.getChildNodes();
-				assertEquals(15,instInfoList.getLength());
+				assertEquals(14,instInfoList.getLength());
 				for (int i = 0; i < instInfoList.getLength(); i++){
 					Node instInfo = instInfoList.item(i);
 					assertEquals(0,instInfo.getAttributes().getLength());
