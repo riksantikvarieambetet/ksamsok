@@ -1761,7 +1761,7 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Franska Polynesien</ksamsok:name>
         <ksamsok:name xml:lang="en">French Polynesia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4020092</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4030656</rdfs:seeAlso>
         <ksamsok:alpha2>pf</ksamsok:alpha2>
         <ksamsok:alpha3>pyf</ksamsok:alpha3>
         <ksamsok:number>258</ksamsok:number>
