@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><script type="text/javascript">
+function MakeString()
+{
+var queryVar="";
+queryVar += appendIfSet(queryVar, "text", document.kparam.all.value);
+queryVar += appendIfSet(queryVar, "item", document.kparam.what.value);
+queryVar += appendIfSet(queryVar, "place", document.kparam.where.value);
+queryVar += appendIfSet(queryVar, "time", document.kparam.when.value);
+queryVar += appendIfSet(queryVar, "actor", document.kparam.who.value);
+queryVar += appendIfSet(queryVar, "itemTitle", document.kparam.id.value);
+document.ksearch.query.value=queryVar;
+document.ksearch.stylesheet.value="../stylesheet/searchStyle.xsl";
+if ((document.utseende.looks[1].checked) || (document.ksearch.operation.value=="scan") || (document.ksearch.operation.value=="explain"))
+{
+document.ksearch.stylesheet.value="";
+}
+return true;
+}
+function appendIfSet(q, param, value) {
+var retStr = "";
+if (value) {
+if (q.length > 0) {
+retStr+= " and ";
+}
+if ((param=="time") && (value.indexOf("0-talet")==3) && (isUnsignedInteger(value.substr(0,4))))
+{
+retStr+="create_toTime>="+value.substr(0,4);
+retStr+=" and create_fromTime<="+addYears(value.substr(0,4));
+}
+else if ((param=="time") && (value.indexOf("0-talet")==2) && (isUnsignedInteger(value.substr(0,3))))
+{
+retStr+="create_toTime>="+value.substr(0,3);
+retStr+=" and create_fromTime<="+addYears(value.substr(0,3));
+}
+else retStr+=param + '=' + '"' + value + '"';
+}
+return retStr;
+}
+function addYears(numStr) {
+// need to adapt to the string length, "800" is as valid as "1200"
+pos=numStr.length-2;
+// default is decade mode
+addTerm=9;
+// check if century is used rather then decade
+if (numStr.substr(pos,1)=="0") addTerm=99;
+//add 9 or 99 years for the toTime parameter
+return (1*numStr+addTerm);
+}
+function isUnsignedInteger(s)
+{
+return (s.toString().search(/^[0-9]+$/) == 0);
+}
+</script><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>SOCH/K-samsök demo</title><link href="mall.css" rel="stylesheet" type="text/css"></head>
+<body><div id="box1"><div id="col1"><img src="raa_logo.jpg" width="300px"><div id="black">This is
+a simple tool application, showing some of the possibilities with the SOCH/K-samsök API.</div>
+<br><br><h1>What?</h1> An
+object, piece of art, building, book...
+<br>&nbsp;<br><h1>Where?</h1> A place,
+parish, county...
+<br>&nbsp;<br><h1>When?</h1> A time period,
+event, year, decade...
+<br>&nbsp;<br><h1>Who?</h1> A person,
+organization, company...
+<br>&nbsp;<br><h1>How?</h1> Harvested to
+SOCH and made searchable to the public...
+<br>&nbsp;<br><h1>But Why?</h1>
+To give everybody access to our lovely cultural heritage!<br>&nbsp;<br>&nbsp;
+</div><div id="col2"><strong>Here you can scan
+values and number of occurences for specific elements in the repository</strong><br><nbsp><br>
+</nbsp><form name="scanform" method="get" accept-charset="UTF-8" action="http://kulturarvsdata.se/ksamsok/api"> <input name="stylesheet" value="../stylesheet/statistic.xsl" type="hidden"> <input name="method" value="statistic" type="hidden"><input name="x-api" value="test" type="hidden"><table style="width: 375px; height: 64px;" summary="scan example"><tbody><tr><td><strong>Parameter:</strong></td>
+<td> <select name="index"><option value="cadastralUnit=*111">scan(cadastralUnit:
+fastighetsbeteckning *111)</option><option value="collection=*">scan(collection:
+samling)</option><option value="contextType=*">scan(contextType:
+sammanhang)</option><option value="continentName=*">scan(continentName:
+kontinent)</option><option value="country=*">scan(country:
+land)</option><option value="countryName=*">scan(countryName:
+landsnamn)</option><option value="county=*">scan(county:
+l&auml;nskod)</option><option value="countyName=*">scan(countyName:
+l&auml;nsnamn)</option><option value="dataQuality=*">scan(dataQuality:
+datakvalitet)</option><option value="eventAuth=*">scan(eventAuth:
+auktoritet f&ouml;r h&auml;ndelse)</option><option value="eventName=*">scan(eventName: namn p&aring;
+h&auml;ndelse)</option><option value="fromPeriodId=*">scan(fromPeriodId:
+start p&aring; tidsperiod-id)</option><option value="fromPeriodName=*">scan(fromPeriodName: start
+p&aring; tidsperiod)</option><option value="fullName=a*">scan(fullName:
+fullst&auml;ndigt
+namn a*)</option><option value="gender=*">scan(gender:
+k&ouml;nstillh&ouml;righet)</option><option value="itemClass=*">scan(itemClass: klassifikation)</option><option value="itemClassName=a*">scan(itemClassName: klass a*)</option><option value="itemColor=*">scan(itemColor: f&auml;rg)</option><option value="itemKeyWord=a*">scan(itemKeyword: nyckelord a*)</option><option value="itemMaterial=a*">scan(itemMaterial: material a*)</option><option value="itemLabel=a*">scan(itemLabel: etikett a*)</option><option value="itemLicense=*">scan(itemLicense: licens f&ouml;r
+objektet)</option><option value="itemMotiveWord=a*">scan(itemMotiveWord:
+motivbeskrivning a*)</option><option value="itemName=ab*">scan(itemName:
+ben&auml;mning ab*)</option><option value="itemNumber=a*">scan(itemNumber:
+inventarienummer a*)</option><option value="itemSpecification=a*">scan(itemSpecification:
+modellbeteckning a*)</option><option value="itemStyle=*">scan(itemStyle:
+stil)</option><option value="itemTechnique=a*">scan(itemTechnique:
+teknik a*)</option><option value="itemTitle=ab*">scan(itemTitle:
+titel ab*)</option><option value="itemType=*">scan(itemType:
+objekttyp)</option><option value="mediaLicense=*">scan(mediaLicense:
+licens f&ouml;r bilden)</option><option value="mediaType=*">scan(mediaType:
+mediatyp)</option><option value="municipality=*">scan(municipality:
+kommunkod)</option><option value="municipalityName=*">scan(municipalityName:
+kommunnamn)</option><option value="nameAuth=*">scan(nameAuth:
+auktoritet f&ouml;r namn)</option><option value="nameId=*">scan(nameId:
+auktoriserat ID)</option><option value="parish=*11">scan(parish:
+sockenkod *11)</option><option value="parishName=a*">scan(parishName:
+sockennamn a*)</option><option value="periodAuth=*">scan(periodAuth:
+auktoritet f&ouml;r period)</option><option value="placeTermAuth=*">scan(placeTermAuth: auktoritet
+f&ouml;r plats-id)</option><option value="placeTermId=*">scan(placeTermId:
+platsid hos auktoritet)</option><option value="province=*">scan(province:
+landskapskod)</option><option value="provinceName=*">scan(provinceName:
+landskapsnamn)</option><option value="serviceName=*">scan(serviceName:
+tj&auml;nst)</option><option value="serviceOrganization=*" selected="selected">scan(serviceOrganization:
+organisation/institution)</option><option value="subject=*">scan(subject:
+&auml;mne)</option><option value="title=*">scan(title:
+persontitel)</option><option value="toPeriodId=*">scan(toPeriodId:
+slut p&aring; tidsperiod-id)</option><option value="toPeriodName=*">scan(toPeriodName: slut p&aring;
+tidsperiod)</option></select>
+</td></tr><tr><td></td><td><input value="Scan for value range" type="submit"></td></tr></tbody></table></form><hr color="#006600" size="5"><strong><br>This
+is a simple SRU client form for searching cultural heritage objects</strong>
+<form name="utseende"><br><input name="looks" value="style" checked="checked" type="radio">Pretty!
+(for human beings)<br>
+<input name="looks" value="xml" type="radio">XML
+(for machines)
+</form><form name="kparam"> <br><table summary="parameters"> <tbody><tr><td><strong>Free
+text:</strong></td>
+<td><input name="all"></td></tr><tr><td>&nbsp;</td></tr>
+<tr><td><strong>What:</strong></td>
+<td><input name="what" value="Docka" type="text"></td></tr><tr><td><strong>Where:</strong></td>
+<td><input name="where" type="text"></td></tr><tr><td><strong>When:</strong></td>
+<td><input name="when" value="1700-talet"></td></tr><tr><td><strong>Who:</strong></td>
+<td><input name="who"></td></tr><tr><td>&nbsp;</td></tr><tr><td><strong>ID:</strong></td>
+<td><input name="id" type="text"></td></tr><tr><td>&nbsp;</td></tr></tbody></table></form><form name="ksearch" method="get" accept-charset="UTF-8" action="http://kulturarvsdata.se/ksamsok/api" onsubmit="return MakeString()"><input name="stylesheet" value="../stylesheet/searchStyle.xsl" type="hidden"><input name="x-api" value="test" type="hidden">
+<table style="width: 355px; height: 116px;" summary="simple SOCH API client"><tbody><tr><td><strong>Method:</strong></td>
+<td><select name="method"><option value="search">search</option></select>
+</td></tr><tr><td><strong>Max number of
+records:</strong> </td>
+<td><select name="hitsPerPage"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="10">
+10</option><option value="50" selected="selected">50</option><option value="100">100</option><option value="250">250</option></select>
+</td> </tr> <tr><td><strong>Latest
+search:</strong></td> <td><input name="query" size="30" type="text"></td></tr>
+<tr><td></td> <td><input value="Search" type="submit">&nbsp;&nbsp;&nbsp;<input value="Clean" type="reset"></td></tr></tbody></table><br></form>
+</div></div><script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-1898436-3");
+pageTracker._trackPageview();
+} catch(err) {}</script></body></html>
