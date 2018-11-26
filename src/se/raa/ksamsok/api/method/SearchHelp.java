@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,7 +77,7 @@ public class SearchHelp extends AbstractAPIMethod {
 				}
 				termList = serviceProvider.getSearchService().terms(index, prefix, 0, maxValueCount);
 			}
-		} catch (SolrServerException e) {
+		} catch (SolrServerException | IOException e) {
 			throw new DiagnosticException("Oväntat IO fel uppstod", "SearchHelp.performMethod", e.getMessage(), true);
 		}
 	}

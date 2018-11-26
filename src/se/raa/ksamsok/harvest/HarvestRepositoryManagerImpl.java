@@ -24,7 +24,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.common.SolrInputDocument;
 
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -51,9 +51,9 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	private SAXParserFactory spf;
 	private StatusService ss;
 	private File spoolDir;
-	private SolrServer solr;
+	private SolrClient solr;
 
-	public HarvestRepositoryManagerImpl(DataSource ds, StatusService ss, SolrServer solr) {
+	public HarvestRepositoryManagerImpl(DataSource ds, StatusService ss, SolrClient solr) {
 		super(ds);
 		spf = SAXParserFactory.newInstance();
 		spf.setNamespaceAware(true);

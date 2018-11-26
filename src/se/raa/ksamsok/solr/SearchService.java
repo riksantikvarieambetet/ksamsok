@@ -20,7 +20,7 @@ public interface SearchService {
 	 * @return frågesvar
 	 * @throws SolrServerException vid kommuikationsproblem
 	 */
-	QueryResponse query(SolrQuery query) throws SolrServerException;
+	QueryResponse query(SolrQuery query) throws SolrServerException, IOException;
 
 	/**
 	 * Hämtar antal dokument i indexet för angiven tjänst, eller totalt om tjänstenamnet är null.
@@ -28,14 +28,14 @@ public interface SearchService {
 	 * @return antal träffar för tjänsten eller totalt
 	 * @throws SolrServerException vid fel
 	 */
-	long getIndexCount(String serviceName) throws SolrServerException;
+	long getIndexCount(String serviceName) throws SolrServerException, IOException;
 
 	/**
 	 * Hämtar antal dokument i indexet för alla tjänster nycklat på tjänste-id.
 	 * @return antal träffar för alla tjänster
 	 * @throws SolrServerException vid fel
 	 */
-	Map<String, Long> getIndexCounts() throws SolrServerException;
+	Map<String, Long> getIndexCounts() throws SolrServerException, IOException;
 
 	/**
 	 * Analyserar (stammar) ett eller flera ord.
@@ -55,14 +55,14 @@ public interface SearchService {
 	 * @return mängd med {@linkplain Term}er
 	 * @throws SolrServerException
 	 */
-	List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException;
+	List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException, IOException;
 
 	/**
 	 * Ger index-information ("path", "free", "size").
 	 * @return lista med namngivna strängar
 	 * @throws SolrServerException 
 	 */
-	NamedList<Object> getIndexInfo() throws SolrServerException;
+	NamedList<Object> getIndexInfo() throws SolrServerException, IOException;
 
 	/**
 	 * Ger url till den solr-instans som används.
