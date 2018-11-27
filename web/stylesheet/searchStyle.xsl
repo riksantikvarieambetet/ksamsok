@@ -20,14 +20,14 @@ xmlns:pres="http://kulturarvsdata.se/presentation#">
 
 	li {font-family: Verdana; font-size: 11px;}
 	#red {color: #990000; font-weight: bold;}
-	#box1 {border-left: 1px solid #999999; border-right: 1px solid #999999; border-bottom: 1px solid #999999; width:800px; height: 100%; padding: 10px; margin-right: auto; margin-left: auto;  background-color: #ededed;}
-	
+	#box1 {border-left: 1px solid #999999; border-right: 1px solid #999999; border-bottom: 1px solid #999999; width:800px; height: 100%; padding: 10px; margin-right: auto; margin-left: auto;  background-color: #ffffff;}
+      .logo {width:100px; max-width:300px}
 	
 
 </style>
   </head>
   <body>
-  <center><div id="box1"><img src="../bilder/ksmsok_logga.png" /><div id="red">Demo</div>
+  <center><div id="box1"><img src="../bilder/raa_logo.jpg" class="logo"/><div id="red">Demo</div>
   <h2>Kulturarvsdata</h2>
     <table border="0">
       <tr bgcolor="#ededed">

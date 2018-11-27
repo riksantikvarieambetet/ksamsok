@@ -13,3 +13,7 @@ li {font-family: Verdana; font-size: 11px;}
 #box1 {border-left: 1px solid #999999; border-right: 1px solid #999999; border-bottom: 1px solid #999999; border-top: 1px solid #999999; width:800px; height: 700px; padding: 10px; margin-top: 10px; margin-right: auto; margin-left: auto;  background-color: #ffffff;}
 #col1 {width: 350px; float: left; padding-right: 1em; padding-left: 1em; border-right: 1px solid #999999;}
 #col2 {width: 350px; float: left; padding-right: 1em; padding-left: 1em; margin-top: 20px;}
+
+.logo {
+    width:100%; max-width:300px
+}
