@@ -10,7 +10,7 @@ queryVar += appendIfSet(queryVar, "time", document.kparam.when.value);
 queryVar += appendIfSet(queryVar, "actor", document.kparam.who.value);
 queryVar += appendIfSet(queryVar, "itemTitle", document.kparam.id.value);
 document.ksearch.query.value=queryVar;
-document.ksearch.stylesheet.value="../stylesheet/searchStyle.xsl";
+document.ksearch.stylesheet.value="/ksamsok/stylesheet/searchStyle.xsl";
 if ((document.utseende.looks[1].checked) || (document.ksearch.operation.value=="scan") || (document.ksearch.operation.value=="explain"))
 {
 document.ksearch.stylesheet.value="";
