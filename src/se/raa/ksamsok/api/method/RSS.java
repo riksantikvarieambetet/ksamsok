@@ -126,7 +126,7 @@ public class RSS extends AbstractSearchMethod {
 			q.addField(ContentHelper.I_IX_RDF);
 			QueryResponse qr = serviceProvider.getSearchService().query(q);
 			hitList = qr.getResults();
-		} catch (SolrServerException e) {
+		} catch (SolrServerException | IOException e) {
 			throw new DiagnosticException("Oväntat IO-fel", "RSS.doSearch", e.getMessage(), true);
 		} catch (BadParameterException e) {
 			throw new DiagnosticException("Oväntat parserfel uppstod", "RSS.doSearch", e.getMessage(), true);

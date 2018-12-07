@@ -13,8 +13,8 @@ import java.util.Iterator;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,12 +31,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 
+import com.github.jsonldjava.jena.JenaJSONLD;
+
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchServiceImpl;
 import se.raa.ksamsok.statistic.StatisticsManager;
-
-import com.github.jsonldjava.jena.JenaJSONLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:test/resources/testContext.xml")
@@ -51,7 +51,7 @@ abstract public class AbstractBaseTest {
 	
 	public void setUp() throws MalformedURLException{
 		if (apiMethodFactory == null){
-			SolrServer solr = new CommonsHttpSolrServer(COMMON_SOLR_SERVER);
+			SolrClient solr = new HttpSolrClient.Builder(COMMON_SOLR_SERVER).build();
 			SearchServiceImpl searchService = new SearchServiceImpl();
 			// The solr is @Autowired in the project. It is necessary to set up it by hand in the test cases
 			ReflectionTestUtils.setField(searchService,"solr", solr);

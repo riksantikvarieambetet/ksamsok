@@ -10,11 +10,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest.METHOD;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.FieldAnalysisRequest;
 import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.response.AnalysisResponseBase.AnalysisPhase;
@@ -39,19 +39,19 @@ public class SearchServiceImpl implements SearchService {
 	private static final Logger logger = Logger.getLogger(SearchService.class);
 
 	@Autowired
-	private SolrServer solr;
+	private SolrClient solr;
 
-	public void setSolr(SolrServer solr) {
+	public void setSolr(SolrClient solr) {
 		this.solr = solr;
 	}
 	@Override
-	public QueryResponse query(SolrQuery query) throws SolrServerException {
+	public QueryResponse query(SolrQuery query) throws SolrServerException, IOException {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Söker med \"" + query.getQuery() + "\" sort: " + query.getSortField() + " start: " + query.getStart() + " rows: " + query.getRows());
 		}
 		return solr.query(query, METHOD.POST);
 	}
-
+	
 	@Override
 	public Set<String> analyze(String words) throws SolrServerException, IOException {
 		if (logger.isInfoEnabled()) {
@@ -84,7 +84,7 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException {
+	public List<Term> terms(String index, String prefix, int removeBelow, int maxCount) throws SolrServerException, IOException {
 		// * tolkas som del av termen så sådana kan vi inte ha med
 		prefix = prefix.replace("*", "");
 		if (logger.isDebugEnabled()) {
@@ -93,7 +93,7 @@ public class SearchServiceImpl implements SearchService {
 		// TODO: kommer finnas bättre sätt att göra detta i senare solr/solrj-versioner
 		List<Term> terms = new LinkedList<Term>();
 		SolrQuery query = new SolrQuery();
-		query.setQueryType("/terms");
+		query.setRequestHandler("/terms");
 		query.set(TermsParams.TERMS_FIELD, index);
 		query.set(TermsParams.TERMS, true);
 		query.set(TermsParams.TERMS_PREFIX_STR, prefix);
@@ -119,7 +119,7 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public long getIndexCount(String serviceName) throws SolrServerException {
+	public long getIndexCount(String serviceName) throws SolrServerException, IOException {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Hämtar antal för tjänsten " + (serviceName != null ? serviceName : "*"));
 		}
@@ -132,7 +132,7 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public Map<String, Long> getIndexCounts() throws SolrServerException {
+	public Map<String, Long> getIndexCounts() throws SolrServerException, IOException {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Hämtar antal för alla tjänster");
 		}
@@ -156,15 +156,15 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public String getSolrURL() {
-		return (solr instanceof CommonsHttpSolrServer ? ((CommonsHttpSolrServer) solr).getBaseURL() : null);
+		return (solr instanceof HttpSolrClient ? ((HttpSolrClient) solr).getBaseURL() : null);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public NamedList<Object> getIndexInfo() throws SolrServerException {
+	public NamedList<Object> getIndexInfo() throws SolrServerException, IOException {
 		final String qpath = "/admin/indexdiskinfo";
 		SolrQuery query = new SolrQuery();
-		query.setQueryType(qpath);
+		query.setQuery(qpath);
 		QueryRequest qreq = new QueryRequest(query, METHOD.POST);
 		QueryResponse qres = qreq.process(solr);
 		return (NamedList<Object>) qres.getResponse().get("index");

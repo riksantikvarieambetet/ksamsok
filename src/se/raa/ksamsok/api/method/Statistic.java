@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api.method;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -247,7 +248,7 @@ public class Statistic extends AbstractAPIMethod {
 				List<Term> terms = serviceProvider.getSearchService().terms(indexValue, value, removeBelow, -1);
 				extractedTerms.addAll(terms);
 				termMap.put(indexValue, extractedTerms);
-			} catch(SolrServerException e) {
+			} catch(SolrServerException | IOException e) {
 				throw new DiagnosticException("Oväntat fel uppstod. Var god försök igen", "Statistic.buildTermMap", e.getMessage(), true);
 			}
 		}

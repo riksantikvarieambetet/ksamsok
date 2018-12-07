@@ -221,7 +221,7 @@ public class Search extends AbstractSearchMethod {
 			query.setStart(startRecord - 1);
 			query.setRows(hitsPerPage);
 			if (sort != null) {
-				query.addSortField(sort, sortDesc ? ORDER.desc : ORDER.asc);
+				query.addSort(sort, sortDesc ? ORDER.desc : ORDER.asc);
 			}
 			query.addField(ContentHelper.IX_ITEMID);
 			query.addField("score"); // score är "solr-special" för uhm, score...
@@ -229,7 +229,7 @@ public class Search extends AbstractSearchMethod {
 			query.addField(binDataField);
 			QueryResponse qr = serviceProvider.getSearchService().query(query);
 			hitList = qr.getResults();
-		} catch (SolrServerException e) {
+		} catch (SolrServerException | IOException e) {
 			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.performMethod",
 				e.getMessage(), true);
 		} catch (BadParameterException e) {
