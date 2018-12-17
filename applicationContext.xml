@@ -24,7 +24,7 @@
 	
 	<bean id="solr" class="org.apache.solr.client.solrj.impl.CommonsHttpSolrServer" >
 		<constructor-arg>
-			<value>http://lx-ra-ksamtest1.raa.se:8080/solr</value>
+			<value>localhost:8080/solr</value>
 		</constructor-arg>
 	</bean>
 
