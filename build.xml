@@ -49,7 +49,7 @@
         </path>
 
         <path id="project.test.classpath">
-            <fileset dir="${basedir}/test/lib">
+            <fileset dir="/src/test/lib">
                 <include name="*.jar"/>
             </fileset>
             <path refid="project.classpath" />
@@ -116,14 +116,14 @@
         <!-- bort med admin och skriv över konf-filer med "slav-versioner" -->
         <delete dir="${project.build.dir}/web/userAdmin" verbose="true" />
         <delete dir="${project.build.dir}/web/admin" verbose="true" />
-        <copy overwrite="true" file="${basedir}/web/WEB-INF/slave.web.xml" tofile="${project.build.dir}/web/WEB-INF/web.xml" verbose="true"/>
-        <copy overwrite="true" file="${basedir}/web/WEB-INF/slave.applicationContext.xml" tofile="${project.build.dir}/web/WEB-INF/applicationContext.xml" verbose="true"/>
+        <copy overwrite="true" file="/src/main/web/WEB-INF/slave.web.xml" tofile="${project.build.dir}/web/WEB-INF/web.xml" verbose="true"/>
+        <copy overwrite="true" file="/src/main/web/WEB-INF/slave.applicationContext.xml" tofile="${project.build.dir}/web/WEB-INF/applicationContext.xml" verbose="true"/>
     </target>
 
     <target name="prepare-war">
         <!-- kopiera men ta inte med slavkonf, den kommer ev med i senare steg -->
         <copy todir="${project.build.dir}/web">
-            <fileset dir="${basedir}/web">
+            <fileset dir="/src/main/web">
                 <exclude name="WEB-INF/slave.web.xml" />
                 <exclude name="WEB-INF/slave.applicationContext.xml" />
             </fileset>
@@ -287,7 +287,7 @@
             </classpath>
             <formatter type="xml"/>
             <batchtest todir="build/test/reports">
-                <fileset dir="${basedir}/test/src">
+                <fileset dir="/src/test/src">
                     <include name="**/*.java" />
                 </fileset>
             </batchtest>
@@ -303,7 +303,7 @@
     <target name="utveckling">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/test"/>
     	<copy file="${basedir}/conf/test/environment.properties.dev"  
-    	    						toFile="web/WEB-INF/classes/environment.properties" 
+    	    						toFile="src/main/web/WEB-INF/classes/environment.properties"
     	    						failonerror="true" 
     	    						overwrite="true" 
     	    						verbose="true" />
@@ -315,7 +315,7 @@
     <target name="produktion">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>
     	<copy file="${basedir}/conf/prod/environment.properties.prod"  
-    						toFile="web/WEB-INF/classes/environment.properties" 
+    						toFile="src/main/web/WEB-INF/classes/environment.properties"
     						failonerror="true" 
     						overwrite="true" 
     						verbose="true" />
@@ -340,7 +340,7 @@
 		</copy>
 		<!--Test dir -->
 		<copy todir="${project.build.dir}/SOCH_Src_Code/test">
-			<fileset dir="${basedir}/test">
+			<fileset dir="/src/test">
 				<include name="**/*.java" />
 				<include name="**/*.xml" />
 				<include name="**/*.rdf" />
@@ -356,7 +356,7 @@
 		</copy>
 		<!-- WEB dir -->
 		<copy todir="${project.build.dir}/SOCH_Src_Code/web">
-			<fileset dir="${basedir}/web">
+			<fileset dir="/src/main/web">
 				<include name="**/*.jsp" />
 				<include name="**/*.css" />
 				<include name="**/*.html" />
