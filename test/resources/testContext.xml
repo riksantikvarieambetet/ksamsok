@@ -21,7 +21,7 @@
      
      <bean id="COMMON_SOLR_SERVER" class="java.lang.String">
      	<constructor-arg>
-     		<value>http://lx-ra-ksamtest1:8080/solr</value>
+     		<value>http://localhost:8983/solr/ksamsok</value>
      	</constructor-arg>
      </bean>
 </beans>

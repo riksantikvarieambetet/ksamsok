@@ -64,6 +64,7 @@ public class AllIndexUniqueValueCountTest extends AbstractBaseTest {
 				index=index.getNextSibling();
 			}
 		} catch (Exception e){
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
@@ -87,6 +88,7 @@ public class AllIndexUniqueValueCountTest extends AbstractBaseTest {
 				assertTrue(index.getInt("uniqueValues")>0);
 			}
 		} catch (Exception e){
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
