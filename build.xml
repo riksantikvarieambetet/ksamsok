@@ -302,7 +302,7 @@
     
     <target name="utveckling">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/test"/>
-    	<copy file="${basedir}/conf/test/environment.properties.dev"  
+    	<copy file="/conf/test/environment.properties"
     	    						toFile="src/main/web/WEB-INF/classes/environment.properties"
     	    						failonerror="true" 
     	    						overwrite="true" 
@@ -314,7 +314,7 @@
     
     <target name="produktion">
         <property name="project.src.conf.context.dir" value="${basedir}/conf/prod"/>
-    	<copy file="${basedir}/conf/prod/environment.properties.prod"  
+    	<copy file="/conf/prod/environment.properties"
     						toFile="src/main/web/WEB-INF/classes/environment.properties"
     						failonerror="true" 
     						overwrite="true" 
