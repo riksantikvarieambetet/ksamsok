@@ -39,6 +39,12 @@ repositories {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'xml-apis:xml-apis:1.4.01'
+    }
+}
+
 dependencies {
 
     compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
@@ -57,7 +63,11 @@ dependencies {
     compile group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
     compile group: 'org.geotools', name: 'gt-main', version: '2.5.6'
     compile group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
+
+    providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
+    
     compile group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
+
     compile group: 'joda-time', name: 'joda-time', version: '1.6.2'
     compile group: 'org.json', name: 'json', version: '20180813'
     compile group: 'com.github.jsonld-java', name: 'jsonld-java-jena', version: '0.3'
@@ -66,18 +76,17 @@ dependencies {
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
     compile group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
     compile group: 'org.opengis', name: 'geoapi', version: '2.2.0'
-    
+
+    compile group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
+
     runtime group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
 
 }
 
-jar {
-    
-}
+
 
 war {
     dependsOn jar
-
     def confDir = 'test'
     if (project.hasProperty('production')) {
         confDir = 'prod'
@@ -89,10 +98,13 @@ war {
 
 
 ospackage {
-
     packageName = 'raa-ksamsok_app'
-    version = '%{ver}'
-    release = '%{rel}'
+    version = '1.3'
+    release = '1'
+
+//    version = '%{ver}'
+//    release = '%{rel}'
+
     os = 'LINUX'
     arch = 'X86_64'
 
@@ -101,19 +113,20 @@ ospackage {
 
 
     requires('raa-jre', '1.8.0-191', EQUAL)
+
     requires('raa-tomcat8080',  '7.0.82', EQUAL)
     requires('raa-ksamsok_solr', '7.5.0', EQUAL)
 
+
+    preInstall file('rpm/preInstall.sh')
     postInstall file('rpm/postInstall.sh')
     postUninstall file('rpm/postUninstall.sh')
 
-    into '/tmp'
+    into '/usr/local/tomcat8080'
 
-    from('solr-7.5.0') {
-        into 'solr-7.5.0'
-    }
+    from (war.archivePath) { into('webapps')}
+    from ("conf/ksamsok.javaopts") { into('bin/appconfig') }
+    from ("conf/setenv.sh") { into('bin')}
+    from ("conf/tomcat-users.xml") {into ('conf')}
 
-    from('ksamsok-config') {
-        into('ksamsok-config')
-    }
 }

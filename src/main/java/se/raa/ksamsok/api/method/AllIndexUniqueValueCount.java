@@ -52,13 +52,11 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 	private static final Map<String, String> defaultIndexMap;
 
-	private static final String PATH = "/" + ContentHelper.class.getPackage().getName().replace('.', '/') + "/";
-
 	static {
 		// kopierat från LuceneServlet
 		Map<String, String> im = new HashMap<String, String>();
 		try {
-			String fileName = PATH + "index.xml";
+			String fileName = "/index.xml";
 			DataInputStream input = new DataInputStream(ContentHelper.class.getResourceAsStream(fileName));
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();

@@ -30,7 +30,7 @@ import org.xml.sax.XMLReader;
  * 
  */
 public class XmlValidator {
-	private static final String SCHEMA_LOCATION = "/" + XmlValidator.class.getPackage().getName().replace(".", "/") + "/oai.xsd";
+	private static final String SCHEMA_LOCATION = "/oai.xsd";
 	
 	public List<Message> validate(String xml) {
 		

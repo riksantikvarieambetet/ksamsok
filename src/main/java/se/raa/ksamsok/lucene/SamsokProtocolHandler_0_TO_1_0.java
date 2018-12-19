@@ -52,7 +52,7 @@ public class SamsokProtocolHandler_0_TO_1_0 extends BaseSamsokProtocolHandler {
 	// map med uri -> värde för indexering
 	private static final Map<String,String> uriValues_0_TO_1_0;
 	// bassökväg
-	static final String PATH = "/" + SamsokContentHelper.class.getPackage().getName().replace('.', '/') + "/";
+	static final String PATH = "/";
 	// reationsmap
 	static final Map<String, URI> relationsMap_0_TO_1_0;
 
