@@ -66,8 +66,14 @@ dependencies {
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
     compile group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
     compile group: 'org.opengis', name: 'geoapi', version: '2.2.0'
+    
+    runtime group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+
 }
 
+jar {
+    
+}
 
 war {
     dependsOn jar
