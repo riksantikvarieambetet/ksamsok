@@ -17,7 +17,6 @@ RUNNING_PID
 .project
 .cached
 *.class
-*.jar
 *.war
 *.ear
 
