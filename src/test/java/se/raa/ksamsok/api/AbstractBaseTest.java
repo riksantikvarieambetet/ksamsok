@@ -39,7 +39,7 @@ import se.raa.ksamsok.solr.SearchServiceImpl;
 import se.raa.ksamsok.statistic.StatisticsManager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:test/resources/testContext.xml")
+@ContextConfiguration("file:src/test/resources/testContext.xml")
 abstract public class AbstractBaseTest {
 
 	@Resource

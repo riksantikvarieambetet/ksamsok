@@ -49,10 +49,10 @@ public class OAIPMHHarvestJobTest {
 
 	@BeforeClass
 	public static void setup() throws Exception {
-		// starta en lokal jetty och servera statiska filer från test/resources
+		// starta en lokal jetty och servera statiska filer från src/test/resources
 		server = new Server(PORT);
 		ResourceHandler handler = new ResourceHandler();
-		handler.setResourceBase("test/resources");
+		handler.setResourceBase("src/test/resources");
 		//handler.setDirectoriesListed(true); // bra för debug, ger dirlistning
 		HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[] { handler, new DefaultHandler() });

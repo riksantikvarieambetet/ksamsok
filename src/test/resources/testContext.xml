@@ -14,7 +14,7 @@
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     	<property name="driverClassName" value="org.postgresql.Driver" />
-    	<property name="url" value="jdbc:postgresql://lx-ra-testdb/ksamsok" />
+    	<property name="url" value="jdbc:postgresql://lx-ra-testdb.raa.se/ksamsok" />
     	<property name="username" value="ksamsok" />
     	<property name="password" value="ksamsok" />
      </bean>  

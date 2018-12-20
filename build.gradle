@@ -63,10 +63,10 @@ dependencies {
     compile group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
     compile group: 'org.geotools', name: 'gt-main', version: '2.5.6'
     compile group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
+    compile group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
+    testCompile group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
 
     providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
-    
-    compile group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
 
     compile group: 'joda-time', name: 'joda-time', version: '1.6.2'
     compile group: 'org.json', name: 'json', version: '20180813'
@@ -80,6 +80,12 @@ dependencies {
     compile group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
 
     runtime group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+
+    testImplementation 'junit:junit:4.+'
+    testCompile group: 'org.springframework', name: 'org.springframework.test', version: '3.2.2.RELEASE'
+    testCompile group: 'org.springframework', name: 'org.springframework.jdbc', version: '3.2.2.RELEASE'
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.0.4.v20111024'
+
 
 }
 

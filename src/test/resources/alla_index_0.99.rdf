@@ -59,7 +59,7 @@
 <rdf:Description rdf:nodeID="bNode_2">
     <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#create"/>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
-    <ns5:coordinates xmlns:gml="http://www.opengis.net/gml" rdf:parseType="Literal"><gml:Point srsName="SDO:4326"><gml:coordinates cs="," decimal="." ts=" ">18.072394042188,59.3270266104628</gml:coordinates></gml:Point></ns5:coordinates>
+    <ns5:coordinates xmlns:gml="http://www.opengis.net/gml" rdf:parseType="Literal"><gml:Point srsName="EPSG:4326"><gml:coordinates cs="," decimal="." ts=" ">18.072394042188,59.3270266104628</gml:coordinates></gml:Point></ns5:coordinates>
     <ns5:fromTime>1540</ns5:fromTime>
     <ns5:toTime>1541</ns5:toTime>
     <ns5:eventName>Hjälmhamrande</ns5:eventName>

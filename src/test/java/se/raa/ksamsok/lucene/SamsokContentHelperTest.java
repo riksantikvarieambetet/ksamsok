@@ -557,7 +557,7 @@ public class SamsokContentHelperTest {
 		try {
 			// förutsätter att testfallen körs med projektkatalogen som cwd
 			// vilket normalt är fallet både från ant och i eclipse
-			Document doc = builder.parse(new File("test/resources/" + fileName));
+			Document doc = builder.parse(new File("src/test/resources/" + fileName));
 			final int initialSize = 4096;
 			Source source = new DOMSource(doc);
 			Transformer xformer = xformerFact.newTransformer();

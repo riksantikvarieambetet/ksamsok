@@ -117,7 +117,7 @@ public class Protocol_0_TO_1_0_Test {
 		try {
 			//is = getClass().getResourceAsStream(fileName);
 			//Document doc = builder.parse(is);
-			Document doc = builder.parse(new File("test/resources/" + fileName));
+			Document doc = builder.parse(new File("src/test/resources/" + fileName));
 			final int initialSize = 4096;
 			Source source = new DOMSource(doc);
 			Transformer xformer = xformerFact.newTransformer();

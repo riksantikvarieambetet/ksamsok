@@ -327,7 +327,7 @@ public class Protocol_1_1_Test {
 		InputStream is = null;
 		StringWriter sw = null;
 		try {
-			Document doc = builder.parse(new File("test/resources/" + fileName));
+			Document doc = builder.parse(new File("src/test/resources/" + fileName));
 			final int initialSize = 4096;
 			Source source = new DOMSource(doc);
 			Transformer xformer = xformerFact.newTransformer();
