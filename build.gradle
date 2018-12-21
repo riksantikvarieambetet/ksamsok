@@ -109,7 +109,7 @@ war {
 ospackage {
     packageName = 'raa-ksamsok_app'
 //    version = '1.3'
-//    release = '1'
+//    release = '9'
 
     version = '%{ver}'
     release = '%{rel}'
@@ -135,6 +135,16 @@ ospackage {
     from ("conf/ksamsok.javaopts") { into('bin/appconfig') }
     from ("conf/setenv.sh") { into('bin')}
     from ("conf/tomcat-users.xml") {into ('conf')}
+}
+
+buildRpm {
+    doLast {
+        //nebula/ospackage bygger till /distributions, men bamboo förväntar sig att rpm:en finns i /rpm
+        copy {
+            from "$buildDir/distributions"
+            into "$buildDir/rpm"
+        }
+    }
 }
 
 
