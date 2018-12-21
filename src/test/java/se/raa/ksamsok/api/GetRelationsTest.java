@@ -61,6 +61,7 @@ public class GetRelationsTest extends AbstractBaseTest {
 				assertRelation(relationList.item(i));
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
