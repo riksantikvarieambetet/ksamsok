@@ -138,6 +138,7 @@ ospackage {
 }
 
 buildRpm {
+    dependsOn war
     doLast {
         //nebula/ospackage bygger till /distributions, men bamboo förväntar sig att rpm:en finns i /rpm
         copy {
