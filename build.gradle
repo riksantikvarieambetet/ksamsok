@@ -93,7 +93,7 @@ dependencies {
 
 
 
-// Bygg med -pProduction för att bygg prod-rpm, annars byggs test-rpm
+// Bygg med -PProduction för att bygga prod-war, annars byggs test-war
 war {
     dependsOn jar
     def confDir = 'test'
