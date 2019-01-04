@@ -138,6 +138,11 @@
         <ksamsok:name>Berättelse</ksamsok:name>
         <ksamsok:description>En berättelse om t ex ett föremål eller fristående. Underkategori till Informationsobjekt.</ksamsok:description>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#3d-model">
+        <rdf:type rdf:resource="&ksamsok;EntityType"/>
+        <ksamsok:name>3D-modell</ksamsok:name>
+        <ksamsok:description>Information om en digital 3D-modell. Underkategori till Informationsobjekt.</ksamsok:description>
+    </owl:NamedIndividual>
 </rdf:RDF>
 
 
