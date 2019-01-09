@@ -1,12 +1,11 @@
 package se.raa.ksamsok.lucene;
 
-import java.util.Iterator;
-
-import javax.xml.namespace.NamespaceContext;
-
 import org.apache.xml.utils.PrefixResolver;
 import org.apache.xml.utils.PrefixResolverDefault;
 import org.w3c.dom.Document;
+
+import javax.xml.namespace.NamespaceContext;
+import java.util.Iterator;
 
 /**
  * Hjälpklass för uri-prefixhantering. Används bara för DC-data fn.

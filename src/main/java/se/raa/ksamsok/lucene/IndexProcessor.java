@@ -1,11 +1,11 @@
 package se.raa.ksamsok.lucene;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.solr.common.SolrInputDocument;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.solr.common.SolrInputDocument;
 
 /**
  * Klass som hanterar indexprocessning (översättning av värden, hur de

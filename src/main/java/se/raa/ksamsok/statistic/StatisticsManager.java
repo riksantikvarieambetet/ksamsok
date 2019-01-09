@@ -1,5 +1,12 @@
 package se.raa.ksamsok.statistic;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import se.raa.ksamsok.api.util.StaticMethods;
+import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,20 +16,12 @@ import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import javax.sql.DataSource;
-
-import org.apache.log4j.Logger;
-
-import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
-import se.raa.ksamsok.harvest.DBUtil;
-
 /**
  * Databashanterare som hanterar ändringar och tillägg i statistikdatabasen
  * TODO: statistikloggningen kan göras bättre med batchhämtning och verkligen återanvända prepared statements
  */
 public class StatisticsManager extends DBBasedManagerImpl {
-	private static final Logger logger = Logger.getLogger(StatisticsManager.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	// speciell instans som används för att stoppa konsumenttråd
 	private static final StatisticLoggData STOP = new StatisticLoggData();

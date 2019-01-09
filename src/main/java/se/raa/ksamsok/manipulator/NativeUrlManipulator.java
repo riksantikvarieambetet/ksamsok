@@ -1,23 +1,22 @@
 package se.raa.ksamsok.manipulator;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.raa.ksamsok.harvest.DBUtil;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
 import se.raa.ksamsok.util.RedirectChecker;
 import se.raa.ksamsok.util.StopWatch;
+
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class NativeUrlManipulator implements Manipulator
 {
@@ -30,7 +29,7 @@ public class NativeUrlManipulator implements Manipulator
 	private boolean isRunning;
 	private boolean manipulateAllPosts;
 	
-	private static final Logger logger = Logger.getLogger(NativeUrlManipulator.class);
+	private static final Logger logger = LogManager.getLogger();
 	private static final String NAME = "Native URL extract and insert";
 	
 	public NativeUrlManipulator(DataSource ds)

@@ -1,9 +1,9 @@
 package se.raa.ksamsok.spatial;
 
+import se.raa.ksamsok.harvest.DBUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
-import se.raa.ksamsok.harvest.DBUtil;
 
 /**
  * Basklass som kan användas för att implementera databasspecifika instanser av

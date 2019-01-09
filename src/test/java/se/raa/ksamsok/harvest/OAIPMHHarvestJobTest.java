@@ -1,6 +1,6 @@
 package se.raa.ksamsok.harvest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;

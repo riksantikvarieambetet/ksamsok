@@ -1,19 +1,18 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.OutputStream;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
-
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.ContentHelper.Index;
+
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class GetRelationTypes extends AbstractAPIMethod {
 

@@ -1,12 +1,5 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
@@ -16,13 +9,19 @@ import org.w3c.dom.Element;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
-
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.QueryContent;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Klass gjort för att enkelt implementera facet sökningar i TA
@@ -32,7 +31,7 @@ public class Facet extends StatisticSearch {
 	/** metodens namn */
 	public static final String METHOD_NAME = "facet";
 	
-	//private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.method.Facet");
+	//private static final Logger logger = LogManager.getLogger();
 
 	/**
 	 * skapar ett objekt av Facet

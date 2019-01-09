@@ -1,5 +1,11 @@
 package se.raa.ksamsok.organization;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,13 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.sql.DataSource;
-
-import org.apache.log4j.Logger;
-
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
-import se.raa.ksamsok.harvest.DBUtil;
-
 /**
  * Klass för att hantera databas graj för att modda organisationers
  * information
@@ -23,7 +22,7 @@ import se.raa.ksamsok.harvest.DBUtil;
  */
 public class OrganizationManager extends DBBasedManagerImpl {
 
-	private static final Logger logger = Logger.getLogger(OrganizationManager.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	/**
 	 * Skapar en ny databashanterare

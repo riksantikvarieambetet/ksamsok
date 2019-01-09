@@ -1,5 +1,17 @@
 package se.raa.ksamsok.harvest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.common.SolrInputDocument;
+import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.SamsokContentHelper;
+import se.raa.ksamsok.spatial.GMLDBWriter;
+import se.raa.ksamsok.spatial.GMLUtil;
+
+import javax.sql.DataSource;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -19,22 +31,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import javax.sql.DataSource;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.common.SolrInputDocument;
-
-import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.SamsokContentHelper;
-import se.raa.ksamsok.spatial.GMLDBWriter;
-import se.raa.ksamsok.spatial.GMLUtil;
-
 public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements HarvestRepositoryManager {
 
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.HarvestRepositoryManager");
+	private static final Logger logger = LogManager.getLogger();
 
 	/** parameter som pekar ut var hämtad xml ska mellanlagras, om ej satt används tempdir */
 	protected static final String D_HARVEST_SPOOL_DIR = "samsok-harvest-spool-dir";

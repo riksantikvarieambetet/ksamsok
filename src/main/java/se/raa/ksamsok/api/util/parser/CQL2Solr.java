@@ -1,10 +1,8 @@
 package se.raa.ksamsok.api.util.parser;
 
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.z3950.zing.cql.CQLAndNode;
 import org.z3950.zing.cql.CQLBooleanNode;
@@ -14,11 +12,13 @@ import org.z3950.zing.cql.CQLOrNode;
 import org.z3950.zing.cql.CQLSortNode;
 import org.z3950.zing.cql.CQLTermNode;
 import org.z3950.zing.cql.Modifier;
-
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.spatial.GMLUtil;
+
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Kod inspirerad av LuceneTranslator från 
@@ -29,7 +29,7 @@ import se.raa.ksamsok.spatial.GMLUtil;
  */
 public class CQL2Solr {
 
-	private static final Logger logger = Logger.getLogger(CQL2Solr.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	private static final String INDEX_CQL_SERVERCHOICE = "cql.serverChoice";
 	private static final String INDEX_CQL_RESULTSETID = "cql.resultSetId";

@@ -1,15 +1,7 @@
 package se.raa.ksamsok.solr;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest.METHOD;
@@ -27,16 +19,24 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.TermsParams;
 import org.apache.solr.common.util.NamedList;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.raa.ksamsok.api.util.Term;
 import se.raa.ksamsok.lucene.ContentHelper;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SearchServiceImpl implements SearchService {
 
 	// max antal termer att hämta om inget angivits (-1)
 	private static final int DEFAULT_TERM_COUNT = 1000;
 
-	private static final Logger logger = Logger.getLogger(SearchService.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	@Autowired
 	private SolrClient solr;

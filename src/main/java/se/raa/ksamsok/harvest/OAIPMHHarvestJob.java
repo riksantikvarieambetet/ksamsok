@@ -1,5 +1,19 @@
 package se.raa.ksamsok.harvest;
 
+import ORG.oclc.oai.harvester2.verb.Identify;
+import ORG.oclc.oai.harvester2.verb.ListMetadataFormats;
+import ORG.oclc.oai.harvester2.verb.ListRecords;
+import ORG.oclc.oai.harvester2.verb.ListSets;
+import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import se.raa.ksamsok.lucene.ContentHelper;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,21 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import ORG.oclc.oai.harvester2.verb.Identify;
-import ORG.oclc.oai.harvester2.verb.ListMetadataFormats;
-import ORG.oclc.oai.harvester2.verb.ListRecords;
-import ORG.oclc.oai.harvester2.verb.ListSets;
-import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
  * Basklass för att hantera skörd mha OAI-PMH-protokollet.
@@ -383,7 +382,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	public static void main(String[] args) {
-		Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.OAIPMHHarvestJob");
+		Logger logger = LogManager.getLogger();
 		FileOutputStream fos = null;
 		OAIPMHHarvestJob j = new OAIPMHHarvestJob();
 		long start = System.currentTimeMillis();

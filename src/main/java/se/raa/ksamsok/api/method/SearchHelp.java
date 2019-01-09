@@ -1,16 +1,7 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
 import org.apache.solr.client.solrj.SolrServerException;
 import org.w3c.dom.Element;
-
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -19,6 +10,14 @@ import se.raa.ksamsok.api.util.Term;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
 /**
  * Utför en prefix sökning för att ge förslag på fortsättningar av ett givet query
  * TODO: denna klarar bara ett index trots att dok på kulturarvsdata.se säger att den ska klara
@@ -26,7 +25,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
  * @author Henrik Hjalmarsson
  */
 public class SearchHelp extends AbstractAPIMethod {
-	//private static final Logger logger = Logger.getLogger(SearchHelp.class);
+	//private static final Logger logger = LogManager.getLogger();
 	
 	/** metodens namn */
 	public static final String METHOD_NAME = "searchHelp";
