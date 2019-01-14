@@ -146,9 +146,9 @@ public class GetGeoResourceTest extends AbstractBaseTest {
 			searchResult = new JSONObject(out.toString("UTF-8"));
 			assertTrue(searchResult.has("@context"));
 			//Check that coordinates exist
-			assertTrue(searchResult.has("ksamsok:coordinates"));
+			assertTrue(searchResult.has("coordinates"));
 			//Check that values for coordinates is not empty
-			assertFalse(searchResult.get("ksamsok:coordinates").toString().isEmpty());
+			assertFalse(searchResult.get("coordinates").toString().isEmpty());
 			context  = searchResult.getJSONObject("@context");
 			assertTrue(context.has("name"));
 			assertFalse(context.has("error"));
