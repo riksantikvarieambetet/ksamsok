@@ -96,6 +96,7 @@ dependencies {
 // Bygg med -PProduction för att bygga prod-war, annars byggs test-war
 war {
     dependsOn jar
+    archiveName = 'ksamsok.war'
     def confDir = 'test'
     if (project.hasProperty('Production')) {
         confDir = 'prod'
