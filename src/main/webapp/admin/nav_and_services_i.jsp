@@ -20,7 +20,9 @@
 
 	// funkar bara ok i drift om man går mot www.kulturarvsdata.se så länge som proxyHost
 	//  inte är satt till utsidans hostnamn då solr inte är (eller ska vara i alla fall!) synligt utåt
-	URL solrURL = new URL(searchService.getSolrURL());
+	// solr 7.5 vill ha en brädhög med i url:en...
+
+	URL solrURL = new URL(searchService.getSolrURL().replace("/ksamsok", "/#/ksamsok"));
 	if ("127.0.0.1".equals(solrURL.getHost())) {
 		solrURL = new URL(solrURL.toString().replaceFirst("127\\.0\\.0\\.1", request.getServerName()));
 	} else if ("localhost".equals(solrURL.getHost())) {
@@ -38,7 +40,7 @@
 			<!-- #4244 -->
 			<a href="map.jsp">Sök med karta</a>
 			<a href="search.jsp">Sök utan karta</a>
-			<a href="<%=solrURL.toString() %>/admin/">Solr-admin</a>
+			<a href="<%=solrURL.toString() %>/query">Solr-admin</a>
 			<span class="servername"><%=request.getServerName() %></span>
 		</div>
 <%
