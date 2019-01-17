@@ -180,7 +180,7 @@ public class SamsokContentHelper extends ContentHelper {
 		} catch (Exception e) {
 			// TODO: kasta exception/räkna felen/annat?
 			logger.error("Fel vid skapande av lucenedokument för " + identifier + ": " + e.getMessage());
-			throw e;
+			//throw e;
 		} finally {
 			if (model != null) {
 				model.close();
