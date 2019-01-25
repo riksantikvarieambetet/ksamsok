@@ -30,7 +30,7 @@ repositories {
 
     // för cql-java
     maven {
-        url = 'http://maven.indexdata.com/'
+        url = 'http://maven.icm.edu.pl/artifactory/repo'
     }
 
     // för geotools
@@ -58,13 +58,13 @@ dependencies {
     compile group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
     compile group: 'rome', name: 'rome-mediarss', version: '0.2.2'
     compile group: 'rome', name: 'rome', version: '1.0'
-    compile group: 'org.z3950.zing', name: 'cql-java', version: '1.13'
+    compile group: 'org.z3950.zing', name: 'cql-java', version: '1.10'
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
     compile group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
     compile group: 'org.geotools', name: 'gt-main', version: '2.5.6'
     compile group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
     compile group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
-    testCompile group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
+    compile group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
 
     // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
     // and we can't use only xml-apis-xerces for some reasone

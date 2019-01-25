@@ -1,8 +1,5 @@
 package se.raa.ksamsok.api.util.parser;
 
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -14,11 +11,13 @@ import org.z3950.zing.cql.CQLOrNode;
 import org.z3950.zing.cql.CQLSortNode;
 import org.z3950.zing.cql.CQLTermNode;
 import org.z3950.zing.cql.Modifier;
-
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.spatial.GMLUtil;
+
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Kod inspirerad av LuceneTranslator från 
