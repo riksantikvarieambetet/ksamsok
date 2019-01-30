@@ -36,17 +36,17 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#interactiveResource">
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
         <ksamsok:name>Bearbetning/interaktiv resurs</ksamsok:name>
-        <ksamsok:description>Information om en interaktiv resurs som texter, Internet-sidor och multimedia. Underkategori till Fysiskt ting.</ksamsok:description>
+        <ksamsok:description>Information om en interaktiv resurs som texter, Internet-sidor och multimedia. Underkategori till Informationsobjekt.</ksamsok:description>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#video">
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
         <ksamsok:name>Film/video</ksamsok:name>
-        <ksamsok:description>Information om rörlig bild. Underkategori till Fysiskt ting.</ksamsok:description>
+        <ksamsok:description>Information om rörlig bild. Underkategori till Informationsobjekt.</ksamsok:description>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#sound">
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
         <ksamsok:name>Ljud</ksamsok:name>
-        <ksamsok:description>Information om ljudupptagning/inspelning. Underkategori till Fysiskt ting.</ksamsok:description>
+        <ksamsok:description>Information om ljudupptagning/inspelning. Underkategori till Informationsobjekt.</ksamsok:description>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#document">
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
@@ -81,7 +81,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#collection">
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
         <ksamsok:name>Samling</ksamsok:name>
-        <ksamsok:description>Information om en samling eller annat urval. Underkategori till Fysiskt ting.</ksamsok:description>
+        <ksamsok:description>Information om en samling eller annat urval. Underkategori till Informationsobjekt.</ksamsok:description>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/entitytype#site">
         <rdf:type rdf:resource="&ksamsok;EntityType"/>
