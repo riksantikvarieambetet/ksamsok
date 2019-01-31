@@ -1,11 +1,10 @@
 package se.raa.ksamsok.harvest;
 
+import org.json.JSONObject;
+import se.raa.ksamsok.harvest.StatusService.Step;
+
 import java.util.Date;
 import java.util.List;
-
-import org.json.JSONObject;
-
-import se.raa.ksamsok.harvest.StatusService.Step;
 
 /**
  * Tjänst som hanterar skördetjänster.

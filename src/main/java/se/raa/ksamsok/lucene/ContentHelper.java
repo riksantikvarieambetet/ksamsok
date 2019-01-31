@@ -1,5 +1,13 @@
 package se.raa.ksamsok.lucene;
 
+import org.apache.commons.lang.time.DurationFormatUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.solr.common.SolrInputDocument;
+import se.raa.ksamsok.harvest.ExtractedInfo;
+import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
@@ -10,14 +18,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import org.apache.commons.lang.time.DurationFormatUtils;
-import org.apache.log4j.Logger;
-import org.apache.solr.common.SolrInputDocument;
-
-import se.raa.ksamsok.harvest.ExtractedInfo;
-import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 /**
  * Basklass för innehållshantering av tjänstedata och index samt diverse hjälpmetoder.
@@ -580,7 +580,7 @@ public abstract class ContentHelper {
 	}
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(ContentHelper.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	public ContentHelper() {}
 

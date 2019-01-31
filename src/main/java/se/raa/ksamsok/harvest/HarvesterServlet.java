@@ -1,7 +1,13 @@
 package se.raa.ksamsok.harvest;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.apache.commons.lang.Validate;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.imageio.spi.IIORegistry;
 import javax.servlet.ServletConfig;
@@ -11,14 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-
-import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Används bara fn för att kolla att systemet verkar korrekt instantierat map spring-tjänster
@@ -27,7 +27,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class HarvesterServlet extends HttpServlet {
 
 
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.HarvesterServlet");
+	private static final Logger logger = LogManager.getLogger();
 
 	private static final long serialVersionUID = 1L;
 

@@ -1,12 +1,6 @@
 package se.raa.ksamsok.api;
 
-import java.io.OutputStream;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
@@ -26,6 +20,10 @@ import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchService;
 import se.raa.ksamsok.statistic.StatisticsManager;
+
+import javax.sql.DataSource;
+import java.io.OutputStream;
+import java.util.Map;
 
 /**
  * Factory-klass som bygger APIMethod-objekt

@@ -1,16 +1,15 @@
 package se.raa.ksamsok.solr;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.NamedList;
-
 import se.raa.ksamsok.api.util.Term;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface SearchService {
 

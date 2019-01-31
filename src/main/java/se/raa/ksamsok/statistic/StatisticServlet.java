@@ -1,7 +1,11 @@
 package se.raa.ksamsok.statistic;
 
-import java.io.IOException;
-import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -10,12 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet som hanterar anrop från Admin gränssnittet som hanterar visning av statistik
@@ -24,7 +24,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class StatisticServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 2L;
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.statistic.StatisticServlet");
+	private static final Logger logger = LogManager.getLogger();
 	
 	@Autowired
 	private StatisticsManager statisticsManager;

@@ -1,16 +1,11 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParser;
-
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -18,6 +13,10 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.QueryContent;
 import se.raa.ksamsok.api.util.Term;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
+
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Map;
 
 /**
  * utför en statisticSearch operation

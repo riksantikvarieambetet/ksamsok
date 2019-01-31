@@ -1,11 +1,11 @@
 package se.raa.ksamsok.api;
 
-import javax.sql.DataSource;
-
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchService;
 import se.raa.ksamsok.statistic.StatisticsManager;
+
+import javax.sql.DataSource;
 
 /**
  * Interface för att koppla loss factory från metoderna och undvika cirkelberoenden.

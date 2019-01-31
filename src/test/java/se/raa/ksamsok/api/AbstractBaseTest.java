@@ -1,18 +1,5 @@
 package se.raa.ksamsok.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import javax.annotation.Resource;
-import javax.sql.DataSource;
-
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.json.JSONArray;
@@ -30,13 +17,24 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
-
-import com.github.jsonldjava.jena.JenaJSONLD;
-
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchServiceImpl;
 import se.raa.ksamsok.statistic.StatisticsManager;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+//import com.github.jsonldjava.jena.JenaJSONLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/test/resources/testContext.xml")
@@ -66,7 +64,7 @@ abstract public class AbstractBaseTest {
 			ReflectionTestUtils.setField(apiMethodFactory,"organizationManager", organizationManager);
 			//Wire a database connection right here, made available for use in classes extending the AbstractBaseTest.
 			ReflectionTestUtils.setField(apiMethodFactory,"dataSource", dataSource);
-			JenaJSONLD.init();
+			//JenaJSONLD.init();
 		}
 	}
 

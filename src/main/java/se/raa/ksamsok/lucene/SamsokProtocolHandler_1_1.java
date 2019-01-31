@@ -1,16 +1,15 @@
 package se.raa.ksamsok.lucene;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.logging.log4j.Logger;
+
 import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
 
 public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 

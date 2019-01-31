@@ -1,9 +1,25 @@
 package se.raa.ksamsok.api;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
+import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.ProcessingInstruction;
+import se.raa.ksamsok.api.exception.APIException;
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.method.APIMethod.Format;
+import se.raa.ksamsok.api.util.StaticMethods;
+import se.raa.ksamsok.apikey.APIKeyManager;
+import se.raa.ksamsok.lucene.ContentHelper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -19,29 +35,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.XML;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.ProcessingInstruction;
-
-import com.github.jsonldjava.jena.JenaJSONLD;
-
-import se.raa.ksamsok.api.exception.APIException;
-import se.raa.ksamsok.api.exception.BadParameterException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.method.APIMethod;
-import se.raa.ksamsok.api.method.APIMethod.Format;
-import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.apikey.APIKeyManager;
-import se.raa.ksamsok.lucene.ContentHelper;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Map;
 
 /**
  * Hanterar förfrågningar till K-samsöks API
@@ -51,7 +48,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
 public class APIServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 	// klass specifik logger
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.APIServlet");
+	private static final Logger logger = LogManager.getLogger();
 
 	@Autowired
 	private APIKeyManager keyManager;
@@ -76,7 +73,7 @@ public class APIServlet extends HttpServlet {
 		awcb.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 		awcb.autowireBeanProperties(apiMethodFactory, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 		// This method subscribes the Json-ld writers to Jena-RDF writer
-		JenaJSONLD.init();
+		//JenaJSONLD.init();
 		if (logger.isInfoEnabled()) {
 			logger.info("APIServlet startad");
 		}

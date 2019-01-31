@@ -1,5 +1,15 @@
 package se.raa.ksamsok.lucene;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.logging.log4j.Logger;
+
+import java.net.URI;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTAINSINFORMATIONABOUT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTAINSOBJECT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_HASBEENUSEDIN;
@@ -33,17 +43,6 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsRelatedTo;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsVisualizedBy;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rSameAs;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rVisualizes;
-
-import java.net.URI;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
 
 public class SamsokProtocolHandler_0_TO_1_0 extends BaseSamsokProtocolHandler {
 

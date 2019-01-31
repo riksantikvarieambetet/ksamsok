@@ -31,12 +31,12 @@ import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.StmtIterator;
 
 @SuppressWarnings("unused")
 public class Protocol_1_11_Test {

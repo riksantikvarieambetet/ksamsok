@@ -1,18 +1,7 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
@@ -24,13 +13,23 @@ import org.w3c.dom.NodeList;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
-
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.util.parser.CQL2Solr;
 import se.raa.ksamsok.lucene.ContentHelper;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Utför metoden allIndexUniqueValue count som returnerar en lista över index
@@ -40,7 +39,7 @@ import se.raa.ksamsok.lucene.ContentHelper;
 public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 
-	private static final Logger logger = Logger.getLogger(AllIndexUniqueValueCount.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	/** metodens namn */
 	public static final String METHOD_NAME = "allIndexUniqueValueCount";

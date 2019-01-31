@@ -1,14 +1,13 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.OutputStream;
-import java.util.Map;
-
 import org.apache.solr.common.SolrDocumentList;
-
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
+
+import java.io.OutputStream;
+import java.util.Map;
 
 public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 

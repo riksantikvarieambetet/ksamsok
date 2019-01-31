@@ -1,16 +1,15 @@
 package se.raa.ksamsok.harvest;
 
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import se.raa.ksamsok.harvest.StatusService.Step;
+import se.raa.ksamsok.lucene.ContentHelper;
+
 import java.io.File;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
-import se.raa.ksamsok.harvest.StatusService.Step;
-import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
  * Klass som kör en optimering av index i form av en tjänst/cron-jobb.

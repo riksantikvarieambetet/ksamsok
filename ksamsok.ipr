@@ -9,8 +9,8 @@
     <wildcardResourcePatterns>
       <entry name="!?*.class"/>
       <entry name="!?*.scala"/>
-      <entry name="!?*.groovy"/>
       <entry name="!?*.java"/>
+      <entry name="!?*.groovy"/>
     </wildcardResourcePatterns>
     <annotationProcessing enabled="false" useClasspath="true"/>
     <bytecodeTargetLevel target="1.8"/>
@@ -48,7 +48,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ksamsok.iml" filepath="$PROJECT_DIR$/ksamsok.iml"/>
+      <module filepath="$PROJECT_DIR$/ksamsok.iml" fileurl="file://$PROJECT_DIR$/ksamsok.iml"/>
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-type="JavaSDK" assert-jdk-15="true" project-jdk-name="1.8">

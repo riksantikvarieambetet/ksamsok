@@ -1,5 +1,12 @@
 package se.raa.ksamsok.apikey;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import se.raa.ksamsok.harvest.DBBasedManagerImpl;
+import se.raa.ksamsok.harvest.DBUtil;
+import se.raa.ksamsok.statistic.APIKey;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,17 +17,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import javax.sql.DataSource;
-
-import org.apache.log4j.Logger;
-
-import se.raa.ksamsok.harvest.DBBasedManagerImpl;
-import se.raa.ksamsok.harvest.DBUtil;
-import se.raa.ksamsok.statistic.APIKey;
-
 public class APIKeyManager extends DBBasedManagerImpl {
 
-	private static final Logger logger = Logger.getLogger(APIKeyManager.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	// ladda om cache med detta mellanrum (lazily)
 	private static final long UPDATE_INTERVAL_MILLIS = 10 * 60 * 1000; // 10 min

@@ -1,5 +1,26 @@
 package se.raa.ksamsok.lucene;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.Selector;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.solr.common.SolrInputDocument;
+import se.raa.ksamsok.harvest.HarvestService;
+
+import java.net.URI;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ADDEDTOINDEXDATE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CADASTRALUNIT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_COLLECTION;
@@ -143,28 +164,6 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rToTime;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Desc;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Name;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Spec;
-
-import java.net.URI;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.log4j.Logger;
-import org.apache.solr.common.SolrInputDocument;
-
-import se.raa.ksamsok.harvest.HarvestService;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.rdf.model.Selector;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler, RelationToIndexMapper {
 
@@ -850,7 +849,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	public static Logger getClassLogger() {
 		final Throwable t = new Throwable();
 		t.fillInStackTrace();
-		return Logger.getLogger(t.getStackTrace()[1].getClassName());
+		return LogManager.getLogger();
 	}
 
 }

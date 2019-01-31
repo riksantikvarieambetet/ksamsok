@@ -1,7 +1,8 @@
 package se.raa.ksamsok.api.util.parser;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.z3950.zing.cql.CQLAndNode;
 import org.z3950.zing.cql.CQLBooleanNode;
@@ -28,7 +29,7 @@ import java.util.StringTokenizer;
  */
 public class CQL2Solr {
 
-	private static final Logger logger = Logger.getLogger(CQL2Solr.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	private static final String INDEX_CQL_SERVERCHOICE = "cql.serverChoice";
 	private static final String INDEX_CQL_RESULTSETID = "cql.resultSetId";
