@@ -24,7 +24,7 @@ import java.util.Properties;
 
 public class SitemapIndexBuilder
 {
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(SitemapIndexBuilder.class);
 	private PrintWriter writer;
 	private DataSource ds;
 	private HttpServletRequest request;

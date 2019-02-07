@@ -1,12 +1,11 @@
 package se.raa.ksamsok.api.method;
 
-//import com.github.jsonldjava.jena.JenaJSONLD;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.riot.RiotException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -123,7 +122,7 @@ public class Search extends AbstractSearchMethod {
 		dummyService.setName("dummy");
 	}
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.Search");
 
 	protected String sort = null;
 	protected boolean sortDesc = false;
@@ -243,7 +242,7 @@ public class Search extends AbstractSearchMethod {
 		// set.
 		// If this is the case then should the result be a json with json-ld rdfs. The method
 		// xmlToJson does not creates json-ld
-		if (format != Format.JSON_LD || recordSchema != null) {
+		if (format != Format.JSON_LD || (recordSchema != null && !NS_SAMSOK_RDF.equals(recordSchema))) {
 			Element result = super.generateBaseDocument();
 
 			Element totalHits = doc.createElement("totalHits");
@@ -338,30 +337,36 @@ public class Search extends AbstractSearchMethod {
 
 	@Override
 	protected void writeResult() throws DiagnosticException {
-		if (format != Format.JSON_LD || recordSchema != null) {
+		if (format != Format.JSON_LD || (recordSchema != null && !NS_SAMSOK_RDF.equals(recordSchema))) {
 			super.writeResult();
 		} else {
 			String content = "";
 			try {
 				JSONArray records = new JSONArray();
 				for (SolrDocument d : hitList) {
-					Float score = (Float) d.getFieldValue("score");
-					String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
-					content = getContent(d, ident);
-					if (content != null) {
-						JSONObject record = new JSONObject();
-						ByteArrayOutputStream jsonLDRDF = new ByteArrayOutputStream();
-						Model m = ModelFactory.createDefaultModel();
-						m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
-						// Create JSON-LD
-						RDFDataMgr.write(jsonLDRDF, m,
-							prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_FLAT);
-						record.put("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
-						JSONObject relScore = new JSONObject();
-						relScore.put("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
-						relScore.put("#text", score);
-						record.put("rel:score", relScore);
-						records.put(record);
+					try {
+						Float score = (Float) d.getFieldValue("score");
+						String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
+						content = getContent(d, ident);
+						if (content != null) {
+							JSONObject record = new JSONObject();
+							ByteArrayOutputStream jsonLDRDF = new ByteArrayOutputStream();
+							Model m = ModelFactory.createDefaultModel();
+
+							m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
+
+							// Create JSON-LD
+							RDFDataMgr.write(jsonLDRDF, m,
+									prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
+							record.put("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
+							JSONObject relScore = new JSONObject();
+							relScore.put("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
+							relScore.put("#text", score);
+							record.put("rel:score", relScore);
+							records.put(record);
+						}
+					} catch (RiotException e) {
+						logger.error("Kan inte läsa rdf för " + content + e.getMessage());
 					}
 				}
 				// Create echo object

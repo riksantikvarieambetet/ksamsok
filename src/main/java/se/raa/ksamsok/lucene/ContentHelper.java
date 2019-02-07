@@ -580,7 +580,7 @@ public abstract class ContentHelper {
 	}
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(ContentHelper.class);
 
 	public ContentHelper() {}
 

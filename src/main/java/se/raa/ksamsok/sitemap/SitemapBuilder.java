@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class SitemapBuilder
 {
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(SitemapBuilder.class);
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv", "SE"));
 	
 	private PrintWriter writer;

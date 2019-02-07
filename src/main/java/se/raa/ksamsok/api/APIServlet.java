@@ -48,7 +48,7 @@ import java.util.Map;
 public class APIServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 	// klass specifik logger
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.APIServlet");
 
 	@Autowired
 	private APIKeyManager keyManager;

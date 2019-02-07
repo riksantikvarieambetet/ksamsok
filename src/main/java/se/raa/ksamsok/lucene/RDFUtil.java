@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class RDFUtil {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(RDFUtil.class);
 
     public static Model parseModel(String rdfXml) throws Exception {
 		Model model;
@@ -39,7 +39,7 @@ public class RDFUtil {
 		return model;
 	}
 
-	public static Model parseModel(Reader r) throws Exception {
+	public static Model parseModel(Reader r) {
 		Model m = ModelFactory.createDefaultModel();
 		m.read(r, "");
 		return m;

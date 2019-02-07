@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.XML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,7 +38,7 @@ import java.util.StringTokenizer;
  */
 public abstract class AbstractAPIMethod implements APIMethod {
 
-	protected static final Logger logger = LogManager.getLogger();
+	protected static final Logger logger = LogManager.getLogger(AbstractAPIMethod.class);
 
 	protected APIServiceProvider serviceProvider;
 	protected Map<String, String> params;
@@ -102,11 +103,8 @@ public abstract class AbstractAPIMethod implements APIMethod {
 				strResult = new StreamResult(baos);
 				transform.transform(source, strResult);
 				String json;
-				if (prettyPrint){
-					json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
-				} else {
-					json=XML.toJSONObject(baos.toString("UTF-8")).toString();
-				}
+				JSONObject jsonObject = XML.toJSONObject(baos.toString("UTF-8"));
+				json = jsonObject.toString(prettyPrint ? indentFactor : 0);
 				out.write(json.getBytes("UTF-8"));
 			} else {
 				strResult = new StreamResult(out);

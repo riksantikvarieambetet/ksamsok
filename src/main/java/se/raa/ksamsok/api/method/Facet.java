@@ -31,7 +31,7 @@ public class Facet extends StatisticSearch {
 	/** metodens namn */
 	public static final String METHOD_NAME = "facet";
 	
-	//private static final Logger logger = LogManager.getLogger();
+	//private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.method.Facet");
 
 	/**
 	 * skapar ett objekt av Facet

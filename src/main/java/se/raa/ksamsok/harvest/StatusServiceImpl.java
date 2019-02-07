@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class StatusServiceImpl implements StatusService {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(StatusService.class);
 
 	// gräns i antal dagar för hur länge loggmeddelanden sparas i databasen
 	static final int LOG_THRESHHOLD_DAYS = 21;

@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class DBUtil {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(DBUtil.class);
 	// stödda databastyper (nödvändigt då det är olika syntax för rownum/limit/offet etc)
 	private enum DBType  { DERBY, ORACLE, POSTGRES }
 

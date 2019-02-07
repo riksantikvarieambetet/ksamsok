@@ -13,7 +13,7 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_DECADE;
 
 public class TimeUtil {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(TimeUtil.class);
 
 	// iso8601-datumparser, trådsäker
 	private static final DateTimeFormatter isoDateTimeFormatter = ISODateTimeFormat.dateOptionalTimeParser();

@@ -34,8 +34,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-//import com.github.jsonldjava.jena.JenaJSONLD;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/test/resources/testContext.xml")
 abstract public class AbstractBaseTest {
@@ -64,7 +62,6 @@ abstract public class AbstractBaseTest {
 			ReflectionTestUtils.setField(apiMethodFactory,"organizationManager", organizationManager);
 			//Wire a database connection right here, made available for use in classes extending the AbstractBaseTest.
 			ReflectionTestUtils.setField(apiMethodFactory,"dataSource", dataSource);
-			//JenaJSONLD.init();
 		}
 	}
 

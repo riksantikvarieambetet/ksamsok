@@ -382,7 +382,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	public static void main(String[] args) {
-		Logger logger = LogManager.getLogger();
+		Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.OAIPMHHarvestJob");
 		FileOutputStream fos = null;
 		OAIPMHHarvestJob j = new OAIPMHHarvestJob();
 		long start = System.currentTimeMillis();

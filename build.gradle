@@ -32,6 +32,7 @@ repositories {
     maven {
         url = 'http://maven.icm.edu.pl/artifactory/repo'
     }
+    
 
     // för geotools
     maven {
@@ -47,11 +48,7 @@ configurations.all {
 
 dependencies {
 
-
-    compile group: 'org.apache.jena', name: 'jena-core', version: '3.10.0'
-    compile group: 'org.apache.jena', name: 'jena-arq', version: '3.10.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
-
     compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
     compile group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
     compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
@@ -59,6 +56,8 @@ dependencies {
     compile group: 'com.vividsolutions', name: 'jts', version: '1.13'
     compile group: 'org.springframework', name: 'spring-beans', version: '3.2.18.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version: '3.2.18.RELEASE'
+    compile group: 'org.apache.jena', name: 'jena-core', version: '3.10.0'
+    compile group: 'org.apache.jena', name: 'jena-arq', version: '3.10.0'
     compile group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
     compile group: 'rome', name: 'rome-mediarss', version: '0.2.2'
     compile group: 'rome', name: 'rome', version: '1.0'
@@ -69,32 +68,34 @@ dependencies {
     compile group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
     compile group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
     compile group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
+    
     // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
     // and we can't use only xml-apis-xerces for some reasone
     providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
 
     compile group: 'joda-time', name: 'joda-time', version: '1.6.2'
     compile group: 'org.json', name: 'json', version: '20180813'
-    //compile group: 'com.github.jsonld-java', name: 'jsonld-java-jena', version: '0.4.1'
-    compile group: 'org.apache.jena', name: 'jena', version: '3.10.0', ext: 'pom'
+    //compile group: 'com.github.jsonld-java', name: 'jsonld-java-jena', version: '0.3'
     compile group: 'org.springframework', name: 'spring-web', version: '3.2.18.RELEASE'
     compile group: 'xalan', name: 'xalan', version: '2.6.0'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+
     compile group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
+    // old jars use old log4j
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+
     compile group: 'org.opengis', name: 'geoapi', version: '2.2.0'
     compile group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
-    compile group: 'junit', name: 'junit', version: '4.+'
 
 
     runtime group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
-    runtime group: 'log4j', name: 'log4j', version: '1.2.17'
 
     testImplementation 'junit:junit:4.+'
     testCompile group: 'org.springframework', name: 'org.springframework.test', version: '3.2.2.RELEASE'
     testCompile group: 'org.springframework', name: 'org.springframework.jdbc', version: '3.2.2.RELEASE'
     testCompile group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.0.4.v20111024'
-    testRuntime group: 'log4j', name: 'log4j', version: '1.2.17'
 
 
 }

@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
  * @author Henrik Hjalmarsson
  */
 public class SearchHelp extends AbstractAPIMethod {
-	//private static final Logger logger = LogManager.getLogger();
+	//private static final Logger logger = LogManager.getLogger(SearchHelp.class);
 	
 	/** metodens namn */
 	public static final String METHOD_NAME = "searchHelp";

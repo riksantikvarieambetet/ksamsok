@@ -27,7 +27,7 @@ import java.io.PrintWriter;
 public class HarvesterServlet extends HttpServlet {
 
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.HarvesterServlet");
 
 	private static final long serialVersionUID = 1L;
 

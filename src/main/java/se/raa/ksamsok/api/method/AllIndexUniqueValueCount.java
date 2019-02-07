@@ -39,7 +39,7 @@ import java.util.Map.Entry;
 public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(AllIndexUniqueValueCount.class);
 
 	/** metodens namn */
 	public static final String METHOD_NAME = "allIndexUniqueValueCount";

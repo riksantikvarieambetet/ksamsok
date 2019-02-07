@@ -165,6 +165,8 @@ public class OAIPMHHarvestJobTest {
 				assertNotNull("Inget solr-dokument från rdf", solrDoc);
 			}
 			
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			if (os != null) {
 				os.close();

@@ -1,20 +1,17 @@
 package se.raa.ksamsok.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.json.JSONObject;
+import org.junit.Before;
+import org.junit.Test;
+import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 
 import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 
-import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
-
-import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.method.APIMethod;
-import se.raa.ksamsok.api.method.APIMethod.Format;
+import static org.junit.Assert.fail;
 
 public class StemTest extends AbstractBaseTest {
 	@Before

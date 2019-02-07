@@ -849,7 +849,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	public static Logger getClassLogger() {
 		final Throwable t = new Throwable();
 		t.fillInStackTrace();
-		return LogManager.getLogger();
+		return LogManager.getLogger(t.getStackTrace()[1].getClassName());
 	}
 
 }

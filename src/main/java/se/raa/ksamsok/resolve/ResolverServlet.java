@@ -1,7 +1,5 @@
 package se.raa.ksamsok.resolve;
 
-//import com.github.jsonldjava.jena.JenaJSONLD;
-
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
@@ -346,9 +344,9 @@ public class ResolverServlet extends HttpServlet {
 					Model m = ModelFactory.createDefaultModel();
 					m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
-					RDFDataMgr.write(resp.getOutputStream(), m,
+					RDFDataMgr.write(resp.getOutputStream(), m, prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
+//					RDFDataMgr.write(resp.getOutputStream(), m,
 //						prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
-							prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_FLAT);
 				} else {
 					resp.sendError(404, "Could not find record for path");
 				}

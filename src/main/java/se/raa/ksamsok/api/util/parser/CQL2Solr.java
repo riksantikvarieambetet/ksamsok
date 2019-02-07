@@ -29,7 +29,7 @@ import java.util.StringTokenizer;
  */
 public class CQL2Solr {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(CQL2Solr.class);
 
 	private static final String INDEX_CQL_SERVERCHOICE = "cql.serverChoice";
 	private static final String INDEX_CQL_RESULTSETID = "cql.resultSetId";

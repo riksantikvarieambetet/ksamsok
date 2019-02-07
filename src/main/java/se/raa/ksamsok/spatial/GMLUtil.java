@@ -30,7 +30,7 @@ import java.sql.Connection;
  */
 public class GMLUtil {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.spatial.GMLUtil");
 
 	// klassnamn för databasspecifik GML-hanterare
 	private static String gmlDBWriterClassName;

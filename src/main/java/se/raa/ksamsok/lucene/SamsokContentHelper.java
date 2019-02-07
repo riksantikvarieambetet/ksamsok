@@ -44,7 +44,7 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uriPrefix;
 
 public class SamsokContentHelper extends ContentHelper {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(SamsokContentHelper.class);
 
 	private static DocumentBuilderFactory xmlFact;
 	private static TransformerFactory xformerFact;

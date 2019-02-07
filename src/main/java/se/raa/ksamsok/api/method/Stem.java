@@ -20,7 +20,7 @@ public class Stem extends AbstractAPIMethod {
 
 	public static final String METHOD_NAME = "stem";
 	public static final String PARAM_WORDS = "words";
-	//private static final Logger logg = LogManager.getLogger();
+	//private static final Logger logg = LogManager.getLogger(Stem.class);
 
 	private String words;
 	private Set<String> stems;

@@ -29,6 +29,7 @@ import org.apache.jena.rdf.model.Selector;
 import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.riot.RiotException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -80,7 +81,7 @@ public class RSS extends AbstractSearchMethod {
 	// rss version
 	private static final String RSS_2_0 = "rss_2.0";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv",	"SE"));
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.RSS");
 	
 	//fabriker
 	private static final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
@@ -193,7 +194,11 @@ public class RSS extends AbstractSearchMethod {
 					content = new String(xmlData, "UTF-8");
 				}
 				if (content != null) {
-					entries.add(getEntry(content));	
+					try {
+						entries.add(getEntry(content));
+					} catch (RiotException rio) {
+						logger.warn("Ogiltigt rdf-data för " + uri);
+					}
 				} else {
 					logger.warn("Hittade inte rdf-data för " + uri);
 				}

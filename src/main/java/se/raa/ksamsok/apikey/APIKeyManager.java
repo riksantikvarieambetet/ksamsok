@@ -19,7 +19,7 @@ import java.util.Vector;
 
 public class APIKeyManager extends DBBasedManagerImpl {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(APIKeyManager.class);
 
 	// ladda om cache med detta mellanrum (lazily)
 	private static final long UPDATE_INTERVAL_MILLIS = 10 * 60 * 1000; // 10 min

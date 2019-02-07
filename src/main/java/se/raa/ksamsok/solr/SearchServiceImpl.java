@@ -36,7 +36,7 @@ public class SearchServiceImpl implements SearchService {
 	// max antal termer att hämta om inget angivits (-1)
 	private static final int DEFAULT_TERM_COUNT = 1000;
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(SearchService.class);
 
 	@Autowired
 	private SolrClient solr;
@@ -96,7 +96,11 @@ public class SearchServiceImpl implements SearchService {
 		query.setRequestHandler("/terms");
 		query.set(TermsParams.TERMS_FIELD, index);
 		query.set(TermsParams.TERMS, true);
-		query.set(TermsParams.TERMS_PREFIX_STR, prefix);
+		if (prefix != null && !prefix.isEmpty()) {
+
+			// solr 7 hanterar inte ett tomt prefix särskilt väl
+			query.set(TermsParams.TERMS_PREFIX_STR, prefix);
+		}
 		query.set(TermsParams.TERMS_MINCOUNT, removeBelow);
 		if (maxCount > 0) {
 			query.set(TermsParams.TERMS_LIMIT, maxCount);

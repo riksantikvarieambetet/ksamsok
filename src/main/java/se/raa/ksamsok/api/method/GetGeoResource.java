@@ -1,6 +1,5 @@
 package se.raa.ksamsok.api.method;
 
-//import com.github.jsonldjava.jena.JenaJSONLD;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
@@ -261,7 +260,8 @@ public class GetGeoResource extends AbstractAPIMethod {
 		if (format== Format.XML){
 			RDFDataMgr.write(out, m, prettyPrint ? RDFFormat.RDFXML_PRETTY : RDFFormat.RDFXML);
 		} else {
-			RDFDataMgr.write(out, m, prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_FLAT);
+			RDFDataMgr.write(out, m,
+					prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
 		}
 	}
 

@@ -16,7 +16,7 @@ import java.net.URLDecoder;
 public class StaticMethods
 {
 	@SuppressWarnings("unused")
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.StaticMethods");
 	/**
 	 * används för att escapa special tecken i sökningar
 	 * @param s sträng med text

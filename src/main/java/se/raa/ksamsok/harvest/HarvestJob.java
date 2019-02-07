@@ -37,7 +37,7 @@ public abstract class HarvestJob implements InterruptableJob {
 	boolean interrupted;
 
 	protected HarvestJob() {
-		logger = LogManager.getLogger();
+		logger = LogManager.getLogger(this.getClass().getName());
 	}
 
 	/**

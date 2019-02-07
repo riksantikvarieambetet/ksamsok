@@ -29,7 +29,7 @@ import java.util.Set;
 
 public class GetRelations extends AbstractAPIMethod {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(GetRelations.class);
 
 	// om och hur sameAs ska hanteras
 	private enum InferSameAs { yes, no, sourceOnly, targetsOnly }

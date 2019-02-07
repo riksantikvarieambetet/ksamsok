@@ -32,7 +32,7 @@ import java.util.List;
 
 public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements HarvestServiceManager {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.HarvestServiceManager");
 
 	private static final String JOBGROUP_HARVESTERS = "harvesters";
 	private static final String TRIGGER_SUFFIX = "-trigger";

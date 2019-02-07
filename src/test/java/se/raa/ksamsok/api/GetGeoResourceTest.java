@@ -131,7 +131,8 @@ public class GetGeoResourceTest extends AbstractBaseTest {
 			getGeoResource = apiMethodFactory.getAPIMethod(reqParams, out);
 			getGeoResource.setFormat(Format.JSON_LD);
 			getGeoResource.performMethod();
-			searchResult = new JSONObject(out.toString("UTF-8"));
+			String jsonldString = out.toString("UTF-8");
+			searchResult = new JSONObject(jsonldString);
 			assertTrue(searchResult.has("@context"));
 			context  = searchResult.getJSONObject("@context");
 			assertTrue(context.has("name"));
@@ -139,11 +140,13 @@ public class GetGeoResourceTest extends AbstractBaseTest {
 			
 			//Test JSON response for Parish
 			reqParams.put("uri", PARISH_URI);
+			reqParams.put("prettyPrint", "y");
 			out = new ByteArrayOutputStream();
 			APIMethod getGeoResource = apiMethodFactory.getAPIMethod(reqParams, out);
 			getGeoResource.setFormat(Format.JSON_LD);
 			getGeoResource.performMethod();
-			searchResult = new JSONObject(out.toString("UTF-8"));
+			jsonldString = out.toString("UTF-8");
+			searchResult = new JSONObject(jsonldString);
 			assertTrue(searchResult.has("@context"));
 			//Check that coordinates exist
 			assertTrue(searchResult.has("coordinates"));

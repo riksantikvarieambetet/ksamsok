@@ -24,7 +24,7 @@ import java.util.List;
 public class StatisticServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 2L;
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.statistic.StatisticServlet");
 	
 	@Autowired
 	private StatisticsManager statisticsManager;

@@ -29,7 +29,7 @@ public class NativeUrlManipulator implements Manipulator
 	private boolean isRunning;
 	private boolean manipulateAllPosts;
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(NativeUrlManipulator.class);
 	private static final String NAME = "Native URL extract and insert";
 	
 	public NativeUrlManipulator(DataSource ds)

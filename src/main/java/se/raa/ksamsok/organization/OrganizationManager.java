@@ -22,7 +22,7 @@ import java.util.Vector;
  */
 public class OrganizationManager extends DBBasedManagerImpl {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(OrganizationManager.class);
 
 	/**
 	 * Skapar en ny databashanterare

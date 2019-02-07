@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * TODO: statistikloggningen kan göras bättre med batchhämtning och verkligen återanvända prepared statements
  */
 public class StatisticsManager extends DBBasedManagerImpl {
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(StatisticsManager.class);
 
 	// speciell instans som används för att stoppa konsumenttråd
 	private static final StatisticLoggData STOP = new StatisticLoggData();
