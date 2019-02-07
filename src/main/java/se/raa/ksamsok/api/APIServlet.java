@@ -137,11 +137,11 @@ public class APIServlet extends HttpServlet {
 					keyManager.updateUsage(apiKey);
 				} catch (MissingParameterException | BadParameterException e) {
 					resp.setStatus(400);
-					logger.error("queryString i requesten: " + req.getQueryString());
+					logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
 					diagnostic(out, stylesheet, e);
 				} catch (DiagnosticException e) {
 					resp.setStatus(500);
-					logger.error("queryString i requesten: " + req.getQueryString());
+					logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
 					diagnostic(out, stylesheet, e);
 				}
 			} else if (apiKey == null) {
