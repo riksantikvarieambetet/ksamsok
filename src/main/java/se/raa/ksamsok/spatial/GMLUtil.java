@@ -131,7 +131,7 @@ public class GMLUtil {
 		CoordinateReferenceSystem targetCRS = CRS.decode(toCRS);
 		for (int i = 0; i < coords.length; i+=2) {
 			Point p = geometryFactory.createPoint(new Coordinate(coords[i], coords[i + 1]));
-			p = (Point) transformCRS(p, sourceCRS, targetCRS, false);
+			p = (Point) transformCRS(p, sourceCRS, targetCRS, true);
 			result[i] = p.getX();
 			result[i + 1] = p.getY();
 		}
