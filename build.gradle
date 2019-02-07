@@ -1,0 +1,172 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-ospackage-plugin:4.10.0'
+    }
+}
+plugins {
+    id "nebula.ospackage" version "4.10.0"
+    id "war"
+}
+
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+//and standard one
+apply plugin: 'java'
+
+repositories {
+    // för georss-rome måste jcenter stå först, den i mavencentral är trasig...
+    jcenter()
+    mavenCentral()
+
+    // för rome-mediarss
+    maven {
+        url = 'http://dist.wso2.org/maven2/'
+    }
+
+    // för cql-java
+    maven {
+        url = 'http://maven.icm.edu.pl/artifactory/repo'
+    }
+    
+
+    // för geotools
+    maven {
+        url = 'http://download.osgeo.org/webdav/geotools/'
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'xml-apis:xml-apis:1.4.01'
+    }
+}
+
+dependencies {
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
+    compile group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
+    compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+    compile group: 'com.vividsolutions', name: 'jts', version: '1.13'
+    compile group: 'org.springframework', name: 'spring-beans', version: '3.2.18.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '3.2.18.RELEASE'
+    compile group: 'org.apache.jena', name: 'jena-core', version: '3.10.0'
+    compile group: 'org.apache.jena', name: 'jena-arq', version: '3.10.0'
+    compile group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
+    compile group: 'rome', name: 'rome-mediarss', version: '0.2.2'
+    compile group: 'rome', name: 'rome', version: '1.0'
+    compile group: 'org.z3950.zing', name: 'cql-java', version: '1.10'
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    compile group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
+    compile group: 'org.geotools', name: 'gt-main', version: '2.5.6'
+    compile group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
+    compile group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
+    compile group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+
+    
+    // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
+    // and we can't use only xml-apis-xerces for some reasone
+    providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
+
+    compile group: 'joda-time', name: 'joda-time', version: '1.6.2'
+    compile group: 'org.json', name: 'json', version: '20180813'
+    //compile group: 'com.github.jsonld-java', name: 'jsonld-java-jena', version: '0.3'
+    compile group: 'org.springframework', name: 'spring-web', version: '3.2.18.RELEASE'
+    compile group: 'xalan', name: 'xalan', version: '2.6.0'
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+
+    compile group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
+    // old jars use old log4j
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+
+    compile group: 'org.opengis', name: 'geoapi', version: '2.2.0'
+    compile group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
+
+
+    runtime group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+
+    testImplementation 'junit:junit:4.+'
+    testCompile group: 'org.springframework', name: 'org.springframework.test', version: '3.2.2.RELEASE'
+    testCompile group: 'org.springframework', name: 'org.springframework.jdbc', version: '3.2.2.RELEASE'
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.0.4.v20111024'
+
+
+}
+
+
+
+// Bygg med -PProduction för att bygga prod-war, annars byggs test-war
+war {
+    dependsOn jar
+    archiveName = 'ksamsok.war'
+    def confDir = 'test'
+    if (project.hasProperty('Production')) {
+        confDir = 'prod'
+    }
+    metaInf { from "conf/${confDir}/context.xml" }
+    webInf { from (jar.archivePath) { into('lib') } }
+    webInf { from ("conf/${confDir}/environment.properties") {into ('classes')}}
+}
+
+
+ospackage {
+    packageName = 'raa-ksamsok_app'
+//    version = '1.3'
+//    release = '9'
+
+    version = '%{ver}'
+    release = '%{rel}'
+
+    os = 'LINUX'
+    arch = 'X86_64'
+
+    user('tomcat')
+    permissionGroup('raagroup')
+
+
+    requires('raa-jre', '1.8.0-191', EQUAL)
+
+    requires('raa-tomcat8080',  '7.0.82', EQUAL)
+    requires('raa-ksamsok_solr', '7.5.0', EQUAL)
+
+    preInstall file('rpm/preInstall.sh')
+    postInstall file('rpm/postInstall.sh')
+    postUninstall file('rpm/postUninstall.sh')
+
+    into '/usr/local/tomcat8080'
+    from (war.archivePath) { into('webapps')}
+    from ("conf/ksamsok.javaopts") { into('bin/appconfig') }
+    from ("conf/setenv.sh") { into('bin')}
+    from ("conf/tomcat-users.xml") {into ('conf')}
+}
+
+buildRpm {
+    dependsOn war
+    doLast {
+        //nebula/ospackage bygger till /distributions, men bamboo förväntar sig att rpm:en finns i /rpm
+        copy {
+            from "$buildDir/distributions"
+            into "$buildDir/rpm"
+        }
+    }
+}
+
+
+// de här fungerar inte
+//task localClean (type: Delete) {
+//    delete "${localTomcatKsamsok}/webapps/ksamsok"
+//}
+//
+//task localDeploy (type: Copy) {
+//    dependsOn localClean
+//        println "HOHOHOHOHO: ${localTomcatKsamsok}/webapps"
+//        from war.archivePath
+//        into "${localTomcatKsamsok}/webapps"
+//}

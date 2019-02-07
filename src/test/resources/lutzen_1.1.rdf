@@ -1,0 +1,52 @@
+<rdf:RDF xmlns:ns5="http://kulturarvsdata.se/ksamsok#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:crm="http://www.cidoc-crm.org/rdfs/cidoc-crm#">
+    <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
+    <ns5:buildDate>2010-01-22</ns5:buildDate>
+    <ns5:createdDate>2006-01-01</ns5:createdDate>
+    <ns5:dataQuality rdf:resource="http://kulturarvsdata.se/resurser/DataQuality#processed"/>
+    <ns5:itemKeyWord>Lützen</ns5:itemKeyWord>
+    <ns5:itemTitle>Slaget vid Lützen</ns5:itemTitle>
+    <ns5:itemLabel>Slaget vid Lützen</ns5:itemLabel>
+    <ns5:itemSuperType rdf:resource="http://kulturarvsdata.se/resurser/EntitySuperType#event"/>
+    <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#event"/>
+    <ns5:ksamsokVersion>1.1</ns5:ksamsokVersion>
+    <ns5:lastChangedDate>2009-03-06</ns5:lastChangedDate>
+    <ns5:mediaType>text/html</ns5:mediaType>
+        <ns5:presentation xmlns:pres="http://kulturarvsdata.se/presentation#" rdf:parseType="Literal"><pres:item><pres:id>1</pres:id><pres:entityUri>http://kulturarvsdata.se/raa/test/1</pres:entityUri><pres:dataQuality>Bearbetad</pres:dataQuality><pres:type>Person</pres:type><pres:idLabel>Gustav Vasa</pres:idLabel><pres:itemLabel>Gustav Vasa</pres:itemLabel><pres:description>Text som beskriver Gustav Vasa</pres:description><pres:context><pres:nameLabel>Gustav Vasa</pres:nameLabel></pres:context><pres:representations><pres:representation format="RDF">http://kulturarvsdata.se/raa/test/1</pres:representation><pres:representation format="Presentation">http://kulturarvsdata.se/raa/test/xml/1</pres:representation><pres:representation format="HTML">http://www.livrustkammaren.se/default.asp?id=4872&amp;ptid=&amp;refid=4983&amp;filename=&amp;xmlfilename=</pres:representation></pres:representations><pres:organization>Riksantikvarieämbetet</pres:organization><pres:organizationShort>RAÄ</pres:organizationShort><pres:service>Test</pres:service><pres:version>0.99</pres:version><pres:buildDate>1/22/10 2:55 PM</pres:buildDate></pres:item></ns5:presentation>
+    <ns5:serviceName>test</ns5:serviceName>
+    <ns5:serviceOrganization>RAÄ</ns5:serviceOrganization>
+    <ns5:subject rdf:resource="http://kulturarvsdata.se/resurser/Subject#culturalHistory"/>
+    <ns5:url>http://sv.wikipedia.org/wiki/Slaget_vid_L%C3%BCtzen</ns5:url>
+    <ns5:thumbnail>http://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Battle_of_Lutzen.jpg/320px-Battle_of_Lutzen.jpg</ns5:thumbnail>
+    <crm:P11F.had_participant rdf:resource="http://viaf.org/viaf/10637323" />
+    <crm:P12F.occurred_in_the_presence_of rdf:resource="http://viaf.org/viaf/10637323" />
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_0">
+    <ns5:name>Slag</ns5:name>
+    <ns5:type>Namn</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemName"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_1">
+    <ns5:desc>Text som beskriver slaget</ns5:desc>
+    <ns5:type>Beskrivning</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemDescription"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_2">
+    <ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#create"/>
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#start"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns5:fromTime>1632</ns5:fromTime>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_3">
+    <ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#cease"/>
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#stop"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns5:toTime>1632</ns5:toTime>
+</rdf:Description>
+<rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
+    <ns5:context rdf:nodeID="bNode_2"/>
+    <ns5:context rdf:nodeID="bNode_3"/>
+    <ns5:itemDescription rdf:nodeID="bNode_1"/>
+    <ns5:itemName rdf:nodeID="bNode_0"/>
+</rdf:Description>
+</rdf:RDF>

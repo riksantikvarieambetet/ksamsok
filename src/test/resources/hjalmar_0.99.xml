@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"><responseDate>2010-01-22T13:55:45Z</responseDate><request metadataPrefix="ksamsok-rdf" verb="ListRecords">http://localhost:8080/oaicat-ksamsok/OAIHandler/test</request><ListRecords>
+<record><header><identifier>oai:oaicat.raa.se:test/1</identifier><datestamp>2009-03-06</datestamp></header><metadata><rdf:RDF
+        xmlns:ns5="http://kulturarvsdata.se/ksamsok#" xmlns:ns6="http://xmlns.com/foaf/0.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+    <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
+    <ns5:buildDate>2010-01-22</ns5:buildDate>
+    <ns5:createdDate>2006-01-01</ns5:createdDate>
+    <ns5:dataQuality rdf:resource="http://kulturarvsdata.se/resurser/DataQuality#processed"/>
+    <ns5:itemKeyWord>Hjälm</ns5:itemKeyWord>
+    <ns5:itemTitle>Gustav Vasas hjälm 1</ns5:itemTitle>
+    <ns5:itemLabel>Hjälm</ns5:itemLabel>
+    <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#object"/>
+    <ns5:ksamsokVersion>0.99</ns5:ksamsokVersion>
+    <ns5:lastChangedDate>2009-03-06</ns5:lastChangedDate>
+    <ns5:mediaType>text/html</ns5:mediaType>
+    <ns5:presentation xmlns:pres="http://kulturarvsdata.se/presentation#" rdf:parseType="Literal"><pres:item><pres:id>2</pres:id><pres:entityUri>http://kulturarvsdata.se/raa/test/2</pres:entityUri><pres:dataQuality>Bearbetad</pres:dataQuality><pres:type>Föremål</pres:type><pres:idLabel>Gustav Vasas hjälm</pres:idLabel><pres:itemLabel>Hjälm</pres:itemLabel><pres:description>Text som beskriver Gustav Vasas hjälm</pres:description><pres:context><pres:nameLabel>Gustav Vasas hjälm</pres:nameLabel></pres:context><pres:representations><pres:representation format="RDF">http://kulturarvsdata.se/raa/test/2</pres:representation><pres:representation format="Presentation">http://kulturarvsdata.se/raa/test/xml/2</pres:representation><pres:representation format="HTML">http://www.livrustkammaren.se/default.asp?id=4916&amp;ptid=&amp;refid=4984&amp;filename=&amp;xmlfilename=</pres:representation></pres:representations><pres:organization>Riksantikvarieämbetet</pres:organization><pres:organizationShort>RAÄ</pres:organizationShort><pres:service>Test</pres:service><pres:version>0.99</pres:version><pres:buildDate>1/22/10 2:55 PM</pres:buildDate></pres:item></ns5:presentation>
+    <ns5:serviceName>test</ns5:serviceName>
+    <ns5:serviceOrganization>RAÄ</ns5:serviceOrganization>
+    <ns5:subject rdf:resource="http://kulturarvsdata.se/resurser/Subject#culturalHistory"/>
+    <ns5:url>http://www.livrustkammaren.se/default.asp?id=4916&amp;ptid=&amp;refid=4984&amp;filename=&amp;xmlfilename=</ns5:url>
+    <ns5:thumbnail>http://www.livrustkammaren.se/livrustkammaren/Redaktionellt/Global/Bilder/hjalm.jpg</ns5:thumbnail>
+	<ns5:isRelatedTo rdf:resource="http://libris.kb.se/resource/auth/58087"/>
+    <ns5:isRelatedTo rdf:resource="http://viaf.org/viaf/59878606"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_0">
+    <ns5:name>Föremål</ns5:name>
+    <ns5:type>Namn</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemName"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_1">
+    <ns5:desc>Text som beskriver Gustav Vasas hjälm 1</ns5:desc>
+    <ns5:type>Beskrivning</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemDescription"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_2">
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#create"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns6:name>Kunz Lochner</ns6:name>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_3">
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#use"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns6:name>Gustav Vasa</ns6:name>
+</rdf:Description>
+<rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
+    <ns5:context rdf:nodeID="bNode_2"/>
+    <ns5:context rdf:nodeID="bNode_3"/>
+    <ns5:itemDescription rdf:nodeID="bNode_1"/>
+    <ns5:itemName rdf:nodeID="bNode_0"/>
+</rdf:Description>
+</rdf:RDF></metadata></record>
+<record><header><identifier>oai:oaicat.raa.se:test/2</identifier><datestamp>2009-03-06</datestamp></header><metadata><rdf:RDF
+        xmlns:ns5="http://kulturarvsdata.se/ksamsok#" xmlns:ns6="http://xmlns.com/foaf/0.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+    <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/2">
+    <ns5:buildDate>2010-01-22</ns5:buildDate>
+    <ns5:createdDate>2006-01-01</ns5:createdDate>
+    <ns5:dataQuality rdf:resource="http://kulturarvsdata.se/resurser/DataQuality#processed"/>
+    <ns5:itemKeyWord>Hjälm</ns5:itemKeyWord>
+    <ns5:itemTitle>Gustav Vasas hjälm 2</ns5:itemTitle>
+    <ns5:itemLabel>Hjälm</ns5:itemLabel>
+    <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#object"/>
+    <ns5:ksamsokVersion>0.99</ns5:ksamsokVersion>
+    <ns5:lastChangedDate>2009-03-06</ns5:lastChangedDate>
+    <ns5:mediaType>text/html</ns5:mediaType>
+        <ns5:presentation xmlns:pres="http://kulturarvsdata.se/presentation#" rdf:parseType="Literal"><pres:item><pres:id>2</pres:id><pres:entityUri>http://kulturarvsdata.se/raa/test/2</pres:entityUri><pres:dataQuality>Bearbetad</pres:dataQuality><pres:type>Föremål</pres:type><pres:idLabel>Gustav Vasas hjälm</pres:idLabel><pres:itemLabel>Hjälm</pres:itemLabel><pres:description>Text som beskriver Gustav Vasas hjälm</pres:description><pres:context><pres:nameLabel>Gustav Vasas hjälm</pres:nameLabel></pres:context><pres:representations><pres:representation format="RDF">http://kulturarvsdata.se/raa/test/2</pres:representation><pres:representation format="Presentation">http://kulturarvsdata.se/raa/test/xml/2</pres:representation><pres:representation format="HTML">http://www.livrustkammaren.se/default.asp?id=4916&amp;ptid=&amp;refid=4984&amp;filename=&amp;xmlfilename=</pres:representation></pres:representations><pres:organization>Riksantikvarieämbetet</pres:organization><pres:organizationShort>RAÄ</pres:organizationShort><pres:service>Test</pres:service><pres:version>0.99</pres:version><pres:buildDate>1/22/10 2:55 PM</pres:buildDate></pres:item></ns5:presentation>
+    <ns5:serviceName>test</ns5:serviceName>
+    <ns5:serviceOrganization>RAÄ</ns5:serviceOrganization>
+    <ns5:subject rdf:resource="http://kulturarvsdata.se/resurser/Subject#culturalHistory"/>
+    <ns5:url>http://www.livrustkammaren.se/default.asp?id=4916&amp;ptid=&amp;refid=4984&amp;filename=&amp;xmlfilename=</ns5:url>
+    <ns5:thumbnail>http://www.livrustkammaren.se/livrustkammaren/Redaktionellt/Global/Bilder/hjalm.jpg</ns5:thumbnail>
+	<ns5:isRelatedTo rdf:resource="http://libris.kb.se/resource/auth/58087"/>
+    <ns5:isRelatedTo rdf:resource="http://viaf.org/viaf/59878606"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_0">
+    <ns5:name>Föremål</ns5:name>
+    <ns5:type>Namn</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemName"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_1">
+    <ns5:desc>Text som beskriver Gustav Vasas hjälm 2</ns5:desc>
+    <ns5:type>Beskrivning</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemDescription"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_2">
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#create"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns6:name>Kunz Lochner</ns6:name>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_3">
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#use"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns6:name>Gustav Vasa</ns6:name>
+</rdf:Description>
+<rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/2">
+    <ns5:context rdf:nodeID="bNode_2"/>
+    <ns5:context rdf:nodeID="bNode_3"/>
+    <ns5:itemDescription rdf:nodeID="bNode_1"/>
+    <ns5:itemName rdf:nodeID="bNode_0"/>
+</rdf:Description>
+</rdf:RDF></metadata></record>
+<resumptionToken/></ListRecords></OAI-PMH>

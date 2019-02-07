@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        targetNamespace="http://www.openarchives.org/OAI/2.0/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:oai="http://www.openarchives.org/OAI/2.0/"
+>
+	
+  <xs:import namespace="http://kulturarvsdata.se/ksamsok#" schemaLocation="ksamsok.xsd"/>
+  <xs:import namespace="http://kulturarvsdata.se/presentation#" schemaLocation="pres.xsd"/>
+  <xs:import namespace="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" schemaLocation="geoF.xsd"/>
+  <xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+  
+  <!-- 
+  Här börjar schemat. oai.xsd anropas av validatorn 
+  http://www.openarchives.org/OAI/openarchivesprotocol.html#OAIPMHschema
+  -->
+  <xs:element name="OAI-PMH">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="oai:responseDate"/>
+        <xs:element ref="oai:request"/>
+        <xs:element ref="oai:ListRecords"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="responseDate" type="xs:string"/>
+  <xs:element name="request">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="metadataPrefix" use="required"/>
+          <xs:attribute name="identifier" use="optional"/>
+          <!-- Optional för att om status=deleted i header attribut så finns inte verb med -->
+          <xs:attribute name="verb" use="optional"/>   
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListRecords">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="oai:record" maxOccurs="unbounded"/>
+        <xs:element ref="oai:resumptionToken" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="record">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="oai:header"/>
+        <xs:element ref="oai:metadata" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="header">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="oai:identifier"/>
+        <xs:element ref="oai:datestamp"/>
+        <xs:element ref="oai:setSpec" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="status" use="optional">
+        <!-- Måste ligga här av någon anledning -->
+      	<xs:simpleType>
+          <xs:restriction base="xs:string">
+             <xs:enumeration value="deleted"/>
+          </xs:restriction>
+      	</xs:simpleType>
+      </xs:attribute>  
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="identifier" type="xs:anyURI"/>
+  <xs:element name="datestamp" type="xs:string"/>
+  <xs:element name="setSpec" type="xs:string"/>
+  
+  
+  <xs:element name="metadata">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="rdf:RDF"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="resumptionToken">
+    <xs:complexType mixed="true">
+      <xs:attribute name="expirationDate" use="optional" type="xs:dateTime"/>
+      <xs:attribute name="completeListSize" use="optional" type="xs:positiveInteger"/>
+      <xs:attribute name="cursor" use="optional" type="xs:nonNegativeInteger"/>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

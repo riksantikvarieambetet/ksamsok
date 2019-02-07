@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#"
+           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  
+  <xs:import namespace="http://kulturarvsdata.se/ksamsok#" schemaLocation="ksamsok.xsd"/>
+  <xs:import namespace="http://kulturarvsdata.se/presentation#" schemaLocation="pres.xsd"/>
+  <xs:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
+  <xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+  <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="foaf.xsd"/>
+  
+  <xs:element name="county">
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="province">
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="municipality">
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parish">
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
