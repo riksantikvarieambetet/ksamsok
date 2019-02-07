@@ -1,17 +1,21 @@
 package se.raa.ksamsok.lucene;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Selector;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import org.apache.log4j.Logger;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Selector;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.logging.log4j.Logger;
 
-import static se.raa.ksamsok.lucene.ContentHelper.*;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIALICENSE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIAMOTIVEWORD;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIATYPE;
 import static se.raa.ksamsok.lucene.RDFUtil.extractValue;
-import static se.raa.ksamsok.lucene.SamsokProtocol.*;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMedia;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaLicense;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaMotiveWord;
 
 public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 		implements SamsokProtocolHandler {

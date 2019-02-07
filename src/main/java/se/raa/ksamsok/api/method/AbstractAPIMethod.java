@@ -1,12 +1,18 @@
 package se.raa.ksamsok.api.method;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.ProcessingInstruction;
+import se.raa.ksamsok.api.APIServiceProvider;
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,19 +24,13 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.XML;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.ProcessingInstruction;
-
-import se.raa.ksamsok.api.APIServiceProvider;
-import se.raa.ksamsok.api.exception.BadParameterException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.exception.MissingParameterException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * Basklass för api-metoder.
@@ -38,7 +38,7 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
  */
 public abstract class AbstractAPIMethod implements APIMethod {
 
-	protected static final Logger logger = Logger.getLogger(AbstractAPIMethod.class);
+	protected static final Logger logger = LogManager.getLogger(AbstractAPIMethod.class);
 
 	protected APIServiceProvider serviceProvider;
 	protected Map<String, String> params;
@@ -103,11 +103,8 @@ public abstract class AbstractAPIMethod implements APIMethod {
 				strResult = new StreamResult(baos);
 				transform.transform(source, strResult);
 				String json;
-				if (prettyPrint){
-					json=XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
-				} else {
-					json=XML.toJSONObject(baos.toString("UTF-8")).toString();
-				}
+				JSONObject jsonObject = XML.toJSONObject(baos.toString("UTF-8"));
+				json = jsonObject.toString(prettyPrint ? indentFactor : 0);
 				out.write(json.getBytes("UTF-8"));
 			} else {
 				strResult = new StreamResult(out);

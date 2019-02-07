@@ -1,8 +1,35 @@
 package se.raa.ksamsok.resolve;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Map;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.Selector;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrDocumentList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.method.AbstractAPIMethod;
+import se.raa.ksamsok.harvest.HarvestRepositoryManager;
+import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.RDFUtil;
+import se.raa.ksamsok.solr.SearchService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -21,38 +48,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.util.ClientUtils;
-import org.apache.solr.common.SolrDocumentList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import com.github.jsonldjava.jena.JenaJSONLD;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.rdf.model.Selector;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.method.AbstractAPIMethod;
-import se.raa.ksamsok.harvest.HarvestRepositoryManager;
-import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.RDFUtil;
-import se.raa.ksamsok.solr.SearchService;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect till
@@ -61,7 +59,7 @@ import se.raa.ksamsok.solr.SearchService;
 public class ResolverServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = Logger.getLogger(ResolverServlet.class);
+	private static final Logger logger = LogManager.getLogger();
 	// urlar att redirecta till får inte starta med detta (gemener)
 	private static final String badURLPrefix = "http://kulturarvsdata.se/";
 
@@ -346,8 +344,9 @@ public class ResolverServlet extends HttpServlet {
 					Model m = ModelFactory.createDefaultModel();
 					m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
-					RDFDataMgr.write(resp.getOutputStream(), m,
-						prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
+					RDFDataMgr.write(resp.getOutputStream(), m, prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
+//					RDFDataMgr.write(resp.getOutputStream(), m,
+//						prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
 				} else {
 					resp.sendError(404, "Could not find record for path");
 				}

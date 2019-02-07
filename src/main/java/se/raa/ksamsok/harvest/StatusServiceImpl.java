@@ -1,7 +1,8 @@
 package se.raa.ksamsok.harvest;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 import javax.sql.DataSource;
@@ -21,7 +22,7 @@ import java.util.Set;
 
 public class StatusServiceImpl implements StatusService {
 
-	private static final Logger logger = Logger.getLogger(StatusService.class);
+	private static final Logger logger = LogManager.getLogger(StatusService.class);
 
 	// gräns i antal dagar för hur länge loggmeddelanden sparas i databasen
 	static final int LOG_THRESHHOLD_DAYS = 21;

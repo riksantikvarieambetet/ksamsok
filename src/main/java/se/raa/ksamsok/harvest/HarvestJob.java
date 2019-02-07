@@ -1,5 +1,18 @@
 package se.raa.ksamsok.harvest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.quartz.DisallowConcurrentExecution;
+import org.quartz.InterruptableJob;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.PersistJobDataAfterExecution;
+import org.quartz.SchedulerException;
+import org.quartz.UnableToInterruptJobException;
+import se.raa.ksamsok.harvest.StatusService.Step;
+import se.raa.ksamsok.lucene.ContentHelper;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -13,19 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
-import org.apache.log4j.Logger;
-import org.quartz.DisallowConcurrentExecution;
-import org.quartz.InterruptableJob;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.PersistJobDataAfterExecution;
-import org.quartz.SchedulerException;
-import org.quartz.UnableToInterruptJobException;
-
-import se.raa.ksamsok.harvest.StatusService.Step;
-import se.raa.ksamsok.lucene.ContentHelper;
-
 /**
  * Basklass för skördejobb.
  */
@@ -37,7 +37,7 @@ public abstract class HarvestJob implements InterruptableJob {
 	boolean interrupted;
 
 	protected HarvestJob() {
-		logger = Logger.getLogger(this.getClass().getName());
+		logger = LogManager.getLogger(this.getClass().getName());
 	}
 
 	/**

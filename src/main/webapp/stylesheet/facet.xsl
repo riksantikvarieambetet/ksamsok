@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <xsl:stylesheet version="2.0"
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:pres="http://kulturarvsdata.se/presentation#"
-xmlns:srw="http://www.loc.gov/zing/srw/">
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+>
 <xsl:output method='html' version='1.0' encoding='iso-8859-1' indent='yes'/>
 
 <xsl:template match="/">

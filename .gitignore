@@ -23,6 +23,10 @@ RUNNING_PID
 
 .gradle/
 
+#idea
+*.iml
+*.ipr
+
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 

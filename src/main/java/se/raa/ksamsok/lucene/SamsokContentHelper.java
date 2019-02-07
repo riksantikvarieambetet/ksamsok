@@ -1,13 +1,26 @@
 package se.raa.ksamsok.lucene;
 
-import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uriPrefix;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Date;
-import java.util.LinkedList;
+import org.apache.commons.lang.StringUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.Selector;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.util.Base64;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import se.raa.ksamsok.harvest.ExtractedInfo;
+import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
+import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.vecmath.Point2d;
 import javax.xml.parsers.DocumentBuilder;
@@ -20,33 +33,18 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Date;
+import java.util.LinkedList;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.util.Base64;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import se.raa.ksamsok.harvest.ExtractedInfo;
-import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
-import se.raa.ksamsok.spatial.GMLUtil;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.rdf.model.Selector;
-import com.hp.hpl.jena.rdf.model.SimpleSelector;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
+import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uriPrefix;
 
 public class SamsokContentHelper extends ContentHelper {
 
-	private static final Logger logger = Logger.getLogger(SamsokContentHelper.class);
+	private static final Logger logger = LogManager.getLogger(SamsokContentHelper.class);
 
 	private static DocumentBuilderFactory xmlFact;
 	private static TransformerFactory xformerFact;

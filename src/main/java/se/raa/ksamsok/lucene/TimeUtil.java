@@ -1,18 +1,19 @@
 package se.raa.ksamsok.lucene;
 
-import static se.raa.ksamsok.lucene.ContentHelper.IX_CENTURY;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_DECADE;
-
-import java.util.Date;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.util.Date;
+
+import static se.raa.ksamsok.lucene.ContentHelper.IX_CENTURY;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_DECADE;
+
 public class TimeUtil {
 
-	private static final Logger logger = Logger.getLogger(TimeUtil.class);
+	private static final Logger logger = LogManager.getLogger(TimeUtil.class);
 
 	// iso8601-datumparser, trådsäker
 	private static final DateTimeFormatter isoDateTimeFormatter = ISODateTimeFormat.dateOptionalTimeParser();

@@ -1,7 +1,8 @@
 package se.raa.ksamsok.harvest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -68,7 +69,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	private PreparedStatement deleteUpdatePst;
 	private PreparedStatement insertPst;
 
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.OAIPMHHandler");
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.OAIPMHHandler");
 
 
 	public OAIPMHHandler(StatusService ss, HarvestService service, ContentHelper contentHelper, ServiceMetadata sm,

@@ -1,13 +1,16 @@
 package se.raa.ksamsok.api;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.net.MalformedURLException;
-import java.util.HashMap;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.json.JSONObject;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,20 +18,14 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.net.MalformedURLException;
+import java.util.HashMap;
 
-import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
-import se.raa.ksamsok.api.method.APIMethod;
-import se.raa.ksamsok.api.method.APIMethod.Format;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class GetGeoResourceTest extends AbstractBaseTest {
 
@@ -134,7 +131,8 @@ public class GetGeoResourceTest extends AbstractBaseTest {
 			getGeoResource = apiMethodFactory.getAPIMethod(reqParams, out);
 			getGeoResource.setFormat(Format.JSON_LD);
 			getGeoResource.performMethod();
-			searchResult = new JSONObject(out.toString("UTF-8"));
+			String jsonldString = out.toString("UTF-8");
+			searchResult = new JSONObject(jsonldString);
 			assertTrue(searchResult.has("@context"));
 			context  = searchResult.getJSONObject("@context");
 			assertTrue(context.has("name"));
@@ -142,16 +140,18 @@ public class GetGeoResourceTest extends AbstractBaseTest {
 			
 			//Test JSON response for Parish
 			reqParams.put("uri", PARISH_URI);
+			reqParams.put("prettyPrint", "y");
 			out = new ByteArrayOutputStream();
 			APIMethod getGeoResource = apiMethodFactory.getAPIMethod(reqParams, out);
 			getGeoResource.setFormat(Format.JSON_LD);
 			getGeoResource.performMethod();
-			searchResult = new JSONObject(out.toString("UTF-8"));
+			jsonldString = out.toString("UTF-8");
+			searchResult = new JSONObject(jsonldString);
 			assertTrue(searchResult.has("@context"));
 			//Check that coordinates exist
-			assertTrue(searchResult.has("ksamsok:coordinates"));
+			assertTrue(searchResult.has("coordinates"));
 			//Check that values for coordinates is not empty
-			assertFalse(searchResult.get("ksamsok:coordinates").toString().isEmpty());
+			assertFalse(searchResult.get("coordinates").toString().isEmpty());
 			context  = searchResult.getJSONObject("@context");
 			assertTrue(context.has("name"));
 			assertFalse(context.has("error"));

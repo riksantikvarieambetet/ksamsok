@@ -1,18 +1,17 @@
 package se.raa.ksamsok.api.method;
 
+import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Element;
+import se.raa.ksamsok.api.APIServiceProvider;
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.w3c.dom.Element;
-
-import se.raa.ksamsok.api.APIServiceProvider;
-import se.raa.ksamsok.api.exception.BadParameterException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.exception.MissingParameterException;
 
 /**
  * Uför ordstammning av inskickad sträng och ger tillbaka en lista med unika ordstammar.
@@ -21,7 +20,7 @@ public class Stem extends AbstractAPIMethod {
 
 	public static final String METHOD_NAME = "stem";
 	public static final String PARAM_WORDS = "words";
-	//private static final Logger logg = Logger.getLogger(Stem.class);
+	//private static final Logger logg = LogManager.getLogger(Stem.class);
 
 	private String words;
 	private Set<String> stems;

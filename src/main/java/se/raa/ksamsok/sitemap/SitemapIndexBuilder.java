@@ -1,5 +1,12 @@
 package se.raa.ksamsok.sitemap;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import se.raa.ksamsok.harvest.DBUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,17 +22,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
-
-import se.raa.ksamsok.harvest.DBUtil;
-
 public class SitemapIndexBuilder
 {
-	private static final Logger logger = Logger.getLogger(SitemapIndexBuilder.class);
+	private static final Logger logger = LogManager.getLogger(SitemapIndexBuilder.class);
 	private PrintWriter writer;
 	private DataSource ds;
 	private HttpServletRequest request;

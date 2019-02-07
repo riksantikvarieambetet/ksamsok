@@ -1,18 +1,19 @@
 package se.raa.ksamsok.harvest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import org.apache.log4j.Logger;
 
 /**
  * Hjälpmetoder och konstanter för databasoperationer.
  */
 public class DBUtil {
 
-	private static final Logger logger = Logger.getLogger(DBUtil.class);
+	private static final Logger logger = LogManager.getLogger(DBUtil.class);
 	// stödda databastyper (nödvändigt då det är olika syntax för rownum/limit/offet etc)
 	private enum DBType  { DERBY, ORACLE, POSTGRES }
 

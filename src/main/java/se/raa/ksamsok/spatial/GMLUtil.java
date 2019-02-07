@@ -1,13 +1,11 @@
 package se.raa.ksamsok.spatial;
 
-import java.io.StringReader;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.sql.Connection;
-
-import javax.vecmath.Point2d;
-
-import org.apache.log4j.Logger;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.gml.producer.GeometryTransformer;
 import org.geotools.gml2.GMLConfiguration;
@@ -19,10 +17,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.xml.sax.ContentHandler;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
+import javax.vecmath.Point2d;
+import java.io.StringReader;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.sql.Connection;
 
 /**
  * Klass med metoder för att jobba med GML, koordinater och koordinatsystem.
@@ -31,7 +30,7 @@ import com.vividsolutions.jts.geom.Point;
  */
 public class GMLUtil {
 
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.spatial.GMLUtil");
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.spatial.GMLUtil");
 
 	// klassnamn för databasspecifik GML-hanterare
 	private static String gmlDBWriterClassName;

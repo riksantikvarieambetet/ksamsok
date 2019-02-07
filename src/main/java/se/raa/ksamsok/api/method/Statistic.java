@@ -1,5 +1,18 @@
 package se.raa.ksamsok.api.method;
 
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.w3c.dom.Element;
+import se.raa.ksamsok.api.APIServiceProvider;
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.util.QueryContent;
+import se.raa.ksamsok.api.util.Term;
+import se.raa.ksamsok.api.util.parser.CQL2Solr;
+import se.raa.ksamsok.lucene.ContentHelper;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -9,20 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.w3c.dom.Element;
-
-import se.raa.ksamsok.api.APIServiceProvider;
-import se.raa.ksamsok.api.exception.BadParameterException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.util.QueryContent;
-import se.raa.ksamsok.api.util.Term;
-import se.raa.ksamsok.api.util.parser.CQL2Solr;
-import se.raa.ksamsok.lucene.ContentHelper;
 
 /**
  * söka statistik

@@ -1,5 +1,11 @@
 package se.raa.ksamsok.sitemap;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import se.raa.ksamsok.harvest.DBUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,16 +15,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
-
-import org.apache.log4j.Logger;
-
-import se.raa.ksamsok.harvest.DBUtil;
-
 public class SitemapBuilder
 {
-	private static final Logger logger = Logger.getLogger(SitemapBuilder.class);
+	private static final Logger logger = LogManager.getLogger(SitemapBuilder.class);
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv", "SE"));
 	
 	private PrintWriter writer;

@@ -1,17 +1,7 @@
 package se.raa.ksamsok.harvest;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.sql.DataSource;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.quartz.CronTrigger;
 import org.quartz.InterruptableJob;
@@ -27,13 +17,22 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
-
 import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements HarvestServiceManager {
 
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.harvest.HarvestServiceManager");
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.HarvestServiceManager");
 
 	private static final String JOBGROUP_HARVESTERS = "harvesters";
 	private static final String TRIGGER_SUFFIX = "-trigger";

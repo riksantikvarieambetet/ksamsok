@@ -1,17 +1,9 @@
 package se.raa.ksamsok.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Before;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
-
-import org.junit.Before;
-
-import se.raa.ksamsok.api.method.APIMethod;
 
 public class RSSTest extends AbstractBaseTest {
 
@@ -32,6 +24,7 @@ public class RSSTest extends AbstractBaseTest {
 
 	//TODO: Kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
 	//	// av om det finns data eller ej genom setup/teardown
+	// Kan inte köras just nu pga instabilt testdata
 //	@Test
 //	public void testRSSSearch(){
 //		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -100,6 +93,7 @@ public class RSSTest extends AbstractBaseTest {
 //				// The rest nodes are not asserted
 //			}
 //		} catch (Exception e) {
+//			e.printStackTrace();
 //			fail(e.getMessage());
 //		}
 //	}

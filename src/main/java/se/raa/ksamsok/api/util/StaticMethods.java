@@ -1,12 +1,13 @@
 package se.raa.ksamsok.api.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.util.ClientUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 /**
  * innehåller statiska metoder som används av flera klasser i systemet
@@ -15,7 +16,7 @@ import org.apache.solr.client.solrj.util.ClientUtils;
 public class StaticMethods
 {
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger("se.raa.ksamsok.api.StaticMethods");
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.StaticMethods");
 	/**
 	 * används för att escapa special tecken i sökningar
 	 * @param s sträng med text

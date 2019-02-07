@@ -1,11 +1,22 @@
 package se.raa.ksamsok.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import se.raa.ksamsok.api.exception.BadParameterException;
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.exception.MissingParameterException;
+import se.raa.ksamsok.api.method.APIMethod;
+import se.raa.ksamsok.api.method.APIMethod.Format;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,24 +26,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import se.raa.ksamsok.api.exception.BadParameterException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.method.APIMethod;
-import se.raa.ksamsok.api.method.APIMethod.Format;
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 public class SearchTest extends AbstractBaseTest{
@@ -49,6 +47,7 @@ public class SearchTest extends AbstractBaseTest{
 
 	//TODO: kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
 	//	// av om det finns data eller ej genom setup/teardown
+	// Kan inte köras just nu pga instabilt testdata
 //	@Test
 //	public void testSearchWithRecordSchemaXMLResponse(){
 //		reqParams.put("fields","itemId,itemLabel,itemDescription,thumbnail,url");
@@ -100,26 +99,26 @@ public class SearchTest extends AbstractBaseTest{
 
 	//TODO: kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
 	//	// av om det finns data eller ej genom setup/teardown
-//	@Test
-//	public void testSearchWithRecordSchemaPresResponse(){
-//		reqParams.put("recordSchema","presentation");
-//		try{
-//			// Assert the base search document structure
-//			NodeList recordList = assertBaseSearchDocument(Format.XML);
-//			for (int i = 0; i < recordList.getLength(); i++){
-//				assertEquals(2, recordList.item(i).getChildNodes().getLength());
-//				Node pres = recordList.item(i).getFirstChild();
-//				assertTrue(pres.getNodeName().equals("pres:item"));
-//				assertNotNull(pres.getFirstChild());
-//				//rel:score
-//				Node relScore = recordList.item(i).getLastChild();
-//				assertRelScore(relScore);
-//			}
-//		} catch (Exception e){
-//			e.printStackTrace();
-//			fail(e.getMessage());
-//		}
-//	}
+	@Test
+	public void testSearchWithRecordSchemaPresResponse(){
+		reqParams.put("recordSchema","presentation");
+		try{
+			// Assert the base search document structure
+			NodeList recordList = assertBaseSearchDocument(Format.XML);
+			for (int i = 0; i < recordList.getLength(); i++){
+				assertEquals(2, recordList.item(i).getChildNodes().getLength());
+				Node pres = recordList.item(i).getFirstChild();
+				assertTrue(pres.getNodeName().equals("pres:item"));
+				assertNotNull(pres.getFirstChild());
+				//rel:score
+				Node relScore = recordList.item(i).getLastChild();
+				assertRelScore(relScore);
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
 	
 	@Test
 	public void testSearchWithRecordSchemaPresJSONResponse(){
@@ -134,6 +133,7 @@ public class SearchTest extends AbstractBaseTest{
 
    // TODO: kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
    //	// av om det finns data eller ej genom setup/teardown
+	// kan inte köras just nu pga instabilt testdata
 //	@Test
 //	public void testSearchWithRecordSchemaRDFResponse(){
 //		reqParams.put("recordSchema","rdf");
@@ -144,7 +144,7 @@ public class SearchTest extends AbstractBaseTest{
 //				//Try to creat an model from the embedded rdf
 //				Node rdf = recordList.item(i).getFirstChild();
 //				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//				Transformer	transform = transformerFactory.newTransformer();
+//				Transformer transform = transformerFactory.newTransformer();
 //				DOMSource source = new DOMSource(rdf);
 //				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //				StreamResult strResult = new StreamResult(baos);

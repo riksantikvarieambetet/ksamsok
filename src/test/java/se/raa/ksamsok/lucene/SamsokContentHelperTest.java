@@ -1,15 +1,12 @@
 package se.raa.ksamsok.lucene;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.Collection;
-import java.util.Date;
+import org.apache.solr.common.SolrInputDocument;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import se.raa.ksamsok.harvest.ExtractedInfo;
+import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.harvest.HarvestServiceImpl;
+import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,15 +17,16 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Date;
 
-import org.apache.solr.common.SolrInputDocument;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
-import se.raa.ksamsok.harvest.ExtractedInfo;
-import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.harvest.HarvestServiceImpl;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class SamsokContentHelperTest {
 
