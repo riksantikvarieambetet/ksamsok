@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://www.opengis.net/gml"
+           xmlns:gml="http://www.opengis.net/gml">
+  
+  <xs:import namespace="http://kulturarvsdata.se/ksamsok#" schemaLocation="ksamsok.xsd"/>
+  <xs:import namespace="http://kulturarvsdata.se/presentation#" schemaLocation="pres.xsd"/>
+  <xs:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
+  <xs:import namespace="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" schemaLocation="geoF.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+  <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="foaf.xsd"/>
+  
+  
+  <xs:element name="Point">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="gml:coordinates"/>
+      </xs:sequence>
+      <xs:attribute name="srsName" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="coordinates">
+    <xs:complexType mixed="true">
+      <xs:attribute name="cs" type="xs:string" use="required"/>
+      <xs:attribute name="decimal" type="xs:string" use="required"/>
+      <xs:attribute name="ts" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Så den ser ut enligt ksamsok.se's specifikationer..
+  <xs:element name="Point">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="gml:pos"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pos" type="xs:string"/>
+  -->
+</xs:schema>

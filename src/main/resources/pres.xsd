@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        targetNamespace="http://kulturarvsdata.se/presentation#"
+        xmlns:pres="http://kulturarvsdata.se/presentation#"
+        xmlns:georss="http://www.georss.org/georss"
+>
+  
+  	<!--
+  	Presentationsdelen som används av utvecklarna. 
+  	En delmängd av ksamsok:Entity(?)
+  	 -->
+  
+  <xs:import namespace="http://kulturarvsdata.se/ksamsok#" schemaLocation="ksamsok.xsd"/>
+  <xs:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
+  <xs:import namespace="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" schemaLocation="geoF.xsd"/>
+  <xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+  <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="foaf.xsd"/>
+  
+  <!-- Struktur -->
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="pres:version"/>
+        <xs:element ref="pres:entityUri"/>
+        <xs:element ref="pres:relevance"/>
+        <xs:element ref="pres:type"/>
+        <xs:element ref="pres:id"/>
+        <xs:element ref="pres:idLabel"/>
+        <xs:element ref="pres:itemLabel"/>
+        <xs:element ref="pres:tag" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="pres:description"/>
+        <xs:element ref="pres:content" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="pres:context" maxOccurs="unbounded"/>
+        <xs:element ref="pres:sweref99"/>
+        <xs:element ref="georss:where"/>
+        <xs:element ref="pres:image" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="pres:references" minOccurs="0"/>
+        <xs:element ref="pres:representations"/>
+        <xs:element ref="pres:organization"/>
+        <xs:element ref="pres:organizationShort"/>
+        <xs:element ref="pres:service"/>
+        <xs:element ref="pres:dataQuality"/>
+        <xs:element ref="pres:buildDate"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Definition -->
+  <xs:element name="version" type="xs:string"/>
+  <xs:element name="entityUri" type="xs:string"/>
+  <xs:element name="relevance" type="xs:string"/>
+  <xs:element name="type" type="xs:string"/>
+  <xs:element name="id" type="xs:string"/>
+  <xs:element name="idLabel" type="xs:string"/>
+  <xs:element name="itemLabel" type="xs:string"/>
+  <xs:element name="tag" type="xs:string"/>
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="content" type="xs:string"/>
+  
+  <xs:element name="context">
+    <xs:complexType>
+      <xs:sequence >
+        <xs:element ref="pres:event" minOccurs="0"/>
+        <xs:element ref="pres:placeLabel" minOccurs="0"/>
+        <xs:element ref="pres:timeLabel" minOccurs="0"/>
+        <xs:element ref="pres:nameLabel" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="event" type="xs:string"/>
+  <xs:element name="placeLabel" type="xs:string"/>
+  <xs:element name="timeLabel" type="xs:string"/>
+  <xs:element name="nameLabel" type="xs:string"/>
+  
+  <xs:element name="sweref99" type="xs:string"/>
+  
+  <xs:element name="image">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="pres:src"/>
+        <xs:element ref="pres:byline"/>
+        <xs:element ref="pres:motive" minOccurs="0"/>
+        <xs:element ref="pres:copyright"/>
+        <xs:element ref="pres:mediaLicense"/>
+        <xs:element ref="pres:mediaUri" minOccurs="0"/>
+        <xs:element ref="pres:mediaUrl"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="src">
+    <xs:complexType mixed="true">
+      <xs:attribute name="type" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="byline" type="xs:string"/>
+  <xs:element name="motive" type="xs:string"/>
+  <xs:element name="copyright" type="xs:string"/>
+  <xs:element name="mediaLicense" type="xs:string"/>
+  <xs:element name="mediaUri" type="xs:anyURI"/>
+  <xs:element name="mediaUrl" type="xs:anyURI"/>
+  
+  <xs:element name="references">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="pres:reference" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="reference" type="xs:string"/>
+  
+  <xs:element name="representations">
+    <xs:complexType>
+      <xs:sequence maxOccurs="5">
+	      <xs:element name="representation">
+		    <xs:complexType mixed="true">
+		      <xs:attribute name="format" use="required">
+		      	<xs:simpleType>
+		      		<xs:restriction base="xs:string">
+		      			<xs:enumeration value="HTML"/>
+		      			<xs:enumeration value="RDF"/>
+		      			<xs:enumeration value="XML"/>
+		      			<xs:enumeration value="presentation"/>
+		      			<xs:enumeration value="museumdat"/>
+		      		</xs:restriction>
+		      	</xs:simpleType>
+		      </xs:attribute>
+		    </xs:complexType>
+		  </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  
+  <xs:element name="organization" type="xs:string"/>
+  <xs:element name="organizationShort" type="xs:string"/>
+  <xs:element name="service" type="xs:string"/>
+  <xs:element name="dataQuality" type="xs:string"/>
+  <xs:element name="buildDate" type="xs:string"/>
+</xs:schema>

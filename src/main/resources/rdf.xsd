@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:geoF="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:owl="http://www.w3.org/2002/07/owl#"
+        xmlns:ksamsok="http://kulturarvsdata.se/ksamsok#"
+        xmlns:georss="http://www.georss.org/georss"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  
+  <xs:import namespace="http://kulturarvsdata.se/ksamsok#" schemaLocation="ksamsok.xsd"/>
+  <xs:import namespace="http://kulturarvsdata.se/presentation#" schemaLocation="pres.xsd"/>
+  <xs:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
+  <xs:import namespace="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" schemaLocation="geoF.xsd"/>
+  <xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml.xsd"/>
+  <xs:import namespace="http://www.w3.org/2002/07/owl#" schemaLocation="owl.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="foaf.xsd"/>
+  
+  <xs:element name="RDF">
+	<xs:complexType>
+   		<xs:choice>
+   		
+      		<xs:choice maxOccurs="unbounded">
+		        <xs:element ref="ksamsok:Entity" minOccurs="0"/>
+		        <xs:element ref="ksamsok:Context" minOccurs="0" maxOccurs="unbounded" />
+		        <xs:element ref="ksamsok:Image" minOccurs="0" maxOccurs="unbounded" />
+		        <xs:element ref="ksamsok:ItemNumber" minOccurs="0" maxOccurs="unbounded"/>
+		        <xs:element ref="ksamsok:ItemName" minOccurs="0" maxOccurs="unbounded" />
+		        <xs:element ref="ksamsok:ItemSpecification" minOccurs="0" maxOccurs="unbounded" />
+		        <xs:element ref="ksamsok:ItemMaterial" minOccurs="0" maxOccurs="unbounded" />
+		        <xs:element ref="ksamsok:ItemDescription" minOccurs="0" maxOccurs="unbounded" />
+		        <xs:element ref="ksamsok:ItemMeasurement" minOccurs="0" maxOccurs="unbounded"/>
+     	 	</xs:choice>
+      
+    		<xs:element ref="rdf:Description" maxOccurs="unbounded" />
+    		
+       </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:attribute name="about" type="rdf:startsWithHttp"/>
+  <xs:attribute name="nodeID" type="xs:string"/>
+  <xs:attribute name="parseType" type="xs:string"/> 
+  
+  <xs:attribute name="resource" type="rdf:startsWithHttp"/>
+  
+  <!-- rdf:about and rdf:resource should always start with http -->
+  <xs:simpleType name="startsWithHttp">
+  	<xs:restriction base="xs:string">
+  		<xs:pattern value="[hH][tT]{2}[pP].+"></xs:pattern>
+  	</xs:restriction>
+  </xs:simpleType>
+  
+  <!-- Sometimes description is used, and sometimes entity -->
+  <xs:element name="Description">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+      	<xs:choice>
+      	
+	      	<!-- ItemNumber -->
+	      	<xs:sequence>
+	      	 	<xs:element ref="ksamsok:number"/>
+	      	 	<xs:element ref="ksamsok:type"/>
+	      	</xs:sequence>
+	      	
+	       	<!-- ItemName -->
+	      	<xs:sequence >
+	      	 	<xs:element ref="ksamsok:name"/>
+	      	 	<xs:element ref="ksamsok:type"/>
+	      	</xs:sequence>
+	  
+	  		<!-- ItemDescription -->
+	      	<xs:sequence>
+	      	 	<xs:element ref="ksamsok:desc"/>
+	      	 	<xs:element ref="ksamsok:type"/>
+	      	</xs:sequence>
+	      	
+	      	<!-- Context -->
+	      	<xs:sequence>
+		        <xs:choice maxOccurs="unbounded">
+			        <xs:element ref="ksamsok:contextType"/> 
+			        <xs:element ref="ksamsok:contextLabel" minOccurs="0"/>
+			        <xs:element ref="ksamsok:fromTime" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:toTime" minOccurs="0"/>
+			        <xs:element ref="ksamsok:fromPeriodName" minOccurs="0"/>
+			        <xs:element ref="ksamsok:toPeriodName" minOccurs="0"/>
+			        <xs:element ref="ksamsok:fromPeriodId" minOccurs="0"/>
+			        <xs:element ref="ksamsok:toPeriodId" minOccurs="0"/>
+			        <xs:element ref="ksamsok:periodAuth" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:eventName" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:eventAuth" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:timeText" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:continentName" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:country" minOccurs="0"/> 
+			        <xs:element ref="geoF:county" minOccurs="0"/> 
+			        <xs:element ref="geoF:province" minOccurs="0"/> 
+			        <xs:element ref="geoF:municipality" minOccurs="0"/> 
+			        <xs:element ref="geoF:parish" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:countryName" minOccurs="0"/>
+			        <xs:element ref="ksamsok:countyName" minOccurs="0"/>
+			        <xs:element ref="ksamsok:provinceName" minOccurs="0"/>
+			        <xs:element ref="ksamsok:municipalityName" minOccurs="0"/>
+			        <xs:element ref="ksamsok:parishName" minOccurs="0"/>
+			        <xs:element ref="ksamsok:placeName" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:cadastralUnit" minOccurs="0"/>
+			        <xs:element ref="ksamsok:placeTermId" minOccurs="0"/>
+			        <xs:element ref="ksamsok:placeTermAuth" minOccurs="0"/>
+			        <xs:element ref="ksamsok:sweref99"/>
+			        <xs:element ref="georss:where" minOccurs="0"/> 
+			        <xs:element ref="foaf:firstName" minOccurs="0"/> 
+			        <xs:element ref="foaf:surname" minOccurs="0"/> 
+			        <xs:element ref="foaf:fullName" minOccurs="0"/> 
+			        <xs:element ref="foaf:name" minOccurs="0"/> 
+			        <xs:element ref="foaf:organization" minOccurs="0"/> 
+			        <xs:element ref="foaf:gender" minOccurs="0"/> 
+			        <xs:element ref="foaf:title" minOccurs="0"/> 
+			        <xs:element ref="ksamsok:nameId" minOccurs="0"/>
+			        <xs:element ref="ksamsok:nameAuth" minOccurs="0"/>
+		      	</xs:choice>
+		     </xs:sequence> 
+	      	
+	      	
+	      	<!-- Image -->
+	      	<xs:sequence>
+	      		<xs:choice maxOccurs="unbounded">
+			       
+			        <xs:element ref="ksamsok:thumbnailSource"/>
+			        <xs:element ref="ksamsok:lowresSource"/>
+			        <xs:element ref="ksamsok:highresSource"/>
+			        <xs:element ref="ksamsok:byline"/>
+			        <xs:element ref="ksamsok:mediaMotiveWord" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:copyright"/>
+			        <xs:element ref="ksamsok:mediaLicense"/>
+			        <xs:element ref="ksamsok:mediaLicenseUrl"/>
+		      	</xs:choice>
+	      	</xs:sequence>
+	      	
+	      	
+	      	<!-- Entity --> 	
+	      	<xs:sequence>
+	      		<xs:choice maxOccurs="unbounded">
+			        <xs:element ref="ksamsok:ksamsokVersion"/>
+			        <xs:element ref="ksamsok:serviceName"/>
+			        <xs:element ref="ksamsok:serviceOrganization"/>
+			        <xs:element ref="ksamsok:buildDate"/>
+			        <xs:element ref="ksamsok:itemForIndexing" minOccurs="0"/>
+			        <xs:element ref="ksamsok:collection" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:theme" minOccurs="0" maxOccurs="unbounded" />
+			        <xs:element ref="ksamsok:createdDate" minOccurs="0"/>
+			        <xs:element ref="ksamsok:lastChangedDate" minOccurs="0"/>
+			        <xs:element ref="ksamsok:url"/>
+			        <xs:element ref="ksamsok:museumdatUrl" minOccurs="0"/>
+			        <xs:element ref="ksamsok:thumbnail" minOccurs="0"/>
+			        <xs:element ref="ksamsok:subject" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:dataQuality"/>
+			        <xs:element ref="ksamsok:itemType"/>
+			        <xs:element ref="ksamsok:itemClass" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemClassName" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemLicense"/>
+			        <xs:element ref="ksamsok:itemLicenseUrl"/>
+			        <xs:element ref="ksamsok:itemLabel"/>
+			        <xs:element ref="ksamsok:itemSpecification" maxOccurs="unbounded" />
+			        <xs:element ref="ksamsok:itemTitle" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemKeyWord" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemMotiveWord" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemMaterial" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemTechnique" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemStyle" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemColor" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:itemMeasurement" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:isRelatedTo" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:containsInformationAbout" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:containsObject" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:isPartOf" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:isFoundIn" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:hasBeenUsedIn" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:hasChild" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:hasParent" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:hasFind" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:hasImage" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:hasObjectExample" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:hasPart" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:isDescribedBy" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:visualizes" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:isVisualizedBy" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="owl:sameAs" minOccurs="0" maxOccurs="unbounded"/>
+			        <xs:element ref="ksamsok:presentation"/>
+		      	</xs:choice>
+	      	</xs:sequence>
+	  
+	  		
+	        <xs:sequence>
+	        	<xs:element ref="ksamsok:context" maxOccurs="unbounded" /> 
+				<xs:element ref="ksamsok:image"/>
+				<xs:element ref="ksamsok:itemDescription"/>
+				<xs:element ref="ksamsok:itemName"/>
+				<xs:element ref="ksamsok:itemNumber"/>
+	        </xs:sequence>
+	        
+        </xs:choice>
+        
+        <!-- Blir lite buggigt med mediatype på image och i entity, så den får ligga utanför -->
+       	<xs:element ref="ksamsok:mediaType" minOccurs="0" maxOccurs="unbounded"/> 
+        
+		<!-- Vilken typ av Description det är... -->
+        <xs:element ref="rdf:type" minOccurs="0"/>
+        
+      </xs:choice>
+      <xs:attribute name="about" form="qualified" type="xs:anyURI"/>
+      <xs:attribute ref="rdf:nodeID"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="type">
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

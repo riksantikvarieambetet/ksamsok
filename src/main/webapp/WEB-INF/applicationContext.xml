@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:property-placeholder location="classpath:environment.properties"/>
+	<context:annotation-config />
+
+	<!--
+		applikationskonf för en master/replikeringsmasternod
+		notera att om nåt läggs till/ändras här så kanske man vill uppdatera
+		slav-versionen och vice versa
+	-->
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/harvestdb" />
+	</bean>
+
+	<bean id="dataSourceReader" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/harvestdbreader" />
+	</bean>
+
+	<bean id="solrBuilder" class="org.apache.solr.client.solrj.impl.HttpSolrClient$Builder">
+		<constructor-arg value="http://localhost:8983/solr/ksamsok" />
+	</bean>
+	
+	<bean id="solr" class="org.apache.solr.client.solrj.impl.HttpSolrClient" factory-bean="solrBuilder" factory-method="build" />
+	
+
+	<bean id="statusService" class="se.raa.ksamsok.harvest.StatusServiceImpl">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	<bean id="harvestRepositoryManager" class="se.raa.ksamsok.harvest.HarvestRepositoryManagerImpl">
+		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="statusService" />
+		<constructor-arg ref="solr" />
+	</bean>
+<!-- 	<bean id="harvestServiceManager" class="se.raa.ksamsok.harvest.HarvestServiceManagerImpl" init-method="init" destroy-method="destroy"> -->
+	<bean id="harvestServiceManager" class="se.raa.ksamsok.harvest.HarvestServiceManagerImpl" init-method="init" destroy-method="destroy">
+		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="harvestRepositoryManager" />
+		<constructor-arg ref="statusService" />
+		<!-- sätter pausad status (om app.state=development), för att pausa alla servicar i test/utv-miljö.  -->
+		<constructor-arg value="${app.state}" />
+	</bean>
+	<bean id="searchService" class="se.raa.ksamsok.solr.SearchServiceImpl">
+		<property name="solr" ref="solr"/>
+	</bean>
+	<bean id="keyManager" class="se.raa.ksamsok.apikey.APIKeyManager" init-method="init">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	<bean id="statisticsManager" class="se.raa.ksamsok.statistic.StatisticsManager" init-method="init" destroy-method="destroy">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	<bean id="organizationManager" class="se.raa.ksamsok.organization.OrganizationManager">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+</beans>
