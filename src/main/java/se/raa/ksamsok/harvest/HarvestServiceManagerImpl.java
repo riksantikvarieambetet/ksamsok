@@ -141,9 +141,12 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				//Om applikationen är i test/utv. sätts alla servicear till pausade.
 				if (devState) {
 					togglePausedForServices(devState);
-				} else if (!devState) {//Om applikationen är i prod, schemaläggs alla servicar.
+				} else {
+					// Om applikationen är i prod, schemaläggs alla servicar som inte är satta på paus
 					for (HarvestService service: services) {
-						scheduleJob(service);
+						if (!service.getPaused()) {
+							scheduleJob(service);
+						}
 					}
 					// skapa "tjänst" om den inte finns
 					if (indexOptimizeService != null) {
@@ -500,7 +503,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 					logger.warn("Problem when unscheduling paused job for service with ID: " +
 							service.getId(), e);
 				}
-			} else if (!service.getPaused()) {
+			} else {
 				try {
 					unScheduleJob(service.getId());
 				} catch (Exception e) {
