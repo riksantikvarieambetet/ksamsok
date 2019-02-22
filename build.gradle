@@ -118,6 +118,7 @@ war {
     metaInf { from "conf/${confDir}/context.xml" }
     webInf { from (jar.archivePath) { into('lib') } }
     webInf { from ("conf/${confDir}/environment.properties") {into ('classes')}}
+    webInf { from ("conf/${confDir}/applicationContext.xml") }
 }
 
 

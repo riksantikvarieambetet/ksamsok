@@ -23,7 +23,7 @@
 	</bean>
 
 	<bean id="solrBuilder" class="org.apache.solr.client.solrj.impl.HttpSolrClient$Builder">
-		<constructor-arg value="http://localhost:8983/solr/ksamsok" />
+		<constructor-arg value="http://lx-ra-ksam2.raa.se:8983/solr/ksamsok" />
 	</bean>
 	
 	<bean id="solr" class="org.apache.solr.client.solrj.impl.HttpSolrClient" factory-bean="solrBuilder" factory-method="build" />
