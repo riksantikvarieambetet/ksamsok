@@ -222,6 +222,9 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rTitle), ip);
 		ip.setCurrent(ContentHelper.IX_ORGANIZATION);
 		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rOrganization), ip);
+
+		ip.setCurrent(ContentHelper.IX_REPLACES);
+		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rReplaces), ip);
 	}
 	/**
 	 * Extraherar och indexerar typinformation ur en kontextnod.

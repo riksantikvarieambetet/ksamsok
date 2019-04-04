@@ -265,10 +265,9 @@ public class ResolverServlet extends HttpServlet {
 
 		final String escapedUrli = ClientUtils.escapeQueryChars(urli);
 		StringBuilder sb = new StringBuilder(ContentHelper.IX_ITEMID).append(":").append(escapedUrli);
-		if (isSameAsSpecialCase(urli)) {
-			//specialhantera sameAs om de innehåller "raa/fmi", se KSAM-210
-			sb.append(" OR ").append(ContentHelper.IX_SAMEAS).append(":").append(escapedUrli);
-		}
+
+		// we have to append a special case to also fetch any posts that have the id in a "replaces"-tag
+		sb.append(" OR ").append(ContentHelper.IX_REPLACES).append(":").append(escapedUrli);
 
 		q.setQuery(sb.toString());
 		q.setRows(1);
@@ -337,10 +336,6 @@ public class ResolverServlet extends HttpServlet {
 		return prepResp;
 	}
 
-	private boolean isSameAsSpecialCase(String urli) {
-		return urli.contains("raa/fmi");
-	}
-
 	private String escapeChars(String urli) {
 		return StringUtils.replace(urli, ":", "\\:");
 	}
@@ -377,7 +372,7 @@ public class ResolverServlet extends HttpServlet {
 					System.out.println("predicate: " + predicate);
 					System.out.println("Statement as triple:" + statement.asTriple().toString());
 
-					if ("sameAs".equals(predicate.getLocalName()) && isSameAsSpecialCase((urli)) && urli.equals(statement.getObject().toString())) {
+					if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
 
 						if (res.getURI() != null) {
 							resp.sendRedirect(res.getURI());

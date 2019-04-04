@@ -308,6 +308,8 @@ public abstract class ContentHelper {
 	public static final String IX_CENTURY = "century";
 	public static final String IX_DECADE = "decade";
 
+	public static final String IX_REPLACES = "replaces";
+
 	// alla index
 	private static final HashMap<String, Index> indices = new LinkedHashMap<String, Index>();
 	// publika index
@@ -331,7 +333,9 @@ public abstract class ContentHelper {
 		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_DATAQUALITY, "Beskrivningsnivå", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.TOLOWERCASE, true, false); // uri
-																									// //
+
+		addIndex(IX_REPLACES, "Identifierare för objekt som detta objekt ersätter", IndexType.VERBATIM);
+
 		// TODO:
 		// detta stämmer
 		// ej(?)
