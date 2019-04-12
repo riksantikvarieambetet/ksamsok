@@ -358,19 +358,13 @@ public class ResolverServlet extends HttpServlet {
 			final ResIterator resIterator = m.listSubjects();
 
 			while (resIterator.hasNext()) {
-				System.out.println("NEW RESOURCE");
 				Resource res = resIterator.next();
-				System.out.println("URI: " + res.getURI());
 
 
 				final StmtIterator statementIterator = res.listProperties();
 				while (statementIterator.hasNext()) {
-					System.out.println("NEW PROPERTY");
 					Statement statement = statementIterator.next();
-					System.out.println("Statement: " + statement);
 					Property predicate = statement.getPredicate();
-					System.out.println("predicate: " + predicate);
-					System.out.println("Statement as triple:" + statement.asTriple().toString());
 
 					if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
 
