@@ -372,7 +372,7 @@ public class ResolverServlet extends HttpServlet {
 							resp.sendRedirect(res.getURI());
 							return;
 						} else {
-							logger.warn("Found sameAs: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
+							logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
 						}
 					}
 
