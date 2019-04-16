@@ -53,6 +53,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 		// hämta ut is mentioned by (0M)
 		relMap.put(ContentHelper.IX_ISMENTIONEDBY, SamsokProtocol.uri_rIsMentionedBy);
+		// hämta ut replaces (0M)
+		relMap.put(ContentHelper.IX_REPLACES, SamsokProtocol.uri_rReplaces);
 		// hämta ut mentions (0M)
 		relMap.put(ContentHelper.IX_MENTIONS, SamsokProtocol.uri_rMentions);
 		// hämta ut is contained in (0M)
@@ -168,6 +170,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		String relationType;
 		if (SamsokProtocol.uri_rSameAs.toString().equals(refUri)) {
 			relationType = ContentHelper.IX_SAMEAS;
+		} else if (SamsokProtocol.uri_rReplaces.toString().equals(refUri)) {
+			relationType = ContentHelper.IX_REPLACES;
 		} else {
 			relationType = StringUtils.trimToNull(StringUtils.substringAfter(refUri, SamsokProtocol.uriPrefixKSamsok));
 			// TODO: fixa bättre/validera lite
@@ -223,8 +227,8 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		ip.setCurrent(ContentHelper.IX_ORGANIZATION);
 		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rOrganization), ip);
 
-		ip.setCurrent(ContentHelper.IX_REPLACES);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rReplaces), ip);
+//		ip.setCurrent(ContentHelper.IX_REPLACES);
+//		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rReplaces), ip);
 	}
 	/**
 	 * Extraherar och indexerar typinformation ur en kontextnod.

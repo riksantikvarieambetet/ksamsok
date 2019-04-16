@@ -159,6 +159,8 @@ public abstract class ContentHelper {
 	public static final String IX_VISUALIZES = "visualizes";
 	public static final String IX_ISMENTIONEDBY = "isMentionedBy";
 	public static final String IX_MENTIONS = "mentions";
+	public static final String IX_REPLACES = "replaces";
+	public static final String IX_ISREPLACEDBY = "isReplacedBy";
 
 	// cidoc-crm
 	public static final String IX_HASFORMERORCURRENTOWNER = "has_former_or_current_owner";
@@ -308,7 +310,6 @@ public abstract class ContentHelper {
 	public static final String IX_CENTURY = "century";
 	public static final String IX_DECADE = "decade";
 
-	public static final String IX_REPLACES = "replaces";
 
 	// alla index
 	private static final HashMap<String, Index> indices = new LinkedHashMap<String, Index>();
