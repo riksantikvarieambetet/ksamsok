@@ -121,7 +121,6 @@ dependencies {
 // Bygg med -Penv=prod för att bygga prod-war, -Penv=utv för att bygga utv-war osv. Utan -Penv byggs local
 war {
     dependsOn setUpEnvironmentConfiguration
-    dependsOn jar
     archiveName = 'ksamsok.war'
     metaInf {
         from "src/main/environment/common/META-INF"
@@ -131,7 +130,6 @@ war {
         }
         filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: myProps)
     }
-    webInf { from (jar.archivePath) { into('lib') } }
     webInf {
         from "src/main/environment/common/WEB-INF"
         def myProps = new Properties()
