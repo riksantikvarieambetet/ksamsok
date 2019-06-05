@@ -13,7 +13,7 @@ plugins {
 // Set up environment start
 loadConfiguration()
 def loadConfiguration() {
-    def environment = project.hasProperty('env') ? project.env : 'utv'
+    def environment = project.hasProperty('env') ? project.env : 'default'
     project.ext.set 'environment', environment
 }
 apply from: 'environment.gradle'
@@ -114,7 +114,9 @@ dependencies {
 
 
 
-// Bygg med -Penv=prod för att bygga prod-war, -Penv=utv för att bygga utv-war osv. Utan -Penv byggs local
+// Bygg med -Penv=buildserver för att bygga en warfil från en byggserver, 
+// -Penv=local för att bygga en warfil med lokala inställningar
+// Utan -Penv byggs en warfil med inställningar från src/main/environment/default
 war {
     dependsOn setUpEnvironmentConfiguration
     archiveName = 'ksamsok.war'

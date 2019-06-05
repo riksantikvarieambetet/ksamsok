@@ -2,8 +2,8 @@ task setUpEnvironmentConfiguration {
 
         apply plugin: 'java'
 
-        def availableEnvironments = ['local', 'utv', 'sys', 'acc', 'ver', 'prod']
-        def environment = project.hasProperty('environment') ? environment : 'utv'
+        def availableEnvironments = ['local', 'buildserver', 'default']
+        def environment = project.hasProperty('environment') ? environment : 'default'
 
         if (!availableEnvironments.contains(environment)) {
             def message = "Target environment '${environment}' not allowed. Please use one of the following: " +
