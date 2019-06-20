@@ -52,6 +52,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -340,6 +342,39 @@ public class ResolverServlet extends HttpServlet {
 		return StringUtils.replace(urli, ":", "\\:");
 	}
 
+	private String buildReplacedByMultipleUrisJsonReply(ArrayList<String> replaceUris) {
+		StringBuffer jsonBuf = new StringBuffer();
+		if (replaceUris.size() > 1) {
+			// create a json with all the redirect possibilities
+			jsonBuf = new StringBuffer("{\"isReplacedBy:\" [");
+			int counter = 0;
+			for (String replaceUri : replaceUris) {
+				jsonBuf.append("{\"record\": \"").append(replaceUri).append("\"}");
+				if (++counter < replaceUris.size()) {
+					jsonBuf.append(", ");
+				}
+
+			}
+			jsonBuf.append("]}");
+		}
+		return jsonBuf.toString();
+	}
+
+	private String buildReplacedByMultipleUrisXmlReply(ArrayList<String> replaceUris) {
+		StringBuffer xmlBuf = new StringBuffer();
+		if (replaceUris.size() > 1) {
+			// create an xml with all the redirect possibilities
+			xmlBuf = new StringBuffer("<isReplacedBy>");
+			for (String replaceUri : replaceUris) {
+				xmlBuf.append("<record>").append(replaceUri).append("</record>");
+
+
+			}
+			xmlBuf.append("</isReplacedBy>");
+		}
+		return xmlBuf.toString();
+	}
+
 	/**
 	 * This method writes the response
 	 *
@@ -352,10 +387,13 @@ public class ResolverServlet extends HttpServlet {
 	 */
 	private void makeResponse(String response, Format format, String urli, Boolean prettyPrint,
 							  HttpServletResponse resp) throws IOException, DiagnosticException {
+		ArrayList<String> replaceUris = new ArrayList<>();
 		if (response != null) {
 			Model m = ModelFactory.createDefaultModel();
 			m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
 			final ResIterator resIterator = m.listSubjects();
+
+
 
 			while (resIterator.hasNext()) {
 				Resource res = resIterator.next();
@@ -369,8 +407,8 @@ public class ResolverServlet extends HttpServlet {
 					if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
 
 						if (res.getURI() != null) {
-							resp.sendRedirect(res.getURI());
-							return;
+							replaceUris.add(res.getURI());
+							//resp.sendRedirect(res.getURI());
 						} else {
 							logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
 						}
@@ -382,9 +420,24 @@ public class ResolverServlet extends HttpServlet {
 
 		}
 
+		// if we found only one replaceUri, redirect immediately:
+		if (replaceUris.size() == 1) {
+			resp.sendRedirect(replaceUris.get(0));
+			return;
+		}
+
 		switch (format) {
 			case JSON_LD:
-				if (response != null) {
+				if (replaceUris.size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisJsonReply(replaceUris);
+					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+
+					PrintWriter out = resp.getWriter();
+					resp.setContentType("application/json");
+					resp.setCharacterEncoding("UTF-8");
+					out.print(jsonReply);
+					out.flush();
+				} else if (response != null) {
 					Model m = ModelFactory.createDefaultModel();
 					m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
@@ -395,7 +448,16 @@ public class ResolverServlet extends HttpServlet {
 				break;
 			case RDF:
 			case XML:
-				if (response != null) {
+				if (replaceUris.size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisXmlReply(replaceUris);
+					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+
+					PrintWriter out = resp.getWriter();
+					resp.setContentType("text/xml");
+					resp.setCharacterEncoding("UTF-8");
+					out.print(jsonReply);
+					out.flush();
+				} else if (response != null) {
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder docBuilder;
 					Document doc;
