@@ -60,38 +60,38 @@ public class SamsokProtocol {
 	static final URI uri_rItemForIndexing = URI.create(uriPrefixKSamsok + "itemForIndexing");
 
 	// relationer
-	static final URI uri_rContainsInformationAbout = URI.create(uriPrefixKSamsok + "containsInformationAbout");
+	static final URI uri_rSameAs = URI.create("http://www.w3.org/2002/07/owl#sameAs"); // obs, owl
+	static final URI uri_rIsRelatedTo = URI.create(uriPrefixKSamsok + "isRelatedTo");
 	static final URI uri_rContainsObject = URI.create(uriPrefixKSamsok + "containsObject");
 	static final URI uri_rIsContainedIn = URI.create(uriPrefixKSamsok + "isContainedIn");
 	static final URI uri_rHasBeenUsedIn = URI.create(uriPrefixKSamsok + "hasBeenUsedIn");
 	static final URI uri_rHasChild = URI.create(uriPrefixKSamsok + "hasChild");
+	static final URI uri_rHasParent = URI.create(uriPrefixKSamsok + "hasParent");
 	static final URI uri_rHasFind = URI.create(uriPrefixKSamsok + "hasFind");
+	static final URI uri_rIsFoundIn = URI.create(uriPrefixKSamsok + "isFoundIn");
 	static final URI uri_rHasImage = URI.create(uriPrefixKSamsok + "hasImage");
 	static final URI uri_rHasObjectExample = URI.create(uriPrefixKSamsok + "hasObjectExample");
 	static final URI uri_rIsObjectExampleFor = URI.create(uriPrefixKSamsok + "isObjectExampleFor");
-	static final URI uri_rHasParent = URI.create(uriPrefixKSamsok + "hasParent");
 	static final URI uri_rHasPart = URI.create(uriPrefixKSamsok + "hasPart");
+	static final URI uri_rIsPartOf = URI.create(uriPrefixKSamsok + "isPartOf");
 	static final URI uri_rIsDescribedBy = URI.create(uriPrefixKSamsok + "isDescribedBy");
 	static final URI uri_rDescribes = URI.create(uriPrefixKSamsok + "describes");
-	static final URI uri_rIsFoundIn = URI.create(uriPrefixKSamsok + "isFoundIn");
-	static final URI uri_rIsPartOf = URI.create(uriPrefixKSamsok + "isPartOf");
-	static final URI uri_rIsRelatedTo = URI.create(uriPrefixKSamsok + "isRelatedTo");
 	static final URI uri_rIsVisualizedBy = URI.create(uriPrefixKSamsok + "isVisualizedBy");
-	static final URI uri_rSameAs = URI.create("http://www.w3.org/2002/07/owl#sameAs"); // obs, owl
 	static final URI uri_rVisualizes = URI.create(uriPrefixKSamsok + "visualizes");
+	static final URI uri_rContainsInformationAbout = URI.create(uriPrefixKSamsok + "containsInformationAbout");
 	static final URI uri_rIsMentionedBy = URI.create(uriPrefixKSamsok + "isMentionedBy");
 	static final URI uri_rMentions = URI.create(uriPrefixKSamsok + "mentions");
 
 	// relationer, cidoc-crm
 	static final String uriPrefix_cidoc_crm = "http://www.cidoc-crm.org/rdfs/cidoc-crm#";
-	static final URI uri_cidoc_P94B_was_created_by = URI.create(uriPrefix_cidoc_crm + "P94B.was_created_by");
-	static final URI uri_cidoc_P51F_has_former_or_current_owner = URI.create(uriPrefix_cidoc_crm + "P51F.has_former_or_current_owner");
-	static final URI uri_cidoc_P49F_has_former_or_current_keeper = URI.create(uriPrefix_cidoc_crm + "P49F.has_former_or_current_keeper");
-	static final URI uri_cidoc_P105F_right_held_by = URI.create(uriPrefix_cidoc_crm + "P105F.right_held_by");
-	static final URI uri_cidoc_P11F_had_participant = URI.create(uriPrefix_cidoc_crm + "P11F.had_participant");
 	static final URI uri_cidoc_P11B_participated_in = URI.create(uriPrefix_cidoc_crm + "P11B.participated_in");
+	static final URI uri_cidoc_P11F_had_participant = URI.create(uriPrefix_cidoc_crm + "P11F.had_participant");
 	static final URI uri_cidoc_P12B_was_present_at = URI.create(uriPrefix_cidoc_crm + "P12B.was_present_at");
 	static final URI uri_cidoc_P12F_occurred_in_the_presence_of = URI.create(uriPrefix_cidoc_crm + "P12F.occurred_in_the_presence_of");
+	static final URI uri_cidoc_P49F_has_former_or_current_keeper = URI.create(uriPrefix_cidoc_crm + "P49F.has_former_or_current_keeper");
+	static final URI uri_cidoc_P51F_has_former_or_current_owner = URI.create(uriPrefix_cidoc_crm + "P51F.has_former_or_current_owner");
+	static final URI uri_cidoc_P94B_was_created_by = URI.create(uriPrefix_cidoc_crm + "P94B.was_created_by");
+	static final URI uri_cidoc_P105F_right_held_by = URI.create(uriPrefix_cidoc_crm + "P105F.right_held_by");
 	static final URI uri_cidoc_P107B_is_current_or_former_member_of = URI.create(uriPrefix_cidoc_crm + "P107B.is_current_or_former_member_of");
 	static final URI uri_cidoc_P107F_has_current_or_former_member = URI.create(uriPrefix_cidoc_crm + "P107F.has_current_or_former_member");
 

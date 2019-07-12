@@ -138,41 +138,41 @@ public abstract class ContentHelper {
 
 	// relationer
 	public static final String IX_RELURI = "relUri"; // slask-indexet
-	public static final String IX_CONTAINSINFORMATIONABOUT = "containsInformationAbout";
+	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
+	public static final String IX_ISRELATEDTO = "isRelatedTo";
 	public static final String IX_CONTAINSOBJECT = "containsObject";
 	public static final String IX_ISCONTAINEDIN = "isContainedIn";
 	public static final String IX_HASBEENUSEDIN = "hasBeenUsedIn";
 	public static final String IX_HASCHILD = "hasChild";
+	public static final String IX_HASPARENT = "hasParent";
 	public static final String IX_HASFIND = "hasFind";
+	public static final String IX_ISFOUNDIN = "isFoundIn";
 	public static final String IX_HASIMAGE = "hasImage";
 	public static final String IX_HASOBJECTEXAMPLE = "hasObjectExample";
 	public static final String IX_ISOBJECTEXAMPLEFOR = "isObjectExampleFor";
-	public static final String IX_HASPARENT = "hasParent";
 	public static final String IX_HASPART = "hasPart";
+	public static final String IX_ISPARTOF = "isPartOf";
 	public static final String IX_ISDESCRIBEDBY = "isDescribedBy";
 	public static final String IX_DESCRIBES = "describes";
-	public static final String IX_ISFOUNDIN = "isFoundIn";
-	public static final String IX_ISPARTOF = "isPartOf";
-	public static final String IX_ISRELATEDTO = "isRelatedTo";
 	public static final String IX_ISVISUALIZEDBY = "isVisualizedBy";
-	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
 	public static final String IX_VISUALIZES = "visualizes";
+	public static final String IX_CONTAINSINFORMATIONABOUT = "containsInformationAbout";
 	public static final String IX_ISMENTIONEDBY = "isMentionedBy";
 	public static final String IX_MENTIONS = "mentions";
 
 	// cidoc-crm
-	public static final String IX_HASFORMERORCURRENTOWNER = "has_former_or_current_owner";
-	public static final String IX_ISFORMERORCURRENTOWNEROF = "is_former_or_current_owner_of";
+	public static final String IX_PARTICIPATEDIN = "participated_in";
+	public static final String IX_HADPARTICIPANT = "had_participant";
+	public static final String IX_WASPRESENTAT = "was_present_at";
+	public static final String IX_OCCUREDINTHEPRESENCEOF = "occurred_in_the_presence_of";
 	public static final String IX_HASFORMERORCURRENTKEEPER = "has_former_or_current_keeper";
 	public static final String IX_ISFORMERORCURRENTKEEPEROF = "is_former_or_current_keeper_of";
+	public static final String IX_HASFORMERORCURRENTOWNER = "has_former_or_current_owner";
+	public static final String IX_ISFORMERORCURRENTOWNEROF = "is_former_or_current_owner_of";
 	public static final String IX_HASCREATED = "has_created";
 	public static final String IX_WASCREATEDBY = "was_created_by";
 	public static final String IX_HASRIGHTON = "has_right_on";
 	public static final String IX_RIGHTHELDBY = "right_held_by";
-	public static final String IX_WASPRESENTAT = "was_present_at";
-	public static final String IX_OCCUREDINTHEPRESENCEOF = "occurred_in_the_presence_of";
-	public static final String IX_HADPARTICIPANT = "had_participant";
-	public static final String IX_PARTICIPATEDIN = "participated_in";
 	public static final String IX_ISCURRENTORFORMERMEMBEROF = "is_current_or_former_member_of";
 	public static final String IX_HASCURRENTORFORMERMEMBER = "has_current_or_former_member";
 
