@@ -6,7 +6,6 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.AllIndexUniqueValueCount;
 import se.raa.ksamsok.api.method.Facet;
-import se.raa.ksamsok.api.method.GetGeoResource;
 import se.raa.ksamsok.api.method.GetRelationTypes;
 import se.raa.ksamsok.api.method.GetRelations;
 import se.raa.ksamsok.api.method.GetServiceOrganization;
@@ -101,8 +100,6 @@ public class APIMethodFactory implements APIServiceProvider {
 			m = new Stem(this, out, params);
 		} else if (method.equals(GetRelations.METHOD_NAME)) {
 			m = new GetRelations(this, out, params);
-		} else if (method.equals(GetGeoResource.METHOD_NAME)) {
-			m = new GetGeoResource(this, out, params);
 		} else if (method.equals(GetRelationTypes.METHOD_NAME)) {
 			m = new GetRelationTypes(this, out, params);
 		} else {

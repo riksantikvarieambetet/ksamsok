@@ -106,28 +106,6 @@ public class DBUtil {
 		}
 	}
 
-	/**
-	 * Ger en sträng som kan användas för att få en geometrikolumn översatt till gml (v2).
-	 * @param c connection
-	 * @param columnName geometrins kolumnnamn
-	 * @return sträng med funktionsanrop anpassat till aktuell databas
-	 */
-	public static String toGMLCall(Connection c, String columnName) {
-		switch (determineDBType(c)) {
-		case ORACLE:
-			return "sdo_util.to_gmlgeometry(" + columnName + ")";
-		case POSTGRES:
-			// TODO: kan ha fler parametrar i anropet
-			return "ST_AsGML(" + columnName + ")";
-		case DERBY:
-			logger.error("Derby does not handle gml/spatial data");
-			throw new RuntimeException("Derby does not handle gml/spatial data");
-		default:
-			logger.error("Unsupported database");
-			throw new RuntimeException("unsupported database");
-		}
-	}
-
 	// avgör och cachar upp databastyp för uppkopplingen, kastar runtime exception
 	// om databastypen inte gick att avgöra eller om den inte stöds
 	private static DBType determineDBType(Connection c) {
