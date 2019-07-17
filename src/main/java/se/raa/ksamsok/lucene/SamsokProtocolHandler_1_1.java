@@ -11,6 +11,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISCONTAINEDIN;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISOBJECTEXAMPLEFOR;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_DESCRIBES;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ISMENTIONEDBY;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_MENTIONS;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsContainedIn;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsObjectExampleFor;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rDescribes;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsMentionedBy;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMentions;
+
 public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 	private static final Logger classLogger = getClassLogger();
@@ -90,9 +101,13 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		// kontextrelationerna
 		Map<String, URI> contextRelMap = new HashMap<String, URI>();
 
+		contextRelMap.put(ContentHelper.IX_ISFORMERORCURRENTKEEPEROF, SamsokProtocol.uri_cidoc_P49B_is_former_or_current_keeper_of);
 		contextRelMap.put(ContentHelper.IX_HASFORMERORCURRENTKEEPER, SamsokProtocol.uri_cidoc_P49F_has_former_or_current_keeper);
+		contextRelMap.put(ContentHelper.IX_ISFORMERORCURRENTOWNEROF, SamsokProtocol.uri_cidoc_P51B_is_former_or_current_owner_of);
 		contextRelMap.put(ContentHelper.IX_HASFORMERORCURRENTOWNER, SamsokProtocol.uri_cidoc_P51F_has_former_or_current_owner);
 		contextRelMap.put(ContentHelper.IX_WASCREATEDBY, SamsokProtocol.uri_cidoc_P94B_was_created_by);
+		contextRelMap.put(ContentHelper.IX_HASCREATED, SamsokProtocol.uri_cidoc_P94F_has_created);
+		contextRelMap.put(ContentHelper.IX_HASRIGHTON, SamsokProtocol.uri_cidoc_P105B_has_right_on);
 		contextRelMap.put(ContentHelper.IX_RIGHTHELDBY, SamsokProtocol.uri_cidoc_P105F_right_held_by);
 		contextRelMap.put(ContentHelper.IX_CLIENT, SamsokProtocol.uri_rClient);
 		contextRelMap.put(ContentHelper.IX_AUTHOR, SamsokProtocol.uri_rAuthor);

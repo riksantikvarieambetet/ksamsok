@@ -88,9 +88,13 @@ public class SamsokProtocol {
 	static final URI uri_cidoc_P11F_had_participant = URI.create(uriPrefix_cidoc_crm + "P11F.had_participant");
 	static final URI uri_cidoc_P12B_was_present_at = URI.create(uriPrefix_cidoc_crm + "P12B.was_present_at");
 	static final URI uri_cidoc_P12F_occurred_in_the_presence_of = URI.create(uriPrefix_cidoc_crm + "P12F.occurred_in_the_presence_of");
+	static final URI uri_cidoc_P49B_is_former_or_current_keeper_of = URI.create(uriPrefix_cidoc_crm + "P49B.is_former_or_current_keeper_of");
 	static final URI uri_cidoc_P49F_has_former_or_current_keeper = URI.create(uriPrefix_cidoc_crm + "P49F.has_former_or_current_keeper");
+	static final URI uri_cidoc_P51B_is_former_or_current_owner_of = URI.create(uriPrefix_cidoc_crm + "P51B.is_former_or_current_owner_of");
 	static final URI uri_cidoc_P51F_has_former_or_current_owner = URI.create(uriPrefix_cidoc_crm + "P51F.has_former_or_current_owner");
 	static final URI uri_cidoc_P94B_was_created_by = URI.create(uriPrefix_cidoc_crm + "P94B.was_created_by");
+	static final URI uri_cidoc_P94F_has_created = URI.create(uriPrefix_cidoc_crm + "P94F.has_created");
+	static final URI uri_cidoc_P105B_has_right_on = URI.create(uriPrefix_cidoc_crm + "P105B.has_right_on");
 	static final URI uri_cidoc_P105F_right_held_by = URI.create(uriPrefix_cidoc_crm + "P105F.right_held_by");
 	static final URI uri_cidoc_P107B_is_current_or_former_member_of = URI.create(uriPrefix_cidoc_crm + "P107B.is_current_or_former_member_of");
 	static final URI uri_cidoc_P107F_has_current_or_former_member = URI.create(uriPrefix_cidoc_crm + "P107F.has_current_or_former_member");
