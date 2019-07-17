@@ -235,7 +235,7 @@ public abstract class ContentHelper {
 	public static final String IX_EMPLOYER = "employer";
 	public static final String IX_MARRIEDTO = "marriedTo";
 
-	// roller inverser inte index men konstanter
+	// roller inverser
 	public static final String CLIENT_OF = "clientOf";
 	public static final String COMPOSER_OF = "composerOf";
 	public static final String AUTHOR_OF = "authorOf";
