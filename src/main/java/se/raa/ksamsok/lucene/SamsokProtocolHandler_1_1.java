@@ -11,17 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static se.raa.ksamsok.lucene.ContentHelper.IX_ISCONTAINEDIN;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_ISOBJECTEXAMPLEFOR;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_DESCRIBES;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_ISMENTIONEDBY;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_MENTIONS;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsContainedIn;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsObjectExampleFor;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rDescribes;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rIsMentionedBy;
-import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMentions;
-
 public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 
 	private static final Logger classLogger = getClassLogger();
@@ -62,38 +51,24 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		// utgå från tidigare version och lägg till de nytillkomna
 		Map<String, URI> relMap = new HashMap<String, URI>(relationsMap_0_TO_1_0);
 
-		// hämta ut is contained in (0M)
 		relMap.put(ContentHelper.IX_ISCONTAINEDIN, SamsokProtocol.uri_rIsContainedIn);
-		// hämta ut is object example for (0M)
 		relMap.put(ContentHelper.IX_ISOBJECTEXAMPLEFOR, SamsokProtocol.uri_rIsObjectExampleFor);
-		// hämta ut describes (0M)
 		relMap.put(ContentHelper.IX_DESCRIBES, SamsokProtocol.uri_rDescribes);
-		// hämta ut is mentioned by (0M)
 		relMap.put(ContentHelper.IX_ISMENTIONEDBY, SamsokProtocol.uri_rIsMentionedBy);
-		// hämta ut mentions (0M)
 		relMap.put(ContentHelper.IX_MENTIONS, SamsokProtocol.uri_rMentions);
 
-		// hämta ut participated in (0M)
+		// cidoc
 		relMap.put(ContentHelper.IX_PARTICIPATEDIN, SamsokProtocol.uri_cidoc_P11B_participated_in);
-		// hämta ut had participant (0M)
 		relMap.put(ContentHelper.IX_HADPARTICIPANT, SamsokProtocol.uri_cidoc_P11F_had_participant);
-		// hämta ut was present at (0M)
 		relMap.put(ContentHelper.IX_WASPRESENTAT, SamsokProtocol.uri_cidoc_P12B_was_present_at);
-		// hämta ut occured in the presence of (0M)
 		relMap.put(ContentHelper.IX_OCCUREDINTHEPRESENCEOF, SamsokProtocol.uri_cidoc_P12F_occurred_in_the_presence_of);
-		// hämta ut current or former owner of (0M)
 		relMap.put(ContentHelper.IX_ISCURRENTORFORMERMEMBEROF, SamsokProtocol.uri_cidoc_P107B_is_current_or_former_member_of);
-		// hämta ut has former or current keeper of (0M)
 		relMap.put(ContentHelper.IX_HASCURRENTORFORMERMEMBER, SamsokProtocol.uri_cidoc_P107F_has_current_or_former_member);
 
 		// bio
-		// hämta ut child (01)
 		relMap.put(ContentHelper.IX_CHILD, SamsokProtocol.uri_bio_child);
-		// hämta ut parent (01)
 		relMap.put(ContentHelper.IX_PARENT, SamsokProtocol.uri_bio_parent);
-		// hämta ut mother (01)
 		relMap.put(ContentHelper.IX_MOTHER, SamsokProtocol.uri_bio_mother);
-		// hämta ut father (01)
 		relMap.put(ContentHelper.IX_FATHER, SamsokProtocol.uri_bio_father);
 
 		relationsMap_1_1_TO = Collections.unmodifiableMap(relMap);
