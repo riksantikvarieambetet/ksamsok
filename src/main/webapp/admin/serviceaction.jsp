@@ -102,6 +102,7 @@
    		if (spoolFile.exists()) {
    			spoolFile.delete();
    		}
+		redirTo = "editservice.jsp?serviceId=" + serviceId;
    	} else if ("unziptospool".equals(action)) {
    		hrm.extractGZipToSpool(service);   		
    	} else {
