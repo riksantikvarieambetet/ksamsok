@@ -34,3 +34,5 @@ RUNNING_PID
 ksamsok.iml
 test/test.iml
 .idea/
+/src/main/environment/local/
+/src/main/environment/local/environment.properties

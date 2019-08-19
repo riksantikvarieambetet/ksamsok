@@ -5,7 +5,6 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:property-placeholder location="classpath:environment.properties"/>
 	<context:annotation-config />
 
 	<!--
@@ -23,7 +22,7 @@
 	</bean>
 
 	<bean id="solrBuilder" class="org.apache.solr.client.solrj.impl.HttpSolrClient$Builder">
-		<constructor-arg value="http://localhost:8983/solr/ksamsok" />
+		<constructor-arg value="http://@solr.servername@:8983/solr/ksamsok" />
 	</bean>
 	
 	<bean id="solr" class="org.apache.solr.client.solrj.impl.HttpSolrClient" factory-bean="solrBuilder" factory-method="build" />
@@ -43,7 +42,7 @@
 		<constructor-arg ref="harvestRepositoryManager" />
 		<constructor-arg ref="statusService" />
 		<!-- sätter pausad status (om app.state=development), för att pausa alla servicar i test/utv-miljö.  -->
-		<constructor-arg value="${app.state}" />
+		<constructor-arg value="@app.state@" />
 	</bean>
 	<bean id="searchService" class="se.raa.ksamsok.solr.SearchServiceImpl">
 		<property name="solr" ref="solr"/>
