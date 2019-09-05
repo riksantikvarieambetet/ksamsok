@@ -10,7 +10,7 @@ public class SamsokProtocol {
 	static final String uriPrefixFoaf = "http://xmlns.com/foaf/0.1/";
 	static final String uriPrefixMindswap = "http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#";
 
-	static final String uriPrefixDcterms = "http://purl.org/dc/terms#";
+	static final String uriPrefixDcterms = "http://purl.org/dc/terms/";
 
 	static final URI uri_rdfType = URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 	static final URI uri_samsokEntity = URI.create(uriPrefixKSamsok + "Entity");
