@@ -10,6 +10,8 @@ public class SamsokProtocol {
 	static final String uriPrefixFoaf = "http://xmlns.com/foaf/0.1/";
 	static final String uriPrefixMindswap = "http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#";
 
+	static final String uriPrefixDcterms = "http://purl.org/dc/terms/";
+
 	static final URI uri_rdfType = URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 	static final URI uri_samsokEntity = URI.create(uriPrefixKSamsok + "Entity");
 
@@ -55,6 +57,8 @@ public class SamsokProtocol {
 	static final URI uri_rURL = URI.create(uriPrefixKSamsok + "url");
 	static final URI uri_rMuseumdatURL = URI.create(uriPrefixKSamsok + "museumdatUrl");
 	static final URI uri_rTheme = URI.create(uriPrefixKSamsok + "theme");
+
+	static final URI uri_rReplaces = URI.create(uriPrefixDcterms + "replaces");
 
 	// special
 	static final URI uri_rItemForIndexing = URI.create(uriPrefixKSamsok + "itemForIndexing");

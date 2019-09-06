@@ -79,6 +79,7 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_ISDESCRIBEDBY, ContentHelper.IX_DESCRIBES);
 		twoWay(map, ContentHelper.IX_HASOBJECTEXAMPLE, ContentHelper.IX_ISOBJECTEXAMPLEFOR);
 		twoWay(map, ContentHelper.IX_ISMENTIONEDBY, ContentHelper.IX_MENTIONS);
+		twoWay(map, ContentHelper.IX_REPLACES, ContentHelper.IX_ISREPLACEDBY);
 
 		// bio (lite special)
 		map.put(ContentHelper.IX_FATHER, ContentHelper.IX_CHILD);

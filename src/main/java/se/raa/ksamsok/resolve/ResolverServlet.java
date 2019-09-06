@@ -1,9 +1,11 @@
 package se.raa.ksamsok.resolve;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Selector;
@@ -50,6 +52,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -76,7 +80,7 @@ public class ResolverServlet extends HttpServlet {
 
 		/**
 		 * Parsar en sträng med formatet och ger motsvarande konstant.
-		 * 
+		 *
 		 * @param formatString formatsträng
 		 * @return formatkonstant eller null
 		 */
@@ -97,27 +101,27 @@ public class ResolverServlet extends HttpServlet {
 		}
 	}
 
-    @Override
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		ServletContext servletContext = config.getServletContext();
 		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE,
-			true);
+				true);
 	}
 
 	/**
 	 * Försöker kontrollera om requesten är något resolverservleten ska hantera. Om det inte är det
 	 * skickas requesten vidare mha request dispatchers.
-	 * 
-	 * @param req request
+	 *
+	 * @param req  request
 	 * @param resp response
 	 * @return de olika delarna i pathInfo, eller null om requesten inte ska hanteras av resolvern
 	 * @throws ServletException
 	 * @throws IOException
 	 */
 	protected String[] checkAndForwardRequests(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
+			throws ServletException, IOException {
 		String path = req.getPathInfo();
 		// special då resolverservlet "käkar" upp default-sidehanteringen
 		if ("/admin/".equals(path) || "/".equals(path)) {
@@ -145,14 +149,14 @@ public class ResolverServlet extends HttpServlet {
 
 	/**
 	 * Försöker göra forward på ej hanterad request genom att hitta en passande request dispatcher.
-	 * 
-	 * @param req request
+	 *
+	 * @param req  request
 	 * @param resp response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
 	protected void forwardRequest(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
+			throws ServletException, IOException {
 		RequestDispatcher rd;
 		// TODO: dessa dispatchers fungerar för tomcat, fungerar de för övriga?
 		String name = "default";
@@ -239,7 +243,7 @@ public class ResolverServlet extends HttpServlet {
 			String urli = "http://kulturarvsdata.se/" + path;
 			// Get content from solr or db
 			String response = prepareResponse(urli, format, req);
-			// Make responde
+			// Make response
 			makeResponse(response, format, urli, prettyPrint, resp);
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
@@ -249,10 +253,10 @@ public class ResolverServlet extends HttpServlet {
 
 	/**
 	 * This method gets the data from Solr or in some cases from db
-	 * 
-	 * @param urli - The path to the request, i.e. which object shoud we get
+	 *
+	 * @param urli   - The path to the request, i.e. which object shoud we get
 	 * @param format - The requested response format
-	 * @param req - The http servlet request
+	 * @param req    - The http servlet request
 	 * @return - A string with the found content or null
 	 * @throws Exception
 	 */
@@ -260,8 +264,16 @@ public class ResolverServlet extends HttpServlet {
 		String prepResp = null;
 		byte[] xmlContent;
 		SolrQuery q = new SolrQuery();
-		q.setQuery(ContentHelper.IX_ITEMID + ":" + ClientUtils.escapeQueryChars(urli));
+
+		final String escapedUrli = ClientUtils.escapeQueryChars(urli);
+		StringBuilder sb = new StringBuilder(ContentHelper.IX_ITEMID).append(":").append(escapedUrli);
+
+		// we have to append a special case to also fetch any posts that have the id in a "replaces"-tag
+		sb.append(" OR ").append(ContentHelper.IX_REPLACES).append(":").append(escapedUrli);
+
+		q.setQuery(sb.toString());
 		q.setRows(1);
+
 		// hämta bara nödvändigt fält
 		switch (format) {
 			case JSON_LD:
@@ -326,34 +338,126 @@ public class ResolverServlet extends HttpServlet {
 		return prepResp;
 	}
 
+	private String escapeChars(String urli) {
+		return StringUtils.replace(urli, ":", "\\:");
+	}
+
+	private String buildReplacedByMultipleUrisJsonReply(ArrayList<String> replaceUris) {
+		StringBuffer jsonBuf = new StringBuffer();
+		if (replaceUris.size() > 1) {
+			// create a json with all the redirect possibilities
+			jsonBuf = new StringBuffer("{\"isReplacedBy:\" [");
+			int counter = 0;
+			for (String replaceUri : replaceUris) {
+				jsonBuf.append("{\"record\": \"").append(replaceUri).append("\"}");
+				if (++counter < replaceUris.size()) {
+					jsonBuf.append(", ");
+				}
+
+			}
+			jsonBuf.append("]}");
+		}
+		return jsonBuf.toString();
+	}
+
+	private String buildReplacedByMultipleUrisXmlReply(ArrayList<String> replaceUris) {
+		StringBuffer xmlBuf = new StringBuffer();
+		if (replaceUris.size() > 1) {
+			// create an xml with all the redirect possibilities
+			xmlBuf = new StringBuffer("<isReplacedBy>");
+			for (String replaceUri : replaceUris) {
+				xmlBuf.append("<record>").append(replaceUri).append("</record>");
+
+
+			}
+			xmlBuf.append("</isReplacedBy>");
+		}
+		return xmlBuf.toString();
+	}
+
 	/**
 	 * This method writes the response
-	 * 
+	 *
 	 * @param response - The content from solr or db
-	 * @param format - The requested response format
-	 * @param urli - The path to the request, i.e. which object shoud we get
-	 * @param resp - The http servlet response
+	 * @param format   - The requested response format
+	 * @param urli     - The path to the request, i.e. which object should we get
+	 * @param resp     - The http servlet response
 	 * @throws IOException
 	 * @throws DiagnosticException
 	 */
 	private void makeResponse(String response, Format format, String urli, Boolean prettyPrint,
-		HttpServletResponse resp) throws IOException, DiagnosticException {
+							  HttpServletResponse resp) throws IOException, DiagnosticException {
+		ArrayList<String> replaceUris = new ArrayList<>();
+		if (response != null) {
+			Model m = ModelFactory.createDefaultModel();
+			m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
+			final ResIterator resIterator = m.listSubjects();
+
+
+
+			while (resIterator.hasNext()) {
+				Resource res = resIterator.next();
+
+
+				final StmtIterator statementIterator = res.listProperties();
+				while (statementIterator.hasNext()) {
+					Statement statement = statementIterator.next();
+					Property predicate = statement.getPredicate();
+
+					if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
+
+						if (res.getURI() != null) {
+							replaceUris.add(res.getURI());
+							//resp.sendRedirect(res.getURI());
+						} else {
+							logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+		// if we found only one replaceUri, redirect immediately:
+		if (replaceUris.size() == 1) {
+			resp.sendRedirect(replaceUris.get(0));
+			return;
+		}
+
 		switch (format) {
 			case JSON_LD:
-				if (response != null) {
+				if (replaceUris.size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisJsonReply(replaceUris);
+					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+
+					PrintWriter out = resp.getWriter();
+					resp.setContentType("application/json");
+					resp.setCharacterEncoding("UTF-8");
+					out.print(jsonReply);
+					out.flush();
+				} else if (response != null) {
 					Model m = ModelFactory.createDefaultModel();
 					m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
 					RDFDataMgr.write(resp.getOutputStream(), m, prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
-//					RDFDataMgr.write(resp.getOutputStream(), m,
-//						prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
 				} else {
 					resp.sendError(404, "Could not find record for path");
 				}
 				break;
 			case RDF:
 			case XML:
-				if (response != null) {
+				if (replaceUris.size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisXmlReply(replaceUris);
+					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+
+					PrintWriter out = resp.getWriter();
+					resp.setContentType("text/xml");
+					resp.setCharacterEncoding("UTF-8");
+					out.print(jsonReply);
+					out.flush();
+				} else if (response != null) {
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder docBuilder;
 					Document doc;
@@ -373,19 +477,19 @@ public class ResolverServlet extends HttpServlet {
 					} catch (ParserConfigurationException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					} catch (SAXException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att skapa xml svaret",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					} catch (TransformerConfigurationException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att initiera xml dokument transformeraren",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					} catch (TransformerException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att skriva xml dokument till ut-strömmen",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					}
 				} else if (format == Format.RDF) {
 					logger.warn("Could not find rdf for record with uri: " + urli);
@@ -401,11 +505,11 @@ public class ResolverServlet extends HttpServlet {
 					if (response.toLowerCase().startsWith(badURLPrefix)) {
 						if (format == Format.HTML) {
 							logger.warn(
-								"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + response);
+									"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + response);
 							resp.sendError(404, "Invalid html url to pass on to");
 						} else {
 							logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " +
-								response);
+									response);
 							resp.sendError(404, "Invalid museumdat url to pass on to");
 						}
 					} else {
@@ -428,7 +532,7 @@ public class ResolverServlet extends HttpServlet {
 
 	/**
 	 * This method gets the url to the the original storage of the rdf data
-	 * 
+	 *
 	 * @param content - String containing a rdf
 	 * @return - a string with the url, if not found then null
 	 */
