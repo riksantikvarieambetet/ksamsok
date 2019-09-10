@@ -47,6 +47,7 @@
         <xs:element ref="ksamsok:itemLabel"/>
         <xs:element ref="ksamsok:itemSpecification" maxOccurs="unbounded" />
         <xs:element ref="ksamsok:itemTitle" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ksamsok:itemMark" minOccurs="0" maxOccurs="unbounded" />
         <xs:element ref="ksamsok:itemDescription" minOccurs="0" maxOccurs="unbounded" />
         <xs:element ref="ksamsok:itemKeyWord" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="ksamsok:itemMotiveWord" minOccurs="0" maxOccurs="unbounded"/>
@@ -139,7 +140,12 @@
       <xs:attribute ref="rdf:nodeID" use="required"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="itemTitle" type="xs:string"/> 
+  <xs:element name="itemTitle" type="xs:string"/>
+  <xs:element name="itemMark">
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="itemDescription"> 
     <xs:complexType>
       <xs:attribute ref="rdf:nodeID" use="required"/>
@@ -358,6 +364,17 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="material" type="xs:string"/>
+
+  <xs:element name="ItemMark">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:form"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="form" type="xs:string"/>
   
   <xs:element name="ItemDescription"> 
     <xs:complexType>
