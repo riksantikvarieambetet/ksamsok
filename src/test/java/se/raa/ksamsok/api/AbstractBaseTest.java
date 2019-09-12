@@ -20,7 +20,6 @@ import org.w3c.dom.ProcessingInstruction;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchServiceImpl;
-import se.raa.ksamsok.statistic.StatisticsManager;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -54,9 +53,6 @@ abstract public class AbstractBaseTest {
 			apiMethodFactory = new APIMethodFactory();
 			// The searchService is @Autowired in the project. It is necessary to set up it by hand in the test cases
 			ReflectionTestUtils.setField(apiMethodFactory,"searchService", searchService);
-			// The statisticsManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
-			StatisticsManager statisticsManager = new StatisticsManager(dataSource);
-			ReflectionTestUtils.setField(apiMethodFactory,"statisticsManager", statisticsManager);
 			// The organizationManager is @Autowired in the project.It is necessary to set up it by hand in the test cases
 			OrganizationManager organizationManager = new OrganizationManager(dataSource);
 			ReflectionTestUtils.setField(apiMethodFactory,"organizationManager", organizationManager);

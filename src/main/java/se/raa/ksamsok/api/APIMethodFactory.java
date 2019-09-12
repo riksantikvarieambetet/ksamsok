@@ -18,7 +18,6 @@ import se.raa.ksamsok.api.method.Stem;
 import se.raa.ksamsok.harvest.HarvestRepositoryManager;
 import se.raa.ksamsok.organization.OrganizationManager;
 import se.raa.ksamsok.solr.SearchService;
-import se.raa.ksamsok.statistic.StatisticsManager;
 
 import javax.sql.DataSource;
 import java.io.OutputStream;
@@ -39,8 +38,6 @@ public class APIMethodFactory implements APIServiceProvider {
 	HarvestRepositoryManager hrm;
 	@Autowired
 	OrganizationManager organizationManager;
-	@Autowired
-	StatisticsManager statisticsManager;
 	@Autowired
 	// @Qualifier("dataSourceReader")
 	DataSource dataSource;
@@ -122,11 +119,6 @@ public class APIMethodFactory implements APIServiceProvider {
 	@Override
 	public OrganizationManager getOrganizationManager() {
 		return organizationManager;
-	}
-
-	@Override
-	public StatisticsManager getStatisticsManager() {
-		return statisticsManager;
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.XML;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -17,8 +16,6 @@ import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
-import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 import javax.servlet.ServletConfig;
@@ -49,9 +46,6 @@ public class APIServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 	// klass specifik logger
 	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.APIServlet");
-
-	@Autowired
-	private APIKeyManager keyManager;
 
 	// fabrik
 	private APIMethodFactory apiMethodFactory;
@@ -112,46 +106,32 @@ public class APIServlet extends HttpServlet {
 		try {
 			out = resp.getOutputStream();
 			String stylesheet = null;
-			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
-			if (apiKey != null)
-				apiKey = StaticMethods.removeChar(apiKey, '"');
-			if (apiKey != null && keyManager.contains(apiKey)) {
-				try {
-					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-					stylesheet = reqParams.get("stylesheet");
-					method = apiMethodFactory.getAPIMethod(reqParams, out);
-					logger.info("Reqparams " + reqParams + "\nStylesheet " + stylesheet + "\nMethod " + method);
-					// Check which format the respond should be
-					String acceptFormat = req.getHeader("Accept");
-					if (acceptFormat != null && acceptFormat.toLowerCase().contains("json")) {
-						format = Format.JSON_LD;
-						method.setFormat(Format.JSON_LD);
-						resp.setContentType("application/json; charset=UTF-8");
-					} else {
-						format = Format.XML;
-						method.setFormat(Format.XML);
-						resp.setContentType("application/xml; charset=UTF-8");
-					}
-					resp.setHeader("Access-Control-Allow-Origin", "*");
-					method.performMethod();
-					keyManager.updateUsage(apiKey);
-				} catch (MissingParameterException | BadParameterException e) {
-					resp.setStatus(400);
-					logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
-					diagnostic(out, stylesheet, e);
-				} catch (DiagnosticException e) {
-					resp.setStatus(500);
-					logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
-					diagnostic(out, stylesheet, e);
+			try {
+				reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+				stylesheet = reqParams.get("stylesheet");
+				method = apiMethodFactory.getAPIMethod(reqParams, out);
+				logger.info("Reqparams " + reqParams + "\nStylesheet " + stylesheet + "\nMethod " + method);
+				// Check which format the respond should be
+				String acceptFormat = req.getHeader("Accept");
+				if (acceptFormat != null && acceptFormat.toLowerCase().contains("json")) {
+					format = Format.JSON_LD;
+					method.setFormat(Format.JSON_LD);
+					resp.setContentType("application/json; charset=UTF-8");
+				} else {
+					format = Format.XML;
+					method.setFormat(Format.XML);
+					resp.setContentType("application/xml; charset=UTF-8");
 				}
-			} else if (apiKey == null) {
+				resp.setHeader("Access-Control-Allow-Origin", "*");
+				method.performMethod();
+			} catch (MissingParameterException | BadParameterException e) {
 				resp.setStatus(400);
-				diagnostic(out, stylesheet,
-					new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
-			} else {
-				resp.setStatus(400);
-				diagnostic(out, stylesheet,
-					new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
+				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
+				diagnostic(out, stylesheet, e);
+			} catch (DiagnosticException e) {
+				resp.setStatus(500);
+				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
+				diagnostic(out, stylesheet, e);
 			}
 		} catch (Exception e) {
 			resp.setStatus(500);

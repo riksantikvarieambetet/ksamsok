@@ -18,8 +18,6 @@ public interface APIMethod
     String API_VERSION = "1.0";
 	/** namnet på metod parametern */
     String METHOD = "method";
-	/** API nyckel parameter namn */
-    String API_KEY_PARAM_NAME = "x-api";
 	/** delare för att dela query strängar */
     String DELIMITER = "|";
 	

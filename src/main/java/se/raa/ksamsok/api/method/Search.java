@@ -22,11 +22,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
-import org.z3950.zing.cql.CQLTermNode;
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -36,7 +34,6 @@ import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
-import se.raa.ksamsok.statistic.StatisticLoggData;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -127,7 +124,6 @@ public class Search extends AbstractSearchMethod {
 	protected String sort = null;
 	protected boolean sortDesc = false;
 	protected String recordSchema = null;
-	protected String apiKey;
 	protected String binDataField = null;
 	protected Set<String> fields = null;
 
@@ -148,7 +144,6 @@ public class Search extends AbstractSearchMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException, BadParameterException {
 		super.extractParameters();
-		this.apiKey = params.get(APIMethod.API_KEY_PARAM_NAME);
 		sort = params.get(Search.SORT);
 		if (sort != null) {
 			if (!ContentHelper.indexExists(sort)) {
@@ -514,8 +509,6 @@ public class Search extends AbstractSearchMethod {
 			String solrQueryString = CQL2Solr.makeQuery(rootNode);
 			if (solrQueryString != null) {
 				query = new SolrQuery(solrQueryString);
-				// logga sökdata
-				loggData(rootNode);
 			}
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.createQuery",
@@ -543,32 +536,5 @@ public class Search extends AbstractSearchMethod {
 			}
 		}
 		return sortDesc;
-	}
-
-	/**
-	 * Loggar data för sökningen för indexet "text".
-	 * 
-	 * @param query cql
-	 * @throws DiagnosticException
-	 */
-	private void loggData(CQLNode query) throws DiagnosticException {
-		if (query == null) {
-			return;
-		}
-		if (query instanceof CQLBooleanNode) {
-			CQLBooleanNode bool = (CQLBooleanNode) query;
-			loggData(bool.getLeftOperand());
-			loggData(bool.getRightOperand());
-		} else if (query instanceof CQLTermNode) {
-			CQLTermNode t = (CQLTermNode) query;
-			// bara för "text"
-			if (t.getIndex().equals(ContentHelper.IX_TEXT)) {
-				StatisticLoggData data = new StatisticLoggData();
-				data.setParam(t.getIndex());
-				data.setAPIKey(apiKey);
-				data.setQueryString(t.getTerm());
-				serviceProvider.getStatisticsManager().addToQueue(data);
-			}
-		}
 	}
 }
