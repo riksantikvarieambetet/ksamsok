@@ -1,9 +1,7 @@
 package se.raa.ksamsok.lucene;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Selector;
@@ -19,7 +17,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
 import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.vecmath.Point2d;
@@ -212,8 +209,7 @@ public class SamsokContentHelper extends ContentHelper {
 	}
 
 	@Override
-	public ExtractedInfo extractInfo(String xmlContent,
-			GMLInfoHolder gmlInfoHolder) throws Exception {
+	public ExtractedInfo extractInfo(String xmlContent) throws Exception {
 		String identifier = null;
 		String htmlURL = null;
 		Model model = null;
@@ -243,65 +239,7 @@ public class SamsokContentHelper extends ContentHelper {
 			}
 			info.setIdentifier(identifier);
 			info.setNativeURL(htmlURL);
-			if (gmlInfoHolder != null) {
-				try {
-					// sätt identifier först då den används för deletes etc även om det går
-					// fel nedan
-					gmlInfoHolder.setIdentifier(identifier);
-					Property rCoordinates = ResourceFactory.createProperty(SamsokProtocol.uri_rCoordinates.toString());
-					Property rContext = ResourceFactory.createProperty(SamsokProtocol.uri_rContext.toString());
-					// hämta ev gml från kontext-noder
-					LinkedList<String> gmlGeometries = new LinkedList<String>();
-					selector = new SimpleSelector(subject, rContext, (RDFNode) null);
-					iter = model.listStatements(selector);
-					while (iter.hasNext()){
-						Statement s = iter.next();
-						if (s.getObject().isResource()){
-							Resource cS = s.getObject().asResource();
-							String gml = RDFUtil.extractSingleValue(model, cS, rCoordinates, null);
-							if (gml != null && gml.length() > 0) {
-								// vi konverterar till SWEREF 99 TM då det är vårt standardformat
-								// dessutom fungerar konverteringen som en kontroll av om gml:en är ok
-								gml = GMLUtil.convertTo(gml, GMLUtil.CRS_SWEREF99_TM_3006);
-								gmlGeometries.add(gml);
-							}
-						}
-					}
-					gmlInfoHolder.setGmlGeometries(gmlGeometries);
-					// itemTitle kan vara 0M så om den saknas försöker vi ta itemName och
-					// om den saknas, itemType
-					Property rItemTitle = ResourceFactory.createProperty(SamsokProtocol.uri_rItemTitle.toString());
-					String name = StringUtils.trimToNull(RDFUtil.extractValue(model, subject, rItemTitle, null, null));
-					if (name == null) {
-						Property rItemName = ResourceFactory.createProperty(SamsokProtocol.uri_rItemName.toString());
-						name = StringUtils.trimToNull(RDFUtil.extractValue(model, subject, rItemName, null, null));
-						if (name == null) {
-							Property rItemType = ResourceFactory.createProperty(SamsokProtocol.uri_rItemType.toString());
-							String typeUri = RDFUtil.extractSingleValue(model, subject, rItemType, null);
-							if (typeUri != null) {
-								Property rProtocolVersion = ResourceFactory.createProperty(SamsokProtocol.uri_rKsamsokVersion.toString());
-								String protocolVersion = RDFUtil.extractSingleValue(model, subject, rProtocolVersion, null);
-								if (protocolVersion == null) {
-									logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + model);
-									throw new Exception("Hittade ingen protokollversion i rdf-grafen");
-								}
-								SamsokProtocolHandler handler = getProtocolHandlerForVersion(protocolVersion, model, subject);
-								name = handler.lookupURIValue(typeUri);
-								//name = uriValues.get(typeUri);
-							}
-						}
-					}
-					if (name == null) {
-						name = "Okänt objekt";
-					}
-					gmlInfoHolder.setName(name);
-				} catch (Exception e) {
-					//logger.error("Fel vid gmlhantering för " + identifier, e);
-					// rensa mängd med geometrier
-					gmlInfoHolder.setGmlGeometries(null);
-					addProblemMessage("Problem with GML for " + identifier + ": " + e.getMessage());
-				}
-			}
+
 		} finally {
 			if (model != null) {
 				model.close();

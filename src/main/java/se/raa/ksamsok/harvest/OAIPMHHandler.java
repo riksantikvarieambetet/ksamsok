@@ -11,9 +11,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokUriPrefix;
-import se.raa.ksamsok.spatial.GMLDBWriter;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
-import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
@@ -40,7 +37,6 @@ public class OAIPMHHandler extends DefaultHandler {
 	private static DateTimeFormatter isoDateTimeParser = ISODateTimeFormat.dateTimeParser();
 
 	Connection c;
-	GMLDBWriter gmlDBWriter;
 	HarvestService service;
 	ContentHelper contentHelper;
 	String oaiURI;
@@ -90,7 +86,6 @@ public class OAIPMHHandler extends DefaultHandler {
 		this.insertPst = c.prepareStatement("insert into content " +
 			"(uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status, nativeURL) " +
 			"values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
 	}
 
 	public void destroy() {
@@ -102,10 +97,6 @@ public class OAIPMHHandler extends DefaultHandler {
 		updatePst = null;
 		deleteUpdatePst = null;
 		insertPst = null;
-		if (gmlDBWriter != null) {
-			gmlDBWriter.destroy();
-			gmlDBWriter = null;
-		}
 	}
 
 	@Override
@@ -372,17 +363,7 @@ public class OAIPMHHandler extends DefaultHandler {
 
 		ResultSet rs = null;
 		try {
-			// bort med ev spatialt data
-			if (gmlDBWriter != null) {
-				// hÃ¤mta ut uri:n dÃ¥ oai-uri bara Ã¤r intern identifierare
-				// select uri from content where oaiuri = ?
-				oai2uriPst.setString(1, oaiURI);
-				rs = oai2uriPst.executeQuery();
-				if (rs.next()) {
-					String uri = rs.getString("uri");
-					gmlDBWriter.delete(uri);
-				}
-			}
+
 			// update content set status = ?, changed = ?, deleted = ?, datestamp = ? where
 			// serviceId = ? and oaiuri = ?
 			deleteUpdatePst.setInt(1, DBUtil.STATUS_NORMAL);
@@ -411,12 +392,10 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param uri (rdf-)identifierare
 	 * @param xmlContent xml-innehÃ¥ll
 	 * @param datestamp postens Ã¤ndringsdatum (frÃ¥n oai-huvudet)
-	 * @param gmlInfoHolder hÃ¥llare fÃ¶r geometrier mm
 	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
-	protected void insertRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp,
-		GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
+	protected void insertRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp, String nativeURL) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug(
 				"* Entering data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " + service.getId());
@@ -438,10 +417,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		insertPst.setInt(8, DBUtil.STATUS_NORMAL);
 		insertPst.setString(9, nativeURL);
 		insertPst.executeUpdate();
-		// stoppa in ev spatialdata om vi har nÃ¥t
-		if (gmlDBWriter != null && gmlInfoHolder != null && gmlInfoHolder.hasGeometries()) {
-			gmlDBWriter.insert(gmlInfoHolder);
-		}
+
 		++numInsertedXact;
 		if (logger.isDebugEnabled()) {
 			logger.debug(
@@ -457,12 +433,10 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param uri (rdf-)identifierare
 	 * @param xmlContent xml-innehÃ¥ll
 	 * @param datestamp postens Ã¤ndringsdatum (frÃ¥n oai-huvudet)
-	 * @param gmlInfoHolder hÃ¥llare fÃ¶r geometrier mm
 	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
-	protected boolean updateRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp,
-		GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
+	protected boolean updateRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp, String nativeURL) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug(
 				"* Updated data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " + service.getId());
@@ -484,11 +458,6 @@ public class OAIPMHHandler extends DefaultHandler {
 		updatePst.setString(8, uri);
 		boolean updated = updatePst.executeUpdate() > 0;
 		if (updated) {
-			// spara gml (obs, inget villkor pÃ¥ att det finns geometrier dÃ¥ det kanske
-			// fanns gamla som nu ska tas bort)
-			if (gmlDBWriter != null && gmlInfoHolder != null) {
-				gmlDBWriter.update(gmlInfoHolder);
-			}
 			++numUpdatedXact;
 			if (logger.isDebugEnabled()) {
 				logger.debug("* Updated data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " +
@@ -510,14 +479,10 @@ public class OAIPMHHandler extends DefaultHandler {
 	 */
 	protected void insertOrUpdateRecord(String oaiURI, String xmlContent, Timestamp datestamp) throws Exception {
 		String uri = null;
-		GMLInfoHolder gmlih = null;
 		String nativeURL = null;
-		if (gmlDBWriter != null) {
-			// om vi ska hantera spatiala data, skapa en datahÃ¥llare att fylla pÃ¥
-			gmlih = new GMLInfoHolder();
-		}
+
 		try {
-			ExtractedInfo info = contentHelper.extractInfo(xmlContent, gmlih);
+			ExtractedInfo info = contentHelper.extractInfo(xmlContent);
 			uri = info.getIdentifier();
 			nativeURL = info.getNativeURL();
 		} catch (Exception e) {
@@ -534,8 +499,8 @@ public class OAIPMHHandler extends DefaultHandler {
 
 		// gÃ¶r update och om ingen post uppdaterades stoppa in en (istf fÃ¶r att kolla om post
 		// finns fÃ¶rst)
-		if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL)) {
-			insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL);
+		if (!updateRecord(oaiURI, uri, xmlContent, datestamp, nativeURL)) {
+			insertRecord(oaiURI, uri, xmlContent, datestamp, nativeURL);
 		}
 	}
 
@@ -603,10 +568,6 @@ public class OAIPMHHandler extends DefaultHandler {
 					uri = rs.getString("uri");
 					updatePst.setString(5, uri);
 					deltaRec += updatePst.executeUpdate();
-					// uppdatera status/data fÃ¶r postens ev geometrier
-					if (gmlDBWriter != null) {
-						totalGeo += gmlDBWriter.delete(uri);
-					}
 				}
 				// stÃ¤ng (och nollstÃ¤ll) rs fÃ¶r Ã¥teranvÃ¤ndning
 				DBUtil.closeDBResources(rs, null, null);

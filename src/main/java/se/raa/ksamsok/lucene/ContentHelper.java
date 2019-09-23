@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -596,11 +595,10 @@ public abstract class ContentHelper {
 	 * URI och xml-innehållet är en post med k-samsöks-xml (rdf).
 	 * 
 	 * @param xmlContent xml-innehåll
-	 * @param gmlInfoHolder böna som fylls på med funna gml-geometrier mm om ej null
 	 * @return värdeböna, aldrig null
 	 * @throws Exception vid problem
 	 */
-	public abstract ExtractedInfo extractInfo(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
+	public abstract ExtractedInfo extractInfo(String xmlContent) throws Exception;
 
 	/**
 	 * Skapar ett solr-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster är
