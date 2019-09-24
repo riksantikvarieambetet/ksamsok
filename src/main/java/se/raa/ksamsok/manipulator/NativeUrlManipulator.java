@@ -104,7 +104,7 @@ public class NativeUrlManipulator implements Manipulator
 				String uri = rs.getString("uri");
 				String xmlContent = rs.getString("xmlData");
 				if(xmlContent != null) {
-					ExtractedInfo info = contentHelper.extractInfo(xmlContent, null);
+					ExtractedInfo info = contentHelper.extractInfo(xmlContent);
 					String nativeUrl = info.getNativeURL();
 					try {
 						if(!StringUtils.containsIgnoreCase(nativeUrl, "raa.se")) {
