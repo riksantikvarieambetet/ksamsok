@@ -6,8 +6,6 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.common.SolrInputDocument;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
-import se.raa.ksamsok.spatial.GMLDBWriter;
-import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.sql.DataSource;
 import javax.xml.parsers.SAXParser;
@@ -324,11 +322,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				pst = c.prepareStatement("delete from content where serviceId = ?");
 				pst.setString(1, serviceId);
 				pst.executeUpdate();
-				// och rensa ev spatial-data för tjänsten
-				GMLDBWriter gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
-				if (gmlDBWriter != null) {
-					gmlDBWriter.deleteAllForService();
-				}
 				solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
 				// commit först för db då den är troligast att den smäller och sen solr
 				DBUtil.commit(c);
