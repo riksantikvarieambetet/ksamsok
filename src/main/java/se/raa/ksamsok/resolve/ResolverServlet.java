@@ -212,12 +212,6 @@ public class ResolverServlet extends HttpServlet {
 			}
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[2];
 		}
-		// Check if json should be in pretty print
-		Map<String, String> reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-		Boolean prettyPrint = false;
-		if (reqParams.get("prettyPrint") != null && reqParams.get("prettyPrint").equalsIgnoreCase("true")) {
-			prettyPrint = true;
-		}
 		switch (format) {
 			case HTML:
 				resp.setContentType("text/html; charset=UTF-8");
@@ -244,7 +238,7 @@ public class ResolverServlet extends HttpServlet {
 			// Get content from solr or db
 			String response = prepareResponse(urli, format, req);
 			// Make response
-			makeResponse(response, format, urli, prettyPrint, resp);
+			makeResponse(response, format, urli, resp);
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
@@ -385,10 +379,10 @@ public class ResolverServlet extends HttpServlet {
 	 * @throws IOException
 	 * @throws DiagnosticException
 	 */
-	private void makeResponse(String response, Format format, String urli, Boolean prettyPrint,
+	private void makeResponse(String response, Format format, String urli,
 							  HttpServletResponse resp) throws IOException, DiagnosticException {
 		ArrayList<String> replaceUris = new ArrayList<>();
-		if (response != null) {
+		if (response != null && !response.startsWith("http://")) {
 			Model m = ModelFactory.createDefaultModel();
 			m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
 			final ResIterator resIterator = m.listSubjects();
@@ -441,7 +435,7 @@ public class ResolverServlet extends HttpServlet {
 					Model m = ModelFactory.createDefaultModel();
 					m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
-					RDFDataMgr.write(resp.getOutputStream(), m, prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
+					RDFDataMgr.write(resp.getOutputStream(), m, RDFFormat.JSONLD_COMPACT_FLAT);
 				} else {
 					resp.sendError(404, "Could not find record for path");
 				}
@@ -469,10 +463,6 @@ public class ResolverServlet extends HttpServlet {
 						transform = transformerFactory.newTransformer();
 						DOMSource source = new DOMSource(doc);
 						StreamResult strResult = new StreamResult(resp.getOutputStream());
-						if (prettyPrint) {
-							transform.setOutputProperty(OutputKeys.INDENT, "yes");
-							transform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-						}
 						transform.transform(source, strResult);
 					} catch (ParserConfigurationException e) {
 						logger.error(e);
