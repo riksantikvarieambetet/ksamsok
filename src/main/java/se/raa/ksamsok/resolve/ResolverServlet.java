@@ -43,7 +43,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -54,7 +53,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect till
@@ -236,9 +234,9 @@ public class ResolverServlet extends HttpServlet {
 		try {
 			String urli = "http://kulturarvsdata.se/" + path;
 			// Get content from solr or db
-			String response = prepareResponse(urli, format, req);
+			PreparedResponse preparedResponse = prepareResponse(urli, format, req);
 			// Make response
-			makeResponse(response, format, urli, resp);
+			makeResponse(preparedResponse, format, urli, resp);
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
@@ -254,8 +252,9 @@ public class ResolverServlet extends HttpServlet {
 	 * @return - A string with the found content or null
 	 * @throws Exception
 	 */
-	private String prepareResponse(String urli, Format format, HttpServletRequest req) throws Exception {
-		String prepResp = null;
+	private PreparedResponse prepareResponse(String urli, Format format, HttpServletRequest req) throws Exception {
+		PreparedResponse preparedResponse = new PreparedResponse();
+		String stringResponse = null;
 		byte[] xmlContent;
 		SolrQuery q = new SolrQuery();
 
@@ -264,24 +263,24 @@ public class ResolverServlet extends HttpServlet {
 
 		// we have to append a special case to also fetch any posts that have the id in a "replaces"-tag
 		sb.append(" OR ").append(ContentHelper.IX_REPLACES).append(":").append(escapedUrli);
-
 		q.setQuery(sb.toString());
 		q.setRows(1);
 
+		// vi måste alltid ha rdf för att kunna kolla replaces
+		q.setFields(ContentHelper.I_IX_RDF);
 		// hämta bara nödvändigt fält
 		switch (format) {
 			case JSON_LD:
 			case RDF:
-				q.setFields(ContentHelper.I_IX_RDF);
 				break;
 			case XML:
-				q.setFields(ContentHelper.I_IX_PRES);
+				q.addField(ContentHelper.I_IX_PRES);
 				break;
 			case HTML:
-				q.setFields(ContentHelper.I_IX_HTML_URL);
+				q.addField(ContentHelper.I_IX_HTML_URL);
 				break;
 			case MUSEUMDAT:
-				q.setFields(ContentHelper.I_IX_MUSEUMDAT_URL);
+				q.addField(ContentHelper.I_IX_MUSEUMDAT_URL);
 				break;
 		}
 		logger.debug("resolve of (" + format + ") uri: " + urli);
@@ -296,40 +295,69 @@ public class ResolverServlet extends HttpServlet {
 			if (format == Format.RDF || format == Format.JSON_LD || format == Format.HTML) {
 				String content = hrm.getXMLData(urli);
 				if (content != null) {
-					prepResp = content;
+					stringResponse = content;
 					if (format == Format.HTML) {
-						prepResp = getRedirectUrl(content);
+						stringResponse = getRedirectUrl(content);
 					}
 				}
 			}
 		} else {
+
+			// vi måste alltid hämta ut rdf:en för att kolla replaces
+			xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
+			if (xmlContent != null) {
+				stringResponse = new String(xmlContent, "UTF-8");
+			} else {
+				stringResponse = hrm.getXMLData(urli);
+			}
+
+			if (stringResponse != null) {
+				Model m = ModelFactory.createDefaultModel();
+				m.read(new ByteArrayInputStream(stringResponse.getBytes("UTF-8")), "UTF-8");
+				final ResIterator resIterator = m.listSubjects();
+
+				while (resIterator.hasNext()) {
+					Resource res = resIterator.next();
+					final StmtIterator statementIterator = res.listProperties();
+					while (statementIterator.hasNext()) {
+						Statement statement = statementIterator.next();
+						Property predicate = statement.getPredicate();
+						if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
+
+							if (res.getURI() != null) {
+								preparedResponse.addReplaceUri(res.getURI());
+							} else {
+								logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
+							}
+						}
+					}
+				}
+			}
+
+			// in the case of json or rdf, we already have our stringResp from above, otherwise replace with correct content
 			switch (format) {
 				case JSON_LD:
 				case RDF:
-					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-					if (xmlContent != null) {
-						prepResp = new String(xmlContent, "UTF-8");
-					} else {
-						prepResp = hrm.getXMLData(urli);
-					}
+					// do nothing
 					break;
 				case XML:
 					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
 					if (xmlContent != null) {
-						prepResp = new String(xmlContent, "UTF-8");
+						stringResponse = new String(xmlContent, "UTF-8");
 					}
 					break;
 				case HTML:
-					prepResp = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
+					stringResponse = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
 					break;
 				case MUSEUMDAT:
-					prepResp = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
+					stringResponse = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
 					break;
 				default:
 					break;
 			}
 		}
-		return prepResp;
+		preparedResponse.setResponse(stringResponse);
+		return preparedResponse;
 	}
 
 	private String escapeChars(String urli) {
@@ -372,58 +400,25 @@ public class ResolverServlet extends HttpServlet {
 	/**
 	 * This method writes the response
 	 *
-	 * @param response - The content from solr or db
+	 * @param preparedResponse - The content from solr or db
 	 * @param format   - The requested response format
 	 * @param urli     - The path to the request, i.e. which object should we get
 	 * @param resp     - The http servlet response
 	 * @throws IOException
 	 * @throws DiagnosticException
 	 */
-	private void makeResponse(String response, Format format, String urli,
+	private void makeResponse(PreparedResponse preparedResponse, Format format, String urli,
 							  HttpServletResponse resp) throws IOException, DiagnosticException {
-		ArrayList<String> replaceUris = new ArrayList<>();
-		if (response != null && !response.startsWith("http://")) {
-			Model m = ModelFactory.createDefaultModel();
-			m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
-			final ResIterator resIterator = m.listSubjects();
-
-
-
-			while (resIterator.hasNext()) {
-				Resource res = resIterator.next();
-
-
-				final StmtIterator statementIterator = res.listProperties();
-				while (statementIterator.hasNext()) {
-					Statement statement = statementIterator.next();
-					Property predicate = statement.getPredicate();
-
-					if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
-
-						if (res.getURI() != null) {
-							replaceUris.add(res.getURI());
-							//resp.sendRedirect(res.getURI());
-						} else {
-							logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
-						}
-					}
-
-				}
-
-			}
-
-		}
-
 		// if we found only one replaceUri, redirect immediately:
-		if (replaceUris.size() == 1) {
-			resp.sendRedirect(replaceUris.get(0));
+		if (preparedResponse.getReplaceUris().size() == 1) {
+			resp.sendRedirect(preparedResponse.getReplaceUris().get(0));
 			return;
 		}
 
 		switch (format) {
 			case JSON_LD:
-				if (replaceUris.size() > 1) {
-					String jsonReply = buildReplacedByMultipleUrisJsonReply(replaceUris);
+				if (preparedResponse.getReplaceUris().size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisJsonReply(preparedResponse.getReplaceUris());
 					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
 
 					PrintWriter out = resp.getWriter();
@@ -431,9 +426,9 @@ public class ResolverServlet extends HttpServlet {
 					resp.setCharacterEncoding("UTF-8");
 					out.print(jsonReply);
 					out.flush();
-				} else if (response != null) {
+				} else if (preparedResponse.getResponse() != null) {
 					Model m = ModelFactory.createDefaultModel();
-					m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
+					m.read(new ByteArrayInputStream(preparedResponse.getResponse().getBytes("UTF-8")), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
 					RDFDataMgr.write(resp.getOutputStream(), m, RDFFormat.JSONLD_COMPACT_FLAT);
 				} else {
@@ -442,8 +437,8 @@ public class ResolverServlet extends HttpServlet {
 				break;
 			case RDF:
 			case XML:
-				if (replaceUris.size() > 1) {
-					String jsonReply = buildReplacedByMultipleUrisXmlReply(replaceUris);
+				if (preparedResponse.getReplaceUris().size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisXmlReply(preparedResponse.getReplaceUris());
 					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
 
 					PrintWriter out = resp.getWriter();
@@ -451,13 +446,13 @@ public class ResolverServlet extends HttpServlet {
 					resp.setCharacterEncoding("UTF-8");
 					out.print(jsonReply);
 					out.flush();
-				} else if (response != null) {
+				} else if (preparedResponse.getResponse() != null) {
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder docBuilder;
 					Document doc;
 					try {
 						docBuilder = docFactory.newDocumentBuilder();
-						doc = docBuilder.parse(new ByteArrayInputStream(response.getBytes("UTF-8")));
+						doc = docBuilder.parse(new ByteArrayInputStream(preparedResponse.getResponse().getBytes("UTF-8")));
 						TransformerFactory transformerFactory = TransformerFactory.newInstance();
 						Transformer transform;
 						transform = transformerFactory.newTransformer();
@@ -491,19 +486,19 @@ public class ResolverServlet extends HttpServlet {
 				break;
 			case HTML:
 			case MUSEUMDAT:
-				if (response != null) {
-					if (response.toLowerCase().startsWith(badURLPrefix)) {
+				if (preparedResponse.getResponse() != null) {
+					if (preparedResponse.getResponse().toLowerCase().startsWith(badURLPrefix)) {
 						if (format == Format.HTML) {
 							logger.warn(
-									"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + response);
+									"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + preparedResponse.getResponse());
 							resp.sendError(404, "Invalid html url to pass on to");
 						} else {
 							logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " +
-									response);
+									preparedResponse.getResponse());
 							resp.sendError(404, "Invalid museumdat url to pass on to");
 						}
 					} else {
-						resp.sendRedirect(response);
+						resp.sendRedirect(preparedResponse.getResponse());
 					}
 				} else if (format == Format.HTML) {
 					logger.debug("Could not find html url for record with uri: " + urli);
