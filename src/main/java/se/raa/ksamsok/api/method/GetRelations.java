@@ -308,7 +308,6 @@ public class GetRelations extends AbstractAPIMethod {
 			}
 			// sök fram källposten/-erna och alla som har relation till den/dem
 			query.setQuery(searchStr.toString());
-			query.setFields((String)null);
 
 			qr = searchService.query(query);
 			docs = qr.getResults();
