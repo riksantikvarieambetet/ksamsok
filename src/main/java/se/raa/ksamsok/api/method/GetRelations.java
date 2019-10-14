@@ -231,8 +231,7 @@ public class GetRelations extends AbstractAPIMethod {
 		itemUris.add(uri);
 
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
-		SolrQuery query = new SolrQuery();
-		query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+
 
 		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
 		// algoritmen ser fn ut så här - inferSameAs styr steg 1, 2 och 4, default är att inte utföra dem
@@ -240,17 +239,17 @@ public class GetRelations extends AbstractAPIMethod {
 		// 3. sök fram källpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
 		// 4. hämta ev de relaterades sameAs och lägg till dessa som relationer
 
-		// hämta uri och relationer
-		query.addField(ContentHelper.I_IX_RELATIONS);
-		query.addField(ContentHelper.IX_ITEMID);
 		try {
 			QueryResponse qr;
 			SolrDocumentList docs;
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
 				// hämta andra poster som är samma som denna och lägg till dem som "källposter"
-				query.setFields(ContentHelper.IX_SAMEAS);
-				query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
-				qr = searchService.query(query);
+				SolrQuery sameAsQuery = new SolrQuery();
+				sameAsQuery.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+
+				sameAsQuery.setFields(ContentHelper.IX_SAMEAS);
+				sameAsQuery.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
+				qr = searchService.query(sameAsQuery);
 				docs = qr.getResults();
 
 
@@ -266,37 +265,21 @@ public class GetRelations extends AbstractAPIMethod {
 					}
 				}
 
-
-
-//				for (SolrDocument doc : docs) {
-//					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
-//					Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
-//					if (values != null) {
-//						for (Object value : values) {
-//							String parts[] = ((String) value).split("\\|");
-//							if (parts.length != 2) {
-//								logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
-//								continue;
-//							}
-//							String typePart = parts[0];
-//							String uriPart = parts[1];
-//							if (ContentHelper.IX_SAMEAS.equals(typePart)) {
-//								itemUris.add(uriPart);
-//							}
-//						}
-//					}
-//				}
-
 				// hämta andra poster som säger att de är samma som denna och lägg till dem som "källposter"
-				query.setFields(ContentHelper.IX_ITEMID);
-				query.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedUri);
-				qr = searchService.query(query);
+				sameAsQuery.setFields(ContentHelper.IX_ITEMID);
+				sameAsQuery.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedUri);
+				qr = searchService.query(sameAsQuery);
 				docs = qr.getResults();
 				for (SolrDocument doc : docs) {
 					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 					itemUris.add(itemId);
 				}
 			}
+			SolrQuery query = new SolrQuery();
+			query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+			// hämta uri och relationer
+			query.addField(ContentHelper.I_IX_RELATIONS);
+			query.addField(ContentHelper.IX_ITEMID);
 			// bygg söksträng mh källposten/alla källposter
 			StringBuilder searchStr = new StringBuilder();
 			for (String itemId: itemUris) {
