@@ -53,6 +53,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect till
@@ -74,7 +75,30 @@ public class ResolverServlet extends HttpServlet {
 	 * Enum för de olika formaten som stöds.
 	 */
 	private enum Format {
-		RDF, HTML, MUSEUMDAT, XML, JSON_LD;
+		RDF("rdf"),
+		HTML("html"),
+		MUSEUMDAT("museumdat"),
+		XML("xml"),
+		JSON_LD("jsonld");
+
+		String format;
+
+		private static final HashMap<String, Format> lookupTable = new HashMap();
+
+		// populate lookup table
+		static {
+			for (Format format : Format.values()) {
+				lookupTable.put(format.getFormat(), format);
+			}
+		}
+
+		Format(String format) {
+			this.format = format;
+		}
+
+		String getFormat() {
+			return format;
+		}
 
 		/**
 		 * Parsar en sträng med formatet och ger motsvarande konstant.
@@ -83,19 +107,7 @@ public class ResolverServlet extends HttpServlet {
 		 * @return formatkonstant eller null
 		 */
 		static Format parseFormat(String formatString) {
-			Format format = null;
-			if ("rdf".equals(formatString)) {
-				format = RDF;
-			} else if ("html".equals(formatString)) {
-				format = HTML;
-			} else if ("museumdat".equals(formatString)) {
-				format = MUSEUMDAT;
-			} else if ("xml".equals(formatString)) {
-				format = XML;
-			} else if ("jsonld".equals(formatString)) {
-				format = JSON_LD;
-			}
-			return format;
+			return lookupTable.get(formatString);
 		}
 	}
 
@@ -132,15 +144,20 @@ public class ResolverServlet extends HttpServlet {
 		if (path != null && path.startsWith("/resurser")) {
 			path = path.substring(9);
 		}
+		String[] pathComponents = getPathComponents(path);
+		if (pathComponents == null) {
+			forwardRequest(req, resp);
+		}
+		return pathComponents;
+	}
+
+	private String[] getPathComponents(String path) {
 		String[] pathComponents = null;
 
 		if (path != null && !path.contains(".") && (pathComponents = path.substring(1).split("/")) != null) {
 			if (pathComponents.length < 3 || pathComponents.length > 4) {
 				pathComponents = null;
 			}
-		}
-		if (pathComponents == null) {
-			forwardRequest(req, resp);
 		}
 		return pathComponents;
 	}
@@ -185,14 +202,18 @@ public class ResolverServlet extends HttpServlet {
 		}
 		String path;
 		Format format;
+		final String formatLowerCase;
+		boolean formatSetInPath = false;
 		// hantera olika format
 		if (pathComponents.length == 4) {
-			format = Format.parseFormat(pathComponents[2].toLowerCase());
+			 formatLowerCase = pathComponents[2].toLowerCase();
+			format = Format.parseFormat(formatLowerCase);
 			if (format == null) {
 				logger.debug("Invalid format: " + pathComponents[2]);
 				resp.sendError(404, "Invalid format " + pathComponents[2]);
 				return;
 			}
+			formatSetInPath = true;
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[3];
 		} else {
 			// Check which format the respond should be
@@ -220,7 +241,6 @@ public class ResolverServlet extends HttpServlet {
 			case MUSEUMDAT:
 				resp.setContentType("application/xml; charset=UTF-8");
 				break;
-
 			case RDF:
 				resp.setContentType("application/rdf+xml; charset=UTF-8");
 				break;
@@ -234,7 +254,7 @@ public class ResolverServlet extends HttpServlet {
 		try {
 			String urli = "http://kulturarvsdata.se/" + path;
 			// Get content from solr or db
-			PreparedResponse preparedResponse = prepareResponse(urli, format, req);
+			PreparedResponse preparedResponse = prepareResponse(urli, format, req, formatSetInPath);
 			// Make response
 			makeResponse(preparedResponse, format, urli, resp);
 		} catch (Exception e) {
@@ -252,7 +272,7 @@ public class ResolverServlet extends HttpServlet {
 	 * @return - A string with the found content or null
 	 * @throws Exception
 	 */
-	private PreparedResponse prepareResponse(String urli, Format format, HttpServletRequest req) throws Exception {
+	private PreparedResponse prepareResponse(String urli, Format format, HttpServletRequest req, boolean formatSetInPath) throws Exception {
 		PreparedResponse preparedResponse = new PreparedResponse();
 		String stringResponse = null;
 		byte[] xmlContent;
@@ -323,9 +343,20 @@ public class ResolverServlet extends HttpServlet {
 						Statement statement = statementIterator.next();
 						Property predicate = statement.getPredicate();
 						if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
+							// we have found one that replaces the requested one
+							String replaceUri = res.getURI();
+							if (replaceUri != null) {
+								if (formatSetInPath) {
+									// the format has been explicitally requested in the url path, we have to
+									// put it back in there
+									final String formatString = format.getFormat();
+									int formatEntyIndex = replaceUri.lastIndexOf("/") + 1;
+									StringBuffer tmpBuf = new StringBuffer(replaceUri);
 
-							if (res.getURI() != null) {
-								preparedResponse.addReplaceUri(res.getURI());
+									tmpBuf.insert(formatEntyIndex, formatString + "/");
+									replaceUri = tmpBuf.toString();
+								}
+								preparedResponse.addReplaceUri(replaceUri);
 							} else {
 								logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
 							}
