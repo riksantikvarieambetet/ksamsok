@@ -82,7 +82,7 @@ public class ResolverServlet extends HttpServlet {
 
 		String format;
 
-		private static final HashMap<String, Format> lookupTable = new HashMap();
+		private static final HashMap<String, Format> lookupTable = new HashMap<String, Format>();
 
 		// populate lookup table
 		static {
