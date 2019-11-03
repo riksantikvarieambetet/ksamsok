@@ -23,7 +23,6 @@ import se.raa.ksamsok.api.util.Term;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -61,7 +60,6 @@ public class SearchServiceImpl implements SearchService {
 		FieldAnalysisRequest far = new FieldAnalysisRequest();
 		// vi kör analys mot text-indexet då vi vet att den stammar
 		far.addFieldName(ContentHelper.IX_TEXT);
-		List<String> noFieldTypes = Collections.emptyList();
 		far.addFieldType("text");
 		// det är query-delen vi främst är intresserade av (ger a.getQueryPhases() != null nedan)
 		far.setQuery(words);
