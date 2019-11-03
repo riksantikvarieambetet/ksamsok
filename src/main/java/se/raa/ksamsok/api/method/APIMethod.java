@@ -25,8 +25,6 @@ public interface APIMethod
     enum Format {
 		RDF, HTML, MUSEUMDAT, XML, JSON_LD
     }
-	/** Pretty print indrag för json*/
-    int indentFactor = 4;
 
 	
 	/**

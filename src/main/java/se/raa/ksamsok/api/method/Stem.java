@@ -33,7 +33,6 @@ public class Stem extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		this.words = StringUtils.trimToNull(params.get(PARAM_WORDS));
 		if (words == null) {
 			throw new MissingParameterException("Missing or empty parameter (" + PARAM_WORDS + ")",

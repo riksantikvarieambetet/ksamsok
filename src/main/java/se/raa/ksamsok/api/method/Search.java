@@ -351,8 +351,7 @@ public class Search extends AbstractSearchMethod {
 							m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
 
 							// Create JSON-LD
-							RDFDataMgr.write(jsonLDRDF, m,
-									prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
+							RDFDataMgr.write(jsonLDRDF, m, RDFFormat.JSONLD_COMPACT_FLAT);
 							record.put("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
 							JSONObject relScore = new JSONObject();
 							relScore.put("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
@@ -379,7 +378,7 @@ public class Search extends AbstractSearchMethod {
 				JSONObject response = new JSONObject();
 				response.put("result", result);
 				// Write the result
-				out.write(prettyPrint ? response.toString(indentFactor).getBytes() : response.toString().getBytes());
+				out.write(response.toString().getBytes());
 
 			} catch (UnsupportedEncodingException e) {
 				logger.error(e);

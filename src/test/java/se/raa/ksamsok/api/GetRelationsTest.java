@@ -34,7 +34,6 @@ public class GetRelationsTest extends AbstractBaseTest {
 		reqParams.put("method", "getRelations");
 		reqParams.put("relation","all");
 		reqParams.put("objectId","raa/fmi/10028201230001");
-//		reqParams.put("prettyPrint","true");
 	}
 	
 	@Test

@@ -51,8 +51,6 @@ public class APIServlet extends HttpServlet {
 	private APIMethodFactory apiMethodFactory;
 
 	private Format format = Format.XML;
-	private boolean prettyPrint = false;
-	private int indentFactor = 4;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -194,11 +192,7 @@ public class APIServlet extends HttpServlet {
 		transform.transform(source, strResult);
 		if (format == Format.JSON_LD) {
 			String json;
-			if (prettyPrint) {
-				json = XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
-			} else {
-				json = XML.toJSONObject(baos.toString("UTF-8")).toString();
-			}
+			json = XML.toJSONObject(baos.toString("UTF-8")).toString();
 			out.write(json.getBytes("UTF-8"));
 		}
 

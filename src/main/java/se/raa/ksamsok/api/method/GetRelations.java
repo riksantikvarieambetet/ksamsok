@@ -185,7 +185,6 @@ public class GetRelations extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !relationXlate.containsKey(relation)) {

@@ -20,7 +20,6 @@ public class StemTest extends AbstractBaseTest {
 		reqParams = new HashMap<String,String>();
 		reqParams.put("method", "stem");
 		reqParams.put("words","kappe");
-//		reqParams.put("prettyPrint","true");
 	}
 
 
