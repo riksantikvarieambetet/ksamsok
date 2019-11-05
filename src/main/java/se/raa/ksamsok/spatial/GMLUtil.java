@@ -29,11 +29,6 @@ public class GMLUtil {
 
 	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.spatial.GMLUtil");
 
-	// klassnamn för databasspecifik GML-hanterare
-	private static String gmlDBWriterClassName;
-	// flagga som anger om man har försökt sätta klassnamnsvariabeln
-	private static boolean gmlDBWriterClassNameSet = false;
-
 	static {
 		// OBS! denna är väldigt viktig - det blir fel annars - i alla fall om srsName är på formen EPSG:4326
 		// TODO: kolla upp vad som händer om man får in en uri på formen

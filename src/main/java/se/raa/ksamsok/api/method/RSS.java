@@ -141,7 +141,7 @@ public class RSS extends AbstractSearchMethod {
 		SyndFeedOutput output = new SyndFeedOutput();
 		PrintWriter w = new PrintWriter(out);
 		try {
-			output.output(feed, w, prettyPrint);
+			output.output(feed, w);
 		} catch (FeedException e) {
 			logger.error(e);
 			throw new DiagnosticException("Det är problem med att generera ett RSS-flöde", this.getClass().getName(), e.getMessage(), false);

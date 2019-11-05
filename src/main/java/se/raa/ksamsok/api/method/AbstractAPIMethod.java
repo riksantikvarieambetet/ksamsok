@@ -17,7 +17,6 @@ import se.raa.ksamsok.api.exception.MissingParameterException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -46,9 +45,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	protected String stylesheet;
 	protected Document doc;
 	protected Format format = Format.XML;
-	protected boolean prettyPrint = false;
-	
-	
+
 	/**
 	 * Skapar ny instans.
 	 * @param serviceProvider tillhandahåller tjänster etc
@@ -104,14 +101,10 @@ public abstract class AbstractAPIMethod implements APIMethod {
 				transform.transform(source, strResult);
 				String json;
 				JSONObject jsonObject = XML.toJSONObject(baos.toString("UTF-8"));
-				json = jsonObject.toString(prettyPrint ? indentFactor : 0);
+				json = jsonObject.toString();
 				out.write(json.getBytes("UTF-8"));
 			} else {
 				strResult = new StreamResult(out);
-				if (prettyPrint){
-					transform.setOutputProperty(OutputKeys.INDENT, "yes");
-					transform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-				}
 				transform.transform(source, strResult);
 			}
 		} catch (TransformerException e) {
@@ -135,12 +128,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 * @throws MissingParameterException om parameter saknas
 	 * @throws BadParameterException om parameter är felaktig
 	 */
-	protected void extractParameters() throws MissingParameterException, BadParameterException{
-		//Check if the response should be in pretty print
-		if (params.get("prettyPrint") != null && params.get("prettyPrint").equalsIgnoreCase("true")){
-			prettyPrint=true;
-		}
-	}
+	abstract protected void extractParameters() throws MissingParameterException, BadParameterException;
 
 	/**
 	 * Utför metodens logik.
@@ -222,9 +210,5 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	
 	public void setFormat(Format format){
 		this.format=format;
-	}
-	
-	public void setPrettyPrint(Boolean prettyPrint){
-		this.prettyPrint=prettyPrint;
 	}
 }

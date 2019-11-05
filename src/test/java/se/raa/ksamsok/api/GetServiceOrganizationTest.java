@@ -29,7 +29,6 @@ public class GetServiceOrganizationTest extends AbstractBaseTest {
 		reqParams = new HashMap<String,String>();
 		reqParams.put("method", "getServiceOrganization");
 		reqParams.put("value","all");
-//		reqParams.put("prettyPrint","true");
 	}
 	
 	@Test

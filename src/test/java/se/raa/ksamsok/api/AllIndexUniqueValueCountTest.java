@@ -76,12 +76,10 @@ public class AllIndexUniqueValueCountTest extends AbstractBaseTest {
 				assertTrue(Integer.parseInt(assertChild(uniqueValuesValue))>0);
 				index=index.getNextSibling();
 			}
-			int i =1;
 		} catch (Throwable e){
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
-		int j = 1;
 	}
 
 

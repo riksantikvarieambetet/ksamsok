@@ -1,6 +1,5 @@
 package se.raa.ksamsok.resolve;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
@@ -83,7 +82,7 @@ public class ResolverServlet extends HttpServlet {
 
 		String format;
 
-		private static final HashMap<String, Format> lookupTable = new HashMap();
+		private static final HashMap<String, Format> lookupTable = new HashMap<String, Format>();
 
 		// populate lookup table
 		static {
@@ -389,10 +388,6 @@ public class ResolverServlet extends HttpServlet {
 		}
 		preparedResponse.setResponse(stringResponse);
 		return preparedResponse;
-	}
-
-	private String escapeChars(String urli) {
-		return StringUtils.replace(urli, ":", "\\:");
 	}
 
 	private String buildReplacedByMultipleUrisJsonReply(ArrayList<String> replaceUris) {

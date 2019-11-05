@@ -32,7 +32,6 @@ public class GetRelationsTypesTest extends AbstractBaseTest {
 		reqParams = new HashMap<String,String>();
 		reqParams.put("method", "getRelationTypes");
 		reqParams.put("relation","all");
-//		reqParams.put("prettyPrint","true");
 	}
 	
 	@Test
