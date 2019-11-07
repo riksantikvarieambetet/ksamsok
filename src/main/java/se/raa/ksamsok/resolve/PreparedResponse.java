@@ -6,6 +6,7 @@ class PreparedResponse {
 
 	private String response;
 	private ArrayList<String> replaceUris = new ArrayList<>();
+	private boolean gone = false;
 
 
 	public String getResponse() {
@@ -26,5 +27,13 @@ class PreparedResponse {
 
 	public void addReplaceUri(String replaceUri) {
 		replaceUris.add(replaceUri);
+	}
+
+	public void setGone(boolean gone) {
+		this.gone=gone;
+	}
+
+	public boolean isGone() {
+		return gone;
 	}
 }

@@ -209,7 +209,7 @@ public class ResolverServlet extends HttpServlet {
 			format = Format.parseFormat(formatLowerCase);
 			if (format == null) {
 				logger.debug("Invalid format: " + pathComponents[2]);
-				resp.sendError(404, "Invalid format " + pathComponents[2]);
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid format " + pathComponents[2]);
 				return;
 			}
 			formatSetInPath = true;
@@ -308,20 +308,15 @@ public class ResolverServlet extends HttpServlet {
 		SolrDocumentList hits = response.getResults();
 		if (hits.getNumFound() != 1) {
 			logger.debug("Could not find record for q: " + q);
-			// specialfall för att hantera itemForIndexing=n, bara för rdf och html
-			// vid detta fall ligger rdf:en bara i databasen och inte i lucene
-			// men det är ett undantagsfall så vi provar alltid lucene först
-			if (format == Format.RDF || format == Format.JSON_LD || format == Format.HTML) {
-				String content = hrm.getXMLData(urli);
-				if (content != null) {
-					stringResponse = content;
-					if (format == Format.HTML) {
-						stringResponse = getRedirectUrl(content);
-					}
-				}
+			// om objektet inte finns i indexet kan det ändå finnas i databasen,
+			// exempelvis om itemForIndexing=n, om objektet inte har någon medialicense
+			// eller om objektet har blivit borttaget. I dessa fall ska vi returnera
+			// 410 Gone
+			if (hrm.existsInDatabase(urli)) {
+				preparedResponse.setGone(true);
 			}
 		} else {
-
+			// objektet finns i indexet
 			// vi måste alltid hämta ut rdf:en för att kolla replaces
 			xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
 			if (xmlContent != null) {
@@ -346,7 +341,7 @@ public class ResolverServlet extends HttpServlet {
 							String replaceUri = res.getURI();
 							if (replaceUri != null) {
 								if (formatSetInPath) {
-									// the format has been explicitally requested in the url path, we have to
+									// the format has been explicitly requested in the url path, we have to
 									// put it back in there
 									final String formatString = format.getFormat();
 									int formatEntyIndex = replaceUri.lastIndexOf("/") + 1;
@@ -435,6 +430,12 @@ public class ResolverServlet extends HttpServlet {
 	 */
 	private void makeResponse(PreparedResponse preparedResponse, Format format, String urli,
 							  HttpServletResponse resp) throws IOException, DiagnosticException {
+		if (preparedResponse.isGone()) {
+			// reply that the object is gone
+			resp.sendError(HttpServletResponse.SC_GONE, "Object " + urli + " is gone");
+			return;
+		}
+
 		// if we found only one replaceUri, redirect immediately:
 		if (preparedResponse.getReplaceUris().size() == 1) {
 			resp.sendRedirect(preparedResponse.getReplaceUris().get(0));
@@ -458,7 +459,7 @@ public class ResolverServlet extends HttpServlet {
 					// It is done in APIServlet.init JenaJSONLD.init();
 					RDFDataMgr.write(resp.getOutputStream(), m, RDFFormat.JSONLD_COMPACT_FLAT);
 				} else {
-					resp.sendError(404, "Could not find record for path");
+					resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find record for path");
 				}
 				break;
 			case RDF:
@@ -504,10 +505,10 @@ public class ResolverServlet extends HttpServlet {
 					}
 				} else if (format == Format.RDF) {
 					logger.warn("Could not find rdf for record with uri: " + urli);
-					resp.sendError(404, "No rdf for record");
+					resp.sendError(HttpServletResponse.SC_NOT_FOUND, "No rdf for record");
 				} else {
 					logger.warn("Could not find xml for record with uri: " + urli);
-					resp.sendError(404, "No presentation xml for record");
+					resp.sendError(HttpServletResponse.SC_NOT_FOUND, "No presentation xml for record");
 				}
 				break;
 			case HTML:
@@ -517,26 +518,26 @@ public class ResolverServlet extends HttpServlet {
 						if (format == Format.HTML) {
 							logger.warn(
 									"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + preparedResponse.getResponse());
-							resp.sendError(404, "Invalid html url to pass on to");
+							resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid html url to pass on to");
 						} else {
 							logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " +
 									preparedResponse.getResponse());
-							resp.sendError(404, "Invalid museumdat url to pass on to");
+							resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid museumdat url to pass on to");
 						}
 					} else {
 						resp.sendRedirect(preparedResponse.getResponse());
 					}
 				} else if (format == Format.HTML) {
 					logger.debug("Could not find html url for record with uri: " + urli);
-					resp.sendError(404, "Could not find html url to pass on to");
+					resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find html url to pass on to");
 				} else {
 					logger.debug("Could not find museumdat url for record with uri: " + urli);
-					resp.sendError(404, "Could not find museumdat url to pass on to");
+					resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find museumdat url to pass on to");
 				}
 				break;
 			default:
 				logger.warn("Invalid format: " + format);
-				resp.sendError(404, "Invalid format");
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid format");
 		}
 	}
 
