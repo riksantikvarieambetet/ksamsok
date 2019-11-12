@@ -50,7 +50,7 @@ public class StatisticSearch extends Statistic {
 
 	@Override
 	protected void performMethodLogic() throws DiagnosticException {
-		Map<String, List<Term>> termMap = null;
+		Map<String, List<Term>> termMap;
 		try {
 			// TODO: om bara ett index borde man kunna köra facet rakt av
 			SolrQuery query = new SolrQuery();

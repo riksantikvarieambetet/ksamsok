@@ -56,7 +56,7 @@ public class SamsokProtocolHandler_0_TO_1_0 extends BaseSamsokProtocolHandler {
 	static final Map<String, URI> relationsMap_0_TO_1_0;
 
 	static {
-		Map<String,String> values = new HashMap<String,String>();
+		Map<String,String> values = new HashMap<>();
 		// läs in uri-värden för uppslagning
 		RDFUtil.readURIValueResource(PATH + "entitytype_0_TO_1.0.rdf", SamsokProtocol.uri_r__Name, values);
 		RDFUtil.readURIValueResource(PATH + "subject.rdf", SamsokProtocol.uri_r__Name, values);
@@ -65,7 +65,7 @@ public class SamsokProtocolHandler_0_TO_1_0 extends BaseSamsokProtocolHandler {
 
 		uriValues_0_TO_1_0 = Collections.unmodifiableMap(values);
 
-		Map<String, URI> relMap = new HashMap<String, URI>();
+		Map<String, URI> relMap = new HashMap<>();
 		// hämta ut sameAs (0n)
 		relMap.put(IX_SAMEAS, uri_rSameAs);
 		// hämta ut isRelatedTo (0n)

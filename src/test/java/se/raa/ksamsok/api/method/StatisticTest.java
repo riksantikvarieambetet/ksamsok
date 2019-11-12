@@ -1,29 +1,48 @@
-package se.raa.ksamsok.api;
+package se.raa.ksamsok.api.method;
 
-import org.json.JSONObject;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
-import se.raa.ksamsok.api.exception.MissingParameterException;
-import se.raa.ksamsok.api.method.APIMethod;
-import se.raa.ksamsok.api.method.APIMethod.Format;
+import se.raa.ksamsok.api.AbstractStatisticTest;
+import se.raa.ksamsok.api.util.Term;
 
-import java.io.ByteArrayOutputStream;
-import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import static org.junit.Assert.fail;
-
-public class StatisticTest extends AbstractBaseTest {
-	ByteArrayOutputStream out;
+public class StatisticTest extends AbstractStatisticTest {
 	static int numberOfTermsVal;
-	@Before
-	public void setUp() throws MalformedURLException{
-		super.setUp();
-		reqParams = new HashMap<String,String>();
-		reqParams.put("method", "statistic");
-		reqParams.put("index", "mediaType=*|itemName=yxa*");
-		reqParams.put("removeBelow","10");
+
+	@Test
+	public void testGetCartesianCount() {
+		HashMap<String, List<Term>> map = new HashMap<>();
+		Term term = new Term("foo","bar", 1L );
+		// 5
+		final ArrayList<Term> terms1 = new ArrayList<>();
+		terms1.add(term);
+		terms1.add(term);
+		terms1.add(term);
+		terms1.add(term);
+		terms1.add(term);
+		//4
+		final ArrayList<Term> terms2 = new ArrayList<>();
+		terms2.add(term);
+		terms2.add(term);
+		terms2.add(term);
+		terms2.add(term);
+		//3
+		final ArrayList<Term> terms3 = new ArrayList<>();
+		terms3.add(term);
+		terms3.add(term);
+		terms3.add(term);
+
+		map.put("1", terms1);
+		map.put("2", terms2);
+		map.put("3", terms3);
+		int cc = Statistic.getCartesianCount(map);
+
+		Assert.assertEquals(60, cc);
 	}
+
 
 	//TODO: kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
 	//	// av om det finns data eller ej genom setup/teardown
@@ -148,23 +167,5 @@ public class StatisticTest extends AbstractBaseTest {
 //			fail(e.getMessage());
 //		}
 //	}
-	
-	@Test
-	public void testStatisticsRespWithoutIndex(){
-		out = new ByteArrayOutputStream();
-		APIMethod statistic;
-		reqParams.remove("index");
-		try {
-			statistic = apiMethodFactory.getAPIMethod(reqParams, out);
-			statistic.setFormat(Format.JSON_LD);
-			statistic.performMethod();
-			System.out.println(new JSONObject(out.toString("UTF-8")).toString(1));
-			fail("No excption thrown, expected MissingParameterException");
-		} catch (MissingParameterException e) {
-			//Ignore this exception is expected
-		} catch (Exception e) {
-			fail("Wrong excption thrown, expected MissingParameterException");
-		}
-		
-	}
+
 }

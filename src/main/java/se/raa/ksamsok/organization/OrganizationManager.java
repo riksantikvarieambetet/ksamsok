@@ -38,7 +38,7 @@ public class OrganizationManager extends DBBasedManagerImpl {
 	 * och value är det svenska namnet för organisationen
 	 */
 	public List<Organization> getServiceOrganizations() {
-		List<Organization> list = new Vector<Organization>();
+		List<Organization> list = new Vector<>();
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -91,7 +91,7 @@ public class OrganizationManager extends DBBasedManagerImpl {
 				ps = c.prepareStatement(sql);
 				ps.setString(1, org.getKortnamn());
 				rs = ps.executeQuery();
-				List<Service> serviceList = new Vector<Service>();
+				List<Service> serviceList = new Vector<>();
 				while(rs.next()) {
 					Service s = new Service();
 					s.setNamn(rs.getString("name"));
@@ -144,7 +144,6 @@ public class OrganizationManager extends DBBasedManagerImpl {
 	public void updateOrg(Organization org) {
 		Connection c = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
 		try {
 			c = ds.getConnection();
 			String sql = "UPDATE organisation SET namnswe=?, namneng=?, beskrivswe=?, beskriveng=?, adress1=?, adress2=?, postadress=?, epostkontaktperson=?, websida=?, websidaks=?, lowressurl=?, thumbnailurl=?, serv_org=? WHERE kortnamn=?";
@@ -165,9 +164,9 @@ public class OrganizationManager extends DBBasedManagerImpl {
 			DBUtil.commit(c);
 		} catch (SQLException e) {
 			DBUtil.rollback(c);
-			logger.error("Problem updating organization " + org != null ? org.getKortnamn() : "null", e);
+			logger.error("Problem updating organization " + (org != null ? org.getKortnamn() : "null"), e);
 		} finally {
-			DBUtil.closeDBResources(rs, ps, c);
+			DBUtil.closeDBResources(null, ps, c);
 		}
 	}
 	
@@ -207,7 +206,7 @@ public class OrganizationManager extends DBBasedManagerImpl {
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<Organization> orgList = new Vector<Organization>();
+		List<Organization> orgList = new Vector<>();
 		try {
 			c = ds.getConnection();
 			String sql = "SELECT kortnamn FROM organisation";
@@ -233,7 +232,7 @@ public class OrganizationManager extends DBBasedManagerImpl {
 	 * @param password lösenordet för organisationen
 	 * @return true om lösenord och kortnamn är korrekt. Annars false
 	 */
-	public boolean Authenticate(String kortnamn, String password) {
+	public boolean authenticate(String kortnamn, String password) {
 		boolean authentic = false;
 		Connection c = null;
 		PreparedStatement ps = null;
@@ -263,7 +262,7 @@ public class OrganizationManager extends DBBasedManagerImpl {
 	 * @return Map med lösenord
 	 */
 	public Map<String,String> getPasswords() {
-		Map<String,String> passwordMap = new HashMap<String,String>();
+		Map<String,String> passwordMap = new HashMap<>();
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

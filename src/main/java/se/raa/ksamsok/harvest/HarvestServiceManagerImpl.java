@@ -34,6 +34,8 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 
 	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.HarvestServiceManager");
 
+	private final Object LOCK_OBJECT = new Object();
+
 	private static final String JOBGROUP_HARVESTERS = "harvesters";
 	private static final String TRIGGER_SUFFIX = "-trigger";
 	private static final String OPTIMIZE_TYPE = "_LUCENE_OPTIMIZE"; // TODO: ligger i db så kan inte bara ändras till solr
@@ -52,7 +54,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	protected StatusService ss;
 
 	// hjälpvariabler för försenad init (db ej åtkomlig vid uppstart)
-	protected volatile long initLastFailedAt;
 	protected volatile boolean initOk = false;
 	protected Thread delayedInit;
 
@@ -104,7 +105,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	protected void innerInit() throws Throwable {
-		synchronized (JOBGROUP_HARVESTERS) {
+		synchronized (LOCK_OBJECT) {
 			if (initOk) {
 				return;
 			}
@@ -162,11 +163,6 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 				}
 				
 				initOk = true;
-				initLastFailedAt = 0;
-			} catch (Throwable t) {
-				initLastFailedAt = System.currentTimeMillis();
-				//logger.error("Error when starting harvest service manager", t);
-				throw t;
 			} finally {
 				DBUtil.closeDBResources(null, null, c);
 			}
@@ -280,7 +276,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	@Override
-	public HarvestService getService(String serviceId) throws Exception {
+	public HarvestService getService(String serviceId) {
 		if (!checkInit()) {
 			return null;
 		}
@@ -288,7 +284,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	@Override
-	public JSONObject getServiceAsJSON(String serviceId) throws Exception {
+	public JSONObject getServiceAsJSON(String serviceId) {
 		if (!checkInit()) {
 			return null;
 		}
@@ -323,7 +319,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	}
 
 	@Override
-	public List<HarvestService> getServices() throws Exception {
+	public List<HarvestService> getServices() {
 	    if (!checkInit()) {
 	    	return null;
 	    }
@@ -345,7 +341,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	    	pst = c.prepareStatement("select * from harvestservices where serviceId <> '" +
 	    			SERVICE_INDEX_OPTIMIZE + "' order by name");
 	    	rs = pst.executeQuery();
-	    	services = new ArrayList<HarvestService>();
+	    	services = new ArrayList<>();
 	    	while (rs.next()) {
 	    		HarvestService service = newServiceInstance(rs);
 	    		services.add(service);
@@ -710,7 +706,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 		if (err != null) {
 			return err;
 		}
-		String status = null;
+		String status;
 		String isRunning = "";
 		try {
 			List<JobExecutionContext> running = scheduler.getCurrentlyExecutingJobs();
@@ -776,7 +772,7 @@ public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements Har
 	// skapar en instans av JobDetail med rätt jobbklass beroende på tjänstetyp
 	private JobDetail createJobDetail(HarvestService service) {
 		String type = service.getServiceType();
-		Class<? extends HarvestJob> clazz = null;
+		Class<? extends HarvestJob> clazz;
 		if (type == null || "OAI-PMH".equalsIgnoreCase(type)) {
 			clazz = OAIPMHHarvestJob.class;
 		} else if ("SIMPLE".equalsIgnoreCase(type)) {

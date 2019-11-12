@@ -8,6 +8,7 @@ import org.apache.solr.client.solrj.util.ClientUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * innehåller statiska metoder som används av flera klasser i systemet
@@ -63,7 +64,7 @@ public class StaticMethods
 		try {//Vet inte om detta är ultimat. Men det tycks funka
 			if(param != null) {
 				param = URLDecoder.decode(param, "UTF-8");
-				param = new String(param.getBytes("ISO-8859-1"), "UTF-8");
+				param = new String(param.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

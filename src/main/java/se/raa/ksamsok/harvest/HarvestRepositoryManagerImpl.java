@@ -181,7 +181,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				// TODO: man skulle kunna strömma allt i en enda request, men jag tror inte man
 				//       skulle tjäna så mycket på det
 				//       se http://wiki.apache.org/solr/Solrj#Streaming_documents_for_an_update
-				List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>(solrBatchSize);
+				List<SolrInputDocument> docs = new ArrayList<>(solrBatchSize);
 				while (rs.next()) {
 					//oaiURI = rs.getString("oaiuri");
 					if (ts != null) {
@@ -415,12 +415,12 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	@Override
 	public Map<String, Integer> getCounts() throws Exception {
-		Map<String, Integer> countMap = new HashMap<String, Integer>();
+		Map<String, Integer> countMap = new HashMap<>();
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		String serviceId = null;
-		int count = 0;
+		int count;
 		try {
 			c = ds.getConnection();
 			// ora: lite special istället för group by för att få db-index att vara med och slippa full table scan...
@@ -522,10 +522,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			Date nowDate = new Date();
 			ss.setWarningTextAndLog(service, "Note! Problem(s) when " + operation, nowDate);
 			logger.warn(service.getId() + ", got following problem(s) when " + operation + ": ");
-			for (String uri: problemMessages.keySet()) {
-				ss.setWarningTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times", nowDate);
-				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
-			}
+			problemMessages.forEach((uri, message) -> {
+				ss.setWarningTextAndLog(service, uri + " - " + message + " times", nowDate);
+				logger.warn("  " + uri + " - " + message + " times");
+			});
 		}
 	}
 

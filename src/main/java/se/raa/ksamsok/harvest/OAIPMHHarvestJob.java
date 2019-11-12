@@ -5,7 +5,6 @@ import ORG.oclc.oai.harvester2.verb.ListMetadataFormats;
 import ORG.oclc.oai.harvester2.verb.ListRecords;
 import ORG.oclc.oai.harvester2.verb.ListSets;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -23,6 +22,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 
 	@Override
 	protected List<ServiceFormat> performGetFormats(HarvestService service) throws Exception {
-		final List<ServiceFormat> list = new ArrayList<ServiceFormat>();
+		final List<ServiceFormat> list = new ArrayList<>();
 		ListMetadataFormats formats = new ListMetadataFormats(service.getHarvestURL());
 		NodeList nodes = formats.getNodeList("/oai20:OAI-PMH/oai20:ListMetadataFormats/oai20:metadataFormat");
 		ServiceFormat f;
@@ -77,7 +77,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 
 	@Override
 	protected List<String> performGetSets(HarvestService service) throws Exception {
-		final List<String> list = new ArrayList<String>();
+		final List<String> list = new ArrayList<>();
 		ListSets sets = new ListSets(service.getHarvestURL());
 		NodeList nodes = sets.getNodeList("/oai20:OAI-PMH/oai20:ListSets/oai20:set");
 		String setSpec;
@@ -190,8 +190,8 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		String resumptionToken = null;
 		try {
 			try {
-				os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes("UTF-8"));
-				os.write("<harvest>\n".getBytes("UTF-8"));
+				os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes(StandardCharsets.UTF_8));
+				os.write("<harvest>\n".getBytes(StandardCharsets.UTF_8));
 			} catch (IOException e) {
 				if (logger != null) {
 					logger.error("Det är problem med att skriva till ut-strömmen");
@@ -225,8 +225,8 @@ public class OAIPMHHarvestJob extends HarvestJob {
 					throw new Exception(listRecords.toString());
 				}
 				try {
-					os.write(listRecords.toString().getBytes("UTF-8"));
-					os.write("\n".getBytes("UTF-8"));
+					os.write(listRecords.toString().getBytes(StandardCharsets.UTF_8));
+					os.write("\n".getBytes(StandardCharsets.UTF_8));
 				} catch (IOException e) {
 					if (logger != null) {
 
@@ -283,7 +283,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 					while (listRecords == null) {
 						++tryNum;
 						if (logger != null && logger.isInfoEnabled()) {
-							logger.info((service != null ? service.getId() : "") + " Trying, attempt " + String.valueOf(tryNum) +
+							logger.info((service != null ? service.getId() : "") + " Trying, attempt " + tryNum +
 								" resumption with token " + resumptionToken);
 						}
 						try {
@@ -295,7 +295,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				}
 			}
 			try {
-				os.write("</harvest>\n".getBytes("UTF-8"));
+				os.write("</harvest>\n".getBytes(StandardCharsets.UTF_8));
 				os.flush();
 			} catch (IOException e) {
 				if (logger != null) {
@@ -327,7 +327,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			throw e;
 		} catch (SAXException e) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			e.printStackTrace(new PrintStream(new ByteArrayOutputStream()));
+			e.printStackTrace(new PrintStream(baos));
 			String message = "Det är problem att parsa skördningen\n";
 			message = message + "Url: " + url + ", metadataPrefix=" + metadataPrefix + ", fromDate:" + fromDate +
 				", toDate: " + toDate + ", resumptionToken=" + resumptionToken + "\n";
@@ -380,100 +380,4 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		}
 
 	}
-
-	public static void main(String[] args) {
-		Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.OAIPMHHarvestJob");
-		FileOutputStream fos = null;
-		OAIPMHHarvestJob j = new OAIPMHHarvestJob();
-		long start = System.currentTimeMillis();
-		try {
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/oaipmh.xml"));
-			 * j.getRecords("http://alcme.oclc.org/oaicat/OAIHandler", null, null, "oai_dc", null,
-			 * fos, logger);
-			 */
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/kthdiva.xml"));
-			 * j.getRecords("http://www.diva-portal.org/oai/kth/OAI", null, null, "oai_dc", null,
-			 * fos, logger);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/sudiva.xml"));
-			 * j.getRecords("http://www.diva-portal.org/oai/su/OAI", null, null, "oai_dc", null,
-			 * fos, logger);
-			 */
-
-			/*
-			 * funkar ej ok - otroooligt seg i alla fall? fos = new FileOutputStream(new
-			 * File("d:/temp/usc.xml")); j.getRecords("http://oai.usc.edu:8085/oaidp", null, null,
-			 * "oai_dc", null, fos, logger);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/brighton.xml"));
-			 * j.getRecords("http://eprints.brighton.ac.uk/perl/oai2", null, null, "oai_dc", null,
-			 * fos, logger,);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/nils1.xml"));
-			 * j.getRecords("http://172.20.6.106:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf",
-			 * "fmi", fos, logger);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/utvnod.xml"));
-			 * j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null,
-			 * "ksamsok-rdf", "fmi", fos, logger);
-			 */
-
-			fos = new FileOutputStream(new File("d:/temp/utvnod_kmb.xml"));
-			j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null, "ksamsok-rdf", "kmb", fos,
-				logger);
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/utvnod_big2.xml"));
-			 * j.getRecords("http://ux-ra-utvap.raa.se:8081/oaicat/OAIHandler", null, null,
-			 * "ksamsok-rdf", "fmi_big", fos, logger);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/lokal_fmi2.xml"));
-			 * j.getRecords("http://127.0.0.1:8080/oaicat/OAIHandler", null, null, "ksamsok-rdf",
-			 * "fmi", fos, logger);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/shm_context.xml"));
-			 * j.getRecords("http://mis.historiska.se/OAICat/SHM/context", null, null,
-			 * "ksamsok-rdf", null, fos, logger);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/shm_media.xml"));
-			 * j.getRecords("http://mis.historiska.se/OAICat/SHM/media", null, null, "ksamsok-rdf",
-			 * null, fos, logger);
-			 */
-
-			/*
-			 * fos = new FileOutputStream(new File("d:/temp/va_gnm_media.xml"));
-			 * j.getRecords("http://www9.vgregion.se/vastarvet/OAICat/gnm/media", null, null,
-			 * "ksamsok-rdf", null, fos, logger);
-			 */
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (fos != null) {
-				try {
-					fos.close();
-				} catch (Exception ignore) {
-				}
-			}
-		}
-		long durationMillis = System.currentTimeMillis() - start;
-		System.out.println("Time: " + ContentHelper.formatRunTime(durationMillis));
-	}
-
 }

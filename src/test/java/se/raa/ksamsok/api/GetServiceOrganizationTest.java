@@ -19,14 +19,13 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class GetServiceOrganizationTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "getServiceOrganization");
 		reqParams.put("value","all");
 	}
@@ -41,8 +40,7 @@ public class GetServiceOrganizationTest extends AbstractBaseTest {
 			gerServOrg.performMethod();
 			//System.out.println(out.toString("UTF-8"));
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder=null;
-			docBuilder = docFactory.newDocumentBuilder();
+			DocumentBuilder docBuilder=docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			Node institution = assertBaseDocProp(resultDoc);
 			//This is to make sure that we will enter the while-loop
@@ -55,7 +53,7 @@ public class GetServiceOrganizationTest extends AbstractBaseTest {
 					Node instInfo = instInfoList.item(i);
 					assertEquals(0,instInfo.getAttributes().getLength());
 					assertNull(instInfo.getNodeValue());
-					assertTrue(instInfo.getNodeType()==Element.ELEMENT_NODE);
+					assertEquals(instInfo.getNodeType(), Element.ELEMENT_NODE);
 				}
 				institution=institution.getNextSibling();
 			}

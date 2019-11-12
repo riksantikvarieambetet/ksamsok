@@ -30,7 +30,7 @@ public class GetRelationsTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "getRelations");
 		reqParams.put("relation","all");
 		reqParams.put("objectId","raa/fmi/10028201230001");
@@ -46,11 +46,10 @@ public class GetRelationsTest extends AbstractBaseTest {
 			getRelations.performMethod();
 //			System.out.println(out.toString("UTF-8"));
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder=null;
-			docBuilder = docFactory.newDocumentBuilder();
+			DocumentBuilder docBuilder=docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			Node relations = assertBaseDocProp(resultDoc);
-			assertTrue(relations.getNodeName().equals("relations"));
+			assertEquals("relations", relations.getNodeName());
 			int numberOfRelations = Integer.parseInt(relations.getAttributes().getNamedItem("count").getTextContent());
 			NodeList relationList = relations.getChildNodes();
 			assertEquals(numberOfRelations, relationList.getLength());
@@ -64,7 +63,7 @@ public class GetRelationsTest extends AbstractBaseTest {
 	}
 	
 	private void assertRelation(Node relation) throws URISyntaxException{
-		assertTrue(relation.getNodeName().equals("relation"));
+		assertEquals("relation", relation.getNodeName());
 		NamedNodeMap relAttrList = relation.getAttributes();
 		assertTrue(relAttrList.getLength()>0);
 		for(int i = 0; i < relAttrList.getLength(); i++){
@@ -72,7 +71,7 @@ public class GetRelationsTest extends AbstractBaseTest {
 			if (relAttr.getNodeName().equals("type")){
 				assertChild(relAttr.getFirstChild());
 			} else if (relAttr.getNodeName().equals("source")){
-				assertTrue(assertChild(relAttr.getFirstChild()).equals("deduced"));
+				assertEquals("deduced", assertChild(relAttr.getFirstChild()));
 			} else {
 				fail("Unknown attribute was found in relation tag: "+ relAttr.getNodeName());
 			}

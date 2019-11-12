@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
@@ -13,8 +14,11 @@ import se.raa.ksamsok.api.method.APIMethod;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 
@@ -32,7 +36,7 @@ public class FacetTest extends AbstractBaseTest{
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "facet");
 		reqParams.put("stylesheet", "stylesheet/facet.xsl");
 		reqParams.put("index", "countyName|thumbnailExists");
@@ -51,8 +55,7 @@ public class FacetTest extends AbstractBaseTest{
 			facet.setFormat(APIMethod.Format.XML);
 			facet.performMethod();
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder=null;
-			docBuilder = docFactory.newDocumentBuilder();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			// Travel trough the document
 			// The base doc properties, result, version and echo tag
@@ -68,12 +71,12 @@ public class FacetTest extends AbstractBaseTest{
 				numberOfTermsVal = Integer.parseInt(assertChild(numberOfTermsValue));
 				assertTrue(numberOfTermsVal>1);
 			}
-			assertTrue(numberOfTerms.getFirstChild().equals(numberOfTerms.getLastChild()));
+			assertEquals(numberOfTerms.getFirstChild(), numberOfTerms.getLastChild());
 			// The term tags
 			Node term=numberOfTerms;
 			boolean fillIndexes = false;
 			if (indexes == null){
-				indexes = new HashMap<String, HashMap<String, Integer>>();
+				indexes = new HashMap<>();
 				fillIndexes=true;
 			}
 			for (int i=0; i < numberOfTermsVal; i++){
@@ -87,32 +90,28 @@ public class FacetTest extends AbstractBaseTest{
 				assertParent(index,"index");
 				//The index value
 				Node indexValue = index.getFirstChild();
-				assertTrue(index.getFirstChild().equals(index.getLastChild()));
+				assertEquals(index.getFirstChild(), index.getLastChild());
 				String indexName = assertChild(indexValue);
 				// The value tag
 				Node value = index.getNextSibling();
 				assertParent(value,"value");
-				assertTrue(indexFields.getLastChild().equals(value));
+				assertEquals(indexFields.getLastChild(), value);
 				// The value tag's value
 				Node valueValue = value.getFirstChild();
-				assertTrue(value.getFirstChild().equals(value.getLastChild()));
+				assertEquals(value.getFirstChild(), value.getLastChild());
 				String indexNameValue = assertChild(valueValue);
 				// The records tag
 				Node records = indexFields.getNextSibling();
 				assertParent(records,"records");
-				assertTrue(term.getLastChild().equals(records));
+				assertEquals(term.getLastChild(), records);
 				// The records tags value
 				Node recordsValue = records.getFirstChild();
-				assertTrue(records.getFirstChild().equals(records.getLastChild()));
+				assertEquals(records.getFirstChild(), records.getLastChild());
 				int indexNameRecord = Integer.parseInt(assertChild(recordsValue));
 				assertTrue(indexNameRecord>=Integer.parseInt(reqParams.get("removeBelow")));
 				if (fillIndexes){
 					// Store fetch value to compare with json result
-					HashMap<String, Integer> indexRecords = indexes.get(indexName);
-					if (indexRecords == null){
-						indexRecords = new HashMap<String, Integer>();
-						indexes.put(indexName, indexRecords);
-					}
+					HashMap<String, Integer> indexRecords = indexes.computeIfAbsent(indexName, k -> new HashMap<>());
 					indexRecords.put(indexNameValue, indexNameRecord);
 				} else {
 					// This can only be tested if testFacetJSONRepsonse has been running
@@ -122,7 +121,7 @@ public class FacetTest extends AbstractBaseTest{
 					assertEquals((int) indexRecords.get(indexNameValue),indexNameRecord);
 				}
 			}
-		} catch (Exception e) {
+		} catch (MissingParameterException | DiagnosticException | BadParameterException | ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -139,32 +138,32 @@ public class FacetTest extends AbstractBaseTest{
 			facet.performMethod();
 			JSONObject jsonResult = new JSONObject(out.toString("UTF-8"));
 			// The result object
-			assertEquals(1,jsonResult.length());
+			assertEquals(1, jsonResult.length());
 			assertTrue(jsonResult.has("result"));
 			JSONObject result = jsonResult.getJSONObject("result");
 			assertEquals(4, result.length());
 			assertTrue(result.has("term"));
 			assertTrue(result.has("echo"));
 			assertTrue(result.has("version"));
-			assertEquals(Float.parseFloat(APIMethod.API_VERSION),result.getInt("version"),0);
+			assertEquals(Float.parseFloat(APIMethod.API_VERSION), result.getInt("version"), 0);
 			assertTrue(result.has("numberOfTerms"));
-			if (numberOfTermsVal>0){
+			if (numberOfTermsVal > 0) {
 				// This can only be tested if testFacetXMLRepsonse has been running
-				assertEquals(numberOfTermsVal,result.getInt("numberOfTerms"));
+				assertEquals(numberOfTermsVal, result.getInt("numberOfTerms"));
 			} else {
-				numberOfTermsVal=result.getInt("numberOfTerms");
-				assertTrue(numberOfTermsVal>1);
+				numberOfTermsVal = result.getInt("numberOfTerms");
+				assertTrue(numberOfTermsVal > 1);
 			}
 			// The terms object
 			JSONArray terms = result.getJSONArray("term");
-			assertEquals(numberOfTermsVal,terms.length());
+			assertEquals(numberOfTermsVal, terms.length());
 			// Check to see if testFacetXMLResponse has been running
 			boolean fillIndexes = false;
-			if (indexes == null){
-				fillIndexes=true;
-				indexes = new HashMap<String, HashMap<String,Integer>>();
+			if (indexes == null) {
+				fillIndexes = true;
+				indexes = new HashMap<>();
 			}
-			for (int i=0; i< numberOfTermsVal; i++){
+			for (int i = 0; i < numberOfTermsVal; i++) {
 				JSONObject term = terms.getJSONObject(i);
 				assertEquals(2, term.length());
 				assertTrue(term.has("indexFields"));
@@ -173,42 +172,38 @@ public class FacetTest extends AbstractBaseTest{
 				assertEquals(2, indexFields.length());
 				assertTrue(indexFields.has("index"));
 				assertTrue(indexFields.has("value"));
-				if (fillIndexes){
+				if (fillIndexes) {
 					// Store fetch value to compare with xml result
-					HashMap<String, Integer> indexRecords = indexes.get(indexFields.getString("index"));
-					if (indexRecords == null){
-						indexRecords = new HashMap<String, Integer>();
-						indexes.put(indexFields.getString("index"), indexRecords);
-					}
+					HashMap<String, Integer> indexRecords = indexes.computeIfAbsent(indexFields.getString("index"), k -> new HashMap<>());
 					indexRecords.put(indexFields.getString("value"), term.getInt("records"));
 				} else {
 					// This can only be tested if testFacetXMLRepsonse has been running
 					// Compare with the xml result
-					HashMap<String, Integer> indexRecords =indexes.get(indexFields.getString("index"));
+					HashMap<String, Integer> indexRecords = indexes.get(indexFields.getString("index"));
 					assertNotNull(indexRecords);
-					assertEquals((int) indexRecords.get(indexFields.getString("value")),term.getInt("records"));
+					assertEquals((int) indexRecords.get(indexFields.getString("value")), term.getInt("records"));
 				}
 			}
 			// The echo object
 			JSONObject echo = result.getJSONObject("echo");
-			assertEquals(4,echo.length());
+			assertEquals(4, echo.length());
 			// The echo index object
 			assertTrue(echo.has("index"));
 			JSONArray index = echo.getJSONArray("index");
-			assertEquals(2,index.length());
-			for (int i=0; i < index.length();i++){
+			assertEquals(2, index.length());
+			for (int i = 0; i < index.length(); i++) {
 				assertTrue(reqParams.get("index").contains(index.getString(i)));
 			}
 			// The query property
 			assertTrue(echo.has("query"));
-			assertTrue(reqParams.get("query").equals(echo.getString("query")));
+			assertEquals(reqParams.get("query"), echo.getString("query"));
 			// The method property
 			assertTrue(echo.has("method"));
-			assertTrue(reqParams.get("method").equals(echo.getString("method")));
+			assertEquals(reqParams.get("method"), echo.getString("method"));
 			// The remove below property
 			assertTrue(echo.has("removeBelow"));
-			assertEquals(Integer.parseInt(reqParams.get("removeBelow")),echo.getInt("removeBelow"));
-		} catch (Exception e) {
+			assertEquals(Integer.parseInt(reqParams.get("removeBelow")), echo.getInt("removeBelow"));
+		} catch (DiagnosticException | BadParameterException | UnsupportedEncodingException | MissingParameterException e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -225,9 +220,7 @@ public class FacetTest extends AbstractBaseTest{
 				fail("No exception was thrown, expected MissingParameterException");
 			} catch (MissingParameterException e) {
 				// Ignore, correct exception was trown
-			} catch (DiagnosticException e) {
-				fail("Wrong exception thrown");
-			} catch (BadParameterException e) {
+			} catch (DiagnosticException | BadParameterException e) {
 				fail("Wrong exception thrown");
 			}
 	}
@@ -243,9 +236,7 @@ public class FacetTest extends AbstractBaseTest{
 				fail("No exception was thrown, expected MissingParameterException");
 			} catch (MissingParameterException e) {
 				// Ignore, correct exception was trown
-			} catch (DiagnosticException e) {
-				fail("Wrong exception thrown");
-			} catch (BadParameterException e) {
+			} catch (DiagnosticException | BadParameterException e) {
 				fail("Wrong exception thrown");
 			}
 	}

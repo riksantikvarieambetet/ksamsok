@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -102,7 +103,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 				String json;
 				JSONObject jsonObject = XML.toJSONObject(baos.toString("UTF-8"));
 				json = jsonObject.toString();
-				out.write(json.getBytes("UTF-8"));
+				out.write(json.getBytes(StandardCharsets.UTF_8));
 			} else {
 				strResult = new StreamResult(out);
 				transform.transform(source, strResult);
@@ -181,7 +182,7 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	 */
 	public Map<String,String> getIndexMapSingleValue(String indexString,
 			String value)  throws MissingParameterException {
-		Map<String,String> indexMap = new HashMap<String,String>();
+		Map<String,String> indexMap = new HashMap<>();
 		if (indexString == null || indexString.trim().length() < 1) 	{
 			throw new MissingParameterException("parametern index saknas eller är tom", "APIMethodFactory.getIndexMapSingleValue", null, false);
 		}

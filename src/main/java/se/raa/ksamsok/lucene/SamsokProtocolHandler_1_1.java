@@ -28,16 +28,16 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 	private static final Map<String, String> superContextTypes_1_1_TO;
 
 	static {
-		final Map<String,String> contextTypeValues = new HashMap<String,String>();
+		final Map<String,String> contextTypeValues = new HashMap<>();
 		RDFUtil.readURIValueResource(PATH + "contexttype_1.1.rdf", SamsokProtocol.uri_rContextLabel, contextTypeValues);
 		contextTypes_1_1_TO = Collections.unmodifiableMap(contextTypeValues);
 
 		// kontextsupertyper
-		final Map<String,String> contextSuperTypeValues = new HashMap<String,String>();
+		final Map<String,String> contextSuperTypeValues = new HashMap<>();
 		RDFUtil.readURIValueResource(PATH + "contextsupertype_1.1.rdf", SamsokProtocol.uri_r__Name, contextSuperTypeValues);
 		superContextTypes_1_1_TO = Collections.unmodifiableMap(contextSuperTypeValues);
 
-		Map<String,String> values = new HashMap<String,String>();
+		Map<String,String> values = new HashMap<>();
 		// läs in uri-värden för uppslagning
 		RDFUtil.readURIValueResource(PATH + "entitytype_1.1.rdf", SamsokProtocol.uri_r__Name, values);
 		RDFUtil.readURIValueResource(PATH + "entitysupertype_1.1.rdf", SamsokProtocol.uri_r__Name, values);
@@ -49,7 +49,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		uriValues_1_1_TO = Collections.unmodifiableMap(values);
 
 		// utgå från tidigare version och lägg till de nytillkomna
-		Map<String, URI> relMap = new HashMap<String, URI>(relationsMap_0_TO_1_0);
+		Map<String, URI> relMap = new HashMap<>(relationsMap_0_TO_1_0);
 
 		// hämta ut is mentioned by (0M)
 		relMap.put(ContentHelper.IX_ISMENTIONEDBY, SamsokProtocol.uri_rIsMentionedBy);
@@ -61,8 +61,6 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		relMap.put(ContentHelper.IX_ISCONTAINEDIN, SamsokProtocol.uri_rIsContainedIn);
 		relMap.put(ContentHelper.IX_ISOBJECTEXAMPLEFOR, SamsokProtocol.uri_rIsObjectExampleFor);
 		relMap.put(ContentHelper.IX_DESCRIBES, SamsokProtocol.uri_rDescribes);
-		relMap.put(ContentHelper.IX_ISMENTIONEDBY, SamsokProtocol.uri_rIsMentionedBy);
-		relMap.put(ContentHelper.IX_MENTIONS, SamsokProtocol.uri_rMentions);
 
 		// cidoc
 		relMap.put(ContentHelper.IX_PARTICIPATEDIN, SamsokProtocol.uri_cidoc_P11B_participated_in);
@@ -81,7 +79,7 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		relationsMap_1_1_TO = Collections.unmodifiableMap(relMap);
 
 		// kontextrelationerna
-		Map<String, URI> contextRelMap = new HashMap<String, URI>();
+		Map<String, URI> contextRelMap = new HashMap<>();
 
 		contextRelMap.put(ContentHelper.IX_ISFORMERORCURRENTKEEPEROF, SamsokProtocol.uri_cidoc_P49B_is_former_or_current_keeper_of);
 		contextRelMap.put(ContentHelper.IX_HASFORMERORCURRENTKEEPER, SamsokProtocol.uri_cidoc_P49F_has_former_or_current_keeper);

@@ -40,7 +40,7 @@ public class SearchTest extends AbstractBaseTest{
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "search");
 		reqParams.put("query","text=yxa");
 	}
@@ -108,7 +108,7 @@ public class SearchTest extends AbstractBaseTest{
 			for (int i = 0; i < recordList.getLength(); i++){
 				assertEquals(2, recordList.item(i).getChildNodes().getLength());
 				Node pres = recordList.item(i).getFirstChild();
-				assertTrue(pres.getNodeName().equals("pres:item"));
+				assertEquals("pres:item", pres.getNodeName());
 				assertNotNull(pres.getFirstChild());
 				//rel:score
 				Node relScore = recordList.item(i).getLastChild();
@@ -182,9 +182,9 @@ public class SearchTest extends AbstractBaseTest{
 	 * @param node - The <field> node
 	 */
 	private void assertField(Node node) {
-		assertTrue(node.getNodeName().equals("field"));
+		assertEquals("field", node.getNodeName());
 		assertEquals(1,node.getAttributes().getLength());
-		assertTrue(node.getAttributes().item(0).getNodeName().equals("name"));
+		assertEquals("name", node.getAttributes().item(0).getNodeName());
 		String fieldName=node.getAttributes().item(0).getNodeValue();
 		Node fieldValue = node.getFirstChild();
 		if (fieldName.equals("itemId") || fieldName.equals("thumbnail") || fieldName.equals("url")){
@@ -217,7 +217,7 @@ public class SearchTest extends AbstractBaseTest{
 		search.setFormat(format);
 		search.performMethod();
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder=null;
+		DocumentBuilder docBuilder;
 		docBuilder = docFactory.newDocumentBuilder();
 		Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 		//System.out.println(out.toString("UTF-8"));
@@ -238,8 +238,7 @@ public class SearchTest extends AbstractBaseTest{
 		Node records = totalHits.getNextSibling();
 		assertParent(records,"records");
 		// The record
-		NodeList recordList = records.getChildNodes();
-		return recordList;
+		return records.getChildNodes();
 	}
 	
 	/**

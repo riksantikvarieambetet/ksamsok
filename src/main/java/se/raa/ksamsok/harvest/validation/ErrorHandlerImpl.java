@@ -1,7 +1,6 @@
 package se.raa.ksamsok.harvest.validation;
 
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import java.util.ArrayList;
@@ -13,17 +12,17 @@ import java.util.List;
  */
 public class ErrorHandlerImpl implements ErrorHandler{
 
-	private List<Message> messages = new ArrayList<Message>();
+	private List<Message> messages = new ArrayList<>();
 
-	public void error(SAXParseException exception) throws SAXException {
+	public void error(SAXParseException exception) {
 		addMessage("Fel: ", exception);
 	}
 
-    public void fatalError(SAXParseException exception) throws SAXException{
+    public void fatalError(SAXParseException exception) {
     	addMessage("Fatalt fel: ", exception);
     }
 
-    public void warning(SAXParseException exception) throws SAXException{
+    public void warning(SAXParseException exception) {
     	addMessage("Varning: ", exception);
     }
 
@@ -42,7 +41,7 @@ public class ErrorHandlerImpl implements ErrorHandler{
     	m.messageText = msgStart + (e == null ? "" : e.getMessage());
     	if(!messages.contains(m)){
     		// adds a new message
-    		if(e != null && e instanceof SAXParseException){
+    		if(e instanceof SAXParseException){
 	        	m.firstOccuranceCol = ((SAXParseException)e).getColumnNumber();
 	        	m.firstOccuranceRow = ((SAXParseException)e).getLineNumber();
     		}

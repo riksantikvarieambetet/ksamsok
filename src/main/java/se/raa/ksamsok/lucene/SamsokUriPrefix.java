@@ -25,7 +25,7 @@ public enum SamsokUriPrefix {
 		this.shortVersion = shortVersion;
 	}
 
-	private static HashMap<String, String> cache = new HashMap<String, String>();
+	private static HashMap<String, String> cache = new HashMap<>();
 
 	/**
 	 * Given a uri prefix, looks up the correct one. This is to correct for example uri:s from
