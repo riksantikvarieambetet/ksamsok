@@ -3,9 +3,7 @@ package se.raa.ksamsok.api.method;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
 import se.raa.ksamsok.api.APIServiceProvider;
-import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.organization.Organization;
 import se.raa.ksamsok.organization.Service;
 
@@ -43,20 +41,18 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void extractParameters() throws MissingParameterException,
-			BadParameterException {
-		super.extractParameters();
+	protected void extractParameters() {
 		value = StringUtils.defaultIfEmpty(params.get(GetServiceOrganization.VALUE), ALL);
 	}
 
 	@Override
-	protected void performMethodLogic() throws DiagnosticException {
+	protected void performMethodLogic() {
 		if (value.equals(ALL)) {
 			orgList = serviceProvider.getOrganizationManager().getAllOrganizations();
 		} else {
 			Organization org = serviceProvider.getOrganizationManager().getOrganization(value, true);
 			if (org != null) {
-				orgList = new ArrayList<Organization>();
+				orgList = new ArrayList<>();
 				orgList.add(org);
 			}
 		}

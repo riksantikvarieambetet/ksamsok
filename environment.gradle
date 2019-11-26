@@ -1,0 +1,18 @@
+task setUpEnvironmentConfiguration {
+
+        apply plugin: 'java'
+
+        def availableEnvironments = ['local', 'buildserver', 'default']
+        def environment = project.hasProperty('environment') ? environment : 'default'
+
+        if (!availableEnvironments.contains(environment)) {
+            def message = "Target environment '${environment}' not allowed. Please use one of the following: " +
+                    availableEnvironments.join(", ")
+            throw new TaskExecutionException(setUpEnvironmentConfiguration, new ResourceException(message))
+        }
+
+        println "***"
+        println "Target environment used: '${environment}'"
+        println "***"
+
+}

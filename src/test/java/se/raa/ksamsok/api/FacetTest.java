@@ -22,7 +22,7 @@ public class FacetTest extends AbstractBaseTest{
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "facet");
 		reqParams.put("stylesheet", "stylesheet/facet.xsl");
 		reqParams.put("index", "countyName|thumbnailExists");
@@ -215,9 +215,7 @@ public class FacetTest extends AbstractBaseTest{
 				fail("No exception was thrown, expected MissingParameterException");
 			} catch (MissingParameterException e) {
 				// Ignore, correct exception was trown
-			} catch (DiagnosticException e) {
-				fail("Wrong exception thrown");
-			} catch (BadParameterException e) {
+			} catch (DiagnosticException | BadParameterException e) {
 				fail("Wrong exception thrown");
 			}
 	}
@@ -233,9 +231,7 @@ public class FacetTest extends AbstractBaseTest{
 				fail("No exception was thrown, expected MissingParameterException");
 			} catch (MissingParameterException e) {
 				// Ignore, correct exception was trown
-			} catch (DiagnosticException e) {
-				fail("Wrong exception thrown");
-			} catch (BadParameterException e) {
+			} catch (DiagnosticException | BadParameterException e) {
 				fail("Wrong exception thrown");
 			}
 	}

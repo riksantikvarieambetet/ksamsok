@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -141,41 +140,43 @@ public abstract class ContentHelper {
 
 	// relationer
 	public static final String IX_RELURI = "relUri"; // slask-indexet
-	public static final String IX_CONTAINSINFORMATIONABOUT = "containsInformationAbout";
+	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
+	public static final String IX_ISRELATEDTO = "isRelatedTo";
 	public static final String IX_CONTAINSOBJECT = "containsObject";
 	public static final String IX_ISCONTAINEDIN = "isContainedIn";
 	public static final String IX_HASBEENUSEDIN = "hasBeenUsedIn";
 	public static final String IX_HASCHILD = "hasChild";
+	public static final String IX_HASPARENT = "hasParent";
 	public static final String IX_HASFIND = "hasFind";
+	public static final String IX_ISFOUNDIN = "isFoundIn";
 	public static final String IX_HASIMAGE = "hasImage";
 	public static final String IX_HASOBJECTEXAMPLE = "hasObjectExample";
 	public static final String IX_ISOBJECTEXAMPLEFOR = "isObjectExampleFor";
-	public static final String IX_HASPARENT = "hasParent";
 	public static final String IX_HASPART = "hasPart";
+	public static final String IX_ISPARTOF = "isPartOf";
 	public static final String IX_ISDESCRIBEDBY = "isDescribedBy";
 	public static final String IX_DESCRIBES = "describes";
-	public static final String IX_ISFOUNDIN = "isFoundIn";
-	public static final String IX_ISPARTOF = "isPartOf";
-	public static final String IX_ISRELATEDTO = "isRelatedTo";
 	public static final String IX_ISVISUALIZEDBY = "isVisualizedBy";
-	public static final String IX_SAMEAS = "sameAs"; // owl:sameAs
 	public static final String IX_VISUALIZES = "visualizes";
+	public static final String IX_CONTAINSINFORMATIONABOUT = "containsInformationAbout";
 	public static final String IX_ISMENTIONEDBY = "isMentionedBy";
 	public static final String IX_MENTIONS = "mentions";
+	public static final String IX_REPLACES = "replaces";
+	public static final String IX_ISREPLACEDBY = "isReplacedBy";
 
 	// cidoc-crm
-	public static final String IX_HASFORMERORCURRENTOWNER = "has_former_or_current_owner";
-	public static final String IX_ISFORMERORCURRENTOWNEROF = "is_former_or_current_owner_of";
+	public static final String IX_PARTICIPATEDIN = "participated_in";
+	public static final String IX_HADPARTICIPANT = "had_participant";
+	public static final String IX_WASPRESENTAT = "was_present_at";
+	public static final String IX_OCCUREDINTHEPRESENCEOF = "occurred_in_the_presence_of";
 	public static final String IX_HASFORMERORCURRENTKEEPER = "has_former_or_current_keeper";
 	public static final String IX_ISFORMERORCURRENTKEEPEROF = "is_former_or_current_keeper_of";
+	public static final String IX_HASFORMERORCURRENTOWNER = "has_former_or_current_owner";
+	public static final String IX_ISFORMERORCURRENTOWNEROF = "is_former_or_current_owner_of";
 	public static final String IX_HASCREATED = "has_created";
 	public static final String IX_WASCREATEDBY = "was_created_by";
 	public static final String IX_HASRIGHTON = "has_right_on";
 	public static final String IX_RIGHTHELDBY = "right_held_by";
-	public static final String IX_WASPRESENTAT = "was_present_at";
-	public static final String IX_OCCUREDINTHEPRESENCEOF = "occurred_in_the_presence_of";
-	public static final String IX_HADPARTICIPANT = "had_participant";
-	public static final String IX_PARTICIPATEDIN = "participated_in";
 	public static final String IX_ISCURRENTORFORMERMEMBEROF = "is_current_or_former_member_of";
 	public static final String IX_HASCURRENTORFORMERMEMBER = "has_current_or_former_member";
 
@@ -238,56 +239,56 @@ public abstract class ContentHelper {
 	public static final String IX_EMPLOYER = "employer";
 	public static final String IX_MARRIEDTO = "marriedTo";
 
-	// roller inverser inte index men konstanter
-	public static final String CLIENT_OF = "clientOf";
-	public static final String COMPOSER_OF = "composerOf";
-	public static final String AUTHOR_OF = "authorOf";
-	public static final String ARCHITECT_OF = "architectOf";
-	public static final String INVENTOR_OF = "inventorOf";
-	public static final String SCENOGRAPHER_OF = "scenographerOf";
-	public static final String DESIGNER_OF = "designerOf";
-	public static final String PRODUCER_OF = "producerOf";
-	public static final String ORGANIZER_OF = "organizerOf";
-	public static final String DIRECTOR_OF = "directorOf";
-	public static final String PHOTOGRAPHER_OF = "photographerOf";
-	public static final String PAINTER_OF = "painterOf";
-	public static final String BUILDER_OF = "builderOf";
-	public static final String MASTERBUILDER_OF = "masterBuilderOf";
-	public static final String CONSTRUCTIONCLIENT_OF = "constructionClientOf";
-	public static final String ENGRAVER_OF = "engraverOf";
-	public static final String MINTMASTER_OF = "mintmasterOf";
-	public static final String ARTIST_OF = "artistOf";
-	public static final String DESIGNENGINEER_OF = "designEngineerOf";
-	public static final String CARPENTER_OF = "carpenterOf";
-	public static final String MASON_OF = "masonOf";
-	public static final String TECHNICIAN_OF = "technicianOf";
-	public static final String PUBLISHER_OF = "publisherOf";
-	public static final String PUBLICIST_OF = "publicistOf";
-	public static final String MUSICIAN_OF = "musicianOf";
-	public static final String ACTORACTRESS_OF = "actorActressOf";
-	public static final String PRINTER_OF = "printerOf";
-	public static final String SIGNER_OF = "signerOf";
-	public static final String FINDER_OF = "finderOf";
-	public static final String ABANDONEE_OF = "abandoneeOf";
-	public static final String INTERMEDIARY_OF = "intermediaryOf";
-	public static final String BUYER_OF = "buyerOf";
-	public static final String SELLER_OF = "sellerOf";
-	public static final String GENERALAGENT_OF = "generalAgentOf";
-	public static final String DONOR_OF = "donorOf";
-	public static final String DEPOSITOR_OF = "depositorOf";
-	public static final String RESELLER_OF = "resellerOf";
-	public static final String INVENTORYTAKER_OF = "inventoryTakerOf";
-	public static final String EXCAVATOR_OF = "excavatorOf";
-	public static final String EXAMINATOR_OF = "examinatorOf";
-	public static final String CONSERVATOR_OF = "conservatorOf";
-	public static final String ARCHIVECONTRIBUTOR_OF = "archiveContributorOf";
-	public static final String INTERVIEWER_OF = "interviewerOf";
-	public static final String INFORMANT_OF = "informantOf";
-	public static final String PATENTHOLDER_OF = "patentHolderOf";
-	public static final String USER_OF = "userOf";
-	public static final String SCANNEROPERATOR_OF = "scannerOperatorOf";
-	public static final String PICTUREEDITOR_OF = "pictureEditorOf";
-	public static final String EMPLOYER_OF = "employerOf";
+	// roller inverser
+	public static final String IX_CLIENT_OF = "clientOf";
+	public static final String IX_COMPOSER_OF = "composerOf";
+	public static final String IX_AUTHOR_OF = "authorOf";
+	public static final String IX_ARCHITECT_OF = "architectOf";
+	public static final String IX_INVENTOR_OF = "inventorOf";
+	public static final String IX_SCENOGRAPHER_OF = "scenographerOf";
+	public static final String IX_DESIGNER_OF = "designerOf";
+	public static final String IX_PRODUCER_OF = "producerOf";
+	public static final String IX_ORGANIZER_OF = "organizerOf";
+	public static final String IX_DIRECTOR_OF = "directorOf";
+	public static final String IX_PHOTOGRAPHER_OF = "photographerOf";
+	public static final String IX_PAINTER_OF = "painterOf";
+	public static final String IX_BUILDER_OF = "builderOf";
+	public static final String IX_MASTERBUILDER_OF = "masterBuilderOf";
+	public static final String IX_CONSTRUCTIONCLIENT_OF = "constructionClientOf";
+	public static final String IX_ENGRAVER_OF = "engraverOf";
+	public static final String IX_MINTMASTER_OF = "mintmasterOf";
+	public static final String IX_ARTIST_OF = "artistOf";
+	public static final String IX_DESIGNENGINEER_OF = "designEngineerOf";
+	public static final String IX_CARPENTER_OF = "carpenterOf";
+	public static final String IX_MASON_OF = "masonOf";
+	public static final String IX_TECHNICIAN_OF = "technicianOf";
+	public static final String IX_PUBLISHER_OF = "publisherOf";
+	public static final String IX_PUBLICIST_OF = "publicistOf";
+	public static final String IX_MUSICIAN_OF = "musicianOf";
+	public static final String IX_ACTORACTRESS_OF = "actorActressOf";
+	public static final String IX_PRINTER_OF = "printerOf";
+	public static final String IX_SIGNER_OF = "signerOf";
+	public static final String IX_FINDER_OF = "finderOf";
+	public static final String IX_ABANDONEE_OF = "abandoneeOf";
+	public static final String IX_INTERMEDIARY_OF = "intermediaryOf";
+	public static final String IX_BUYER_OF = "buyerOf";
+	public static final String IX_SELLER_OF = "sellerOf";
+	public static final String IX_GENERALAGENT_OF = "generalAgentOf";
+	public static final String IX_DONOR_OF = "donorOf";
+	public static final String IX_DEPOSITOR_OF = "depositorOf";
+	public static final String IX_RESELLER_OF = "resellerOf";
+	public static final String IX_INVENTORYTAKER_OF = "inventoryTakerOf";
+	public static final String IX_EXCAVATOR_OF = "excavatorOf";
+	public static final String IX_EXAMINATOR_OF = "examinatorOf";
+	public static final String IX_CONSERVATOR_OF = "conservatorOf";
+	public static final String IX_ARCHIVECONTRIBUTOR_OF = "archiveContributorOf";
+	public static final String IX_INTERVIEWER_OF = "interviewerOf";
+	public static final String IX_INFORMANT_OF = "informantOf";
+	public static final String IX_PATENTHOLDER_OF = "patentHolderOf";
+	public static final String IX_USER_OF = "userOf";
+	public static final String IX_SCANNEROPERATOR_OF = "scannerOperatorOf";
+	public static final String IX_PICTUREEDITOR_OF = "pictureEditorOf";
+	public static final String IX_EMPLOYER_OF = "employerOf";
 
 	// media-index
 	public static final String IX_MEDIALICENSE = "mediaLicense";
@@ -314,14 +315,15 @@ public abstract class ContentHelper {
 	public static final String IX_CENTURY = "century";
 	public static final String IX_DECADE = "decade";
 
+
 	// alla index
-	private static final HashMap<String, Index> indices = new LinkedHashMap<String, Index>();
+	private static final HashMap<String, Index> indices = new LinkedHashMap<>();
 	// publika index
-	private static final List<Index> publicIndices = new ArrayList<Index>();
+	private static final List<Index> publicIndices = new ArrayList<>();
 
 	// meddelanden om eventuella problem vid tolkning av tjänsteinnehållet, tex att en konstant
 	// inte kunde slås upp etc, och antal ggr problemet förekom - främst för utv/debug
-	private static final ThreadLocal<Map<String, Integer>> problemMessages = new ThreadLocal<Map<String, Integer>>();
+	private static final ThreadLocal<Map<String, Integer>> problemMessages = new ThreadLocal<>();
 
 	static {
 		// implementerade index
@@ -337,7 +339,9 @@ public abstract class ContentHelper {
 		addIndex(IX_COLLECTION, "Namn på samlingen som objektet tillhör", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_DATAQUALITY, "Beskrivningsnivå", IndexType.TOLOWERCASE); // uri (översatt)
 		addIndex(IX_MEDIATYPE, "Avgränsning av mediatyper", IndexType.TOLOWERCASE, true, false); // uri
-																									// //
+
+		addIndex(IX_REPLACES, "Identifierare för objekt som detta objekt ersätter", IndexType.VERBATIM);
+
 		// TODO:
 		// detta stämmer
 		// ej(?)
@@ -605,11 +609,10 @@ public abstract class ContentHelper {
 	 * URI och xml-innehållet är en post med k-samsöks-xml (rdf).
 	 * 
 	 * @param xmlContent xml-innehåll
-	 * @param gmlInfoHolder böna som fylls på med funna gml-geometrier mm om ej null
 	 * @return värdeböna, aldrig null
 	 * @throws Exception vid problem
 	 */
-	public abstract ExtractedInfo extractInfo(String xmlContent, GMLInfoHolder gmlInfoHolder) throws Exception;
+	public abstract ExtractedInfo extractInfo(String xmlContent) throws Exception;
 
 	/**
 	 * Skapar ett solr-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster är
@@ -620,10 +623,9 @@ public abstract class ContentHelper {
 	 * @param xmlContent xml-innehåll
 	 * @param added datum posten först lades till i repot
 	 * @return ett solr-dokument, eller null om inte posten ska indexeras
-	 * @throws Exception vid problem
 	 */
 	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent, Date added)
-		throws Exception;
+	;
 
 	// statiska metoder
 
@@ -648,7 +650,7 @@ public abstract class ContentHelper {
 	// hämtar ut ett konfat index, eller dess "pappa" för prefixade index
 	// bör bara användas för att fastställa vilken typ av index det är
 	private static IndexType getIndexType(String indexName) {
-		int underScorePos = -1;
+		int underScorePos;
 		if (indexName != null && (underScorePos = indexName.indexOf("_")) > 0) {
 			indexName = indexName.substring(underScorePos + 1);
 		}
@@ -884,7 +886,7 @@ public abstract class ContentHelper {
 	 */
 	public static void initProblemMessages() {
 		// linked hashmap för att behålla ordningen
-		problemMessages.set(new LinkedHashMap<String, Integer>());
+		problemMessages.set(new LinkedHashMap<>());
 	}
 
 	/**
@@ -982,7 +984,7 @@ public abstract class ContentHelper {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException {
-		HashMap<String, String> params = new HashMap<String, String>();
+		HashMap<String, String> params = new HashMap<>();
 		if (qs != null && qs.length() > 0) {
 			StringTokenizer tok = new StringTokenizer(qs, "&");
 			while (tok.hasMoreTokens()) {

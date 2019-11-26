@@ -14,12 +14,10 @@ import static org.junit.Assert.fail;
 
 public class SearchHelpTest extends AbstractBaseTest {
 	ByteArrayOutputStream out;
-	int numberOfTotalHits;
-	int numberOfHits;
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "searchHelp");
 		reqParams.put("index","itemMotiveWord|itemKeyWord");
 		reqParams.put("prefix","sto*");
@@ -64,8 +62,6 @@ public class SearchHelpTest extends AbstractBaseTest {
 //			fail(e.getMessage());
 //		}
 //	}
-
-
 	// TODO: kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
 	// av om det finns data eller ej genom setup/teardown
 //	@Test

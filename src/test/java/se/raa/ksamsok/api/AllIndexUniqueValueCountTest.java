@@ -36,7 +36,7 @@ public class AllIndexUniqueValueCountTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "allIndexUniqueValueCount");
 		reqParams.put("index", "itemType|provinceName|serviceOrganization|thumbnailExists");
 		reqParams.put("query","yxa");
@@ -56,8 +56,7 @@ public class AllIndexUniqueValueCountTest extends AbstractBaseTest {
 			allIndexUnigueValueCount.setFormat(APIMethod.Format.XML);
 			allIndexUnigueValueCount.performMethod();
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder=null;
-			docBuilder = docFactory.newDocumentBuilder();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			//System.out.println(out.toString("UTF-8"));
 			// Travel trough the document
@@ -76,12 +75,10 @@ public class AllIndexUniqueValueCountTest extends AbstractBaseTest {
 				assertTrue(Integer.parseInt(assertChild(uniqueValuesValue))>0);
 				index=index.getNextSibling();
 			}
-			int i =1;
 		} catch (Throwable e){
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
-		int j = 1;
 	}
 
 

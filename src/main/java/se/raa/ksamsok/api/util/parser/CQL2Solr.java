@@ -239,7 +239,7 @@ public class CQL2Solr {
 					"relationen " + relation + " stöds ej för phrase" +
 							" query", true);
 		}
-		return termQuery.toString();
+		return termQuery != null ? termQuery.toString() : null;
 	}
 
 	/**

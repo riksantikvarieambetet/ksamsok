@@ -22,14 +22,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -95,7 +94,7 @@ public class Protocol_1_11_Test {
 
 		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity); 
+		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
 				
 		Resource s = null;
 		StmtIterator iter = model.listStatements(selector);
@@ -108,8 +107,8 @@ public class Protocol_1_11_Test {
 		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_11(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
-		LinkedList<String> relations = new LinkedList<String>();
-		List<String> gmlGeometries = new LinkedList<String>();
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
 		assertEquals("Fel antal relationer tillbaka", 0, relations.size());
@@ -136,7 +135,6 @@ public class Protocol_1_11_Test {
 	
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		InputStream is = null;
 		StringWriter sw = null;
 		try {
 			Document doc = builder.parse(new File("src/test/resources/" + fileName));
@@ -148,15 +146,12 @@ public class Protocol_1_11_Test {
 			sw = new StringWriter(initialSize);
 			Result result = new StreamResult(sw);
 	        xformer.transform(source, result);
+	        return sw.toString();
 		} finally {
 			if (sw != null) {
 				sw.close();
 			}
-			if (is != null) {
-				is.close();
-			}
 		}
-		return sw != null ? sw.toString() : null;
 	}
 
 }

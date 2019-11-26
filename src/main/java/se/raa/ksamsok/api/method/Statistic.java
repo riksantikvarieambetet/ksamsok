@@ -57,7 +57,6 @@ public class Statistic extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		this.indexMap = extractIndexMap();
 		this.removeBelow = getRemoveBelow(params.get(REMOVE_BELOW));
 	}
@@ -68,7 +67,7 @@ public class Statistic extends AbstractAPIMethod {
 
 	@Override
 	protected void performMethodLogic() throws DiagnosticException {
-		Map<String, List<Term>> termMap = null;
+		Map<String, List<Term>> termMap;
 		try {
 			// TODO: om bara ett index borde man kunna köra facet rakt av
 			SolrQuery query = new SolrQuery();
@@ -145,7 +144,7 @@ public class Statistic extends AbstractAPIMethod {
 	private static List<QueryContent> cartesianWithOneIndex(
 			Map<String,List<Term>> data, String index1)
 	{
-		List<QueryContent> result = new ArrayList<QueryContent>();
+		List<QueryContent> result = new ArrayList<>();
 		for(Term term : data.get(index1))
 		{
 			QueryContent content = new QueryContent();
@@ -160,12 +159,11 @@ public class Statistic extends AbstractAPIMethod {
 	 * @param data
 	 * @return
 	 */
-	protected int getCartesianCount(Map<String,List<Term>> data)
+	static int getCartesianCount(Map<String,List<Term>> data)
 	{
 		int count = 1;
-		for(String index : data.keySet())
-		{
-			count *= data.get(index).size();
+		for(List<Term> termsList : data.values()) {
+			count *= termsList.size();
 		}
 		return count;
 	}
@@ -180,14 +178,12 @@ public class Statistic extends AbstractAPIMethod {
 	private static List<QueryContent> cartesian(String index, List<Term> set,
 			List<QueryContent> list)
 	{
-		List<QueryContent> result = new ArrayList<QueryContent>();
+		List<QueryContent> result = new ArrayList<>();
 		for (QueryContent aList : list) {
 			for (Term term : set) {
 				Map<String, String> map = aList.getTermMap();
 				QueryContent content = new QueryContent();
-				for (String index2 : map.keySet()) {
-					content.addTerm(index2, map.get(index2));
-				}
+				map.forEach(content::addTerm);
 				content.addTerm(index, term.getValue());
 				result.add(content);
 			}
@@ -206,7 +202,7 @@ public class Statistic extends AbstractAPIMethod {
 	private static List<QueryContent> cartesian(String index1, String index2,
 			List<Term> set1, List<Term> set2)
 	{
-		List<QueryContent> result = new ArrayList<QueryContent>();
+		List<QueryContent> result = new ArrayList<>();
 		for(Term term1 : set1)
 		{
 			for(Term term2 : set2)
@@ -230,24 +226,25 @@ public class Statistic extends AbstractAPIMethod {
 	protected Map<String, List<Term>> buildTermMap() throws DiagnosticException,
 		BadParameterException {
 		String indexValue;
-		HashMap<String, List<Term>> termMap = new HashMap<String, List<Term>>();
-		for(String index : indexMap.keySet()) {
+		HashMap<String, List<Term>> termMap = new HashMap<>();
+
+		for (Map.Entry<String, String> entry : indexMap.entrySet()) {
 			try {
+				String index = entry.getKey();
 				indexValue = CQL2Solr.translateIndexName(index);
 				if (!ContentHelper.indexExists(indexValue)) {
 					throw new BadParameterException("Indexet " + index + " existerar inte", "Statistic.buildTermMap", null, false);
 				}
-				List<Term> extractedTerms = new LinkedList<Term>();
-				String value = indexMap.get(index);
+				String value = entry.getValue();
 				if (ContentHelper.isToLowerCaseIndex(indexValue) || ContentHelper.isAnalyzedIndex(indexValue)) {
 					value = value != null ? value.toLowerCase() : null;
 				}
 				// snabbfiltrering, finns det inte ens tillräckligt många träffar
 				// totalt så finns det ju inte sen i sökningen heller
 				List<Term> terms = serviceProvider.getSearchService().terms(indexValue, value, removeBelow, -1);
-				extractedTerms.addAll(terms);
+				List<Term> extractedTerms = new LinkedList<>(terms);
 				termMap.put(indexValue, extractedTerms);
-			} catch(SolrServerException | IOException e) {
+			} catch (SolrServerException | IOException e) {
 				throw new DiagnosticException("Oväntat fel uppstod. Var god försök igen", "Statistic.buildTermMap", e.getMessage(), true);
 			}
 		}
@@ -264,12 +261,13 @@ public class Statistic extends AbstractAPIMethod {
 		Element method = doc.createElement("method");
 		method.appendChild(doc.createTextNode(METHOD_NAME));
 		echo.appendChild(method);
-		for(String indexKey : indexMap.keySet()) {
+		indexMap.forEach((key, value) -> {
 			// index
 			Element index = doc.createElement("index");
-			index.appendChild(doc.createTextNode(indexKey + "=" + indexMap.get(indexKey)));
+			index.appendChild(doc.createTextNode(key + "=" + value));
 			echo.appendChild(index);
-		}
+		});
+
 		Element removeBelowEl = doc.createElement(REMOVE_BELOW);
 		removeBelowEl.appendChild(doc.createTextNode(Integer.toString(removeBelow)));
 		echo.appendChild(removeBelowEl);
@@ -383,7 +381,7 @@ public class Statistic extends AbstractAPIMethod {
 			throw new MissingParameterException("parametern " + INDEX_PARAMETER + " saknas eller är tom", "APIMethodFactory.getStatisticSearchObject", "index parametern saknas", false);
 		}
 		StringTokenizer indexTokenizer = new StringTokenizer(indexString, DELIMITER);
-		HashMap<String,String> indexMap = new HashMap<String,String>();
+		HashMap<String,String> indexMap = new HashMap<>();
 		while (indexTokenizer.hasMoreTokens()) {
 			String[] tokens = indexTokenizer.nextToken().split("=");
 			String index = null;

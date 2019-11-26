@@ -3,7 +3,6 @@ package se.raa.ksamsok.api.method;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
 import se.raa.ksamsok.api.APIServiceProvider;
-import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 
@@ -31,9 +30,7 @@ public class Stem extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void extractParameters() throws MissingParameterException,
-			BadParameterException {
-		super.extractParameters();
+	protected void extractParameters() throws MissingParameterException {
 		this.words = StringUtils.trimToNull(params.get(PARAM_WORDS));
 		if (words == null) {
 			throw new MissingParameterException("Missing or empty parameter (" + PARAM_WORDS + ")",

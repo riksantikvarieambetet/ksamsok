@@ -11,9 +11,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokUriPrefix;
-import se.raa.ksamsok.spatial.GMLDBWriter;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
-import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
@@ -40,7 +37,6 @@ public class OAIPMHHandler extends DefaultHandler {
 	private static DateTimeFormatter isoDateTimeParser = ISODateTimeFormat.dateTimeParser();
 
 	Connection c;
-	GMLDBWriter gmlDBWriter;
 	HarvestService service;
 	ContentHelper contentHelper;
 	String oaiURI;
@@ -48,7 +44,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	int mode = 0;
 	private boolean deleteRecord;
 	private StringBuffer buf = new StringBuffer();
-	private HashMap<String, String> prefixMap = new HashMap<String, String>();
+	private HashMap<String, String> prefixMap = new HashMap<>();
 	private static final int NORMAL = 0;
 	private static final int RECORD = 1;
 	private static final int COPY = 2;
@@ -79,7 +75,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		this.contentHelper = contentHelper;
 		this.c = c;
 		this.sm = sm;
-		this.ts = ts;
+		this.ts = new Timestamp(ts.getTime());
 		// fÃ¶rbered nÃ¥gra databas-statements som kommer anvÃ¤ndas frekvent
 		this.oai2uriPst = c.prepareStatement("select uri from content where oaiuri = ?");
 		this.updatePst = c.prepareStatement("update content set deleted = null, oaiuri = ?, " +
@@ -90,7 +86,6 @@ public class OAIPMHHandler extends DefaultHandler {
 		this.insertPst = c.prepareStatement("insert into content " +
 			"(uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status, nativeURL) " +
 			"values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
 	}
 
 	public void destroy() {
@@ -102,10 +97,6 @@ public class OAIPMHHandler extends DefaultHandler {
 		updatePst = null;
 		deleteUpdatePst = null;
 		insertPst = null;
-		if (gmlDBWriter != null) {
-			gmlDBWriter.destroy();
-			gmlDBWriter = null;
-		}
 	}
 
 	@Override
@@ -290,7 +281,7 @@ public class OAIPMHHandler extends DefaultHandler {
 					String datestampStr = buf.toString().trim();
 					datestamp = parseDatestamp(datestampStr);
 					if (datestamp == null) {
-						datestamp = ts;
+						datestamp = new Timestamp((ts.getTime()));
 						ContentHelper.addProblemMessage("There was a problem parsing datestamp (" + datestampStr +
 							") for record, using 'now' instead");
 					}
@@ -316,12 +307,14 @@ public class OAIPMHHandler extends DefaultHandler {
 				// Ã¥terstÃ¤ll char-buff
 				buf.setLength(0);
 				break;
+			default:
+				logger.warn("Unexpected mode " + mode + " found in endElement for uri + " + uri);
 		}
 
 	}
 
 	@Override
-	public void characters(char[] ch, int start, int length) throws SAXException {
+	public void characters(char[] ch, int start, int length) {
 		buf.append(ch, start, length);
 	}
 
@@ -370,37 +363,22 @@ public class OAIPMHHandler extends DefaultHandler {
 		// OBS att antalet parametrar etc *mÃ¥ste* stÃ¤mma med det statement som anvÃ¤nds
 		// och som skapas och fÃ¶rbereds i konstruktorn!
 
-		ResultSet rs = null;
-		try {
-			// bort med ev spatialt data
-			if (gmlDBWriter != null) {
-				// hÃ¤mta ut uri:n dÃ¥ oai-uri bara Ã¤r intern identifierare
-				// select uri from content where oaiuri = ?
-				oai2uriPst.setString(1, oaiURI);
-				rs = oai2uriPst.executeQuery();
-				if (rs.next()) {
-					String uri = rs.getString("uri");
-					gmlDBWriter.delete(uri);
-				}
-			}
-			// update content set status = ?, changed = ?, deleted = ?, datestamp = ? where
-			// serviceId = ? and oaiuri = ?
-			deleteUpdatePst.setInt(1, DBUtil.STATUS_NORMAL);
-			deleteUpdatePst.setTimestamp(2, ts);
-			deleteUpdatePst.setTimestamp(3, deletedAt);
-			deleteUpdatePst.setTimestamp(4, deletedAt);
-			deleteUpdatePst.setString(5, service.getId());
-			deleteUpdatePst.setString(6, oaiURI);
-			int num = deleteUpdatePst.executeUpdate();
-			numDeletedXact += num;
-			if (logger.isDebugEnabled()) {
-				logger.debug(
+
+		// update content set status = ?, changed = ?, deleted = ?, datestamp = ? where
+		// serviceId = ? and oaiuri = ?
+		deleteUpdatePst.setInt(1, DBUtil.STATUS_NORMAL);
+		deleteUpdatePst.setTimestamp(2, ts);
+		deleteUpdatePst.setTimestamp(3, deletedAt);
+		deleteUpdatePst.setTimestamp(4, deletedAt);
+		deleteUpdatePst.setString(5, service.getId());
+		deleteUpdatePst.setString(6, oaiURI);
+		int num = deleteUpdatePst.executeUpdate();
+		numDeletedXact += num;
+		if (logger.isDebugEnabled()) {
+			logger.debug(
 					"* Removed " + num + " number of oaiURI=" + oaiURI + " from service with ID: " + service.getId());
-			}
-			commitIfLimitReached();
-		} finally {
-			DBUtil.closeDBResources(rs, null, null);
 		}
+		commitIfLimitReached();
 	}
 
 	/**
@@ -411,12 +389,10 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param uri (rdf-)identifierare
 	 * @param xmlContent xml-innehÃ¥ll
 	 * @param datestamp postens Ã¤ndringsdatum (frÃ¥n oai-huvudet)
-	 * @param gmlInfoHolder hÃ¥llare fÃ¶r geometrier mm
 	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
-	protected void insertRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp,
-		GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
+	protected void insertRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp, String nativeURL) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug(
 				"* Entering data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " + service.getId());
@@ -438,10 +414,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		insertPst.setInt(8, DBUtil.STATUS_NORMAL);
 		insertPst.setString(9, nativeURL);
 		insertPst.executeUpdate();
-		// stoppa in ev spatialdata om vi har nÃ¥t
-		if (gmlDBWriter != null && gmlInfoHolder != null && gmlInfoHolder.hasGeometries()) {
-			gmlDBWriter.insert(gmlInfoHolder);
-		}
+
 		++numInsertedXact;
 		if (logger.isDebugEnabled()) {
 			logger.debug(
@@ -457,12 +430,10 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @param uri (rdf-)identifierare
 	 * @param xmlContent xml-innehÃ¥ll
 	 * @param datestamp postens Ã¤ndringsdatum (frÃ¥n oai-huvudet)
-	 * @param gmlInfoHolder hÃ¥llare fÃ¶r geometrier mm
 	 * @param nativeURL url till html-representation, eller null
 	 * @throws Exception
 	 */
-	protected boolean updateRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp,
-		GMLInfoHolder gmlInfoHolder, String nativeURL) throws Exception {
+	protected boolean updateRecord(String oaiURI, String uri, String xmlContent, Timestamp datestamp, String nativeURL) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug(
 				"* Updated data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " + service.getId());
@@ -484,11 +455,6 @@ public class OAIPMHHandler extends DefaultHandler {
 		updatePst.setString(8, uri);
 		boolean updated = updatePst.executeUpdate() > 0;
 		if (updated) {
-			// spara gml (obs, inget villkor pÃ¥ att det finns geometrier dÃ¥ det kanske
-			// fanns gamla som nu ska tas bort)
-			if (gmlDBWriter != null && gmlInfoHolder != null) {
-				gmlDBWriter.update(gmlInfoHolder);
-			}
 			++numUpdatedXact;
 			if (logger.isDebugEnabled()) {
 				logger.debug("* Updated data for oaiURI=" + oaiURI + ", uri=" + uri + " for service with ID: " +
@@ -509,15 +475,11 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @throws Exception
 	 */
 	protected void insertOrUpdateRecord(String oaiURI, String xmlContent, Timestamp datestamp) throws Exception {
-		String uri = null;
-		GMLInfoHolder gmlih = null;
-		String nativeURL = null;
-		if (gmlDBWriter != null) {
-			// om vi ska hantera spatiala data, skapa en datahÃ¥llare att fylla pÃ¥
-			gmlih = new GMLInfoHolder();
-		}
+		String uri;
+		String nativeURL;
+
 		try {
-			ExtractedInfo info = contentHelper.extractInfo(xmlContent, gmlih);
+			ExtractedInfo info = contentHelper.extractInfo(xmlContent);
 			uri = info.getIdentifier();
 			nativeURL = info.getNativeURL();
 		} catch (Exception e) {
@@ -534,8 +496,8 @@ public class OAIPMHHandler extends DefaultHandler {
 
 		// gÃ¶r update och om ingen post uppdaterades stoppa in en (istf fÃ¶r att kolla om post
 		// finns fÃ¶rst)
-		if (!updateRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL)) {
-			insertRecord(oaiURI, uri, xmlContent, datestamp, gmlih, nativeURL);
+		if (!updateRecord(oaiURI, uri, xmlContent, datestamp, nativeURL)) {
+			insertRecord(oaiURI, uri, xmlContent, datestamp, nativeURL);
 		}
 	}
 
@@ -566,7 +528,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		}
 		final int BATCH_SIZE = 500;
 		ss.setStatusText(service, "Attempting to update status and deleted column for pending records");
-		int updated = 0;
+		int updated;
 		PreparedStatement updatePst = null;
 		PreparedStatement selPst = null;
 		ResultSet rs = null;
@@ -603,10 +565,6 @@ public class OAIPMHHandler extends DefaultHandler {
 					uri = rs.getString("uri");
 					updatePst.setString(5, uri);
 					deltaRec += updatePst.executeUpdate();
-					// uppdatera status/data fÃ¶r postens ev geometrier
-					if (gmlDBWriter != null) {
-						totalGeo += gmlDBWriter.delete(uri);
-					}
 				}
 				// stÃ¤ng (och nollstÃ¤ll) rs fÃ¶r Ã¥teranvÃ¤ndning
 				DBUtil.closeDBResources(rs, null, null);
@@ -640,7 +598,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			logger.debug("* Attempting to reset status for pending records for service " + service.getId());
 		}
 		ss.setStatusText(service, "Recovery: Attempting to reset status for pending records");
-		int numAffected = 0;
+		int numAffected;
 		PreparedStatement pst = null;
 		try {
 			pst = c.prepareStatement("update content set status = ? where serviceId = ? and status <> ?");
@@ -738,7 +696,7 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	}
 
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 		/*
 		 * funkar inte riktigt fn Connection c = null; Statement st = null; FSDirectory dir = null;
 		 * try { //File xmlFile = new File("d:/temp/oaipmh2.xml"); //File xmlFile = new
@@ -770,5 +728,5 @@ public class OAIPMHHandler extends DefaultHandler {
 		 * } finally { if (s != null) { try { s.close(); } catch (IOException e) {
 		 * e.printStackTrace(); } } } }
 		 */
-	}
+	//}
 }

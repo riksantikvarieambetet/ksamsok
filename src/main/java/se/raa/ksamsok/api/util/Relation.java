@@ -101,13 +101,8 @@ public class Relation {
 			return false;
 		}
 		if (targetUri == null) {
-			if (other.targetUri != null) {
-				return false;
-			}
-		} else if (!targetUri.equals(other.targetUri)) {
-			return false;
-		}
-		return true;
+			return other.targetUri == null;
+		} else return targetUri.equals(other.targetUri);
 	}
 
 	@Override

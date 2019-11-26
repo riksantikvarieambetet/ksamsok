@@ -17,11 +17,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 public class GetRelationsTypesTest extends AbstractBaseTest {
@@ -29,10 +28,9 @@ public class GetRelationsTypesTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "getRelationTypes");
 		reqParams.put("relation","all");
-//		reqParams.put("prettyPrint","true");
 	}
 	
 	@Test
@@ -45,11 +43,10 @@ public class GetRelationsTypesTest extends AbstractBaseTest {
 			getRelationTypes.performMethod();
 //			System.out.println(out.toString("UTF-8"));
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder=null;
-			docBuilder = docFactory.newDocumentBuilder();
+			DocumentBuilder docBuilder=docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			Node relationTypes = assertBaseDocProp(resultDoc);
-			assertTrue(relationTypes.getNodeName().equals("relationTypes"));
+			assertEquals("relationTypes", relationTypes.getNodeName());
 			int numberOfRelations = Integer.parseInt(relationTypes.getAttributes().getNamedItem("count").getTextContent());
 			NodeList relationTypeList = relationTypes.getChildNodes();
 			assertEquals(numberOfRelations, relationTypeList.getLength());
@@ -61,23 +58,24 @@ public class GetRelationsTypesTest extends AbstractBaseTest {
 		}
 	}
 	
-	private void assertRelationType(Node relationType) throws URISyntaxException{
-		assertTrue(relationType.getNodeName().equals("relationType"));
+	private void assertRelationType(Node relationType) {
+		assertEquals("relationType", relationType.getNodeName());
 		NamedNodeMap relAttrList = relationType.getAttributes();
 		assertEquals(3, relAttrList.getLength());
 		for(int i = 0; i < relAttrList.getLength(); i++){
 			Node relAttr = relAttrList.item(i);
-			if (relAttr.getNodeName().equals("name")){
-				assertChild(relAttr.getFirstChild());
-			} else if (relAttr.getNodeName().equals("title")){
-				assertChild(relAttr.getFirstChild());
-			} else if (relAttr.getNodeName().equals("reverse")){
-				assertChild(relAttr.getFirstChild());
-			} else {
-				fail("Unknown attribute was found in relation tag: "+ relAttr.getNodeName());
+			switch (relAttr.getNodeName()) {
+				case "name":
+				case "reverse":
+				case "title":
+					assertChild(relAttr.getFirstChild());
+					break;
+				default:
+					fail("Unknown attribute was found in relation tag: " + relAttr.getNodeName());
+					break;
 			}
 		}
-		assertTrue(relationType.getFirstChild() == null);
+		assertNull(relationType.getFirstChild());
 	}
 
 	@Test

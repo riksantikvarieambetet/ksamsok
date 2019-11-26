@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.XML;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -17,8 +16,6 @@ import se.raa.ksamsok.api.exception.DiagnosticException;
 import se.raa.ksamsok.api.exception.MissingParameterException;
 import se.raa.ksamsok.api.method.APIMethod;
 import se.raa.ksamsok.api.method.APIMethod.Format;
-import se.raa.ksamsok.api.util.StaticMethods;
-import se.raa.ksamsok.apikey.APIKeyManager;
 import se.raa.ksamsok.lucene.ContentHelper;
 
 import javax.servlet.ServletConfig;
@@ -38,6 +35,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -50,15 +48,10 @@ public class APIServlet extends HttpServlet {
 	// klass specifik logger
 	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.APIServlet");
 
-	@Autowired
-	private APIKeyManager keyManager;
-
 	// fabrik
 	private APIMethodFactory apiMethodFactory;
 
 	private Format format = Format.XML;
-	private boolean prettyPrint = false;
-	private int indentFactor = 4;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -91,7 +84,7 @@ public class APIServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("doOptions called");
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Content-Type");
@@ -106,65 +99,42 @@ public class APIServlet extends HttpServlet {
 		// sätter contentType och character encoding
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
-		Map<String, String> reqParams = null;
-		APIMethod method = null;
-		OutputStream out = null;
-		try {
-			out = resp.getOutputStream();
+		Map<String, String> reqParams;
+		APIMethod method;
+		try (OutputStream out = resp.getOutputStream()) {
 			String stylesheet = null;
-			String apiKey = req.getParameter(APIMethod.API_KEY_PARAM_NAME);
-			if (apiKey != null)
-				apiKey = StaticMethods.removeChar(apiKey, '"');
-			if (apiKey != null && keyManager.contains(apiKey)) {
-				try {
-					reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-					stylesheet = reqParams.get("stylesheet");
-					method = apiMethodFactory.getAPIMethod(reqParams, out);
-					logger.info("Reqparams " + reqParams + "\nStylesheet " + stylesheet + "\nMethod " + method);
-					// Check which format the respond should be
-					String acceptFormat = req.getHeader("Accept");
-					if (acceptFormat != null && acceptFormat.toLowerCase().contains("json")) {
-						format = Format.JSON_LD;
-						method.setFormat(Format.JSON_LD);
-						resp.setContentType("application/json; charset=UTF-8");
-					} else {
-						format = Format.XML;
-						method.setFormat(Format.XML);
-						resp.setContentType("application/xml; charset=UTF-8");
-					}
-					resp.setHeader("Access-Control-Allow-Origin", "*");
-					method.performMethod();
-					keyManager.updateUsage(apiKey);
-				} catch (MissingParameterException | BadParameterException e) {
-					resp.setStatus(400);
-					logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
-					diagnostic(out, stylesheet, e);
-				} catch (DiagnosticException e) {
-					resp.setStatus(500);
-					logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
-					diagnostic(out, stylesheet, e);
+			try {
+				reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
+				stylesheet = reqParams.get("stylesheet");
+				method = apiMethodFactory.getAPIMethod(reqParams, out);
+				logger.info("Reqparams " + reqParams + "\nStylesheet " + stylesheet + "\nMethod " + method);
+				// Check which format the respond should be
+				String acceptFormat = req.getHeader("Accept");
+				if (acceptFormat != null && acceptFormat.toLowerCase().contains("json")) {
+					format = Format.JSON_LD;
+					method.setFormat(Format.JSON_LD);
+					resp.setContentType("application/json; charset=UTF-8");
+				} else {
+					format = Format.XML;
+					method.setFormat(Format.XML);
+					resp.setContentType("application/xml; charset=UTF-8");
 				}
-			} else if (apiKey == null) {
+				resp.setHeader("Access-Control-Allow-Origin", "*");
+				method.performMethod();
+			} catch (MissingParameterException | BadParameterException e) {
 				resp.setStatus(400);
-				diagnostic(out, stylesheet,
-					new DiagnosticException("API-nyckel saknas", "APIServlet.doGet", null, false));
-			} else {
-				resp.setStatus(400);
-				diagnostic(out, stylesheet,
-					new DiagnosticException("Felaktig API-nyckel", "APIServlet.doGet", null, false));
+				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
+				diagnostic(out, stylesheet, e);
+			} catch (DiagnosticException e) {
+				resp.setStatus(500);
+				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
+				diagnostic(out, stylesheet, e);
 			}
-		} catch (Exception e) {
+		} catch (IOException | ParserConfigurationException | TransformerException e) {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					// Ignore
-				}
-			}
 		}
+		// Ignore
 	}
 
 	/**
@@ -214,18 +184,14 @@ public class APIServlet extends HttpServlet {
 		transform.transform(source, strResult);
 		if (format == Format.JSON_LD) {
 			String json;
-			if (prettyPrint) {
-				json = XML.toJSONObject(baos.toString("UTF-8")).toString(indentFactor);
-			} else {
-				json = XML.toJSONObject(baos.toString("UTF-8")).toString();
-			}
-			out.write(json.getBytes("UTF-8"));
+			json = XML.toJSONObject(baos.toString("UTF-8")).toString();
+			out.write(json.getBytes(StandardCharsets.UTF_8));
 		}
 
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		doGet(req, resp);
 	}
 

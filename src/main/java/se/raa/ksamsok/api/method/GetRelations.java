@@ -69,7 +69,7 @@ public class GetRelations extends AbstractAPIMethod {
 	protected static final List<String> relationOneWay;
 
 	static {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 		// dubbelriktade
 		twoWay(map, ContentHelper.IX_ISPARTOF, ContentHelper.IX_HASPART);
 		twoWay(map, ContentHelper.IX_CONTAINSOBJECT, ContentHelper.IX_ISCONTAINEDIN);
@@ -79,6 +79,7 @@ public class GetRelations extends AbstractAPIMethod {
 		twoWay(map, ContentHelper.IX_ISDESCRIBEDBY, ContentHelper.IX_DESCRIBES);
 		twoWay(map, ContentHelper.IX_HASOBJECTEXAMPLE, ContentHelper.IX_ISOBJECTEXAMPLEFOR);
 		twoWay(map, ContentHelper.IX_ISMENTIONEDBY, ContentHelper.IX_MENTIONS);
+		twoWay(map, ContentHelper.IX_REPLACES, ContentHelper.IX_ISREPLACEDBY);
 
 		// bio (lite special)
 		map.put(ContentHelper.IX_FATHER, ContentHelper.IX_CHILD);
@@ -98,55 +99,55 @@ public class GetRelations extends AbstractAPIMethod {
 		// (eller rättare sagt det indexeras inte) tex en författares verk
 		// från toppnivån av författarobjektet då man helst vill kunna få med
 		// år etc från kontextet vilket man inte kan få om relationen går åt andra hållet
-		twoWay(map, ContentHelper.IX_CLIENT, ContentHelper.CLIENT_OF);
-		twoWay(map, ContentHelper.IX_COMPOSER, ContentHelper.COMPOSER_OF);
-		twoWay(map, ContentHelper.IX_AUTHOR, ContentHelper.AUTHOR_OF);
-		twoWay(map, ContentHelper.IX_ARCHITECT, ContentHelper.ARCHITECT_OF);
-		twoWay(map, ContentHelper.IX_INVENTOR, ContentHelper.INVENTOR_OF);
-		twoWay(map, ContentHelper.IX_SCENOGRAPHER, ContentHelper.SCENOGRAPHER_OF);
-		twoWay(map, ContentHelper.IX_DESIGNER, ContentHelper.DESIGNER_OF);
-		twoWay(map, ContentHelper.IX_PRODUCER, ContentHelper.PRODUCER_OF);
-		twoWay(map, ContentHelper.IX_ORGANIZER, ContentHelper.ORGANIZER_OF);
-		twoWay(map, ContentHelper.IX_DIRECTOR, ContentHelper.DIRECTOR_OF);
-		twoWay(map, ContentHelper.IX_PHOTOGRAPHER, ContentHelper.PHOTOGRAPHER_OF);
-		twoWay(map, ContentHelper.IX_PAINTER, ContentHelper.PAINTER_OF);
-		twoWay(map, ContentHelper.IX_BUILDER, ContentHelper.BUILDER_OF);
-		twoWay(map, ContentHelper.IX_MASTERBUILDER, ContentHelper.MASTERBUILDER_OF);
-		twoWay(map, ContentHelper.IX_CONSTRUCTIONCLIENT, ContentHelper.CONSTRUCTIONCLIENT_OF);
-		twoWay(map, ContentHelper.IX_ENGRAVER, ContentHelper.ENGRAVER_OF);
-		twoWay(map, ContentHelper.IX_MINTMASTER, ContentHelper.MINTMASTER_OF);
-		twoWay(map, ContentHelper.IX_ARTIST, ContentHelper.ARTIST_OF);
-		twoWay(map, ContentHelper.IX_DESIGNENGINEER, ContentHelper.DESIGNENGINEER_OF);
-		twoWay(map, ContentHelper.IX_CARPENTER, ContentHelper.CARPENTER_OF);
-		twoWay(map, ContentHelper.IX_MASON, ContentHelper.MASON_OF);
-		twoWay(map, ContentHelper.IX_TECHNICIAN, ContentHelper.TECHNICIAN_OF);
-		twoWay(map, ContentHelper.IX_PUBLISHER, ContentHelper.PUBLISHER_OF);
-		twoWay(map, ContentHelper.IX_PUBLICIST, ContentHelper.PUBLICIST_OF);
-		twoWay(map, ContentHelper.IX_MUSICIAN, ContentHelper.MUSICIAN_OF);
-		twoWay(map, ContentHelper.IX_ACTORACTRESS, ContentHelper.ACTORACTRESS_OF);
-		twoWay(map, ContentHelper.IX_PRINTER, ContentHelper.PRINTER_OF);
-		twoWay(map, ContentHelper.IX_SIGNER, ContentHelper.SIGNER_OF);
-		twoWay(map, ContentHelper.IX_FINDER, ContentHelper.FINDER_OF);
-		twoWay(map, ContentHelper.IX_ABANDONEE, ContentHelper.ABANDONEE_OF);
-		twoWay(map, ContentHelper.IX_INTERMEDIARY, ContentHelper.INTERMEDIARY_OF);
-		twoWay(map, ContentHelper.IX_BUYER, ContentHelper.BUYER_OF);
-		twoWay(map, ContentHelper.IX_SELLER, ContentHelper.SELLER_OF);
-		twoWay(map, ContentHelper.IX_GENERALAGENT, ContentHelper.GENERALAGENT_OF);
-		twoWay(map, ContentHelper.IX_DONOR, ContentHelper.DONOR_OF);
-		twoWay(map, ContentHelper.IX_DEPOSITOR, ContentHelper.DEPOSITOR_OF);
-		twoWay(map, ContentHelper.IX_RESELLER, ContentHelper.RESELLER_OF);
-		twoWay(map, ContentHelper.IX_INVENTORYTAKER, ContentHelper.INVENTORYTAKER_OF);
-		twoWay(map, ContentHelper.IX_EXCAVATOR, ContentHelper.EXCAVATOR_OF);
-		twoWay(map, ContentHelper.IX_EXAMINATOR, ContentHelper.EXAMINATOR_OF);
-		twoWay(map, ContentHelper.IX_CONSERVATOR, ContentHelper.CONSERVATOR_OF);
-		twoWay(map, ContentHelper.IX_ARCHIVECONTRIBUTOR, ContentHelper.ARCHIVECONTRIBUTOR_OF);
-		twoWay(map, ContentHelper.IX_INTERVIEWER, ContentHelper.INTERVIEWER_OF);
-		twoWay(map, ContentHelper.IX_INFORMANT, ContentHelper.INFORMANT_OF);
-		twoWay(map, ContentHelper.IX_PATENTHOLDER, ContentHelper.PATENTHOLDER_OF);
-		twoWay(map, ContentHelper.IX_USER, ContentHelper.USER_OF);
-		twoWay(map, ContentHelper.IX_SCANNEROPERATOR, ContentHelper.SCANNEROPERATOR_OF);
-		twoWay(map, ContentHelper.IX_PICTUREEDITOR, ContentHelper.PICTUREEDITOR_OF);
-		twoWay(map, ContentHelper.IX_EMPLOYER, ContentHelper.EMPLOYER_OF);
+		twoWay(map, ContentHelper.IX_CLIENT, ContentHelper.IX_CLIENT_OF);
+		twoWay(map, ContentHelper.IX_COMPOSER, ContentHelper.IX_COMPOSER_OF);
+		twoWay(map, ContentHelper.IX_AUTHOR, ContentHelper.IX_AUTHOR_OF);
+		twoWay(map, ContentHelper.IX_ARCHITECT, ContentHelper.IX_ARCHITECT_OF);
+		twoWay(map, ContentHelper.IX_INVENTOR, ContentHelper.IX_INVENTOR_OF);
+		twoWay(map, ContentHelper.IX_SCENOGRAPHER, ContentHelper.IX_SCENOGRAPHER_OF);
+		twoWay(map, ContentHelper.IX_DESIGNER, ContentHelper.IX_DESIGNER_OF);
+		twoWay(map, ContentHelper.IX_PRODUCER, ContentHelper.IX_PRODUCER_OF);
+		twoWay(map, ContentHelper.IX_ORGANIZER, ContentHelper.IX_ORGANIZER_OF);
+		twoWay(map, ContentHelper.IX_DIRECTOR, ContentHelper.IX_DIRECTOR_OF);
+		twoWay(map, ContentHelper.IX_PHOTOGRAPHER, ContentHelper.IX_PHOTOGRAPHER_OF);
+		twoWay(map, ContentHelper.IX_PAINTER, ContentHelper.IX_PAINTER_OF);
+		twoWay(map, ContentHelper.IX_BUILDER, ContentHelper.IX_BUILDER_OF);
+		twoWay(map, ContentHelper.IX_MASTERBUILDER, ContentHelper.IX_MASTERBUILDER_OF);
+		twoWay(map, ContentHelper.IX_CONSTRUCTIONCLIENT, ContentHelper.IX_CONSTRUCTIONCLIENT_OF);
+		twoWay(map, ContentHelper.IX_ENGRAVER, ContentHelper.IX_ENGRAVER_OF);
+		twoWay(map, ContentHelper.IX_MINTMASTER, ContentHelper.IX_MINTMASTER_OF);
+		twoWay(map, ContentHelper.IX_ARTIST, ContentHelper.IX_ARTIST_OF);
+		twoWay(map, ContentHelper.IX_DESIGNENGINEER, ContentHelper.IX_DESIGNENGINEER_OF);
+		twoWay(map, ContentHelper.IX_CARPENTER, ContentHelper.IX_CARPENTER_OF);
+		twoWay(map, ContentHelper.IX_MASON, ContentHelper.IX_MASON_OF);
+		twoWay(map, ContentHelper.IX_TECHNICIAN, ContentHelper.IX_TECHNICIAN_OF);
+		twoWay(map, ContentHelper.IX_PUBLISHER, ContentHelper.IX_PUBLISHER_OF);
+		twoWay(map, ContentHelper.IX_PUBLICIST, ContentHelper.IX_PUBLICIST_OF);
+		twoWay(map, ContentHelper.IX_MUSICIAN, ContentHelper.IX_MUSICIAN_OF);
+		twoWay(map, ContentHelper.IX_ACTORACTRESS, ContentHelper.IX_ACTORACTRESS_OF);
+		twoWay(map, ContentHelper.IX_PRINTER, ContentHelper.IX_PRINTER_OF);
+		twoWay(map, ContentHelper.IX_SIGNER, ContentHelper.IX_SIGNER_OF);
+		twoWay(map, ContentHelper.IX_FINDER, ContentHelper.IX_FINDER_OF);
+		twoWay(map, ContentHelper.IX_ABANDONEE, ContentHelper.IX_ABANDONEE_OF);
+		twoWay(map, ContentHelper.IX_INTERMEDIARY, ContentHelper.IX_INTERMEDIARY_OF);
+		twoWay(map, ContentHelper.IX_BUYER, ContentHelper.IX_BUYER_OF);
+		twoWay(map, ContentHelper.IX_SELLER, ContentHelper.IX_SELLER_OF);
+		twoWay(map, ContentHelper.IX_GENERALAGENT, ContentHelper.IX_GENERALAGENT_OF);
+		twoWay(map, ContentHelper.IX_DONOR, ContentHelper.IX_DONOR_OF);
+		twoWay(map, ContentHelper.IX_DEPOSITOR, ContentHelper.IX_DEPOSITOR_OF);
+		twoWay(map, ContentHelper.IX_RESELLER, ContentHelper.IX_RESELLER_OF);
+		twoWay(map, ContentHelper.IX_INVENTORYTAKER, ContentHelper.IX_INVENTORYTAKER_OF);
+		twoWay(map, ContentHelper.IX_EXCAVATOR, ContentHelper.IX_EXCAVATOR_OF);
+		twoWay(map, ContentHelper.IX_EXAMINATOR, ContentHelper.IX_EXAMINATOR_OF);
+		twoWay(map, ContentHelper.IX_CONSERVATOR, ContentHelper.IX_CONSERVATOR_OF);
+		twoWay(map, ContentHelper.IX_ARCHIVECONTRIBUTOR, ContentHelper.IX_ARCHIVECONTRIBUTOR_OF);
+		twoWay(map, ContentHelper.IX_INTERVIEWER, ContentHelper.IX_INTERVIEWER_OF);
+		twoWay(map, ContentHelper.IX_INFORMANT, ContentHelper.IX_INFORMANT_OF);
+		twoWay(map, ContentHelper.IX_PATENTHOLDER, ContentHelper.IX_PATENTHOLDER_OF);
+		twoWay(map, ContentHelper.IX_USER, ContentHelper.IX_USER_OF);
+		twoWay(map, ContentHelper.IX_SCANNEROPERATOR, ContentHelper.IX_SCANNEROPERATOR_OF);
+		twoWay(map, ContentHelper.IX_PICTUREEDITOR, ContentHelper.IX_PICTUREEDITOR_OF);
+		twoWay(map, ContentHelper.IX_EMPLOYER, ContentHelper.IX_EMPLOYER_OF);
 
 		// enkelriktade
 		map.put(ContentHelper.IX_HASBEENUSEDIN, ContentHelper.IX_ISRELATEDTO);
@@ -184,7 +185,6 @@ public class GetRelations extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !relationXlate.containsKey(relation)) {
@@ -226,49 +226,56 @@ public class GetRelations extends AbstractAPIMethod {
 		}
 		SearchService searchService = serviceProvider.getSearchService();
 		final String uri = URI_PREFIX + partialIdentifier;
-		Set<String> itemUris = new HashSet<String>();
+		Set<String> itemUris = new HashSet<>();
 		itemUris.add(uri);
 
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
-		SolrQuery query = new SolrQuery();
-		query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+
 
 		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
-		// algoritmen ser fn ut så här - inferSameAs styr steg 1 och 3, default är att inte utföra dem
+		// algoritmen ser fn ut så här - inferSameAs styr steg 1, 2 och 4, default är att inte utföra dem
 		// 1. hämta ev post för att få tag på postens sameAs
-		// 2. sök fram källpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
-		// 3. hämta ev de relaterades sameAs och lägg till dessa som relationer
+		// 3. sök fram källpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
+		// 4. hämta ev de relaterades sameAs och lägg till dessa som relationer
 
-		// hämta uri och relationer
-		query.addField(ContentHelper.I_IX_RELATIONS);
-		query.addField(ContentHelper.IX_ITEMID);
 		try {
 			QueryResponse qr;
 			SolrDocumentList docs;
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
 				// hämta andra poster som är samma som denna och lägg till dem som "källposter"
-				query.setQuery(ContentHelper.IX_ITEMID + ":"+ escapedUri);
-				qr = searchService.query(query);
+				SolrQuery sameAsQuery = new SolrQuery();
+				sameAsQuery.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+
+				sameAsQuery.setFields(ContentHelper.IX_SAMEAS);
+				sameAsQuery.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
+				qr = searchService.query(sameAsQuery);
 				docs = qr.getResults();
-				for (SolrDocument doc: docs) {
-					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
-					Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
-					if (values != null) {
-						for (Object value: values) {
-							String parts[] = ((String) value).split("\\|");
-							if (parts.length != 2) {
-								logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
-								continue;
-							}
-							String typePart = parts[0];
-							String uriPart = parts[1];
-							if (ContentHelper.IX_SAMEAS.equals(typePart)) {
-								itemUris.add(uriPart);
-							}
+
+
+				for (SolrDocument doc : docs) {
+					Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
+					if (sameAsIds != null) {
+						for (Object sameAsId : sameAsIds) {
+							itemUris.add((String) sameAsId);
 						}
 					}
 				}
+
+				// hämta andra poster som säger att de är samma som denna och lägg till dem som "källposter"
+				sameAsQuery.setFields(ContentHelper.IX_ITEMID);
+				sameAsQuery.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedUri);
+				qr = searchService.query(sameAsQuery);
+				docs = qr.getResults();
+				for (SolrDocument doc : docs) {
+					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
+					itemUris.add(itemId);
+				}
 			}
+			SolrQuery query = new SolrQuery();
+			query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+			// hämta uri och relationer
+			query.addField(ContentHelper.I_IX_RELATIONS);
+			query.addField(ContentHelper.IX_ITEMID);
 			// bygg söksträng mh källposten/alla källposter
 			StringBuilder searchStr = new StringBuilder();
 			for (String itemId: itemUris) {
@@ -283,14 +290,14 @@ public class GetRelations extends AbstractAPIMethod {
 
 			qr = searchService.query(query);
 			docs = qr.getResults();
-			relations = new HashSet<Relation>();
+			relations = new HashSet<>();
 			for (SolrDocument doc: docs) {
 				String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 				boolean isSourceDoc = itemUris.contains(itemId);
 				Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
 				if (values != null) {
 					for (Object value: values) {
-						String parts[] = ((String) value).split("\\|");
+						String[] parts = ((String) value).split("\\|");
 						if (parts.length != 2) {
 							logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
 							continue;
@@ -347,9 +354,11 @@ public class GetRelations extends AbstractAPIMethod {
 			}
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.targetsOnly) {
 				// sökning på same as för träffarnas uri:er och skapa relation till dessa också
-				query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
-				for (Relation rel: new HashSet<Relation>(relations)) {
-					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ ClientUtils.escapeQueryChars(rel.getTargetUri()));
+
+				for (Relation rel: new HashSet<>(relations)) {
+					final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
+					query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
+					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ escapedTargetUri);
 					qr = searchService.query(query);
 					docs = qr.getResults();
 					for (SolrDocument doc: docs) {
@@ -364,6 +373,25 @@ public class GetRelations extends AbstractAPIMethod {
 							}
 						}
 					}
+
+					// Ta fram de objekt som träffarna pekar ut med sameAs
+					query.setFields(ContentHelper.IX_SAMEAS);
+					query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedTargetUri);
+					qr = searchService.query(query);
+					docs = qr.getResults();
+					for (SolrDocument doc : docs) {
+						Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
+						if (sameAsIds != null) {
+							for (Object sameAsId : sameAsIds) {
+								if (!relations.add(new Relation(rel.getRelationType(), (String) sameAsId, rel.getSource(), rel.getOriginalRelationType()))) {
+									if (logger.isDebugEnabled()) {
+										logger.debug("duplicate rel (from same as part 2) " + rel);
+									}
+								}
+							}
+						}
+					}
+
 				}
 			}
 

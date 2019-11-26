@@ -20,8 +20,8 @@
     <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
     		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		maxActive="10" maxIdle="5" maxWait="-1"
-		username="ksamsok" password="ksamsok" driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://lx-ra-kmsdb/ksamsok"
+		username="@db.harvest.username@" password="@db.harvest.password@" driverClassName="org.postgresql.Driver"
+		url="jdbc:postgresql://@db.servername@/@db.dbname@"
 		testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
 		timeBetweenEvictionRunsMillis="300000"
 		validationQuery="select version()"
@@ -30,15 +30,13 @@
 	<Resource name="jdbc/harvestdbreader" auth="Container" type="javax.sql.DataSource"
     		factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
 		maxActive="10" maxIdle="5" maxWait="-1"
-		username="ksamsokreader" password="ksamsok" driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://lx-ra-kmsdb/ksamsok"
+		username="@db.harvestreader.username@" password="@db.harvestreader.password@" driverClassName="org.postgresql.Driver"
+		url="jdbc:postgresql://@db.servername@/ksamsok"
 		testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
 		timeBetweenEvictionRunsMillis="300000"
 		validationQuery="select version()"
 		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
 		defaultAutoCommit="false" />
-		
-
     <!-- Default set of monitored resources -->
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
 	

@@ -22,11 +22,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.z3950.zing.cql.CQLBooleanNode;
 import org.z3950.zing.cql.CQLNode;
 import org.z3950.zing.cql.CQLParseException;
 import org.z3950.zing.cql.CQLParser;
-import org.z3950.zing.cql.CQLTermNode;
 import se.raa.ksamsok.api.APIServiceProvider;
 import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.api.exception.DiagnosticException;
@@ -36,7 +34,6 @@ import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
-import se.raa.ksamsok.statistic.StatisticLoggData;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -51,6 +48,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -127,7 +125,6 @@ public class Search extends AbstractSearchMethod {
 	protected String sort = null;
 	protected boolean sortDesc = false;
 	protected String recordSchema = null;
-	protected String apiKey;
 	protected String binDataField = null;
 	protected Set<String> fields = null;
 
@@ -148,7 +145,6 @@ public class Search extends AbstractSearchMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException, BadParameterException {
 		super.extractParameters();
-		this.apiKey = params.get(APIMethod.API_KEY_PARAM_NAME);
 		sort = params.get(Search.SORT);
 		if (sort != null) {
 			if (!ContentHelper.indexExists(sort)) {
@@ -181,7 +177,7 @@ public class Search extends AbstractSearchMethod {
 			if (splitFields == null || splitFields.length == 0) {
 				throw new BadParameterException("Inga efterfrågade fält.", "Search.performMethod", null, false);
 			}
-			fields = new LinkedHashSet<String>();
+			fields = new LinkedHashSet<>();
 			// ta alltid med itemId så att man vet vilken post det är
 			fields.add(ContentHelper.IX_ITEMID);
 			for (String field : splitFields) {
@@ -257,10 +253,10 @@ public class Search extends AbstractSearchMethod {
 				if (content != null) {
 					Element record = doc.createElement("record");
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-					DocumentBuilder docBuilder = null;
+					DocumentBuilder docBuilder;
 					try {
 						docBuilder = docFactory.newDocumentBuilder();
-						Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
+						Document contentDoc = docBuilder.parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
 						NodeList childNodes;
 						if (contentDoc.getFirstChild().getNodeName().equals("recordSchema")) {
 							childNodes = contentDoc.getFirstChild().getChildNodes();
@@ -282,7 +278,7 @@ public class Search extends AbstractSearchMethod {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren",
 							AbstractAPIMethod.class.getName(), e.getMessage(), false);
-					} catch (UnsupportedEncodingException e) {
+					} catch (IOException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att konvertera en sträng till output ström",
 							AbstractAPIMethod.class.getName(), e.getMessage(), false);
@@ -291,10 +287,6 @@ public class Search extends AbstractSearchMethod {
 						logger.error(e);
 						throw new DiagnosticException(
 							"Det är problem med att konvertera en sträng till ett xml-dokument",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
-					} catch (IOException e) {
-						logger.error(e);
-						throw new DiagnosticException("Det är problem med att konvertera en sträng till output ström",
 							AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					}
 					records.appendChild(record);
@@ -353,11 +345,10 @@ public class Search extends AbstractSearchMethod {
 							ByteArrayOutputStream jsonLDRDF = new ByteArrayOutputStream();
 							Model m = ModelFactory.createDefaultModel();
 
-							m.read(new ByteArrayInputStream(content.getBytes("UTF-8")), "UTF-8");
+							m.read(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)), "UTF-8");
 
 							// Create JSON-LD
-							RDFDataMgr.write(jsonLDRDF, m,
-									prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
+							RDFDataMgr.write(jsonLDRDF, m, RDFFormat.JSONLD_COMPACT_FLAT);
 							record.put("record", new JSONObject(jsonLDRDF.toString("UTF-8")));
 							JSONObject relScore = new JSONObject();
 							relScore.put("-xmlns:rel", "info:srw/extension/2/relevancy-1.0");
@@ -384,7 +375,7 @@ public class Search extends AbstractSearchMethod {
 				JSONObject response = new JSONObject();
 				response.put("result", result);
 				// Write the result
-				out.write(prettyPrint ? response.toString(indentFactor).getBytes() : response.toString().getBytes());
+				out.write(response.toString().getBytes(StandardCharsets.UTF_8));
 
 			} catch (UnsupportedEncodingException e) {
 				logger.error(e);
@@ -419,7 +410,7 @@ public class Search extends AbstractSearchMethod {
 
 		try {
 			if (xmlData != null) {
-				content = new String(xmlData, "UTF-8");
+				content = new String(xmlData, StandardCharsets.UTF_8);
 			}
 			if (content == null) {
 				logger.warn("Hittade inte xml-data (" + binDataField + ") för " + uri);
@@ -514,8 +505,6 @@ public class Search extends AbstractSearchMethod {
 			String solrQueryString = CQL2Solr.makeQuery(rootNode);
 			if (solrQueryString != null) {
 				query = new SolrQuery(solrQueryString);
-				// logga sökdata
-				loggData(rootNode);
 			}
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO-fel uppstod. Var god försök igen", "Search.createQuery",
@@ -543,32 +532,5 @@ public class Search extends AbstractSearchMethod {
 			}
 		}
 		return sortDesc;
-	}
-
-	/**
-	 * Loggar data för sökningen för indexet "text".
-	 * 
-	 * @param query cql
-	 * @throws DiagnosticException
-	 */
-	private void loggData(CQLNode query) throws DiagnosticException {
-		if (query == null) {
-			return;
-		}
-		if (query instanceof CQLBooleanNode) {
-			CQLBooleanNode bool = (CQLBooleanNode) query;
-			loggData(bool.getLeftOperand());
-			loggData(bool.getRightOperand());
-		} else if (query instanceof CQLTermNode) {
-			CQLTermNode t = (CQLTermNode) query;
-			// bara för "text"
-			if (t.getIndex().equals(ContentHelper.IX_TEXT)) {
-				StatisticLoggData data = new StatisticLoggData();
-				data.setParam(t.getIndex());
-				data.setAPIKey(apiKey);
-				data.setQueryString(t.getTerm());
-				serviceProvider.getStatisticsManager().addToQueue(data);
-			}
-		}
 	}
 }

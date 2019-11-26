@@ -4,6 +4,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Selector;
@@ -41,7 +42,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -50,7 +50,10 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Map;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect till
@@ -72,52 +75,63 @@ public class ResolverServlet extends HttpServlet {
 	 * Enum för de olika formaten som stöds.
 	 */
 	private enum Format {
-		RDF, HTML, MUSEUMDAT, XML, JSON_LD;
+		RDF("rdf"),
+		HTML("html"),
+		MUSEUMDAT("museumdat"),
+		XML("xml"),
+		JSON_LD("jsonld");
+
+		String format;
+
+		private static final HashMap<String, Format> lookupTable = new HashMap<>();
+
+		// populate lookup table
+		static {
+			for (Format format : Format.values()) {
+				lookupTable.put(format.getFormat(), format);
+			}
+		}
+
+		Format(String format) {
+			this.format = format;
+		}
+
+		String getFormat() {
+			return format;
+		}
 
 		/**
 		 * Parsar en sträng med formatet och ger motsvarande konstant.
-		 * 
+		 *
 		 * @param formatString formatsträng
 		 * @return formatkonstant eller null
 		 */
 		static Format parseFormat(String formatString) {
-			Format format = null;
-			if ("rdf".equals(formatString)) {
-				format = RDF;
-			} else if ("html".equals(formatString)) {
-				format = HTML;
-			} else if ("museumdat".equals(formatString)) {
-				format = MUSEUMDAT;
-			} else if ("xml".equals(formatString)) {
-				format = XML;
-			} else if ("jsonld".equals(formatString)) {
-				format = JSON_LD;
-			}
-			return format;
+			return lookupTable.get(formatString);
 		}
 	}
 
-    @Override
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		ServletContext servletContext = config.getServletContext();
 		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		ctx.getAutowireCapableBeanFactory().autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE,
-			true);
+				true);
 	}
 
 	/**
 	 * Försöker kontrollera om requesten är något resolverservleten ska hantera. Om det inte är det
 	 * skickas requesten vidare mha request dispatchers.
-	 * 
-	 * @param req request
+	 *
+	 * @param req  request
 	 * @param resp response
 	 * @return de olika delarna i pathInfo, eller null om requesten inte ska hanteras av resolvern
 	 * @throws ServletException
 	 * @throws IOException
 	 */
 	protected String[] checkAndForwardRequests(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
+			throws ServletException, IOException {
 		String path = req.getPathInfo();
 		// special då resolverservlet "käkar" upp default-sidehanteringen
 		if ("/admin/".equals(path) || "/".equals(path)) {
@@ -130,6 +144,14 @@ public class ResolverServlet extends HttpServlet {
 		if (path != null && path.startsWith("/resurser")) {
 			path = path.substring(9);
 		}
+		String[] pathComponents = getPathComponents(path);
+		if (pathComponents == null) {
+			forwardRequest(req, resp);
+		}
+		return pathComponents;
+	}
+
+	private String[] getPathComponents(String path) {
 		String[] pathComponents = null;
 
 		if (path != null && !path.contains(".") && (pathComponents = path.substring(1).split("/")) != null) {
@@ -137,22 +159,19 @@ public class ResolverServlet extends HttpServlet {
 				pathComponents = null;
 			}
 		}
-		if (pathComponents == null) {
-			forwardRequest(req, resp);
-		}
 		return pathComponents;
 	}
 
 	/**
 	 * Försöker göra forward på ej hanterad request genom att hitta en passande request dispatcher.
-	 * 
-	 * @param req request
+	 *
+	 * @param req  request
 	 * @param resp response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
 	protected void forwardRequest(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
+			throws ServletException, IOException {
 		RequestDispatcher rd;
 		// TODO: dessa dispatchers fungerar för tomcat, fungerar de för övriga?
 		String name = "default";
@@ -183,14 +202,18 @@ public class ResolverServlet extends HttpServlet {
 		}
 		String path;
 		Format format;
+		final String formatLowerCase;
+		boolean formatSetInPath = false;
 		// hantera olika format
 		if (pathComponents.length == 4) {
-			format = Format.parseFormat(pathComponents[2].toLowerCase());
+			 formatLowerCase = pathComponents[2].toLowerCase();
+			format = Format.parseFormat(formatLowerCase);
 			if (format == null) {
 				logger.debug("Invalid format: " + pathComponents[2]);
 				resp.sendError(404, "Invalid format " + pathComponents[2]);
 				return;
 			}
+			formatSetInPath = true;
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[3];
 		} else {
 			// Check which format the respond should be
@@ -208,29 +231,18 @@ public class ResolverServlet extends HttpServlet {
 			}
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[2];
 		}
-		// Check if json should be in pretty print
-		Map<String, String> reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
-		Boolean prettyPrint = false;
-		if (reqParams.get("prettyPrint") != null && reqParams.get("prettyPrint").equalsIgnoreCase("true")) {
-			prettyPrint = true;
-		}
 		switch (format) {
-			case HTML:
-				resp.setContentType("text/html; charset=UTF-8");
-				break;
 			case JSON_LD:
 				resp.setContentType("application/json; charset=UTF-8");
 				break;
 			case MUSEUMDAT:
-				resp.setContentType("application/xml; charset=UTF-8");
-				break;
-
-			case RDF:
-				resp.setContentType("application/rdf+xml; charset=UTF-8");
-				break;
 			case XML:
 				resp.setContentType("application/xml; charset=UTF-8");
 				break;
+			case RDF:
+				resp.setContentType("application/rdf+xml; charset=UTF-8");
+				break;
+			case HTML:
 			default:
 				resp.setContentType("text/html; charset=UTF-8");
 				break;
@@ -238,9 +250,9 @@ public class ResolverServlet extends HttpServlet {
 		try {
 			String urli = "http://kulturarvsdata.se/" + path;
 			// Get content from solr or db
-			String response = prepareResponse(urli, format, req);
-			// Make responde
-			makeResponse(response, format, urli, prettyPrint, resp);
+			PreparedResponse preparedResponse = prepareResponse(urli, format, req, formatSetInPath);
+			// Make response
+			makeResponse(preparedResponse, format, urli, resp);
 		} catch (Exception e) {
 			logger.error("Error when resolving url, path:" + path + ", format: " + format, e);
 			throw new ServletException("Error when resolving url", e);
@@ -249,33 +261,43 @@ public class ResolverServlet extends HttpServlet {
 
 	/**
 	 * This method gets the data from Solr or in some cases from db
-	 * 
-	 * @param urli - The path to the request, i.e. which object shoud we get
+	 *
+	 * @param urli   - The path to the request, i.e. which object shoud we get
 	 * @param format - The requested response format
-	 * @param req - The http servlet request
+	 * @param req    - The http servlet request
 	 * @return - A string with the found content or null
 	 * @throws Exception
 	 */
-	private String prepareResponse(String urli, Format format, HttpServletRequest req) throws Exception {
-		String prepResp = null;
+	private PreparedResponse prepareResponse(String urli, Format format, HttpServletRequest req, boolean formatSetInPath) throws Exception {
+		PreparedResponse preparedResponse = new PreparedResponse();
+		String stringResponse = null;
 		byte[] xmlContent;
 		SolrQuery q = new SolrQuery();
-		q.setQuery(ContentHelper.IX_ITEMID + ":" + ClientUtils.escapeQueryChars(urli));
+
+		final String escapedUrli = ClientUtils.escapeQueryChars(urli);
+
+		String sb = ContentHelper.IX_ITEMID + ":" + escapedUrli +
+
+				// we have to append a special case to also fetch any posts that have the id in a "replaces"-tag
+				" OR " + ContentHelper.IX_REPLACES + ":" + escapedUrli;
+		q.setQuery(sb);
 		q.setRows(1);
+
+		// vi måste alltid ha rdf för att kunna kolla replaces
+		q.setFields(ContentHelper.I_IX_RDF);
 		// hämta bara nödvändigt fält
 		switch (format) {
 			case JSON_LD:
 			case RDF:
-				q.setFields(ContentHelper.I_IX_RDF);
 				break;
 			case XML:
-				q.setFields(ContentHelper.I_IX_PRES);
+				q.addField(ContentHelper.I_IX_PRES);
 				break;
 			case HTML:
-				q.setFields(ContentHelper.I_IX_HTML_URL);
+				q.addField(ContentHelper.I_IX_HTML_URL);
 				break;
 			case MUSEUMDAT:
-				q.setFields(ContentHelper.I_IX_MUSEUMDAT_URL);
+				q.addField(ContentHelper.I_IX_MUSEUMDAT_URL);
 				break;
 		}
 		logger.debug("resolve of (" + format + ") uri: " + urli);
@@ -290,102 +312,193 @@ public class ResolverServlet extends HttpServlet {
 			if (format == Format.RDF || format == Format.JSON_LD || format == Format.HTML) {
 				String content = hrm.getXMLData(urli);
 				if (content != null) {
-					prepResp = content;
+					stringResponse = content;
 					if (format == Format.HTML) {
-						prepResp = getRedirectUrl(content);
+						stringResponse = getRedirectUrl(content);
 					}
 				}
 			}
 		} else {
+
+			// vi måste alltid hämta ut rdf:en för att kolla replaces
+			xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
+			if (xmlContent != null) {
+				stringResponse = new String(xmlContent, StandardCharsets.UTF_8);
+			} else {
+				stringResponse = hrm.getXMLData(urli);
+			}
+
+			if (stringResponse != null) {
+				Model m = ModelFactory.createDefaultModel();
+				m.read(new ByteArrayInputStream(stringResponse.getBytes(StandardCharsets.UTF_8)), "UTF-8");
+				final ResIterator resIterator = m.listSubjects();
+
+				while (resIterator.hasNext()) {
+					Resource res = resIterator.next();
+					final StmtIterator statementIterator = res.listProperties();
+					while (statementIterator.hasNext()) {
+						Statement statement = statementIterator.next();
+						Property predicate = statement.getPredicate();
+						if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
+							// we have found one that replaces the requested one
+							String replaceUri = res.getURI();
+							if (replaceUri != null) {
+								if (formatSetInPath) {
+									// the format has been explicitally requested in the url path, we have to
+									// put it back in there
+									final String formatString = format.getFormat();
+									int formatEntyIndex = replaceUri.lastIndexOf("/") + 1;
+									StringBuilder tmpBuf = new StringBuilder(replaceUri);
+
+									tmpBuf.insert(formatEntyIndex, formatString + "/");
+									replaceUri = tmpBuf.toString();
+								}
+								preparedResponse.addReplaceUri(replaceUri);
+							} else {
+								logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
+							}
+						}
+					}
+				}
+			}
+
+			// in the case of json or rdf, we already have our stringResp from above, otherwise replace with correct content
 			switch (format) {
 				case JSON_LD:
 				case RDF:
-					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-					if (xmlContent != null) {
-						prepResp = new String(xmlContent, "UTF-8");
-					} else {
-						prepResp = hrm.getXMLData(urli);
-					}
+					// do nothing
 					break;
 				case XML:
 					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
 					if (xmlContent != null) {
-						prepResp = new String(xmlContent, "UTF-8");
+						stringResponse = new String(xmlContent, StandardCharsets.UTF_8);
 					}
 					break;
 				case HTML:
-					prepResp = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
+					stringResponse = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_HTML_URL);
 					break;
 				case MUSEUMDAT:
-					prepResp = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
+					stringResponse = (String) hits.get(0).getFieldValue(ContentHelper.I_IX_MUSEUMDAT_URL);
 					break;
 				default:
 					break;
 			}
 		}
-		return prepResp;
+		preparedResponse.setResponse(stringResponse);
+		return preparedResponse;
+	}
+
+	private String buildReplacedByMultipleUrisJsonReply(ArrayList<String> replaceUris) {
+		StringBuffer jsonBuf = new StringBuffer();
+		if (replaceUris.size() > 1) {
+			// create a json with all the redirect possibilities
+			jsonBuf = new StringBuffer("{\"isReplacedBy:\" [");
+			int counter = 0;
+			for (String replaceUri : replaceUris) {
+				jsonBuf.append("{\"record\": \"").append(replaceUri).append("\"}");
+				if (++counter < replaceUris.size()) {
+					jsonBuf.append(", ");
+				}
+
+			}
+			jsonBuf.append("]}");
+		}
+		return jsonBuf.toString();
+	}
+
+	private String buildReplacedByMultipleUrisXmlReply(ArrayList<String> replaceUris) {
+		StringBuffer xmlBuf = new StringBuffer();
+		if (replaceUris.size() > 1) {
+			// create an xml with all the redirect possibilities
+			xmlBuf = new StringBuffer("<isReplacedBy>");
+			for (String replaceUri : replaceUris) {
+				xmlBuf.append("<record>").append(replaceUri).append("</record>");
+
+
+			}
+			xmlBuf.append("</isReplacedBy>");
+		}
+		return xmlBuf.toString();
 	}
 
 	/**
 	 * This method writes the response
-	 * 
-	 * @param response - The content from solr or db
-	 * @param format - The requested response format
-	 * @param urli - The path to the request, i.e. which object shoud we get
-	 * @param resp - The http servlet response
+	 *
+	 * @param preparedResponse - The content from solr or db
+	 * @param format   - The requested response format
+	 * @param urli     - The path to the request, i.e. which object should we get
+	 * @param resp     - The http servlet response
 	 * @throws IOException
 	 * @throws DiagnosticException
 	 */
-	private void makeResponse(String response, Format format, String urli, Boolean prettyPrint,
-		HttpServletResponse resp) throws IOException, DiagnosticException {
+	private void makeResponse(PreparedResponse preparedResponse, Format format, String urli,
+							  HttpServletResponse resp) throws IOException, DiagnosticException {
+		// if we found only one replaceUri, redirect immediately:
+		if (preparedResponse.getReplaceUris().size() == 1) {
+			resp.sendRedirect(preparedResponse.getReplaceUris().get(0));
+			return;
+		}
+
 		switch (format) {
 			case JSON_LD:
-				if (response != null) {
+				if (preparedResponse.getReplaceUris().size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisJsonReply(preparedResponse.getReplaceUris());
+					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+
+					PrintWriter out = resp.getWriter();
+					resp.setContentType("application/json");
+					resp.setCharacterEncoding("UTF-8");
+					out.print(jsonReply);
+					out.flush();
+				} else if (preparedResponse.getResponse() != null) {
 					Model m = ModelFactory.createDefaultModel();
-					m.read(new ByteArrayInputStream(response.getBytes("UTF-8")), "UTF-8");
+					m.read(new ByteArrayInputStream(preparedResponse.getResponse().getBytes(StandardCharsets.UTF_8)), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
-					RDFDataMgr.write(resp.getOutputStream(), m, prettyPrint ? RDFFormat.JSONLD_PRETTY : RDFFormat.JSONLD_COMPACT_FLAT);
-//					RDFDataMgr.write(resp.getOutputStream(), m,
-//						prettyPrint ? JenaJSONLD.JSONLD_FORMAT_PRETTY : JenaJSONLD.JSONLD_FORMAT_FLAT);
+					RDFDataMgr.write(resp.getOutputStream(), m, RDFFormat.JSONLD_COMPACT_FLAT);
 				} else {
 					resp.sendError(404, "Could not find record for path");
 				}
 				break;
 			case RDF:
 			case XML:
-				if (response != null) {
+				if (preparedResponse.getReplaceUris().size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisXmlReply(preparedResponse.getReplaceUris());
+					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+
+					PrintWriter out = resp.getWriter();
+					resp.setContentType("text/xml");
+					resp.setCharacterEncoding("UTF-8");
+					out.print(jsonReply);
+					out.flush();
+				} else if (preparedResponse.getResponse() != null) {
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder docBuilder;
 					Document doc;
 					try {
 						docBuilder = docFactory.newDocumentBuilder();
-						doc = docBuilder.parse(new ByteArrayInputStream(response.getBytes("UTF-8")));
+						doc = docBuilder.parse(new ByteArrayInputStream(preparedResponse.getResponse().getBytes(StandardCharsets.UTF_8)));
 						TransformerFactory transformerFactory = TransformerFactory.newInstance();
 						Transformer transform;
 						transform = transformerFactory.newTransformer();
 						DOMSource source = new DOMSource(doc);
 						StreamResult strResult = new StreamResult(resp.getOutputStream());
-						if (prettyPrint) {
-							transform.setOutputProperty(OutputKeys.INDENT, "yes");
-							transform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-						}
 						transform.transform(source, strResult);
 					} catch (ParserConfigurationException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att initiera xml dokument hanteraren",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					} catch (SAXException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att skapa xml svaret",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					} catch (TransformerConfigurationException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att initiera xml dokument transformeraren",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					} catch (TransformerException e) {
 						logger.error(e);
 						throw new DiagnosticException("Det är problem med att skriva xml dokument till ut-strömmen",
-							AbstractAPIMethod.class.getName(), e.getMessage(), false);
+								AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					}
 				} else if (format == Format.RDF) {
 					logger.warn("Could not find rdf for record with uri: " + urli);
@@ -397,19 +510,19 @@ public class ResolverServlet extends HttpServlet {
 				break;
 			case HTML:
 			case MUSEUMDAT:
-				if (response != null) {
-					if (response.toLowerCase().startsWith(badURLPrefix)) {
+				if (preparedResponse.getResponse() != null) {
+					if (preparedResponse.getResponse().toLowerCase().startsWith(badURLPrefix)) {
 						if (format == Format.HTML) {
 							logger.warn(
-								"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + response);
+									"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + preparedResponse.getResponse());
 							resp.sendError(404, "Invalid html url to pass on to");
 						} else {
 							logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " +
-								response);
+									preparedResponse.getResponse());
 							resp.sendError(404, "Invalid museumdat url to pass on to");
 						}
 					} else {
-						resp.sendRedirect(response);
+						resp.sendRedirect(preparedResponse.getResponse());
 					}
 				} else if (format == Format.HTML) {
 					logger.debug("Could not find html url for record with uri: " + urli);
@@ -428,7 +541,7 @@ public class ResolverServlet extends HttpServlet {
 
 	/**
 	 * This method gets the url to the the original storage of the rdf data
-	 * 
+	 *
 	 * @param content - String containing a rdf
 	 * @return - a string with the url, if not found then null
 	 */
@@ -437,7 +550,7 @@ public class ResolverServlet extends HttpServlet {
 		try {
 			Model model = RDFUtil.parseModel(content);
 			Property uriPredicate = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#url");
-			Selector selector = new SimpleSelector((Resource) null, uriPredicate, (RDFNode) null);
+			Selector selector = new SimpleSelector(null, uriPredicate, (RDFNode) null);
 			StmtIterator iter = model.listStatements(selector);
 			if (iter.hasNext()) {
 				Statement s = iter.next();

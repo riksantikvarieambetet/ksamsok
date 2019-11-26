@@ -159,7 +159,7 @@ public class OAIPMHHarvestJobTest {
 			for (int i = 0; i < graphs.getLength(); ++i) {
 				Node rdfNode = graphs.item(i);
 				rdf = serializeNode(rdfNode);
-				ExtractedInfo info = samsokContentHelper.extractInfo(rdf, null);
+				ExtractedInfo info = samsokContentHelper.extractInfo(rdf);
 				assertNotNull("Ingen info extraherad ur rdf", info);
 				SolrInputDocument solrDoc = samsokContentHelper.createSolrDocument(service, rdf, added);
 				assertNotNull("Inget solr-dokument från rdf", solrDoc);
@@ -207,7 +207,7 @@ public class OAIPMHHarvestJobTest {
 			for (int i = 0; i < graphs.getLength(); ++i) {
 				Node rdfNode = graphs.item(i);
 				rdf = serializeNode(rdfNode);
-				ExtractedInfo info = samsokContentHelper.extractInfo(rdf, null);
+				ExtractedInfo info = samsokContentHelper.extractInfo(rdf);
 				assertNotNull("Ingen info extraherad ur rdf", info);
 				SolrInputDocument solrDoc = samsokContentHelper.createSolrDocument(service, rdf, added);
 				assertNotNull("Inget solr-dokument från rdf", solrDoc);

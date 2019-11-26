@@ -187,7 +187,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * Map som håller ev återkommande uri:er och uri-referenser för att slippa
 	 * skapa dem flera gånger eller ha variabler
 	 */
-	protected Map<URI, Property> mapper = new HashMap<URI, Property>();
+	protected Map<URI, Property> mapper = new HashMap<>();
 
 	protected boolean timeInfoExists = false;
 	protected boolean geoDataExists = false;
@@ -801,7 +801,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * @return beräknat datum för när posten först indexerades i k-samsök
 	 */
 	static Date calculateAddedToIndex(Date firstIndexed, Date recordCreated) {
-		Date addedToIndex = null;
+		Date addedToIndex;
 		if (firstIndexed != null) {
 			// tjänsten har redan indexerats (minst) en gång
 			if (recordCreated != null) {

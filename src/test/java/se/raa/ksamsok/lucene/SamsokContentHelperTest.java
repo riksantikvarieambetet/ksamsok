@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,13 +17,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -41,27 +38,23 @@ public class SamsokContentHelperTest {
 	@Test
 	public void testExtractInfo__0_TO_1_0() throws Exception {
 		SamsokContentHelper helper = new SamsokContentHelper();
-		GMLInfoHolder gmlInfoHolder = new GMLInfoHolder();
 		String xmlContent = loadTestFileAsString("hjalm_0.99.rdf");
-		ExtractedInfo extractedInfo = helper.extractInfo(xmlContent, gmlInfoHolder);
+		ExtractedInfo extractedInfo = helper.extractInfo(xmlContent);
 		assertNotNull("Ingen extractedInfo", extractedInfo);
 		assertNotNull("Ingen idenfierare", extractedInfo.getIdentifier());
 		assertNotNull("Ingen url", extractedInfo.getNativeURL());
 		assertEquals("Fel identfierare", "http://kulturarvsdata.se/raa/test/1", extractedInfo.getIdentifier());
-		assertFalse("Gml-info ska inte finnas", gmlInfoHolder.hasGeometries());
 	}
 
 	@Test
 	public void testExtractInfo_1_1() throws Exception {
 		SamsokContentHelper helper = new SamsokContentHelper();
-		GMLInfoHolder gmlInfoHolder = new GMLInfoHolder();
 		String xmlContent = loadTestFileAsString("hjalm_1.1.rdf");
-		ExtractedInfo extractedInfo = helper.extractInfo(xmlContent, gmlInfoHolder);
+		ExtractedInfo extractedInfo = helper.extractInfo(xmlContent);
 		assertNotNull("Ingen extractedInfo", extractedInfo);
 		assertNotNull("Ingen idenfierare", extractedInfo.getIdentifier());
 		assertNotNull("Ingen url", extractedInfo.getNativeURL());
 		assertEquals("Fel identfierare", "http://kulturarvsdata.se/raa/test/1", extractedInfo.getIdentifier());
-		assertFalse("Gml-info ska inte finnas", gmlInfoHolder.hasGeometries());
 	}
 
 	@Test
@@ -555,7 +548,6 @@ public class SamsokContentHelperTest {
 
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		InputStream is = null;
 		StringWriter sw = null;
 		try {
 			// förutsätter att testfallen körs med projektkatalogen som cwd
@@ -569,14 +561,11 @@ public class SamsokContentHelperTest {
 			sw = new StringWriter(initialSize);
 			Result result = new StreamResult(sw);
 	        xformer.transform(source, result);
+	        return sw.toString();
 		} finally {
 			if (sw != null) {
 				sw.close();
 			}
-			if (is != null) {
-				is.close();
-			}
 		}
-		return sw != null ? sw.toString() : null;
 	}
 }

@@ -9,7 +9,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.PersistJobDataAfterExecution;
 import org.quartz.SchedulerException;
-import org.quartz.UnableToInterruptJobException;
 import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
 
@@ -127,14 +126,14 @@ public abstract class HarvestJob implements InterruptableJob {
 	/* (non-Javadoc)
 	 * @see org.quartz.InterruptableJob#interrupt()
 	 */
-	public void interrupt() throws UnableToInterruptJobException {
+	public void interrupt() {
 		interrupted = true;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
 	 */
-	public void execute(JobExecutionContext ctx) throws JobExecutionException {
+	public void execute(JobExecutionContext ctx) {
 		// 1. init
 		// 2. kontrollera startsteg
 		// 3. om start är index kör det och sluta, annars kör identify
@@ -150,7 +149,7 @@ public abstract class HarvestJob implements InterruptableJob {
 		Timestamp nowTs = new Timestamp(now.getTime());
 		Date lastSuccessfulHarvestDate; // TODO: ts eller date?
 		File temp = null;
-		File spoolFile = null;
+		File spoolFile;
 		HarvestService service = null;
 		StatusService ss = null;
 		long start = System.currentTimeMillis();
@@ -193,7 +192,7 @@ public abstract class HarvestJob implements InterruptableJob {
 			ss.initStatus(service, "Init");
 			ss.setStep(service, Step.FETCH);
 
-			ServiceMetadata sm = null;
+			ServiceMetadata sm;
 
 			int numRecords = -1; // -1 är okänt antal poster
 			spoolFile = hrm.getSpoolFile(service);
