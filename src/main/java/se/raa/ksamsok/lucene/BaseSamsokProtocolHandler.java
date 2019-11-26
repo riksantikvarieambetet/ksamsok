@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ADDEDTOINDEXDATE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_BUILD_DATE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CADASTRALUNIT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_COLLECTION;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CONTEXTLABEL;
@@ -42,6 +43,7 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMTIME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FULLNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_GENDER;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_GEODATAEXISTS;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_HIGHRES_SOURCE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMCLASS;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMCLASSNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMCOLOR;
@@ -59,6 +61,7 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMTECHNIQUE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMTITLE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMTYPE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_LASTCHANGEDDATE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_LOWRES_SOURCE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIALICENSE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIAMOTIVEWORD;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIATYPE;
@@ -82,7 +85,9 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_SERVICEORGANISATION;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_SUBJECT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_SURNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_THEME;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_THUMBNAIL;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_THUMBNAILEXISTS;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_THUMBNAIL_SOURCE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TIMEINFOEXISTS;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TITLE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIODID;
@@ -93,6 +98,7 @@ import static se.raa.ksamsok.lucene.ContentHelper.formatDate;
 import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
 import static se.raa.ksamsok.lucene.RDFUtil.extractValue;
 import static se.raa.ksamsok.lucene.SamsokProtocol.context_pre;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rBuilddDate;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rCadastralUnit;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rCollection;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rContext;
@@ -114,6 +120,7 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rFromPeriodName;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rFromTime;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rFullName;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rGender;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rHighresSource;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rImage;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemClass;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemClassName;
@@ -132,6 +139,7 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemTechnique;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemTitle;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemType;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rLastChangedDate;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rLowresSource;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMaterial;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaLicense;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rMediaMotiveWord;
@@ -157,6 +165,7 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rSubject;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rSurname;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rTheme;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rThumbnail;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rThumbnailSource;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rTitle;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rToPeriodId;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rToPeriodName;
@@ -285,9 +294,10 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		luceneDoc.addField(IX_GEODATAEXISTS, geoDataExists ? "j" : "n");
 		luceneDoc.addField(IX_TIMEINFOEXISTS, timeInfoExists ? "j" : "n");
 		// lägg till specialindex för om tumnagel existerar eller ej (j/n), IndexType.TOLOWERCASE
-		boolean thumbnailExists = extractSingleValue(model, subject, getURIRef(uri_rThumbnail), null) != null;
+		final String thumbnail = extractSingleValue(model, subject, getURIRef(uri_rThumbnail), null);
+		boolean thumbnailExists = thumbnail != null;
 		luceneDoc.addField(IX_THUMBNAILEXISTS, thumbnailExists ? "j" : "n");
-
+		luceneDoc.addField(IX_THUMBNAIL, thumbnail);
 	}
 
 	/**
@@ -328,6 +338,13 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			// addProblemMessage("Värde för '" + IX_LASTCHANGEDDATE +
 			//		"' saknas för " + identifier);
 		}
+
+		Date buildDateAsDate = null;
+		String buildDate = extractSingleValue(model, subject, getURIRef(uri_rBuilddDate), null);
+		if (buildDate != null) {
+			buildDateAsDate = TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_BUILD_DATE, buildDate, ip);
+		}
+
 	}
 
 	/**
@@ -412,6 +429,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// hämta ut itemLicense (01)
 		ip.setCurrent(IX_ITEMLICENSE, false); // uri, ingen uppslagning fn
 		extractSingleValue(model, subject, getURIRef(uri_rItemLicense), ip);
+
+
 	}
 
 	/**
@@ -433,6 +452,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		}
 	}
 
+
+
+
 	/**
 	 * Extraherar och indexerar information ur en bildnod.
 	 * Hanterar de index som gällde för protokollversioner till och med 1.0, se dok.
@@ -446,6 +468,12 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip);
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
 		extractValue(model, cS, getURIRef(uri_rMediaMotiveWord), null, ip);
+		ip.setCurrent(IX_THUMBNAIL_SOURCE, false);
+		extractValue(model, cS, getURIRef(uri_rThumbnailSource), null, ip);
+		ip.setCurrent(IX_LOWRES_SOURCE, false);
+		extractValue(model, cS, getURIRef(uri_rLowresSource), null, ip);
+		ip.setCurrent(IX_HIGHRES_SOURCE, false);
+		extractValue(model, cS, getURIRef(uri_rHighresSource), null, ip);
 	}
 
 	/**

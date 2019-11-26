@@ -266,6 +266,11 @@ public class SamsokContentHelperTest {
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTNAME, "Hj\u00e4lmhamrande");
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTAUTH, "Hj\u00e4lmhamrarf\u00f6rbundet");
 
+
+		assertEquals("Felaktigt värde för thumbnailSource", "http://localhost/thumbnail.jpg", doc.getFieldValue(ContentHelper.IX_THUMBNAIL_SOURCE));
+		assertEquals("Felaktigt värde för lowresSource", "http://localhost/lowres.jpg", doc.getFieldValue(ContentHelper.IX_LOWRES_SOURCE));
+		assertEquals("Felaktigt värde för highresSource", "http://localhost/highres.jpg", doc.getFieldValue(ContentHelper.IX_HIGHRES_SOURCE));
+
 	}
 
 	@Test

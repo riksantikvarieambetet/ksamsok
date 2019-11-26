@@ -63,7 +63,7 @@ public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 		extractValue(model, cS, getURIRef(uri_rMediaMotiveWord), null, ip);
 		extractMediaAndImageNodeInformation(cS);
 	}
-	
+
 	/**
 	 * Extraherar och indexerar information ur en bildnod.
 	 * Överlagra i subklasser vid behov.
