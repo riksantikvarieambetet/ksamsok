@@ -25,27 +25,24 @@ public interface HarvestServiceManager {
 	 * Ger lista med alla användarskapade tjänster.
 	 * 
 	 * @return lista med tjänster, eller null vid databasproblem
-	 * @throws Exception
 	 */
-	List<HarvestService>getServices() throws Exception;
+	List<HarvestService>getServices();
 
 	/**
 	 * Hämtar böna för tjänst med inskickad id.
 	 * 
 	 * @param serviceId id
 	 * @return tjänst eller null
-	 * @throws Exception
 	 */
-	HarvestService getService(String serviceId) throws Exception;
+	HarvestService getService(String serviceId);
 	
 	/**
 	 * Hämtar böna i json-format för tjänst med inskickad id.
 	 * 
 	 * @param serviceId id
 	 * @return json-objekt eller null
-	 * @throws Exception
 	 */
-	JSONObject getServiceAsJSON(String serviceId) throws Exception;
+	JSONObject getServiceAsJSON(String serviceId);
 
 	/**
 	 * Uppdaterar tjänst i databasen.

@@ -311,13 +311,13 @@ public abstract class ContentHelper {
 
 
 	// alla index
-	private static final HashMap<String, Index> indices = new LinkedHashMap<String, Index>();
+	private static final HashMap<String, Index> indices = new LinkedHashMap<>();
 	// publika index
-	private static final List<Index> publicIndices = new ArrayList<Index>();
+	private static final List<Index> publicIndices = new ArrayList<>();
 
 	// meddelanden om eventuella problem vid tolkning av tjänsteinnehållet, tex att en konstant
 	// inte kunde slås upp etc, och antal ggr problemet förekom - främst för utv/debug
-	private static final ThreadLocal<Map<String, Integer>> problemMessages = new ThreadLocal<Map<String, Integer>>();
+	private static final ThreadLocal<Map<String, Integer>> problemMessages = new ThreadLocal<>();
 
 	static {
 		// implementerade index
@@ -609,10 +609,9 @@ public abstract class ContentHelper {
 	 * @param xmlContent xml-innehåll
 	 * @param added datum posten först lades till i repot
 	 * @return ett solr-dokument, eller null om inte posten ska indexeras
-	 * @throws Exception vid problem
 	 */
 	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent, Date added)
-		throws Exception;
+	;
 
 	// statiska metoder
 
@@ -637,7 +636,7 @@ public abstract class ContentHelper {
 	// hämtar ut ett konfat index, eller dess "pappa" för prefixade index
 	// bör bara användas för att fastställa vilken typ av index det är
 	private static IndexType getIndexType(String indexName) {
-		int underScorePos = -1;
+		int underScorePos;
 		if (indexName != null && (underScorePos = indexName.indexOf("_")) > 0) {
 			indexName = indexName.substring(underScorePos + 1);
 		}
@@ -873,7 +872,7 @@ public abstract class ContentHelper {
 	 */
 	public static void initProblemMessages() {
 		// linked hashmap för att behålla ordningen
-		problemMessages.set(new LinkedHashMap<String, Integer>());
+		problemMessages.set(new LinkedHashMap<>());
 	}
 
 	/**
@@ -971,7 +970,7 @@ public abstract class ContentHelper {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException {
-		HashMap<String, String> params = new HashMap<String, String>();
+		HashMap<String, String> params = new HashMap<>();
 		if (qs != null && qs.length() > 0) {
 			StringTokenizer tok = new StringTokenizer(qs, "&");
 			while (tok.hasMoreTokens()) {

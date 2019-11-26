@@ -27,18 +27,18 @@ public class StatusServiceImpl implements StatusService {
 	// gräns i antal dagar för hur länge loggmeddelanden sparas i databasen
 	static final int LOG_THRESHHOLD_DAYS = 21;
 
-	Map<String, String> statusTexts = Collections.synchronizedMap(new HashMap<String, String>());
-	Map<String, String> errorTexts = Collections.synchronizedMap(new HashMap<String, String>());
-	Map<String, List<String>> statusLogs = Collections.synchronizedMap(new HashMap<String, List<String>>());
-	Map<String, String> interrupts = Collections.synchronizedMap(new HashMap<String, String>());
-	Map<String, String> lastStarts = Collections.synchronizedMap(new HashMap<String, String>());
-	Map<String, Step> steps = Collections.synchronizedMap(new HashMap<String, Step>());
-	Map<String, Step> startSteps = Collections.synchronizedMap(new HashMap<String, Step>());
-	Map<String, Boolean> rdfErrors = Collections.synchronizedMap(new HashMap<String,Boolean>());
+	Map<String, String> statusTexts = Collections.synchronizedMap(new HashMap<>());
+	Map<String, String> errorTexts = Collections.synchronizedMap(new HashMap<>());
+	Map<String, List<String>> statusLogs = Collections.synchronizedMap(new HashMap<>());
+	Map<String, String> interrupts = Collections.synchronizedMap(new HashMap<>());
+	Map<String, String> lastStarts = Collections.synchronizedMap(new HashMap<>());
+	Map<String, Step> steps = Collections.synchronizedMap(new HashMap<>());
+	Map<String, Step> startSteps = Collections.synchronizedMap(new HashMap<>());
+	Map<String, Boolean> rdfErrors = Collections.synchronizedMap(new HashMap<>());
 
 	DataSource ds;
 
-	Set<HarvestService> servicesInitializedFromDb = Collections.synchronizedSet(new HashSet<HarvestService>());
+	Set<HarvestService> servicesInitializedFromDb = Collections.synchronizedSet(new HashSet<>());
 
 	StatusServiceImpl(DataSource ds) {
 		this.ds = ds;
@@ -140,11 +140,7 @@ public class StatusServiceImpl implements StatusService {
 		Date nowDate = date != null ? date : new Date();
 		String now = ContentHelper.formatDate(nowDate, true);
 		statusTexts.put(service.getId(), message + " (" + now + ")");
-		List<String> statusLog = statusLogs.get(service.getId());
-		if (statusLog == null) {
-			statusLog = new ArrayList<String>();
-			statusLogs.put(service.getId(), statusLog);
-		}
+		List<String> statusLog = statusLogs.computeIfAbsent(service.getId(), k -> new ArrayList<>());
 		statusLog.add(now + ": " + message);
 		log2Db(service, eventType, nowDate, message);
 	}
@@ -164,11 +160,7 @@ public class StatusServiceImpl implements StatusService {
 		Date nowDate = new Date();
 		String now = ContentHelper.formatDate(nowDate, true);
 		errorTexts.put(service.getId(), now + ": " + message);
-		List<String> statusLog = statusLogs.get(service.getId());
-		if (statusLog == null) {
-			statusLog = new ArrayList<String>();
-			statusLogs.put(service.getId(), statusLog);
-		}
+		List<String> statusLog = statusLogs.computeIfAbsent(service.getId(), k -> new ArrayList<>());
 		statusLog.add(now + ": *** " + message);
 		log2Db(service, LogEvent.EVENT_ERROR, nowDate, message);
 	}
@@ -228,7 +220,7 @@ public class StatusServiceImpl implements StatusService {
 			pst.setString(1, service.getId());
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				statusLog = new ArrayList<String>();
+				statusLog = new ArrayList<>();
 				do {
 					statusLog.add(ContentHelper.formatDate(rs.getTimestamp("eventTs"), true) +
 							": " + (rs.getInt("eventType") != LogEvent.EVENT_INFO ? "*** " : "") +
@@ -275,7 +267,7 @@ public class StatusServiceImpl implements StatusService {
 			pst.setMaxRows(maxRows);
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				statusLog = new ArrayList<LogEvent>();
+				statusLog = new ArrayList<>();
 				do {
 					statusLog.add(new LogEvent(rs.getString("serviceId"),
 							rs.getInt("eventType"),

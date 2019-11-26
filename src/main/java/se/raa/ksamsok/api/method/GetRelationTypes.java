@@ -54,7 +54,7 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void performMethodLogic() throws DiagnosticException {
+	protected void performMethodLogic() {
 		if (isAll) {
 			relationTypes = GetRelations.relationXlate;
 		} else {

@@ -60,6 +60,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -184,14 +185,14 @@ public class RSS extends AbstractSearchMethod {
 	 */
 	protected List<SyndEntry> getEntries(SolrDocumentList hits)
 		throws DiagnosticException {
-		List<SyndEntry> entries = new Vector<SyndEntry>();
+		List<SyndEntry> entries = new Vector<>();
 		try {
 			for (SolrDocument d: hits) {
 				String uri = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
 				String content = null;
 				byte[] xmlData = (byte[]) d.getFieldValue(ContentHelper.I_IX_RDF);
 				if (xmlData != null) {
-					content = new String(xmlData, "UTF-8");
+					content = new String(xmlData, StandardCharsets.UTF_8);
 				}
 				if (content != null) {
 					try {
@@ -203,8 +204,6 @@ public class RSS extends AbstractSearchMethod {
 					logger.warn("Hittade inte rdf-data för " + uri);
 				}
 			}
-		} catch (IOException e) {
-			throw new DiagnosticException("Oväntat IO fel", "RSS.getEntries", e.getMessage(), true);
 		} catch(Exception e) {
 			throw new DiagnosticException("Fel vid hämtning av data", "RSS.getEntries", e.getMessage(), true);
 		}
@@ -275,7 +274,7 @@ public class RSS extends AbstractSearchMethod {
 		throws DiagnosticException
 	{
 		RssObject data = new RssObject();
-		Model model = null;
+		Model model;
 		model = getModel(content);
 		Property rRdfType = ResourceFactory.createProperty(URI_RDF_TYPE.toString());
 		RDFNode rKsamsokEntity = ResourceFactory.createResource(URI_KSAMSOK_ENTITY.toString());
@@ -285,9 +284,9 @@ public class RSS extends AbstractSearchMethod {
 		Property rBuildDate = ResourceFactory.createProperty(URI_BUILD_DATE.toString());
 		Resource subject = getSubjectNode(model, rRdfType, rKsamsokEntity);
 		data.setIdentifier(subject.toString());
-		data.setTitle(getValueFromGraph(model, subject, rItemTitle, (Property) null));
+		data.setTitle(getValueFromGraph(model, subject, rItemTitle, null));
 		data = getDataFromPresentationBlock(getSingleValueFromGraph(model, subject, rPresentation), data);
-	
+
 		String itemKeyWordsString = getValueFromGraph(model, subject, rItemKeyWord, null);
 		String[] itemKeyWords = new String[0];
 		if(itemKeyWordsString != null) {
@@ -304,21 +303,12 @@ public class RSS extends AbstractSearchMethod {
 	 * Skapar en RDF graf från textsträng
 	 * @param content RDF data som textsträng
 	 * @return RDF graf
-	 * @throws DiagnosticException
 	 */
-	private Model getModel(String content) 
-		throws DiagnosticException
-	{
-		Model m = null;
-		StringReader reader = null;
-		try {
-			reader = new StringReader(content);
+	private Model getModel(String content) {
+		Model m;
+		try (StringReader reader = new StringReader(content)) {
 			m = ModelFactory.createDefaultModel();
 			m.read(reader, "");
-		}finally {
-			if(reader != null) {
-				reader.close();
-			}
 		}
 		return m;
 	}
@@ -335,7 +325,7 @@ public class RSS extends AbstractSearchMethod {
 	private Resource getSubjectNode(Model model, Property rRdfType, RDFNode rKsamsokEntity) 
 		throws DiagnosticException
 	{
-		Selector selector = new SimpleSelector((Resource) null, rRdfType, rKsamsokEntity);
+		Selector selector = new SimpleSelector(null, rRdfType, rKsamsokEntity);
 		StmtIterator iter = model.listStatements(selector);
 		Resource subject = null;
 		while (iter.hasNext()){
@@ -364,39 +354,47 @@ public class RSS extends AbstractSearchMethod {
 		NodeList nodeList = doc.getElementsByTagName("pres:item").item(0).getChildNodes();
 		for(int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
-			if(node.getNodeName().equals("pres:description")) {
-				if(data.getDescription() != null) {
-					data.setDescription(data.getDescription() + " " + node.getTextContent());
-				}else {
-					data.setDescription(node.getTextContent());
-				}
-			}else if(node.getNodeName().equals("pres:representations")) {
-				NodeList childNodes = node.getChildNodes();
-				for(int j = 0; j < childNodes.getLength(); j++) {
-					Node child = childNodes.item(j);
-					if(child.getAttributes().getNamedItem("format").getTextContent().equals("HTML")) {
-						data.setLink(child.getTextContent());
+			switch (node.getNodeName()) {
+				case "pres:description":
+					if (data.getDescription() != null) {
+						data.setDescription(data.getDescription() + " " + node.getTextContent());
+					} else {
+						data.setDescription(node.getTextContent());
 					}
-				}
-			}else if(node.getNodeName().equals("pres:image")) {
-				NodeList childNodes = node.getChildNodes();
-				for(int j = 0; j < childNodes.getLength(); j++) {
-					Node child = childNodes.item(j);
-					if(child.getNodeName().equals("pres:src")) {
-						if(child.getAttributes().getNamedItem("type").getTextContent().equals("lowres")) {
-							data.setImageUrl(child.getTextContent());
-						}else if(child.getAttributes().getNamedItem("type").getTextContent().equals("thumbnail")) {
-							data.setThumbnailUrl(child.getTextContent());
+					break;
+				case "pres:representations": {
+					NodeList childNodes = node.getChildNodes();
+					for (int j = 0; j < childNodes.getLength(); j++) {
+						Node child = childNodes.item(j);
+						if (child.getAttributes().getNamedItem("format").getTextContent().equals("HTML")) {
+							data.setLink(child.getTextContent());
 						}
 					}
+					break;
 				}
-			}else if(node.getNodeName().equals("pres:itemLabel")) {
-				if(StringUtils.trimToNull(data.getTitle()) == null) {
-					data.setTitle(node.getTextContent());
+				case "pres:image": {
+					NodeList childNodes = node.getChildNodes();
+					for (int j = 0; j < childNodes.getLength(); j++) {
+						Node child = childNodes.item(j);
+						if (child.getNodeName().equals("pres:src")) {
+							if (child.getAttributes().getNamedItem("type").getTextContent().equals("lowres")) {
+								data.setImageUrl(child.getTextContent());
+							} else if (child.getAttributes().getNamedItem("type").getTextContent().equals("thumbnail")) {
+								data.setThumbnailUrl(child.getTextContent());
+							}
+						}
+					}
+					break;
 				}
-			}else if(node.getNodeName().equals("georss:where")) {
-				Node child = node.getFirstChild().getFirstChild();
-				data.setCoords(StringUtils.trimToNull(child.getTextContent()));
+				case "pres:itemLabel":
+					if (StringUtils.trimToNull(data.getTitle()) == null) {
+						data.setTitle(node.getTextContent());
+					}
+					break;
+				case "georss:where":
+					Node child = node.getFirstChild().getFirstChild();
+					data.setCoords(StringUtils.trimToNull(child.getTextContent()));
+					break;
 			}
 		}
 		return data;
@@ -412,18 +410,14 @@ public class RSS extends AbstractSearchMethod {
 		throws DiagnosticException
 	{
 		StringReader reader = null;
-		org.w3c.dom.Document doc = null;
+		org.w3c.dom.Document doc;
 		try {
 			reader = new StringReader(presentationBlock);
 			DocumentBuilder builder = domFactory.newDocumentBuilder();
 			doc = builder.parse(new InputSource(reader));
-		} catch (ParserConfigurationException e) {
+		} catch (ParserConfigurationException | IOException | SAXException e) {
 			throw new DiagnosticException("Internt fel", "RSS.getDOMDocument", e.getMessage(), true);
-		} catch (SAXException e) {
-			throw new DiagnosticException("Internt fel", "RSS.getDOMDocument", e.getMessage(), true);
-		} catch (IOException e) {
-			throw new DiagnosticException("Internt fel", "RSS.getDOMDocument", e.getMessage(), true);
-		}finally {
+		} finally {
 			if(reader != null) {
 				reader.close();
 			}
@@ -438,9 +432,7 @@ public class RSS extends AbstractSearchMethod {
 	 * @param pn - predicate nod
 	 * @return värde från graf som textsträng
 	 */
-	private String getSingleValueFromGraph(Model m, Resource sn, Property pn)
-		throws DiagnosticException
-	{
+	private String getSingleValueFromGraph(Model m, Resource sn, Property pn) {
 		Selector selector = new SimpleSelector(sn, pn, (RDFNode) null);
 		StmtIterator iter = m.listStatements(selector);
 		String value = null;
@@ -463,12 +455,10 @@ public class RSS extends AbstractSearchMethod {
 	 * @param refRef - URI referens till eventuella subnoder
 	 * @return värden som textsträng
 	 */
-	private String getValueFromGraph(Model model, Resource subject, Property ref, Property refRef)
-		throws DiagnosticException
-	{
+	private String getValueFromGraph(Model model, Resource subject, Property ref, Property refRef) {
 		final String sep = " ";
 		StringBuilder buf = new StringBuilder();
-		String value = null;
+		String value;
 		Selector selector = new SimpleSelector(subject, ref, (RDFNode) null);
 		StmtIterator iter = model.listStatements(selector);
 		while (iter.hasNext()){
@@ -568,11 +558,10 @@ public class RSS extends AbstractSearchMethod {
 	 * @param thumb URL till tumnagel
 	 * @param mediaModule MediaModule som används
 	 * @return Metadata objekt med tumnagel
-	 * @throws URISyntaxException
-	 * @throws DiagnosticException 
+	 * @throws DiagnosticException
 	 */
 	protected Metadata getMetadata(RssObject data, String thumb, MediaEntryModule mediaModule) 
-		throws URISyntaxException, DiagnosticException
+		throws DiagnosticException
 	{
 		Metadata metadata = mediaModule.getMetadata();
 		if (metadata == null)
@@ -587,7 +576,7 @@ public class RSS extends AbstractSearchMethod {
 	private Thumbnail[] getThumbnail(String thumb) 
 		throws DiagnosticException
 	{
-		Thumbnail thumbnail = null;
+		Thumbnail thumbnail;
 		try {
 			thumbnail = new Thumbnail(new URI(thumb));
 		} catch (URISyntaxException e) {
@@ -630,7 +619,7 @@ public class RSS extends AbstractSearchMethod {
 	 * Böna (typ) som håller data om en RSS entitet
 	 * @author Henrik Hjalmarsson
 	 */
-	public class RssObject
+	public static class RssObject
 	{
 		private String identifier;
 		private String title;
@@ -644,7 +633,7 @@ public class RSS extends AbstractSearchMethod {
 		
 		public RssObject()
 		{
-			keyWords = new Vector<String>();
+			keyWords = new Vector<>();
 		}
 		
 		/**

@@ -27,7 +27,7 @@ public class SitemapServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+			throws IOException {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
 		String batch = req.getParameter(BATCH_PARAMETER_NAME);

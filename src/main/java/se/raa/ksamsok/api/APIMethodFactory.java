@@ -75,33 +75,45 @@ public class APIMethodFactory implements APIServiceProvider {
 	 */
 	private APIMethod getMethod(String method, Map<String, String> params, OutputStream out)
 		throws MissingParameterException, DiagnosticException {
-		APIMethod m = null;
+		APIMethod m;
 		// en ny if-sats läggs till för varje ny metod
-		if (method.equals(Search.METHOD_NAME)) {
-			m = new Search(this, out, params);
-		} else if (method.equals(Statistic.METHOD_NAME)) {
-			m = new Statistic(this, out, params);
-		} else if (method.equals(StatisticSearch.METHOD_NAME)) {
-			m = new StatisticSearch(this, out, params);
-		} else if (method.equals(AllIndexUniqueValueCount.METHOD_NAME)) {
-			m = new AllIndexUniqueValueCount(this, out, params);
-		} else if (method.equals(Facet.METHOD_NAME)) {
-			m = new Facet(this, out, params);
-		} else if (method.equals(SearchHelp.METHOD_NAME)) {
-			m = new SearchHelp(this, out, params);
-		} else if (method.equals(RSS.METHOD_NAME)) {
-			m = new RSS(this, out, params);
-		} else if (method.equals(GetServiceOrganization.METHOD_NAME)) {
-			m = new GetServiceOrganization(this, out, params);
-		} else if (method.equals(Stem.METHOD_NAME)) {
-			m = new Stem(this, out, params);
-		} else if (method.equals(GetRelations.METHOD_NAME)) {
-			m = new GetRelations(this, out, params);
-		} else if (method.equals(GetRelationTypes.METHOD_NAME)) {
-			m = new GetRelationTypes(this, out, params);
-		} else {
-			throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod",
-				"felaktig metod", false);
+		switch (method) {
+			case Search.METHOD_NAME:
+				m = new Search(this, out, params);
+				break;
+			case Statistic.METHOD_NAME:
+				m = new Statistic(this, out, params);
+				break;
+			case StatisticSearch.METHOD_NAME:
+				m = new StatisticSearch(this, out, params);
+				break;
+			case AllIndexUniqueValueCount.METHOD_NAME:
+				m = new AllIndexUniqueValueCount(this, out, params);
+				break;
+			case Facet.METHOD_NAME:
+				m = new Facet(this, out, params);
+				break;
+			case SearchHelp.METHOD_NAME:
+				m = new SearchHelp(this, out, params);
+				break;
+			case RSS.METHOD_NAME:
+				m = new RSS(this, out, params);
+				break;
+			case GetServiceOrganization.METHOD_NAME:
+				m = new GetServiceOrganization(this, out, params);
+				break;
+			case Stem.METHOD_NAME:
+				m = new Stem(this, out, params);
+				break;
+			case GetRelations.METHOD_NAME:
+				m = new GetRelations(this, out, params);
+				break;
+			case GetRelationTypes.METHOD_NAME:
+				m = new GetRelationTypes(this, out, params);
+				break;
+			default:
+				throw new MissingParameterException("metoden " + method + " finns inte", "APIMethodFactory.getAPIMethod",
+						"felaktig metod", false);
 		}
 		return m;
 	}

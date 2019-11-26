@@ -35,6 +35,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -83,7 +84,7 @@ public class APIServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("doOptions called");
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Content-Type");
@@ -98,11 +99,9 @@ public class APIServlet extends HttpServlet {
 		// sätter contentType och character encoding
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/xml; charset=UTF-8");
-		Map<String, String> reqParams = null;
-		APIMethod method = null;
-		OutputStream out = null;
-		try {
-			out = resp.getOutputStream();
+		Map<String, String> reqParams;
+		APIMethod method;
+		try (OutputStream out = resp.getOutputStream()) {
 			String stylesheet = null;
 			try {
 				reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
@@ -131,18 +130,11 @@ public class APIServlet extends HttpServlet {
 				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
 				diagnostic(out, stylesheet, e);
 			}
-		} catch (Exception e) {
+		} catch (IOException | ParserConfigurationException | TransformerException e) {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					// Ignore
-				}
-			}
 		}
+		// Ignore
 	}
 
 	/**
@@ -193,13 +185,13 @@ public class APIServlet extends HttpServlet {
 		if (format == Format.JSON_LD) {
 			String json;
 			json = XML.toJSONObject(baos.toString("UTF-8")).toString();
-			out.write(json.getBytes("UTF-8"));
+			out.write(json.getBytes(StandardCharsets.UTF_8));
 		}
 
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		doGet(req, resp);
 	}
 

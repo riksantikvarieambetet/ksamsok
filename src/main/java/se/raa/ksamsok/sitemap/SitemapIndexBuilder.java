@@ -45,7 +45,7 @@ public class SitemapIndexBuilder
 	 * nativeUrls containing one of these will be shown in the sitemap
 	 */
 	private static List<String> getFilteredUrls(HttpServletRequest request){
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		Properties p = new Properties();
 		try {
 			InputStream stream = new FileInputStream(
@@ -112,7 +112,7 @@ public class SitemapIndexBuilder
 	
 	private int getNumberOfBatches()
 	{
-		int numberOfBatches = 0;
+		int numberOfBatches;
 		int recordCount = getRecordCount();
 		
 		if(recordCount != lastRecordCount){

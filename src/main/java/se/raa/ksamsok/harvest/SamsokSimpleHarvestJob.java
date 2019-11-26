@@ -14,9 +14,8 @@ public class SamsokSimpleHarvestJob extends SimpleHarvestJob {
 		return "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 	}
 	@Override
-	protected List<ServiceFormat> performGetFormats(HarvestService service)
-			throws Exception {
-		final List<ServiceFormat> list = new ArrayList<ServiceFormat>(1);
+	protected List<ServiceFormat> performGetFormats(HarvestService service) {
+		final List<ServiceFormat> list = new ArrayList<>(1);
 		list.add(new ServiceFormat("rdf",
 				"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
 				"http://www.w3.org/2000/07/rdf.xsd")); // TODO: rätt schemaplats
