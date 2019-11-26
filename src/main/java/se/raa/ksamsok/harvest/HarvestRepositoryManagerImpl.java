@@ -316,12 +316,21 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		String serviceId = null;
 		synchronized (SYNC) { // en i taget som får köra index-write
 			try {
+				Timestamp ts = new Timestamp(new Date().getTime());
 				serviceId = service.getId();
 				c = ds.getConnection();
-				// rensa först allt vanligt innehåll
-				pst = c.prepareStatement("delete from content where serviceId = ?");
-				pst.setString(1, serviceId);
-				pst.executeUpdate();
+				// rensa först allt vanligt innehåll, ta bara bort data, inte själva raderna
+
+				// behåll deleted om värdet finns, även för datestamp tas värdet från deleted
+				pst = c.prepareStatement("update content set changed = ?, deleted = coalesce(deleted, ?), " +
+						"datestamp = coalesce(deleted, ?), status = ?, xmldata = null where serviceid = ?");
+				pst.setTimestamp(1, ts);
+				pst.setTimestamp(2, ts);
+				pst.setTimestamp(3, ts);
+				pst.setInt(4, DBUtil.STATUS_NORMAL);
+				pst.setString(5, serviceId);
+				pst.execute();
+
 				solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
 				// commit först för db då den är troligast att den smäller och sen solr
 				DBUtil.commit(c);
@@ -342,6 +351,31 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				DBUtil.closeDBResources(null, pst, c);
 			}
 		}
+	}
+
+	@Override
+	public boolean existsInDatabase(String uri) throws Exception {
+		boolean existsInDatabase = false;
+		String xmlContent = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			c = ds.getConnection();
+			pst = c.prepareStatement("select * from content where uri = ?");
+			pst.setString(1, uri);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				existsInDatabase = true;
+			}
+		} catch (Exception e) {
+			logger.error("Error when checking whether uri " + uri + " exists in database", e);
+			logger.error(e.getMessage());
+			throw e;
+		} finally {
+			DBUtil.closeDBResources(rs, pst, c);
+		}
+		return existsInDatabase;
 	}
 
 	@Override

@@ -75,14 +75,13 @@ public class OAIPMHHandler extends DefaultHandler {
 		this.contentHelper = contentHelper;
 		this.c = c;
 		this.sm = sm;
+		// förbered några databas-statements som kommer användas frekvent
 		this.ts = new Timestamp(ts.getTime());
-		// fÃ¶rbered nÃ¥gra databas-statements som kommer anvÃ¤ndas frekvent
 		this.oai2uriPst = c.prepareStatement("select uri from content where oaiuri = ?");
 		this.updatePst = c.prepareStatement("update content set deleted = null, oaiuri = ?, " +
 			"serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ?, nativeURL = ? where uri = ?");
-		// TODO: stoppa in xmldata = null nedan fÃ¶r att rensa onÃ¶digt gammalt postinnehÃ¥ll?
 		this.deleteUpdatePst = c.prepareStatement("update content set status = ?, " +
-			"changed = ?, deleted = ?, datestamp = ? where serviceId = ? and oaiuri = ?");
+			"changed = ?, deleted = ?, datestamp = ?, xmldata = null where serviceId = ? and oaiuri = ?");
 		this.insertPst = c.prepareStatement("insert into content " +
 			"(uri, oaiuri, serviceId, xmldata, changed, added, datestamp, status, nativeURL) " +
 			"values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -541,7 +540,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			selPst.setString(1, service.getId());
 			selPst.setInt(2, DBUtil.STATUS_NORMAL);
 
-			// behÃ¥ll deleted om vÃ¤rdet finns, Ã¤ven fÃ¶r datestamp tas vÃ¤rdet frÃ¥n deleted
+			// behåll deleted om värdet finns, även för datestamp tas värdet från deleted
 			updatePst = c.prepareStatement("update content set changed = ?, deleted = coalesce(deleted, ?), " +
 				"datestamp = coalesce(deleted, ?), status = ?, xmldata = null where uri = ?");
 			updatePst.setTimestamp(1, ts);
