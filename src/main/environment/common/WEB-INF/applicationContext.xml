@@ -47,12 +47,6 @@
 	<bean id="searchService" class="se.raa.ksamsok.solr.SearchServiceImpl">
 		<property name="solr" ref="solr"/>
 	</bean>
-	<bean id="keyManager" class="se.raa.ksamsok.apikey.APIKeyManager" init-method="init">
-		<constructor-arg ref="dataSource" />
-	</bean>
-	<bean id="statisticsManager" class="se.raa.ksamsok.statistic.StatisticsManager" init-method="init" destroy-method="destroy">
-		<constructor-arg ref="dataSource" />
-	</bean>
 	<bean id="organizationManager" class="se.raa.ksamsok.organization.OrganizationManager">
 		<constructor-arg ref="dataSource" />
 	</bean>

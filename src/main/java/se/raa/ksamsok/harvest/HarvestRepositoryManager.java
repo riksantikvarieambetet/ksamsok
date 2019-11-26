@@ -58,6 +58,14 @@ public interface HarvestRepositoryManager {
 	 */
 	void deleteData(HarvestService service) throws Exception;
 
+	/** Kollar om efterfrågad uri finns i databasen
+	 *
+	 * @param uri identifierare
+	 * @return true om den finns, false annars
+	 * @throws Exception
+	 */
+	public boolean existsInDatabase(String uri) throws Exception;
+
 	/**
 	 * Hämtar xml (rdf) för en inskickad uri som identifierar en post.
 	 * 

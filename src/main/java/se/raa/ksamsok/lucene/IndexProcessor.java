@@ -33,7 +33,7 @@ class IndexProcessor {
 	 * @param extraIndexName ev extra index värdet ska in i, eller null
 	 */
 	void setCurrent(String indexName, String [] contextPrefix, boolean lookupURI, String extraIndexName) {
-		ArrayList<String> indexList = new ArrayList<String>();
+		ArrayList<String> indexList = new ArrayList<>();
 		indexList.add(indexName);
 		if (contextPrefix != null) {
 			for (String prefix: contextPrefix) {
@@ -43,7 +43,7 @@ class IndexProcessor {
 		if (extraIndexName != null) {
 			indexList.add(extraIndexName);
 		}
-		setCurrent(indexList.toArray(new String[indexList.size()]), lookupURI);
+		setCurrent(indexList.toArray(new String[0]), lookupURI);
 	}
 
 	/**

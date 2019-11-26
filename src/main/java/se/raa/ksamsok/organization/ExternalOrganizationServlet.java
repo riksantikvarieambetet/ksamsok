@@ -1,5 +1,7 @@
 package se.raa.ksamsok.organization;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -21,6 +23,8 @@ import java.io.IOException;
  */
 public class ExternalOrganizationServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
+
+	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.organization.ExternalOrganizationServlet");
 
 	@Autowired
 	private OrganizationManager organizationManager;
@@ -51,7 +55,7 @@ public class ExternalOrganizationServlet extends HttpServlet {
 				case "authenticate":
 					String username = req.getParameter("username");
 					String password = req.getParameter("password");
-					if (organizationManager.Authenticate(username, password)) {
+					if (organizationManager.authenticate(username, password)) {
 						req.getSession().setAttribute("isAuthenticated", "j");
 						req.setAttribute("orgData", organizationManager.getOrganization(username, false));
 					} else {
@@ -59,6 +63,7 @@ public class ExternalOrganizationServlet extends HttpServlet {
 					}
 					break;
 				case "logout":
+				case "unAuthenticate":
 					req.getSession().removeAttribute("isAuthenticated");
 					break;
 				case "update":
@@ -66,9 +71,8 @@ public class ExternalOrganizationServlet extends HttpServlet {
 					organizationManager.updateOrg(org);
 					req.setAttribute("orgData", organizationManager.getOrganization(org.getKortnamn(), false));
 					break;
-				case "unAuthenticate":
-					req.getSession().removeAttribute("isAuthenticated");
-					break;
+				default:
+					logger.warn("Unexpected operation " + operation + " in doPost");
 			}
 		}
 		view.forward(req, resp);

@@ -69,7 +69,7 @@ public class GetRelations extends AbstractAPIMethod {
 	protected static final List<String> relationOneWay;
 
 	static {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 		// dubbelriktade
 		twoWay(map, ContentHelper.IX_ISPARTOF, ContentHelper.IX_HASPART);
 		twoWay(map, ContentHelper.IX_CONTAINSOBJECT, ContentHelper.IX_ISCONTAINEDIN);
@@ -185,7 +185,6 @@ public class GetRelations extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !relationXlate.containsKey(relation)) {
@@ -227,12 +226,11 @@ public class GetRelations extends AbstractAPIMethod {
 		}
 		SearchService searchService = serviceProvider.getSearchService();
 		final String uri = URI_PREFIX + partialIdentifier;
-		Set<String> itemUris = new HashSet<String>();
+		Set<String> itemUris = new HashSet<>();
 		itemUris.add(uri);
 
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
-		SolrQuery query = new SolrQuery();
-		query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+
 
 		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
 		// algoritmen ser fn ut så här - inferSameAs styr steg 1, 2 och 4, default är att inte utföra dem
@@ -240,63 +238,44 @@ public class GetRelations extends AbstractAPIMethod {
 		// 3. sök fram källpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
 		// 4. hämta ev de relaterades sameAs och lägg till dessa som relationer
 
-		// hämta uri och relationer
-		query.addField(ContentHelper.I_IX_RELATIONS);
-		query.addField(ContentHelper.IX_ITEMID);
 		try {
 			QueryResponse qr;
 			SolrDocumentList docs;
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
 				// hämta andra poster som är samma som denna och lägg till dem som "källposter"
-				query.setFields(ContentHelper.IX_SAMEAS);
-				query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
-				qr = searchService.query(query);
-				docs = qr.getResults();
+				SolrQuery sameAsQuery = new SolrQuery();
+				sameAsQuery.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
 
+				sameAsQuery.setFields(ContentHelper.IX_SAMEAS);
+				sameAsQuery.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
+				qr = searchService.query(sameAsQuery);
+				docs = qr.getResults();
 
 
 				for (SolrDocument doc : docs) {
 					Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
 					if (sameAsIds != null) {
-						if(sameAsIds != null) {
-							for (Object sameAsId : sameAsIds) {
-								itemUris.add((String) sameAsId);
-							}
+						for (Object sameAsId : sameAsIds) {
+							itemUris.add((String) sameAsId);
 						}
 					}
 				}
 
-
-
-//				for (SolrDocument doc : docs) {
-//					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
-//					Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
-//					if (values != null) {
-//						for (Object value : values) {
-//							String parts[] = ((String) value).split("\\|");
-//							if (parts.length != 2) {
-//								logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
-//								continue;
-//							}
-//							String typePart = parts[0];
-//							String uriPart = parts[1];
-//							if (ContentHelper.IX_SAMEAS.equals(typePart)) {
-//								itemUris.add(uriPart);
-//							}
-//						}
-//					}
-//				}
-
 				// hämta andra poster som säger att de är samma som denna och lägg till dem som "källposter"
-				query.setFields(ContentHelper.IX_ITEMID);
-				query.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedUri);
-				qr = searchService.query(query);
+				sameAsQuery.setFields(ContentHelper.IX_ITEMID);
+				sameAsQuery.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedUri);
+				qr = searchService.query(sameAsQuery);
 				docs = qr.getResults();
 				for (SolrDocument doc : docs) {
 					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 					itemUris.add(itemId);
 				}
 			}
+			SolrQuery query = new SolrQuery();
+			query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+			// hämta uri och relationer
+			query.addField(ContentHelper.I_IX_RELATIONS);
+			query.addField(ContentHelper.IX_ITEMID);
 			// bygg söksträng mh källposten/alla källposter
 			StringBuilder searchStr = new StringBuilder();
 			for (String itemId: itemUris) {
@@ -308,18 +287,17 @@ public class GetRelations extends AbstractAPIMethod {
 			}
 			// sök fram källposten/-erna och alla som har relation till den/dem
 			query.setQuery(searchStr.toString());
-			query.setFields(null);
 
 			qr = searchService.query(query);
 			docs = qr.getResults();
-			relations = new HashSet<Relation>();
+			relations = new HashSet<>();
 			for (SolrDocument doc: docs) {
 				String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 				boolean isSourceDoc = itemUris.contains(itemId);
 				Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
 				if (values != null) {
 					for (Object value: values) {
-						String parts[] = ((String) value).split("\\|");
+						String[] parts = ((String) value).split("\\|");
 						if (parts.length != 2) {
 							logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
 							continue;
@@ -377,7 +355,7 @@ public class GetRelations extends AbstractAPIMethod {
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.targetsOnly) {
 				// sökning på same as för träffarnas uri:er och skapa relation till dessa också
 
-				for (Relation rel: new HashSet<Relation>(relations)) {
+				for (Relation rel: new HashSet<>(relations)) {
 					final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
 					query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
 					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ escapedTargetUri);

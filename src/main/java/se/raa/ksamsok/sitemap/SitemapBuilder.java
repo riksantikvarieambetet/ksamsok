@@ -84,7 +84,7 @@ public class SitemapBuilder
 	
 	private String getDate(Timestamp ts)
 	{
-		String date = null;
+		String date;
 		try {
 			date = sdf.format(ts);
 		}catch(Exception e) {

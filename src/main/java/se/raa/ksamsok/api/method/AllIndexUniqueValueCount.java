@@ -53,7 +53,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 	static {
 		// kopierat från LuceneServlet
-		Map<String, String> im = new HashMap<String, String>();
+		Map<String, String> im = new HashMap<>();
 		try {
 			String fileName = "/index.xml";
 			DataInputStream input = new DataInputStream(ContentHelper.class.getResourceAsStream(fileName));
@@ -84,7 +84,6 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		queryString = getQueryString(params.get(QUERY_PARAMS));
 		String indexString = params.get(INDEX_PARAMETER);
 		if (indexString != null) {
@@ -120,9 +119,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 			throw new DiagnosticException("Oväntat IO fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
 		} catch (SolrServerException e) {
 			throw new DiagnosticException("Oväntat fel uppstod", "AllIndexUniqueValueCount.performMethod", e.getMessage(), true);
-		} catch (CQLParseException e) {
-			throw new DiagnosticException("Oväntat parserfel uppstod. Detta beror troligen på att CQL syntax ej följs. Var god kontrollera query sträng eller kontakta systemadministratör för söksystemet du använder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
-		} catch (BadParameterException e) {
+		} catch (CQLParseException | BadParameterException e) {
 			throw new DiagnosticException("Oväntat parserfel uppstod. Detta beror troligen på att CQL syntax ej följs. Var god kontrollera query sträng eller kontakta systemadministratör för söksystemet du använder", "AllIndexUniqueValueCount.performMethod", e.getMessage(),	true);
 		}
 	} 

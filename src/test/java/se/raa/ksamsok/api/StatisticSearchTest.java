@@ -19,7 +19,7 @@ public class StatisticSearchTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "statisticSearch");
 		reqParams.put("index", "serviceOrganization=*");
 		reqParams.put("query","itemLabel>talk and itemLabel<talm");

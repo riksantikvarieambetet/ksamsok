@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rdf:RDF xmlns:ns5="http://kulturarvsdata.se/ksamsok#" xmlns:ns6="http://xmlns.com/foaf/0.1/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:geoF="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#" xmlns:crm="http://www.cidoc-crm.org/rdfs/cidoc-crm#">
+         xmlns:geoF="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#">
     <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
     <ns5:buildDate>2010-01-22</ns5:buildDate>
     <ns5:createdDate>2006-01-01</ns5:createdDate>
@@ -8,7 +8,6 @@
     <ns5:itemKeyWord>Hjälm</ns5:itemKeyWord>
     <ns5:itemTitle>Gustav Vasas hjälm</ns5:itemTitle>
     <ns5:itemLabel>Hjälm</ns5:itemLabel>
-    <ns5:itemSuperType rdf:resource="http://kulturarvsdata.se/resurser/EntitySuperType#object"/>
     <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#object"/>
     <ns5:itemClass>http://raa.se/test/itemClass#test</ns5:itemClass>
     <ns5:itemClassName>Test</ns5:itemClassName>
@@ -18,7 +17,7 @@
     <ns5:itemStyle>tuff</ns5:itemStyle>
     <ns5:itemColor>metall</ns5:itemColor>
     <ns5:itemLicense>http://kulturarvsdata.se/resurser/license#public</ns5:itemLicense>
-    <ns5:ksamsokVersion>1.1</ns5:ksamsokVersion>
+    <ns5:ksamsokVersion>0.97</ns5:ksamsokVersion>
     <ns5:lastChangedDate>2009-03-06</ns5:lastChangedDate>
     <ns5:mediaType>text/html</ns5:mediaType>
         <ns5:presentation xmlns:pres="http://kulturarvsdata.se/presentation#" rdf:parseType="Literal"><pres:item><pres:id>2</pres:id><pres:entityUri>http://kulturarvsdata.se/raa/niklas/2</pres:entityUri><pres:dataQuality>Bearbetad</pres:dataQuality><pres:type>Föremål</pres:type><pres:idLabel>Gustav Vasas hjälm</pres:idLabel><pres:itemLabel>Hjälm</pres:itemLabel><pres:description>Text som beskriver Gustav Vasas hjälm</pres:description><pres:context><pres:nameLabel>Gustav Vasas hjälm</pres:nameLabel></pres:context><pres:representations><pres:representation format="RDF">http://kulturarvsdata.se/raa/niklas/2</pres:representation><pres:representation format="Presentation">http://kulturarvsdata.se/raa/niklas/xml/2</pres:representation><pres:representation format="HTML">http://www.livrustkammaren.se/default.asp?id=4916&amp;ptid=&amp;refid=4984&amp;filename=&amp;xmlfilename=</pres:representation></pres:representations><pres:organization>Riksantikvarieämbetet</pres:organization><pres:organizationShort>RAÄ</pres:organizationShort><pres:service>Niklas Test</pres:service><pres:version>0.97</pres:version><pres:buildDate>1/22/10 2:55 PM</pres:buildDate></pres:item></ns5:presentation>
@@ -46,7 +45,6 @@
 	<ns5:isVisualizedBy rdf:resource="http://kulturarvsdata.se/raa/test/16"/>
 	<owl:sameAs rdf:resource="http://kulturarvsdata.se/raa/test/17"/>
 	<ns5:visualizes rdf:resource="http://kulturarvsdata.se/raa/test/18"/>
-	<ns5:isMentionedBy rdf:resource="http://kulturarvsdata.se/raa/test/23" />
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_0">
@@ -60,20 +58,17 @@
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemDescription"/>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_2">
-    <ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#create"/>
-    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#produce"/>
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#create"/>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
-    <ns5:coordinates xmlns:gml="http://www.opengis.net/gml" rdf:parseType="Literal"><gml:Point srsName="SDO:4326"><gml:coordinates cs="," decimal="." ts=" ">18.072394042188,59.3270266104628</gml:coordinates></gml:Point></ns5:coordinates>
+    <ns5:coordinates xmlns:gml="http://www.opengis.net/gml" rdf:parseType="Literal"><gml:Point srsName="EPSG:4326"><gml:coordinates cs="," decimal="." ts=" ">18.072394042188,59.3270266104628</gml:coordinates></gml:Point></ns5:coordinates>
     <ns5:fromTime>1540</ns5:fromTime>
     <ns5:toTime>1541</ns5:toTime>
     <ns5:eventName>Hjälmhamrande</ns5:eventName>
     <ns5:eventAuth>Hjälmhamrarförbundet</ns5:eventAuth>
     <ns6:title>Smed</ns6:title>
     <ns6:name>Kunz Lochner</ns6:name>
-    <ns5:client rdf:resource="http://kulturarvsdata.se/raa/test/24"/>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_3">
-	<ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#interact"/>
     <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#use"/>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
     <ns5:placeName>Stockholm</ns5:placeName>
@@ -106,10 +101,6 @@
     <ns5:toPeriodId>5678</ns5:toPeriodId>
     <ns5:periodAuth>Tidsoptimisterna</ns5:periodAuth>
     <ns6:name>Gustav Vasa</ns6:name>
-    <crm:P49F.has_former_or_current_keeper rdf:resource="http://kulturarvsdata.se/raa/test/19" />
-    <crm:P51F.has_former_or_current_owner rdf:resource="http://kulturarvsdata.se/raa/test/20" />
-    <crm:P94B.was_created_by rdf:resource="http://kulturarvsdata.se/raa/test/21" />
-    <crm:P105F.right_held_by rdf:resource="http://kulturarvsdata.se/raa/test/22" />
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_4">
     <ns5:spec>Huvudsak</ns5:spec>
@@ -132,9 +123,10 @@
 	<ns5:lowresSource>http://localhost/lowres.jpg</ns5:lowresSource>
 	<ns5:mediaMotiveWord>Stockholms slott</ns5:mediaMotiveWord>
 	<ns5:mediaType>image/jpeg</ns5:mediaType>
+    <!-- Ska generera fel då den inte har mediaLicense
 	<ns5:mediaLicense>http://kulturarvsdata.se/resurser/License#test</ns5:mediaLicense>
+	-->
 	<ns5:thumbnailSource>http://localhost/thumbnail.jpg</ns5:thumbnailSource>
-    <ns5:highresSource>http://localhost/highres.jpg</ns5:highresSource>
 	<rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Image" />
 </rdf:Description>
 <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
@@ -147,5 +139,4 @@
     <ns5:itemNumber rdf:nodeID="bNode_6"/>
     <ns5:image rdf:nodeID="bNode_7"/>
 </rdf:Description>
-
 </rdf:RDF>

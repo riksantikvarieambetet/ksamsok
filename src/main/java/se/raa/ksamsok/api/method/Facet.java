@@ -44,7 +44,7 @@ public class Facet extends StatisticSearch {
 		super(serviceProvider, out, params); 
 	}
 
-	protected Map<String, String> extractIndexMap() throws MissingParameterException, BadParameterException {
+	protected Map<String, String> extractIndexMap() throws MissingParameterException {
 		return getIndexMapSingleValue(params.get(INDEX_PARAMETER), "*");
 	}
 
@@ -65,7 +65,7 @@ public class Facet extends StatisticSearch {
 			QueryResponse qr = serviceProvider.getSearchService().query(query);
 			List<FacetField> facetFields = qr.getFacetFields();
 			if (facetFields != null && facetFields.size() > 0) {
-				queryResults = new LinkedList<QueryContent>();
+				queryResults = new LinkedList<>();
 				for (FacetField ff: facetFields) {
 					List<Count> facetValues = ff.getValues();
 				
@@ -79,14 +79,12 @@ public class Facet extends StatisticSearch {
 					}
 				}
 			}
-		} catch (CQLParseException e) {
+		} catch (CQLParseException | BadParameterException e) {
 			throw new DiagnosticException("Oväntat parserfel uppstod - detta beror troligen på att query strängen inte följer CQL syntax. Var god kontrollera query-strängen eller kontakta systemadministratören för systemet du använder dig av.", "Facet.performMethod", null, false);
 		} catch (IOException e) {
 			throw new DiagnosticException("Oväntat IO-fel, var god försök igen", "Facet.performMethod", e.getMessage(), true); 
 		} catch (SolrServerException e) {
 			throw new DiagnosticException("Oväntat sök-fel, var god försök igen", "Facet.performMethod", e.getMessage(), true);
-		} catch (BadParameterException e) {
-			throw new DiagnosticException("Oväntat parserfel uppstod - detta beror troligen på att query strängen inte följer CQL syntax. Var god kontrollera query-strängen eller kontakta systemadministratören för systemet du använder dig av.", "Facet.performMethod", null, false);
 		}
 	}
 	@Override

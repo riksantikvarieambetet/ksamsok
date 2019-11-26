@@ -58,12 +58,14 @@ public class SamsokProtocolHandler_1_11 extends SamsokProtocolHandler_1_1
 	protected void extractMediaNodeInformation(Resource cS) throws Exception {
 		// samma som image-noder i protokoll < 1.11
 		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
-		extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip);
+		if (extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip) == null) {
+			throw new Exception("Missing mediaLicense for identifier " + subject.toString());
+		};
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
 		extractValue(model, cS, getURIRef(uri_rMediaMotiveWord), null, ip);
 		extractMediaAndImageNodeInformation(cS);
 	}
-	
+
 	/**
 	 * Extraherar och indexerar information ur en bildnod.
 	 * Överlagra i subklasser vid behov.

@@ -10,7 +10,7 @@ public class RSSTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "rss");
 		reqParams.put("query","item=yxa");
 		reqParams.put("place","gotland");
@@ -18,8 +18,6 @@ public class RSSTest extends AbstractBaseTest {
 		reqParams.put("hitsPerPage","25");
 		reqParams.put("sort","itemName");
 		reqParams.put("sortConfig","asc");
-		// Setting pretty print will make the junit test fail because /n will be extra nodes in the DOM
-		//reqParams.put("prettyPrint","true");
 	}
 
 	//TODO: Kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende

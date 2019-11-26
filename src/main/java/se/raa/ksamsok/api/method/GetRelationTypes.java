@@ -45,7 +45,6 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		relation = getMandatoryParameterValue(RELATION_PARAMETER, "GetRelations.extractParameters", null);
 		isAll = RELATION_ALL.equals(relation);
 		if (!isAll && !GetRelations.relationXlate.containsKey(relation)) {
@@ -55,7 +54,7 @@ public class GetRelationTypes extends AbstractAPIMethod {
 	}
 
 	@Override
-	protected void performMethodLogic() throws DiagnosticException {
+	protected void performMethodLogic() {
 		if (isAll) {
 			relationTypes = GetRelations.relationXlate;
 		} else {

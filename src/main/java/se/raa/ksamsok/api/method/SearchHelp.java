@@ -59,7 +59,6 @@ public class SearchHelp extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		super.extractParameters();
 		indexList = getIndexList(params.get(INDEX_PARAMETER));
 		prefix = getPrefix(params.get(PREFIX_PARAMETER));
 		maxValueCount = getMaxValueCount(params.get(MAX_VALUE_COUNT_PARAMETER));
@@ -72,7 +71,7 @@ public class SearchHelp extends AbstractAPIMethod {
 			for (String index : indexList) {
 				index = CQL2Solr.translateIndexName(index);
 				if (ContentHelper.isToLowerCaseIndex(index) || ContentHelper.isAnalyzedIndex(index)) {
-					prefix = prefix != null ? prefix.toLowerCase() : prefix;
+					prefix = prefix != null ? prefix.toLowerCase() : null;
 				}
 				termList = serviceProvider.getSearchService().terms(index, prefix, 0, maxValueCount);
 			}
@@ -132,7 +131,7 @@ public class SearchHelp extends AbstractAPIMethod {
 	 * @throws MissingParameterException
 	 */
 	public List<String> getIndexList(String indexString)  throws MissingParameterException {
-		List<String> indexList = new ArrayList<String>();
+		List<String> indexList = new ArrayList<>();
 		if (indexString == null || indexString.trim().length() < 1) {
 			throw new MissingParameterException("parametern index saknas eller är tom", "APIMethodFactory.getIndexList", null, false);
 		}
@@ -164,7 +163,7 @@ public class SearchHelp extends AbstractAPIMethod {
 	 * @throws BadParameterException
 	 */
 	public int getMaxValueCount(String maxValueCountString) throws BadParameterException {
-		int maxValueCount = 0;
+		int maxValueCount;
 		if (maxValueCountString == null) {
 			maxValueCount = DEFAULT_MAX_VALUE_COUNT;
 		} else {

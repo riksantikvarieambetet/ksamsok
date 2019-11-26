@@ -6,8 +6,6 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.common.SolrInputDocument;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokContentHelper;
-import se.raa.ksamsok.spatial.GMLDBWriter;
-import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.sql.DataSource;
 import javax.xml.parsers.SAXParser;
@@ -183,7 +181,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				// TODO: man skulle kunna strömma allt i en enda request, men jag tror inte man
 				//       skulle tjäna så mycket på det
 				//       se http://wiki.apache.org/solr/Solrj#Streaming_documents_for_an_update
-				List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>(solrBatchSize);
+				List<SolrInputDocument> docs = new ArrayList<>(solrBatchSize);
 				while (rs.next()) {
 					//oaiURI = rs.getString("oaiuri");
 					if (ts != null) {
@@ -318,17 +316,21 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 		String serviceId = null;
 		synchronized (SYNC) { // en i taget som får köra index-write
 			try {
+				Timestamp ts = new Timestamp(new Date().getTime());
 				serviceId = service.getId();
 				c = ds.getConnection();
-				// rensa först allt vanligt innehåll
-				pst = c.prepareStatement("delete from content where serviceId = ?");
-				pst.setString(1, serviceId);
-				pst.executeUpdate();
-				// och rensa ev spatial-data för tjänsten
-				GMLDBWriter gmlDBWriter = GMLUtil.getGMLDBWriter(service.getId(), c);
-				if (gmlDBWriter != null) {
-					gmlDBWriter.deleteAllForService();
-				}
+				// rensa först allt vanligt innehåll, ta bara bort data, inte själva raderna
+
+				// behåll deleted om värdet finns, även för datestamp tas värdet från deleted
+				pst = c.prepareStatement("update content set changed = ?, deleted = coalesce(deleted, ?), " +
+						"datestamp = coalesce(deleted, ?), status = ?, xmldata = null where serviceid = ?");
+				pst.setTimestamp(1, ts);
+				pst.setTimestamp(2, ts);
+				pst.setTimestamp(3, ts);
+				pst.setInt(4, DBUtil.STATUS_NORMAL);
+				pst.setString(5, serviceId);
+				pst.execute();
+
 				solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
 				// commit först för db då den är troligast att den smäller och sen solr
 				DBUtil.commit(c);
@@ -349,6 +351,31 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				DBUtil.closeDBResources(null, pst, c);
 			}
 		}
+	}
+
+	@Override
+	public boolean existsInDatabase(String uri) throws Exception {
+		boolean existsInDatabase = false;
+		String xmlContent = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			c = ds.getConnection();
+			pst = c.prepareStatement("select * from content where uri = ?");
+			pst.setString(1, uri);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				existsInDatabase = true;
+			}
+		} catch (Exception e) {
+			logger.error("Error when checking whether uri " + uri + " exists in database", e);
+			logger.error(e.getMessage());
+			throw e;
+		} finally {
+			DBUtil.closeDBResources(rs, pst, c);
+		}
+		return existsInDatabase;
 	}
 
 	@Override
@@ -422,12 +449,12 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	@Override
 	public Map<String, Integer> getCounts() throws Exception {
-		Map<String, Integer> countMap = new HashMap<String, Integer>();
+		Map<String, Integer> countMap = new HashMap<>();
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		String serviceId = null;
-		int count = 0;
+		int count;
 		try {
 			c = ds.getConnection();
 			// ora: lite special istället för group by för att få db-index att vara med och slippa full table scan...
@@ -529,10 +556,10 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			Date nowDate = new Date();
 			ss.setWarningTextAndLog(service, "Note! Problem(s) when " + operation, nowDate);
 			logger.warn(service.getId() + ", got following problem(s) when " + operation + ": ");
-			for (String uri: problemMessages.keySet()) {
-				ss.setWarningTextAndLog(service, uri + " - " + problemMessages.get(uri) + " times", nowDate);
-				logger.warn("  " + uri + " - " + problemMessages.get(uri) + " times");
-			}
+			problemMessages.forEach((uri, message) -> {
+				ss.setWarningTextAndLog(service, uri + " - " + message + " times", nowDate);
+				logger.warn("  " + uri + " - " + message + " times");
+			});
 		}
 	}
 

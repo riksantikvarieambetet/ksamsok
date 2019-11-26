@@ -30,19 +30,7 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
 
-    <!-- resten laddas vid användning -->
-    <servlet>
-        <servlet-name>APIKey</servlet-name>
-        <servlet-class>se.raa.ksamsok.apikey.APIKeyServlet</servlet-class>
-    </servlet>
-    
-    
-    <servlet>
-        <servlet-name>Manipulator</servlet-name>
-        <servlet-class>se.raa.ksamsok.manipulator.ManipulatorServlet</servlet-class>
-    </servlet>
-    
-    
+
     <servlet>
         <servlet-name>sitemap</servlet-name>
         <servlet-class>se.raa.ksamsok.sitemap.SitemapServlet</servlet-class>
@@ -52,12 +40,8 @@
         <servlet-name>externalOrgAdmin</servlet-name>
         <servlet-class>se.raa.ksamsok.organization.ExternalOrganizationServlet</servlet-class>
     </servlet>
-    
-    <servlet>
-        <servlet-name>statistic</servlet-name>
-        <servlet-class>se.raa.ksamsok.statistic.StatisticServlet</servlet-class>
-    </servlet>
-    
+
+
     <!--
         Denna servlet hanterar uppslagning av poster i olika format om request-sökvägen
         (pathInfo) matchar [/resurser]/*/*/*[/*]. Övriga requests skickas vidare till
@@ -80,15 +64,6 @@
         <url-pattern>/api</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>APIKey</servlet-name>
-        <url-pattern>/admin/apiKeyAdmin</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>Manipulator</servlet-name>
-        <url-pattern>/admin/manipulate</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>sitemap</servlet-name>
@@ -100,11 +75,7 @@
         <url-pattern>/userAdmin/orgAdmin</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>statistic</servlet-name>
-        <url-pattern>/admin/statistic</url-pattern>
-    </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>orgAdmin</servlet-name>
         <url-pattern>/admin/orgAdmin</url-pattern>

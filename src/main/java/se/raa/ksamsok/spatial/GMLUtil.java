@@ -19,9 +19,6 @@ import org.xml.sax.ContentHandler;
 
 import javax.vecmath.Point2d;
 import java.io.StringReader;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.sql.Connection;
 
 /**
  * Klass med metoder för att jobba med GML, koordinater och koordinatsystem.
@@ -31,11 +28,6 @@ import java.sql.Connection;
 public class GMLUtil {
 
 	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.spatial.GMLUtil");
-
-	// klassnamn för databasspecifik GML-hanterare
-	private static String gmlDBWriterClassName;
-	// flagga som anger om man har försökt sätta klassnamnsvariabeln
-	private static boolean gmlDBWriterClassNameSet = false;
 
 	static {
 		// OBS! denna är väldigt viktig - det blir fel annars - i alla fall om srsName är på formen EPSG:4326
@@ -126,7 +118,7 @@ public class GMLUtil {
 		if (coords.length % 2 != 0) {
 			throw new Exception("Felaktig koordinatlista - ojämnt antal koordinater");
 		}
-		double result[] = new double[coords.length];
+		double[] result = new double[coords.length];
 		CoordinateReferenceSystem sourceCRS = CRS.decode(fromCRS);
 		CoordinateReferenceSystem targetCRS = CRS.decode(toCRS);
 		for (int i = 0; i < coords.length; i+=2) {
@@ -136,94 +128,6 @@ public class GMLUtil {
 			result[i + 1] = p.getY();
 		}
 		return result;
-	}
-
-	/**
-	 * Hämtar (ev) en ny instans av en databas-specifik klass för att hantera geometrier.
-	 * Databasuppkopplingen används för att försöka härleda fram en klass.
-	 * För närvarande stöds bara Postgres, se {@linkplain PostgresGMLDBWriter},
-	 * och för övriga kommer anropet ge null.<br/>
-	 * Beteendet ovan kan åsidosättas genom att explicit sätta ett klassnamn
-	 * via -Dsamsok.spatial.class=x.y.Z (klassen måste implementera GMLDBWriter och ha
-	 * en publik default-konstruktor).<br/>
-	 * Om man ej vill använda det spatiala stödet alls kan man stänga av det genom att
-	 * sätta flaggan -Dsamsok.spatial=false.
-	 * Den hämtade instansen initieras också (med init()) och innan den släpps till gc måste
-	 * destroy() anropas för att släppa hållna resurser.
-	 * 
-	 * @param serviceId tjänst
-	 * @param c databasuppkoppling
-	 * @return en för aktuell databas (eller konf) lämplig hanterare av geometrier, eller null 
-	 */
-	public static GMLDBWriter getGMLDBWriter(String serviceId, Connection c) {
-		GMLDBWriter gmlDbWriter = null;
-		// kolla om vi ska skriva i spatialtabeller, default är sant
-		if (Boolean.parseBoolean(System.getProperty("samsok.spatial", "true"))) {
-			// hämta klassnamnet och instantiera och initera en writer
-			String className = getGMLDBWriterClassName(c);
-			if (className != null) {
-				try {
-					gmlDbWriter = (GMLDBWriter) Class.forName(className).newInstance();
-				} catch (Throwable t) {
-					logger.error("Misslyckades att skapa ny instans av GMLDBWriter (" +
-							className + ")", t);
-				}
-				if (gmlDbWriter != null) {
-					try {
-						gmlDbWriter.init(serviceId, c);
-					} catch (Throwable t) {
-						logger.error("Misslyckades att initiera instans av GMLDBWriter (" +
-								className + ")", t);
-						gmlDbWriter.destroy();
-						gmlDbWriter = null;
-					}
-				}
-			}
-		}
-		return gmlDbWriter;
-	}
-
-	// hämtar cachat klassnamn, eller försöker ta reda på ett bra klassnamn och cacha upp det
-	private static String getGMLDBWriterClassName(Connection c) {
-		// hit ska vi bara komma om vi ska spara data i spatialtabeller
-		// TODO: synkronisera kanske?
-		if (!gmlDBWriterClassNameSet) {
-			gmlDBWriterClassName = System.getProperty("samsok.spatial.class");
-			// om det inte är satt som en systemproperty försök lista ut från uppkopplingen
-			if (gmlDBWriterClassName == null) {
-				String extractedClassName = c.getClass().getName();
-				// om det är en dbcp delegate, testa att ta fram den aktuella klassen
-				if (extractedClassName.indexOf("dbcp") > 0) {
-					try {
-						Class<?> classToAnalyze = c.getClass();
-						while (classToAnalyze != null && !Modifier.isPublic(classToAnalyze.getModifiers())) {
-							classToAnalyze = classToAnalyze.getSuperclass();
-						}
-						if (classToAnalyze != null) {
-							Method getInnermostDelegate = classToAnalyze.getMethod("getInnermostDelegate", (Class[]) null);
-							Object id = getInnermostDelegate.invoke(c, (Object[]) null);
-							if (id == null) {
-								// fallback genom ett litet trick om metodanrop ger null
-								// TODO: detta är egentligen allt som behövs för att få ett
-								//       bra klassnamn att kolla
-								id = c.getMetaData().getConnection();
-							}
-							extractedClassName = id.getClass().getName();
-						}
-					} catch (Exception e) {
-						logger.error("Fel vid kontroll av innermost delegate för en dbcp connection", e);
-					}
-				}
-				if (extractedClassName.toLowerCase().contains("postgres")) {
-					gmlDBWriterClassName = "se.raa.ksamsok.spatial.PostgresGMLDBWriter";
-				} else {
-					logger.info("Ingen spatial-kapabel (och känd) databas används(?), " +
-							"connection-klass tolkades som " + extractedClassName);
-				}
-			}
-			gmlDBWriterClassNameSet = true;
-		}
-		return gmlDBWriterClassName;
 	}
 
 	// transformera geometri från ett koordinatsystem till ett annat

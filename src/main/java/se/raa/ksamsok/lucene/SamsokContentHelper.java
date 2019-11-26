@@ -1,9 +1,7 @@
 package se.raa.ksamsok.lucene;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Selector;
@@ -19,7 +17,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.spatial.GMLInfoHolder;
 import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.vecmath.Point2d;
@@ -36,6 +33,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -57,7 +55,7 @@ public class SamsokContentHelper extends ContentHelper {
 
 	@Override
 	public SolrInputDocument createSolrDocument(HarvestService service,
-			String xmlContent, Date added) throws Exception {
+			String xmlContent, Date added) {
 		Model model = null;
 		String identifier = null;
 		SolrInputDocument luceneDoc = null;
@@ -76,7 +74,7 @@ public class SamsokContentHelper extends ContentHelper {
 			Property rProtocolVersion = ResourceFactory.createProperty(SamsokProtocol.uri_rKsamsokVersion.toString());
 
 			Resource subject = null;
-			Selector selector = new SimpleSelector((Resource) null, rdfType, samsokEntity);
+			Selector selector = new SimpleSelector(null, rdfType, samsokEntity);
 			StmtIterator iter = model.listStatements(selector);
 			while (iter.hasNext()){
 				if (subject != null) {
@@ -102,8 +100,8 @@ public class SamsokContentHelper extends ContentHelper {
 				throw new Exception("Hittade ingen protokollversion i rdf-grafen");
 			}
 
-			LinkedList<String> gmlGeometries = new LinkedList<String>();
-			LinkedList<String> relations = new LinkedList<String>();
+			LinkedList<String> gmlGeometries = new LinkedList<>();
+			LinkedList<String> relations = new LinkedList<>();
 			SamsokProtocolHandler sph = getProtocolHandlerForVersion(protocolVersion, model, subject);
 			luceneDoc = sph.handle(service, added, relations, gmlGeometries);
 
@@ -167,12 +165,12 @@ public class SamsokContentHelper extends ContentHelper {
 				// serialisera som ett xml-fragment, dvs utan xml-deklaration
 				pres = serializeDocumentAsFragment(doc);
 				// lagra binärt, kodat i UTF-8
-				byte[] presBytes = pres.getBytes("UTF-8");
+				byte[] presBytes = pres.getBytes(StandardCharsets.UTF_8);
 				luceneDoc.addField(I_IX_PRES, Base64.byteArrayToBase64(presBytes, 0, presBytes.length));
 			}
 
 			// lagra rdf:en 
-			byte[] rdfBytes = xmlContent.getBytes("UTF-8");
+			byte[] rdfBytes = xmlContent.getBytes(StandardCharsets.UTF_8);
 			luceneDoc.addField(I_IX_RDF, Base64.byteArrayToBase64(rdfBytes, 0, rdfBytes.length));
 
 		} catch (Exception e) {
@@ -190,7 +188,7 @@ public class SamsokContentHelper extends ContentHelper {
 	private SamsokProtocolHandler getProtocolHandlerForVersion(String protocolVersion,
 			Model model, Resource subject)  throws Exception {
 		Double protocol;
-		SamsokProtocolHandler handler = null;
+		SamsokProtocolHandler handler;
 		try {
 			protocol = Double.parseDouble(protocolVersion);
 		} catch (Exception e) {
@@ -212,8 +210,7 @@ public class SamsokContentHelper extends ContentHelper {
 	}
 
 	@Override
-	public ExtractedInfo extractInfo(String xmlContent,
-			GMLInfoHolder gmlInfoHolder) throws Exception {
+	public ExtractedInfo extractInfo(String xmlContent) throws Exception {
 		String identifier = null;
 		String htmlURL = null;
 		Model model = null;
@@ -224,8 +221,8 @@ public class SamsokContentHelper extends ContentHelper {
 			Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 			Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
 			Property rURL = ResourceFactory.createProperty(SamsokProtocol.uri_rURL.toString());
-			Resource subject = null;
-			Selector selector = new SimpleSelector((Resource) null, rdfType, samsokEntity);
+			Resource subject;
+			Selector selector = new SimpleSelector(null, rdfType, samsokEntity);
 			StmtIterator iter = model.listStatements(selector);
 			while (iter.hasNext()){
 				if (identifier != null) {
@@ -243,65 +240,7 @@ public class SamsokContentHelper extends ContentHelper {
 			}
 			info.setIdentifier(identifier);
 			info.setNativeURL(htmlURL);
-			if (gmlInfoHolder != null) {
-				try {
-					// sätt identifier först då den används för deletes etc även om det går
-					// fel nedan
-					gmlInfoHolder.setIdentifier(identifier);
-					Property rCoordinates = ResourceFactory.createProperty(SamsokProtocol.uri_rCoordinates.toString());
-					Property rContext = ResourceFactory.createProperty(SamsokProtocol.uri_rContext.toString());
-					// hämta ev gml från kontext-noder
-					LinkedList<String> gmlGeometries = new LinkedList<String>();
-					selector = new SimpleSelector(subject, rContext, (RDFNode) null);
-					iter = model.listStatements(selector);
-					while (iter.hasNext()){
-						Statement s = iter.next();
-						if (s.getObject().isResource()){
-							Resource cS = s.getObject().asResource();
-							String gml = RDFUtil.extractSingleValue(model, cS, rCoordinates, null);
-							if (gml != null && gml.length() > 0) {
-								// vi konverterar till SWEREF 99 TM då det är vårt standardformat
-								// dessutom fungerar konverteringen som en kontroll av om gml:en är ok
-								gml = GMLUtil.convertTo(gml, GMLUtil.CRS_SWEREF99_TM_3006);
-								gmlGeometries.add(gml);
-							}
-						}
-					}
-					gmlInfoHolder.setGmlGeometries(gmlGeometries);
-					// itemTitle kan vara 0M så om den saknas försöker vi ta itemName och
-					// om den saknas, itemType
-					Property rItemTitle = ResourceFactory.createProperty(SamsokProtocol.uri_rItemTitle.toString());
-					String name = StringUtils.trimToNull(RDFUtil.extractValue(model, subject, rItemTitle, null, null));
-					if (name == null) {
-						Property rItemName = ResourceFactory.createProperty(SamsokProtocol.uri_rItemName.toString());
-						name = StringUtils.trimToNull(RDFUtil.extractValue(model, subject, rItemName, null, null));
-						if (name == null) {
-							Property rItemType = ResourceFactory.createProperty(SamsokProtocol.uri_rItemType.toString());
-							String typeUri = RDFUtil.extractSingleValue(model, subject, rItemType, null);
-							if (typeUri != null) {
-								Property rProtocolVersion = ResourceFactory.createProperty(SamsokProtocol.uri_rKsamsokVersion.toString());
-								String protocolVersion = RDFUtil.extractSingleValue(model, subject, rProtocolVersion, null);
-								if (protocolVersion == null) {
-									logger.error("Hittade ingen protokollversion i rdf-grafen:\n" + model);
-									throw new Exception("Hittade ingen protokollversion i rdf-grafen");
-								}
-								SamsokProtocolHandler handler = getProtocolHandlerForVersion(protocolVersion, model, subject);
-								name = handler.lookupURIValue(typeUri);
-								//name = uriValues.get(typeUri);
-							}
-						}
-					}
-					if (name == null) {
-						name = "Okänt objekt";
-					}
-					gmlInfoHolder.setName(name);
-				} catch (Exception e) {
-					//logger.error("Fel vid gmlhantering för " + identifier, e);
-					// rensa mängd med geometrier
-					gmlInfoHolder.setGmlGeometries(null);
-					addProblemMessage("Problem with GML for " + identifier + ": " + e.getMessage());
-				}
-			}
+
 		} finally {
 			if (model != null) {
 				model.close();

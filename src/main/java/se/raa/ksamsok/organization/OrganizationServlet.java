@@ -77,7 +77,7 @@ public class OrganizationServlet extends HttpServlet {
 					break;
 				}
 				case "updatePasswords":
-					Map<String, String> passwordMap = new HashMap<String, String>();
+					Map<String, String> passwordMap = new HashMap<>();
 					String[] passwords = req.getParameterValues("passwords");
 					String[] organizations = req.getParameterValues("organizations");
 					for (int i = 0; i < organizations.length; i++) {
@@ -85,6 +85,8 @@ public class OrganizationServlet extends HttpServlet {
 					}
 					organizationManager.setPassword(passwordMap);
 					break;
+				default:
+					logger.warn("Unexpected operation " + operation + " in doPost");
 			}
 		}
 		req.setAttribute("orgList", organizationManager.getServiceOrganizations());
@@ -120,7 +122,7 @@ public class OrganizationServlet extends HttpServlet {
 		o.setLowressUrl(req.getParameter("lowressUrl"));
 		o.setThumbnailUrl(req.getParameter("thumbnailUrl"));
 		Map<String,String[]> params = req.getParameterMap();
-		List<Service> serviceList = new Vector<Service>();
+		List<Service> serviceList = new Vector<>();
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			if (StringUtils.startsWith(entry.getKey(), "service") && !StringUtils.endsWith(entry.getKey(), "name")) {
 				Service s = new Service();
