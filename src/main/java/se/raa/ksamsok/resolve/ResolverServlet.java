@@ -51,6 +51,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -82,7 +83,7 @@ public class ResolverServlet extends HttpServlet {
 
 		String format;
 
-		private static final HashMap<String, Format> lookupTable = new HashMap<String, Format>();
+		private static final HashMap<String, Format> lookupTable = new HashMap<>();
 
 		// populate lookup table
 		static {
@@ -231,21 +232,17 @@ public class ResolverServlet extends HttpServlet {
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[2];
 		}
 		switch (format) {
-			case HTML:
-				resp.setContentType("text/html; charset=UTF-8");
-				break;
 			case JSON_LD:
 				resp.setContentType("application/json; charset=UTF-8");
 				break;
 			case MUSEUMDAT:
+			case XML:
 				resp.setContentType("application/xml; charset=UTF-8");
 				break;
 			case RDF:
 				resp.setContentType("application/rdf+xml; charset=UTF-8");
 				break;
-			case XML:
-				resp.setContentType("application/xml; charset=UTF-8");
-				break;
+			case HTML:
 			default:
 				resp.setContentType("text/html; charset=UTF-8");
 				break;
@@ -278,11 +275,12 @@ public class ResolverServlet extends HttpServlet {
 		SolrQuery q = new SolrQuery();
 
 		final String escapedUrli = ClientUtils.escapeQueryChars(urli);
-		StringBuilder sb = new StringBuilder(ContentHelper.IX_ITEMID).append(":").append(escapedUrli);
 
-		// we have to append a special case to also fetch any posts that have the id in a "replaces"-tag
-		sb.append(" OR ").append(ContentHelper.IX_REPLACES).append(":").append(escapedUrli);
-		q.setQuery(sb.toString());
+		String sb = ContentHelper.IX_ITEMID + ":" + escapedUrli +
+
+				// we have to append a special case to also fetch any posts that have the id in a "replaces"-tag
+				" OR " + ContentHelper.IX_REPLACES + ":" + escapedUrli;
+		q.setQuery(sb);
 		q.setRows(1);
 
 		// vi måste alltid ha rdf för att kunna kolla replaces
@@ -320,14 +318,14 @@ public class ResolverServlet extends HttpServlet {
 			// vi måste alltid hämta ut rdf:en för att kolla replaces
 			xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
 			if (xmlContent != null) {
-				stringResponse = new String(xmlContent, "UTF-8");
+				stringResponse = new String(xmlContent, StandardCharsets.UTF_8);
 			} else {
 				stringResponse = hrm.getXMLData(urli);
 			}
 
 			if (stringResponse != null) {
 				Model m = ModelFactory.createDefaultModel();
-				m.read(new ByteArrayInputStream(stringResponse.getBytes("UTF-8")), "UTF-8");
+				m.read(new ByteArrayInputStream(stringResponse.getBytes(StandardCharsets.UTF_8)), "UTF-8");
 				final ResIterator resIterator = m.listSubjects();
 
 				while (resIterator.hasNext()) {
@@ -345,7 +343,7 @@ public class ResolverServlet extends HttpServlet {
 									// put it back in there
 									final String formatString = format.getFormat();
 									int formatEntyIndex = replaceUri.lastIndexOf("/") + 1;
-									StringBuffer tmpBuf = new StringBuffer(replaceUri);
+									StringBuilder tmpBuf = new StringBuilder(replaceUri);
 
 									tmpBuf.insert(formatEntyIndex, formatString + "/");
 									replaceUri = tmpBuf.toString();
@@ -368,7 +366,7 @@ public class ResolverServlet extends HttpServlet {
 				case XML:
 					xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_PRES);
 					if (xmlContent != null) {
-						stringResponse = new String(xmlContent, "UTF-8");
+						stringResponse = new String(xmlContent, StandardCharsets.UTF_8);
 					}
 					break;
 				case HTML:
@@ -455,7 +453,7 @@ public class ResolverServlet extends HttpServlet {
 					out.flush();
 				} else if (preparedResponse.getResponse() != null) {
 					Model m = ModelFactory.createDefaultModel();
-					m.read(new ByteArrayInputStream(preparedResponse.getResponse().getBytes("UTF-8")), "UTF-8");
+					m.read(new ByteArrayInputStream(preparedResponse.getResponse().getBytes(StandardCharsets.UTF_8)), "UTF-8");
 					// It is done in APIServlet.init JenaJSONLD.init();
 					RDFDataMgr.write(resp.getOutputStream(), m, RDFFormat.JSONLD_COMPACT_FLAT);
 				} else {
@@ -479,7 +477,7 @@ public class ResolverServlet extends HttpServlet {
 					Document doc;
 					try {
 						docBuilder = docFactory.newDocumentBuilder();
-						doc = docBuilder.parse(new ByteArrayInputStream(preparedResponse.getResponse().getBytes("UTF-8")));
+						doc = docBuilder.parse(new ByteArrayInputStream(preparedResponse.getResponse().getBytes(StandardCharsets.UTF_8)));
 						TransformerFactory transformerFactory = TransformerFactory.newInstance();
 						Transformer transform;
 						transform = transformerFactory.newTransformer();
@@ -553,7 +551,7 @@ public class ResolverServlet extends HttpServlet {
 		try {
 			Model model = RDFUtil.parseModel(content);
 			Property uriPredicate = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#url");
-			Selector selector = new SimpleSelector((Resource) null, uriPredicate, (RDFNode) null);
+			Selector selector = new SimpleSelector(null, uriPredicate, (RDFNode) null);
 			StmtIterator iter = model.listStatements(selector);
 			if (iter.hasNext()) {
 				Statement s = iter.next();

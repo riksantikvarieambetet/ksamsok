@@ -69,7 +69,7 @@ public class GetRelations extends AbstractAPIMethod {
 	protected static final List<String> relationOneWay;
 
 	static {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 		// dubbelriktade
 		twoWay(map, ContentHelper.IX_ISPARTOF, ContentHelper.IX_HASPART);
 		twoWay(map, ContentHelper.IX_CONTAINSOBJECT, ContentHelper.IX_ISCONTAINEDIN);
@@ -226,7 +226,7 @@ public class GetRelations extends AbstractAPIMethod {
 		}
 		SearchService searchService = serviceProvider.getSearchService();
 		final String uri = URI_PREFIX + partialIdentifier;
-		Set<String> itemUris = new HashSet<String>();
+		Set<String> itemUris = new HashSet<>();
 		itemUris.add(uri);
 
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
@@ -252,14 +252,11 @@ public class GetRelations extends AbstractAPIMethod {
 				docs = qr.getResults();
 
 
-
 				for (SolrDocument doc : docs) {
 					Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
 					if (sameAsIds != null) {
-						if(sameAsIds != null) {
-							for (Object sameAsId : sameAsIds) {
-								itemUris.add((String) sameAsId);
-							}
+						for (Object sameAsId : sameAsIds) {
+							itemUris.add((String) sameAsId);
 						}
 					}
 				}
@@ -293,14 +290,14 @@ public class GetRelations extends AbstractAPIMethod {
 
 			qr = searchService.query(query);
 			docs = qr.getResults();
-			relations = new HashSet<Relation>();
+			relations = new HashSet<>();
 			for (SolrDocument doc: docs) {
 				String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 				boolean isSourceDoc = itemUris.contains(itemId);
 				Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
 				if (values != null) {
 					for (Object value: values) {
-						String parts[] = ((String) value).split("\\|");
+						String[] parts = ((String) value).split("\\|");
 						if (parts.length != 2) {
 							logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
 							continue;
@@ -358,7 +355,7 @@ public class GetRelations extends AbstractAPIMethod {
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.targetsOnly) {
 				// sökning på same as för träffarnas uri:er och skapa relation till dessa också
 
-				for (Relation rel: new HashSet<Relation>(relations)) {
+				for (Relation rel: new HashSet<>(relations)) {
 					final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
 					query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
 					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ escapedTargetUri);

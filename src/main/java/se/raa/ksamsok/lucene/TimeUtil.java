@@ -34,7 +34,8 @@ public class TimeUtil {
 			int year;
 			if (dotkrpos > 0) {
 				year = Integer.parseInt(value.substring(0, dotkrpos - 1).trim());
-				switch (value.charAt(dotkrpos - 1)) {
+				final char character = value.charAt(dotkrpos - 1);
+				switch (character) {
 				case 'F':
 				case 'f':
 					year = -year + 1; // 1 fkr är år 0
@@ -47,6 +48,7 @@ public class TimeUtil {
 					break;
 					default:
 						// måste vara f eller e för att sätta result
+						logger.warn("Only f or e is handled in parseYearFromISO8601DateAndTransform, but found " + character);
 				}
 			} else {
 				DateTime dateTime = isoDateTimeFormatter.parseDateTime(value);
@@ -94,7 +96,7 @@ public class TimeUtil {
 	}
 
 	static void expandDecadeAndCentury(String fromTime, String toTime,
-			String[] contextTypePrefixes, IndexProcessor ip) throws Exception {
+			String[] contextTypePrefixes, IndexProcessor ip) {
 		// timeInfoExists, decade och century
 		if (fromTime != null || toTime != null) {
 			// bara då vi ska skapa århundraden och årtionden
@@ -150,8 +152,8 @@ public class TimeUtil {
 		}
 	}
 
-	static Integer latest(String aString, Integer aInteger) throws Exception {
-		Integer sLatest=0;
+	static Integer latest(String aString, Integer aInteger) {
+		Integer sLatest;
 		try {
 			sLatest=Math.max(Integer.parseInt(aString),aInteger);
 		} catch (Exception e) {
@@ -161,8 +163,8 @@ public class TimeUtil {
 		return sLatest;
 	}
 
-	static Integer earliest(String aString, Integer aInteger) throws Exception {
-		Integer sEarliest=0;
+	static Integer earliest(String aString, Integer aInteger) {
+		Integer sEarliest;
 		try {
 			sEarliest=Math.min(Integer.parseInt(aString),aInteger);
 		} catch (Exception e) {
@@ -184,7 +186,7 @@ public class TimeUtil {
         return String.valueOf(centuryFloor);
 	}
 	
-	static String tidyTimeString(String aString) throws Exception {
+	static String tidyTimeString(String aString) {
 		String timeString=aString;
 		try {
 			if ((timeString.length()>5) && timeString.startsWith("-")) {

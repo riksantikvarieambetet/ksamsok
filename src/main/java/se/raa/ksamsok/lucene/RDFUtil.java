@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -25,16 +26,10 @@ public class RDFUtil {
 
 	private static final Logger logger = LogManager.getLogger(RDFUtil.class);
 
-    public static Model parseModel(String rdfXml) throws Exception {
+    public static Model parseModel(String rdfXml) {
 		Model model;
-		StringReader r = null;
-		try {
-			r = new StringReader(rdfXml);
+		try (StringReader r = new StringReader(rdfXml)) {
 			model = parseModel(r);
-		} finally {
-			if (r != null) {
-				r.close();
-			}
 		}
 		return model;
 	}
@@ -56,7 +51,7 @@ public class RDFUtil {
 	static String extractValue(Model model, Resource subject, Property ref, Property refRef, IndexProcessor ip, List<String> relations) throws Exception {
 		final String sep = " ";
 		StringBuilder buf = new StringBuilder();
-		String value = null;
+		String value;
 		Selector selector = new SimpleSelector(subject, ref, (RDFNode) null);
 		StmtIterator iter = model.listStatements(selector);
 		while (iter.hasNext()){
@@ -77,8 +72,7 @@ public class RDFUtil {
 				}
 			} else if (s.getObject().isURIResource()){
 				value = getReferenceValue(s.getObject().asResource(), ip, relations, ref);
-				// lägg till i buffer bara om detta är en uri vi ska slå upp värde för
-				if (value != null && ip != null && ip.translateURI()) {
+				if (value != null) {
 					if (buf.length() > 0) {
 						buf.append(sep);
 					}
@@ -96,7 +90,6 @@ public class RDFUtil {
 					buf.append(value);
 				}
 			}
-			value = null;
 		}
 		return buf.length() > 0 ? StringUtils.trimToNull(buf.toString()) : null;
 	}
@@ -128,7 +121,7 @@ public class RDFUtil {
 
 	// försöker översätta ett uri-värde till ett förinläst värde
 	private static String getReferenceValue(Resource object, IndexProcessor ip, List<String> relations, Property ref) throws Exception {
-		String value = null;
+		String value;
 		String uri = object.getURI();
 		String refUri = ref != null ? ref.getURI() : null;
 		// se om vi ska försöka ersätta uri:n med en uppslagen text
@@ -157,16 +150,14 @@ String value = null;
 	// läser in en rdf-resurs och lagrar uri-värden och översättningsvärden för uppslagning
 	// alla resurser förutsätts vara kodade i utf-8 och att värdena är Literals
 	static void readURIValueResource(String fileName, URI predicateURI, Map<String, String> uriValues) {
-		Reader r = null;
 		Model model = null;
-		try {
-			r = new InputStreamReader(RDFUtil.class.getResourceAsStream(fileName), "UTF-8");
+		try (Reader r = new InputStreamReader(RDFUtil.class.getResourceAsStream(fileName), StandardCharsets.UTF_8)) {
 			model = parseModel(r);
 			Property rName = ResourceFactory.createProperty(predicateURI.toString());
-			Selector selector = new SimpleSelector((Resource) null, rName, (RDFNode) null);
+			Selector selector = new SimpleSelector(null, rName, (RDFNode) null);
 			StmtIterator iter = model.listStatements(selector);
-			int statementCnt=0;
-			while (iter.hasNext()){
+			int statementCnt = 0;
+			while (iter.hasNext()) {
 				Statement s = iter.next();
 				uriValues.put(s.getSubject().getURI(), StringUtils.trimToNull(s.getObject().asLiteral().getString()));
 				statementCnt++;
@@ -178,12 +169,6 @@ String value = null;
 			throw new RuntimeException("Problem att läsa in uri-översättningsfil " +
 					fileName, e);
 		} finally {
-			if (r != null) {
-				try {
-					r.close();
-				} catch (Exception ignore) {
-				}
-			}
 			if (model != null) {
 				model.close();
 			}

@@ -18,7 +18,7 @@ public class QueryContent
 	 */
 	public QueryContent()
 	{
-		terms = new HashMap<String,String>();
+		terms = new HashMap<>();
 		hits = 0L;
 	}
 	

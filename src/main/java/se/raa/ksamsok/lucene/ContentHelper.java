@@ -81,7 +81,10 @@ public abstract class ContentHelper {
 	public static final String IX_ITEMCOLOR = "itemColor";
 	public static final String IX_ITEMNUMBER = "itemNumber";
 	public static final String IX_ITEMLICENSE = "itemLicense";
+	public static final String IX_ITEMMEASUREMENT = "itemMeasurement";
 	public static final String IX_THEME = "theme";
+	public static final String IX_BUILD_DATE = "buildDate";
+	public static final String IX_THUMBNAIL = "thumbnail";
 
 	// tider, platser, personer
 	// Sammanhang enligt ändlig lista. Sammanhanget gäller för tider, platser och
@@ -292,6 +295,9 @@ public abstract class ContentHelper {
 	public static final String IX_MEDIAMOTIVEWORD = "mediaMotiveWord";
 	public static final String IX_BYLINE = "byline";
 	public static final String IX_COPYRIGHT = "copyright";
+	public static final String IX_THUMBNAIL_SOURCE = "thumbnailSource";
+	public static final String IX_LOWRES_SOURCE = "lowresSource";
+	public static final String IX_HIGHRES_SOURCE = "highresSource";
 
 	// spatiala specialindex
 	public static final String IX_BOUNDING_BOX = "boundingBox";
@@ -311,13 +317,13 @@ public abstract class ContentHelper {
 
 
 	// alla index
-	private static final HashMap<String, Index> indices = new LinkedHashMap<String, Index>();
+	private static final HashMap<String, Index> indices = new LinkedHashMap<>();
 	// publika index
-	private static final List<Index> publicIndices = new ArrayList<Index>();
+	private static final List<Index> publicIndices = new ArrayList<>();
 
 	// meddelanden om eventuella problem vid tolkning av tjänsteinnehållet, tex att en konstant
 	// inte kunde slås upp etc, och antal ggr problemet förekom - främst för utv/debug
-	private static final ThreadLocal<Map<String, Integer>> problemMessages = new ThreadLocal<Map<String, Integer>>();
+	private static final ThreadLocal<Map<String, Integer>> problemMessages = new ThreadLocal<>();
 
 	static {
 		// implementerade index
@@ -374,6 +380,7 @@ public abstract class ContentHelper {
 		addIndex(IX_CREATEDDATE, "Datum då posten skapades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_LASTCHANGEDDATE, "Datum då posten ändrades i källsystemet (yyyy-mm-dd)", IndexType.VERBATIM);
 		addIndex(IX_THEME, "Tema", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_BUILD_DATE, "Datum då posten publicerades", IndexType.VERBATIM);
 
 		// plats
 		addIndex(IX_PLACENAME, "Annat platsnamn [*]", IndexType.TOLOWERCASE, true, false);
@@ -554,6 +561,9 @@ public abstract class ContentHelper {
 		addIndex(IX_MEDIAMOTIVEWORD, "Bildmotiv för ingående bilder/media", IndexType.ANALYZED, true, false);
 		addIndex(IX_BYLINE, "Byline för ingående bild/media(uri)", IndexType.TOLOWERCASE);
 		addIndex(IX_COPYRIGHT, "Copyright för ingående bild/media(uri)", IndexType.TOLOWERCASE);
+		addIndex(IX_THUMBNAIL_SOURCE, "Källa för tumnagel", IndexType.VERBATIM, true, false);
+		addIndex(IX_LOWRES_SOURCE, "Källa för lågupplöst bild", IndexType.VERBATIM, true, false);
+		addIndex(IX_HIGHRES_SOURCE, "Källa för högupplöst bild", IndexType.VERBATIM, true, false);
 
 		// övriga
 		addIndex(IX_THUMBNAILEXISTS, "Om objektet har en tumnagelbild (j/n)", IndexType.TOLOWERCASE);
@@ -562,6 +572,8 @@ public abstract class ContentHelper {
 			IndexType.TOLOWERCASE);
 		addIndex(IX_CENTURY, "De århundraden som objektet omfattar", IndexType.ISO8601DATEYEAR, true, false);
 		addIndex(IX_DECADE, "De årtionden som objektet omfattar", IndexType.ISO8601DATEYEAR, true, false);
+
+		addIndex(IX_THUMBNAIL, "url till tumnagel", IndexType.VERBATIM, true, false);
 
 		// övriga, "interna"
 		addIndex(I_IX_PRES, "presentationsblocket", IndexType.VERBATIM, false, false);
@@ -574,6 +586,8 @@ public abstract class ContentHelper {
 		addIndex(I_IX_RELATIONS, "relationer", IndexType.VERBATIM, false, false);
 		addIndex(CONTEXT_SET_REC + "." + IX_REC_IDENTIFIER, "identifierare", IndexType.VERBATIM, false, false);
 		// addIndex(I_IX_RDF, "rdf", IndexType.VERBATIM, false);
+
+
 
 		// publika
 		for (Index index : indices.values()) {
@@ -609,10 +623,9 @@ public abstract class ContentHelper {
 	 * @param xmlContent xml-innehåll
 	 * @param added datum posten först lades till i repot
 	 * @return ett solr-dokument, eller null om inte posten ska indexeras
-	 * @throws Exception vid problem
 	 */
 	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent, Date added)
-		throws Exception;
+	;
 
 	// statiska metoder
 
@@ -637,7 +650,7 @@ public abstract class ContentHelper {
 	// hämtar ut ett konfat index, eller dess "pappa" för prefixade index
 	// bör bara användas för att fastställa vilken typ av index det är
 	private static IndexType getIndexType(String indexName) {
-		int underScorePos = -1;
+		int underScorePos;
 		if (indexName != null && (underScorePos = indexName.indexOf("_")) > 0) {
 			indexName = indexName.substring(underScorePos + 1);
 		}
@@ -873,7 +886,7 @@ public abstract class ContentHelper {
 	 */
 	public static void initProblemMessages() {
 		// linked hashmap för att behålla ordningen
-		problemMessages.set(new LinkedHashMap<String, Integer>());
+		problemMessages.set(new LinkedHashMap<>());
 	}
 
 	/**
@@ -971,7 +984,7 @@ public abstract class ContentHelper {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException {
-		HashMap<String, String> params = new HashMap<String, String>();
+		HashMap<String, String> params = new HashMap<>();
 		if (qs != null && qs.length() > 0) {
 			StringTokenizer tok = new StringTokenizer(qs, "&");
 			while (tok.hasMoreTokens()) {

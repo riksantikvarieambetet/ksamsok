@@ -22,6 +22,7 @@ public class SamsokProtocol {
 	static final URI uri_rServiceName = URI.create(uriPrefixKSamsok + "serviceName");
 	static final URI uri_rServiceOrganization = URI.create(uriPrefixKSamsok + "serviceOrganization");
 	static final URI uri_rCreatedDate = URI.create(uriPrefixKSamsok + "createdDate");
+	static final URI uri_rBuilddDate = URI.create(uriPrefixKSamsok + "buildDate");
 	static final URI uri_rLastChangedDate = URI.create(uriPrefixKSamsok + "lastChangedDate");
 	static final URI uri_rItemTitle = URI.create(uriPrefixKSamsok + "itemTitle");
 	static final URI uri_rItemLabel = URI.create(uriPrefixKSamsok + "itemLabel");
@@ -265,6 +266,9 @@ public class SamsokProtocol {
 	static final URI uri_rMediaLicense = URI.create(uriPrefixKSamsok + "mediaLicense");
 	static final URI uri_rMediaLicenseUrl = URI.create(uriPrefixKSamsok + "mediaLicenseUrl"); // 1.11
 	static final URI uri_rMediaMotiveWord = URI.create(uriPrefixKSamsok + "mediaMotiveWord");
+	static final URI uri_rThumbnailSource = URI.create(uriPrefixKSamsok + "thumbnailSource");
+	static final URI uri_rLowresSource = URI.create(uriPrefixKSamsok + "lowresSource");
+	static final URI uri_rHighresSource = URI.create(uriPrefixKSamsok + "highresSource");
 	
 	static final URI uri_rByline = URI.create(uriPrefixKSamsok + "byline");
 	static final URI uri_rCopyright = URI.create(uriPrefixKSamsok + "copyright");

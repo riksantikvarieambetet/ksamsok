@@ -10,7 +10,7 @@ public class RSSTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "rss");
 		reqParams.put("query","item=yxa");
 		reqParams.put("place","gotland");

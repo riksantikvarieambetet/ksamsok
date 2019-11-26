@@ -44,7 +44,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	int mode = 0;
 	private boolean deleteRecord;
 	private StringBuffer buf = new StringBuffer();
-	private HashMap<String, String> prefixMap = new HashMap<String, String>();
+	private HashMap<String, String> prefixMap = new HashMap<>();
 	private static final int NORMAL = 0;
 	private static final int RECORD = 1;
 	private static final int COPY = 2;
@@ -75,8 +75,8 @@ public class OAIPMHHandler extends DefaultHandler {
 		this.contentHelper = contentHelper;
 		this.c = c;
 		this.sm = sm;
-		this.ts = ts;
 		// förbered några databas-statements som kommer användas frekvent
+		this.ts = new Timestamp(ts.getTime());
 		this.oai2uriPst = c.prepareStatement("select uri from content where oaiuri = ?");
 		this.updatePst = c.prepareStatement("update content set deleted = null, oaiuri = ?, " +
 			"serviceId = ?, changed = ?, datestamp = ?, xmldata = ?, status = ?, nativeURL = ? where uri = ?");
@@ -280,7 +280,7 @@ public class OAIPMHHandler extends DefaultHandler {
 					String datestampStr = buf.toString().trim();
 					datestamp = parseDatestamp(datestampStr);
 					if (datestamp == null) {
-						datestamp = ts;
+						datestamp = new Timestamp((ts.getTime()));
 						ContentHelper.addProblemMessage("There was a problem parsing datestamp (" + datestampStr +
 							") for record, using 'now' instead");
 					}
@@ -306,12 +306,14 @@ public class OAIPMHHandler extends DefaultHandler {
 				// Ã¥terstÃ¤ll char-buff
 				buf.setLength(0);
 				break;
+			default:
+				logger.warn("Unexpected mode " + mode + " found in endElement for uri + " + uri);
 		}
 
 	}
 
 	@Override
-	public void characters(char[] ch, int start, int length) throws SAXException {
+	public void characters(char[] ch, int start, int length) {
 		buf.append(ch, start, length);
 	}
 
@@ -360,27 +362,22 @@ public class OAIPMHHandler extends DefaultHandler {
 		// OBS att antalet parametrar etc *mÃ¥ste* stÃ¤mma med det statement som anvÃ¤nds
 		// och som skapas och fÃ¶rbereds i konstruktorn!
 
-		ResultSet rs = null;
-		try {
 
-			// update content set status = ?, changed = ?, deleted = ?, datestamp = ? where
-			// serviceId = ? and oaiuri = ?
-			deleteUpdatePst.setInt(1, DBUtil.STATUS_NORMAL);
-			deleteUpdatePst.setTimestamp(2, ts);
-			deleteUpdatePst.setTimestamp(3, deletedAt);
-			deleteUpdatePst.setTimestamp(4, deletedAt);
-			deleteUpdatePst.setString(5, service.getId());
-			deleteUpdatePst.setString(6, oaiURI);
-			int num = deleteUpdatePst.executeUpdate();
-			numDeletedXact += num;
-			if (logger.isDebugEnabled()) {
-				logger.debug(
+		// update content set status = ?, changed = ?, deleted = ?, datestamp = ? where
+		// serviceId = ? and oaiuri = ?
+		deleteUpdatePst.setInt(1, DBUtil.STATUS_NORMAL);
+		deleteUpdatePst.setTimestamp(2, ts);
+		deleteUpdatePst.setTimestamp(3, deletedAt);
+		deleteUpdatePst.setTimestamp(4, deletedAt);
+		deleteUpdatePst.setString(5, service.getId());
+		deleteUpdatePst.setString(6, oaiURI);
+		int num = deleteUpdatePst.executeUpdate();
+		numDeletedXact += num;
+		if (logger.isDebugEnabled()) {
+			logger.debug(
 					"* Removed " + num + " number of oaiURI=" + oaiURI + " from service with ID: " + service.getId());
-			}
-			commitIfLimitReached();
-		} finally {
-			DBUtil.closeDBResources(rs, null, null);
 		}
+		commitIfLimitReached();
 	}
 
 	/**
@@ -477,8 +474,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	 * @throws Exception
 	 */
 	protected void insertOrUpdateRecord(String oaiURI, String xmlContent, Timestamp datestamp) throws Exception {
-		String uri = null;
-		String nativeURL = null;
+		String uri;
+		String nativeURL;
 
 		try {
 			ExtractedInfo info = contentHelper.extractInfo(xmlContent);
@@ -530,7 +527,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		}
 		final int BATCH_SIZE = 500;
 		ss.setStatusText(service, "Attempting to update status and deleted column for pending records");
-		int updated = 0;
+		int updated;
 		PreparedStatement updatePst = null;
 		PreparedStatement selPst = null;
 		ResultSet rs = null;
@@ -600,7 +597,7 @@ public class OAIPMHHandler extends DefaultHandler {
 			logger.debug("* Attempting to reset status for pending records for service " + service.getId());
 		}
 		ss.setStatusText(service, "Recovery: Attempting to reset status for pending records");
-		int numAffected = 0;
+		int numAffected;
 		PreparedStatement pst = null;
 		try {
 			pst = c.prepareStatement("update content set status = ? where serviceId = ? and status <> ?");
@@ -698,7 +695,7 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	}
 
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 		/*
 		 * funkar inte riktigt fn Connection c = null; Statement st = null; FSDirectory dir = null;
 		 * try { //File xmlFile = new File("d:/temp/oaipmh2.xml"); //File xmlFile = new
@@ -730,5 +727,5 @@ public class OAIPMHHandler extends DefaultHandler {
 		 * } finally { if (s != null) { try { s.close(); } catch (IOException e) {
 		 * e.printStackTrace(); } } } }
 		 */
-	}
+	//}
 }

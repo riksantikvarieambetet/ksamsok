@@ -94,7 +94,7 @@ abstract public class AbstractBaseTest {
 	 * @return - A string with the node's value
 	 */
 	protected String assertChild(Node node) {
-		assertTrue(node.getNodeType()==Node.TEXT_NODE);
+		assertEquals(node.getNodeType(), Node.TEXT_NODE);
 		assertNull(node.getFirstChild());		
 		return node.getNodeValue();
 	}
@@ -105,10 +105,10 @@ abstract public class AbstractBaseTest {
 	 * @param nodeName - The name it should have
 	 */
 	protected void assertParent(Node node, String nodeName) {
-		assertTrue(node.getNodeName().equals(nodeName));
+		assertEquals(node.getNodeName(), nodeName);
 		assertEquals(0,node.getAttributes().getLength());
 		assertNull(node.getNodeValue());
-		assertTrue(node.getNodeType()==Element.ELEMENT_NODE);
+		assertEquals(node.getNodeType(), Element.ELEMENT_NODE);
 		assertTrue(node.getChildNodes().getLength()>0);
 	}
 
@@ -126,7 +126,7 @@ abstract public class AbstractBaseTest {
 		// The version value
 		Node versionValue = version.getFirstChild();
 		assertEquals(Float.parseFloat(APIMethod.API_VERSION),Float.parseFloat(assertChild(versionValue)),0);
-		assertTrue(version.getFirstChild().equals(version.getLastChild()));
+		assertEquals(version.getFirstChild(), version.getLastChild());
 		return version.getNextSibling();
 	}
 
@@ -135,13 +135,13 @@ abstract public class AbstractBaseTest {
 	 * @param node - The <rel:score> node
 	 */
 	protected void assertRelScore(Node node) {
-		assertTrue(node.getNodeName().equals("rel:score"));
+		assertEquals("rel:score", node.getNodeName());
 		// Check rel:score namespace
 		assertEquals(1,node.getAttributes().getLength());
-		assertTrue(node.getAttributes().item(0).getNodeName().equals("xmlns:rel"));
-		assertTrue(node.getAttributes().item(0).getNodeType()==Node.ATTRIBUTE_NODE);
+		assertEquals("xmlns:rel", node.getAttributes().item(0).getNodeName());
+		assertEquals(node.getAttributes().item(0).getNodeType(), Node.ATTRIBUTE_NODE);
 		String nameSpace = assertChild(node.getAttributes().item(0).getFirstChild());
-		assertTrue(nameSpace.equals("info:srw/extension/2/relevancy-1.0"));
+		assertEquals("info:srw/extension/2/relevancy-1.0", nameSpace);
 		// The first child is the attribute node
 		Node relScoreValue = node.getLastChild();
 		assertTrue(Float.parseFloat(assertChild(relScoreValue))>0);
@@ -163,19 +163,17 @@ abstract public class AbstractBaseTest {
 			}
 		}
 		// Check that all parameters are in the echo block
-		Iterator<String> keys = reqParams.keySet().iterator();
-		while(keys.hasNext()){
-			String nodeName = keys.next();
-			if (!nodeName.equals("stylesheet")){
-				boolean found=false;
-				for (int i = 0; i < echoNodes.getLength(); i++){
+		for (String nodeName : reqParams.keySet()) {
+			if (!nodeName.equals("stylesheet")) {
+				boolean found = false;
+				for (int i = 0; i < echoNodes.getLength(); i++) {
 					Node echoChildNode = echoNodes.item(i);
-					if (echoChildNode.getNodeName().equals(nodeName)){
-						found=true;
+					if (echoChildNode.getNodeName().equals(nodeName)) {
+						found = true;
 						break;
 					}
 				}
-				if (!found){
+				if (!found) {
 					fail(nodeName + " not found in echo node");
 				}
 			}
@@ -216,9 +214,7 @@ abstract public class AbstractBaseTest {
 			}
 		}
 		// Check that all parameters are in the echo block
-		Iterator<String> reqKeys = reqParams.keySet().iterator();
-		while(reqKeys.hasNext()){
-			String keyName = reqKeys.next();
+		for (String keyName : reqParams.keySet()) {
 			assertTrue(echo.has(keyName));
 		}
 	}

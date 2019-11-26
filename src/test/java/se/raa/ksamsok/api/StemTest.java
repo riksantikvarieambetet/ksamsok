@@ -17,7 +17,7 @@ public class StemTest extends AbstractBaseTest {
 	@Before
 	public void setUp() throws MalformedURLException{
 		super.setUp();
-		reqParams = new HashMap<String,String>();
+		reqParams = new HashMap<>();
 		reqParams.put("method", "stem");
 		reqParams.put("words","kappe");
 	}

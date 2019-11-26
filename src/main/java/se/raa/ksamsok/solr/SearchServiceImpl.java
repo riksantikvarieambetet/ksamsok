@@ -56,7 +56,7 @@ public class SearchServiceImpl implements SearchService {
 		if (logger.isInfoEnabled()) {
 			logger.debug("Analyserar " + words);
 		}
-		Set<String> stems = new HashSet<String>();
+		Set<String> stems = new HashSet<>();
 		FieldAnalysisRequest far = new FieldAnalysisRequest();
 		// vi kör analys mot text-indexet då vi vet att den stammar
 		far.addFieldName(ContentHelper.IX_TEXT);
@@ -89,7 +89,7 @@ public class SearchServiceImpl implements SearchService {
 			logger.debug("Hämtar termer för index: " + index + ", prefix: " + prefix);
 		}
 		// TODO: kommer finnas bättre sätt att göra detta i senare solr/solrj-versioner
-		List<Term> terms = new LinkedList<Term>();
+		List<Term> terms = new LinkedList<>();
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/terms");
 		query.set(TermsParams.TERMS_FIELD, index);
@@ -138,7 +138,7 @@ public class SearchServiceImpl implements SearchService {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Hämtar antal för alla tjänster");
 		}
-		Map<String, Long> countMap = new HashMap<String, Long>();
+		Map<String, Long> countMap = new HashMap<>();
 		SolrQuery query = new SolrQuery();
 		query.setQuery("*:*");
 		query.setFields(ContentHelper.I_IX_SERVICE);

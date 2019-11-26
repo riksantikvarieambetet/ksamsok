@@ -118,7 +118,7 @@ public class GMLUtil {
 		if (coords.length % 2 != 0) {
 			throw new Exception("Felaktig koordinatlista - ojämnt antal koordinater");
 		}
-		double result[] = new double[coords.length];
+		double[] result = new double[coords.length];
 		CoordinateReferenceSystem sourceCRS = CRS.decode(fromCRS);
 		CoordinateReferenceSystem targetCRS = CRS.decode(toCRS);
 		for (int i = 0; i < coords.length; i+=2) {

@@ -2,7 +2,6 @@ package se.raa.ksamsok.harvest;
 
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import se.raa.ksamsok.harvest.StatusService.Step;
 import se.raa.ksamsok.lucene.ContentHelper;
 
@@ -17,25 +16,23 @@ import java.util.List;
 public class ReindexAllJob extends HarvestJob {
 
 	@Override
-	protected List<ServiceFormat> performGetFormats(HarvestService service)
-			throws Exception {
+	protected List<ServiceFormat> performGetFormats(HarvestService service) {
 		return Collections.emptyList();
 	}
 
 	@Override
 	protected int performGetRecords(HarvestService service, ServiceMetadata sm,
-			ServiceFormat f, File storeTo, StatusService ss) throws Exception {
+			ServiceFormat f, File storeTo, StatusService ss) {
 		return 0;
 	}
 
 	@Override
-	protected ServiceMetadata performIdentify(HarvestService service)
-			throws Exception {
+	protected ServiceMetadata performIdentify(HarvestService service) {
 		return null;
 	}
 
 	@Override
-	public void execute(JobExecutionContext ctx) throws JobExecutionException {
+	public void execute(JobExecutionContext ctx) {
 		interrupted = false;
 		StatusService ss = null;
 		HarvestService service = null;

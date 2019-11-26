@@ -7,6 +7,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.solr.common.SolrInputDocument;
+import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.HarvestService;
@@ -22,7 +23,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
@@ -85,18 +85,17 @@ public class Protocol_1_11_Test {
 		}
 	}
  */
-	
-	
+
 	@Test
-	public void testParseMedia() throws Exception {
-		String rdf = loadTestFileAsString("media.rdf");
+	public void testNoMediaLicense() throws Exception {
+		String rdf = loadTestFileAsString("hjalm_1.11_felaktig.rdf");
 		Model model = RDFUtil.parseModel(rdf);
 		assertNotNull("Ingen graf, fel på rdf:en?", model);
 
 		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity); 
-				
+		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity);
+
 		Resource s = null;
 		StmtIterator iter = model.listStatements(selector);
 		while (iter.hasNext()){
@@ -110,6 +109,42 @@ public class Protocol_1_11_Test {
 		service.setId("TESTID");
 		LinkedList<String> relations = new LinkedList<String>();
 		List<String> gmlGeometries = new LinkedList<String>();
+		try {
+			SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+			Assert.fail("Was expecting an exception due to missing mediaLicense");
+		} catch (Exception e) {
+			// That's ok, there should be an exception thrown here
+		}
+	}
+
+
+
+
+
+
+	@Test
+	public void testParseMedia() throws Exception {
+		String rdf = loadTestFileAsString("media.rdf");
+		Model model = RDFUtil.parseModel(rdf);
+		assertNotNull("Ingen graf, fel på rdf:en?", model);
+
+		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
+				
+		Resource s = null;
+		StmtIterator iter = model.listStatements(selector);
+		while (iter.hasNext()){
+			if (s != null) {
+				throw new Exception("Ska bara finnas en entity i rdf-grafen");
+			}
+			s = iter.next().getSubject();
+		}
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_11(model, s);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
 		assertEquals("Fel antal relationer tillbaka", 0, relations.size());
@@ -128,14 +163,14 @@ public class Protocol_1_11_Test {
 		assertEquals("Felaktigt värde för mediaMotiveWord", "Ett mediamotiv", doc.getFieldValue(ContentHelper.IX_MEDIAMOTIVEWORD));
 		assertEquals("Felaktigt värde för byline", "Arbetets Museum", doc.getFieldValue(ContentHelper.IX_BYLINE));
 		assertEquals("Felaktigt värde för copyright", "Arbetets Museum", doc.getFieldValue(ContentHelper.IX_COPYRIGHT));
-		
+		assertEquals("Felaktigt värde för thumbnailSource", "http://www.workwithsounds.eu/wp-content/uploads/2014/10/IMG_2867-204x136.jpg", doc.getFieldValue(ContentHelper.IX_THUMBNAIL_SOURCE));
+
 	}
 
 
 	
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		InputStream is = null;
 		StringWriter sw = null;
 		try {
 			Document doc = builder.parse(new File("src/test/resources/" + fileName));
@@ -147,15 +182,12 @@ public class Protocol_1_11_Test {
 			sw = new StringWriter(initialSize);
 			Result result = new StreamResult(sw);
 	        xformer.transform(source, result);
+	        return sw.toString();
 		} finally {
 			if (sw != null) {
 				sw.close();
 			}
-			if (is != null) {
-				is.close();
-			}
 		}
-		return sw != null ? sw.toString() : null;
 	}
 
 }

@@ -33,6 +33,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -54,7 +55,7 @@ public class SamsokContentHelper extends ContentHelper {
 
 	@Override
 	public SolrInputDocument createSolrDocument(HarvestService service,
-			String xmlContent, Date added) throws Exception {
+			String xmlContent, Date added) {
 		Model model = null;
 		String identifier = null;
 		SolrInputDocument luceneDoc = null;
@@ -73,7 +74,7 @@ public class SamsokContentHelper extends ContentHelper {
 			Property rProtocolVersion = ResourceFactory.createProperty(SamsokProtocol.uri_rKsamsokVersion.toString());
 
 			Resource subject = null;
-			Selector selector = new SimpleSelector((Resource) null, rdfType, samsokEntity);
+			Selector selector = new SimpleSelector(null, rdfType, samsokEntity);
 			StmtIterator iter = model.listStatements(selector);
 			while (iter.hasNext()){
 				if (subject != null) {
@@ -99,8 +100,8 @@ public class SamsokContentHelper extends ContentHelper {
 				throw new Exception("Hittade ingen protokollversion i rdf-grafen");
 			}
 
-			LinkedList<String> gmlGeometries = new LinkedList<String>();
-			LinkedList<String> relations = new LinkedList<String>();
+			LinkedList<String> gmlGeometries = new LinkedList<>();
+			LinkedList<String> relations = new LinkedList<>();
 			SamsokProtocolHandler sph = getProtocolHandlerForVersion(protocolVersion, model, subject);
 			luceneDoc = sph.handle(service, added, relations, gmlGeometries);
 
@@ -164,12 +165,12 @@ public class SamsokContentHelper extends ContentHelper {
 				// serialisera som ett xml-fragment, dvs utan xml-deklaration
 				pres = serializeDocumentAsFragment(doc);
 				// lagra binärt, kodat i UTF-8
-				byte[] presBytes = pres.getBytes("UTF-8");
+				byte[] presBytes = pres.getBytes(StandardCharsets.UTF_8);
 				luceneDoc.addField(I_IX_PRES, Base64.byteArrayToBase64(presBytes, 0, presBytes.length));
 			}
 
 			// lagra rdf:en 
-			byte[] rdfBytes = xmlContent.getBytes("UTF-8");
+			byte[] rdfBytes = xmlContent.getBytes(StandardCharsets.UTF_8);
 			luceneDoc.addField(I_IX_RDF, Base64.byteArrayToBase64(rdfBytes, 0, rdfBytes.length));
 
 		} catch (Exception e) {
@@ -187,7 +188,7 @@ public class SamsokContentHelper extends ContentHelper {
 	private SamsokProtocolHandler getProtocolHandlerForVersion(String protocolVersion,
 			Model model, Resource subject)  throws Exception {
 		Double protocol;
-		SamsokProtocolHandler handler = null;
+		SamsokProtocolHandler handler;
 		try {
 			protocol = Double.parseDouble(protocolVersion);
 		} catch (Exception e) {
@@ -220,8 +221,8 @@ public class SamsokContentHelper extends ContentHelper {
 			Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 			Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
 			Property rURL = ResourceFactory.createProperty(SamsokProtocol.uri_rURL.toString());
-			Resource subject = null;
-			Selector selector = new SimpleSelector((Resource) null, rdfType, samsokEntity);
+			Resource subject;
+			Selector selector = new SimpleSelector(null, rdfType, samsokEntity);
 			StmtIterator iter = model.listStatements(selector);
 			while (iter.hasNext()){
 				if (identifier != null) {

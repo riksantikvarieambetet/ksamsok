@@ -7,6 +7,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.solr.common.SolrInputDocument;
+import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.HarvestService;
@@ -22,7 +23,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.LinkedList;
@@ -80,8 +80,8 @@ public class Protocol_0_TO_1_0_Test {
 		SamsokProtocolHandler handler = new SamsokProtocolHandler_0_TO_1_0(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
-		LinkedList<String> relations = new LinkedList<String>();
-		List<String> gmlGeometries = new LinkedList<String>();
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
 		assertEquals("Fel antal relationer tillbaka", 1, relations.size());
@@ -109,11 +109,8 @@ public class Protocol_0_TO_1_0_Test {
 
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		InputStream is = null;
 		StringWriter sw = null;
 		try {
-			//is = getClass().getResourceAsStream(fileName);
-			//Document doc = builder.parse(is);
 			Document doc = builder.parse(new File("src/test/resources/" + fileName));
 			final int initialSize = 4096;
 			Source source = new DOMSource(doc);
@@ -123,15 +120,43 @@ public class Protocol_0_TO_1_0_Test {
 			sw = new StringWriter(initialSize);
 			Result result = new StreamResult(sw);
 	        xformer.transform(source, result);
+	        return sw.toString();
 		} finally {
 			if (sw != null) {
 				sw.close();
 			}
-			if (is != null) {
-				is.close();
-			}
 		}
-		return sw != null ? sw.toString() : null;
+	}
+
+	@Test
+	public void testNoMediaLicense() throws Exception {
+		String rdf = loadTestFileAsString("alla_index_0.99_felaktig.rdf");
+		Model model = RDFUtil.parseModel(rdf);
+		Assert.assertNotNull("Ingen graf, fel på rdf:en?", model);
+
+		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity);
+
+		Resource s = null;
+		StmtIterator iter = model.listStatements(selector);
+		while (iter.hasNext()){
+			if (s != null) {
+				throw new Exception("Ska bara finnas en entity i rdf-grafen");
+			}
+			s = iter.next().getSubject();
+		}
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_0_TO_1_0(model, s);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		LinkedList<String> relations = new LinkedList<String>();
+		List<String> gmlGeometries = new LinkedList<String>();
+		try {
+			SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+			Assert.fail("Was expecting an exception due to missing mediaLicense");
+		} catch (Exception e) {
+			// That's ok, there should be an exception thrown here
+		}
 	}
 
 }

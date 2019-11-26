@@ -22,7 +22,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
@@ -30,10 +29,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class Protocol_1_1_Test {
 
@@ -75,7 +74,7 @@ public class Protocol_1_1_Test {
 
 		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity); 
+		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
 				
 		Resource s = null;
 		StmtIterator iter = model.listStatements(selector);
@@ -88,8 +87,8 @@ public class Protocol_1_1_Test {
 		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_1(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
-		LinkedList<String> relations = new LinkedList<String>();
-		List<String> gmlGeometries = new LinkedList<String>();
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
 		assertEquals("Fel antal relationer tillbaka", 2, relations.size());
@@ -133,7 +132,7 @@ public class Protocol_1_1_Test {
 
 		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity); 
+		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
 				
 		Resource s = null;
 		StmtIterator iter = model.listStatements(selector);
@@ -147,8 +146,8 @@ public class Protocol_1_1_Test {
 		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_1(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
-		LinkedList<String> relations = new LinkedList<String>();
-		List<String> gmlGeometries = new LinkedList<String>();
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
 		singleValueIndexAssert(doc, ContentHelper.IX_NAMEAUTH, "RAÄ");
@@ -213,7 +212,7 @@ public class Protocol_1_1_Test {
 
 		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity); 
+		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
 				
 		Resource s = null;
 		StmtIterator iter = model.listStatements(selector);
@@ -226,8 +225,8 @@ public class Protocol_1_1_Test {
 		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_1(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
-		LinkedList<String> relations = new LinkedList<String>();
-		List<String> gmlGeometries = new LinkedList<String>();
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
 		singleValueIndexAssert(doc, ContentHelper.IX_ITEMTYPE, "Historisk h\u00e4ndelse");
@@ -247,7 +246,7 @@ public class Protocol_1_1_Test {
 
 		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
 		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity); 
+		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
 				
 		Resource s = null;
 		StmtIterator iter = model.listStatements(selector);
@@ -261,8 +260,8 @@ public class Protocol_1_1_Test {
 		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_1(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
-		LinkedList<String> relations = new LinkedList<String>();
-		List<String> gmlGeometries = new LinkedList<String>();
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
 		try {
 			handler.handle(service, new Date(), relations, gmlGeometries);
 			fail("Ett exception borde ha kastats då transact inte är giltig kontexttyp i 1.1");
@@ -307,7 +306,7 @@ public class Protocol_1_1_Test {
 	}
 
 	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName,
-			String[] values, Collection<? extends Object> docValues, int count) {
+										  String[] values, Collection<?> docValues, int count) {
 		if (count > 0) {
 			assertEquals("Fältet " + indexName + " innehåller fel antal värden, värden är" +
 					docValues, count, docValues.size());
@@ -321,7 +320,6 @@ public class Protocol_1_1_Test {
 
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		InputStream is = null;
 		StringWriter sw = null;
 		try {
 			Document doc = builder.parse(new File("src/test/resources/" + fileName));
@@ -333,15 +331,12 @@ public class Protocol_1_1_Test {
 			sw = new StringWriter(initialSize);
 			Result result = new StreamResult(sw);
 	        xformer.transform(source, result);
+			return sw.toString();
 		} finally {
 			if (sw != null) {
 				sw.close();
 			}
-			if (is != null) {
-				is.close();
-			}
 		}
-		return sw != null ? sw.toString() : null;
 	}
 
 }

@@ -40,7 +40,7 @@ public class XmlValidator {
 			factory.setNamespaceAware(true);
 	      
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-			SAXParser parser = null;
+			SAXParser parser;
 			
 			factory.setSchema(schemaFactory.newSchema(getClass().getResource(SCHEMA_LOCATION)));
 			parser = factory.newSAXParser();

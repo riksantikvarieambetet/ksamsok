@@ -17,7 +17,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
@@ -259,6 +258,11 @@ public class SamsokContentHelperTest {
 
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTNAME, "Hj\u00e4lmhamrande");
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTAUTH, "Hj\u00e4lmhamrarf\u00f6rbundet");
+
+
+		assertEquals("Felaktigt värde för thumbnailSource", "http://localhost/thumbnail.jpg", doc.getFieldValue(ContentHelper.IX_THUMBNAIL_SOURCE));
+		assertEquals("Felaktigt värde för lowresSource", "http://localhost/lowres.jpg", doc.getFieldValue(ContentHelper.IX_LOWRES_SOURCE));
+		assertEquals("Felaktigt värde för highresSource", "http://localhost/highres.jpg", doc.getFieldValue(ContentHelper.IX_HIGHRES_SOURCE));
 
 	}
 
@@ -544,7 +548,6 @@ public class SamsokContentHelperTest {
 
 	private String loadTestFileAsString(String fileName) throws Exception {
 		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		InputStream is = null;
 		StringWriter sw = null;
 		try {
 			// förutsätter att testfallen körs med projektkatalogen som cwd
@@ -558,14 +561,11 @@ public class SamsokContentHelperTest {
 			sw = new StringWriter(initialSize);
 			Result result = new StreamResult(sw);
 	        xformer.transform(source, result);
+	        return sw.toString();
 		} finally {
 			if (sw != null) {
 				sw.close();
 			}
-			if (is != null) {
-				is.close();
-			}
 		}
-		return sw != null ? sw.toString() : null;
 	}
 }

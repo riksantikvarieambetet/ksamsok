@@ -17,15 +17,13 @@ public class SimpleHarvestJob extends HarvestJob {
 	}
 
 	@Override
-	protected ServiceMetadata performIdentify(HarvestService service)
-			throws Exception {
+	protected ServiceMetadata performIdentify(HarvestService service) {
 		return new ServiceMetadata(ServiceMetadata.D_TRANSIENT, ServiceMetadata.G_DAY);
 	}
 
 	@Override
-	protected List<ServiceFormat> performGetFormats(HarvestService service)
-			throws Exception {
-		final List<ServiceFormat> list = new ArrayList<ServiceFormat>(1);
+	protected List<ServiceFormat> performGetFormats(HarvestService service) {
+		final List<ServiceFormat> list = new ArrayList<>(1);
 		list.add(new ServiceFormat("oai_dc",
 				"http://www.openarchives.org/OAI/2.0/oai_dc/",
 				"http://www.openarchives.org/OAI/2.0/oai_dc.xsd"));
@@ -35,7 +33,7 @@ public class SimpleHarvestJob extends HarvestJob {
 	@Override
 	protected int performGetRecords(HarvestService service,
 			ServiceMetadata sm, ServiceFormat f, File storeTo, StatusService ss) throws Exception {
-		int result = 0;
+		int result;
 		if (logger.isDebugEnabled()) {
 			logger.debug(service.getId() + " - Hämtar " + service.getHarvestURL() + ", senaste hämtning: " + service.getLastHarvestDate());
 		}
