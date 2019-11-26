@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rdf:RDF xmlns:ns5="http://kulturarvsdata.se/ksamsok#" xmlns:ns6="http://xmlns.com/foaf/0.1/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:geoF="http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#">
+    <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
+    <ns5:buildDate>2010-01-22</ns5:buildDate>
+    <ns5:createdDate>2006-01-01</ns5:createdDate>
+    <ns5:dataQuality rdf:resource="http://kulturarvsdata.se/resurser/DataQuality#processed"/>
+    <ns5:itemKeyWord>Hjälm</ns5:itemKeyWord>
+    <ns5:itemTitle>Gustav Vasas hjälm</ns5:itemTitle>
+    <ns5:itemLabel>Hjälm</ns5:itemLabel>
+    <ns5:itemType rdf:resource="http://kulturarvsdata.se/resurser/EntityType#object"/>
+    <ns5:itemClass>http://raa.se/test/itemClass#test</ns5:itemClass>
+    <ns5:itemClassName>Test</ns5:itemClassName>
+    <ns5:itemMotiveWord>Hjälm</ns5:itemMotiveWord>
+    <ns5:itemMotiveWord>Huvudbonad</ns5:itemMotiveWord>
+    <ns5:itemTechnique>gjuten</ns5:itemTechnique>
+    <ns5:itemStyle>tuff</ns5:itemStyle>
+    <ns5:itemColor>metall</ns5:itemColor>
+    <ns5:itemLicense>http://kulturarvsdata.se/resurser/license#public</ns5:itemLicense>
+    <ns5:ksamsokVersion>0.97</ns5:ksamsokVersion>
+    <ns5:lastChangedDate>2009-03-06</ns5:lastChangedDate>
+    <ns5:mediaType>text/html</ns5:mediaType>
+        <ns5:presentation xmlns:pres="http://kulturarvsdata.se/presentation#" rdf:parseType="Literal"><pres:item><pres:id>2</pres:id><pres:entityUri>http://kulturarvsdata.se/raa/niklas/2</pres:entityUri><pres:dataQuality>Bearbetad</pres:dataQuality><pres:type>Föremål</pres:type><pres:idLabel>Gustav Vasas hjälm</pres:idLabel><pres:itemLabel>Hjälm</pres:itemLabel><pres:description>Text som beskriver Gustav Vasas hjälm</pres:description><pres:context><pres:nameLabel>Gustav Vasas hjälm</pres:nameLabel></pres:context><pres:representations><pres:representation format="RDF">http://kulturarvsdata.se/raa/niklas/2</pres:representation><pres:representation format="Presentation">http://kulturarvsdata.se/raa/niklas/xml/2</pres:representation><pres:representation format="HTML">http://www.livrustkammaren.se/default.asp?id=4916&amp;ptid=&amp;refid=4984&amp;filename=&amp;xmlfilename=</pres:representation></pres:representations><pres:organization>Riksantikvarieämbetet</pres:organization><pres:organizationShort>RAÄ</pres:organizationShort><pres:service>Niklas Test</pres:service><pres:version>0.97</pres:version><pres:buildDate>1/22/10 2:55 PM</pres:buildDate></pres:item></ns5:presentation>
+    <ns5:serviceName>test</ns5:serviceName>
+    <ns5:serviceOrganization>TEST</ns5:serviceOrganization>
+    <ns5:subject rdf:resource="http://kulturarvsdata.se/resurser/Subject#culturalHistory"/>
+    <ns5:collection>En samling</ns5:collection>
+    <ns5:theme>http://kulturarvsdata.se/resurser/Theme#test</ns5:theme>
+    <ns5:url>http://www.livrustkammaren.se/default.asp?id=4916&amp;ptid=&amp;refid=4984&amp;filename=&amp;xmlfilename=</ns5:url>
+    <ns5:thumbnail>http://www.livrustkammaren.se/livrustkammaren/Redaktionellt/Global/Bilder/hjalm.jpg</ns5:thumbnail>
+    <ns5:isRelatedTo rdf:resource="http://kulturarvsdata.se/raa/test/2"/>
+    <ns5:containsInformationAbout rdf:resource="http://kulturarvsdata.se/raa/test/3"/>
+    <ns5:containsObject rdf:resource="http://kulturarvsdata.se/raa/test/4"/>
+    <ns5:hasBeenUsedIn rdf:resource="http://kulturarvsdata.se/raa/test/5"/>
+    <ns5:hasChild rdf:resource="http://kulturarvsdata.se/raa/test/6"/>
+	<ns5:hasFind rdf:resource="http://kulturarvsdata.se/raa/test/7"/>
+	<ns5:hasImage rdf:resource="http://kulturarvsdata.se/raa/test/8"/>
+	<ns5:hasObjectExample rdf:resource="http://kulturarvsdata.se/raa/test/9"/>
+	<ns5:hasObjectExample rdf:resource="http://kulturarvsdata.se/raa/test/10"/>
+	<ns5:hasParent rdf:resource="http://kulturarvsdata.se/raa/test/11"/>
+	<ns5:hasPart rdf:resource="http://kulturarvsdata.se/raa/test/12"/>
+	<ns5:isDescribedBy rdf:resource="http://kulturarvsdata.se/raa/test/13"/>
+	<ns5:isFoundIn rdf:resource="http://kulturarvsdata.se/raa/test/14"/>
+	<ns5:isPartOf rdf:resource="http://kulturarvsdata.se/raa/test/15"/>
+	<ns5:isVisualizedBy rdf:resource="http://kulturarvsdata.se/raa/test/16"/>
+	<owl:sameAs rdf:resource="http://kulturarvsdata.se/raa/test/17"/>
+	<ns5:visualizes rdf:resource="http://kulturarvsdata.se/raa/test/18"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_0">
+    <ns5:name>Föremål</ns5:name>
+    <ns5:type>Namn</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemName"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_1">
+    <ns5:desc>Text som beskriver Gustav Vasas hjälm</ns5:desc>
+    <ns5:type>Beskrivning</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemDescription"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_2">
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#create"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns5:coordinates xmlns:gml="http://www.opengis.net/gml" rdf:parseType="Literal"><gml:Point srsName="EPSG:4326"><gml:coordinates cs="," decimal="." ts=" ">18.072394042188,59.3270266104628</gml:coordinates></gml:Point></ns5:coordinates>
+    <ns5:fromTime>1540</ns5:fromTime>
+    <ns5:toTime>1541</ns5:toTime>
+    <ns5:eventName>Hjälmhamrande</ns5:eventName>
+    <ns5:eventAuth>Hjälmhamrarförbundet</ns5:eventAuth>
+    <ns6:title>Smed</ns6:title>
+    <ns6:name>Kunz Lochner</ns6:name>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_3">
+    <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#use"/>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns5:placeName>Stockholm</ns5:placeName>
+    <ns5:cadastralUnit>Stockholm 1:1</ns5:cadastralUnit>
+    <ns5:placeTermId>4711</ns5:placeTermId>
+    <ns5:placeTermAuth>Vaktmästaren</ns5:placeTermAuth>
+    <ns5:continentName>Europa</ns5:continentName>
+    <ns5:countryName>Sverige</ns5:countryName>
+    <ns5:countyName>Stockholm</ns5:countyName>
+    <ns5:municipalityName>Stockholm</ns5:municipalityName>
+    <ns5:provinceName>Uppland</ns5:provinceName>
+    <ns5:parishName>Stockholm</ns5:parishName>
+    <geoF:country rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/country#se" />
+    <geoF:county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01" />
+    <geoF:municipality rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/municipality#0180" />
+    <geoF:province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up" />
+    <geoF:parish rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/parish#91" />
+    <ns6:firstName>Gustav</ns6:firstName>
+    <ns6:surname>Vasa</ns6:surname>
+    <ns6:gender>male</ns6:gender>
+    <ns6:organization>Kungarna</ns6:organization>
+    <ns6:title>Kung</ns6:title>
+    <ns5:nameId>59878606</ns5:nameId>
+    <ns5:nameAuth>VIAF</ns5:nameAuth>
+    <ns5:fromTime>1542</ns5:fromTime>
+    <ns5:toTime>1560</ns5:toTime>
+    <ns5:fromPeriodName>Omodern tid</ns5:fromPeriodName>
+    <ns5:toPeriodName>Modern tid</ns5:toPeriodName>
+    <ns5:fromPeriodId>1234</ns5:fromPeriodId>
+    <ns5:toPeriodId>5678</ns5:toPeriodId>
+    <ns5:periodAuth>Tidsoptimisterna</ns5:periodAuth>
+    <ns6:name>Gustav Vasa</ns6:name>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_4">
+    <ns5:spec>Huvudsak</ns5:spec>
+    <ns5:type>Name</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemSpecification"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_5">
+    <ns5:material>metall</ns5:material>
+    <ns5:type>Huvudmaterial</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMaterial"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_6">
+    <ns5:number>4711</ns5:number>
+    <ns5:type>Hjämnummer</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemNumber"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="bNode_7">
+	<ns5:byline>Bengt A Lundberg</ns5:byline>
+	<ns5:copyright>Riksantikvarieämbetet</ns5:copyright>
+	<ns5:lowresSource>http://localhost/lowres.jpg</ns5:lowresSource>
+	<ns5:mediaMotiveWord>Stockholms slott</ns5:mediaMotiveWord>
+	<ns5:mediaType>image/jpeg</ns5:mediaType>
+    <!-- Ska generera fel då den inte har mediaLicense
+	<ns5:mediaLicense>http://kulturarvsdata.se/resurser/License#test</ns5:mediaLicense>
+	-->
+	<ns5:thumbnailSource>http://localhost/thumbnail.jpg</ns5:thumbnailSource>
+	<rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Image" />
+</rdf:Description>
+<rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
+    <ns5:context rdf:nodeID="bNode_2"/>
+    <ns5:context rdf:nodeID="bNode_3"/>
+    <ns5:itemDescription rdf:nodeID="bNode_1"/>
+    <ns5:itemName rdf:nodeID="bNode_0"/>
+    <ns5:itemSpecification rdf:nodeID="bNode_4"/>
+    <ns5:itemMaterial rdf:nodeID="bNode_5"/>
+    <ns5:itemNumber rdf:nodeID="bNode_6"/>
+    <ns5:image rdf:nodeID="bNode_7"/>
+</rdf:Description>
+</rdf:RDF>

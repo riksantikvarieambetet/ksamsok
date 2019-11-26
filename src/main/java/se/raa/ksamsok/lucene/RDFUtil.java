@@ -72,8 +72,7 @@ public class RDFUtil {
 				}
 			} else if (s.getObject().isURIResource()){
 				value = getReferenceValue(s.getObject().asResource(), ip, relations, ref);
-				// lägg till i buffer bara om detta är en uri vi ska slå upp värde för
-				if (value != null && ip != null && ip.translateURI()) {
+				if (value != null) {
 					if (buf.length() > 0) {
 						buf.append(sep);
 					}

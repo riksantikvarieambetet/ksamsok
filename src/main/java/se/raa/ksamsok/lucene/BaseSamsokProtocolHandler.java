@@ -465,7 +465,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 */
 	protected void extractImageNodeInformation(Resource cS) throws Exception {
 		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
-		extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip);
+		if (extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip) == null) {
+			throw new Exception("Missing mediaLicense for identifier " + subject.toString());
+		};
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
 		extractValue(model, cS, getURIRef(uri_rMediaMotiveWord), null, ip);
 		ip.setCurrent(IX_THUMBNAIL_SOURCE, false);

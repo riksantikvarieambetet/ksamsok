@@ -7,6 +7,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.solr.common.SolrInputDocument;
+import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.HarvestService;
@@ -84,8 +85,43 @@ public class Protocol_1_11_Test {
 		}
 	}
  */
-	
-	
+
+	@Test
+	public void testNoMediaLicense() throws Exception {
+		String rdf = loadTestFileAsString("hjalm_1.11_felaktig.rdf");
+		Model model = RDFUtil.parseModel(rdf);
+		assertNotNull("Ingen graf, fel på rdf:en?", model);
+
+		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+		SimpleSelector selector = new SimpleSelector ((Resource) null, rdfType, samsokEntity);
+
+		Resource s = null;
+		StmtIterator iter = model.listStatements(selector);
+		while (iter.hasNext()){
+			if (s != null) {
+				throw new Exception("Ska bara finnas en entity i rdf-grafen");
+			}
+			s = iter.next().getSubject();
+		}
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_11(model, s);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		LinkedList<String> relations = new LinkedList<String>();
+		List<String> gmlGeometries = new LinkedList<String>();
+		try {
+			SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+			Assert.fail("Was expecting an exception due to missing mediaLicense");
+		} catch (Exception e) {
+			// That's ok, there should be an exception thrown here
+		}
+	}
+
+
+
+
+
+
 	@Test
 	public void testParseMedia() throws Exception {
 		String rdf = loadTestFileAsString("media.rdf");
