@@ -125,6 +125,7 @@
 	<ns5:mediaType>image/jpeg</ns5:mediaType>
 	<ns5:mediaLicense>http://kulturarvsdata.se/resurser/License#test</ns5:mediaLicense>
 	<ns5:thumbnailSource>http://localhost/thumbnail.jpg</ns5:thumbnailSource>
+    <ns5:highresSource>http://localhost/highres.jpg</ns5:highresSource>
 	<rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Image" />
 </rdf:Description>
 <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
