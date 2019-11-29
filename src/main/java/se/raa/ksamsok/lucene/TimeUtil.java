@@ -30,20 +30,30 @@ public class TimeUtil {
 		String result = null;
 		try {
 			// tills vidare godkänner vi också "x f.kr" och "y e.kr" skiftlägesokänsligt här
-			int dotkrpos = value.toLowerCase().indexOf(".kr");
+			value = value.toLowerCase();
+			int dotkrpos = value.indexOf(".kr");
 			int year;
 			if (dotkrpos > 0) {
 				year = Integer.parseInt(value.substring(0, dotkrpos - 1).trim());
+				boolean canBeNegative = false;
 				final char character = value.charAt(dotkrpos - 1);
 				switch (character) {
-				case 'F':
 				case 'f':
-					year = -year + 1; // 1 fkr är år 0
+					// vi godtar inte 0 f.Kr (eller negativa år före kristus)
+					if (year > 0 ) {
+						// TODO: fundera på om 1 före kristus verkligen ska vara år 0 - år 0 finns väl inte?
+						year = -year + 1; // 1 fkr är år 0
+						canBeNegative = true;
+					} else {
+						throw new NumberFormatException();
+					}
 					// obs - inget break
-				case 'E':
 				case 'e':
 					// TODO: "numerfixen" görs numera på solr-sidan, ändra returtyp?
-					result = String.valueOf(year);
+					// här måste året vara icke-negativt (men 0 är ok)
+					if (canBeNegative || year >= 0) {
+						result = String.valueOf(year);
+					}
 					//result = transformNumberToLuceneString(year);
 					break;
 					default:
