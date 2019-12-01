@@ -186,13 +186,17 @@ public class TimeUtil {
 
 	static String decadeString(Integer aInteger) {
 		Integer decadeFloor=(aInteger/10)*10;
-		if (decadeFloor<0) decadeFloor-=10;
+		if (aInteger < 0) {
+			decadeFloor -= 10;
+		}
         return String.valueOf(decadeFloor);
 	}
 
 	static String centuryString(Integer aInteger) {
 		Integer centuryFloor=(aInteger/100)*100;
-		if (centuryFloor<0) centuryFloor-=100;
+		if (aInteger < 0) {
+			centuryFloor -= 100;
+		}
         return String.valueOf(centuryFloor);
 	}
 	
