@@ -97,7 +97,6 @@ public class Search extends AbstractSearchMethod {
 	// bättre och snabbare vore att lagra fälten i solr och hämta därifrån,
 	// men detta är snabbare att implementera och kräver inte med disk för solr-indexet
 	// specialvärden/variabler för valbara fält
-	private static final String FIELD_THUMBNAIL = "thumbnail";
 	private static final String FIELD_URL = "url";
 	private static final String FIELD_LON = "lon";
 	private static final String FIELD_LAT = "lat";
@@ -105,7 +104,7 @@ public class Search extends AbstractSearchMethod {
 	private static final SamsokContentHelper sch = new SamsokContentHelper();
 	// specialhanterade fält som antingen kräver extra hantering eller som inte blir vettiga
 	private static final List<String> extraFields = Collections.unmodifiableList(
-		Arrays.asList(FIELD_THUMBNAIL, FIELD_LON, FIELD_LAT, FIELD_URL));
+		Arrays.asList(FIELD_LON, FIELD_LAT, FIELD_URL));
 	private static final List<String> disallowedFields = Collections.unmodifiableList(
 		Arrays.asList(ContentHelper.IX_ADDEDTOINDEXDATE, // blir inte rätt beräknat med dummy-tjänst
 			ContentHelper.IX_BOUNDING_BOX, // bara för sök
@@ -419,18 +418,6 @@ public class Search extends AbstractSearchMethod {
 				SolrInputDocument resDoc = sch.createSolrDocument(dummyService, content, new Date());
 				// nödvändigt då createSolrDocument lägger in felmeddelanden mm
 				ContentHelper.getAndClearProblemMessages();
-				// (ful-)hämta ut tumnagel då den inte indexeras
-				// alternativet är att parsa rdf:en och hämta ut den, men det skulle fn innebära
-				// dubbelparsning av rdf:en och iom att detta med att gå via ett solr-dokument
-				// redan är långsamt och troligen är en temporär lösning så får det bli så här
-				// tills vidare (motsvarar hämtning av SamsokProtocol.uri_rThumbnail) och
-				// förhoppningsvis funkar det för så gott som alla fall
-				if (fields.contains(FIELD_THUMBNAIL)) {
-					String thumb = StringUtils.substringBetween(content, "thumbnail>", "<");
-					if (!StringUtils.isEmpty(thumb)) {
-						resDoc.addField(FIELD_THUMBNAIL, thumb);
-					}
-				}
 				content = "";
 				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder docBuilder;
