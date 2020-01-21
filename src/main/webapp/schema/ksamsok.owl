@@ -549,7 +549,7 @@
 
         <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#form">
             <rdfs:comment></rdfs:comment>
-            <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMark/>
+            <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMark"/>
             <rdfs:range rdf:resource="&xsd;string"/>
         </owl:DatatypeProperty>
 
