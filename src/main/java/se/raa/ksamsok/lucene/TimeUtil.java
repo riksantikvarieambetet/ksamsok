@@ -39,6 +39,10 @@ public class TimeUtil {
 				final char character = value.charAt(dotkrpos - 1);
 				switch (character) {
 				case 'f':
+					// TODO: Nu så tar vi * f.kr år och tar detta -1.
+					// egentligen vill vi låta det vara som det är om året explicit inte är 0.
+					// i humaniora så avser 100 f.kr 100 f.kr och inte 99 f.kr.
+
 					// vi godtar inte 0 f.Kr (eller negativa år före kristus)
 					if (year > 0 ) {
 						// TODO: fundera på om 1 före kristus verkligen ska vara år 0 - år 0 finns väl inte?
