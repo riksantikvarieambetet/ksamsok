@@ -317,7 +317,14 @@ public class GetRelations extends AbstractAPIMethod {
 						String orgTypePart = null; // håller orginaltypen om vi gör en inversupplagning
 						String typePart = parts[0];
 						String uriPart = parts[1];
+
+						if (ContentHelper.IX_REPLACES.equals(typePart) && uriPart.equals(uri)) {
+							//läge där replaces-länken pekar på "det här" objektet, vi måste vända på den
+							isSourceDoc = false;
+						}
+
 						if (!isSourceDoc) {
+							// "bakvänd" länk, eller
 							if (!itemUrisSet.contains(uriPart)) {
 								// inte för aktuellt objekt
 								continue;
