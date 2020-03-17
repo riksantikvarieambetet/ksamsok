@@ -270,6 +270,36 @@ public class GetRelations extends AbstractAPIMethod {
 					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 					itemUris.add(itemId);
 				}
+
+				// Gör samma sak med replaces
+
+				SolrQuery replacesQuery = new SolrQuery();
+				replacesQuery.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+
+				replacesQuery.setFields(ContentHelper.IX_REPLACES);
+				replacesQuery.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
+				qr = searchService.query(replacesQuery);
+				docs = qr.getResults();
+
+
+				for (SolrDocument doc : docs) {
+					Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
+					if (replacesIds != null) {
+						for (Object replacesId : replacesIds) {
+							itemUris.add((String) replacesId);
+						}
+					}
+				}
+
+				// hämta andra poster som säger att de replaces denna och lägg till dem som "källposter"
+				replacesQuery.setFields(ContentHelper.IX_ITEMID);
+				replacesQuery.setQuery(ContentHelper.IX_REPLACES + ":" + escapedUri);
+				qr = searchService.query(replacesQuery);
+				docs = qr.getResults();
+				for (SolrDocument doc : docs) {
+					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
+					itemUris.add(itemId);
+				}
 			}
 			SolrQuery query = new SolrQuery();
 			query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
@@ -357,6 +387,8 @@ public class GetRelations extends AbstractAPIMethod {
 
 				for (Relation rel: new HashSet<>(relations)) {
 					final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
+
+					// handle sameas
 					query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
 					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ escapedTargetUri);
 					qr = searchService.query(query);
@@ -374,18 +406,36 @@ public class GetRelations extends AbstractAPIMethod {
 						}
 					}
 
-					// Ta fram de objekt som träffarna pekar ut med sameAs
-					query.setFields(ContentHelper.IX_SAMEAS);
+					// and replaces
+					query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
+					query.setQuery(ContentHelper.IX_REPLACES + ":" + escapedTargetUri);
+					qr = searchService.query(query);
+					docs = qr.getResults();
+					for (SolrDocument doc: docs) {
+						String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
+						// ta inte med min uri
+						if (itemUris.contains(itemId)) {
+							continue;
+						}
+						if (!relations.add(new Relation(rel.getRelationType(), itemId, rel.getSource(), rel.getOriginalRelationType()))) {
+							if (logger.isDebugEnabled()) {
+								logger.debug("duplicate rel (from replaces) " + rel);
+							}
+						}
+					}
+
+					// Ta fram de objekt som träffarna pekar ut med replaces
+					query.setFields(ContentHelper.IX_REPLACES);
 					query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedTargetUri);
 					qr = searchService.query(query);
 					docs = qr.getResults();
 					for (SolrDocument doc : docs) {
-						Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
+						Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
 						if (sameAsIds != null) {
 							for (Object sameAsId : sameAsIds) {
 								if (!relations.add(new Relation(rel.getRelationType(), (String) sameAsId, rel.getSource(), rel.getOriginalRelationType()))) {
 									if (logger.isDebugEnabled()) {
-										logger.debug("duplicate rel (from same as part 2) " + rel);
+										logger.debug("duplicate rel (from replaces part 2) " + rel);
 									}
 								}
 							}

@@ -77,8 +77,11 @@ dependencies {
     compile group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     compile group: 'jstl', name: 'jstl', version: '1.2'
+    compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
-    
+
+
+
     // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
     // and we can't use only xml-apis-xerces for some reason
     providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
