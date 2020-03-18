@@ -318,13 +318,13 @@ public class GetRelations extends AbstractAPIMethod {
 						String typePart = parts[0];
 						String uriPart = parts[1];
 
-						if (ContentHelper.IX_REPLACES.equals(typePart) && uriPart.equals(uri)) {
-							//läge där replaces-länken pekar på "det här" objektet, vi måste vända på den
+						if ((ContentHelper.IX_SAMEAS.equals(typePart) || ContentHelper.IX_REPLACES.equals(typePart)) && uriPart.equals(uri)) {
+							//läge där sameas/replaces-länken pekar på "det här" objektet, vi måste vända på den
 							isSourceDoc = false;
 						}
 
 						if (!isSourceDoc) {
-							// "bakvänd" länk, eller
+							// "bakvänd" länk, eller läge där sameas/replaces-länken pekar på "det här" objektet, vi måste vända på den
 							if (!itemUrisSet.contains(uriPart)) {
 								// inte för aktuellt objekt
 								continue;
@@ -355,19 +355,24 @@ public class GetRelations extends AbstractAPIMethod {
 							}
 						}
 
-						String source = isSourceDoc ? SOURCE_DIRECT : SOURCE_REVERSE;
-						Relation rel = new Relation(typePart, uriPart, source, orgTypePart);
-						if (!relations.add(rel)) {
-							if (logger.isDebugEnabled()) {
-								logger.debug("duplicate rel " + rel);
+						// vi vill inte ha med relationer som pekar på "det här" objektet
+						if(!uriPart.equals(uri)) {
+							String source = isSourceDoc ? SOURCE_DIRECT : SOURCE_REVERSE;
+							Relation rel = new Relation(typePart, uriPart, source, orgTypePart);
+
+							if (!relations.add(rel)) {
+								if (logger.isDebugEnabled()) {
+									logger.debug("duplicate rel " + rel);
+								}
+							}
+							// optimering genom att göra return direkt vid detta fall, annars ska man
+							// hoppa ur denna loop och den utanför den och sen filtrera
+							// funkar dock bara för fallet "alla"
+							if (maxCount > 0 && isAll && relations.size() == maxCount) {
+								return;
 							}
 						}
-						// optimering genom att göra return direkt vid detta fall, annars ska man
-						// hoppa ur denna loop och den utanför den och sen filtrera
-						// funkar dock bara för fallet "alla"
-						if (maxCount > 0 && isAll && relations.size() == maxCount) {
-							return;
-						}
+
 					}
 				}
 			}
@@ -405,9 +410,12 @@ public class GetRelations extends AbstractAPIMethod {
 						Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
 						if (sameAsIds != null) {
 							for (Object sameAsId : sameAsIds) {
-								if (!relations.add(new Relation(rel.getRelationType(), (String) sameAsId, rel.getSource(), rel.getOriginalRelationType()))) {
-									if (logger.isDebugEnabled()) {
-										logger.debug("duplicate rel (from same as part 2) " + rel);
+								// ta inte med mig själv
+								if (!sameAsId.equals(uri)) {
+									if (!relations.add(new Relation(rel.getRelationType(), (String) sameAsId, rel.getSource(), rel.getOriginalRelationType()))) {
+										if (logger.isDebugEnabled()) {
+											logger.debug("duplicate rel (from same as part 2) " + rel);
+										}
 									}
 								}
 							}
@@ -416,9 +424,12 @@ public class GetRelations extends AbstractAPIMethod {
 						Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
 						if (replacesIds != null) {
 							for (Object replacesId : replacesIds) {
-								if (!relations.add(new Relation(rel.getRelationType(), (String) replacesId, rel.getSource(), rel.getOriginalRelationType()))) {
-									if (logger.isDebugEnabled()) {
-										logger.debug("duplicate rel (from replaces part 2) " + rel);
+								// ta inte med mig själv
+								if (!replacesId.equals(uri)) {
+									if (!relations.add(new Relation(rel.getRelationType(), (String) replacesId, rel.getSource(), rel.getOriginalRelationType()))) {
+										if (logger.isDebugEnabled()) {
+											logger.debug("duplicate rel (from replaces part 2) " + rel);
+										}
 									}
 								}
 							}
