@@ -195,6 +195,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	protected boolean timeInfoExists = false;
 	protected boolean geoDataExists = false;
 
+	boolean requireMediaLicense = true;
+
 	
 	protected BaseSamsokProtocolHandler(Model model, Resource subject) {
 		logger = getLogger();
@@ -218,10 +220,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 	/**
 	 * Skapar en URIReference för aktuell graf och cachar den.
-	 * @param elementFactory factory
 	 * @param uri uri
 	 * @return en URIReference
-	 * @throws GraphException vid fel
 	 */
 	protected Property getURIRef(URI uri){
 		Property ref = mapper.get(uri);
@@ -443,7 +443,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * Tar bildnoder och extraherar och indexerar information ur dem.
 	 * Hanterar de index som gällde för protokollversioner till och med 1.0, se dok.
 	 * Överlagra i subklasser vid behov.
-	 * 
+	 *
 	 * @throws Exception vid fel
 	 */
 	protected void extractImageNodes() throws Exception {
@@ -470,10 +470,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 	 * @throws Exception vid fel
 	 */
 	protected void extractImageNodeInformation(Resource cS) throws Exception {
-		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
-		if (extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip) == null) {
-			throw new Exception("Missing mediaLicense for identifier " + subject.toString());
-		};
+		extractMediaLicense(cS);
 		ip.setCurrent(IX_MEDIAMOTIVEWORD);
 		extractValue(model, cS, getURIRef(uri_rMediaMotiveWord), null, ip);
 		ip.setCurrent(IX_THUMBNAIL_SOURCE, false);
@@ -482,6 +479,15 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		extractValue(model, cS, getURIRef(uri_rLowresSource), null, ip);
 		ip.setCurrent(IX_HIGHRES_SOURCE, false);
 		extractValue(model, cS, getURIRef(uri_rHighresSource), null, ip);
+	}
+
+	void extractMediaLicense(Resource cS) throws Exception {
+		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
+		final String mediaLicense = extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip);
+		if (requireMediaLicense && mediaLicense == null) {
+			throw new Exception("Missing mediaLicense for identifier " + subject.toString());
+		}
+		;
 	}
 
 	/**
@@ -861,6 +867,12 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			}
 		}
 		return value;
+	}
+
+
+	@Override
+	public void setRequireMediaLicense(boolean requireMediaLicense) {
+		this.requireMediaLicense = requireMediaLicense;
 	}
 
 	/**

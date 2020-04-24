@@ -151,7 +151,7 @@ public class OAIPMHHarvestJobTest {
 			NodeList graphs = doc.getElementsByTagNameNS("http://www.w3.org/1999/02/22-rdf-syntax-ns#","RDF");
 			assertNotNull("Inga rdf-grafer", graphs);
 			assertEquals("Fel antal rdf-grafer", records, graphs.getLength());
-			SamsokContentHelper samsokContentHelper = new SamsokContentHelper();
+			SamsokContentHelper samsokContentHelper = new SamsokContentHelper(true);
 			Date added = new Date();
 			service = new HarvestServiceImpl();
 			service.setId("TEST");
@@ -199,7 +199,7 @@ public class OAIPMHHarvestJobTest {
 			NodeList graphs = doc.getElementsByTagNameNS("http://www.w3.org/1999/02/22-rdf-syntax-ns#","RDF");
 			assertNotNull("Inga rdf-grafer", graphs);
 			assertEquals("Fel antal rdf-grafer", records, graphs.getLength());
-			SamsokContentHelper samsokContentHelper = new SamsokContentHelper();
+			SamsokContentHelper samsokContentHelper = new SamsokContentHelper(true);
 			Date added = new Date();
 			service = new HarvestServiceImpl();
 			service.setId("TEST");

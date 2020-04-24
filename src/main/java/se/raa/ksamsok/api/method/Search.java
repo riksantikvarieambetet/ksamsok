@@ -101,7 +101,7 @@ public class Search extends AbstractSearchMethod {
 	private static final String FIELD_LON = "lon";
 	private static final String FIELD_LAT = "lat";
 	// återanvänd samma kod som används för indexering
-	private static final SamsokContentHelper sch = new SamsokContentHelper();
+	private static final SamsokContentHelper sch = new SamsokContentHelper(false);
 	// specialhanterade fält som antingen kräver extra hantering eller som inte blir vettiga
 	private static final List<String> extraFields = Collections.unmodifiableList(
 		Arrays.asList(FIELD_LON, FIELD_LAT, FIELD_URL));

@@ -36,4 +36,12 @@ public interface SamsokProtocolHandler {
 	 * @return värde eller null
 	 */
 	String lookupURIValue(String uri);
+
+
+	/**
+	 * Om requireMediaLicense är satt till true, krävs att objektet har mediaLicense för att skapa luceneDocument
+	 * @param requireMediaLicense
+	 */
+	void setRequireMediaLicense(boolean requireMediaLicense);
+
 }
