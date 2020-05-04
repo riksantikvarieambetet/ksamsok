@@ -46,11 +46,16 @@ public class SamsokContentHelper extends ContentHelper {
 
 	private static DocumentBuilderFactory xmlFact;
 	private static TransformerFactory xformerFact;
+	private boolean requireMediaLicense;
 
 	static {
 		xmlFact = DocumentBuilderFactory.newInstance();
 	    xmlFact.setNamespaceAware(true);
 	    xformerFact = TransformerFactory.newInstance();
+	}
+
+	public SamsokContentHelper(boolean requireMediaLicense) {
+		this.requireMediaLicense = requireMediaLicense;
 	}
 
 	@Override
@@ -103,6 +108,8 @@ public class SamsokContentHelper extends ContentHelper {
 			LinkedList<String> gmlGeometries = new LinkedList<>();
 			LinkedList<String> relations = new LinkedList<>();
 			SamsokProtocolHandler sph = getProtocolHandlerForVersion(protocolVersion, model, subject);
+
+			sph.setRequireMediaLicense(requireMediaLicense);
 			luceneDoc = sph.handle(service, added, relations, gmlGeometries);
 
 			// den unika identifieraren och protokollversionen

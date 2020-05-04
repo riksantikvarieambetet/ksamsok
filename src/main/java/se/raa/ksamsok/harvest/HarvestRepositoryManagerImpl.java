@@ -38,7 +38,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 
 	private static final Object SYNC = new Object(); // används för att synka skrivningar till solr
 
-	private static final ContentHelper samsokContentHelper = new SamsokContentHelper();
+	private static final ContentHelper samsokContentHelper = new SamsokContentHelper(true);
 
 	// antal solr-dokument som skickas per batch, för få -> mycket io, för många -> mycket minne
 	private static final int solrBatchSize = 50;
