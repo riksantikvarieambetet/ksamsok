@@ -24,4 +24,9 @@
 		<description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</description>
 	</EntitySuperType>
 
+	<EntitySuperType rdf:ID="information">
+		<name>Informationsobjekt</name>
+		<description>Immateriella objekt med identifierbar struktur, som t.ex. historier, berättelser, dikter, datamängder, källkod, mm.</description>
+	</EntitySuperType>
+
 </rdf:RDF>
