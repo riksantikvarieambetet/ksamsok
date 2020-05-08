@@ -114,4 +114,14 @@
 		<description>En övergripande definition av ett event eller ett objekt t.ex. av krig.</description>
 	</EntityType>
 
+	<EntityType rdf:ID="story">
+		<name>Berättelse</name>
+		<description>En berättelse om t ex ett föremål eller fristående. Underkategori till Informationsobjekt.</description>
+	</EntityType>
+
+	<EntityType rdf:ID="3d-model">
+		<name>3D-modell</name>
+		<description>Information om en digital 3D-modell. Underkategori till Informationsobjekt.</description>
+	</EntityType>
+
 </rdf:RDF>
