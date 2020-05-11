@@ -135,11 +135,7 @@ table
   				<td><xsl:value-of select="postadress"/></td>
   			</tr>
   			<tr>
-  				<td>Kontaktperson:</td>
-  				<td><xsl:value-of select="kontaktperson"/></td>
-  			</tr>
-  			<tr>
-  				<td>E-postadress till kontaktperson:</td>
+  				<td>E-postadress till funktionsbrevlåda:</td>
   				<td><xsl:value-of select="epostkontaktperson"/></td>
   			</tr>
   			<tr>

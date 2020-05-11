@@ -97,13 +97,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="title">Kontaktperson för leverans till K-Sams&ouml;k:</td>
-								<td>
-									<input type="text" name="kontaktperson" value="${requestScope.orgData.kontaktperson }"/>
-								</td>
-							</tr>
-							<tr>
-								<td class="title">E-post till kontaktperson:</td>
+								<td class="title">E-post till funktionsbrevl&aring;da (ej personlig adress):</td>
 								<td>
 									<input type="text" name="epostKontaktperson" value="${requestScope.orgData.epostKontaktperson }"/>
 								</td>
