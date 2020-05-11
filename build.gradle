@@ -27,6 +27,11 @@ apply plugin: 'java'
 
 repositories {
 
+    // för geotools
+    maven {
+        url = 'https://repo.osgeo.org/repository/release/'
+    }
+
     // för georss-rome måste jcenter stå först, den i mavencentral är trasig...
     jcenter()
     mavenCentral()
@@ -40,13 +45,6 @@ repositories {
     maven {
         url = 'http://maven.icm.edu.pl/artifactory/repo'
     }
-    
-
-    // för geotools
-    maven {
-        url = 'https://repo.osgeo.org/repository/release/'
-    }
-
 }
 
 configurations.all {
