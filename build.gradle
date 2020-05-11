@@ -26,6 +26,7 @@ apply plugin: 'eclipse'
 apply plugin: 'java'
 
 repositories {
+
     // för georss-rome måste jcenter stå först, den i mavencentral är trasig...
     jcenter()
     mavenCentral()
@@ -43,8 +44,9 @@ repositories {
 
     // för geotools
     maven {
-        url = 'http://download.osgeo.org/webdav/geotools/'
+        url = 'https://repo.osgeo.org/repository/release/'
     }
+
 }
 
 configurations.all {
@@ -69,6 +71,14 @@ dependencies {
     compile group: 'rome', name: 'rome', version: '1.0'
     compile group: 'org.z3950.zing', name: 'cql-java', version: '1.10'
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+
+//    compile group: 'org.geotools', name: 'gt-main', version: '22-RC'
+//    compile group: 'org.geotools', name: 'gt-referencing', version: '22-RC'
+//    compile group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '23.0'
+//    compile group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '23.0'
+//    compile group: 'org.geotools', name: 'gt-epsg-wkt', version: '23.0'
+
+
     compile group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
     compile group: 'org.geotools', name: 'gt-main', version: '2.5.6'
     compile group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
