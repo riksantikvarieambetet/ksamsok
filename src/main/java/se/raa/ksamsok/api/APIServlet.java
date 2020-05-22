@@ -1,5 +1,6 @@
 package se.raa.ksamsok.api;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -126,7 +127,8 @@ public class APIServlet extends HttpServlet {
 				} catch (HttpSolrClient.RemoteSolrException e) {
 					// convert into BadParameterEXception so we can use the "diagnostic" method
 					if (e.getMessage().contains("undefined field")) {
-						throw new BadParameterException(e.getMessage(), method.getClass().getName() + ".performMethod()", null, true);
+						throw new BadParameterException("Okänt sökfält: " + StringUtils.substringAfterLast(e.getMessage(), " "),
+								method.getClass().getName() + ".performMethod()", null, true);
 					}
 					throw e;
 				}
