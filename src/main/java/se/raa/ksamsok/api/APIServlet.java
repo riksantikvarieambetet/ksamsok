@@ -2,6 +2,7 @@ package se.raa.ksamsok.api;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.json.JSONException;
 import org.json.XML;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -120,7 +121,16 @@ public class APIServlet extends HttpServlet {
 					resp.setContentType("application/xml; charset=UTF-8");
 				}
 				resp.setHeader("Access-Control-Allow-Origin", "*");
-				method.performMethod();
+				try {
+					method.performMethod();
+				} catch (HttpSolrClient.RemoteSolrException e) {
+					// convert into BadParameterEXception so we can use the "diagnostic" method
+					if (e.getMessage().contains("undefined field")) {
+						throw new BadParameterException(e.getMessage(), method.getClass().getName() + ".performMethod()", null, true);
+					}
+					throw e;
+				}
+
 			} catch (MissingParameterException | BadParameterException e) {
 				resp.setStatus(400);
 				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
@@ -130,6 +140,7 @@ public class APIServlet extends HttpServlet {
 				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
 				diagnostic(out, stylesheet, e);
 			}
+
 		} catch (IOException | ParserConfigurationException | TransformerException e) {
 			resp.setStatus(500);
 			logger.error("In doGet", e);
@@ -139,16 +150,15 @@ public class APIServlet extends HttpServlet {
 
 	/**
 	 * skriver ut felmeddelanden
-	 * 
-	 * @param out
-	 * @param e
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 * @throws TransformerException
-	 * @throws JSONException
+	 *
+	 * @param out Ström att skriva felmeddelandet på
+	 * @param e   exception som orsakat felutskriften
+	 * @throws IOException                  om det inte går att skriva på utströmmen
+	 * @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested.
+	 * @throws TransformerException         If an unrecoverable error occurs during the course of the transformation.
 	 */
 	private void diagnostic(OutputStream out, String stylesheet, APIException e)
-		throws IOException, ParserConfigurationException, TransformerException, JSONException {
+		throws IOException, ParserConfigurationException, TransformerException {
 		logger.warn(e.getClassName() + " - " + e.getDetails());
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
