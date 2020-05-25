@@ -72,17 +72,18 @@ public class OrganizationManager extends DBBasedManagerImpl {
 		Connection c = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Organization org = new Organization();
+		Organization org = null;
 		try {
 			String sql = "SELECT * FROM organisation WHERE kortnamn=?";
 			if (isServOrg) {
 				sql = "SELECT * FROM organisation WHERE serv_org=?";
-			} 
+			}
 			c = ds.getConnection();
 			ps = c.prepareStatement(sql);
 			ps.setString(1, kortnamn);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
+				org = new Organization();
 				setOrgValues(org, rs);
 				DBUtil.closeDBResources(rs, ps, null);
 				rs = null;
@@ -92,7 +93,7 @@ public class OrganizationManager extends DBBasedManagerImpl {
 				ps.setString(1, org.getKortnamn());
 				rs = ps.executeQuery();
 				List<Service> serviceList = new Vector<>();
-				while(rs.next()) {
+				while (rs.next()) {
 					Service s = new Service();
 					s.setNamn(rs.getString("name"));
 					s.setBeskrivning(rs.getString("beskrivning"));

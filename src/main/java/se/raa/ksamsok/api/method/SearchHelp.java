@@ -47,9 +47,6 @@ public class SearchHelp extends AbstractAPIMethod {
 	/**
 	 * skapar ett objekt av SearchHelp
 	 * @param out
-	 * @param indexList
-	 * @param prefix
-	 * @param maxValueCount
 	 * @throws DiagnosticException TODO
 	 */
 	public SearchHelp(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException {
