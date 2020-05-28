@@ -32,9 +32,10 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 
 	/**
 	 * Skapar ett objekt av GetServiceOrganization
+	 * @param serviceProvider provider av {@link APIMethod}
 	 * @param out Skrivaren som används för att skriva resultatet
-	 * @param value kortnamn på organisationen som skall hämtas data om
-	 * @throws DiagnosticException
+	 * @param params map med parametrar till metoden
+	 * @throws DiagnosticException om det inte går att initiera ett xml-dokument
 	 */
 	public GetServiceOrganization(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
@@ -61,8 +62,12 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	@Override
 	protected void generateDocument() {
 		Element result = super.generateBaseDocument();
-		for (Organization org: orgList) {
-			result.appendChild(createInstitution(org));
+		if (orgList == null || orgList.size() == 0) {
+			result.appendChild(createInstitution(null));
+		} else {
+			for (Organization org : orgList) {
+				result.appendChild(createInstitution(org));
+			}
 		}
 		// Echo
 		Element echo = doc.createElement("echo");
@@ -83,75 +88,77 @@ public class GetServiceOrganization extends AbstractAPIMethod {
 	 */
 	protected Element createInstitution(Organization org) {
 		Element institution = doc.createElement("institution");
-		
-		Element kortNamn = doc.createElement("kortnamn");
-		kortNamn.appendChild(doc.createTextNode(org.getServ_org() != null ? org.getServ_org() : ""));
-		institution.appendChild(kortNamn);
-		
-		Element namnSwe = doc.createElement("namnswe");
-		namnSwe.appendChild(doc.createTextNode(org.getNamnSwe() != null ? org.getNamnSwe() : ""));
-		institution.appendChild(namnSwe);
-		
-		Element namnEng = doc.createElement("namneng");
-		namnEng.appendChild(doc.createTextNode(org.getNamnEng() != null ? org.getNamnEng() : ""));
-		institution.appendChild(namnEng);
-		
-		Element beskrivSwe = doc.createElement("beskrivswe");
-		beskrivSwe.appendChild(doc.createTextNode(org.getBeskrivSwe() != null ? org.getBeskrivSwe() : ""));
-		institution.appendChild(beskrivSwe);
-		
-		Element beskrivEng = doc.createElement("beskriveng");
-		beskrivEng.appendChild(doc.createTextNode(org.getBeskrivEng() != null ? org.getBeskrivEng() : ""));
-		institution.appendChild(beskrivEng);
-		
-		Element adress1 = doc.createElement("adress1");
-		adress1.appendChild(doc.createTextNode(org.getAdress1() != null ? org.getAdress1() : ""));
-		institution.appendChild(adress1);
-		
-		Element adress2 = doc.createElement("adress2");
-		adress2.appendChild(doc.createTextNode(org.getAdress2() != null ? org.getAdress2() : ""));
-		institution.appendChild(adress2);
-		
-		Element postAdress = doc.createElement("postadress");
-		postAdress.appendChild(doc.createTextNode(org.getPostadress() != null ? org.getPostadress() : ""));
-		institution.appendChild(postAdress);
-		
-		Element epostKontaktPerson = doc.createElement("epostkontaktperson");
-		epostKontaktPerson.appendChild(doc.createTextNode(org.getEpostKontaktperson() != null ? org.getEpostKontaktperson() : ""));
-		institution.appendChild(epostKontaktPerson);
-		
-		Element websida = doc.createElement("websida");
-		websida.appendChild(doc.createTextNode(org.getWebsida() != null ? org.getWebsida() : ""));
-		institution.appendChild(websida);
-		
-		Element websidaKS = doc.createElement("websidaKS");
-		websidaKS.appendChild(doc.createTextNode(org.getWebsidaKS() !=  null ? org.getWebsidaKS() : ""));
-		institution.appendChild(websidaKS);
-		
-		Element lowResUrl = doc.createElement("lowressurl");//Felstavat?
-		lowResUrl.appendChild(doc.createTextNode(org.getLowressUrl() != null ? org.getLowressUrl() : ""));
-		institution.appendChild(lowResUrl);
-		
-		Element thumbnailUrl = doc.createElement("thumbnailurl");
-		thumbnailUrl.appendChild(doc.createTextNode(org.getThumbnailUrl() != null ? org.getThumbnailUrl() : ""));
-		institution.appendChild(thumbnailUrl);
-		
-		Element services = doc.createElement("services");
-		for (int i = 0; org.getServiceList() != null && i < org.getServiceList().size(); i++) {
-			Service s = org.getServiceList().get(i);
-			Element service = doc.createElement("service");
-			
-			Element namn = doc.createElement("namn");
-			namn.appendChild(doc.createTextNode(s.getNamn() != null ? s.getNamn() : ""));
-			service.appendChild(namn);
-			
-			Element beskrivning = doc.createElement("beskrvning");
-			beskrivning.appendChild(doc.createTextNode(s.getBeskrivning() != null ? s.getBeskrivning() : ""));
-			service.appendChild(beskrivning);
-			
-			services.appendChild(service);
+		if (org != null) {
+
+			Element kortNamn = doc.createElement("kortnamn");
+			kortNamn.appendChild(doc.createTextNode(org.getServ_org() != null ? org.getServ_org() : ""));
+			institution.appendChild(kortNamn);
+
+			Element namnSwe = doc.createElement("namnswe");
+			namnSwe.appendChild(doc.createTextNode(org.getNamnSwe() != null ? org.getNamnSwe() : ""));
+			institution.appendChild(namnSwe);
+
+			Element namnEng = doc.createElement("namneng");
+			namnEng.appendChild(doc.createTextNode(org.getNamnEng() != null ? org.getNamnEng() : ""));
+			institution.appendChild(namnEng);
+
+			Element beskrivSwe = doc.createElement("beskrivswe");
+			beskrivSwe.appendChild(doc.createTextNode(org.getBeskrivSwe() != null ? org.getBeskrivSwe() : ""));
+			institution.appendChild(beskrivSwe);
+
+			Element beskrivEng = doc.createElement("beskriveng");
+			beskrivEng.appendChild(doc.createTextNode(org.getBeskrivEng() != null ? org.getBeskrivEng() : ""));
+			institution.appendChild(beskrivEng);
+
+			Element adress1 = doc.createElement("adress1");
+			adress1.appendChild(doc.createTextNode(org.getAdress1() != null ? org.getAdress1() : ""));
+			institution.appendChild(adress1);
+
+			Element adress2 = doc.createElement("adress2");
+			adress2.appendChild(doc.createTextNode(org.getAdress2() != null ? org.getAdress2() : ""));
+			institution.appendChild(adress2);
+
+			Element postAdress = doc.createElement("postadress");
+			postAdress.appendChild(doc.createTextNode(org.getPostadress() != null ? org.getPostadress() : ""));
+			institution.appendChild(postAdress);
+
+			Element epostKontaktPerson = doc.createElement("epostkontaktperson");
+			epostKontaktPerson.appendChild(doc.createTextNode(org.getEpostKontaktperson() != null ? org.getEpostKontaktperson() : ""));
+			institution.appendChild(epostKontaktPerson);
+
+			Element websida = doc.createElement("websida");
+			websida.appendChild(doc.createTextNode(org.getWebsida() != null ? org.getWebsida() : ""));
+			institution.appendChild(websida);
+
+			Element websidaKS = doc.createElement("websidaKS");
+			websidaKS.appendChild(doc.createTextNode(org.getWebsidaKS() != null ? org.getWebsidaKS() : ""));
+			institution.appendChild(websidaKS);
+
+			Element lowResUrl = doc.createElement("lowressurl");//Felstavat?
+			lowResUrl.appendChild(doc.createTextNode(org.getLowressUrl() != null ? org.getLowressUrl() : ""));
+			institution.appendChild(lowResUrl);
+
+			Element thumbnailUrl = doc.createElement("thumbnailurl");
+			thumbnailUrl.appendChild(doc.createTextNode(org.getThumbnailUrl() != null ? org.getThumbnailUrl() : ""));
+			institution.appendChild(thumbnailUrl);
+
+			Element services = doc.createElement("services");
+			for (int i = 0; org.getServiceList() != null && i < org.getServiceList().size(); i++) {
+				Service s = org.getServiceList().get(i);
+				Element service = doc.createElement("service");
+
+				Element namn = doc.createElement("namn");
+				namn.appendChild(doc.createTextNode(s.getNamn() != null ? s.getNamn() : ""));
+				service.appendChild(namn);
+
+				Element beskrivning = doc.createElement("beskrivning");
+				beskrivning.appendChild(doc.createTextNode(s.getBeskrivning() != null ? s.getBeskrivning() : ""));
+				service.appendChild(beskrivning);
+
+				services.appendChild(service);
+			}
+			institution.appendChild(services);
 		}
-		institution.appendChild(services);
 		
 		return institution;
 	}
