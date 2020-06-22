@@ -36,7 +36,6 @@ $(function(){
 		
 	
 	pausCheck.on('click', function(){
-		$('#runService').prop('disabled', pausCheck.is(':checked') ? true : false);
 		$(paused).val(pausCheck.is(':checked') ? "true" : "false");
 
 	});

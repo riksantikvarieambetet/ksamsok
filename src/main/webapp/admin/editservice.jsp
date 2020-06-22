@@ -84,8 +84,8 @@
 					<% } else { %>
 						<button name="action" value="interrupt" onclick="javascript:return confirm('Vill du verkligen försöka stoppa denna tjänst nu?')">Stoppa körning</button>
 					<% } %>
-					<button name="action" value="reindex" onclick="javascript:return confirm('Vill du verkligen uppdatera indexet för denna tjänst nu?')">Uppdatera index</button>
-					<button name="action" value="emptyindex" onclick="javascript:return confirm('Vill du verkligen ta bort indexet för denna tjänst nu?')">Ta bort index</button>
+					<button name="action" value="reindex" onclick="javascript:return confirm('Vill du verkligen uppdatera indexet för denna tjänst nu?')" <%= (service.getPaused() == true ? "disabled" : "") %>>Uppdatera index</button>
+					<button name="action" value="emptyindex" onclick="javascript:return confirm('Vill du verkligen ta bort indexet för denna tjänst nu?')" <%= (service.getPaused() == true ? "disabled" : "") %>>Ta bort index</button>
 					<button onclick="javascript:window.location='editservice.jsp?serviceId=<%=serviceId%>&showHistory=true'; return false;">Visa historik</button>			
 				<% } else { %>
 					<button name="action" value="new">Skapa</button>
