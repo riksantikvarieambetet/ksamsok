@@ -250,7 +250,6 @@ public class Search extends AbstractSearchMethod {
 				String ident = (String) d.getFieldValue(ContentHelper.IX_ITEMID);
 				String content = getContent(d, ident);
 				if (content != null) {
-					Element record = doc.createElement("record");
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder docBuilder;
 					try {
@@ -262,16 +261,18 @@ public class Search extends AbstractSearchMethod {
 						} else {
 							childNodes = contentDoc.getChildNodes();
 						}
-						for (int i = 0; i < childNodes.getLength(); i++) {
-							// Import all child nodes from rdf document to result document
-							Node imp = doc.importNode(childNodes.item(i), true);
-							record.appendChild(imp);
-						}
 						if (childNodes.getLength() > 0) {
+							Element record = doc.createElement("record");
+							for (int i = 0; i < childNodes.getLength(); i++) {
+								// Import all child nodes from rdf document to result document
+								Node imp = doc.importNode(childNodes.item(i), true);
+								record.appendChild(imp);
+							}
 							Element relScore = doc.createElement("rel:score");
 							relScore.setAttribute("xmlns:rel", "info:srw/extension/2/relevancy-1.0");
 							relScore.appendChild(doc.createTextNode(Float.toString(score)));
 							record.appendChild(relScore);
+							records.appendChild(record);
 						}
 					} catch (ParserConfigurationException e) {
 						logger.error(e);
@@ -288,7 +289,6 @@ public class Search extends AbstractSearchMethod {
 							"Det är problem med att konvertera en sträng till ett xml-dokument",
 							AbstractAPIMethod.class.getName(), e.getMessage(), false);
 					}
-					records.appendChild(record);
 				}
 			}
 			result.appendChild(records);
