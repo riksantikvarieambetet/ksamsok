@@ -627,3 +627,38 @@ body
 {
 	color: red;
 }
+
+.content-para {
+  display: block;
+  margin: 0;
+  padding: 0.5rem 0;
+  padding-right: 7rem;
+}
+
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #dadada;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 4rem;
+  padding: 0 1rem;
+  flex-shrink: 0;
+}
+
+.header-logo {
+  display: block;
+  height: 3.125rem;
+  margin-top: -4px;
+}
+
+
+.section-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
