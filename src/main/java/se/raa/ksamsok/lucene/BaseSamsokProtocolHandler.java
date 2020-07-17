@@ -48,6 +48,7 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMCLASS;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMCLASSNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMCOLOR;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMDESCRIPTION;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMINSCRIPTION;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMKEYWORD;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMLABEL;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ITEMLICENSE;
@@ -127,6 +128,7 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemClass;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemClassName;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemColor;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemDescription;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemInscription;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemKeyWord;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemLabel;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_rItemLicense;
@@ -176,6 +178,7 @@ import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Desc;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Form;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Name;
 import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Spec;
+import static se.raa.ksamsok.lucene.SamsokProtocol.uri_r__Text;
 
 public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler, RelationToIndexMapper {
 
@@ -429,6 +432,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		// hämta ut itemMark, resursnod (0m)
 		ip.setCurrent(IX_ITEMMARK); // fritext
 		extractValue(model, subject, getURIRef(uri_rItemMark), getURIRef(uri_r__Form), ip);
+		// hämta ut itemInscription, resursnod (0m)
+		ip.setCurrent(IX_ITEMINSCRIPTION); // fritext
+		extractValue(model, subject, getURIRef(uri_rItemInscription), getURIRef(uri_r__Text), ip);
 		// hämta ut itemDescription, resursnod (0m)
 		ip.setCurrent(IX_ITEMDESCRIPTION); // fritext
 		extractValue(model, subject, getURIRef(uri_rItemDescription), getURIRef(uri_r__Desc), ip);

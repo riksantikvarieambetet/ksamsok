@@ -48,6 +48,7 @@
         <xs:element ref="ksamsok:itemSpecification" maxOccurs="unbounded" />
         <xs:element ref="ksamsok:itemTitle" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="ksamsok:itemMark" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ksamsok:itemInscription" minOccurs="0" maxOccurs="unbounded" />
         <xs:element ref="ksamsok:itemDescription" minOccurs="0" maxOccurs="unbounded" />
         <xs:element ref="ksamsok:itemKeyWord" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="ksamsok:itemMotiveWord" minOccurs="0" maxOccurs="unbounded"/>
@@ -142,6 +143,11 @@
   </xs:element>
   <xs:element name="itemTitle" type="xs:string"/>
   <xs:element name="itemMark">
+    <xs:complexType>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemInscription">
     <xs:complexType>
       <xs:attribute ref="rdf:nodeID" use="required"/>
     </xs:complexType>
@@ -374,7 +380,20 @@
       <xs:attribute ref="rdf:nodeID" use="required"/>
     </xs:complexType>
   </xs:element>
+
+  <xs:element name="ItemInscription">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ksamsok:type"/>
+        <xs:element ref="ksamsok:text"/>
+      </xs:sequence>
+      <xs:attribute ref="rdf:nodeID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="form" type="xs:string"/>
+
+  <xs:element name="text" type="xs:string"/>
   
   <xs:element name="ItemDescription"> 
     <xs:complexType>
@@ -408,7 +427,7 @@
       <xs:attribute ref="rdf:resource" use="optional"/>
     </xs:complexType>
   </xs:element>
-  
+
   <xs:element name="type" type="xs:string"/>
   
   <!-- Används där man vill ha datum med YYYY-MM-DD -->

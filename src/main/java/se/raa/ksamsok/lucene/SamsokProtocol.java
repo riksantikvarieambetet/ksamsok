@@ -40,6 +40,7 @@ public class SamsokProtocol {
 	static final URI uri_rItemColor = URI.create(uriPrefixKSamsok + "itemColor");
 	static final URI uri_rItemNumber = URI.create(uriPrefixKSamsok + "itemNumber");
 	static final URI uri_rItemMark = URI.create(uriPrefixKSamsok + "itemMark");
+	static final URI uri_rItemInscription = URI.create(uriPrefixKSamsok + "itemInscription");
 	static final URI uri_rItemDescription = URI.create(uriPrefixKSamsok + "itemDescription");
 	static final URI uri_rItemLicense = URI.create(uriPrefixKSamsok + "itemLicense");
 	static final URI uri_rSubject = URI.create(uriPrefixKSamsok + "subject");
@@ -47,6 +48,7 @@ public class SamsokProtocol {
 	static final URI uri_rDataQuality = URI.create(uriPrefixKSamsok + "dataQuality");
 	static final URI uri_rMediaType = URI.create(uriPrefixKSamsok + "mediaType");
 	static final URI uri_r__Form = URI.create(uriPrefixKSamsok + "form");
+	static final URI uri_r__Text = URI.create(uriPrefixKSamsok + "text");
 	static final URI uri_r__Desc = URI.create(uriPrefixKSamsok + "desc");
 	static final URI uri_r__Name = URI.create(uriPrefixKSamsok + "name");
 	static final URI uri_r__Spec = URI.create(uriPrefixKSamsok + "spec");

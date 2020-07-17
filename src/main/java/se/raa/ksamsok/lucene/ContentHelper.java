@@ -73,6 +73,7 @@ public abstract class ContentHelper {
 	public static final String IX_ITEMTITLE = "itemTitle";
 	public static final String IX_ITEMLABEL = "itemLabel";
 	public static final String IX_ITEMMARK = "itemMark";
+	public static final String IX_ITEMINSCRIPTION = "itemInscription";
 	public static final String IX_ITEMDESCRIPTION = "itemDescription";
 	public static final String IX_ITEMKEYWORD = "itemKeyWord";
 	public static final String IX_ITEMMOTIVEWORD = "itemMotiveWord";
@@ -362,6 +363,7 @@ public abstract class ContentHelper {
 		addIndex(IX_ITEMLABEL, "Huvudsaklig beskrivning av objektet - klassifikation, sakord el dyl",
 			IndexType.TOLOWERCASE);
 		addIndex(IX_ITEMMARK, "Fritext i item mark", IndexType.ANALYZED, true, false);
+		addIndex(IX_ITEMINSCRIPTION, "Fritext i item inscription", IndexType.ANALYZED, true, false);
 		addIndex(IX_ITEMDESCRIPTION, "Fritext i beskrivningsfält", IndexType.ANALYZED, true, false);
 		addIndex(IX_ITEMKEYWORD, "Nyckelord", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_ITEMMOTIVEWORD, "Ord som förekommer som beskrivning av ett motiv i ett bild- eller målningsobjekt",
