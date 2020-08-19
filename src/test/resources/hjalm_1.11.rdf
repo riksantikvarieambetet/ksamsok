@@ -66,12 +66,18 @@
         <ns5:type>Ett märke</ns5:type>
         <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemMark"/>
     </rdf:Description>
+<rdf:Description rdf:nodeID="bNode_8">
+    <ns5:form>Inristning</ns5:form>
+    <ns5:type>En inristning</ns5:type>
+    <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#ItemInscription"/>
+</rdf:Description>
 <rdf:Description rdf:about="http://kulturarvsdata.se/raa/test/1">
     <ns5:context rdf:nodeID="bNode_2"/>
     <ns5:context rdf:nodeID="bNode_3"/>
     <ns5:media rdf:nodeID="bNode_4"/>
     <ns5:image rdf:nodeID="bNode_5"/>
     <ns5:itemMark rdf:nodeID="bNode_7"/>
+    <ns5:itemInscription rdf:nodeID="bNode_8"/>
     <ns5:itemDescription rdf:nodeID="bNode_1"/>
     <ns5:itemName rdf:nodeID="bNode_0"/>
 </rdf:Description>
