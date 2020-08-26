@@ -1,0 +1,346 @@
+@prefix aat: <http://vocab.getty.edu/aat/> .
+@prefix aspect: <http://kulturarvsdata.se/resurser/aukt/srdb/crossform/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform>
+    a skos:ConceptScheme , rdfs:Resource ;
+    rdfs:label "Rune stone cross forms, after Lager"@en , "Runstenkorsformer, efter Lager"@sv ;
+    dcterms:title "Rune stone cross forms, after Lager"@en , "Runstenkorsformer, efter Lager"@sv ;
+    skos:hasTopConcept aspect:A , aspect:B , aspect:C , aspect:D , aspect:E , aspect:F , aspect:G .
+
+aspect:A
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> .
+aspect:B
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> .
+aspect:C
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> .
+aspect:D
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> .
+aspect:E
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> .
+aspect:F
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> .
+aspect:G
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> .
+
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/1>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A1" ;
+    skos:prefLabel "A1" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/2>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A2" ;
+    skos:prefLabel "A2" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/3>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A3" ;
+    skos:prefLabel "A3" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/4>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A4" ;
+    skos:prefLabel "A4" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/5>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A5" ;
+    skos:prefLabel "A5" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/6>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A6" ;
+    skos:prefLabel "A6" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/7>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A7" ;
+    skos:prefLabel "A7" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/8>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A8" ;
+    skos:prefLabel "A8" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/9>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:A ;
+    rdfs:label "A9" ;
+    skos:prefLabel "A9" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/1>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:B ;
+    rdfs:label "B1" ;
+    skos:prefLabel "B1" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/2>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:B ;
+    rdfs:label "B2" ;
+    skos:prefLabel "B2" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/3>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:B ;
+    rdfs:label "B3" ;
+    skos:prefLabel "B3" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/4>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:B ;
+    rdfs:label "B4" ;
+    skos:prefLabel "B4" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/1>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C1" ;
+    skos:prefLabel "C1" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/2>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C2" ;
+    skos:prefLabel "C2" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/3>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C3" ;
+    skos:prefLabel "C3" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/4>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C4" ;
+    skos:prefLabel "C4" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/5>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C5" ;
+    skos:prefLabel "C5" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/6>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C6" ;
+    skos:prefLabel "C6" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/7>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C7" ;
+    skos:prefLabel "C7" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/8>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C8" ;
+    skos:prefLabel "C8" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/9>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C9" ;
+    skos:prefLabel "C9" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/10>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C10" ;
+    skos:prefLabel "C10" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/11>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:C ;
+    rdfs:label "C11" ;
+    skos:prefLabel "C11" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/1>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:D ;
+    rdfs:label "D1" ;
+    skos:prefLabel "D1" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/2>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:D ;
+    rdfs:label "D2" ;
+    skos:prefLabel "D2" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/3>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:D ;
+    rdfs:label "D3" ;
+    skos:prefLabel "D3" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/4>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:D ;
+    rdfs:label "D4" ;
+    skos:prefLabel "D4" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/5>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:D ;
+    rdfs:label "D5" ;
+    skos:prefLabel "D5" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/6>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:D ;
+    rdfs:label "D6" ;
+    skos:prefLabel "D6" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/1>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E1" ;
+    skos:prefLabel "E1" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/2>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E2" ;
+    skos:prefLabel "E2" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/3>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E3" ;
+    skos:prefLabel "E3" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/4>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E4" ;
+    skos:prefLabel "E4" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/5>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E5" ;
+    skos:prefLabel "E5" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/6>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E6" ;
+    skos:prefLabel "E6" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/7>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E7" ;
+    skos:prefLabel "E7" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/8>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E8" ;
+    skos:prefLabel "E8" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/9>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E9" ;
+    skos:prefLabel "E9" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/10>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E10" ;
+    skos:prefLabel "E10" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/11>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:E ;
+    rdfs:label "E11" ;
+    skos:prefLabel "E11" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/1>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:F ;
+    rdfs:label "F1" ;
+    skos:prefLabel "F1" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/2>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:F ;
+    rdfs:label "F2" ;
+    skos:prefLabel "F2" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/3>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:F ;
+    rdfs:label "F3" ;
+    skos:prefLabel "F3" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/4>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:F ;
+    rdfs:label "F4" ;
+    skos:prefLabel "F4" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/1>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:G ;
+    rdfs:label "G1" ;
+    skos:prefLabel "G1" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/2>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:G ;
+    rdfs:label "G2" ;
+    skos:prefLabel "G2" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/3>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:G ;
+    rdfs:label "G3" ;
+    skos:prefLabel "G3" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/4>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:G ;
+    rdfs:label "G4" ;
+    skos:prefLabel "G4" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/5>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:G ;
+    rdfs:label "G5" ;
+    skos:prefLabel "G5" .
+<http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/6>
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/crossform> ;
+    skos:broader aspect:G ;
+    rdfs:label "G6" ;
+    skos:prefLabel "G6" .
+
