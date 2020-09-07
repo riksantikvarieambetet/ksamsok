@@ -1,0 +1,52 @@
+@prefix aat: <http://vocab.getty.edu/aat/> .
+@prefix bracteate: <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype>
+    a skos:ConceptScheme , rdfs:Resource ;
+    rdfs:label "Bracteate types"@en , "Brakteattyper"@sv ;
+    dcterms:title "Bracteate types"@en , "Brakteattyper"@sv ;
+    skos:hasTopConcept bracteate:A , bracteate:B , bracteate:C , bracteate:D , bracteate:E , bracteate:F , bracteate:Okänd .
+
+bracteate:A
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype> ;
+    rdfs:label "Type A"@en , "Typ A"@sv ;
+    skos:prefLabel "Type A"@en , "Typ A"@sv .
+bracteate:B
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype> ;
+    rdfs:label "Type B"@en , "Typ B"@sv ;
+    skos:prefLabel "Type B"@en , "Typ B"@sv .
+bracteate:C
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype> ;
+    rdfs:label "Type C"@en , "Typ C"@sv ;
+    skos:prefLabel "Type C"@en , "Typ C"@sv .
+bracteate:D
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype> ;
+    rdfs:label "Type D"@en , "Typ D"@sv ;
+    skos:prefLabel "Type D"@en , "Typ D"@sv .
+bracteate:E
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype> ;
+    rdfs:label "Type E"@en , "Typ E"@sv ;
+    skos:prefLabel "Type E"@en , "Typ E"@sv .
+bracteate:F
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype> ;
+    rdfs:label "Type F"@en , "Typ F"@sv ;
+    skos:prefLabel "Type F"@en , "Typ F"@sv .
+bracteate:Okänd
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype> ;
+    rdfs:label "Unknown type"@en , "Okänd typ"@sv ;
+    skos:prefLabel "Unkown type"@en , "Okänd typ"@sv .

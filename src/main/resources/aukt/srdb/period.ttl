@@ -1,0 +1,128 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix period: <http://kulturarvsdata.se/resurser/aukt/srdb/period/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://kulturarvsdata.se/resurser/aukt/srdb/period>
+    a skos:ConceptScheme , rdfs:Resource ;
+    rdfs:label "Runological periods to inform the transliterations scheme applied in the Samnordisk runtextdatabas"@en , "Runologiska perioder för att informera transliterationsschemat som tillämpas hos Samnordisk runtextdatabas"@sv ;
+    dcterms:title "Runological periods to inform the transliterations scheme applied in the Samnordisk runtextdatabas"@en , "Runologiska perioder för att informera transliterationsschemat som tillämpas hos Samnordisk runtextdatabas"@sv ;
+    skos:hasTopConcept period:U , period:U-V , period:V , period:V-M , period:M , period:D , period:SENTIDA , period:MODERN , period:OKAEND , period:UTGAAR .
+
+period:U
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Proto-Norse"@en , "Urnordisk"@sv ;
+    skos:prefLabel "Proto-Norse"@en , "Urnordisk"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalFinishedBy [ skos:prefLabel "725 CE"@en , "725 v.t."@sv ;
+                                             skos:altLabel "725 AD"@en , "725 e.Kr."@sv ;
+                                             time:hasDateTimeDescription [ time:year "0725"^^xsd:gYear ]
+                                           ]
+                 ] .
+period:U-V
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Proto-Norse/Viking Age"@en , "Urnordisk/Vikingatid"@sv ;
+    skos:prefLabel "Proto-Norse/Viking Age"@en , "Urnordisk/Vikingatid"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalFinishedBy [ skos:prefLabel "1100 CE"@en , "1100 v.t."@sv ;
+                                             skos:altLabel "1100 AD"@en , "1100 e.Kr."@sv ;
+                                             time:hasDateTimeDescription [ time:year "1100"^^xsd:gYear ]
+                                           ]
+                 ] .
+period:V
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Viking Age"@en , "Vikingatid"@sv ;
+    skos:prefLabel "Viking Age"@en , "Vikingatid"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalStartedBy [ skos:prefLabel "725 CE"@en , "725 v.t."@sv ;
+                                            skos:altLabel "725 AD"@en , "725 e.Kr."@sv ;
+                                            time:hasDateTimeDescription [ time:year "0725"^^xsd:gYear ]
+                                          ] ;
+                   time:intervalFinishedBy [ skos:prefLabel "1100 CE"@en , "1100 v.t."@sv ;
+                                             skos:altLabel "1100 AD"@en , "1100 e.Kr."@sv ;
+                                             time:hasDateTimeDescription [ time:year "1100"^^xsd:gYear ]
+                                           ]
+                 ] .
+period:V-M
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Viking Age/Medieval"@en , "Vikingatid/Medeltid"@sv ;
+    skos:prefLabel "Viking Age/Medieval"@en , "Vikingatid/Medeltid"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalStartedBy [ skos:prefLabel "725 CE"@en , "725 v.t."@sv ;
+                                            skos:altLabel "725 AD"@en , "725 e.Kr."@sv ;
+                                            time:hasDateTimeDescription [ time:year "0725"^^xsd:gYear ]
+                                          ] ;
+                   time:intervalFinishedBy [ skos:prefLabel "1500 CE"@en , "1500 v.t."@sv ;
+                                             skos:altLabel "1500 AD"@en , "1500 e.Kr."@sv ;
+                                             time:hasDateTimeDescription [ time:year "1500"^^xsd:gYear ]
+                                           ]
+                 ] .
+period:M
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Medieval"@en , "Medeltid"@sv ;
+    skos:prefLabel "Medieval"@en , "Medeltid"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalStartedBy [ skos:prefLabel "1100 CE"@en , "1100 v.t."@sv ;
+                                            skos:altLabel "1100 AD"@en , "1100 e.Kr."@sv ;
+                                            time:hasDateTimeDescription [ time:year "1100"^^xsd:gYear ]
+                                          ] ;
+                   time:intervalFinishedBy [ skos:prefLabel "1500 CE"@en , "1500 v.t."@sv ;
+                                             skos:altLabel "1500 AD"@en , "1500 e.Kr."@sv ;
+                                             time:hasDateTimeDescription [ time:year "1500"^^xsd:gYear ]
+                                           ]
+                 ] .
+period:D
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Dalecarlian"@en , "Dalrunor"@sv ;
+    skos:prefLabel "Dalecarlian"@en , "Dalrunor"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalStartedBy [ skos:prefLabel "1500 CE"@en , "1500 v.t."@sv ;
+                                            skos:altLabel "1500 AD"@en , "1500 e.Kr."@sv ;
+                                            time:hasDateTimeDescription [ time:year "1500"^^xsd:gYear ]
+                                          ] ;
+                   time:intervalFinishedBy [ skos:prefLabel "1930 CE"@en , "1930 v.t."@sv ;
+                                             skos:altLabel "1930 AD"@en , "1930 e.Kr."@sv ;
+                                             time:hasDateTimeDescription [ time:year "1930"^^xsd:gYear ]
+                                           ]
+                 ] .
+period:SENTIDA
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Post-Reformation"@en , "Efterreformatoriska"@sv ;
+    skos:prefLabel "Post-Reformation"@en , "Efterreformatoriska"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalStartedBy [ skos:prefLabel "1500 CE"@en , "1500 v.t."@sv ;
+                                            skos:altLabel "1500 AD"@en , "1500 e.Kr."@sv ;
+                                            time:hasDateTimeDescription [ time:year "1500"^^xsd:gYear ]
+                                          ]
+                 ] .
+period:MODERN
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Modern"@en , "Modern"@sv ;
+    skos:prefLabel "Modern"@en , "Modern"@sv ;
+    time:hasTime [ a time:ProperInterval ;
+                   time:intervalStartedBy [ skos:prefLabel "1500 CE"@en , "1500 v.t."@sv ;
+                                            skos:altLabel "1500 AD"@en , "1500 e.Kr."@sv ;
+                                            time:hasDateTimeDescription [ time:year "1500"^^xsd:gYear ]
+                                          ]
+                 ] .
+period:OKAEND
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Unknown"@en , "Okänd"@sv ;
+    skos:prefLabel "Unknown"@en , "Okänd"@sv .
+period:UTGAAR
+    a skos:Concept ;
+    skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
+    rdfs:label "Removed"@en , "Utgår"@sv ;
+    skos:prefLabel "Removed"@en , "Utgår"@sv .

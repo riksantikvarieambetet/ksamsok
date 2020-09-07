@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype">
+		<rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+		<rdfs:label xml:lang="en">Bracteate types</rdfs:label>
+		<rdfs:label xml:lang="sv">Brakteattyper</rdfs:label>
+		<dcterms:title xml:lang="en">Bracteate types</dcterms:title>
+		<dcterms:title xml:lang="sv">Brakteattyper</dcterms:title>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/A"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/B"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/C"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/D"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/E"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/F"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/Okänd"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/A">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype"/>
+		<rdfs:label xml:lang="en">Type A</rdfs:label>
+		<rdfs:label xml:lang="sv">Typ A</rdfs:label>
+		<skos:prefLabel xml:lang="en">Type A</skos:prefLabel>
+		<skos:prefLabel xml:lang="sv">Typ A</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/B">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype"/>
+		<rdfs:label xml:lang="en">Type B</rdfs:label>
+		<rdfs:label xml:lang="sv">Typ B</rdfs:label>
+		<skos:prefLabel xml:lang="en">Type B</skos:prefLabel>
+		<skos:prefLabel xml:lang="sv">Typ B</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/C">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype"/>
+		<rdfs:label xml:lang="en">Type C</rdfs:label>
+		<rdfs:label xml:lang="sv">Typ C</rdfs:label>
+		<skos:prefLabel xml:lang="en">Type C</skos:prefLabel>
+		<skos:prefLabel xml:lang="sv">Typ C</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/D">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype"/>
+		<rdfs:label xml:lang="en">Type D</rdfs:label>
+		<rdfs:label xml:lang="sv">Typ D</rdfs:label>
+		<skos:prefLabel xml:lang="en">Type D</skos:prefLabel>
+		<skos:prefLabel xml:lang="sv">Typ D</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/E">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype"/>
+		<rdfs:label xml:lang="en">Type E</rdfs:label>
+		<rdfs:label xml:lang="sv">Typ E</rdfs:label>
+		<skos:prefLabel xml:lang="en">Type E</skos:prefLabel>
+		<skos:prefLabel xml:lang="sv">Typ E</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/F">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype"/>
+		<rdfs:label xml:lang="en">Type F</rdfs:label>
+		<rdfs:label xml:lang="sv">Typ F</rdfs:label>
+		<skos:prefLabel xml:lang="en">Type F</skos:prefLabel>
+		<skos:prefLabel xml:lang="sv">Typ F</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/Okänd">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype"/>
+		<rdfs:label xml:lang="en">Unknown type</rdfs:label>
+		<rdfs:label xml:lang="sv">Okänd typ</rdfs:label>
+		<skos:prefLabel xml:lang="en">Unkown type</skos:prefLabel>
+		<skos:prefLabel xml:lang="sv">Okänd typ</skos:prefLabel>
+	</rdf:Description>
+</rdf:RDF>

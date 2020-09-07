@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform">
+		<rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+		<rdfs:label xml:lang="en">Rune stone cross forms, after Lager</rdfs:label>
+		<rdfs:label xml:lang="sv">Runstenkorsformer, efter Lager</rdfs:label>
+		<dcterms:title xml:lang="en">Rune stone cross forms, after Lager</dcterms:title>
+		<dcterms:title xml:lang="sv">Runstenkorsformer, efter Lager</dcterms:title>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/1">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A1</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A1</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/2">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A2</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A2</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/3">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A3</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A3</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/4">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A4</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A4</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/5">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A5</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A5</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/6">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A6</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A6</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/7">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A7</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A7</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/8">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A8</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A8</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A/9">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>A9</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/A"/>
+		<skos:prefLabel>A9</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/1">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>B1</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B"/>
+		<skos:prefLabel>B1</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/2">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>B2</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B"/>
+		<skos:prefLabel>B2</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/3">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>B3</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B"/>
+		<skos:prefLabel>B3</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B/4">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>B4</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/B"/>
+		<skos:prefLabel>B4</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/1">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C1</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C1</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/2">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C2</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C2</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/3">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C3</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C3</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/4">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C4</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C4</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/5">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C5</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C5</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/6">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C6</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C6</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/7">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C7</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C7</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/8">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C8</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C8</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/9">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C9</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C9</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/10">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C10</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C10</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C/11">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>C11</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/C"/>
+		<skos:prefLabel>C11</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/1">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>D1</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D"/>
+		<skos:prefLabel>D1</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/2">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>D2</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D"/>
+		<skos:prefLabel>D2</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/3">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>D3</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D"/>
+		<skos:prefLabel>D3</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/4">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>D4</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D"/>
+		<skos:prefLabel>D4</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/5">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>D5</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D"/>
+		<skos:prefLabel>D5</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D/6">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>D6</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/D"/>
+		<skos:prefLabel>D6</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/1">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E1</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E1</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/2">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E2</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E2</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/3">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E3</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E3</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/4">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E4</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E4</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/5">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E5</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E5</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/6">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E6</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E6</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/7">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E7</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E7</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/8">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E8</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E8</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/9">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E9</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E9</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/10">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E10</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E10</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E/11">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>E11</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/E"/>
+		<skos:prefLabel>E11</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/1">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>F1</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F"/>
+		<skos:prefLabel>F1</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/2">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>F2</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F"/>
+		<skos:prefLabel>F2</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/3">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>F3</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F"/>
+		<skos:prefLabel>F3</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F/4">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>F4</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/F"/>
+		<skos:prefLabel>F4</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/1">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>G1</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G"/>
+		<skos:prefLabel>G1</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/2">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>G2</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G"/>
+		<skos:prefLabel>G2</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/3">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>G3</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G"/>
+		<skos:prefLabel>G3</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/4">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>G4</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G"/>
+		<skos:prefLabel>G4</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/5">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>G5</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G"/>
+		<skos:prefLabel>G5</skos:prefLabel>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G/6">
+		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform"/>
+		<rdfs:label>G6</rdfs:label>
+		<skos:broader rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/crossform/G"/>
+		<skos:prefLabel>G6</skos:prefLabel>
+	</rdf:Description>
+</rdf:RDF>
