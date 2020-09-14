@@ -174,7 +174,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				String xmlContent;
 				Timestamp added;
 				int i = 0;
-				int nonI = 0;
 				int deleted = 0;
 				ContentHelper helper = getContentHelper(service);
 				ContentHelper.initProblemMessages();
@@ -195,10 +194,12 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					}
 					xmlContent = rs.getString("xmldata");
 					added = rs.getTimestamp("added");
-					SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, added);
+					SolrInputDocument doc;
+					doc = helper.createSolrDocument(service, xmlContent, added);
 					if (doc == null) {
-						// inget dokument betyder att tjänsten har skickat itemForIndexing=n
-						++nonI;
+						// should not happen
+						ContentHelper.addProblemMessage("createSolrDocument returned null and that shouldn't be possible");
+						logger.warn("createSolrDocument returned null and that shouldn't be possible");
 						continue;
 					}
 					docs.add(doc);
@@ -247,7 +248,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
 				ss.setStatusTextAndLog(service, "Updated index, " + i + " records (" + 
 						(ts == null ? "delete + insert" : "updated incl " + deleted + " deleted") +
-						(nonI > 0 ? ", itemForIndexing=n: " + nonI : "") +
 						"), time: " + runTime + " (" + speed + ")");
 				if (logger.isInfoEnabled()) {
 					logger.info(service.getId() +

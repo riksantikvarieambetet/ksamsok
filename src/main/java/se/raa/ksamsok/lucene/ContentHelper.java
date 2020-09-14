@@ -622,14 +622,13 @@ public abstract class ContentHelper {
 	 * Skapar ett solr-dokument utifrån det inskickade xml-innehållet. För k-samsökstjänster är
 	 * xml-innehållet en post med k-samsöks-xml (rdf). Om metoden ger null har tjänsten begärt att
 	 * posten bara ska lagras och inte indexeras.
-	 * 
+	 *
 	 * @param service tjänst
 	 * @param xmlContent xml-innehåll
 	 * @param added datum posten först lades till i repot
 	 * @return ett solr-dokument, eller null om inte posten ska indexeras
 	 */
-	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent, Date added)
-	;
+	public abstract SolrInputDocument createSolrDocument(HarvestService service, String xmlContent, Date added);
 
 	// statiska metoder
 
