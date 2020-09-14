@@ -197,9 +197,8 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					SolrInputDocument doc;
 					doc = helper.createSolrDocument(service, xmlContent, added);
 					if (doc == null) {
-						// should not happen
-						ContentHelper.addProblemMessage("createSolrDocument returned null and that shouldn't be possible");
-						logger.warn("createSolrDocument returned null and that shouldn't be possible");
+						// Some error occured, it has been logged in createSolrDocument.
+						// Nothing to see here - carry on
 						continue;
 					}
 					docs.add(doc);
