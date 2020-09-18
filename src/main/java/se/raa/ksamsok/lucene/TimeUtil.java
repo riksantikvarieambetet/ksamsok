@@ -223,7 +223,7 @@ public class TimeUtil {
 			logger.error("Fel i tidyTimeString: " + timeString + " : " + e.getMessage());
 			throw e;
 		}
-		return timeString;
+		return timeString.trim();
 	}
 
 }
