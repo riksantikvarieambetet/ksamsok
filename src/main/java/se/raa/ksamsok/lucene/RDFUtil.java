@@ -21,6 +21,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public class RDFUtil {
 
@@ -49,19 +50,16 @@ public class RDFUtil {
 	// läser ut ett värde ur subjektnoden eller subjektnodens objektnod om denna är en subjektnod
 	// och lägger till värdet mha indexprocessorn och ev specialhanterar relationer
 	static String extractValue(Model model, Resource subject, Property ref, Property refRef, IndexProcessor ip, List<String> relations) throws Exception {
-		final String sep = " ";
-		StringBuilder buf = new StringBuilder();
+		StringJoiner stringJoiner = new StringJoiner(" ");
 		String value;
 		Selector selector = new SimpleSelector(subject, ref, (RDFNode) null);
 		StmtIterator iter = model.listStatements(selector);
 		while (iter.hasNext()){
 			Statement s = iter.next();
-			if (s.getObject().isLiteral()){
-				if (buf.length() > 0) {
-					buf.append(sep);
-				}
+			if (s.getObject().isLiteral()) {
+
 				value = s.getObject().asLiteral().getString();
-				buf.append(value);
+				stringJoiner.add(value);
 				if (ip != null) {
 					ip.addToDoc(value);
 					// specialfall för att hantera relationer som nog egentligen felaktigt(?) är vanliga värden, de borde vara rdf-resurser och då URIReferences
@@ -73,50 +71,60 @@ public class RDFUtil {
 			} else if (s.getObject().isURIResource()){
 				value = getReferenceValue(s.getObject().asResource(), ip, relations, ref);
 				if (value != null) {
-					if (buf.length() > 0) {
-						buf.append(sep);
-					}
-					buf.append(value);
+					stringJoiner.add(value);
 				}
 				if (ip != null) {
 					ip.addToDoc(value);
 				}
 			} else if (refRef != null && s.getObject().isResource()){
-				value = extractSingleValue(model, s.getObject().asResource(), refRef, ip);
+				value = extractValue(model, s.getObject().asResource(), refRef, ip);
 				if (value != null) {
-					if (buf.length() > 0) {
-						buf.append(sep);
-					}
-					buf.append(value);
+					stringJoiner.add(value);
 				}
 			}
 		}
-		return buf.length() > 0 ? StringUtils.trimToNull(buf.toString()) : null;
+		return stringJoiner.length() > 0 ? StringUtils.trimToNull(stringJoiner.toString()) : null;
+	}
+
+	// läser ut ett eller flera värden ur subjektoden där objektnoden måste vara en literal eller en uri-referens
+	// och lägger till det mha indexprocessorn. forceSingle kastar exception om mer än ett värde finns
+	private static String extractValue(Model model, Resource subject, Property p, IndexProcessor ip, boolean forceSingle) throws Exception {
+		StringJoiner stringJoiner = new StringJoiner(" ");
+    	String value = null;
+		Selector selector = new SimpleSelector(subject, p, (RDFNode) null);
+		StmtIterator iter = model.listStatements(selector);
+		while (iter.hasNext()) {
+			if (forceSingle && value != null) {
+				throw new Exception("Fler värden än ett för s: " + subject + " p: " + p);
+			}
+			Statement s = iter.next();
+			if (s.getObject().isLiteral()) {
+				value = StringUtils.trimToNull(s.getObject().asLiteral().getString());
+			} else if (s.getObject().isURIResource()){
+				value = getReferenceValue(s.getObject().asResource(), ip, null, null);
+			} else {
+				throw new Exception("Måste vara literal/urireference o.class: " + s.getObject().getClass().getSimpleName() + " för s: " + subject + " p: " + p);
+			}
+			stringJoiner.add(value);
+			if (ip != null) {
+				ip.addToDoc(value);
+			}
+		}
+		return stringJoiner.length() > 0 ? StringUtils.trimToNull(stringJoiner.toString()) : null;
 	}
 
 	// läser ut ett enkelt värde ur subjektoden där objektnoden måste vara en literal eller en uri-referens
 	// och lägger till det mha indexprocessorn
 	static String extractSingleValue(Model model, Resource subject, Property p, IndexProcessor ip) throws Exception {
-		String value = null;
-		Selector selector = new SimpleSelector(subject, p, (RDFNode) null);
-		StmtIterator iter = model.listStatements(selector);
-		while (iter.hasNext()){
-			if (value != null) {
-				throw new Exception("Fler värden än ett för s: " + subject + " p: " + p);
-			}
-			Statement s = iter.next();
-			if (s.getObject().isLiteral()){
-				value = StringUtils.trimToNull(s.getObject().asLiteral().getString());
-			} else if (s.getObject().isURIResource()){
-				value = getReferenceValue(s.getObject().asResource(), ip, null, null);
-			}else {
-				throw new Exception("Måste vara literal/urireference o.class: " + s.getObject().getClass().getSimpleName() + " för s: " + subject + " p: " + p);
-			}
-			if (ip != null) {
-				ip.addToDoc(value);
-			}
-		}
-		return value;
+    	return extractValue(model, subject, p, ip, true);
+
+	}
+
+	// läser ut ett eller flera värden ur subjektoden där objektnoden måste vara en literal eller en uri-referens
+	// och lägger till det mha indexprocessorn
+	static String extractValue(Model model, Resource subject, Property p, IndexProcessor ip) throws Exception {
+		return extractValue(model, subject, p, ip, false);
+
 	}
 
 	// försöker översätta ett uri-värde till ett förinläst värde

@@ -625,7 +625,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		extractSingleValue(model, cS, getURIRef(uri_rContinentName), ip);
 
 		ip.setCurrent(IX_COUNTRYNAME, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rCountryName), ip);
+		extractValue(model, cS, getURIRef(uri_rCountryName), ip);
 
 		ip.setCurrent(IX_COUNTYNAME, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rCountyName), ip);
