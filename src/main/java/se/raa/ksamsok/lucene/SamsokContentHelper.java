@@ -17,6 +17,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.lucene.exception.SamsokProtocolException;
 import se.raa.ksamsok.spatial.GMLUtil;
 
 import javax.vecmath.Point2d;
@@ -35,6 +36,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
@@ -57,6 +59,7 @@ public class SamsokContentHelper extends ContentHelper {
 	public SamsokContentHelper(boolean requireMediaLicense) {
 		this.requireMediaLicense = requireMediaLicense;
 	}
+
 
 	@Override
 	public SolrInputDocument createSolrDocument(HarvestService service,
@@ -97,7 +100,7 @@ public class SamsokContentHelper extends ContentHelper {
 			// specialfall i resolverservleten då den främst jobbar mot lucene-indexet
 			String itemForIndexing = RDFUtil.extractSingleValue(model, subject, rItemForIndexing, null);
 			if ("n".equals(itemForIndexing)) {
-				return null;
+				throw new Exception ("ItemForIndexing = 'n':");
 			}
 			String protocolVersion = RDFUtil.extractSingleValue(model, subject, rProtocolVersion, null);
 			if (protocolVersion == null) {
@@ -188,10 +191,14 @@ public class SamsokContentHelper extends ContentHelper {
 			byte[] rdfBytes = xmlContent.getBytes(StandardCharsets.UTF_8);
 			luceneDoc.addField(I_IX_RDF, Base64.byteArrayToBase64(rdfBytes, 0, rdfBytes.length));
 
-		} catch (Exception e) {
-			// TODO: kasta exception/räkna felen/annat?
-			logger.error("Fel vid skapande av lucenedokument för " + identifier + ": " + e.getMessage());
-			//throw e;
+		}
+		catch (Exception e) {
+			addProblemMessage(e.getMessage());
+			String errorMessage = "Fel vid skapande av lucenedokument för " + identifier + ": " + e.getMessage();
+			if (e instanceof SamsokProtocolException) {
+				errorMessage = errorMessage + " " + ((SamsokProtocolException) e).getSpecificMessage();
+				logger.error(errorMessage);
+			}
 		} finally {
 			if (model != null) {
 				model.close();

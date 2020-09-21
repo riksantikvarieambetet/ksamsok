@@ -9,10 +9,12 @@ import org.apache.jena.rdf.model.Selector;
 import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.sparql.pfunction.library.str;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.lucene.exception.SamsokProtocolException;
 
 import java.net.URI;
 import java.util.Date;
@@ -491,9 +493,8 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_MEDIALICENSE, false); // uri, ingen uppslagning fn
 		final String mediaLicense = extractValue(model, cS, getURIRef(uri_rMediaLicense), null, ip);
 		if (requireMediaLicense && mediaLicense == null) {
-			throw new Exception("Missing mediaLicense for identifier " + subject.toString());
+			throw new SamsokProtocolException("Missing mediaLicense","for identifier " + subject.toString());
 		}
-		;
 	}
 
 	/**
