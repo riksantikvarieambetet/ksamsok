@@ -54,7 +54,7 @@ public abstract class ContentHelper {
 	public static final String IX_CREATEDDATE = "createdDate";
 	public static final String IX_LASTCHANGEDDATE = "lastChangedDate";
 	public static final String IX_ADDEDTOINDEXDATE = "addedToIndexDate"; // special
-	public static final String IX_PROTOCOLVERSION = "protocolVersion";
+	public static final String IX_PROTOCOLVERSION = "stringProtocolVersion";
 
 	// entitet
 
@@ -344,10 +344,8 @@ public abstract class ContentHelper {
 
 		addIndex(IX_REPLACES, "Identifierare för objekt som detta objekt ersätter", IndexType.VERBATIM);
 
-		// TODO:
-		// detta stämmer
-		// ej(?)
-		addIndex(IX_PROTOCOLVERSION, "Protokollversion för posten", IndexType.VERBATIM); // flyttal
+
+		addIndex(IX_PROTOCOLVERSION, "Protokollversion för posten", IndexType.VERBATIM, true, false); // string
 
 		// objekt
 		addIndex(IX_ITEM, "Fritext i entitetsfält", IndexType.ANALYZED);

@@ -15,6 +15,7 @@ import org.apache.solr.common.util.Base64;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import se.raa.ksamsok.api.exception.BadParameterException;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.lucene.exception.SamsokProtocolException;
@@ -49,6 +50,12 @@ public class SamsokContentHelper extends ContentHelper {
 	private static DocumentBuilderFactory xmlFact;
 	private static TransformerFactory xformerFact;
 	private boolean requireMediaLicense;
+
+	// protocol numbers for comparison
+	public final static ProtocolNumber PROTOCOL_NUMBER_1_0 = createProtocolNumber("1.0");
+	public final static ProtocolNumber PROTOCOL_NUMBER_1_1 = createProtocolNumber("1.1");
+	public final static ProtocolNumber PROTOCOL_NUMBER_1_11 = createProtocolNumber("1.11");
+	public final static ProtocolNumber PROTOCOL_NUMBER_1_2_0 = createProtocolNumber("1.2.0");
 
 	static {
 		xmlFact = DocumentBuilderFactory.newInstance();
@@ -112,12 +119,6 @@ public class SamsokContentHelper extends ContentHelper {
 			LinkedList<String> gmlGeometries = new LinkedList<>();
 			LinkedList<String> relations = new LinkedList<>();
 
-			// TODO: We need to handle protocols properly, but for now
-			// we just want to get rundatabasen's tests up and running,
-			// so we cheat a tad with version 1.2.0:
-			if ("1.2.0".equals(protocolVersion)) {
-				protocolVersion = "1.11";
-			}
 			SamsokProtocolHandler sph = getProtocolHandlerForVersion(protocolVersion, model, subject);
 
 			sph.setRequireMediaLicense(requireMediaLicense);
@@ -207,27 +208,42 @@ public class SamsokContentHelper extends ContentHelper {
 		return luceneDoc;
 	}
 
-	private SamsokProtocolHandler getProtocolHandlerForVersion(String protocolVersion,
+	private static ProtocolNumber createProtocolNumber(String protocolNumber) {
+		try {
+			return new ProtocolNumber(protocolNumber);
+		} catch (BadParameterException e) {
+			// Bör aldrig hända här, vi använder det bara i static initializer
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	protected static SamsokProtocolHandler getProtocolHandlerForVersion(String protocolVersion,
 			Model model, Resource subject)  throws Exception {
-		Double protocol;
+		ProtocolNumber protocolNumber;
 		SamsokProtocolHandler handler;
 
 		try {
-			protocol = Double.parseDouble(protocolVersion);
-		} catch (Exception e) {
-			logger.error("Ej numeriskt protokollversionsnummer: " + protocolVersion);
-			throw new Exception("Ej numeriskt protokollversionsnummer: " + protocolVersion);
+			protocolNumber = new ProtocolNumber(protocolVersion);
+		} catch (BadParameterException e) {
+			logger.error(e.getMessage());
+			throw e;
 		}
-		final double latest = 1.11;
-		if (protocol == latest) {
+
+		// due to unfortunate circumstances, version 1.11 was released before version 1.2.0
+		if (protocolNumber.equals(PROTOCOL_NUMBER_1_2_0)) {
+			handler = new SamsokProtocolHandler_1_2_0(model, subject);
+		} else if (protocolNumber.equals(PROTOCOL_NUMBER_1_11)) {
 			handler = new SamsokProtocolHandler_1_11(model, subject);
-		} else if (protocol >= 1.1 && protocol < latest) {
+		} else if (protocolNumber.equals(PROTOCOL_NUMBER_1_1)) {
 			handler = new SamsokProtocolHandler_1_1(model, subject);
-		} else if (protocol > 0 && protocol <= 1.0) {
+			// everything below 1.0 is handled by 1.0
+		} else if (protocolNumber.compareTo(PROTOCOL_NUMBER_1_0) <= 0) {
 			handler = new SamsokProtocolHandler_0_TO_1_0(model, subject);
 		} else {
-			logger.error("Ej hanterat versionsnummer: " + protocolVersion);
-			throw new Exception("Ej hanterat versionsnummer: " + protocolVersion);
+			final String errMsgUnhandledVersion = "Ej hanterat versionsnummer: " + protocolVersion;
+			logger.error(errMsgUnhandledVersion);
+			throw new Exception(errMsgUnhandledVersion);
 		}
 		return handler;
 	}

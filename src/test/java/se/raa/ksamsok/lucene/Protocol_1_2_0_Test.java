@@ -34,7 +34,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("unused")
-public class Protocol_1_11_Test {
+public class Protocol_1_2_0_Test {
 
 	private static DocumentBuilderFactory xmlFact;
 	private static TransformerFactory xformerFact;
@@ -49,49 +49,9 @@ public class Protocol_1_11_Test {
 		//This is a dummy test to be able to run junit in ant-task
 	}
 
-/* 1.11 ändrades så att mediaLicense och mediaLicenseUrl inte är obligatoriska trots allt
-    vilket gör detta testfall felaktigt, men det får ligga kvar bortkommenterat tillsammans
-    med hjalm_1.11_felaktig.rdf tills vidare
-
 	@Test
-	public void testNoLicense() throws Exception {
-		String rdf = loadTestFileAsString("hjalm_1.11_felaktig.rdf");
-		Graph graph = RDFUtil.parseGraph(rdf);
-		assertNotNull("Ingen graf, fel på rdf:en?", graph);
-		GraphElementFactory elementFactory = graph.getElementFactory();
-		// grund
-		URIReference rdfType = elementFactory.createURIReference(SamsokProtocol.uri_rdfType);
-		URIReference samsokEntity = elementFactory.createURIReference(SamsokProtocol.uri_samsokEntity);
-
-		SubjectNode s = null;
-		for (Triple triple: graph.find(AnySubjectNode.ANY_SUBJECT_NODE, rdfType, samsokEntity)) {
-			if (s != null) {
-				throw new Exception("Ska bara finnas en entity i rdf-grafen");
-			}
-			s = triple.getSubject();
-		}
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_11(graph, s);
-		HarvestService service = new HarvestServiceImpl();
-		service.setId("TESTID");
-		LinkedList<String> relations = new LinkedList<String>();
-		List<String> gmlGeometries = new LinkedList<String>();
-		try {
-			handler.handle(service, new Date(), relations, gmlGeometries);
-			fail("Ett exception borde ha kastats då mediaLicense och mediaLicenseUrl är obligatoriska i 1.11");
-		} catch (Exception expected) {
-			// inte helt ok att kolla exception strängar så här men...
-			assertTrue("Strängen 'mediaLicense' borde vara med i det kastade felet",
-					expected.getMessage().contains("mediaLicense"));
-		}
-	}
- */
-
-
-
-
-	@Test
-	public void testNoMediaLicense() throws Exception {
-		String rdf = loadTestFileAsString("hjalm_1.11_felaktig.rdf");
+	public void testItemMark() throws Exception {
+		String rdf = loadTestFileAsString("hjalm_1.2.0.rdf");
 		Model model = RDFUtil.parseModel(rdf);
 		assertNotNull("Ingen graf, fel på rdf:en?", model);
 
@@ -107,17 +67,42 @@ public class Protocol_1_11_Test {
 			}
 			s = iter.next().getSubject();
 		}
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_11(model, s);
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_2_0(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
 		LinkedList<String> relations = new LinkedList<String>();
 		List<String> gmlGeometries = new LinkedList<String>();
-		try {
-			SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
-			Assert.fail("Was expecting an exception due to missing mediaLicense");
-		} catch (Exception e) {
-			// That's ok, there should be an exception thrown here
+		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+		assertNotNull("Inget doc tillbaka", doc);
+		assertEquals("Felaktig värde för itemMark", "Märke i hjälmen", doc.getFieldValue(ContentHelper.IX_ITEMMARK));
+	}
+
+	@Test
+	public void testItemInscription() throws Exception {
+		String rdf = loadTestFileAsString("hjalm_1.2.0.rdf");
+		Model model = RDFUtil.parseModel(rdf);
+		assertNotNull("Ingen graf, fel på rdf:en?", model);
+
+		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
+
+		Resource s = null;
+		StmtIterator iter = model.listStatements(selector);
+		while (iter.hasNext()){
+			if (s != null) {
+				throw new Exception("Ska bara finnas en entity i rdf-grafen");
+			}
+			s = iter.next().getSubject();
 		}
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_2_0(model, s);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		LinkedList<String> relations = new LinkedList<>();
+		List<String> gmlGeometries = new LinkedList<>();
+		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+		assertNotNull("Inget doc tillbaka", doc);
+		assertEquals("Felaktig värde för itemInscription", "Inristning", doc.getFieldValue(ContentHelper.IX_ITEMINSCRIPTION));
 	}
 
 
@@ -143,7 +128,7 @@ public class Protocol_1_11_Test {
 			}
 			s = iter.next().getSubject();
 		}
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_11(model, s);
+		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_2_0(model, s);
 		HarvestService service = new HarvestServiceImpl();
 		service.setId("TESTID");
 		LinkedList<String> relations = new LinkedList<>();
