@@ -1,5 +1,7 @@
 package se.raa.ksamsok.lucene;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -269,29 +271,7 @@ public class SamsokContentHelperTest {
 
 	}
 
-	@Test
-	public void testCreateDoc_1_1() throws Exception {
-		SamsokContentHelper helper = new SamsokContentHelper(true);
-		HarvestService service = new HarvestServiceImpl();
-		service.setId("TESTID");
-		String xmlContent = loadTestFileAsString("hjalm_1.1.rdf");
-		SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, new Date());
-		assertNotNull("Inget solr-dokument", doc);
-		// kolla system-index
-		assertEquals("Felaktigt service-id", "TESTID", doc.getFieldValue(ContentHelper.I_IX_SERVICE));
-		assertEquals("Fel identifierare", "http://kulturarvsdata.se/raa/test/1", doc.getFieldValue(ContentHelper.IX_ITEMID));
-		assertNotNull("Ingen RDF", doc.getFieldValue(ContentHelper.I_IX_RDF));
-		assertNotNull("Inget pres-block", doc.getFieldValue(ContentHelper.I_IX_PRES));
-		// specialindexet för relationer
-		Collection<Object> relations = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
-		assertNotNull("Specialindexet för relationer saknas", relations);
-		assertEquals("Specialindexet för relationer har fel antal", 2, relations.size());
-		assertTrue("Specialindexvärde finns inte med", relations.contains("isRelatedTo|http://kulturarvsdata.se/raa/test/2"));
-		assertTrue("Specialindexvärde finns inte med", relations.contains("has_former_or_current_owner|http://libris.kb.se/resource/auth/58087"));
 
-		assertNotNull("Ingen beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION));
-		assertTrue("Fel beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION).toString().contains("som beskriver Gustav"));
-	}
 
 	@Test
 	public void testMissingMediaLicenseExceptionCaught() throws Exception {
@@ -606,5 +586,24 @@ public class SamsokContentHelperTest {
 				sw.close();
 			}
 		}
+	}
+
+	@Test
+	public void testGetProtocolHandlerForVersion() throws Exception {
+		SamsokProtocolHandler sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.2.0", null, null);
+		assertNotNull(sph);
+		assertEquals("SamsokProtocolHandler_1_2_0", sph.getClass().getSimpleName());
+
+		sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.1", null, null);
+		assertNotNull(sph);
+		assertEquals("SamsokProtocolHandler_1_1", sph.getClass().getSimpleName());
+
+		sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.11", null, null);
+		assertNotNull(sph);
+		assertEquals("SamsokProtocolHandler_1_11", sph.getClass().getSimpleName());
+
+		sph = SamsokContentHelper.getProtocolHandlerForVersion ("0.99", null, null);
+		assertNotNull(sph);
+		assertEquals("SamsokProtocolHandler_0_TO_1_0", sph.getClass().getSimpleName());
 	}
 }

@@ -44,9 +44,33 @@ public class Protocol_1_1_Test {
 	    xformerFact = TransformerFactory.newInstance();
 	}
 
+	@Test
+	public void testCreateDoc_1_1() throws Exception {
+		SamsokContentHelper helper = new SamsokContentHelper(true);
+		HarvestService service = new HarvestServiceImpl();
+		service.setId("TESTID");
+		String xmlContent = loadTestFileAsString("hjalm_1.1.rdf");
+		SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, new Date());
+		assertNotNull("Inget solr-dokument", doc);
+		// kolla system-index
+		assertEquals("Felaktigt service-id", "TESTID", doc.getFieldValue(ContentHelper.I_IX_SERVICE));
+		assertEquals("Fel identifierare", "http://kulturarvsdata.se/raa/test/1", doc.getFieldValue(ContentHelper.IX_ITEMID));
+		assertNotNull("Ingen RDF", doc.getFieldValue(ContentHelper.I_IX_RDF));
+		assertNotNull("Inget pres-block", doc.getFieldValue(ContentHelper.I_IX_PRES));
+		// specialindexet för relationer
+		Collection<Object> relations = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
+		assertNotNull("Specialindexet för relationer saknas", relations);
+		assertEquals("Specialindexet för relationer har fel antal", 2, relations.size());
+		assertTrue("Specialindexvärde finns inte med", relations.contains("isRelatedTo|http://kulturarvsdata.se/raa/test/2"));
+		assertTrue("Specialindexvärde finns inte med", relations.contains("has_former_or_current_owner|http://libris.kb.se/resource/auth/58087"));
+
+		assertNotNull("Ingen beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION));
+		assertTrue("Fel beskrivning", doc.getFieldValue(ContentHelper.IX_ITEMDESCRIPTION).toString().contains("som beskriver Gustav"));
+	}
+
 
 	@Test
-	public void testURILookup() throws Exception {
+	public void testURILookup() {
 		// "null"-graf
 		Model model = RDFUtil.parseModel("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"></rdf:RDF>");
 
