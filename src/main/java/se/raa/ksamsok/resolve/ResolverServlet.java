@@ -201,7 +201,7 @@ public class ResolverServlet extends HttpServlet {
 			return;
 		}
 		String path;
-		Format format;
+		Format format = null;
 		final String formatLowerCase;
 		boolean formatSetInPath = false;
 		// hantera olika format
@@ -217,16 +217,27 @@ public class ResolverServlet extends HttpServlet {
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[3];
 		} else {
 			// Check which format the respond should be
-			String acceptFormat = req.getHeader("Accept") != null ? req.getHeader("Accept").toLowerCase() : "";
-			if (acceptFormat.contains("rdf")) {
-				format = Format.RDF;
-			} else if (acceptFormat.contains("xml")) {
-				format = Format.RDF; // Should be XML??
-			} else if (acceptFormat.contains("json")) {
-				format = Format.JSON_LD;
-			} else if (acceptFormat.contains("html")) {
-				format = Format.HTML;
-			} else {
+			String acceptFormatString = req.getHeader("Accept") != null ? req.getHeader("Accept").toLowerCase() : "";
+
+			// A request header can contain several accepted formats, we honor the priority order
+			String[] acceptFormats = acceptFormatString.split(",");
+			for (String acceptFormat : acceptFormats) {
+				if (acceptFormat.contains("rdf")) {
+					format = Format.RDF;
+					break;
+				} else if (acceptFormat.contains("xml")) {
+					format = Format.RDF;
+					break;
+				} else if (acceptFormat.contains("json")) {
+					format = Format.JSON_LD;
+					break;
+				} else if (acceptFormat.contains("html")) {
+					format = Format.HTML;
+					break;
+				}
+			}
+			// fallback to rdf
+			if (format == null) {
 				format = Format.RDF;
 			}
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[2];
