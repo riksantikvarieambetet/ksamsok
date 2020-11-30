@@ -3,6 +3,7 @@ package se.raa.ksamsok.api.method;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
@@ -16,6 +17,7 @@ import se.raa.ksamsok.api.util.Relation;
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.solr.SearchService;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
@@ -228,19 +230,13 @@ public class GetRelations extends AbstractAPIMethod {
 		Set<String> itemUrisSet = new HashSet<>();
 		final String uri = URI_PREFIX + partialIdentifier;
 		getRelationsTransitively(itemUrisSet, uri);
-
-		// vi får ibland med relationer till ursprungsobjektet - ta bort det
-		relations.remove(uri);
+//
+//		// vi får ibland med relationer till ursprungsobjektet - ta bort det
+//		relations.remove(uri);
 	}
 
 	private void getRelationsTransitively(Set<String> itemUrisSet, String uri) throws DiagnosticException {
-		// don't run the same uri more than once
-		if (itemUrisSet.contains(uri)) {
-			return;
-		}
-		itemUrisSet.add(uri);
 		SearchService searchService = serviceProvider.getSearchService();
-		String escapedUri = ClientUtils.escapeQueryChars(uri);
 
 		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
 		// algoritmen ser fn ut så här - inferSameAs styr steg 1 och 3, default är att inte utföra dem
@@ -249,48 +245,16 @@ public class GetRelations extends AbstractAPIMethod {
 		// 3. hämta ev de relaterades sameAs och replaces/isReplacedBy och lägg till dessa som relationer
 
 		try {
-			QueryResponse qr;
-			SolrDocumentList docs;
+
+			long timerStart = System.currentTimeMillis();
+			// 1)
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
-
-				// 1)
-				// hämta andra poster som är samma som denna och lägg till dem som "källposter"
-				SolrQuery sameAsQuery = new SolrQuery();
-				sameAsQuery.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
-
-				sameAsQuery.setFields(ContentHelper.IX_SAMEAS, ContentHelper.IX_REPLACES);
-				sameAsQuery.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
-				qr = searchService.query(sameAsQuery);
-				docs = qr.getResults();
-
-
-				for (SolrDocument doc : docs) {
-					Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
-					if (sameAsIds != null) {
-						for (Object sameAsId : sameAsIds) {
-							getRelationsTransitively(itemUrisSet, (String) sameAsId);
-						}
-					}
-					Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
-					if (replacesIds != null) {
-						for (Object replacesId : replacesIds) {
-							getRelationsTransitively(itemUrisSet, (String) replacesId);
-						}
-					}
-				}
-
-				// hämta andra poster som säger att de är samma som denna (eller replaces) och lägg till dem som "källposter"
-				sameAsQuery.setFields(ContentHelper.IX_ITEMID);
-				sameAsQuery.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedUri + " OR " + ContentHelper.IX_REPLACES + ":" + escapedUri);
-				qr = searchService.query(sameAsQuery);
-				docs = qr.getResults();
-				for (SolrDocument doc : docs) {
-					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
-					getRelationsTransitively(itemUrisSet, itemId);
-				}
+				getSourceIds(itemUrisSet, uri);
 			}
+			System.out.println("Part 1: " + (System.currentTimeMillis() - timerStart));
 
 			// 2)
+			timerStart = System.currentTimeMillis();
 			SolrQuery query = new SolrQuery();
 			query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
 			// hämta uri och relationer
@@ -308,6 +272,8 @@ public class GetRelations extends AbstractAPIMethod {
 			// sök fram källposten/-erna och alla som har relation till den/dem
 			query.setQuery(searchStr.toString());
 
+			QueryResponse qr;
+			SolrDocumentList docs;
 			qr = searchService.query(query);
 			docs = qr.getResults();
 			for (SolrDocument doc : docs) {
@@ -379,71 +345,21 @@ public class GetRelations extends AbstractAPIMethod {
 								return;
 							}
 						}
-
 					}
 				}
 			}
+			System.out.println("Part 2: " + (System.currentTimeMillis() - timerStart));
+
+			timerStart = System.currentTimeMillis();
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.targetsOnly) {
 				// 3)
-				// sökning på same as för träffarnas uri:er och skapa relation till dessa också
-
+				// sökning på sameAs/replaces för träffarnas uri:er och skapa relation till dessa också
 				for (Relation rel : new HashSet<>(relations)) {
-					final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
-
-					// handle sameas and replaces/isReplacedBy
-					query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
-					query.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedTargetUri + " OR " + ContentHelper.IX_REPLACES + ":" + escapedTargetUri);
-					qr = searchService.query(query);
-					docs = qr.getResults();
-					for (SolrDocument doc : docs) {
-						String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
-						// ta inte med min uri
-						if (itemUrisSet.contains(itemId)) {
-							continue;
-						}
-						if (!relations.add(new Relation(rel.getRelationType(), itemId, rel.getSource(), rel.getOriginalRelationType()))) {
-							if (logger.isDebugEnabled()) {
-								logger.debug("duplicate rel (from same as) " + rel);
-							}
-						}
-					}
-
-					// Ta fram de objekt som träffarna pekar ut med sameAs och replaces/isReplacedBy
-					query.setFields(ContentHelper.IX_SAMEAS, ContentHelper.IX_REPLACES);
-					query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedTargetUri);
-					qr = searchService.query(query);
-					docs = qr.getResults();
-					for (SolrDocument doc : docs) {
-						Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
-						if (sameAsIds != null) {
-							for (Object sameAsId : sameAsIds) {
-								// ta inte med mig själv
-								if (!sameAsId.equals(uri)) {
-									if (!relations.add(new Relation(rel.getRelationType(), (String) sameAsId, rel.getSource(), rel.getOriginalRelationType()))) {
-										if (logger.isDebugEnabled()) {
-											logger.debug("duplicate rel (from same as part 2) " + rel);
-										}
-									}
-								}
-							}
-						}
-
-						Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
-						if (replacesIds != null) {
-							for (Object replacesId : replacesIds) {
-								// ta inte med mig själv
-								if (!replacesId.equals(uri)) {
-									if (!relations.add(new Relation(rel.getRelationType(), (String) replacesId, rel.getSource(), rel.getOriginalRelationType()))) {
-										if (logger.isDebugEnabled()) {
-											logger.debug("duplicate rel (from replaces part 2) " + rel);
-										}
-									}
-								}
-							}
-						}
-					}
+					getTargetRelations(itemUrisSet, uri, rel);
 				}
 			}
+			System.out.println("Part 3: " + (System.currentTimeMillis() - timerStart));
+
 
 			// postfilter vid sökning på specifik relation
 			if (!isAll) {
@@ -458,9 +374,153 @@ public class GetRelations extends AbstractAPIMethod {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DiagnosticException("Fel vid metodanrop", "GetRelations.performMethodLogic", e.getMessage(), true);
 		}
 	}
+
+	private void getTargetRelations(Set<String> itemUrisSet, String sourceUri,  Relation rel) throws SolrServerException, IOException {
+		QueryResponse qr;
+		SolrDocumentList docs;
+		SearchService searchService = serviceProvider.getSearchService();
+		SolrQuery query = new SolrQuery();
+		final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
+
+		long timerStart = System.currentTimeMillis();
+		// handle sameas and replaces/isReplacedBy
+		query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
+		query.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedTargetUri + " OR " + ContentHelper.IX_REPLACES + ":" + escapedTargetUri);
+		qr = searchService.query(query);
+		docs = qr.getResults();
+		System.out.println("Part 3.1: " + (System.currentTimeMillis() - timerStart));
+
+		timerStart = System.currentTimeMillis();
+		for (SolrDocument doc : docs) {
+			String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
+			// ta inte med min uri
+			if (itemUrisSet.contains(itemId)) {
+				continue;
+			}
+			final Relation newRelation = new Relation(rel.getRelationType(), itemId, rel.getSource(), rel.getOriginalRelationType());
+			if (relations.add(newRelation)) {
+				// run this recursively
+				getTargetRelations(itemUrisSet, sourceUri, newRelation);
+			} else {
+				// this is already present, don't run again
+				if (logger.isDebugEnabled()) {
+					logger.debug("duplicate rel (from same as) " + rel);
+				}
+			}
+		}
+		System.out.println("Part 3.2: " + (System.currentTimeMillis() - timerStart));
+
+
+		// Ta fram de objekt som träffarna pekar ut med sameAs och replaces/isReplacedBy
+		query.setFields(ContentHelper.IX_SAMEAS, ContentHelper.IX_REPLACES);
+		query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedTargetUri);
+
+		timerStart = System.currentTimeMillis();
+		qr = searchService.query(query);
+		docs = qr.getResults();
+		System.out.println("Part 3.3: " + (System.currentTimeMillis() - timerStart));
+
+
+		for (SolrDocument doc : docs) {
+			Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
+			if (sameAsIds != null) {
+				timerStart = System.currentTimeMillis();
+				for (Object sameAsId : sameAsIds) {
+					// ta inte med mig själv
+					if (!sameAsId.equals(sourceUri)) {
+						final Relation newRelation = new Relation(rel.getRelationType(), (String) sameAsId, rel.getSource(), rel.getOriginalRelationType());
+						if (relations.add(newRelation)) {
+							// new one, let's run this recursively
+							getTargetRelations(itemUrisSet, sourceUri, newRelation);
+						} else {
+							if (logger.isDebugEnabled()) {
+								logger.debug("duplicate rel (from same as part 2) " + rel);
+							}
+						}
+					}
+				}
+
+				System.out.println("Part 3.4: " + (System.currentTimeMillis() - timerStart));
+			}
+
+
+			Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
+			if (replacesIds != null) {
+				timerStart = System.currentTimeMillis();
+				for (Object replacesId : replacesIds) {
+					// ta inte med mig själv
+					if (!replacesId.equals(sourceUri)) {
+						final Relation newRelation = new Relation(rel.getRelationType(), (String) replacesId, rel.getSource(), rel.getOriginalRelationType());
+						if (!relations.add(newRelation)) {
+							// new one, let's run this recursively
+							getTargetRelations(itemUrisSet, sourceUri, newRelation);
+						} else {
+							if (logger.isDebugEnabled()) {
+								logger.debug("duplicate rel (from replaces) " + rel);
+							}
+						}
+					}
+				}
+
+				System.out.println("Part 3.5: " + (System.currentTimeMillis() - timerStart));
+			}
+		}
+	}
+
+	private void getSourceIds(Set<String> itemUrisSet,  String uri) throws SolrServerException, IOException, DiagnosticException {
+
+		// don't run the same uri more than once
+		if (itemUrisSet.contains(uri)) {
+			return;
+		}
+		itemUrisSet.add(uri);
+		String escapedUri = ClientUtils.escapeQueryChars(uri);
+
+		SearchService searchService = serviceProvider.getSearchService();
+		QueryResponse qr;
+		SolrDocumentList docs;
+
+
+			// 1)
+			// hämta andra poster som är samma som denna och lägg till dem som "källposter"
+			SolrQuery sameAsQuery = new SolrQuery();
+			sameAsQuery.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
+
+			sameAsQuery.setFields(ContentHelper.IX_SAMEAS, ContentHelper.IX_REPLACES);
+			sameAsQuery.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
+			qr = searchService.query(sameAsQuery);
+			docs = qr.getResults();
+
+
+			for (SolrDocument doc : docs) {
+				Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
+				if (sameAsIds != null) {
+					for (Object sameAsId : sameAsIds) {
+						getSourceIds(itemUrisSet, (String) sameAsId);
+					}
+				}
+				Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
+				if (replacesIds != null) {
+					for (Object replacesId : replacesIds) {
+						getSourceIds(itemUrisSet, (String) replacesId);
+					}
+				}
+			}
+
+			// hämta andra poster som säger att de är samma som denna (eller replaces) och lägg till dem som "källposter"
+			sameAsQuery.setFields(ContentHelper.IX_ITEMID);
+			sameAsQuery.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedUri + " OR " + ContentHelper.IX_REPLACES + ":" + escapedUri);
+			qr = searchService.query(sameAsQuery);
+			docs = qr.getResults();
+			for (SolrDocument doc : docs) {
+				String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
+				getSourceIds(itemUrisSet, itemId);
+			}
+		}
 
 	@Override
 	protected void generateDocument() {
