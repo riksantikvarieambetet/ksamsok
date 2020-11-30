@@ -1,5 +1,5 @@
 @prefix aat: <http://vocab.getty.edu/aat/> .
-@prefix bracteate: <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype/> .
+@prefix bracteate: <http://kulturarvsdata.se/resurser/aukt/srdb/bracteatetype#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .

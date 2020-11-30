@@ -1,5 +1,5 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix period: <http://kulturarvsdata.se/resurser/aukt/srdb/period/> .
+@prefix period: <http://kulturarvsdata.se/resurser/aukt/srdb/period#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -10,7 +10,7 @@
     a skos:ConceptScheme , rdfs:Resource ;
     rdfs:label "Runological periods to inform the transliterations scheme applied in the Samnordisk runtextdatabas"@en , "Runologiska perioder för att informera transliterationsschemat som tillämpas hos Samnordisk runtextdatabas"@sv ;
     dcterms:title "Runological periods to inform the transliterations scheme applied in the Samnordisk runtextdatabas"@en , "Runologiska perioder för att informera transliterationsschemat som tillämpas hos Samnordisk runtextdatabas"@sv ;
-    skos:hasTopConcept period:U , period:U-V , period:V , period:V-M , period:M , period:D , period:SENTIDA , period:MODERN , period:OKAEND , period:UTGAAR .
+    skos:hasTopConcept period:U , period:U-V , period:V , period:V-M , period:M , period:D , period:SENTIDA , period:MODERN , period:OKÄND , period:UTGÅR .
 
 period:U
     a skos:Concept ;
@@ -116,12 +116,12 @@ period:MODERN
                                             time:hasDateTimeDescription [ time:year "1500"^^xsd:gYear ]
                                           ]
                  ] .
-period:OKAEND
+period:OKÄND
     a skos:Concept ;
     skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
     rdfs:label "Unknown"@en , "Okänd"@sv ;
     skos:prefLabel "Unknown"@en , "Okänd"@sv .
-period:UTGAAR
+period:UTGÅR
     a skos:Concept ;
     skos:inScheme <http://kulturarvsdata.se/resurser/aukt/srdb/period> ;
     rdfs:label "Removed"@en , "Utgår"@sv ;

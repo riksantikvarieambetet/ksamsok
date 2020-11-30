@@ -7,18 +7,18 @@
 		<rdfs:label xml:lang="sv">Runologiska perioder för att informera transliterationsschemat som tillämpas hos Samnordisk runtextdatabas</rdfs:label>
 		<dcterms:title xml:lang="en">Runological periods to inform the transliterations scheme applied in the Samnordisk runtextdatabas</dcterms:title>
 		<dcterms:title xml:lang="sv">Runologiska perioder för att informera transliterationsschemat som tillämpas hos Samnordisk runtextdatabas</dcterms:title>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/U"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/U-V"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/V"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/V-M"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/M"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/D"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/SENTIDA"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/MODERN"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/OKAEND"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period/UTGAAR"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#U"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#U-V"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#V"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#V-M"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#M"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#D"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#SENTIDA"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#MODERN"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#OKÄND"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period#UTGÅR"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/U">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#U">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Proto-Norse</rdfs:label>
@@ -41,7 +41,7 @@
 	<rdf:Description rdf:nodeID="ub1bL24C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">0725</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/U-V">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#U-V">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Proto-Norse/Viking Age</rdfs:label>
@@ -64,7 +64,7 @@
 	<rdf:Description rdf:nodeID="ub1bL35C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1100</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/V">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#V">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Viking Age</rdfs:label>
@@ -98,7 +98,7 @@
 	<rdf:Description rdf:nodeID="ub1bL50C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1100</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/V-M">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#V-M">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Viking Age/Medieval</rdfs:label>
@@ -132,7 +132,7 @@
 	<rdf:Description rdf:nodeID="ub1bL65C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1500</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/M">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#M">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<skos:prefLabel xml:lang="en">Medieval</skos:prefLabel>
@@ -166,7 +166,7 @@
 	<rdf:Description rdf:nodeID="ub1bL80C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1500</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/D">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#D">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Dalecarlian</rdfs:label>
@@ -200,7 +200,7 @@
 	<rdf:Description rdf:nodeID="ub1bL95C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1930</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/SENTIDA">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#SENTIDA">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Post-Reformation</rdfs:label>
@@ -223,7 +223,7 @@
 	<rdf:Description rdf:nodeID="ub1bL106C73">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1500</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/MODERN">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#MODERN">
 		<rdfs:label xml:lang="sv">Modern</rdfs:label>
 		<skos:prefLabel xml:lang="sv">Modern</skos:prefLabel>
 		<rdfs:label xml:lang="en">Modern</rdfs:label>
@@ -246,7 +246,7 @@
 	<rdf:Description rdf:nodeID="ub1bL117C73">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1500</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/OKAEND">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#OKÄND">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Unknown</rdfs:label>
@@ -254,7 +254,7 @@
 		<skos:prefLabel xml:lang="en">Unknown</skos:prefLabel>
 		<skos:prefLabel xml:lang="sv">Okänd</skos:prefLabel>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period/UTGAAR">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/period#UTGÅR">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/period"/>
 		<rdfs:label xml:lang="en">Removed</rdfs:label>

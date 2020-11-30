@@ -7,17 +7,17 @@
 		<rdfs:label xml:lang="sv">Runstenprofilstilar, efter Gräslund; 'Sod' efter Ljung</rdfs:label>
 		<dcterms:title xml:lang="en">Rune stone profile styles, after Gräslund; 'Sod' after Ljung</dcterms:title>
 		<dcterms:title xml:lang="sv">Runstenprofilstilar, efter Gräslund; 'Sod' efter Ljung</dcterms:title>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Rak"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Fp"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr1"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr2"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr3"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr4"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr5"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Kb"/>
-		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Sod"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Rak"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Fp"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr1"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr2"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr3"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr4"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr5"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Kb"/>
+		<skos:hasTopConcept rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Sod"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Rak">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Rak">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Plain</rdfs:label>
@@ -52,7 +52,7 @@
 	<rdf:Description rdf:nodeID="ub1bL29C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1015</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Fp">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Fp">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Bird’s-eye view</rdfs:label>
@@ -87,7 +87,7 @@
 	<rdf:Description rdf:nodeID="ub1bL44C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1050</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr1">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr1">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Profile style 1</rdfs:label>
@@ -122,7 +122,7 @@
 	<rdf:Description rdf:nodeID="ub1bL59C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1040</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr2">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr2">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Profile style 2</rdfs:label>
@@ -157,7 +157,7 @@
 	<rdf:Description rdf:nodeID="ub1bL74C75">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1050</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr3">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr3">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Profile style 3</rdfs:label>
@@ -192,7 +192,7 @@
 	<rdf:Description rdf:nodeID="ub1bL89C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1080</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr4">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr4">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<owl:sameAs rdf:resource="http://vocab.getty.edu/aat/300020939"/>
@@ -232,7 +232,7 @@
 	<rdf:Description rdf:nodeID="ub1bL106C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1100</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Pr5">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Pr5">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Profile style 5</rdfs:label>
@@ -267,7 +267,7 @@
 	<rdf:Description rdf:nodeID="ub1bL121C74">
 		<time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1130</time:year>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Kb">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Kb">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Cross-band style</rdfs:label>
@@ -276,7 +276,7 @@
 		<skos:prefLabel xml:lang="sv">Korsbandstil</skos:prefLabel>
 		<skos:altLabel>Kb</skos:altLabel>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle/Sod">
+	<rdf:Description rdf:about="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle#Sod">
 		<rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
 		<skos:inScheme rdf:resource="http://kulturarvsdata.se/resurser/aukt/srdb/profilestyle"/>
 		<rdfs:label xml:lang="en">Band with ornamental details</rdfs:label>
