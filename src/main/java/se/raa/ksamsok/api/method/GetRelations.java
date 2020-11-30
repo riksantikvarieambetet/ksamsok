@@ -246,15 +246,12 @@ public class GetRelations extends AbstractAPIMethod {
 
 		try {
 
-			long timerStart = System.currentTimeMillis();
 			// 1)
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
 				getSourceIds(itemUrisSet, uri);
 			}
-			System.out.println("Part 1: " + (System.currentTimeMillis() - timerStart));
 
 			// 2)
-			timerStart = System.currentTimeMillis();
 			SolrQuery query = new SolrQuery();
 			query.setRows(maxCount > 0 ? maxCount : Integer.MAX_VALUE); // TODO: kan det bli för många?
 			// hämta uri och relationer
@@ -348,9 +345,7 @@ public class GetRelations extends AbstractAPIMethod {
 					}
 				}
 			}
-			System.out.println("Part 2: " + (System.currentTimeMillis() - timerStart));
 
-			timerStart = System.currentTimeMillis();
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.targetsOnly) {
 				// 3)
 				// sökning på sameAs/replaces för träffarnas uri:er och skapa relation till dessa också
@@ -358,8 +353,6 @@ public class GetRelations extends AbstractAPIMethod {
 					getTargetRelations(itemUrisSet, uri, rel);
 				}
 			}
-			System.out.println("Part 3: " + (System.currentTimeMillis() - timerStart));
-
 
 			// postfilter vid sökning på specifik relation
 			if (!isAll) {
@@ -386,15 +379,12 @@ public class GetRelations extends AbstractAPIMethod {
 		SolrQuery query = new SolrQuery();
 		final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
 
-		long timerStart = System.currentTimeMillis();
 		// handle sameas and replaces/isReplacedBy
 		query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
 		query.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedTargetUri + " OR " + ContentHelper.IX_REPLACES + ":" + escapedTargetUri);
 		qr = searchService.query(query);
 		docs = qr.getResults();
-		System.out.println("Part 3.1: " + (System.currentTimeMillis() - timerStart));
 
-		timerStart = System.currentTimeMillis();
 		for (SolrDocument doc : docs) {
 			String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 			// ta inte med min uri
@@ -412,23 +402,18 @@ public class GetRelations extends AbstractAPIMethod {
 				}
 			}
 		}
-		System.out.println("Part 3.2: " + (System.currentTimeMillis() - timerStart));
-
 
 		// Ta fram de objekt som träffarna pekar ut med sameAs och replaces/isReplacedBy
 		query.setFields(ContentHelper.IX_SAMEAS, ContentHelper.IX_REPLACES);
 		query.setQuery(ContentHelper.IX_ITEMID + ":" + escapedTargetUri);
 
-		timerStart = System.currentTimeMillis();
 		qr = searchService.query(query);
 		docs = qr.getResults();
-		System.out.println("Part 3.3: " + (System.currentTimeMillis() - timerStart));
 
 
 		for (SolrDocument doc : docs) {
 			Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
 			if (sameAsIds != null) {
-				timerStart = System.currentTimeMillis();
 				for (Object sameAsId : sameAsIds) {
 					// ta inte med mig själv
 					if (!sameAsId.equals(sourceUri)) {
@@ -443,14 +428,10 @@ public class GetRelations extends AbstractAPIMethod {
 						}
 					}
 				}
-
-				System.out.println("Part 3.4: " + (System.currentTimeMillis() - timerStart));
 			}
-
 
 			Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
 			if (replacesIds != null) {
-				timerStart = System.currentTimeMillis();
 				for (Object replacesId : replacesIds) {
 					// ta inte med mig själv
 					if (!replacesId.equals(sourceUri)) {
@@ -465,8 +446,6 @@ public class GetRelations extends AbstractAPIMethod {
 						}
 					}
 				}
-
-				System.out.println("Part 3.5: " + (System.currentTimeMillis() - timerStart));
 			}
 		}
 	}
@@ -484,7 +463,6 @@ public class GetRelations extends AbstractAPIMethod {
 		QueryResponse qr;
 		SolrDocumentList docs;
 
-
 			// 1)
 			// hämta andra poster som är samma som denna och lägg till dem som "källposter"
 			SolrQuery sameAsQuery = new SolrQuery();
@@ -494,7 +472,6 @@ public class GetRelations extends AbstractAPIMethod {
 			sameAsQuery.setQuery(ContentHelper.IX_ITEMID + ":" + escapedUri);
 			qr = searchService.query(sameAsQuery);
 			docs = qr.getResults();
-
 
 			for (SolrDocument doc : docs) {
 				Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
