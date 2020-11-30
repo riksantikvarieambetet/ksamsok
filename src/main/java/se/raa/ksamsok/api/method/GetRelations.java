@@ -224,21 +224,26 @@ public class GetRelations extends AbstractAPIMethod {
 		if (maxCount == 0) {
 			return;
 		}
-		SearchService searchService = serviceProvider.getSearchService();
-		final String uri = URI_PREFIX + partialIdentifier;
+		relations = new HashSet<>();
 		Set<String> itemUrisSet = new HashSet<>();
+		final String uri = URI_PREFIX + partialIdentifier;
+		getRelationsTransitively(itemUrisSet, uri);
+	}
+
+	private void getRelationsTransitively(Set<String> itemUrisSet, String uri) throws DiagnosticException {
+		// don't run the same uri more than once
+		if (itemUrisSet.contains(uri)) {
+			return;
+		}
 		itemUrisSet.add(uri);
-
+		SearchService searchService = serviceProvider.getSearchService();
 		String escapedUri = ClientUtils.escapeQueryChars(uri);
-
 
 		// TODO: algoritmen kan behöva finslipas och optimeras tex för poster med många relaterade objekt
 		// algoritmen ser fn ut så här - inferSameAs styr steg 1 och 3, default är att inte utföra dem
-		// 1. hämta ev post för att få tag på postens sameAs och replaces/isReplacedBy
+		// 1. hämta ev post för att få tag på postens sameAs och replaces/isReplacedBy. Kör rekursivt på alla sameAs och replaces/isReplacedBy
 		// 2. sök fram källpost(er) och alla relaterade poster (post + ev alla sameAs och deras relaterade)
 		// 3. hämta ev de relaterades sameAs och replaces/isReplacedBy och lägg till dessa som relationer
-
-
 
 		try {
 			QueryResponse qr;
@@ -260,13 +265,13 @@ public class GetRelations extends AbstractAPIMethod {
 					Collection<Object> sameAsIds = doc.getFieldValues(ContentHelper.IX_SAMEAS);
 					if (sameAsIds != null) {
 						for (Object sameAsId : sameAsIds) {
-							itemUrisSet.add((String) sameAsId);
+							getRelationsTransitively(itemUrisSet, (String) sameAsId);
 						}
 					}
 					Collection<Object> replacesIds = doc.getFieldValues(ContentHelper.IX_REPLACES);
 					if (replacesIds != null) {
 						for (Object replacesId : replacesIds) {
-							itemUrisSet.add((String) replacesId);
+							getRelationsTransitively(itemUrisSet, (String) replacesId);
 						}
 					}
 				}
@@ -278,7 +283,7 @@ public class GetRelations extends AbstractAPIMethod {
 				docs = qr.getResults();
 				for (SolrDocument doc : docs) {
 					String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
-					itemUrisSet.add(itemId);
+					getRelationsTransitively(itemUrisSet, itemId);
 				}
 			}
 
@@ -290,7 +295,7 @@ public class GetRelations extends AbstractAPIMethod {
 			query.addField(ContentHelper.IX_ITEMID);
 			// bygg söksträng mh källposten/alla källposter
 			StringBuilder searchStr = new StringBuilder();
-			for (String itemId: itemUrisSet) {
+			for (String itemId : itemUrisSet) {
 				String escapedItemId = ClientUtils.escapeQueryChars(itemId);
 				if (searchStr.length() > 0) {
 					searchStr.append(" OR ");
@@ -302,13 +307,12 @@ public class GetRelations extends AbstractAPIMethod {
 
 			qr = searchService.query(query);
 			docs = qr.getResults();
-			relations = new HashSet<>();
-			for (SolrDocument doc: docs) {
+			for (SolrDocument doc : docs) {
 				String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 				boolean isSourceDoc = itemUrisSet.contains(itemId);
 				Collection<Object> values = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
 				if (values != null) {
-					for (Object value: values) {
+					for (Object value : values) {
 						String[] parts = ((String) value).split("\\|");
 						if (parts.length != 2) {
 							logger.error("Fel på värde för relationsindex för " + itemId + ", ej på korrekt format: " + value);
@@ -338,7 +342,7 @@ public class GetRelations extends AbstractAPIMethod {
 							if (ContentHelper.IX_ISRELATEDTO.equals(typePart)) {
 								boolean exists = false;
 								Relation rel = null;
-								for (String owRel: relationOneWay) {
+								for (String owRel : relationOneWay) {
 									// bara typ och uri är intressanta för detta
 									rel = new Relation(owRel, itemId, null, null);
 									if (relations.contains(rel)) {
@@ -356,7 +360,7 @@ public class GetRelations extends AbstractAPIMethod {
 						}
 
 						// vi vill inte ha med relationer som pekar på "det här" objektet
-						if(!uriPart.equals(uri)) {
+						if (!uriPart.equals(uri)) {
 							String source = isSourceDoc ? SOURCE_DIRECT : SOURCE_REVERSE;
 							Relation rel = new Relation(typePart, uriPart, source, orgTypePart);
 
@@ -380,15 +384,15 @@ public class GetRelations extends AbstractAPIMethod {
 				// 3)
 				// sökning på same as för träffarnas uri:er och skapa relation till dessa också
 
-				for (Relation rel: new HashSet<>(relations)) {
+				for (Relation rel : new HashSet<>(relations)) {
 					final String escapedTargetUri = ClientUtils.escapeQueryChars(rel.getTargetUri());
 
 					// handle sameas and replaces/isReplacedBy
 					query.setFields(ContentHelper.IX_ITEMID); // bara itemId här
-					query.setQuery(ContentHelper.IX_SAMEAS + ":"+ escapedTargetUri + " OR " + ContentHelper.IX_REPLACES + ":" + escapedTargetUri);
+					query.setQuery(ContentHelper.IX_SAMEAS + ":" + escapedTargetUri + " OR " + ContentHelper.IX_REPLACES + ":" + escapedTargetUri);
 					qr = searchService.query(query);
 					docs = qr.getResults();
-					for (SolrDocument doc: docs) {
+					for (SolrDocument doc : docs) {
 						String itemId = (String) doc.getFieldValue(ContentHelper.IX_ITEMID);
 						// ta inte med min uri
 						if (itemUrisSet.contains(itemId)) {
@@ -435,9 +439,6 @@ public class GetRelations extends AbstractAPIMethod {
 							}
 						}
 					}
-
-
-
 				}
 			}
 
@@ -456,7 +457,6 @@ public class GetRelations extends AbstractAPIMethod {
 		} catch (Exception e) {
 			throw new DiagnosticException("Fel vid metodanrop", "GetRelations.performMethodLogic", e.getMessage(), true);
 		}
-
 	}
 
 	@Override
