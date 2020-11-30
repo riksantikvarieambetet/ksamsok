@@ -228,6 +228,9 @@ public class GetRelations extends AbstractAPIMethod {
 		Set<String> itemUrisSet = new HashSet<>();
 		final String uri = URI_PREFIX + partialIdentifier;
 		getRelationsTransitively(itemUrisSet, uri);
+
+		// vi får ibland med relationer till ursprungsobjektet - ta bort det
+		relations.remove(uri);
 	}
 
 	private void getRelationsTransitively(Set<String> itemUrisSet, String uri) throws DiagnosticException {
