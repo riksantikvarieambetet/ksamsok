@@ -134,10 +134,14 @@ public class APIServlet extends HttpServlet {
 				}
 
 			} catch (MissingParameterException | BadParameterException e) {
+
+				e.printStackTrace();
 				resp.setStatus(400);
 				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
 				diagnostic(out, stylesheet, e);
 			} catch (DiagnosticException e) {
+
+				e.printStackTrace();
 				resp.setStatus(500);
 				logger.error("queryString i requesten: " + req.getQueryString() + ": " + e.getMessage());
 				diagnostic(out, stylesheet, e);
