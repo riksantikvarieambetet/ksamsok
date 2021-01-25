@@ -249,6 +249,12 @@ public class GetRelations extends AbstractAPIMethod {
 			// 1)
 			if (inferSameAs == InferSameAs.yes || inferSameAs == InferSameAs.sourceOnly) {
 				getSourceIds(itemUrisSet, uri);
+			} else {
+
+				// we can't add uri to itemUrisSet before running getSourceIds,
+				// since it will return immediately if the set contains uri,
+				// so let's add it here afterwards instead
+				itemUrisSet.add(uri);
 			}
 
 			// 2)
@@ -450,7 +456,7 @@ public class GetRelations extends AbstractAPIMethod {
 		}
 	}
 
-	private void getSourceIds(Set<String> itemUrisSet,  String uri) throws SolrServerException, IOException, DiagnosticException {
+	private void getSourceIds(Set<String> itemUrisSet,  String uri) throws SolrServerException, IOException {
 
 		// don't run the same uri more than once
 		if (itemUrisSet.contains(uri)) {
