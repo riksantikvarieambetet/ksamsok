@@ -292,6 +292,9 @@ public class ResolverServlet extends HttpServlet {
 				// we have to append a special case to also fetch any posts that have the id in a "replaces"-tag
 				" OR " + ContentHelper.IX_REPLACES + ":" + escapedUrli;
 		q.setQuery(sb);
+
+		// we want any items that are replacing old items to come first
+		q.setSort(ContentHelper.IX_REPLACES, SolrQuery.ORDER.desc);
 		q.setRows(1);
 
 		// vi måste alltid ha rdf för att kunna kolla replaces
@@ -315,7 +318,7 @@ public class ResolverServlet extends HttpServlet {
 		// Get data
 		QueryResponse response = searchService.query(q);
 		SolrDocumentList hits = response.getResults();
-		if (hits.getNumFound() != 1) {
+		if (hits.getNumFound() < 1) {
 			logger.debug("Could not find record for q: " + q);
 			// om objektet inte finns i indexet kan det ändå finnas i databasen,
 			// exempelvis om itemForIndexing=n, om objektet inte har någon medialicense
