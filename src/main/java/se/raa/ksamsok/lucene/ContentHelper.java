@@ -163,7 +163,7 @@ public abstract class ContentHelper {
 	public static final String IX_CONTAINSINFORMATIONABOUT = "containsInformationAbout";
 	public static final String IX_ISMENTIONEDBY = "isMentionedBy";
 	public static final String IX_MENTIONS = "mentions";
-	public static final String IX_REPLACES = "replaces";
+	public static final String IX_REPLACES = "multipleReplaces";
 	public static final String IX_ISREPLACEDBY = "isReplacedBy";
 
 	// cidoc-crm
