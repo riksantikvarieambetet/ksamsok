@@ -93,24 +93,34 @@ public class RDFUtil {
     	String value = null;
 		Selector selector = new SimpleSelector(subject, p, (RDFNode) null);
 		StmtIterator iter = model.listStatements(selector);
-		while (iter.hasNext()) {
-			if (forceSingle && value != null) {
-				throw new Exception("Fler värden än ett för s: " + subject + " p: " + p);
+		try {
+			while (iter.hasNext()) {
+				if (forceSingle && value != null) {
+					throw new Exception("Fler värden än ett för s: " + subject + " p: " + p);
+				}
+				Statement s = iter.next();
+				if (s.getObject().isLiteral()) {
+					value = StringUtils.trimToNull(s.getObject().asLiteral().getString());
+				} else if (s.getObject().isURIResource()) {
+					value = getReferenceValue(s.getObject().asResource(), ip, null, null);
+				} else {
+					throw new Exception("Måste vara literal/urireference o.class: " + s.getObject().getClass().getSimpleName() + " för s: " + subject + " p: " + p);
+				}
+				stringJoiner.add(value);
+				if (ip != null) {
+					ip.addToDoc(value);
+				}
 			}
-			Statement s = iter.next();
-			if (s.getObject().isLiteral()) {
-				value = StringUtils.trimToNull(s.getObject().asLiteral().getString());
-			} else if (s.getObject().isURIResource()){
-				value = getReferenceValue(s.getObject().asResource(), ip, null, null);
-			} else {
-				throw new Exception("Måste vara literal/urireference o.class: " + s.getObject().getClass().getSimpleName() + " för s: " + subject + " p: " + p);
-			}
-			stringJoiner.add(value);
-			if (ip != null) {
-				ip.addToDoc(value);
+		} finally {
+			if (iter != null) {
+				iter.close();
 			}
 		}
-		return stringJoiner.length() > 0 ? StringUtils.trimToNull(stringJoiner.toString()) : null;
+		if (stringJoiner.length() > 0) {
+			return StringUtils.trimToNull(stringJoiner.toString());
+		} else {
+			return null;
+		}
 	}
 
 	// läser ut ett enkelt värde ur subjektoden där objektnoden måste vara en literal eller en uri-referens

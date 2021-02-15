@@ -719,6 +719,17 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_TOTIME, contextTypes);
 		String toTime = extractSingleValue(model, cS, getURIRef(uri_rToTime), ip);
 
+
+		// I can't for the life of me understand why fromTime and toTime becomes "null" instead of null when there
+		// are empty time tags
+		if ("null".equals(fromTime)) {
+			fromTime = null;
+		}
+
+		if ("null".equals(toTime)) {
+			toTime = null;
+		}
+
 		// hantera ? i tidsfälten
 		if (fromTime != null && fromTime.startsWith("?")) {
 			fromTime = null;

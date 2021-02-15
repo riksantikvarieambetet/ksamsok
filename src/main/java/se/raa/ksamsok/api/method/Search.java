@@ -475,6 +475,7 @@ public class Search extends AbstractSearchMethod {
 		} catch (Exception e) {
 			logger.error(e);
 			logger.error("Fel vid hämtande av xml-data (" + binDataField + ") för " + uri);
+			content = null;
 		}
 		return content;
 	}
