@@ -38,7 +38,7 @@ public class Facet extends StatisticSearch {
 	 * @param indexMap de index som skall ingå i facetten
 	 * @param out för att skriva resultatet
 	 * @param queryString filtrerar resultatet efter query
-	 * @throws DiagnosticException 
+	 * @throws DiagnosticException
 	 */
 	public Facet(APIServiceProvider serviceProvider, OutputStream out, Map<String,String> params) throws DiagnosticException{
 		super(serviceProvider, out, params); 
@@ -106,7 +106,7 @@ public class Facet extends StatisticSearch {
 		removeBelowEl.appendChild(doc.createTextNode(Integer.toString(removeBelow)));
 		echo.appendChild(removeBelowEl);
 		Element query = doc.createElement("query");
-		query.appendChild(doc.createTextNode(queryString));
+		query.appendChild(doc.createTextNode(originalQueryString));
 		echo.appendChild(query);
 	}
 }

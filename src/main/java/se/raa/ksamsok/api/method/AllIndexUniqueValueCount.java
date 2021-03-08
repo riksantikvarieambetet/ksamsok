@@ -74,6 +74,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 
 	protected Map<String,String> indexMap;
 	protected String queryString;
+	protected String originalQueryString;
 
 	protected List<FacetField> facetFields = Collections.emptyList();
 
@@ -84,7 +85,9 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		queryString = getQueryString(params.get(QUERY_PARAMS));
+		final String[] queryStrings = getQueryString(params.get(QUERY_PARAMS));
+		this.queryString = queryStrings[0];
+		this.originalQueryString = queryStrings[1];
 		String indexString = params.get(INDEX_PARAMETER);
 		if (indexString != null) {
 			indexMap = getIndexMapSingleValue(indexString, "*");
@@ -168,7 +171,7 @@ public class AllIndexUniqueValueCount extends AbstractAPIMethod {
 			echo.appendChild(index);
 		}
 		Node query = doc.createElement("query");
-		query.appendChild(doc.createTextNode(queryString));
+		query.appendChild(doc.createTextNode(originalQueryString));
 		echo.appendChild(query);
 		result.appendChild(echo);
 	}

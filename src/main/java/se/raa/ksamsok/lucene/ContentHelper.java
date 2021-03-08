@@ -1008,6 +1008,4 @@ public abstract class ContentHelper {
 		}
 		return params;
 	}
-
-
 }
