@@ -23,6 +23,7 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 	public static final int MAX_HITS_PER_PAGE = 500;
 
 	protected String queryString;
+	protected String originalQueryString;
 	protected int hitsPerPage;
 	protected int startRecord;
 
@@ -35,7 +36,9 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 	@Override
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
-		this.queryString = getQueryString(params.get(SEARCH_PARAMS));
+		final String[] queryStrings = getQueryString(params.get(SEARCH_PARAMS));
+		this.queryString = queryStrings[0];
+		this.originalQueryString = queryStrings[1];
 		//sätter valfria parametrar
 		int hitsPerPage = getHitsPerPage(params.get(HITS_PER_PAGE));
 		int startRecord = getStartRecord(params.get(START_RECORD));

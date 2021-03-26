@@ -321,7 +321,7 @@ public class Search extends AbstractSearchMethod {
 			echo.appendChild(hitsPerPageEl);
 
 			Element query = doc.createElement("query");
-			query.appendChild(doc.createTextNode(queryString));
+			query.appendChild(doc.createTextNode(originalQueryString));
 			echo.appendChild(query);
 		}
 	}

@@ -24,6 +24,7 @@ import java.util.Map;
  */
 public class StatisticSearch extends Statistic {
 	protected String queryString = null;
+	protected String originalQueryString = null;
 
 	/** metodens namn */
 	public static final String METHOD_NAME = "statisticSearch";
@@ -45,7 +46,9 @@ public class StatisticSearch extends Statistic {
 	protected void extractParameters() throws MissingParameterException,
 			BadParameterException {
 		super.extractParameters();
-		queryString = getQueryString(params.get(QUERY_PARAMS));
+		final String[] queryStrings = getQueryString(params.get(QUERY_PARAMS));
+		this.queryString = queryStrings[0];
+		this.originalQueryString = queryStrings[1];
 	}
 
 	@Override
@@ -98,7 +101,7 @@ public class StatisticSearch extends Statistic {
 		NodeList echoNodes = doc.getElementsByTagName("echo");
 		if (echoNodes.getLength()==1){
 			Element query = doc.createElement("query");
-			query.appendChild(doc.createTextNode(queryString));
+			query.appendChild(doc.createTextNode(originalQueryString));
 			echoNodes.item(0).appendChild(query);
 		} else if (echoNodes.getLength()<1){
 			logger.error("Did not find any echo node in the respond document");

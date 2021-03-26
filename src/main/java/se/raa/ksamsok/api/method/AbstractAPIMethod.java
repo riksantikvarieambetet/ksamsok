@@ -160,16 +160,18 @@ public abstract class AbstractAPIMethod implements APIMethod {
 	}
 
 	/**
-	 * Returnerar query-strängen eller kastar ett exception om värdet var null
-	 * @param queryString query-sträng
-	 * @return queryString
+	 * Returnerar query-strängen eller kastar ett exception om värdet var null. Om querysträngen
+	 * innehåller "replaces=" ersätts det med "multipleReplaces" eftersom det har bytt namn i indexet
+	 * @param originalQueryString query-sträng
+	 * @return en array med queryString och originalQueryString
 	 * @throws MissingParameterException om strängen är null eller tomma strängen
 	 */
-	public String getQueryString(String queryString) throws MissingParameterException {
-		if (queryString == null || queryString.trim().length() < 1) {
+	public String[] getQueryString(String originalQueryString) throws MissingParameterException {
+		if (originalQueryString == null || originalQueryString.trim().length() < 1) {
 			throw new MissingParameterException("parametern query saknas eller är tom", "APIMethodFactory.getQueryString", null, false);
 		}
-		return queryString;
+		String queryString = originalQueryString.replaceAll("replaces=",  "multipleReplaces=");
+		return new String[]{queryString, originalQueryString};
 	}
 
 	/**
