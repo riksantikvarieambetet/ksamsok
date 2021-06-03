@@ -4,10 +4,14 @@ buildscript {
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:6.2.0'
+    }
 }
 
 plugins {
     id "war"
+    id 'com.github.ben-manes.versions' version "0.39.0"
 }
 
 // Set up environment start
@@ -24,6 +28,7 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 //and standard one
 apply plugin: 'java'
+apply plugin: 'org.owasp.dependencycheck'
 
 repositories {
 
