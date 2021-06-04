@@ -71,6 +71,9 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-context', version: '5.2.1.RELEASE'
     implementation group: 'org.apache.jena', name: 'jena-core', version: '3.17.0'
     implementation group: 'org.apache.jena', name: 'jena-arq', version: '3.17.0'
+    // Jena 4 kräver java 11, det har vi inte på ksamsök-maskinerna än
+    //implementation group: 'org.apache.jena', name: 'jena-core', version: '4.0.0'
+    //implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.0.0'
     implementation group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
     implementation group: 'rome', name: 'rome-mediarss', version: '0.2.2'
     implementation group: 'rome', name: 'rome', version: '1.0'
@@ -93,7 +96,7 @@ dependencies {
     // and we can't use only xml-apis-xerces for some reason
     providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
 
-    implementation group: 'joda-time', name: 'joda-time', version: '1.6.2'
+    implementation group: 'joda-time', name: 'joda-time', version: '2.10.10'
     implementation group: 'org.json', name: 'json', version: '20180813'
     implementation group: 'org.springframework', name: 'spring-web', version: '5.2.1.RELEASE'
     implementation group: 'xalan', name: 'xalan', version: '2.6.0'
@@ -105,9 +108,7 @@ dependencies {
     implementation group: 'org.opengis', name: 'geoapi', version: '2.2.0'
     implementation group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
 
-
-    // https://mvnrepository.com/artifact/org.postgresql/postgresql
-    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.2.20'
 
     runtimeOnly group: 'javax.media.jai', name: 'com.springsource.javax.media.jai.core', version: '1.1.3'
 
