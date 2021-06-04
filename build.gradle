@@ -62,7 +62,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
     implementation group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
