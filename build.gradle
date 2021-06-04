@@ -65,7 +65,6 @@ dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
     implementation group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
-    implementation group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     implementation group: 'com.vividsolutions', name: 'jts', version: '1.13'
     implementation group: 'org.springframework', name: 'spring-beans', version: '5.2.1.RELEASE'
@@ -98,12 +97,7 @@ dependencies {
     implementation group: 'org.json', name: 'json', version: '20180813'
     implementation group: 'org.springframework', name: 'spring-web', version: '5.2.1.RELEASE'
     implementation group: 'xalan', name: 'xalan', version: '2.6.0'
-    //implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
-
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
-
-
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
     // old jars use old log4j
     implementation group: 'log4j', name: 'log4j', version: '1.2.17'
