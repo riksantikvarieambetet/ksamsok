@@ -2,7 +2,7 @@
 
 buildscript {
     repositories {
-        mavenCentral()
+        maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
     }
     dependencies {
         classpath 'org.owasp:dependency-check-gradle:6.2.0'
@@ -32,26 +32,27 @@ apply plugin: 'org.owasp.dependencycheck'
 
 repositories {
 
+    maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
+
     // för geotools
-    maven {
-        url = 'https://repo.osgeo.org/repository/release/'
-    }
+//    maven {
+//        url = 'https://repo.osgeo.org/repository/release/'
+//    }
 
     // för georss-rome måste jcenter stå först, den i mavencentral är trasig...
-    jcenter()
-    mavenCentral()
 
     // för rome-mediarss
-    maven {
-        url = 'https://dist.wso2.org/maven2/'
-    }
+    jcenter()
+//    maven {
+//        url = 'https://dist.wso2.org/maven2/'
+//    }
 
     // för cql-java
-    maven {
-        url = 'http://maven.icm.edu.pl/artifactory/repo'
-        // This isn't perfect, but it can't be run over https :(
-        allowInsecureProtocol = true
-    }
+//    maven {
+//        url = 'http://maven.icm.edu.pl/artifactory/repo'
+//        // This isn't perfect, but it can't be run over https :(
+//        allowInsecureProtocol = true
+//    }
 }
 
 configurations.all {
@@ -77,13 +78,6 @@ dependencies {
     implementation group: 'org.z3950.zing', name: 'cql-java', version: '1.10'
     implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
 
-//    implementation group: 'org.geotools', name: 'gt-main', version: '22-RC'
-//    implementation group: 'org.geotools', name: 'gt-referencing', version: '22-RC'
-//    implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '23.0'
-//    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '23.0'
-//    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '23.0'
-
-
     implementation group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
     implementation group: 'org.geotools', name: 'gt-main', version: '2.5.6'
     implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
@@ -104,7 +98,11 @@ dependencies {
     implementation group: 'org.json', name: 'json', version: '20180813'
     implementation group: 'org.springframework', name: 'spring-web', version: '5.2.1.RELEASE'
     implementation group: 'xalan', name: 'xalan', version: '2.6.0'
-    implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+    //implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+
 
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
     // old jars use old log4j
