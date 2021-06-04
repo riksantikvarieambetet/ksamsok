@@ -1,6 +1,6 @@
 package se.raa.ksamsok.harvest;
 
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import se.raa.ksamsok.lucene.ContentHelper;
