@@ -1,28 +1,47 @@
-package se.raa.ksamsok.api;
-
-import org.junit.Before;
-
-import java.net.MalformedURLException;
-import java.util.HashMap;
-
-public class RSSTest extends AbstractBaseTest {
-
-	@Before
-	public void setUp() throws MalformedURLException{
-		super.setUp();
-		reqParams = new HashMap<>();
-		reqParams.put("method", "rss");
-		reqParams.put("query","item=yxa");
-		reqParams.put("place","gotland");
-		reqParams.put("startRecord", "10");
-		reqParams.put("hitsPerPage","25");
-		reqParams.put("sort","itemName");
-		reqParams.put("sortConfig","asc");
-	}
-
-	//TODO: Kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
-	//	// av om det finns data eller ej genom setup/teardown
-	// Kan inte köras just nu pga instabilt testdata
+//package se.raa.ksamsok.api;
+//
+//import org.apache.commons.lang3.StringUtils;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
+//import org.w3c.dom.NodeList;
+//import org.w3c.dom.ProcessingInstruction;
+//import se.raa.ksamsok.api.method.APIMethod;
+//
+//import javax.xml.parsers.DocumentBuilder;
+//import javax.xml.parsers.DocumentBuilderFactory;
+//import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayOutputStream;
+//import java.net.MalformedURLException;
+//import java.net.URI;
+//import java.util.HashMap;
+//
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertTrue;
+//import static org.junit.Assert.fail;
+//
+//public class RSSTest extends AbstractBaseTest {
+//
+//	@Before
+//	public void setUp() throws MalformedURLException{
+//		super.setUp();
+//		reqParams = new HashMap<>();
+//		reqParams.put("method", "rss");
+//		reqParams.put("query","item=yxa");
+//		reqParams.put("place","gotland");
+//		reqParams.put("startRecord", "10");
+//		reqParams.put("hitsPerPage","25");
+//		reqParams.put("sort","itemName");
+//		reqParams.put("sortConfig","asc");
+//	}
+//
+//	//TODO: Kommentera tillbaka när vi har data i indexet igen, eller ännu hellre göra teset oberoende
+//	//	// av om det finns data eller ej genom setup/teardown
+//	// Kan inte köras just nu pga instabilt testdata
 //	@Test
 //	public void testRSSSearch(){
 //		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -95,4 +114,5 @@ public class RSSTest extends AbstractBaseTest {
 //			fail(e.getMessage());
 //		}
 //	}
-}
+//
+//}

@@ -63,7 +63,7 @@ configurations.all {
 
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
-    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
+    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
     implementation group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'com.vividsolutions', name: 'jts', version: '1.13'
@@ -86,7 +86,6 @@ dependencies {
     implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
     implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
-    implementation group: 'jstl', name: 'jstl', version: '1.2'
     implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
 
@@ -97,9 +96,9 @@ dependencies {
     providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
 
     implementation group: 'joda-time', name: 'joda-time', version: '2.10.10'
-    implementation group: 'org.json', name: 'json', version: '20180813'
+    implementation group: 'org.json', name: 'json', version: '20210307'
     implementation group: 'org.springframework', name: 'spring-web', version: '5.2.1.RELEASE'
-    implementation group: 'xalan', name: 'xalan', version: '2.6.0'
+    implementation group: 'xalan', name: 'xalan', version: '2.7.2'
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
     // old jars use old log4j
