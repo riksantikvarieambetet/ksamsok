@@ -63,7 +63,7 @@ configurations.all {
 
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
-    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
+    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
     implementation group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.1'
@@ -109,7 +109,7 @@ dependencies {
 
     //implementation group: 'jstl', name: 'jstl', version: '1.2'
 
-    // old jars use old log4j
+    // old jars use old log4j, for example oclc-harvester2 0.1.12
     runtimeOnly group: 'log4j', name: 'log4j', version: '1.2.17'
     runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.2.20'
 
