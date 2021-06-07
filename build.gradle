@@ -68,8 +68,9 @@ dependencies {
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.1'
 
-    implementation group: 'org.springframework', name: 'spring-beans', version: '5.2.1.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.2.1.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.7'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.7'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.7'
     implementation group: 'org.apache.jena', name: 'jena-core', version: '4.1.0'
     implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.1.0'
     implementation group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
@@ -99,7 +100,6 @@ dependencies {
 
     implementation group: 'joda-time', name: 'joda-time', version: '2.10.10'
     implementation group: 'org.json', name: 'json', version: '20210307'
-    implementation group: 'org.springframework', name: 'spring-web', version: '5.2.1.RELEASE'
     implementation group: 'xalan', name: 'xalan', version: '2.7.2'
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
@@ -119,8 +119,8 @@ dependencies {
 
 
     testImplementation 'junit:junit:4.+'
-    testImplementation group: 'org.springframework', name: 'org.springframework.test', version: '3.2.2.RELEASE'
-    testImplementation group: 'org.springframework', name: 'org.springframework.jdbc', version: '3.2.2.RELEASE'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.7'
+    testImplementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.7'
     testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '10.0.3'
 
 
