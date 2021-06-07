@@ -121,7 +121,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     testImplementation group: 'org.springframework', name: 'org.springframework.test', version: '3.2.2.RELEASE'
     testImplementation group: 'org.springframework', name: 'org.springframework.jdbc', version: '3.2.2.RELEASE'
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.0.4.v20111024'
+    testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '10.0.3'
 
 
 }
