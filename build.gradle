@@ -34,7 +34,7 @@ repositories {
 
     maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
 
-    // för geotools
+    // för opengis
 //    maven {
 //        url = 'https://repo.osgeo.org/repository/release/'
 //    }
@@ -85,12 +85,13 @@ dependencies {
     implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '25.1'
     implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '25.1'
     implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '25.1'
+    implementation group: 'org.geotools', name: 'gt-opengis', version: '25.1'
 
-    implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
     // geotools needs this to build
     implementation group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
 
+    implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
     // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
     // and we can't use only xml-apis-xerces for some reason
@@ -103,7 +104,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
 
-    implementation group: 'org.opengis', name: 'geoapi', version: '2.2.0'
+
     implementation group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
 
     //implementation group: 'jstl', name: 'jstl', version: '1.2'
