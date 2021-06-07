@@ -66,14 +66,12 @@ dependencies {
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
     implementation group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    implementation group: 'com.vividsolutions', name: 'jts', version: '1.13'
+    implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.1'
+
     implementation group: 'org.springframework', name: 'spring-beans', version: '5.2.1.RELEASE'
     implementation group: 'org.springframework', name: 'spring-context', version: '5.2.1.RELEASE'
-    implementation group: 'org.apache.jena', name: 'jena-core', version: '3.17.0'
-    implementation group: 'org.apache.jena', name: 'jena-arq', version: '3.17.0'
-    // Jena 4 kräver java 11, det har vi inte på ksamsök-maskinerna än
-    //implementation group: 'org.apache.jena', name: 'jena-core', version: '4.0.0'
-    //implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.0.0'
+    implementation group: 'org.apache.jena', name: 'jena-core', version: '4.1.0'
+    implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.1.0'
     implementation group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
     implementation group: 'rome', name: 'rome-mediarss', version: '0.2.2'
     implementation group: 'rome', name: 'rome', version: '1.0'
@@ -82,15 +80,16 @@ dependencies {
 
 
 
-    implementation group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
-    implementation group: 'org.geotools', name: 'gt-main', version: '2.5.6'
-    implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
-    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
-    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
+    implementation group: 'org.geotools', name: 'gt-referencing', version: '25.1'
+    implementation group: 'org.geotools', name: 'gt-main', version: '25.1'
+    implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '25.1'
+    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '25.1'
+    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '25.1'
 
     implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
-
+    // geotools needs this to build
+    implementation group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
 
 
     // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
