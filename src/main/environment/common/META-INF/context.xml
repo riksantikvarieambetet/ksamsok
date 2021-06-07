@@ -19,8 +19,8 @@
 <Context antiJARLocking="true">
 	<Realm className="org.apache.catalina.realm.MemoryRealm" pathname="/usr/share/tomcat/webapps/ksamsok/WEB-INF/users.xml"/>
     <Resource name="jdbc/harvestdb" auth="Container" type="javax.sql.DataSource"
-    		factory="org.apache.commons.dbcp.BasicDataSourceFactory"
-		maxActive="10" maxIdle="5" maxWait="-1"
+    		factory="org.apache.commons.dbcp2.BasicDataSourceFactory"
+		maxTotal="15" maxIdle="5" maxWaitMillis="-1"
 		username="@db.harvest.username@" password="@db.harvest.password@" driverClassName="org.postgresql.Driver"
 		url="jdbc:postgresql://@db.servername@/@db.dbname@"
 		testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
@@ -29,8 +29,8 @@
 		minEvictableIdleTimeMillis="-1" numTestsPerEvictionRun="10"
 		defaultAutoCommit="false" />
 	<Resource name="jdbc/harvestdbreader" auth="Container" type="javax.sql.DataSource"
-    		factory="org.apache.commons.dbcp.BasicDataSourceFactory"
-		maxActive="10" maxIdle="5" maxWait="-1"
+    		factory="org.apache.commons.dbcp2.BasicDataSourceFactory"
+		maxTotal="15" maxIdle="5" maxWaitMillis="-1"
 		username="@db.harvestreader.username@" password="@db.harvestreader.password@" driverClassName="org.postgresql.Driver"
 		url="jdbc:postgresql://@db.servername@/ksamsok"
 		testOnBorrow="true" testOnReturn="false" testWhileIdle="false"
