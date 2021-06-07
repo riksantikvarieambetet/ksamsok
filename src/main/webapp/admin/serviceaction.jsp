@@ -6,7 +6,7 @@
 <%@page import="se.raa.ksamsok.harvest.HarvestServiceManager"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestService"%>
 <%@page import="se.raa.ksamsok.harvest.HarvestRepositoryManager"%>
-<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@page import="java.util.Date" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Locale" %>
