@@ -64,7 +64,7 @@ configurations.all {
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
-    implementation group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
+    implementation group: 'org.apache.solr', name: 'solr-solrj', version: '8.8.2'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.1'
 
@@ -121,7 +121,9 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.7'
     testImplementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.7'
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '10.0.3'
+
+    // can't use higher version than 9.4.34 while using solr-solrj version: '8.8.2'
+    testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.34.v20201102'
 
 
 }
