@@ -5,10 +5,24 @@
             <PatternLayout pattern="%-7p %d [%-20c]: %m%n"/>
         </Console>
     </Appenders>
+    <RollingFile
+            name="FILE"
+            fileName="logs/ksamsok.log"
+            filePattern="logs/ksamsok.%i.log.gz"
+            ignoreExceptions="false">
+        <PatternLayout>
+            <Pattern>%-7p %d [%-20c]: %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <SizeBasedTriggeringPolicy size="10MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="5"/>
+    </RollingFile>
     <Loggers>
         <Logger name="se.raa.ksamsok" level="info"/>
         <Root level="warn">
             <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE"/>
         </Root>
     </Loggers>
 </Configuration>
