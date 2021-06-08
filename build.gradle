@@ -34,25 +34,8 @@ repositories {
 
     maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
 
-    // för opengis
-//    maven {
-//        url = 'https://repo.osgeo.org/repository/release/'
-//    }
-
-    // för georss-rome måste jcenter stå först, den i mavencentral är trasig...
-
-    // för rome-mediarss
+    // för rome-mediarss, av någon anledning fungerar det inte utan den här, trots att vi har jcenter deklarerat i artifactory
     jcenter()
-//    maven {
-//        url = 'https://dist.wso2.org/maven2/'
-//    }
-
-    // för cql-java
-//    maven {
-//        url = 'http://maven.icm.edu.pl/artifactory/repo'
-//        // This isn't perfect, but it can't be run over https :(
-//        allowInsecureProtocol = true
-//    }
 }
 
 configurations.all {
