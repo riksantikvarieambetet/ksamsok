@@ -27,7 +27,7 @@ import java.io.StringReader;
  */
 public class GMLUtil {
 
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.spatial.GMLUtil");
+	private static final Logger logger = LogManager.getLogger(GMLUtil.class);
 
 	static {
 		// OBS! denna är väldigt viktig - det blir fel annars - i alla fall om srsName är på formen EPSG:4326

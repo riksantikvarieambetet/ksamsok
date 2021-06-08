@@ -32,7 +32,7 @@ import java.util.List;
 
 public class HarvestServiceManagerImpl extends DBBasedManagerImpl implements HarvestServiceManager {
 
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.HarvestServiceManager");
+	private static final Logger logger = LogManager.getLogger(HarvestServiceManager.class);
 
 	private final Object LOCK_OBJECT = new Object();
 

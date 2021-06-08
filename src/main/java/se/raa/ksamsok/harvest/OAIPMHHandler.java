@@ -65,7 +65,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	private PreparedStatement deleteUpdatePst;
 	private PreparedStatement insertPst;
 
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.OAIPMHHandler");
+	private static final Logger logger = LogManager.getLogger(OAIPMHHandler.class);
 
 
 	public OAIPMHHandler(StatusService ss, HarvestService service, ContentHelper contentHelper, ServiceMetadata sm,

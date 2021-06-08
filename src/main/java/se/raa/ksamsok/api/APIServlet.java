@@ -47,10 +47,8 @@ import java.util.Map;
  */
 public class APIServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
-	// klass specifik logger
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.APIServlet");
+	private static final Logger logger = LogManager.getLogger(APIServlet.class);
 
-	// fabrik
 	private APIMethodFactory apiMethodFactory;
 
 	private Format format = Format.XML;
@@ -67,8 +65,6 @@ public class APIServlet extends HttpServlet {
 		AutowireCapableBeanFactory awcb = ctx.getAutowireCapableBeanFactory();
 		awcb.autowireBeanProperties(this, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 		awcb.autowireBeanProperties(apiMethodFactory, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
-		// This method subscribes the Json-ld writers to Jena-RDF writer
-		//JenaJSONLD.init();
 		if (logger.isInfoEnabled()) {
 			logger.info("APIServlet startad");
 		}

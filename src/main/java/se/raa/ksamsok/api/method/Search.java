@@ -119,7 +119,7 @@ public class Search extends AbstractSearchMethod {
 		dummyService.setName("dummy");
 	}
 
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.Search");
+	private static final Logger logger = LogManager.getLogger(Search.class);
 
 	protected String sort = null;
 	protected boolean sortDesc = false;

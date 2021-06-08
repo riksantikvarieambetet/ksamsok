@@ -31,7 +31,7 @@ import java.util.zip.GZIPInputStream;
 
 public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements HarvestRepositoryManager {
 
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.harvest.HarvestRepositoryManager");
+	private static final Logger logger = LogManager.getLogger(HarvestRepositoryManagerImpl.class);
 
 	/** parameter som pekar ut var hämtad xml ska mellanlagras, om ej satt används tempdir */
 	protected static final String D_HARVEST_SPOOL_DIR = "samsok-harvest-spool-dir";
