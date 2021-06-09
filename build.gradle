@@ -135,4 +135,5 @@ war {
         }
         filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: myProps)
     }
+    manifest.attributes('Multi-Release': 'true')
 }
