@@ -1,6 +1,6 @@
 package se.raa.ksamsok.lucene;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.common.SolrInputDocument;
 
 import java.util.ArrayList;

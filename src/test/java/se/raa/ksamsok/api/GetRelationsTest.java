@@ -28,16 +28,16 @@ import static org.junit.Assert.fail;
 public class GetRelationsTest extends AbstractBaseTest {
 
 	@Before
-	public void setUp() throws MalformedURLException{
+	public void setUp() throws MalformedURLException {
 		super.setUp();
 		reqParams = new HashMap<>();
 		reqParams.put("method", "getRelations");
-		reqParams.put("relation","all");
-		reqParams.put("objectId","raa/fmi/10028201230001");
+		reqParams.put("relation", "all");
+		reqParams.put("objectId", "raa/fmi/10028201230001");
 	}
-	
+
 	@Test
-	public void testGetRelationsXMLResponse(){
+	public void testGetRelationsXMLResponse() {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		APIMethod getRelations;
 		try {
@@ -46,14 +46,14 @@ public class GetRelationsTest extends AbstractBaseTest {
 			getRelations.performMethod();
 //			System.out.println(out.toString("UTF-8"));
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder=docFactory.newDocumentBuilder();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document resultDoc = docBuilder.parse(new ByteArrayInputStream(out.toByteArray()));
 			Node relations = assertBaseDocProp(resultDoc);
 			assertEquals("relations", relations.getNodeName());
 			int numberOfRelations = Integer.parseInt(relations.getAttributes().getNamedItem("count").getTextContent());
 			NodeList relationList = relations.getChildNodes();
 			assertEquals(numberOfRelations, relationList.getLength());
-			for (int i = 0; i < numberOfRelations; i++){
+			for (int i = 0; i < numberOfRelations; i++) {
 				assertRelation(relationList.item(i));
 			}
 		} catch (Exception e) {
@@ -61,19 +61,19 @@ public class GetRelationsTest extends AbstractBaseTest {
 			fail(e.getMessage());
 		}
 	}
-	
-	private void assertRelation(Node relation) throws URISyntaxException{
+
+	private void assertRelation(Node relation) throws URISyntaxException {
 		assertEquals("relation", relation.getNodeName());
 		NamedNodeMap relAttrList = relation.getAttributes();
-		assertTrue(relAttrList.getLength()>0);
-		for(int i = 0; i < relAttrList.getLength(); i++){
+		assertTrue(relAttrList.getLength() > 0);
+		for (int i = 0; i < relAttrList.getLength(); i++) {
 			Node relAttr = relAttrList.item(i);
-			if (relAttr.getNodeName().equals("type")){
+			if (relAttr.getNodeName().equals("type")) {
 				assertChild(relAttr.getFirstChild());
-			} else if (relAttr.getNodeName().equals("source")){
+			} else if (relAttr.getNodeName().equals("source")) {
 				assertEquals("deduced", assertChild(relAttr.getFirstChild()));
 			} else {
-				fail("Unknown attribute was found in relation tag: "+ relAttr.getNodeName());
+				fail("Unknown attribute was found in relation tag: " + relAttr.getNodeName());
 			}
 		}
 		// Check if it is an valid uri
@@ -81,7 +81,7 @@ public class GetRelationsTest extends AbstractBaseTest {
 	}
 
 	@Test
-	public void testGetRelationsJSONResponse(){
+	public void testGetRelationsJSONResponse() {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		APIMethod getRelations;
 		try {
@@ -95,8 +95,9 @@ public class GetRelationsTest extends AbstractBaseTest {
 			fail(e.getMessage());
 		}
 	}
+
 	@Test
-	public void testGetRelationsMissingReqParam(){
+	public void testGetRelationsMissingReqParam() {
 		reqParams.remove("relation");
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		APIMethod getRelations;
@@ -108,16 +109,17 @@ public class GetRelationsTest extends AbstractBaseTest {
 			JSONObject response = new JSONObject(out.toString("UTF-8"));
 			assertBaseJSONProp(response);
 			fail("No exception was thrown, expected MissingParameterException");
-		} catch (MissingParameterException e){
+		} catch (MissingParameterException e) {
 			//Correct exception was thrown
 		} catch (Exception e) {
-			fail("Wrong exception was thrown, expected MissingParameterException: "+e.getCause().toString());
+			fail("Wrong exception was thrown, expected MissingParameterException: " + e.getCause().toString());
 		}
 	}
+
 	@Test
-	public void testGetRelationsInvalidReqParam(){
+	public void testGetRelationsInvalidReqParam() {
 		reqParams.remove("relation");
-		reqParams.put("relation","asklödfjlö");
+		reqParams.put("relation", "asklödfjlö");
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		APIMethod getRelations;
 		try {
@@ -128,10 +130,10 @@ public class GetRelationsTest extends AbstractBaseTest {
 			JSONObject response = new JSONObject(out.toString("UTF-8"));
 			assertBaseJSONProp(response);
 			fail("No exception was thrown, expected BadParameterException");
-		} catch (BadParameterException e){
+		} catch (BadParameterException e) {
 			//Correct exception was thrown
 		} catch (Exception e) {
-			fail("Wrong exception was thrown, expected BadParameterException: "+e.getCause().toString());
+			fail("Wrong exception was thrown, expected BadParameterException: " + e.getCause().toString());
 		}
 	}
 

@@ -2,12 +2,16 @@
 
 buildscript {
     repositories {
-        mavenCentral()
+        maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
+    }
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:6.2.0'
     }
 }
 
 plugins {
     id "war"
+    id 'com.github.ben-manes.versions' version "0.39.0"
 }
 
 // Set up environment start
@@ -24,29 +28,14 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 //and standard one
 apply plugin: 'java'
+apply plugin: 'org.owasp.dependencycheck'
 
 repositories {
 
-    // för geotools
-    maven {
-        url = 'https://repo.osgeo.org/repository/release/'
-    }
+    maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
 
-    // för georss-rome måste jcenter stå först, den i mavencentral är trasig...
+    // för rome-mediarss, av någon anledning fungerar det inte utan den här, trots att vi har jcenter deklarerat i artifactory
     jcenter()
-    mavenCentral()
-
-    // för rome-mediarss
-    maven {
-        url = 'https://dist.wso2.org/maven2/'
-    }
-
-    // för cql-java
-    maven {
-        url = 'http://maven.icm.edu.pl/artifactory/repo'
-        // This isn't perfect, but it can't be run over https :(
-        allowInsecureProtocol = true
-    }
 }
 
 configurations.all {
@@ -56,68 +45,68 @@ configurations.all {
 }
 
 dependencies {
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
-    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
-    implementation group: 'org.apache.solr', name: 'solr-solrj', version: '7.5.0'
-    implementation group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
-    implementation group: 'com.vividsolutions', name: 'jts', version: '1.13'
-    implementation group: 'org.springframework', name: 'spring-beans', version: '5.2.1.RELEASE'
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.2.1.RELEASE'
-    implementation group: 'org.apache.jena', name: 'jena-core', version: '3.17.0'
-    implementation group: 'org.apache.jena', name: 'jena-arq', version: '3.17.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
+    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
+    implementation group: 'org.apache.solr', name: 'solr-solrj', version: '8.8.2'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.1'
+
+    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.7'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.7'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.7'
+    implementation group: 'org.apache.jena', name: 'jena-core', version: '4.1.0'
+    implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.1.0'
     implementation group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
     implementation group: 'rome', name: 'rome-mediarss', version: '0.2.2'
     implementation group: 'rome', name: 'rome', version: '1.0'
     implementation group: 'org.z3950.zing', name: 'cql-java', version: '1.10'
-    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
-
-//    implementation group: 'org.geotools', name: 'gt-main', version: '22-RC'
-//    implementation group: 'org.geotools', name: 'gt-referencing', version: '22-RC'
-//    implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '23.0'
-//    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '23.0'
-//    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '23.0'
-
-
-    implementation group: 'org.geotools', name: 'gt-referencing', version: '2.5.6'
-    implementation group: 'org.geotools', name: 'gt-main', version: '2.5.6'
-    implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '2.5.6'
-    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '2.5.6'
-    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '2.5.6'
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
-    implementation group: 'jstl', name: 'jstl', version: '1.2'
-    implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
 
 
+    implementation group: 'org.geotools', name: 'gt-referencing', version: '25.1'
+    implementation group: 'org.geotools', name: 'gt-main', version: '25.1'
+    implementation group: 'org.geotools.xsd', name: 'gt-xsd-core', version: '25.1'
+    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '25.1'
+    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '25.1'
+    implementation group: 'org.geotools', name: 'gt-opengis', version: '25.1'
+
+
+    // geotools needs this to build
+    implementation group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
+
+    implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.8.0'
 
     // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
     // and we can't use only xml-apis-xerces for some reason
     providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
 
-    implementation group: 'joda-time', name: 'joda-time', version: '1.6.2'
-    implementation group: 'org.json', name: 'json', version: '20180813'
-    implementation group: 'org.springframework', name: 'spring-web', version: '5.2.1.RELEASE'
-    implementation group: 'xalan', name: 'xalan', version: '2.6.0'
-    implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
-
+    implementation group: 'joda-time', name: 'joda-time', version: '2.10.10'
+    implementation group: 'org.json', name: 'json', version: '20210307'
+    implementation group: 'xalan', name: 'xalan', version: '2.7.2'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
-    // old jars use old log4j
-    implementation group: 'log4j', name: 'log4j', version: '1.2.17'
 
-    implementation group: 'org.opengis', name: 'geoapi', version: '2.2.0'
+
     implementation group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
 
+    //implementation group: 'jstl', name: 'jstl', version: '1.2'
 
-    // https://mvnrepository.com/artifact/org.postgresql/postgresql
-    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+    // old jars use old log4j, for example oclc-harvester2 0.1.12
+    runtimeOnly group: 'log4j', name: 'log4j', version: '1.2.17'
+    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.2.20'
 
     runtimeOnly group: 'javax.media.jai', name: 'com.springsource.javax.media.jai.core', version: '1.1.3'
+    runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+
+
 
     testImplementation 'junit:junit:4.+'
-    testImplementation group: 'org.springframework', name: 'org.springframework.test', version: '3.2.2.RELEASE'
-    testImplementation group: 'org.springframework', name: 'org.springframework.jdbc', version: '3.2.2.RELEASE'
-    testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.0.4.v20111024'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.7'
+    testImplementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.7'
+
+    // can't use higher version than 9.4.34 while using solr-solrj version: '8.8.2'
+    testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.34.v20201102'
 
 
 }

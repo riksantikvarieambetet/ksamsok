@@ -57,3 +57,22 @@ Kör specifik testklass:
 ```
 ./gradlew test --tests se.raa.ksamsok.lucene.TimeUtilTest
 ```
+
+
+# Säkerhet
+## HOWTO: Kontrollera om det finns gamla beroenden
+För att kontrollera om projektets beroenden (ingående komponenter) är gamla och finns i nyare versioner.
+Gradletasken nedan skapar en rapport över alla ingående komponenter och dess status.
+Se även https://plugins.gradle.org/plugin/com.github.ben-manes.versions
+```bash
+gradlew dependencyUpdates
+```
+## HOWTO: Kontrollera om beroenden har kända sårbarheter
+För att kontrollera om projektets beroenden (ingående komponenter) har kända sårbarheter (security vulnerabilities).   
+Gradletasken nedan skapar en rapport över alla ingående komponenter och dess status.
+Första gången tasken körs kan ta upp till 20 minuter. Därefter tar det bara några sekunder.  
+Se även https://plugins.gradle.org/plugin/org.owasp.dependencycheck.
+```bash
+gradlew dependencyCheckPurge dependencyCheckUpdate dependencyCheckAnalyze
+ls ./build/reports/dependency-check-report.html
+```

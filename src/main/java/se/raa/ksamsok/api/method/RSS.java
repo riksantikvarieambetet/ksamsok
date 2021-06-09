@@ -17,7 +17,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -82,7 +82,7 @@ public class RSS extends AbstractSearchMethod {
 	// rss version
 	private static final String RSS_2_0 = "rss_2.0";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("sv",	"SE"));
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.api.RSS");
+	private static final Logger logger = LogManager.getLogger(RSS.class);
 	
 	//fabriker
 	private static final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();

@@ -24,7 +24,7 @@ import java.io.IOException;
 public class ExternalOrganizationServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
-	private static final Logger logger = LogManager.getLogger("se.raa.ksamsok.organization.ExternalOrganizationServlet");
+	private static final Logger logger = LogManager.getLogger(ExternalOrganizationServlet.class);
 
 	@Autowired
 	private OrganizationManager organizationManager;
