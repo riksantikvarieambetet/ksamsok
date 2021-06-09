@@ -62,7 +62,7 @@ import java.util.HashMap;
 public class ResolverServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(ResolverServlet.class);
 	// urlar att redirecta till får inte starta med detta (gemener)
 	private static final String badURLPrefix = "http://kulturarvsdata.se/";
 
