@@ -3604,6 +3604,11 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Norra_Unnaryds_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;641">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Norrahammar</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;642">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Nydala</ksamsok:name>
@@ -12400,6 +12405,11 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Svanskogs_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;2188">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Säffle</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2189">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Södra Finnskoga</ksamsok:name>
@@ -14558,11 +14568,58 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Hr"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Överhogdals_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3000">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Högbo</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Gä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Högbo_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3002">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Backa</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Backa_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3003">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Bäve</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Bäve_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3004">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Västra Frölunda</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Västra_Frölunda_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3005">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Eker</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Ekers_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3006">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Falsterbo</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3007">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Hyllie</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Hyllie_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3008">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Hjärtlanda</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Hjärtlanda_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3009">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Västra Skrävlinge</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Västra_Skrävlinge_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3010">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14570,11 +14627,179 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sandseryds_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3012">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Norra Ljunga</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Norra_Ljunga_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3013">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Säby</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Säby_socken,_Småland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3014">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Gåsinge</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Gåsinge_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3015">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Brännkyrka</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Brännkyrka_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3016">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Vallsjö</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Vallsjö_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3017">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Dillnäs</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Dillnäs_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3018">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Vagnhärad</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Vagnhärads_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3019">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Trosa</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Trosa_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3020">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Bromma</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Bromma_socken,_Uppland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3022">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Fosie</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Fosie_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3021">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Norra Åsum</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Norra_Åsums_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3023">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Bro</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Bro_socken,_Västmanland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3024">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Malma</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Malma_socken,_Västmanland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3025">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Husie</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Husie_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3026">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Sankt Lars</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sankt_Lars_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3027">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Fallköpings Västra</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Falköpings_västra_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3028">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Fallköpings Östra</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Falköpings_östra_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3030">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Raus</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Raus_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3031">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Östra Eneby</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Östra_Eneby_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3032">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Örgryte</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Örgryte_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3033">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Bara</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Go"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Bara_socken,_Gotland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3034">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Södra Sallerup</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Södra_Sallerups_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3035">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Kattunga</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Kattunga_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3039">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Ånsta</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Ånsta_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3040">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Almby</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Almby_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3041">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Längbro</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Längbro_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3042">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Lundby</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Lundby_socken,_Västergötland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3043">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Västra Sallerup</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Västra_Sallerups_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3044">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Öm</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Öms_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3045">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14588,6 +14813,54 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sankt_Pers_socken,_Uppland</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3047">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Spånga</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Spånga_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3048">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Västertälje</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Västertälje_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3049">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Arnö</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Arnö_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3050">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Fors</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Fors_socken,_Södermanland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3051">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Kloster</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Klosters_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3052">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Nikolai</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sankt_Nicolai_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3053">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Bondkyrka</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Bondkyrka_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3054">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Gamla Uppsala</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Gamla_Uppsala_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3055">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>By</ksamsok:name>
@@ -14600,11 +14873,35 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Tveta_socken,_Värmland</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3057">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Varnum</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Varnums_socken,_Värmland</rdfs:seeAlso>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3059">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Multrå</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ån"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Multrå_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3060">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Badelunda</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Badelunda_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3062">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Lundby</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Lundby_socken,_Västmanland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3063">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Sankt Ilian</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sankt_Ilians_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3064">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14612,17 +14909,71 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Rödene_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3065">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Torpa</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Torpa_socken,_Västergötland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3066">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Vassända-Naglum</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Vassända-Naglums_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3068">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Skerike</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Skerike_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3069">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Säterbo</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Säterbo_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3070">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Brunn</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Brunns_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3071">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Bälinge</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Bälinge_socken,_Västergötland</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3072">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Vist</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Vists_socken,_Västergötland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3073">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Borg</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Borgs_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3074">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Sankt Johannes</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sankt_Johannes_socken</rdfs:seeAlso>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3075">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Sankt Per</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sankt_Pers_socken,_Östergötland</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3076">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Vinnerstad</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Vinnerstads_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3077">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14636,6 +14987,11 @@
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sv.wikipedia.org/wiki/Sala_socken</rdfs:seeAlso>
     </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3079">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Lessebo</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+    </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3080">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Laholms stad</ksamsok:name>
@@ -14645,6 +15001,11 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Valdemarsvik</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="&parish;3083">
+        <rdf:type rdf:resource="&parish;Parish"/>
+        <ksamsok:name>Lingbo</ksamsok:name>
+        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Hs"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;9999">
         <rdf:type rdf:resource="&parish;Parish"/>
