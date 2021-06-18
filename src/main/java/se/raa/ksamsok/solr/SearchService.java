@@ -17,7 +17,7 @@ public interface SearchService {
 	 * Ställer en fråga och ger svaret.
 	 * @param query fråga
 	 * @return frågesvar
-	 * @throws SolrServerException vid kommuikationsproblem
+	 * @throws SolrServerException vid kommunikationsproblem
 	 */
 	QueryResponse query(SolrQuery query) throws SolrServerException, IOException;
 

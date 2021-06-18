@@ -178,7 +178,6 @@ public class GetRelations extends AbstractAPIMethod {
 	 * @param serviceProvider tjänstetillhandahållare
 	 * @param out writer
 	 * @param params parametrar
-	 * @throws DiagnosticException 
 	 */
 	public GetRelations(APIServiceProvider serviceProvider, OutputStream out, Map<String, String> params) throws DiagnosticException {
 		super(serviceProvider, out, params);
@@ -230,9 +229,6 @@ public class GetRelations extends AbstractAPIMethod {
 		Set<String> itemUrisSet = new HashSet<>();
 		final String uri = URI_PREFIX + partialIdentifier;
 		getRelationsTransitively(itemUrisSet, uri);
-//
-//		// vi får ibland med relationer till ursprungsobjektet - ta bort det
-//		relations.remove(uri);
 	}
 
 	private void getRelationsTransitively(Set<String> itemUrisSet, String uri) throws DiagnosticException {
@@ -334,6 +330,14 @@ public class GetRelations extends AbstractAPIMethod {
 						// vi vill inte ha med relationer som pekar på "det här" objektet
 						if (!uriPart.equals(uri)) {
 							String source = isSourceDoc ? SOURCE_DIRECT : SOURCE_REVERSE;
+
+							// protokollet specar att vi har en relation som heter replaces,
+							// men i datat står det "multipleReplaces" eftersom solr inte vill
+							// låta oss göra om det existerande indexet "replaces" till ett flervärt index,
+							// så vi fick skapa ett nytt index med det nya namnet multipleReplaces
+							// Här byter vi tillbaka alla multipleReplaces till replaces innan vi skickar
+							// listan till api-anroparen.
+							typePart = (ContentHelper.IX_REPLACES.equals(typePart) ? "replaces" : typePart);
 							Relation rel = new Relation(typePart, uriPart, source, orgTypePart);
 
 							if (!relations.add(rel)) {
@@ -372,9 +376,10 @@ public class GetRelations extends AbstractAPIMethod {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (SolrServerException|IOException e ) {
 			e.printStackTrace();
 			throw new DiagnosticException("Fel vid metodanrop", "GetRelations.performMethodLogic", e.getMessage(), true);
+
 		}
 	}
 
