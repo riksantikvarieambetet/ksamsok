@@ -21,7 +21,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Andorra</ksamsok:name>
         <ksamsok:name xml:lang="en">Andorra</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3041565</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3041565/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q228"/>
         <ksamsok:alpha2>ad</ksamsok:alpha2>
         <ksamsok:alpha3>and</ksamsok:alpha3>
         <ksamsok:number>20</ksamsok:number>
@@ -31,7 +32,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Förenade Arabemiraten</ksamsok:name>
         <ksamsok:name xml:lang="en">United Arab Emirates</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/290557</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/290557/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q878"/>
         <ksamsok:alpha2>ae</ksamsok:alpha2>
         <ksamsok:alpha3>are</ksamsok:alpha3>
         <ksamsok:number>784</ksamsok:number>
@@ -41,7 +43,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Afghanistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Afghanistan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1149361</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1149361/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q889"/>
         <ksamsok:alpha2>af</ksamsok:alpha2>
         <ksamsok:alpha3>afg</ksamsok:alpha3>
         <ksamsok:number>4</ksamsok:number>
@@ -51,7 +54,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Antigua och Barbuda</ksamsok:name>
         <ksamsok:name xml:lang="en">Antigua and Barbuda</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3576396</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3576396/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q781"/>
         <ksamsok:alpha2>ag</ksamsok:alpha2>
         <ksamsok:alpha3>atg</ksamsok:alpha3>
         <ksamsok:number>28</ksamsok:number>
@@ -61,7 +65,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Anguilla</ksamsok:name>
         <ksamsok:name xml:lang="en">Anguilla</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3573511</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3573511/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q25228"/>
         <ksamsok:alpha2>ai</ksamsok:alpha2>
         <ksamsok:alpha3>aia</ksamsok:alpha3>
         <ksamsok:number>660</ksamsok:number>
@@ -71,7 +76,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Albanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Albania</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/783754</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/783754/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q222"/>
         <ksamsok:alpha2>al</ksamsok:alpha2>
         <ksamsok:alpha3>alb</ksamsok:alpha3>
         <ksamsok:number>8</ksamsok:number>
@@ -81,7 +87,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Armenien</ksamsok:name>
         <ksamsok:name xml:lang="en">Armenia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/174982</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/174982/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q399"/>
         <ksamsok:alpha2>am</ksamsok:alpha2>
         <ksamsok:alpha3>arm</ksamsok:alpha3>
         <ksamsok:number>51</ksamsok:number>
@@ -92,7 +99,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Angola</ksamsok:name>
         <ksamsok:name xml:lang="en">Angola</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3351879</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3351879/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q916"/>
         <ksamsok:alpha2>ao</ksamsok:alpha2>
         <ksamsok:alpha3>ago</ksamsok:alpha3>
         <ksamsok:number>24</ksamsok:number>
@@ -102,7 +110,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Antarktisfördragets område</ksamsok:name>
         <ksamsok:name xml:lang="en">Antarctic Treaty area</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6697173</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/6697173/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q21590062"/>
         <ksamsok:alpha2>aq</ksamsok:alpha2>
         <ksamsok:alpha3>ata</ksamsok:alpha3>
         <ksamsok:number>10</ksamsok:number>
@@ -112,7 +121,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Argentina</ksamsok:name>
         <ksamsok:name xml:lang="en">Argentina</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3865483</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3865483/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q414"/>
         <ksamsok:alpha2>ar</ksamsok:alpha2>
         <ksamsok:alpha3>arg</ksamsok:alpha3>
         <ksamsok:number>32</ksamsok:number>
@@ -122,7 +132,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Amerikanska Samoa</ksamsok:name>
         <ksamsok:name xml:lang="en">American Samoa</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/5880801</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/5880801/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q16641"/>
         <ksamsok:alpha2>as</ksamsok:alpha2>
         <ksamsok:alpha3>asm</ksamsok:alpha3>
         <ksamsok:number>16</ksamsok:number>
@@ -132,7 +143,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Österrike</ksamsok:name>
         <ksamsok:name xml:lang="en">Austria</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2782113</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2782113/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q40"/>
         <ksamsok:alpha2>at</ksamsok:alpha2>
         <ksamsok:alpha3>aut</ksamsok:alpha3>
         <ksamsok:number>40</ksamsok:number>
@@ -142,7 +154,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Australien</ksamsok:name>
         <ksamsok:name xml:lang="en">Australia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2077456</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2077456/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q408"/>
         <ksamsok:alpha2>au</ksamsok:alpha2>
         <ksamsok:alpha3>aus</ksamsok:alpha3>
         <ksamsok:number>36</ksamsok:number>
@@ -152,7 +165,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Aruba</ksamsok:name>
         <ksamsok:name xml:lang="en">Aruba</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3577279</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3577279/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q21203"/>
         <ksamsok:alpha2>aw</ksamsok:alpha2>
         <ksamsok:alpha3>abw</ksamsok:alpha3>
         <ksamsok:number>533</ksamsok:number>
@@ -162,7 +176,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Åland</ksamsok:name>
         <ksamsok:name xml:lang="en">Åland</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/661882</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/661882/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q5689"/>
         <ksamsok:alpha2>ax</ksamsok:alpha2>
         <ksamsok:alpha3>ala</ksamsok:alpha3>
         <ksamsok:number>248</ksamsok:number>
@@ -172,7 +187,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Azerbajdzjan</ksamsok:name>
         <ksamsok:name xml:lang="en">Azerbaijan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/587116</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/587116/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q227"/>
         <ksamsok:alpha2>az</ksamsok:alpha2>
         <ksamsok:alpha3>aze</ksamsok:alpha3>
         <ksamsok:number>31</ksamsok:number>
@@ -183,7 +199,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bosnien och Hercegovina</ksamsok:name>
         <ksamsok:name xml:lang="en">Bosnia and Herzegovina</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3277605</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3277605/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q225"/>
         <ksamsok:alpha2>ba</ksamsok:alpha2>
         <ksamsok:alpha3>bih</ksamsok:alpha3>
         <ksamsok:number>70</ksamsok:number>
@@ -193,7 +210,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Barbados</ksamsok:name>
         <ksamsok:name xml:lang="en">Barbados</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3374084</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3374084/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q244"/>
         <ksamsok:alpha2>bb</ksamsok:alpha2>
         <ksamsok:alpha3>brb</ksamsok:alpha3>
         <ksamsok:number>52</ksamsok:number>
@@ -203,7 +221,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bangladesh</ksamsok:name>
         <ksamsok:name xml:lang="en">Bangladesh</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1210997</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1210997/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q902"/>
         <ksamsok:alpha2>bd</ksamsok:alpha2>
         <ksamsok:alpha3>bgd</ksamsok:alpha3>
         <ksamsok:number>50</ksamsok:number>
@@ -213,7 +232,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Belgien</ksamsok:name>
         <ksamsok:name xml:lang="en">Belgium</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2802361</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2802361/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q31"/>
         <ksamsok:alpha2>be</ksamsok:alpha2>
         <ksamsok:alpha3>bel</ksamsok:alpha3>
         <ksamsok:number>56</ksamsok:number>
@@ -223,7 +243,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Burkina Faso</ksamsok:name>
         <ksamsok:name xml:lang="en">Burkina Faso</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2361809</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2361809/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q965"/>
         <ksamsok:alpha2>bf</ksamsok:alpha2>
         <ksamsok:alpha3>bfa</ksamsok:alpha3>
         <ksamsok:number>854</ksamsok:number>
@@ -233,7 +254,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bulgarien</ksamsok:name>
         <ksamsok:name xml:lang="en">Bulgaria</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/732800</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/732800/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q219"/>
         <ksamsok:alpha2>bg</ksamsok:alpha2>
         <ksamsok:alpha3>bgr</ksamsok:alpha3>
         <ksamsok:number>100</ksamsok:number>
@@ -243,7 +265,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bahrain</ksamsok:name>
         <ksamsok:name xml:lang="en">Bahrain</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/290291</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/290291/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q398"/>
         <ksamsok:alpha2>bh</ksamsok:alpha2>
         <ksamsok:alpha3>bhr</ksamsok:alpha3>
         <ksamsok:number>48</ksamsok:number>
@@ -253,7 +276,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Burundi</ksamsok:name>
         <ksamsok:name xml:lang="en">Burundi</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/433561</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/433561/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q967"/>
         <ksamsok:alpha2>bi</ksamsok:alpha2>
         <ksamsok:alpha3>bdi</ksamsok:alpha3>
         <ksamsok:number>108</ksamsok:number>
@@ -263,7 +287,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Benin</ksamsok:name>
         <ksamsok:name xml:lang="en">Benin</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2395170</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2395170/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q962"/>
         <ksamsok:alpha2>bj</ksamsok:alpha2>
         <ksamsok:alpha3>ben</ksamsok:alpha3>
         <ksamsok:number>204</ksamsok:number>
@@ -273,7 +298,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint-Barthélemy</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Barthélemy</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3578476</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3578476/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q25362"/>
         <ksamsok:alpha2>bl</ksamsok:alpha2>
         <ksamsok:alpha3>blm</ksamsok:alpha3>
         <ksamsok:number>652</ksamsok:number>
@@ -283,7 +309,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bermuda</ksamsok:name>
         <ksamsok:name xml:lang="en">Bermuda</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3573345</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3573345/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q23635"/>
         <ksamsok:alpha2>bm</ksamsok:alpha2>
         <ksamsok:alpha3>bmu</ksamsok:alpha3>
         <ksamsok:number>60</ksamsok:number>
@@ -293,7 +320,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brunei</ksamsok:name>
         <ksamsok:name xml:lang="en">Brunei</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1820814</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1820814/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q921"/>
         <ksamsok:alpha2>bn</ksamsok:alpha2>
         <ksamsok:alpha3>brn</ksamsok:alpha3>
         <ksamsok:number>96</ksamsok:number>
@@ -303,7 +331,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bolivia</ksamsok:name>
         <ksamsok:name xml:lang="en">Bolivia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3923057</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3923057/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q750"/>
         <ksamsok:alpha2>bo</ksamsok:alpha2>
         <ksamsok:alpha3>bol</ksamsok:alpha3>
         <ksamsok:number>68</ksamsok:number>
@@ -313,7 +342,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Karibiska Nederländerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Caribbean Netherlands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/7626844</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/7626844/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q27561"/>
         <ksamsok:alpha2>bq</ksamsok:alpha2>
         <ksamsok:alpha3>bes</ksamsok:alpha3>
         <ksamsok:number>535</ksamsok:number>
@@ -323,7 +353,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brasilien</ksamsok:name>
         <ksamsok:name xml:lang="en">Brazil</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3469034</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3469034/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q155"/>
         <ksamsok:alpha2>br</ksamsok:alpha2>
         <ksamsok:alpha3>bra</ksamsok:alpha3>
         <ksamsok:number>76</ksamsok:number>
@@ -333,7 +364,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bahamas</ksamsok:name>
         <ksamsok:name xml:lang="en">The Bahamas</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3572887</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3572887/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q778"/>
         <ksamsok:alpha2>bs</ksamsok:alpha2>
         <ksamsok:alpha3>bhs</ksamsok:alpha3>
         <ksamsok:number>44</ksamsok:number>
@@ -343,7 +375,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bhutan</ksamsok:name>
         <ksamsok:name xml:lang="en">Bhutan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1252634</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1252634/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q917"/>
         <ksamsok:alpha2>bt</ksamsok:alpha2>
         <ksamsok:alpha3>btn</ksamsok:alpha3>
         <ksamsok:number>64</ksamsok:number>
@@ -353,7 +386,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bouvetön</ksamsok:name>
         <ksamsok:name xml:lang="en">Bouvet Island</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3371123</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3371123/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q23408"/>
         <ksamsok:alpha2>bv</ksamsok:alpha2>
         <ksamsok:alpha3>bvt</ksamsok:alpha3>
         <ksamsok:number>74</ksamsok:number>
@@ -363,7 +397,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Botswana</ksamsok:name>
         <ksamsok:name xml:lang="en">Botswana</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/933860</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/933860/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q963"/>
         <ksamsok:alpha2>bw</ksamsok:alpha2>
         <ksamsok:alpha3>bwa</ksamsok:alpha3>
         <ksamsok:number>72</ksamsok:number>
@@ -373,7 +408,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Belarus</ksamsok:name>
         <ksamsok:name xml:lang="en">Belarus</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/630336</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/630336/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q184"/>
         <ksamsok:alpha2>by</ksamsok:alpha2>
         <ksamsok:alpha3>blr</ksamsok:alpha3>
         <ksamsok:number>112</ksamsok:number>
@@ -383,7 +419,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Belize</ksamsok:name>
         <ksamsok:name xml:lang="en">Belize</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3582678</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3582678/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q242"/>
         <ksamsok:alpha2>bz</ksamsok:alpha2>
         <ksamsok:alpha3>blz</ksamsok:alpha3>
         <ksamsok:number>84</ksamsok:number>
@@ -393,7 +430,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kanada</ksamsok:name>
         <ksamsok:name xml:lang="en">Canada</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6251999</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/6251999/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q16"/>
         <ksamsok:alpha2>ca</ksamsok:alpha2>
         <ksamsok:alpha3>can</ksamsok:alpha3>
         <ksamsok:number>124</ksamsok:number>
@@ -403,7 +441,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kokosöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Cocos (Keeling) Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1547376</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1547376/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q36004"/>
         <ksamsok:alpha2>cc</ksamsok:alpha2>
         <ksamsok:alpha3>cck</ksamsok:alpha3>
         <ksamsok:number>166</ksamsok:number>
@@ -413,7 +452,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kongo-Kinshasa</ksamsok:name>
         <ksamsok:name xml:lang="en">Democratic Republic of the Congo</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/203312</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/203312/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q974"/>
         <ksamsok:alpha2>cd</ksamsok:alpha2>
         <ksamsok:alpha3>cod</ksamsok:alpha3>
         <ksamsok:number>180</ksamsok:number>
@@ -423,7 +463,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Centralafrikanska republiken</ksamsok:name>
         <ksamsok:name xml:lang="en">Central African Republic</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/239880</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/239880/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q929"/>
         <ksamsok:alpha2>cf</ksamsok:alpha2>
         <ksamsok:alpha3>caf</ksamsok:alpha3>
         <ksamsok:number>140</ksamsok:number>
@@ -433,7 +474,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kongo-Brazzaville</ksamsok:name>
         <ksamsok:name xml:lang="en">Republic of the Congo</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2260494</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2260494/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q971"/>
         <ksamsok:alpha2>cg</ksamsok:alpha2>
         <ksamsok:alpha3>cog</ksamsok:alpha3>
         <ksamsok:number>178</ksamsok:number>
@@ -443,7 +485,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Schweiz</ksamsok:name>
         <ksamsok:name xml:lang="en">Switzerland</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2658434</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2658434/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q39"/>
         <ksamsok:alpha2>ch</ksamsok:alpha2>
         <ksamsok:alpha3>che</ksamsok:alpha3>
         <ksamsok:number>756</ksamsok:number>
@@ -453,7 +496,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Elfenbenskusten</ksamsok:name>
         <ksamsok:name xml:lang="en">Ivory Coast</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2287781</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2287781/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1008"/>
         <ksamsok:alpha2>ci</ksamsok:alpha2>
         <ksamsok:alpha3>civ</ksamsok:alpha3>
         <ksamsok:number>384</ksamsok:number>
@@ -463,7 +507,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Cooköarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Cook Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1899402</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1899402/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q26988"/>
         <ksamsok:alpha2>ck</ksamsok:alpha2>
         <ksamsok:alpha3>cok</ksamsok:alpha3>
         <ksamsok:number>184</ksamsok:number>
@@ -473,7 +518,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Chile</ksamsok:name>
         <ksamsok:name xml:lang="en">Chile</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3895114</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3895114/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q298"/>
         <ksamsok:alpha2>cl</ksamsok:alpha2>
         <ksamsok:alpha3>chl</ksamsok:alpha3>
         <ksamsok:number>152</ksamsok:number>
@@ -483,7 +529,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kamerun</ksamsok:name>
         <ksamsok:name xml:lang="en">Cameroon</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2233387</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2233387/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1009"/>
         <ksamsok:alpha2>cm</ksamsok:alpha2>
         <ksamsok:alpha3>cmr</ksamsok:alpha3>
         <ksamsok:number>120</ksamsok:number>
@@ -493,7 +540,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kina</ksamsok:name>
         <ksamsok:name xml:lang="en">People's Republic of China</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1814991</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1814991/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q148"/>
         <ksamsok:alpha2>cn</ksamsok:alpha2>
         <ksamsok:alpha3>chn</ksamsok:alpha3>
         <ksamsok:number>156</ksamsok:number>
@@ -503,7 +551,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Colombia</ksamsok:name>
         <ksamsok:name xml:lang="en">Colombia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3686110</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3686110/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q739"/>
         <ksamsok:alpha2>co</ksamsok:alpha2>
         <ksamsok:alpha3>col</ksamsok:alpha3>
         <ksamsok:number>170</ksamsok:number>
@@ -513,7 +562,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Costa Rica</ksamsok:name>
         <ksamsok:name xml:lang="en">Costa Rica</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3624060</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3624060/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q800"/>
         <ksamsok:alpha2>cr</ksamsok:alpha2>
         <ksamsok:alpha3>cri</ksamsok:alpha3>
         <ksamsok:number>188</ksamsok:number>
@@ -523,7 +573,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kuba</ksamsok:name>
         <ksamsok:name xml:lang="en">Cuba</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3562981</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3562981/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q241"/>
         <ksamsok:alpha2>cu</ksamsok:alpha2>
         <ksamsok:alpha3>cub</ksamsok:alpha3>
         <ksamsok:number>192</ksamsok:number>
@@ -533,7 +584,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kap Verde</ksamsok:name>
         <ksamsok:name xml:lang="en">Cape Verde</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3374766</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3374766/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1011"/>
         <ksamsok:alpha2>cv</ksamsok:alpha2>
         <ksamsok:alpha3>cpv</ksamsok:alpha3>
         <ksamsok:number>132</ksamsok:number>
@@ -543,7 +595,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Curaçao</ksamsok:name>
         <ksamsok:name xml:lang="en">Curaçao</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/7626836</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/7626836/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q25279"/>
         <ksamsok:alpha2>cw</ksamsok:alpha2>
         <ksamsok:alpha3>cuw</ksamsok:alpha3>
         <ksamsok:number>531</ksamsok:number>
@@ -553,7 +606,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Julön</ksamsok:name>
         <ksamsok:name xml:lang="en">Christmas Island</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2078138</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2078138/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q31063"/>
         <ksamsok:alpha2>cx</ksamsok:alpha2>
         <ksamsok:alpha3>cxr</ksamsok:alpha3>
         <ksamsok:number>162</ksamsok:number>
@@ -563,7 +617,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Cypern</ksamsok:name>
         <ksamsok:name xml:lang="en">Cyprus</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/146669</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/146669/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q229"/>
         <ksamsok:alpha2>cy</ksamsok:alpha2>
         <ksamsok:alpha3>cyp</ksamsok:alpha3>
         <ksamsok:number>196</ksamsok:number>
@@ -574,7 +629,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tjeckien</ksamsok:name>
         <ksamsok:name xml:lang="en">Czech Republic</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3077311</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3077311/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q213"/>
         <ksamsok:alpha2>cz</ksamsok:alpha2>
         <ksamsok:alpha3>cze</ksamsok:alpha3>
         <ksamsok:number>203</ksamsok:number>
@@ -584,7 +640,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tyskland</ksamsok:name>
         <ksamsok:name xml:lang="en">Germany</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2921044</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2921044/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q183"/>
         <ksamsok:alpha2>de</ksamsok:alpha2>
         <ksamsok:alpha3>deu</ksamsok:alpha3>
         <ksamsok:number>276</ksamsok:number>
@@ -594,7 +651,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Djibouti</ksamsok:name>
         <ksamsok:name xml:lang="en">Djibouti</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/223816</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/223816/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q977"/>
         <ksamsok:alpha2>dj</ksamsok:alpha2>
         <ksamsok:alpha3>dji</ksamsok:alpha3>
         <ksamsok:number>262</ksamsok:number>
@@ -604,7 +662,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Danmark</ksamsok:name>
         <ksamsok:name xml:lang="en">Denmark</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2623032</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2623032/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q35"/>
         <ksamsok:alpha2>dk</ksamsok:alpha2>
         <ksamsok:alpha3>dnk</ksamsok:alpha3>
         <ksamsok:number>208</ksamsok:number>
@@ -614,7 +673,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Dominica</ksamsok:name>
         <ksamsok:name xml:lang="en">Dominica</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3575830</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3575830/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q784"/>
         <ksamsok:alpha2>dm</ksamsok:alpha2>
         <ksamsok:alpha3>dma</ksamsok:alpha3>
         <ksamsok:number>212</ksamsok:number>
@@ -624,7 +684,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Dominikanska republiken</ksamsok:name>
         <ksamsok:name xml:lang="en">Dominican Republic</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3508796</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3508796/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q786"/>
         <ksamsok:alpha2>do</ksamsok:alpha2>
         <ksamsok:alpha3>dom</ksamsok:alpha3>
         <ksamsok:number>214</ksamsok:number>
@@ -634,7 +695,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Algeriet</ksamsok:name>
         <ksamsok:name xml:lang="en">Algeria</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2589581</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2589581/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q262"/>
         <ksamsok:alpha2>dz</ksamsok:alpha2>
         <ksamsok:alpha3>dza</ksamsok:alpha3>
         <ksamsok:number>12</ksamsok:number>
@@ -644,7 +706,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ecuador</ksamsok:name>
         <ksamsok:name xml:lang="en">Ecuador</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3658394</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3658394/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q736"/>
         <ksamsok:alpha2>ec</ksamsok:alpha2>
         <ksamsok:alpha3>ecu</ksamsok:alpha3>
         <ksamsok:number>218</ksamsok:number>
@@ -654,7 +717,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Estland</ksamsok:name>
         <ksamsok:name xml:lang="en">Estonia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/453733</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/453733/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q191"/>
         <ksamsok:alpha2>ee</ksamsok:alpha2>
         <ksamsok:alpha3>est</ksamsok:alpha3>
         <ksamsok:number>233</ksamsok:number>
@@ -664,7 +728,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Egypten</ksamsok:name>
         <ksamsok:name xml:lang="en">Egypt</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/357994</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/357994/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q79"/>
         <ksamsok:alpha2>eg</ksamsok:alpha2>
         <ksamsok:alpha3>egy</ksamsok:alpha3>
         <ksamsok:number>818</ksamsok:number>
@@ -675,7 +740,9 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sahariska arabiska demokratiska republiken</ksamsok:name>
         <ksamsok:name xml:lang="en">Western Sahara</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2461445</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2461445/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q40362"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q6250"/>
         <ksamsok:alpha2>eh</ksamsok:alpha2>
         <ksamsok:alpha3>esh</ksamsok:alpha3>
         <ksamsok:number>732</ksamsok:number>
@@ -685,7 +752,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Eritrea</ksamsok:name>
         <ksamsok:name xml:lang="en">Eritrea</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/338010</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/338010/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q986"/>
         <ksamsok:alpha2>er</ksamsok:alpha2>
         <ksamsok:alpha3>eri</ksamsok:alpha3>
         <ksamsok:number>232</ksamsok:number>
@@ -695,7 +763,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Spanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Spain</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2510769</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2510769/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q29"/>
         <ksamsok:alpha2>es</ksamsok:alpha2>
         <ksamsok:alpha3>esp</ksamsok:alpha3>
         <ksamsok:number>724</ksamsok:number>
@@ -705,7 +774,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Etiopien</ksamsok:name>
         <ksamsok:name xml:lang="en">Ethiopia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/337996</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/337996/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q115"/>
         <ksamsok:alpha2>et</ksamsok:alpha2>
         <ksamsok:alpha3>eth</ksamsok:alpha3>
         <ksamsok:number>231</ksamsok:number>
@@ -715,7 +785,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Finland</ksamsok:name>
         <ksamsok:name xml:lang="en">Finland</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/660013</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/660013/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q33"/>
         <ksamsok:alpha2>fi</ksamsok:alpha2>
         <ksamsok:alpha3>fin</ksamsok:alpha3>
         <ksamsok:number>246</ksamsok:number>
@@ -725,7 +796,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Fiji</ksamsok:name>
         <ksamsok:name xml:lang="en">Fiji</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2205218</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2205218/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q712"/>
         <ksamsok:alpha2>fj</ksamsok:alpha2>
         <ksamsok:alpha3>fji</ksamsok:alpha3>
         <ksamsok:number>242</ksamsok:number>
@@ -735,7 +807,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Falklandsöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Falkland Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3474414</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3474414/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q9648"/>
         <ksamsok:alpha2>fk</ksamsok:alpha2>
         <ksamsok:alpha3>flk</ksamsok:alpha3>
         <ksamsok:number>238</ksamsok:number>
@@ -745,7 +818,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mikronesiska federationen</ksamsok:name>
         <ksamsok:name xml:lang="en">Federated States of Micronesia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2081918</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2081918/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q702"/>
         <ksamsok:alpha2>fm</ksamsok:alpha2>
         <ksamsok:alpha3>fsm</ksamsok:alpha3>
         <ksamsok:number>583</ksamsok:number>
@@ -755,7 +829,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Färöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Faroe Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2622320</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2622320/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q4628"/>
         <ksamsok:alpha2>fo</ksamsok:alpha2>
         <ksamsok:alpha3>fro</ksamsok:alpha3>
         <ksamsok:number>234</ksamsok:number>
@@ -765,7 +840,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Frankrike</ksamsok:name>
         <ksamsok:name xml:lang="en">France</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3017382</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3017382/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q142"/>
         <ksamsok:alpha2>fr</ksamsok:alpha2>
         <ksamsok:alpha3>fra</ksamsok:alpha3>
         <ksamsok:number>250</ksamsok:number>
@@ -775,7 +851,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Gabon</ksamsok:name>
         <ksamsok:name xml:lang="en">Gabon</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2400553</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2400553/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1000"/>
         <ksamsok:alpha2>ga</ksamsok:alpha2>
         <ksamsok:alpha3>gab</ksamsok:alpha3>
         <ksamsok:number>266</ksamsok:number>
@@ -785,7 +862,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Storbritannien</ksamsok:name>
         <ksamsok:name xml:lang="en">United Kingdom</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2635167</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2635167/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q145"/>
         <ksamsok:alpha2>gb</ksamsok:alpha2>
         <ksamsok:alpha3>gbr</ksamsok:alpha3>
         <ksamsok:number>826</ksamsok:number>
@@ -795,7 +873,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Grenada</ksamsok:name>
         <ksamsok:name xml:lang="en">Grenada</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3580239</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3580239/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q769"/>
         <ksamsok:alpha2>gd</ksamsok:alpha2>
         <ksamsok:alpha3>grd</ksamsok:alpha3>
         <ksamsok:number>308</ksamsok:number>
@@ -805,7 +884,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Georgien</ksamsok:name>
         <ksamsok:name xml:lang="en">Georgia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/614540</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/614540/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q230"/>
         <ksamsok:alpha2>ge</ksamsok:alpha2>
         <ksamsok:alpha3>geo</ksamsok:alpha3>
         <ksamsok:number>268</ksamsok:number>
@@ -816,7 +896,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Franska Guyana</ksamsok:name>
         <ksamsok:name xml:lang="en">French Guiana</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3381670</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3381670/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q3769"/>
         <ksamsok:alpha2>gf</ksamsok:alpha2>
         <ksamsok:alpha3>guf</ksamsok:alpha3>
         <ksamsok:number>254</ksamsok:number>
@@ -826,7 +907,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guernsey</ksamsok:name>
         <ksamsok:name xml:lang="en">Guernsey</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3042362</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3042362/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q25230"/>
         <ksamsok:alpha2>gg</ksamsok:alpha2>
         <ksamsok:alpha3>ggy</ksamsok:alpha3>
         <ksamsok:number>831</ksamsok:number>
@@ -836,7 +918,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ghana</ksamsok:name>
         <ksamsok:name xml:lang="en">Ghana</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2300660</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2300660/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q117"/>
         <ksamsok:alpha2>gh</ksamsok:alpha2>
         <ksamsok:alpha3>gha</ksamsok:alpha3>
         <ksamsok:number>288</ksamsok:number>
@@ -846,7 +929,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Gibraltar</ksamsok:name>
         <ksamsok:name xml:lang="en">Gibraltar</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2411586</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2411586/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1410"/>
         <ksamsok:alpha2>gi</ksamsok:alpha2>
         <ksamsok:alpha3>gib</ksamsok:alpha3>
         <ksamsok:number>292</ksamsok:number>
@@ -856,7 +940,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Grönland</ksamsok:name>
         <ksamsok:name xml:lang="en">Greenland</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3425505</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3425505/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q223"/>
         <ksamsok:alpha2>gl</ksamsok:alpha2>
         <ksamsok:alpha3>grl</ksamsok:alpha3>
         <ksamsok:number>304</ksamsok:number>
@@ -866,7 +951,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Gambia</ksamsok:name>
         <ksamsok:name xml:lang="en">The Gambia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2413451</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2413451/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1005"/>
         <ksamsok:alpha2>gm</ksamsok:alpha2>
         <ksamsok:alpha3>gmb</ksamsok:alpha3>
         <ksamsok:number>270</ksamsok:number>
@@ -876,7 +962,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guinea</ksamsok:name>
         <ksamsok:name xml:lang="en">Guinea</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2420477</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2420477/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1006"/>
         <ksamsok:alpha2>gn</ksamsok:alpha2>
         <ksamsok:alpha3>gin</ksamsok:alpha3>
         <ksamsok:number>324</ksamsok:number>
@@ -886,7 +973,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guadeloupe</ksamsok:name>
         <ksamsok:name xml:lang="en">Guadeloupe</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3579143</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3579143/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q17012"/>
         <ksamsok:alpha2>gp</ksamsok:alpha2>
         <ksamsok:alpha3>glp</ksamsok:alpha3>
         <ksamsok:number>312</ksamsok:number>
@@ -896,7 +984,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ekvatorialguinea</ksamsok:name>
         <ksamsok:name xml:lang="en">Equatorial Guinea</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2309096</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2309096/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q983"/>
         <ksamsok:alpha2>gq</ksamsok:alpha2>
         <ksamsok:alpha3>gnq</ksamsok:alpha3>
         <ksamsok:number>226</ksamsok:number>
@@ -906,7 +995,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Grekland</ksamsok:name>
         <ksamsok:name xml:lang="en">Greece</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/390903</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/390903/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q41"/>
         <ksamsok:alpha2>gr</ksamsok:alpha2>
         <ksamsok:alpha3>grc</ksamsok:alpha3>
         <ksamsok:number>300</ksamsok:number>
@@ -916,7 +1006,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydgeorgien och Sydsandwichöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">South Georgia and the South Sandwich Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3474415</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3474415/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q35086"/>
         <ksamsok:alpha2>gs</ksamsok:alpha2>
         <ksamsok:alpha3>sgs</ksamsok:alpha3>
         <ksamsok:number>239</ksamsok:number>
@@ -926,7 +1017,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guatemala</ksamsok:name>
         <ksamsok:name xml:lang="en">Guatemala</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3595528</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3595528/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q774"/>
         <ksamsok:alpha2>gt</ksamsok:alpha2>
         <ksamsok:alpha3>gtm</ksamsok:alpha3>
         <ksamsok:number>320</ksamsok:number>
@@ -936,7 +1028,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guam</ksamsok:name>
         <ksamsok:name xml:lang="en">Guam</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4043988</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4043988/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q16635"/>
         <ksamsok:alpha2>gu</ksamsok:alpha2>
         <ksamsok:alpha3>gum</ksamsok:alpha3>
         <ksamsok:number>316</ksamsok:number>
@@ -946,7 +1039,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guinea-Bissau</ksamsok:name>
         <ksamsok:name xml:lang="en">Guinea-Bissau</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2372248</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2372248/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1007"/>
         <ksamsok:alpha2>gw</ksamsok:alpha2>
         <ksamsok:alpha3>gnb</ksamsok:alpha3>
         <ksamsok:number>624</ksamsok:number>
@@ -956,7 +1050,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Guyana</ksamsok:name>
         <ksamsok:name xml:lang="en">Guyana</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3378535</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3378535/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q734"/>
         <ksamsok:alpha2>gy</ksamsok:alpha2>
         <ksamsok:alpha3>guy</ksamsok:alpha3>
         <ksamsok:number>328</ksamsok:number>
@@ -966,7 +1061,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Hongkong</ksamsok:name>
         <ksamsok:name xml:lang="en">Hong Kong</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1819730</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1819730/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q8646"/>
         <ksamsok:alpha2>hk</ksamsok:alpha2>
         <ksamsok:alpha3>hkg</ksamsok:alpha3>
         <ksamsok:number>344</ksamsok:number>
@@ -976,7 +1072,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Heard- och McDonaldöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Heard Island and McDonald Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1547314</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1547314/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q131198"/>
         <ksamsok:alpha2>hm</ksamsok:alpha2>
         <ksamsok:alpha3>hmd</ksamsok:alpha3>
         <ksamsok:number>334</ksamsok:number>
@@ -986,7 +1083,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Honduras</ksamsok:name>
         <ksamsok:name xml:lang="en">Honduras</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3608932</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3608932/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q783"/>
         <ksamsok:alpha2>hn</ksamsok:alpha2>
         <ksamsok:alpha3>hnd</ksamsok:alpha3>
         <ksamsok:number>340</ksamsok:number>
@@ -996,7 +1094,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kroatien</ksamsok:name>
         <ksamsok:name xml:lang="en">Croatia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3202326</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3202326/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q224"/>
         <ksamsok:alpha2>hr</ksamsok:alpha2>
         <ksamsok:alpha3>hrv</ksamsok:alpha3>
         <ksamsok:number>191</ksamsok:number>
@@ -1006,7 +1105,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Haiti</ksamsok:name>
         <ksamsok:name xml:lang="en">Haiti</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3723988</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3723988/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q790"/>
         <ksamsok:alpha2>ht</ksamsok:alpha2>
         <ksamsok:alpha3>hti</ksamsok:alpha3>
         <ksamsok:number>332</ksamsok:number>
@@ -1016,7 +1116,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ungern</ksamsok:name>
         <ksamsok:name xml:lang="en">Hungary</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/719819</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/719819/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q28"/>
         <ksamsok:alpha2>hu</ksamsok:alpha2>
         <ksamsok:alpha3>hun</ksamsok:alpha3>
         <ksamsok:number>348</ksamsok:number>
@@ -1026,7 +1127,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Indonesien</ksamsok:name>
         <ksamsok:name xml:lang="en">Indonesia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1643084</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1643084/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q252"/>
         <ksamsok:alpha2>id</ksamsok:alpha2>
         <ksamsok:alpha3>idn</ksamsok:alpha3>
         <ksamsok:number>360</ksamsok:number>
@@ -1037,7 +1139,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Irland</ksamsok:name>
         <ksamsok:name xml:lang="en">Ireland</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2963597</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2963597/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q27"/>
         <ksamsok:alpha2>ie</ksamsok:alpha2>
         <ksamsok:alpha3>irl</ksamsok:alpha3>
         <ksamsok:number>372</ksamsok:number>
@@ -1047,7 +1150,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Israel</ksamsok:name>
         <ksamsok:name xml:lang="en">Israel</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/294640</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/294640/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q801"/>
         <ksamsok:alpha2>il</ksamsok:alpha2>
         <ksamsok:alpha3>isr</ksamsok:alpha3>
         <ksamsok:number>376</ksamsok:number>
@@ -1057,7 +1161,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Isle of Man</ksamsok:name>
         <ksamsok:name xml:lang="en">Isle of Man</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3042225</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3042225/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q9676"/>
         <ksamsok:alpha2>im</ksamsok:alpha2>
         <ksamsok:alpha3>imn</ksamsok:alpha3>
         <ksamsok:number>833</ksamsok:number>
@@ -1067,7 +1172,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Indien</ksamsok:name>
         <ksamsok:name xml:lang="en">India</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1269750</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1269750/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q668"/>
         <ksamsok:alpha2>in</ksamsok:alpha2>
         <ksamsok:alpha3>ind</ksamsok:alpha3>
         <ksamsok:number>356</ksamsok:number>
@@ -1077,7 +1183,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brittiska territoriet i Indiska oceanen</ksamsok:name>
         <ksamsok:name xml:lang="en">British Indian Ocean Territory</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1282588</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1282588/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q43448"/>
         <ksamsok:alpha2>io</ksamsok:alpha2>
         <ksamsok:alpha3>iot</ksamsok:alpha3>
         <ksamsok:number>86</ksamsok:number>
@@ -1087,7 +1194,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Irak</ksamsok:name>
         <ksamsok:name xml:lang="en">Iraq</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/99237</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/99237/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q796"/>
         <ksamsok:alpha2>iq</ksamsok:alpha2>
         <ksamsok:alpha3>irq</ksamsok:alpha3>
         <ksamsok:number>368</ksamsok:number>
@@ -1097,7 +1205,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Iran</ksamsok:name>
         <ksamsok:name xml:lang="en">Iran</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/130758</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/130758/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q794"/>
         <ksamsok:alpha2>ir</ksamsok:alpha2>
         <ksamsok:alpha3>irn</ksamsok:alpha3>
         <ksamsok:number>364</ksamsok:number>
@@ -1107,7 +1216,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Island</ksamsok:name>
         <ksamsok:name xml:lang="en">Iceland</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2629691</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2629691/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q189"/>
         <ksamsok:alpha2>is</ksamsok:alpha2>
         <ksamsok:alpha3>isl</ksamsok:alpha3>
         <ksamsok:number>352</ksamsok:number>
@@ -1117,7 +1227,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Italien</ksamsok:name>
         <ksamsok:name xml:lang="en">Italy</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3175395</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3175395/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q38"/>
         <ksamsok:alpha2>it</ksamsok:alpha2>
         <ksamsok:alpha3>ita</ksamsok:alpha3>
         <ksamsok:number>380</ksamsok:number>
@@ -1127,7 +1238,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jersey</ksamsok:name>
         <ksamsok:name xml:lang="en">Jersey</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3042142</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3042142/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q785"/>
         <ksamsok:alpha2>je</ksamsok:alpha2>
         <ksamsok:alpha3>jey</ksamsok:alpha3>
         <ksamsok:number>832</ksamsok:number>
@@ -1137,7 +1249,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jamaica</ksamsok:name>
         <ksamsok:name xml:lang="en">Jamaica</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3489940</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3489940/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q766"/>
         <ksamsok:alpha2>jm</ksamsok:alpha2>
         <ksamsok:alpha3>jam</ksamsok:alpha3>
         <ksamsok:number>388</ksamsok:number>
@@ -1147,7 +1260,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jordanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Jordan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/248816</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/248816/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q810"/>
         <ksamsok:alpha2>jo</ksamsok:alpha2>
         <ksamsok:alpha3>jor</ksamsok:alpha3>
         <ksamsok:number>400</ksamsok:number>
@@ -1157,7 +1271,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Japan</ksamsok:name>
         <ksamsok:name xml:lang="en">Japan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1861060</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1861060/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q17"/>
         <ksamsok:alpha2>jp</ksamsok:alpha2>
         <ksamsok:alpha3>jpn</ksamsok:alpha3>
         <ksamsok:number>392</ksamsok:number>
@@ -1167,7 +1282,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kenya</ksamsok:name>
         <ksamsok:name xml:lang="en">Kenya</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/192950</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/192950/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q114"/>
         <ksamsok:alpha2>ke</ksamsok:alpha2>
         <ksamsok:alpha3>ken</ksamsok:alpha3>
         <ksamsok:number>404</ksamsok:number>
@@ -1177,7 +1293,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kirgizistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Kyrgyzstan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1527747</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1527747/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q813"/>
         <ksamsok:alpha2>kg</ksamsok:alpha2>
         <ksamsok:alpha3>kgz</ksamsok:alpha3>
         <ksamsok:number>417</ksamsok:number>
@@ -1187,7 +1304,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kambodja</ksamsok:name>
         <ksamsok:name xml:lang="en">Cambodia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1831722</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1831722/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q424"/>
         <ksamsok:alpha2>kh</ksamsok:alpha2>
         <ksamsok:alpha3>khm</ksamsok:alpha3>
         <ksamsok:number>116</ksamsok:number>
@@ -1197,7 +1315,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kiribati</ksamsok:name>
         <ksamsok:name xml:lang="en">Kiribati</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4030945</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4030945/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q710"/>
         <ksamsok:alpha2>ki</ksamsok:alpha2>
         <ksamsok:alpha3>kir</ksamsok:alpha3>
         <ksamsok:number>296</ksamsok:number>
@@ -1207,7 +1326,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Komorerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Comoros</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/921929</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/921929/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q970"/>
         <ksamsok:alpha2>km</ksamsok:alpha2>
         <ksamsok:alpha3>com</ksamsok:alpha3>
         <ksamsok:number>174</ksamsok:number>
@@ -1217,7 +1337,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Kitts och Nevis</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Kitts and Nevis</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3575174</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3575174/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q763"/>
         <ksamsok:alpha2>kn</ksamsok:alpha2>
         <ksamsok:alpha3>kna</ksamsok:alpha3>
         <ksamsok:number>659</ksamsok:number>
@@ -1227,7 +1348,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nordkorea</ksamsok:name>
         <ksamsok:name xml:lang="en">North Korea</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1873107</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1873107/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q423"/>
         <ksamsok:alpha2>kp</ksamsok:alpha2>
         <ksamsok:alpha3>prk</ksamsok:alpha3>
         <ksamsok:number>408</ksamsok:number>
@@ -1237,7 +1359,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydkorea</ksamsok:name>
         <ksamsok:name xml:lang="en">South Korea</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1835841</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1835841/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q884"/>
         <ksamsok:alpha2>kr</ksamsok:alpha2>
         <ksamsok:alpha3>kor</ksamsok:alpha3>
         <ksamsok:number>410</ksamsok:number>
@@ -1247,7 +1370,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kuwait</ksamsok:name>
         <ksamsok:name xml:lang="en">Kuwait</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/285570</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/285570/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q817"/>
         <ksamsok:alpha2>kw</ksamsok:alpha2>
         <ksamsok:alpha3>kwt</ksamsok:alpha3>
         <ksamsok:number>414</ksamsok:number>
@@ -1257,7 +1381,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Caymanöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Cayman Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3580718</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3580718/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q5785"/>
         <ksamsok:alpha2>ky</ksamsok:alpha2>
         <ksamsok:alpha3>cym</ksamsok:alpha3>
         <ksamsok:number>136</ksamsok:number>
@@ -1267,7 +1392,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kazakstan</ksamsok:name>
         <ksamsok:name xml:lang="en">Kazakhstan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1522867</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1522867/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q232"/>
         <ksamsok:alpha2>kz</ksamsok:alpha2>
         <ksamsok:alpha3>kaz</ksamsok:alpha3>
         <ksamsok:number>398</ksamsok:number>
@@ -1278,7 +1404,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Laos</ksamsok:name>
         <ksamsok:name xml:lang="en">Laos</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1655842</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1655842/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q819"/>
         <ksamsok:alpha2>la</ksamsok:alpha2>
         <ksamsok:alpha3>lao</ksamsok:alpha3>
         <ksamsok:number>418</ksamsok:number>
@@ -1288,7 +1415,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Libanon</ksamsok:name>
         <ksamsok:name xml:lang="en">Lebanon</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/272103</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/272103/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q822"/>
         <ksamsok:alpha2>lb</ksamsok:alpha2>
         <ksamsok:alpha3>lbn</ksamsok:alpha3>
         <ksamsok:number>422</ksamsok:number>
@@ -1298,7 +1426,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Lucia</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Lucia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3576468</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3576468/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q760"/>
         <ksamsok:alpha2>lc</ksamsok:alpha2>
         <ksamsok:alpha3>lca</ksamsok:alpha3>
         <ksamsok:number>662</ksamsok:number>
@@ -1308,7 +1437,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Liechtenstein</ksamsok:name>
         <ksamsok:name xml:lang="en">Liechtenstein</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3042058</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3042058/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q347"/>
         <ksamsok:alpha2>li</ksamsok:alpha2>
         <ksamsok:alpha3>lie</ksamsok:alpha3>
         <ksamsok:number>438</ksamsok:number>
@@ -1318,7 +1448,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sri Lanka</ksamsok:name>
         <ksamsok:name xml:lang="en">Sri Lanka</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1227603</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1227603/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q854"/>
         <ksamsok:alpha2>lk</ksamsok:alpha2>
         <ksamsok:alpha3>lka</ksamsok:alpha3>
         <ksamsok:number>144</ksamsok:number>
@@ -1328,7 +1459,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Liberia</ksamsok:name>
         <ksamsok:name xml:lang="en">Liberia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2275384</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2275384/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1014"/>
         <ksamsok:alpha2>lr</ksamsok:alpha2>
         <ksamsok:alpha3>lbr</ksamsok:alpha3>
         <ksamsok:number>430</ksamsok:number>
@@ -1338,7 +1470,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Lesotho</ksamsok:name>
         <ksamsok:name xml:lang="en">Lesotho</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/932692</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/932692/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1013"/>
         <ksamsok:alpha2>ls</ksamsok:alpha2>
         <ksamsok:alpha3>lso</ksamsok:alpha3>
         <ksamsok:number>426</ksamsok:number>
@@ -1348,7 +1481,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Litauen</ksamsok:name>
         <ksamsok:name xml:lang="en">Lithuania</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/597427</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/597427/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q37"/>
         <ksamsok:alpha2>lt</ksamsok:alpha2>
         <ksamsok:alpha3>ltu</ksamsok:alpha3>
         <ksamsok:number>440</ksamsok:number>
@@ -1358,7 +1492,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Luxemburg</ksamsok:name>
         <ksamsok:name xml:lang="en">Luxembourg</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2960313</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2960313/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q32"/>
         <ksamsok:alpha2>lu</ksamsok:alpha2>
         <ksamsok:alpha3>lux</ksamsok:alpha3>
         <ksamsok:number>442</ksamsok:number>
@@ -1368,7 +1503,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Lettland</ksamsok:name>
         <ksamsok:name xml:lang="en">Latvia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/458258</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/458258/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q211"/>
         <ksamsok:alpha2>lv</ksamsok:alpha2>
         <ksamsok:alpha3>lva</ksamsok:alpha3>
         <ksamsok:number>428</ksamsok:number>
@@ -1378,7 +1514,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Libyen</ksamsok:name>
         <ksamsok:name xml:lang="en">Libya</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2215636</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2215636/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1016"/>
         <ksamsok:alpha2>ly</ksamsok:alpha2>
         <ksamsok:alpha3>lby</ksamsok:alpha3>
         <ksamsok:number>434</ksamsok:number>
@@ -1388,7 +1525,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Marocko</ksamsok:name>
         <ksamsok:name xml:lang="en">Morocco</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2542007</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2542007/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1028"/>
         <ksamsok:alpha2>ma</ksamsok:alpha2>
         <ksamsok:alpha3>mar</ksamsok:alpha3>
         <ksamsok:number>504</ksamsok:number>
@@ -1398,7 +1536,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Monaco</ksamsok:name>
         <ksamsok:name xml:lang="en">Monaco</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2993457</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2993457/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q235"/>
         <ksamsok:alpha2>mc</ksamsok:alpha2>
         <ksamsok:alpha3>mco</ksamsok:alpha3>
         <ksamsok:number>492</ksamsok:number>
@@ -1408,7 +1547,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Moldavien</ksamsok:name>
         <ksamsok:name xml:lang="en">Moldova</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/617790</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/617790/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q217"/>
         <ksamsok:alpha2>md</ksamsok:alpha2>
         <ksamsok:alpha3>mda</ksamsok:alpha3>
         <ksamsok:number>498</ksamsok:number>
@@ -1418,7 +1558,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Montenegro</ksamsok:name>
         <ksamsok:name xml:lang="en">Montenegro</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3194884</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3194884/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q236"/>
         <ksamsok:alpha2>me</ksamsok:alpha2>
         <ksamsok:alpha3>mne</ksamsok:alpha3>
         <ksamsok:number>499</ksamsok:number>
@@ -1428,7 +1569,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Martin</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Martin (French part)</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3578421</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3578421/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q126125"/>
         <ksamsok:alpha2>mf</ksamsok:alpha2>
         <ksamsok:alpha3>maf</ksamsok:alpha3>
         <ksamsok:number>663</ksamsok:number>
@@ -1438,7 +1580,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Madagaskar</ksamsok:name>
         <ksamsok:name xml:lang="en">Madagascar</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1062947</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1062947/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1019"/>
         <ksamsok:alpha2>mg</ksamsok:alpha2>
         <ksamsok:alpha3>mdg</ksamsok:alpha3>
         <ksamsok:number>450</ksamsok:number>
@@ -1448,7 +1591,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Marshallöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Marshall Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2080185</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2080185/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q709"/>
         <ksamsok:alpha2>mh</ksamsok:alpha2>
         <ksamsok:alpha3>mhl</ksamsok:alpha3>
         <ksamsok:number>584</ksamsok:number>
@@ -1458,7 +1602,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nordmakedonien</ksamsok:name>
         <ksamsok:name xml:lang="en">North Macedonia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/718075</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/718075/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q221"/>
         <ksamsok:alpha2>mk</ksamsok:alpha2>
         <ksamsok:alpha3>mkd</ksamsok:alpha3>
         <ksamsok:number>807</ksamsok:number>
@@ -1468,7 +1613,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mali</ksamsok:name>
         <ksamsok:name xml:lang="en">Mali</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2453866</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2453866/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q912"/>
         <ksamsok:alpha2>ml</ksamsok:alpha2>
         <ksamsok:alpha3>mli</ksamsok:alpha3>
         <ksamsok:number>466</ksamsok:number>
@@ -1478,7 +1624,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Myanmar</ksamsok:name>
         <ksamsok:name xml:lang="en">Myanmar</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1327865</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1327865/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q836"/>
         <ksamsok:alpha2>mm</ksamsok:alpha2>
         <ksamsok:alpha3>mmr</ksamsok:alpha3>
         <ksamsok:number>104</ksamsok:number>
@@ -1488,7 +1635,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mongoliet</ksamsok:name>
         <ksamsok:name xml:lang="en">Mongolia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2029969</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2029969/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q711"/>
         <ksamsok:alpha2>mn</ksamsok:alpha2>
         <ksamsok:alpha3>mng</ksamsok:alpha3>
         <ksamsok:number>496</ksamsok:number>
@@ -1498,7 +1646,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Macao</ksamsok:name>
         <ksamsok:name xml:lang="en">Macau</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1821275</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1821275/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q14773"/>
         <ksamsok:alpha2>mo</ksamsok:alpha2>
         <ksamsok:alpha3>mac</ksamsok:alpha3>
         <ksamsok:number>446</ksamsok:number>
@@ -1508,7 +1657,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nordmarianerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Northern Mariana Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4041468</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4041468/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q16644"/>
         <ksamsok:alpha2>mp</ksamsok:alpha2>
         <ksamsok:alpha3>mnp</ksamsok:alpha3>
         <ksamsok:number>580</ksamsok:number>
@@ -1518,7 +1668,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Martinique</ksamsok:name>
         <ksamsok:name xml:lang="en">Martinique</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3570311</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3570311/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q17054"/>
         <ksamsok:alpha2>mq</ksamsok:alpha2>
         <ksamsok:alpha3>mtq</ksamsok:alpha3>
         <ksamsok:number>474</ksamsok:number>
@@ -1528,7 +1679,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mauretanien</ksamsok:name>
         <ksamsok:name xml:lang="en">Mauritania</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2378080</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2378080/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1025"/>
         <ksamsok:alpha2>mr</ksamsok:alpha2>
         <ksamsok:alpha3>mrt</ksamsok:alpha3>
         <ksamsok:number>478</ksamsok:number>
@@ -1538,7 +1690,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Montserrat</ksamsok:name>
         <ksamsok:name xml:lang="en">Montserrat</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3578097</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3578097/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q13353"/>
         <ksamsok:alpha2>ms</ksamsok:alpha2>
         <ksamsok:alpha3>msr</ksamsok:alpha3>
         <ksamsok:number>500</ksamsok:number>
@@ -1548,7 +1701,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Malta</ksamsok:name>
         <ksamsok:name xml:lang="en">Malta</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2562770</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2562770/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q233"/>
         <ksamsok:alpha2>mt</ksamsok:alpha2>
         <ksamsok:alpha3>mlt</ksamsok:alpha3>
         <ksamsok:number>470</ksamsok:number>
@@ -1558,7 +1712,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mauritius</ksamsok:name>
         <ksamsok:name xml:lang="en">Mauritius</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/934292</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/934292/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1027"/>
         <ksamsok:alpha2>mu</ksamsok:alpha2>
         <ksamsok:alpha3>mus</ksamsok:alpha3>
         <ksamsok:number>480</ksamsok:number>
@@ -1568,7 +1723,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Maldiverna</ksamsok:name>
         <ksamsok:name xml:lang="en">Maldives</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1282028</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1282028/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q826"/>
         <ksamsok:alpha2>mv</ksamsok:alpha2>
         <ksamsok:alpha3>mdv</ksamsok:alpha3>
         <ksamsok:number>462</ksamsok:number>
@@ -1578,7 +1734,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Malawi</ksamsok:name>
         <ksamsok:name xml:lang="en">Malawi</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/927384</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/927384/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1020"/>
         <ksamsok:alpha2>mw</ksamsok:alpha2>
         <ksamsok:alpha3>mwi</ksamsok:alpha3>
         <ksamsok:number>454</ksamsok:number>
@@ -1588,7 +1745,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mexiko</ksamsok:name>
         <ksamsok:name xml:lang="en">Mexico</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3996063</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3996063/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q96"/>
         <ksamsok:alpha2>mx</ksamsok:alpha2>
         <ksamsok:alpha3>mex</ksamsok:alpha3>
         <ksamsok:number>484</ksamsok:number>
@@ -1598,7 +1756,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Malaysia</ksamsok:name>
         <ksamsok:name xml:lang="en">Malaysia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1733045</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1733045/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q833"/>
         <ksamsok:alpha2>my</ksamsok:alpha2>
         <ksamsok:alpha3>mys</ksamsok:alpha3>
         <ksamsok:number>458</ksamsok:number>
@@ -1608,7 +1767,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Moçambique</ksamsok:name>
         <ksamsok:name xml:lang="en">Mozambique</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1036973</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1036973/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1029"/>
         <ksamsok:alpha2>mz</ksamsok:alpha2>
         <ksamsok:alpha3>moz</ksamsok:alpha3>
         <ksamsok:number>508</ksamsok:number>
@@ -1618,7 +1778,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Namibia</ksamsok:name>
         <ksamsok:name xml:lang="en">Namibia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3355338</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3355338/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1030"/>
         <ksamsok:alpha2>na</ksamsok:alpha2>
         <ksamsok:alpha3>nam</ksamsok:alpha3>
         <ksamsok:number>516</ksamsok:number>
@@ -1628,7 +1789,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nya Kaledonien</ksamsok:name>
         <ksamsok:name xml:lang="en">New Caledonia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2139685</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2139685/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q33788"/>
         <ksamsok:alpha2>nc</ksamsok:alpha2>
         <ksamsok:alpha3>ncl</ksamsok:alpha3>
         <ksamsok:number>540</ksamsok:number>
@@ -1638,7 +1800,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Niger</ksamsok:name>
         <ksamsok:name xml:lang="en">Niger</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2440476</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2440476/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1032"/>
         <ksamsok:alpha2>ne</ksamsok:alpha2>
         <ksamsok:alpha3>ner</ksamsok:alpha3>
         <ksamsok:number>562</ksamsok:number>
@@ -1648,7 +1811,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Norfolkön</ksamsok:name>
         <ksamsok:name xml:lang="en">Norfolk Island</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2155115</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2155115/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q31057"/>
         <ksamsok:alpha2>nf</ksamsok:alpha2>
         <ksamsok:alpha3>nfk</ksamsok:alpha3>
         <ksamsok:number>574</ksamsok:number>
@@ -1658,7 +1822,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nigeria</ksamsok:name>
         <ksamsok:name xml:lang="en">Nigeria</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2328926</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2328926/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1033"/>
         <ksamsok:alpha2>ng</ksamsok:alpha2>
         <ksamsok:alpha3>nga</ksamsok:alpha3>
         <ksamsok:number>566</ksamsok:number>
@@ -1668,7 +1833,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nicaragua</ksamsok:name>
         <ksamsok:name xml:lang="en">Nicaragua</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3617476</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3617476/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q811"/>
         <ksamsok:alpha2>ni</ksamsok:alpha2>
         <ksamsok:alpha3>nic</ksamsok:alpha3>
         <ksamsok:number>558</ksamsok:number>
@@ -1678,7 +1844,9 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nederländerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Netherlands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2750405</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2750405/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q55"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q29999"/>
         <ksamsok:alpha2>nl</ksamsok:alpha2>
         <ksamsok:alpha3>nld</ksamsok:alpha3>
         <ksamsok:number>528</ksamsok:number>
@@ -1688,7 +1856,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Norge</ksamsok:name>
         <ksamsok:name xml:lang="en">Norway</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3144096</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3144096/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q20"/>
         <ksamsok:alpha2>no</ksamsok:alpha2>
         <ksamsok:alpha3>nor</ksamsok:alpha3>
         <ksamsok:number>578</ksamsok:number>
@@ -1698,7 +1867,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nepal</ksamsok:name>
         <ksamsok:name xml:lang="en">Nepal</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1282988</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1282988/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q837"/>
         <ksamsok:alpha2>np</ksamsok:alpha2>
         <ksamsok:alpha3>npl</ksamsok:alpha3>
         <ksamsok:number>524</ksamsok:number>
@@ -1708,7 +1878,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nauru</ksamsok:name>
         <ksamsok:name xml:lang="en">Nauru</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2110425</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2110425/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q697"/>
         <ksamsok:alpha2>nr</ksamsok:alpha2>
         <ksamsok:alpha3>nru</ksamsok:alpha3>
         <ksamsok:number>520</ksamsok:number>
@@ -1718,7 +1889,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Niue</ksamsok:name>
         <ksamsok:name xml:lang="en">Niue</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4036232</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4036232/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q34020"/>
         <ksamsok:alpha2>nu</ksamsok:alpha2>
         <ksamsok:alpha3>niu</ksamsok:alpha3>
         <ksamsok:number>570</ksamsok:number>
@@ -1728,7 +1900,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nya Zeeland</ksamsok:name>
         <ksamsok:name xml:lang="en">New Zealand</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2186224</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2186224/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q664"/>
         <ksamsok:alpha2>nz</ksamsok:alpha2>
         <ksamsok:alpha3>nzl</ksamsok:alpha3>
         <ksamsok:number>554</ksamsok:number>
@@ -1738,7 +1911,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Oman</ksamsok:name>
         <ksamsok:name xml:lang="en">Oman</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/286963</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/286963/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q842"/>
         <ksamsok:alpha2>om</ksamsok:alpha2>
         <ksamsok:alpha3>omn</ksamsok:alpha3>
         <ksamsok:number>512</ksamsok:number>
@@ -1748,7 +1922,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Panama</ksamsok:name>
         <ksamsok:name xml:lang="en">Panama</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3703430</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3703430/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q804"/>
         <ksamsok:alpha2>pa</ksamsok:alpha2>
         <ksamsok:alpha3>pan</ksamsok:alpha3>
         <ksamsok:number>591</ksamsok:number>
@@ -1759,7 +1934,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Peru</ksamsok:name>
         <ksamsok:name xml:lang="en">Peru</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3932488</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3932488/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q419"/>
         <ksamsok:alpha2>pe</ksamsok:alpha2>
         <ksamsok:alpha3>per</ksamsok:alpha3>
         <ksamsok:number>604</ksamsok:number>
@@ -1769,7 +1945,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Franska Polynesien</ksamsok:name>
         <ksamsok:name xml:lang="en">French Polynesia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4030656</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4030656/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q30971"/>
         <ksamsok:alpha2>pf</ksamsok:alpha2>
         <ksamsok:alpha3>pyf</ksamsok:alpha3>
         <ksamsok:number>258</ksamsok:number>
@@ -1779,7 +1956,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Papua Nya Guinea</ksamsok:name>
         <ksamsok:name xml:lang="en">Papua New Guinea</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2088628</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2088628/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q691"/>
         <ksamsok:alpha2>pg</ksamsok:alpha2>
         <ksamsok:alpha3>png</ksamsok:alpha3>
         <ksamsok:number>598</ksamsok:number>
@@ -1789,7 +1967,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Filippinerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Philippines</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1694008</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1694008/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q928"/>
         <ksamsok:alpha2>ph</ksamsok:alpha2>
         <ksamsok:alpha3>phl</ksamsok:alpha3>
         <ksamsok:number>608</ksamsok:number>
@@ -1799,7 +1978,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Pakistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Pakistan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1168579</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1168579/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q843"/>
         <ksamsok:alpha2>pk</ksamsok:alpha2>
         <ksamsok:alpha3>pak</ksamsok:alpha3>
         <ksamsok:number>586</ksamsok:number>
@@ -1809,7 +1989,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Polen</ksamsok:name>
         <ksamsok:name xml:lang="en">Poland</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/798544</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/798544/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q36"/>
         <ksamsok:alpha2>pl</ksamsok:alpha2>
         <ksamsok:alpha3>pol</ksamsok:alpha3>
         <ksamsok:number>616</ksamsok:number>
@@ -1819,7 +2000,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint-Pierre och Miquelon</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Pierre and Miquelon</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3424932</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3424932/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q34617"/>
         <ksamsok:alpha2>pm</ksamsok:alpha2>
         <ksamsok:alpha3>spm</ksamsok:alpha3>
         <ksamsok:number>666</ksamsok:number>
@@ -1829,7 +2011,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Pitcairnöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Pitcairn Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4030699</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4030699/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q35672"/>
         <ksamsok:alpha2>pn</ksamsok:alpha2>
         <ksamsok:alpha3>pcn</ksamsok:alpha3>
         <ksamsok:number>612</ksamsok:number>
@@ -1839,7 +2022,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Puerto Rico</ksamsok:name>
         <ksamsok:name xml:lang="en">Puerto Rico</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4566966</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4566966/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1183"/>
         <ksamsok:alpha2>pr</ksamsok:alpha2>
         <ksamsok:alpha3>pri</ksamsok:alpha3>
         <ksamsok:number>630</ksamsok:number>
@@ -1849,7 +2033,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Palestina</ksamsok:name>
         <ksamsok:name xml:lang="en">State of Palestine</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6254930</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/6254930/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q219060"/>
         <ksamsok:alpha2>ps</ksamsok:alpha2>
         <ksamsok:alpha3>pse</ksamsok:alpha3>
         <ksamsok:number>275</ksamsok:number>
@@ -1859,7 +2044,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Portugal</ksamsok:name>
         <ksamsok:name xml:lang="en">Portugal</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2264397</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2264397/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q45"/>
         <ksamsok:alpha2>pt</ksamsok:alpha2>
         <ksamsok:alpha3>prt</ksamsok:alpha3>
         <ksamsok:number>620</ksamsok:number>
@@ -1869,7 +2055,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Palau</ksamsok:name>
         <ksamsok:name xml:lang="en">Palau</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1559582</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1559582/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q695"/>
         <ksamsok:alpha2>pw</ksamsok:alpha2>
         <ksamsok:alpha3>plw</ksamsok:alpha3>
         <ksamsok:number>585</ksamsok:number>
@@ -1879,7 +2066,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Paraguay</ksamsok:name>
         <ksamsok:name xml:lang="en">Paraguay</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3437598</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3437598/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q733"/>
         <ksamsok:alpha2>py</ksamsok:alpha2>
         <ksamsok:alpha3>pry</ksamsok:alpha3>
         <ksamsok:number>600</ksamsok:number>
@@ -1889,7 +2077,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Qatar</ksamsok:name>
         <ksamsok:name xml:lang="en">Qatar</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/289688</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/289688/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q846"/>
         <ksamsok:alpha2>qa</ksamsok:alpha2>
         <ksamsok:alpha3>qat</ksamsok:alpha3>
         <ksamsok:number>634</ksamsok:number>
@@ -1899,7 +2088,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Réunion</ksamsok:name>
         <ksamsok:name xml:lang="en">Réunion</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/935317</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/935317/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q17070"/>
         <ksamsok:alpha2>re</ksamsok:alpha2>
         <ksamsok:alpha3>reu</ksamsok:alpha3>
         <ksamsok:number>638</ksamsok:number>
@@ -1909,7 +2099,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Rumänien</ksamsok:name>
         <ksamsok:name xml:lang="en">Romania</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/798549</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/798549/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q218"/>
         <ksamsok:alpha2>ro</ksamsok:alpha2>
         <ksamsok:alpha3>rou</ksamsok:alpha3>
         <ksamsok:number>642</ksamsok:number>
@@ -1919,7 +2110,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Serbien</ksamsok:name>
         <ksamsok:name xml:lang="en">Serbia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6290252</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/6290252/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q403"/>
         <ksamsok:alpha2>rs</ksamsok:alpha2>
         <ksamsok:alpha3>srb</ksamsok:alpha3>
         <ksamsok:number>688</ksamsok:number>
@@ -1929,7 +2121,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ryssland</ksamsok:name>
         <ksamsok:name xml:lang="en">Russia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2017370</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2017370/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q159"/>
         <ksamsok:alpha2>ru</ksamsok:alpha2>
         <ksamsok:alpha3>rus</ksamsok:alpha3>
         <ksamsok:number>643</ksamsok:number>
@@ -1940,7 +2133,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Rwanda</ksamsok:name>
         <ksamsok:name xml:lang="en">Rwanda</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/49518</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/49518/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1037"/>
         <ksamsok:alpha2>rw</ksamsok:alpha2>
         <ksamsok:alpha3>rwa</ksamsok:alpha3>
         <ksamsok:number>646</ksamsok:number>
@@ -1950,7 +2144,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saudiarabien</ksamsok:name>
         <ksamsok:name xml:lang="en">Saudi Arabia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/102358</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/102358/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q851"/>
         <ksamsok:alpha2>sa</ksamsok:alpha2>
         <ksamsok:alpha3>sau</ksamsok:alpha3>
         <ksamsok:number>682</ksamsok:number>
@@ -1960,7 +2155,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Salomonöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Solomon Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2103350</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2103350/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q685"/>
         <ksamsok:alpha2>sb</ksamsok:alpha2>
         <ksamsok:alpha3>slb</ksamsok:alpha3>
         <ksamsok:number>90</ksamsok:number>
@@ -1970,7 +2166,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Seychellerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Seychelles</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/241170</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/241170/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1042"/>
         <ksamsok:alpha2>sc</ksamsok:alpha2>
         <ksamsok:alpha3>syc</ksamsok:alpha3>
         <ksamsok:number>690</ksamsok:number>
@@ -1980,7 +2177,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sudan</ksamsok:name>
         <ksamsok:name xml:lang="en">Sudan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/366755</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/366755/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1049"/>
         <ksamsok:alpha2>sd</ksamsok:alpha2>
         <ksamsok:alpha3>sdn</ksamsok:alpha3>
         <ksamsok:number>729</ksamsok:number>
@@ -1990,7 +2188,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sverige</ksamsok:name>
         <ksamsok:name xml:lang="en">Sweden</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2661886</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2661886/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q34"/>
         <ksamsok:alpha2>se</ksamsok:alpha2>
         <ksamsok:alpha3>swe</ksamsok:alpha3>
         <ksamsok:number>752</ksamsok:number>
@@ -2000,7 +2199,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Singapore</ksamsok:name>
         <ksamsok:name xml:lang="en">Singapore</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1880251</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1880251/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q334"/>
         <ksamsok:alpha2>sg</ksamsok:alpha2>
         <ksamsok:alpha3>sgp</ksamsok:alpha3>
         <ksamsok:number>702</ksamsok:number>
@@ -2010,7 +2210,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sankta Helena, Ascension och Tristan da Cunha</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Helena, Ascension and Tristan da Cunha</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3370751</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3370751/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q192184"/>
         <ksamsok:alpha2>sh</ksamsok:alpha2>
         <ksamsok:alpha3>shn</ksamsok:alpha3>
         <ksamsok:number>654</ksamsok:number>
@@ -2020,7 +2221,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Slovenien</ksamsok:name>
         <ksamsok:name xml:lang="en">Slovenia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3190538</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3190538/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q215"/>
         <ksamsok:alpha2>si</ksamsok:alpha2>
         <ksamsok:alpha3>svn</ksamsok:alpha3>
         <ksamsok:number>705</ksamsok:number>
@@ -2030,7 +2232,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Svalbard och Jan Mayen</ksamsok:name>
         <ksamsok:name xml:lang="en">Svalbard and Jan Mayen</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/607072</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/607072/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q842829"/>
         <ksamsok:alpha2>sj</ksamsok:alpha2>
         <ksamsok:alpha3>sjm</ksamsok:alpha3>
         <ksamsok:number>744</ksamsok:number>
@@ -2040,7 +2243,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Slovakien</ksamsok:name>
         <ksamsok:name xml:lang="en">Slovakia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3057568</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3057568/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q214"/>
         <ksamsok:alpha2>sk</ksamsok:alpha2>
         <ksamsok:alpha3>svk</ksamsok:alpha3>
         <ksamsok:number>703</ksamsok:number>
@@ -2050,7 +2254,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sierra Leone</ksamsok:name>
         <ksamsok:name xml:lang="en">Sierra Leone</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2403846</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2403846/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1044"/>
         <ksamsok:alpha2>sl</ksamsok:alpha2>
         <ksamsok:alpha3>sle</ksamsok:alpha3>
         <ksamsok:number>694</ksamsok:number>
@@ -2060,7 +2265,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">San Marino</ksamsok:name>
         <ksamsok:name xml:lang="en">San Marino</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3168068</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3168068/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q238"/>
         <ksamsok:alpha2>sm</ksamsok:alpha2>
         <ksamsok:alpha3>smr</ksamsok:alpha3>
         <ksamsok:number>674</ksamsok:number>
@@ -2070,7 +2276,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Senegal</ksamsok:name>
         <ksamsok:name xml:lang="en">Senegal</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2245662</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2245662/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1041"/>
         <ksamsok:alpha2>sn</ksamsok:alpha2>
         <ksamsok:alpha3>sen</ksamsok:alpha3>
         <ksamsok:number>686</ksamsok:number>
@@ -2080,7 +2287,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Somalia</ksamsok:name>
         <ksamsok:name xml:lang="en">Somalia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/51537</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/51537/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1045"/>
         <ksamsok:alpha2>so</ksamsok:alpha2>
         <ksamsok:alpha3>som</ksamsok:alpha3>
         <ksamsok:number>706</ksamsok:number>
@@ -2090,7 +2298,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Surinam</ksamsok:name>
         <ksamsok:name xml:lang="en">Suriname</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3382998</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3382998/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q730"/>
         <ksamsok:alpha2>sr</ksamsok:alpha2>
         <ksamsok:alpha3>sur</ksamsok:alpha3>
         <ksamsok:number>740</ksamsok:number>
@@ -2100,7 +2309,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydsudan</ksamsok:name>
         <ksamsok:name xml:lang="en">South Sudan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/7909807</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/7909807/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q958"/>
         <ksamsok:alpha2>ss</ksamsok:alpha2>
         <ksamsok:alpha3>ssd</ksamsok:alpha3>
         <ksamsok:number>728</ksamsok:number>
@@ -2110,7 +2320,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">São Tomé och Príncipe</ksamsok:name>
         <ksamsok:name xml:lang="en">São Tomé and Príncipe</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2410758</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2410758/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1039"/>
         <ksamsok:alpha2>st</ksamsok:alpha2>
         <ksamsok:alpha3>stp</ksamsok:alpha3>
         <ksamsok:number>678</ksamsok:number>
@@ -2120,7 +2331,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">El Salvador</ksamsok:name>
         <ksamsok:name xml:lang="en">El Salvador</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3585968</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3585968/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q792"/>
         <ksamsok:alpha2>sv</ksamsok:alpha2>
         <ksamsok:alpha3>slv</ksamsok:alpha3>
         <ksamsok:number>222</ksamsok:number>
@@ -2130,7 +2342,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sint Maarten</ksamsok:name>
         <ksamsok:name xml:lang="en">Sint Maarten</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/7609695</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/7609695/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q26273"/>
         <ksamsok:alpha2>sx</ksamsok:alpha2>
         <ksamsok:alpha3>sxm</ksamsok:alpha3>
         <ksamsok:number>534</ksamsok:number>
@@ -2140,7 +2353,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Syrien</ksamsok:name>
         <ksamsok:name xml:lang="en">Syria</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/163843</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/163843/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q858"/>
         <ksamsok:alpha2>sy</ksamsok:alpha2>
         <ksamsok:alpha3>syr</ksamsok:alpha3>
         <ksamsok:number>760</ksamsok:number>
@@ -2150,7 +2364,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Swaziland</ksamsok:name>
         <ksamsok:name xml:lang="en">Eswatini</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/934841</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/934841/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1050"/>
         <ksamsok:alpha2>sz</ksamsok:alpha2>
         <ksamsok:alpha3>swz</ksamsok:alpha3>
         <ksamsok:number>748</ksamsok:number>
@@ -2160,7 +2375,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Turks- och Caicosöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Turks and Caicos Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3576916</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3576916/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q18221"/>
         <ksamsok:alpha2>tc</ksamsok:alpha2>
         <ksamsok:alpha3>tca</ksamsok:alpha3>
         <ksamsok:number>796</ksamsok:number>
@@ -2170,7 +2386,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tchad</ksamsok:name>
         <ksamsok:name xml:lang="en">Chad</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2434508</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2434508/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q657"/>
         <ksamsok:alpha2>td</ksamsok:alpha2>
         <ksamsok:alpha3>tcd</ksamsok:alpha3>
         <ksamsok:number>148</ksamsok:number>
@@ -2180,7 +2397,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Franska sydterritorierna</ksamsok:name>
         <ksamsok:name xml:lang="en">French Southern and Antarctic Lands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1546748</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1546748/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q129003"/>
         <ksamsok:alpha2>tf</ksamsok:alpha2>
         <ksamsok:alpha3>atf</ksamsok:alpha3>
         <ksamsok:number>260</ksamsok:number>
@@ -2191,7 +2409,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Togo</ksamsok:name>
         <ksamsok:name xml:lang="en">Togo</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2363686</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2363686/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q945"/>
         <ksamsok:alpha2>tg</ksamsok:alpha2>
         <ksamsok:alpha3>tgo</ksamsok:alpha3>
         <ksamsok:number>768</ksamsok:number>
@@ -2201,7 +2420,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Thailand</ksamsok:name>
         <ksamsok:name xml:lang="en">Thailand</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1605651</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1605651/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q869"/>
         <ksamsok:alpha2>th</ksamsok:alpha2>
         <ksamsok:alpha3>tha</ksamsok:alpha3>
         <ksamsok:number>764</ksamsok:number>
@@ -2211,7 +2431,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tadzjikistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Tajikistan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1220409</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1220409/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q863"/>
         <ksamsok:alpha2>tj</ksamsok:alpha2>
         <ksamsok:alpha3>tjk</ksamsok:alpha3>
         <ksamsok:number>762</ksamsok:number>
@@ -2221,7 +2442,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tokelau</ksamsok:name>
         <ksamsok:name xml:lang="en">Tokelau</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4031074</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4031074/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q36823"/>
         <ksamsok:alpha2>tk</ksamsok:alpha2>
         <ksamsok:alpha3>tkl</ksamsok:alpha3>
         <ksamsok:number>772</ksamsok:number>
@@ -2231,7 +2453,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Östtimor</ksamsok:name>
         <ksamsok:name xml:lang="en">East Timor</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1966436</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1966436/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q574"/>
         <ksamsok:alpha2>tl</ksamsok:alpha2>
         <ksamsok:alpha3>tls</ksamsok:alpha3>
         <ksamsok:number>626</ksamsok:number>
@@ -2241,7 +2464,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Turkmenistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Turkmenistan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1218197</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1218197/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q874"/>
         <ksamsok:alpha2>tm</ksamsok:alpha2>
         <ksamsok:alpha3>tkm</ksamsok:alpha3>
         <ksamsok:number>795</ksamsok:number>
@@ -2251,7 +2475,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tunisien</ksamsok:name>
         <ksamsok:name xml:lang="en">Tunisia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2464461</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2464461/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q948"/>
         <ksamsok:alpha2>tn</ksamsok:alpha2>
         <ksamsok:alpha3>tun</ksamsok:alpha3>
         <ksamsok:number>788</ksamsok:number>
@@ -2261,7 +2486,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tonga</ksamsok:name>
         <ksamsok:name xml:lang="en">Tonga</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4032283</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4032283/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q678"/>
         <ksamsok:alpha2>to</ksamsok:alpha2>
         <ksamsok:alpha3>ton</ksamsok:alpha3>
         <ksamsok:number>776</ksamsok:number>
@@ -2271,7 +2497,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Turkiet</ksamsok:name>
         <ksamsok:name xml:lang="en">Turkey</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/298795</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/298795/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q43"/>
         <ksamsok:alpha2>tr</ksamsok:alpha2>
         <ksamsok:alpha3>tur</ksamsok:alpha3>
         <ksamsok:number>792</ksamsok:number>
@@ -2282,7 +2509,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Trinidad och Tobago</ksamsok:name>
         <ksamsok:name xml:lang="en">Trinidad and Tobago</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3573591</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3573591/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q754"/>
         <ksamsok:alpha2>tt</ksamsok:alpha2>
         <ksamsok:alpha3>tto</ksamsok:alpha3>
         <ksamsok:number>780</ksamsok:number>
@@ -2292,7 +2520,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tuvalu</ksamsok:name>
         <ksamsok:name xml:lang="en">Tuvalu</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2110297</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2110297/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q672"/>
         <ksamsok:alpha2>tv</ksamsok:alpha2>
         <ksamsok:alpha3>tuv</ksamsok:alpha3>
         <ksamsok:number>798</ksamsok:number>
@@ -2302,7 +2531,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Taiwan</ksamsok:name>
         <ksamsok:name xml:lang="en">Taiwan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1668284</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1668284/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q865"/>
         <ksamsok:alpha2>tw</ksamsok:alpha2>
         <ksamsok:alpha3>twn</ksamsok:alpha3>
         <ksamsok:number>158</ksamsok:number>
@@ -2312,7 +2542,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Tanzania</ksamsok:name>
         <ksamsok:name xml:lang="en">Tanzania</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/149590</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/149590/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q924"/>
         <ksamsok:alpha2>tz</ksamsok:alpha2>
         <ksamsok:alpha3>tza</ksamsok:alpha3>
         <ksamsok:number>834</ksamsok:number>
@@ -2322,7 +2553,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Ukraina</ksamsok:name>
         <ksamsok:name xml:lang="en">Ukraine</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/690791</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/690791/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q212"/>
         <ksamsok:alpha2>ua</ksamsok:alpha2>
         <ksamsok:alpha3>ukr</ksamsok:alpha3>
         <ksamsok:number>804</ksamsok:number>
@@ -2332,7 +2564,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Uganda</ksamsok:name>
         <ksamsok:name xml:lang="en">Uganda</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/226074</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/226074/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1036"/>
         <ksamsok:alpha2>ug</ksamsok:alpha2>
         <ksamsok:alpha3>uga</ksamsok:alpha3>
         <ksamsok:number>800</ksamsok:number>
@@ -2342,7 +2575,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Förenta staternas mindre öar i Oceanien och Västindien</ksamsok:name>
         <ksamsok:name xml:lang="en">United States Minor Outlying Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/5854968</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/5854968/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q16645"/>
         <ksamsok:alpha2>um</ksamsok:alpha2>
         <ksamsok:alpha3>umi</ksamsok:alpha3>
         <ksamsok:number>581</ksamsok:number>
@@ -2353,7 +2587,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">USA</ksamsok:name>
         <ksamsok:name xml:lang="en">United States of America</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6252001</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/6252001/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q30"/>
         <ksamsok:alpha2>us</ksamsok:alpha2>
         <ksamsok:alpha3>usa</ksamsok:alpha3>
         <ksamsok:number>840</ksamsok:number>
@@ -2364,7 +2599,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Uruguay</ksamsok:name>
         <ksamsok:name xml:lang="en">Uruguay</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3439705</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3439705/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q77"/>
         <ksamsok:alpha2>uy</ksamsok:alpha2>
         <ksamsok:alpha3>ury</ksamsok:alpha3>
         <ksamsok:number>858</ksamsok:number>
@@ -2374,7 +2610,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Uzbekistan</ksamsok:name>
         <ksamsok:name xml:lang="en">Uzbekistan</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1512440</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1512440/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q265"/>
         <ksamsok:alpha2>uz</ksamsok:alpha2>
         <ksamsok:alpha3>uzb</ksamsok:alpha3>
         <ksamsok:number>860</ksamsok:number>
@@ -2384,7 +2621,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vatikanstaten</ksamsok:name>
         <ksamsok:name xml:lang="en">Vatican City</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3164670</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3164670/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q237"/>
         <ksamsok:alpha2>va</ksamsok:alpha2>
         <ksamsok:alpha3>vat</ksamsok:alpha3>
         <ksamsok:number>336</ksamsok:number>
@@ -2394,7 +2632,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Vincent och Grenadinerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Vincent and the Grenadines</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3577815</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3577815/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q757"/>
         <ksamsok:alpha2>vc</ksamsok:alpha2>
         <ksamsok:alpha3>vct</ksamsok:alpha3>
         <ksamsok:number>670</ksamsok:number>
@@ -2404,7 +2643,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Venezuela</ksamsok:name>
         <ksamsok:name xml:lang="en">Venezuela</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3625428</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3625428/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q717"/>
         <ksamsok:alpha2>ve</ksamsok:alpha2>
         <ksamsok:alpha3>ven</ksamsok:alpha3>
         <ksamsok:number>862</ksamsok:number>
@@ -2414,7 +2654,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Wallis- och Futunaöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Wallis and Futuna</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4034749</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4034749/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q35555"/>
         <ksamsok:alpha2>wf</ksamsok:alpha2>
         <ksamsok:alpha3>wlf</ksamsok:alpha3>
         <ksamsok:number>876</ksamsok:number>
@@ -2424,7 +2665,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Brittiska Jungfruöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">British Virgin Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3577718</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3577718/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q25305"/>
         <ksamsok:alpha2>vg</ksamsok:alpha2>
         <ksamsok:alpha3>vgb</ksamsok:alpha3>
         <ksamsok:number>92</ksamsok:number>
@@ -2434,7 +2676,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Amerikanska Jungfruöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">United States Virgin Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4796775</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4796775/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q11703"/>
         <ksamsok:alpha2>vi</ksamsok:alpha2>
         <ksamsok:alpha3>vir</ksamsok:alpha3>
         <ksamsok:number>850</ksamsok:number>
@@ -2444,7 +2687,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vietnam</ksamsok:name>
         <ksamsok:name xml:lang="en">Vietnam</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1562822</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1562822/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q881"/>
         <ksamsok:alpha2>vn</ksamsok:alpha2>
         <ksamsok:alpha3>vnm</ksamsok:alpha3>
         <ksamsok:number>704</ksamsok:number>
@@ -2454,7 +2698,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vanuatu</ksamsok:name>
         <ksamsok:name xml:lang="en">Vanuatu</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2134431</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2134431/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q686"/>
         <ksamsok:alpha2>vu</ksamsok:alpha2>
         <ksamsok:alpha3>vut</ksamsok:alpha3>
         <ksamsok:number>548</ksamsok:number>
@@ -2464,7 +2709,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Samoa</ksamsok:name>
         <ksamsok:name xml:lang="en">Samoa</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4034894</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/4034894/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q683"/>
         <ksamsok:alpha2>ws</ksamsok:alpha2>
         <ksamsok:alpha3>wsm</ksamsok:alpha3>
         <ksamsok:number>882</ksamsok:number>
@@ -2474,7 +2720,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kosovo</ksamsok:name>
         <ksamsok:name xml:lang="en">Kosovo</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/831053</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/831053/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1246"/>
         <ksamsok:alpha2>xk</ksamsok:alpha2>
         <ksamsok:alpha3>xkx</ksamsok:alpha3>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
@@ -2483,7 +2730,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Jemen</ksamsok:name>
         <ksamsok:name xml:lang="en">Yemen</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/69543</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/69543/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q805"/>
         <ksamsok:alpha2>ye</ksamsok:alpha2>
         <ksamsok:alpha3>yem</ksamsok:alpha3>
         <ksamsok:number>887</ksamsok:number>
@@ -2493,7 +2741,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Mayotte</ksamsok:name>
         <ksamsok:name xml:lang="en">Mayotte</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1024031</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/1024031/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q17063"/>
         <ksamsok:alpha2>yt</ksamsok:alpha2>
         <ksamsok:alpha3>myt</ksamsok:alpha3>
         <ksamsok:number>175</ksamsok:number>
@@ -2503,7 +2752,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Sydafrika</ksamsok:name>
         <ksamsok:name xml:lang="en">South Africa</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/953987</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/953987/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q258"/>
         <ksamsok:alpha2>za</ksamsok:alpha2>
         <ksamsok:alpha3>zaf</ksamsok:alpha3>
         <ksamsok:number>710</ksamsok:number>
@@ -2513,7 +2763,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Zambia</ksamsok:name>
         <ksamsok:name xml:lang="en">Zambia</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/895949</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/895949/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q953"/>
         <ksamsok:alpha2>zm</ksamsok:alpha2>
         <ksamsok:alpha3>zmb</ksamsok:alpha3>
         <ksamsok:number>894</ksamsok:number>
@@ -2523,7 +2774,8 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Zimbabwe</ksamsok:name>
         <ksamsok:name xml:lang="en">Zimbabwe</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/878675</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/878675/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q954"/>
         <ksamsok:alpha2>zw</ksamsok:alpha2>
         <ksamsok:alpha3>zwe</ksamsok:alpha3>
         <ksamsok:number>716</ksamsok:number>
