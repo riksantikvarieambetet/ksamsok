@@ -176,6 +176,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Djursholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Djursholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10474985"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;11">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -474,11 +476,15 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Norrtälje</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Norrt%C3%A4lje_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10602968"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;61">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Nynäshamn</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Nyn%C3%A4shamns_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10604876"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;62">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -568,6 +574,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Sigtuna</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Sigtuna_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q3595999"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;81">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -629,6 +637,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Stockholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Stockholms_stad_(stadskommun)</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10680648"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;92">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -641,6 +651,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Sundbyberg</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Sundbybergs_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10683761"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;95">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -660,6 +672,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Södertälje</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/S%C3%B6dert%C3%A4lje_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10688812"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;99">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -735,6 +749,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Vaxholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Vaxholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10713493"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;110">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -992,6 +1008,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Skellefteå stad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vb"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Skellefte%C3%A5_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10669998"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;151">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1025,6 +1043,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Umeå stad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vb"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Ume%C3%A5_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10709198"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;156">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1072,6 +1092,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Boden</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nb"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Bodens_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10431980"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;164">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1091,6 +1113,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Haparanda</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nb"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Haparanda_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10517577"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;169">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1145,6 +1169,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Kiruna</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#La"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Kiruna_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10545810"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;180">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1157,6 +1183,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Luleå</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nb"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Lule%C3%A5_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10570640"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;184">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1197,6 +1225,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Piteå stad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nb"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Pite%C3%A5_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10632419"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;190">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1377,6 +1407,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Enköping</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Enk%C3%B6pings_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10484308"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;220">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1802,6 +1834,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Uppsala</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Uppsala_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10710255"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;283">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1933,6 +1967,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Öregrund</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/%C3%96regrunds_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10727516"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;302">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -1952,6 +1988,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Östhammar</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Up"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/%C3%96sthammars_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10728225"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;305">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2048,6 +2086,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Eskilstuna</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Eskilstuna_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10489096"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;319">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2102,6 +2142,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Gåsinge-Dillnäs</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/G%C3%A5singe-Dilln%C3%A4s_socken</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q18290346"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;328">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2184,6 +2226,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Katrineholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Katrineholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10544409"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;340">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2273,6 +2317,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Mariefred</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Mariefreds_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10577317"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;354">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2292,6 +2338,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Nyköping</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Nyk%C3%B6pings_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10604762"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;358">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2304,6 +2352,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Oxelösund</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Oxel%C3%B6sunds_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10613659"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;360">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2421,11 +2471,15 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Trosa stad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Trosa_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10705193"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;378">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Trosa-Vagnhärad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sö"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Trosa-Vagnh%C3%A4rads_socken</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q18334126"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;379">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -2984,6 +3038,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Linköping</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Link%C3%B6pings_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10562803"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;462">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -3045,6 +3101,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Norrköping</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Norrk%C3%B6pings_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10602823"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;471">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -3190,6 +3248,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Skänninge</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Sk%C3%A4nninge_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10670953"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;494">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -3279,6 +3339,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Söderköping</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/S%C3%B6derk%C3%B6pings_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10688570"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;507">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -3354,6 +3416,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Vadstena</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Vadstena_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10711980"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;519">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -3926,6 +3990,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Huskvarna</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Huskvarna_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10527417"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;606">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -4307,6 +4373,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Sävsjö</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/S%C3%A4vsj%C3%B6_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10688272"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;666">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -4347,6 +4415,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Tranås</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Tran%C3%A5s_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10701395"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;672">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -5100,6 +5170,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Borgholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Öl"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Borgholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10433173"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;790">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -5518,6 +5590,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Nybro</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Nybro_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10604372"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;853">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -5537,6 +5611,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Oskarshamn</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Oskarshamns_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10613022"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;856">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -5737,6 +5813,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Västervik</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sm"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/V%C3%A4sterviks_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10718042"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;885">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -6379,6 +6457,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Visby</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Go"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://ceb.wikipedia.org/wiki/Visby_socken</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10716060"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;977">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -6545,11 +6625,15 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Karlshamn</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bl"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Karlshamns_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10543839"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1001">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Karlskrona</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bl"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Karlskrona_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10543878"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1002">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -6975,6 +7059,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Hässleholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/H%C3%A4ssleholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10531826"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1064">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -7064,6 +7150,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Kristianstad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Kristianstads_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10549212"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1078">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -7314,6 +7402,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Simrishamn</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Simrishamns_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10668153"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1115">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -7578,6 +7668,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Ängelholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/%C3%84ngelholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10725866"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1155">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -7989,6 +8081,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Eslöv</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Esl%C3%B6vs_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10489125"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1215">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -8281,6 +8375,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Helsingborg</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Helsingborgs_stad_(stadskommun)</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10520559"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1263">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -8461,6 +8557,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Landskrona</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Landskrona_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10553941"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1292">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -8557,6 +8655,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Malmö</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Malm%C3%B6_stad_(stadskommun)</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10576166"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1307">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -8751,6 +8851,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Skanör m. Falsterbo</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Skan%C3%B6r_med_Falsterbo_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10669745"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1338">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -9253,6 +9355,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Ystad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Sk"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Ystads_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10723796"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1414">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -9454,6 +9558,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Falkenberg</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ha"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Falkenbergs_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10493741"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1444">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -9536,6 +9642,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Halmstad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ha"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Halmstads_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10516521"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1457">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -9618,6 +9726,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Kungsbacka</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ha"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Kungsbacka_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10550265"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1470">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -9924,6 +10034,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Varberg</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ha"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Varbergs_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10712932"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1517">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -10132,6 +10244,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Göteborg</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/G%C3%B6teborgs_stad_(stadskommun)</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10512911"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1550">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -10228,6 +10342,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Kungälv</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Kung%C3%A4lvs_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10550420"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1564">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -10310,6 +10426,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Lysekil</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Lysekils_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10571693"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1576">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -10322,6 +10440,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Marstrand</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Marstrands_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10577779"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1578">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -10488,6 +10608,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Strömstad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Str%C3%B6mstads_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10682252"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1602">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -10584,6 +10706,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Uddevalla</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Bo"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Uddevalla_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10708426"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1616">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -10708,6 +10832,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Borås</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Bor%C3%A5s_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10433403"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1637">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -11882,6 +12008,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Ulricehamn</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Ulricehamns_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10708867"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1813">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -11929,6 +12057,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Vänersborg</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/V%C3%A4nersborgs_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10717355"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1822">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -12375,6 +12505,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Falköping</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Falk%C3%B6pings_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10493763"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1888">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -12534,6 +12666,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Grästorp</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Gr%C3%A4storps_k%C3%B6ping</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10509818"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1911">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -12973,6 +13107,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Lidköping</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Lidk%C3%B6pings_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10561397"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1974">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -13055,6 +13191,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Mariestad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Mariestads_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10577364"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;1986">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -13543,6 +13681,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Tidaholm</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vg"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Tidaholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10697673"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2059">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14038,6 +14178,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Filipstad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Filipstads_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10495153"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2134">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14125,6 +14267,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Hagfors</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Hagfors_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q18290429"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2147">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14172,6 +14316,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Karlstad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Karlstads_socken</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10543935"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2154">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14184,6 +14330,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Kristinehamn</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vr"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Kristinehamns_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q18291388"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2156">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14782,6 +14930,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Lindesberg</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Lindesbergs_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10562525"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2251">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -14934,11 +15084,15 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Örebro</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Nä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/%C3%96rebro_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10727490"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2273">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Arboga stad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Arboga_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10417022"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2275">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15070,6 +15224,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Kolsva</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Kolsva_socken</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q18291309"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2297">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15194,6 +15350,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Sala stad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Sala_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10660327"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2317">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15297,6 +15455,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Västerås</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Vs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/V%C3%A4ster%C3%A5s_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10718106"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2336">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15358,6 +15518,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Borlänge</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Dr"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Borl%C3%A4nge_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10433249"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2345">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15377,6 +15539,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Falun</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Dr"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Falu_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10493893"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2348">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15753,6 +15917,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Gävle</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Gä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/G%C3%A4vle_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10512453"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2406">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15807,6 +15973,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Hudiksvall</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Hs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Hudiksvalls_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10526864"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2414">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -15973,6 +16141,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Söderhamn</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Hs"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/S%C3%B6derhamns_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10688548"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2441">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -16356,6 +16526,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Sundsvall</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Me"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Sundsvalls_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10683853"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2498">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -16466,6 +16638,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Örnsköldsvik</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ån"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/%C3%96rnsk%C3%B6ldsviks_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10727639"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2515">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -16891,6 +17065,8 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Östersund</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Jä"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/%C3%96stersunds_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10728134"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;2581">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -17396,11 +17572,15 @@
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Laholms stad</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ha"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Laholms_stad</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q10553378"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3081">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Valdemarsvik</ksamsok:name>
         <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#Ög"/>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">https://sv.wikipedia.org/wiki/Valdemarsviks_k%C3%B6ping</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q15217387"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="&parish;3083">
         <rdf:type rdf:resource="&parish;Parish"/>
@@ -17410,7 +17590,6 @@
     <owl:NamedIndividual rdf:about="&parish;9999">
         <rdf:type rdf:resource="&parish;Parish"/>
         <ksamsok:name>Ej sockenbildat</ksamsok:name>
-        <province rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/province#"/>
     </owl:NamedIndividual>
 </rdf:RDF>
 
