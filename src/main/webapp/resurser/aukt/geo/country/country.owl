@@ -29,7 +29,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ae">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Förenade arabemiraten</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Förenade Arabemiraten</ksamsok:name>
         <ksamsok:name xml:lang="en">United Arab Emirates</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/290557</rdfs:seeAlso>
         <ksamsok:alpha2>ae</ksamsok:alpha2>
@@ -85,6 +85,7 @@
         <ksamsok:alpha2>am</ksamsok:alpha2>
         <ksamsok:alpha3>arm</ksamsok:alpha3>
         <ksamsok:number>51</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ao">
@@ -99,8 +100,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#aq">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Antarktis</ksamsok:name>
-        <ksamsok:name xml:lang="en">Antarctica</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Antarktisfördragets område</ksamsok:name>
+        <ksamsok:name xml:lang="en">Antarctic Treaty area</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6697173</rdfs:seeAlso>
         <ksamsok:alpha2>aq</ksamsok:alpha2>
         <ksamsok:alpha3>ata</ksamsok:alpha3>
@@ -155,16 +156,16 @@
         <ksamsok:alpha2>aw</ksamsok:alpha2>
         <ksamsok:alpha3>abw</ksamsok:alpha3>
         <ksamsok:number>533</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ax">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Åland</ksamsok:name>
-        <ksamsok:name xml:lang="en">Aland Islands</ksamsok:name>
+        <ksamsok:name xml:lang="en">Åland</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/661882</rdfs:seeAlso>
         <ksamsok:alpha2>ax</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>ala</ksamsok:alpha3>
+        <ksamsok:number>248</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#az">
@@ -175,11 +176,12 @@
         <ksamsok:alpha2>az</ksamsok:alpha2>
         <ksamsok:alpha3>aze</ksamsok:alpha3>
         <ksamsok:number>31</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ba">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Bosnien-Hercegovina</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Bosnien och Hercegovina</ksamsok:name>
         <ksamsok:name xml:lang="en">Bosnia and Herzegovina</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3277605</rdfs:seeAlso>
         <ksamsok:alpha2>ba</ksamsok:alpha2>
@@ -269,12 +271,12 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bl">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Saint Barthélemy</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Saint-Barthélemy</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Barthélemy</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3578476</rdfs:seeAlso>
         <ksamsok:alpha2>bl</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>blm</ksamsok:alpha3>
+        <ksamsok:number>652</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bm">
@@ -309,8 +311,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bq">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Bonaire</ksamsok:name>
-        <ksamsok:name xml:lang="en">Bonaire</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Karibiska Nederländerna</ksamsok:name>
+        <ksamsok:name xml:lang="en">Caribbean Netherlands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/7626844</rdfs:seeAlso>
         <ksamsok:alpha2>bq</ksamsok:alpha2>
         <ksamsok:alpha3>bes</ksamsok:alpha3>
@@ -330,7 +332,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bs">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bahamas</ksamsok:name>
-        <ksamsok:name xml:lang="en">Bahamas</ksamsok:name>
+        <ksamsok:name xml:lang="en">The Bahamas</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3572887</rdfs:seeAlso>
         <ksamsok:alpha2>bs</ksamsok:alpha2>
         <ksamsok:alpha3>bhs</ksamsok:alpha3>
@@ -350,7 +352,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#bv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Bouvetön</ksamsok:name>
-        <ksamsok:name xml:lang="en">Bouvet island</ksamsok:name>
+        <ksamsok:name xml:lang="en">Bouvet Island</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3371123</rdfs:seeAlso>
         <ksamsok:alpha2>bv</ksamsok:alpha2>
         <ksamsok:alpha3>bvt</ksamsok:alpha3>
@@ -369,7 +371,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#by">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Vitryssland</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Belarus</ksamsok:name>
         <ksamsok:name xml:lang="en">Belarus</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/630336</rdfs:seeAlso>
         <ksamsok:alpha2>by</ksamsok:alpha2>
@@ -400,7 +402,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kokosöarna</ksamsok:name>
-        <ksamsok:name xml:lang="en">Cocos Islands</ksamsok:name>
+        <ksamsok:name xml:lang="en">Cocos (Keeling) Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1547376</rdfs:seeAlso>
         <ksamsok:alpha2>cc</ksamsok:alpha2>
         <ksamsok:alpha3>cck</ksamsok:alpha3>
@@ -409,18 +411,18 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cd">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Kongo</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Kongo-Kinshasa</ksamsok:name>
         <ksamsok:name xml:lang="en">Democratic Republic of the Congo</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/203312</rdfs:seeAlso>
         <ksamsok:alpha2>cd</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>cod</ksamsok:alpha3>
+        <ksamsok:number>180</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Centralafrikanska republiken</ksamsok:name>
-        <ksamsok:name xml:lang="en">Central African republic</ksamsok:name>
+        <ksamsok:name xml:lang="en">Central African Republic</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/239880</rdfs:seeAlso>
         <ksamsok:alpha2>cf</ksamsok:alpha2>
         <ksamsok:alpha3>caf</ksamsok:alpha3>
@@ -490,7 +492,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kina</ksamsok:name>
-        <ksamsok:name xml:lang="en">China</ksamsok:name>
+        <ksamsok:name xml:lang="en">People's Republic of China</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1814991</rdfs:seeAlso>
         <ksamsok:alpha2>cn</ksamsok:alpha2>
         <ksamsok:alpha3>chn</ksamsok:alpha3>
@@ -530,7 +532,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Kap Verde</ksamsok:name>
-        <ksamsok:name xml:lang="en">Cape verde</ksamsok:name>
+        <ksamsok:name xml:lang="en">Cape Verde</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3374766</rdfs:seeAlso>
         <ksamsok:alpha2>cv</ksamsok:alpha2>
         <ksamsok:alpha3>cpv</ksamsok:alpha3>
@@ -539,13 +541,13 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Curacao</ksamsok:name>
-        <ksamsok:name xml:lang="en">Curacao</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Curaçao</ksamsok:name>
+        <ksamsok:name xml:lang="en">Curaçao</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/7626836</rdfs:seeAlso>
         <ksamsok:alpha2>cw</ksamsok:alpha2>
         <ksamsok:alpha3>cuw</ksamsok:alpha3>
         <ksamsok:number>531</ksamsok:number>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cx">
         <rdf:type rdf:resource="&ksamsok;Country"/>
@@ -566,6 +568,7 @@
         <ksamsok:alpha3>cyp</ksamsok:alpha3>
         <ksamsok:number>196</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#cz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
@@ -666,10 +669,11 @@
         <ksamsok:alpha3>egy</ksamsok:alpha3>
         <ksamsok:number>818</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#eh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Västsahara</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Sahariska arabiska demokratiska republiken</ksamsok:name>
         <ksamsok:name xml:lang="en">Western Sahara</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2461445</rdfs:seeAlso>
         <ksamsok:alpha2>eh</ksamsok:alpha2>
@@ -704,7 +708,7 @@
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/337996</rdfs:seeAlso>
         <ksamsok:alpha2>et</ksamsok:alpha2>
         <ksamsok:alpha3>eth</ksamsok:alpha3>
-        <ksamsok:number>210</ksamsok:number>
+        <ksamsok:number>231</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fi">
@@ -739,8 +743,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#fm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Mikronesiens federerade stater</ksamsok:name>
-        <ksamsok:name xml:lang="en">Micronesia</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Mikronesiska federationen</ksamsok:name>
+        <ksamsok:name xml:lang="en">Federated States of Micronesia</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2081918</rdfs:seeAlso>
         <ksamsok:alpha2>fm</ksamsok:alpha2>
         <ksamsok:alpha3>fsm</ksamsok:alpha3>
@@ -805,6 +809,7 @@
         <ksamsok:alpha2>ge</ksamsok:alpha2>
         <ksamsok:alpha3>geo</ksamsok:alpha3>
         <ksamsok:number>268</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gf">
@@ -823,8 +828,8 @@
         <ksamsok:name xml:lang="en">Guernsey</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3042362</rdfs:seeAlso>
         <ksamsok:alpha2>gg</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>ggy</ksamsok:alpha3>
+        <ksamsok:number>831</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gh">
@@ -860,7 +865,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Gambia</ksamsok:name>
-        <ksamsok:name xml:lang="en">Gambia</ksamsok:name>
+        <ksamsok:name xml:lang="en">The Gambia</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2413451</rdfs:seeAlso>
         <ksamsok:alpha2>gm</ksamsok:alpha2>
         <ksamsok:alpha3>gmb</ksamsok:alpha3>
@@ -913,8 +918,8 @@
         <ksamsok:name xml:lang="en">South Georgia and the South Sandwich Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3474415</rdfs:seeAlso>
         <ksamsok:alpha2>gs</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>sgs</ksamsok:alpha3>
+        <ksamsok:number>239</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gt">
@@ -939,7 +944,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#gw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Guinea Bissau</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Guinea-Bissau</ksamsok:name>
         <ksamsok:name xml:lang="en">Guinea-Bissau</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2372248</rdfs:seeAlso>
         <ksamsok:alpha2>gw</ksamsok:alpha2>
@@ -969,8 +974,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#hm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Heard- och McDonaldsöarna</ksamsok:name>
-        <ksamsok:name xml:lang="en">Heard Island and Mcdonald Islands</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Heard- och McDonaldöarna</ksamsok:name>
+        <ksamsok:name xml:lang="en">Heard Island and McDonald Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1547314</rdfs:seeAlso>
         <ksamsok:alpha2>hm</ksamsok:alpha2>
         <ksamsok:alpha3>hmd</ksamsok:alpha3>
@@ -1026,6 +1031,7 @@
         <ksamsok:alpha3>idn</ksamsok:alpha3>
         <ksamsok:number>360</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ie">
         <rdf:type rdf:resource="&ksamsok;Country"/>
@@ -1053,8 +1059,8 @@
         <ksamsok:name xml:lang="en">Isle of Man</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3042225</rdfs:seeAlso>
         <ksamsok:alpha2>im</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>imn</ksamsok:alpha3>
+        <ksamsok:number>833</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#in">
@@ -1069,8 +1075,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#io">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Brittiska territoriet i Indiska Oceanen</ksamsok:name>
-        <ksamsok:name xml:lang="en">British Indian Ocean territory</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Brittiska territoriet i Indiska oceanen</ksamsok:name>
+        <ksamsok:name xml:lang="en">British Indian Ocean Territory</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1282588</rdfs:seeAlso>
         <ksamsok:alpha2>io</ksamsok:alpha2>
         <ksamsok:alpha3>iot</ksamsok:alpha3>
@@ -1123,8 +1129,8 @@
         <ksamsok:name xml:lang="en">Jersey</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3042142</rdfs:seeAlso>
         <ksamsok:alpha2>je</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>jey</ksamsok:alpha3>
+        <ksamsok:number>832</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#jm">
@@ -1199,7 +1205,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#km">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Comorerna</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Komorerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Comoros</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/921929</rdfs:seeAlso>
         <ksamsok:alpha2>km</ksamsok:alpha2>
@@ -1253,7 +1259,7 @@
         <ksamsok:name xml:lang="en">Cayman Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3580718</rdfs:seeAlso>
         <ksamsok:alpha2>ky</ksamsok:alpha2>
-        <ksamsok:alpha3>kym</ksamsok:alpha3>
+        <ksamsok:alpha3>cym</ksamsok:alpha3>
         <ksamsok:number>136</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
@@ -1265,6 +1271,7 @@
         <ksamsok:alpha2>kz</ksamsok:alpha2>
         <ksamsok:alpha3>kaz</ksamsok:alpha3>
         <ksamsok:number>398</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#la">
@@ -1420,11 +1427,11 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Saint Martin</ksamsok:name>
-        <ksamsok:name xml:lang="en">Saint Martin</ksamsok:name>
+        <ksamsok:name xml:lang="en">Saint Martin (French part)</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3578421</rdfs:seeAlso>
         <ksamsok:alpha2>mf</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>maf</ksamsok:alpha3>
+        <ksamsok:number>663</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mg">
@@ -1449,8 +1456,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Makedonien</ksamsok:name>
-        <ksamsok:name xml:lang="en">Macedonia</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Nordmakedonien</ksamsok:name>
+        <ksamsok:name xml:lang="en">North Macedonia</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/718075</rdfs:seeAlso>
         <ksamsok:alpha2>mk</ksamsok:alpha2>
         <ksamsok:alpha3>mkd</ksamsok:alpha3>
@@ -1469,7 +1476,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Burma (Myanmar)</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Myanmar</ksamsok:name>
         <ksamsok:name xml:lang="en">Myanmar</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1327865</rdfs:seeAlso>
         <ksamsok:alpha2>mm</ksamsok:alpha2>
@@ -1489,8 +1496,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#mo">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Macau</ksamsok:name>
-        <ksamsok:name xml:lang="en">Macao</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Macao</ksamsok:name>
+        <ksamsok:name xml:lang="en">Macau</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1821275</rdfs:seeAlso>
         <ksamsok:alpha2>mo</ksamsok:alpha2>
         <ksamsok:alpha3>mac</ksamsok:alpha3>
@@ -1501,7 +1508,7 @@
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Nordmarianerna</ksamsok:name>
         <ksamsok:name xml:lang="en">Northern Mariana Islands</ksamsok:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4041467</rdfs:seeAlso>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4041468</rdfs:seeAlso>
         <ksamsok:alpha2>mp</ksamsok:alpha2>
         <ksamsok:alpha3>mnp</ksamsok:alpha3>
         <ksamsok:number>580</ksamsok:number>
@@ -1745,6 +1752,7 @@
         <ksamsok:alpha2>pa</ksamsok:alpha2>
         <ksamsok:alpha3>pan</ksamsok:alpha3>
         <ksamsok:number>591</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#sa"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pe">
@@ -1809,7 +1817,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Saint Pierre och Miquelon</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Saint-Pierre och Miquelon</ksamsok:name>
         <ksamsok:name xml:lang="en">Saint Pierre and Miquelon</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3424932</rdfs:seeAlso>
         <ksamsok:alpha2>pm</ksamsok:alpha2>
@@ -1819,8 +1827,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pn">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Pitcairn</ksamsok:name>
-        <ksamsok:name xml:lang="en">Pitcairn</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Pitcairnöarna</ksamsok:name>
+        <ksamsok:name xml:lang="en">Pitcairn Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4030699</rdfs:seeAlso>
         <ksamsok:alpha2>pn</ksamsok:alpha2>
         <ksamsok:alpha3>pcn</ksamsok:alpha3>
@@ -1839,12 +1847,12 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ps">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Palestinska självstyret</ksamsok:name>
-        <ksamsok:name xml:lang="en">Palestinian Territory</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Palestina</ksamsok:name>
+        <ksamsok:name xml:lang="en">State of Palestine</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6254930</rdfs:seeAlso>
         <ksamsok:alpha2>ps</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
+        <ksamsok:alpha3>pse</ksamsok:alpha3>
+        <ksamsok:number>275</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#pt">
@@ -1889,8 +1897,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#re">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Reunion</ksamsok:name>
-        <ksamsok:name xml:lang="en">Reunion</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Réunion</ksamsok:name>
+        <ksamsok:name xml:lang="en">Réunion</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/935317</rdfs:seeAlso>
         <ksamsok:alpha2>re</ksamsok:alpha2>
         <ksamsok:alpha3>reu</ksamsok:alpha3>
@@ -1903,7 +1911,7 @@
         <ksamsok:name xml:lang="en">Romania</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/798549</rdfs:seeAlso>
         <ksamsok:alpha2>ro</ksamsok:alpha2>
-        <ksamsok:alpha3>rom</ksamsok:alpha3>
+        <ksamsok:alpha3>rou</ksamsok:alpha3>
         <ksamsok:number>642</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
@@ -1926,6 +1934,7 @@
         <ksamsok:alpha3>rus</ksamsok:alpha3>
         <ksamsok:number>643</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#rw">
         <rdf:type rdf:resource="&ksamsok;Country"/>
@@ -1974,7 +1983,7 @@
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/366755</rdfs:seeAlso>
         <ksamsok:alpha2>sd</ksamsok:alpha2>
         <ksamsok:alpha3>sdn</ksamsok:alpha3>
-        <ksamsok:number>736</ksamsok:number>
+        <ksamsok:number>729</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#se">
@@ -1999,8 +2008,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sh">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Sankta Helena</ksamsok:name>
-        <ksamsok:name xml:lang="en">Saint Helena</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Sankta Helena, Ascension och Tristan da Cunha</ksamsok:name>
+        <ksamsok:name xml:lang="en">Saint Helena, Ascension and Tristan da Cunha</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3370751</rdfs:seeAlso>
         <ksamsok:alpha2>sh</ksamsok:alpha2>
         <ksamsok:alpha3>shn</ksamsok:alpha3>
@@ -2100,7 +2109,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#st">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">São Tomé och Príncipe</ksamsok:name>
-        <ksamsok:name xml:lang="en">Sao Tome and Principe</ksamsok:name>
+        <ksamsok:name xml:lang="en">São Tomé and Príncipe</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/2410758</rdfs:seeAlso>
         <ksamsok:alpha2>st</ksamsok:alpha2>
         <ksamsok:alpha3>stp</ksamsok:alpha3>
@@ -2110,7 +2119,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sv">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">El Salvador</ksamsok:name>
-        <ksamsok:name xml:lang="en">El salvador</ksamsok:name>
+        <ksamsok:name xml:lang="en">El Salvador</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3585968</rdfs:seeAlso>
         <ksamsok:alpha2>sv</ksamsok:alpha2>
         <ksamsok:alpha3>slv</ksamsok:alpha3>
@@ -2140,7 +2149,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#sz">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Swaziland</ksamsok:name>
-        <ksamsok:name xml:lang="en">Swaziland</ksamsok:name>
+        <ksamsok:name xml:lang="en">Eswatini</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/934841</rdfs:seeAlso>
         <ksamsok:alpha2>sz</ksamsok:alpha2>
         <ksamsok:alpha3>swz</ksamsok:alpha3>
@@ -2149,7 +2158,7 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tc">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Turks och Caicosöarna</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Turks- och Caicosöarna</ksamsok:name>
         <ksamsok:name xml:lang="en">Turks and Caicos Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3576916</rdfs:seeAlso>
         <ksamsok:alpha2>tc</ksamsok:alpha2>
@@ -2169,12 +2178,13 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tf">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Franska södra territorierna</ksamsok:name>
-        <ksamsok:name xml:lang="en">French Southern Territories</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Franska sydterritorierna</ksamsok:name>
+        <ksamsok:name xml:lang="en">French Southern and Antarctic Lands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1546748</rdfs:seeAlso>
         <ksamsok:alpha2>tf</ksamsok:alpha2>
         <ksamsok:alpha3>atf</ksamsok:alpha3>
         <ksamsok:number>260</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#af"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#an"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tg">
@@ -2223,9 +2233,9 @@
         <ksamsok:name xml:lang="en">East Timor</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/1966436</rdfs:seeAlso>
         <ksamsok:alpha2>tl</ksamsok:alpha2>
-        <ksamsok:alpha3/>
-        <ksamsok:number/>
-        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
+        <ksamsok:alpha3>tls</ksamsok:alpha3>
+        <ksamsok:number>626</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tm">
         <rdf:type rdf:resource="&ksamsok;Country"/>
@@ -2265,6 +2275,7 @@
         <ksamsok:alpha2>tr</ksamsok:alpha2>
         <ksamsok:alpha3>tur</ksamsok:alpha3>
         <ksamsok:number>792</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#as"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#tt">
@@ -2329,23 +2340,25 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#um">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">USA:s yttre öar</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Förenta staternas mindre öar i Oceanien och Västindien</ksamsok:name>
         <ksamsok:name xml:lang="en">United States Minor Outlying Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/5854968</rdfs:seeAlso>
         <ksamsok:alpha2>um</ksamsok:alpha2>
         <ksamsok:alpha3>umi</ksamsok:alpha3>
         <ksamsok:number>581</ksamsok:number>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#us">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">USA</ksamsok:name>
-        <ksamsok:name xml:lang="en">United States</ksamsok:name>
+        <ksamsok:name xml:lang="en">United States of America</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/6252001</rdfs:seeAlso>
         <ksamsok:alpha2>us</ksamsok:alpha2>
         <ksamsok:alpha3>usa</ksamsok:alpha3>
         <ksamsok:number>840</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#na"/>
+        <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#uy">
         <rdf:type rdf:resource="&ksamsok;Country"/>
@@ -2370,7 +2383,7 @@
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#va">
         <rdf:type rdf:resource="&ksamsok;Country"/>
         <ksamsok:name xml:lang="sv">Vatikanstaten</ksamsok:name>
-        <ksamsok:name xml:lang="en">Vatican</ksamsok:name>
+        <ksamsok:name xml:lang="en">Vatican City</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/3164670</rdfs:seeAlso>
         <ksamsok:alpha2>va</ksamsok:alpha2>
         <ksamsok:alpha3>vat</ksamsok:alpha3>
@@ -2419,8 +2432,8 @@
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#vi">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Jungfruöarna USA</ksamsok:name>
-        <ksamsok:name xml:lang="en">U.S. Virgin Islands</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Amerikanska Jungfruöarna</ksamsok:name>
+        <ksamsok:name xml:lang="en">United States Virgin Islands</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/4796775</rdfs:seeAlso>
         <ksamsok:alpha2>vi</ksamsok:alpha2>
         <ksamsok:alpha3>vir</ksamsok:alpha3>
@@ -2457,14 +2470,13 @@
         <ksamsok:number>882</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#oc"/>
     </owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#XK">
+    <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#xk">
         <rdf:type rdf:resource="&ksamsok;Country"/>
-        <ksamsok:name xml:lang="sv">Republiken Kosovo</ksamsok:name>
+        <ksamsok:name xml:lang="sv">Kosovo</ksamsok:name>
         <ksamsok:name xml:lang="en">Kosovo</ksamsok:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://sws.geonames.org/831053</rdfs:seeAlso>
         <ksamsok:alpha2>xk</ksamsok:alpha2>
         <ksamsok:alpha3>xkx</ksamsok:alpha3>
-        <ksamsok:number>0</ksamsok:number>
         <ksamsok:continent rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/continent#eu"/>
     </owl:NamedIndividual>
     <owl:NamedIndividual rdf:about="http://kulturarvsdata.se/resurser/aukt/geo/country#ye">
