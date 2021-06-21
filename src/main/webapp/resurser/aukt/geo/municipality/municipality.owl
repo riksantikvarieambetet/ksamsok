@@ -94,6 +94,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0114">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Upplands Väsby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2666237/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499425"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -104,6 +106,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0115">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vallentuna</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665451/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501526"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -114,6 +118,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0117">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Österåker</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2685981/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q117728"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -124,6 +130,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0120">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Värmdö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2664880/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q493841"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -134,6 +142,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0123">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Järfälla</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2703292/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q301259"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -144,6 +154,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0125">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ekerö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2716579/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q492614"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -154,6 +166,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0126">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Huddinge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2704619/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q492575"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -164,6 +178,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0127">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Botkyrka</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2720114/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q113718"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -174,6 +190,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0128">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Salem</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2680623/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q516080"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -184,6 +202,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0136">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Haninge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2707952/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q113692"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -194,6 +214,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0138">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tyresö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2666778/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q113730"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -204,6 +226,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0139">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Upplands-Bro</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2666240/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q113673"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -214,6 +238,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0140">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nykvarn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3337442/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499460"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -224,6 +250,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0160">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Täby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2669772/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q493066"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -234,6 +262,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0162">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Danderyd</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2717999/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q113679"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -244,6 +274,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0163">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sollentuna</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2675406/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503746"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -254,6 +286,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0180">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Stockholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2673723/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q506250"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -264,6 +298,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0181">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Södertälje</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2676174/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q516336"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -274,6 +310,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0182">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nacka</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2690578/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q946647"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -284,6 +322,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0183">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sundbyberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2670878/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q972564"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -294,6 +334,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0184">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Solna</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2675396/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q109010"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -304,6 +346,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0186">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lidingö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2696332/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q3120654"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -314,6 +358,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0187">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vaxholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2663537/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q500090"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -324,6 +370,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0188">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Norrtälje</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2688248/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q214048"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -334,6 +382,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0191">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sigtuna</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2679300/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q216915"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -344,6 +394,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0192">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nynäshamn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2687635/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505090"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#01"/>
     </owl:NamedIndividual>
     
@@ -354,6 +406,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0305">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Håbo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2709491/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511253"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -364,6 +418,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0319">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Älvkarleby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726284/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q59858"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -374,6 +430,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0330">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Knivsta</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3337384/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504465"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -384,6 +442,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0331">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Heby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2707055/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q516308"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -394,6 +454,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0360">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tierp</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2669097/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q510198"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -404,6 +466,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0380">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Uppsala</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2666219/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q59091"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -414,6 +478,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0381">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Enköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2716165/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509568"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -424,6 +490,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0382">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Östhammar</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2685697/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q59093"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#03"/>
     </owl:NamedIndividual>
     
@@ -434,6 +502,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0428">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vingåker</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2662828/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q249378"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -444,6 +514,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0461">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gnesta</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3315140/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q239332"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -454,6 +526,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0480">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nyköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2687698/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q500267"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -464,6 +538,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0481">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Oxelösund</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2684652/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505246"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -474,6 +550,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0482">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Flen</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2714388/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q27982"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -484,6 +562,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0483">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Katrineholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2701221/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q508140"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -494,6 +574,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0484">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Eskilstuna</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715951/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503144"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -504,6 +586,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0486">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Strängnäs</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2671389/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501532"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -514,6 +598,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0488">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Trosa</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3315141/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505064"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#04"/>
     </owl:NamedIndividual>
     
@@ -524,6 +610,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0509">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ödeshög</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2687419/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q293970"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -534,6 +622,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0512">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ydre</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2662215/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515699"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -544,6 +634,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0513">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kinda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2700854/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515299"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -554,6 +646,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0560">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Boxholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2720036/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509514"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -564,6 +658,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0561">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Åtvidaberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2724320/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q271340"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -574,6 +670,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0562">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Finspång</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2714901/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503180"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -584,6 +682,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0563">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Valdemarsvik</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665672/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509997"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -594,6 +694,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0580">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Linköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2694759/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499410"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -604,6 +706,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0581">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Norrköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2688367/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504676"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -614,6 +718,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0582">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Söderköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2676214/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515680"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -624,6 +730,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0583">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Motala</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2690959/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q508108"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -634,6 +742,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0584">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vadstena</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665901/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515969"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -644,6 +754,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0586">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mjölby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2691742/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q267030"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#05"/>
     </owl:NamedIndividual>
     
@@ -654,6 +766,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0604">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Aneby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726004/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503167"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -664,6 +778,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0617">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gnosjö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2711789/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509609"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -674,6 +790,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0642">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mullsjö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2690899/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505076"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -684,6 +802,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0643">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Habo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2709492/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503198"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -694,6 +814,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0662">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gislaved</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2712044/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505259"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -704,6 +826,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0665">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vaggeryd</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665856/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q605329"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -714,6 +838,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0680">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Jönköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2702977/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504689"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -724,6 +850,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0682">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nässjö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2690167/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505096"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -734,6 +862,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0683">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Värnamo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2664852/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q280562"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -744,6 +874,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0684">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sävsjö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2679696/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505239"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -754,6 +886,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0685">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vetlanda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2663292/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505052"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -764,6 +898,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0686">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Eksjö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2716433/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q512035"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -774,6 +910,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0687">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tranås</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2667625/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505071"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#06"/>
     </owl:NamedIndividual>
     
@@ -784,6 +922,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0760">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Uppvidinge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2666201/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515505"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -794,6 +934,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0761">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lessebo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2696471/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509488"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -804,6 +946,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0763">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tingsryd</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2669018/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515491"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -814,6 +958,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0764">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Alvesta</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726306/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q182007"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -824,6 +970,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0765">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Älmhult</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726568/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q254799"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -834,6 +982,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0767">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Markaryd</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2692595/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q240574"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -844,6 +994,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0780">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Växjö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2663535/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q500217"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -854,6 +1006,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0781">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ljungby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2694551/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504235"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#07"/>
     </owl:NamedIndividual>
     
@@ -864,6 +1018,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0821">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Högsby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2705716/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q510233"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -874,6 +1030,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0834">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Torsås</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2667902/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515551"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -884,6 +1042,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0840">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mörbylånga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2691347/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514756"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -894,6 +1054,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0860">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hultsfred</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2704397/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q512002"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -904,6 +1066,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0861">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mönsterås</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2691406/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515250"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -914,6 +1078,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0862">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Emmaboda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2716280/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509452"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -924,6 +1090,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0880">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kalmar</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2702260/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q508153"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -934,6 +1102,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0881">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nybro</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2687897/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515318"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -944,6 +1114,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0882">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Oskarshamn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2686161/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505006"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -954,6 +1126,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0883">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Västervik</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2664201/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515477"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -964,6 +1138,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0884">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vimmerby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2662880/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505057"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -974,6 +1150,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0885">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Borgholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2720436/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509546"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#08"/>
     </owl:NamedIndividual>
     
@@ -984,6 +1162,8 @@
     <owl:NamedIndividual rdf:about="&municipality;0980">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gotland</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2711509/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q374794"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#09"/>
     </owl:NamedIndividual>
     
@@ -994,6 +1174,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1060">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Olofström</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2687061/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504257"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
     </owl:NamedIndividual>
     
@@ -1004,6 +1186,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1080">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Karlskrona</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2701712/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1128384"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
     </owl:NamedIndividual>
     
@@ -1014,6 +1198,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1081">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ronneby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2681821/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515373"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
     </owl:NamedIndividual>
     
@@ -1024,6 +1210,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1082">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Karlshamn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2701725/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q510223"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
     </owl:NamedIndividual>
     
@@ -1034,6 +1222,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1083">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sölvesborg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2675364/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515409"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#10"/>
     </owl:NamedIndividual>
     
@@ -1044,6 +1234,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1214">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Svalöv</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2670540/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504227"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1054,6 +1246,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1230">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Staffanstorp</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2674647/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504609"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1064,6 +1258,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1231">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Burlöv</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2718706/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q186662"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1074,6 +1270,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1233">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vellinge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2663398/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511338"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1084,6 +1282,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1256">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Östra Göinge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2685543/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q307370"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1094,6 +1294,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1257">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Örkelljunga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2686595/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q297936"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1104,6 +1306,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1260">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Bjuv</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2721533/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511310"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1114,6 +1318,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1261">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kävlinge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2701094/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q513370"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1124,6 +1330,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1262">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lomma</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2694260/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q427991"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1134,6 +1342,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1263">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Svedala</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2670127/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515706"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1144,6 +1354,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1264">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Skurup</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2677024/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515266"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1154,6 +1366,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1265">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sjöbo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2678902/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504601"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1164,6 +1378,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1266">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hörby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2705046/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504619"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1174,6 +1390,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1267">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Höör</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2705054/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q266401"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1184,6 +1402,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1270">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tomelilla</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2668364/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515519"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1194,6 +1414,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1272">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Bromölla</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2719105/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514830"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1204,6 +1426,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1273">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Osby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2686197/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504594"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1214,6 +1438,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1275">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Perstorp</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2684202/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504249"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1224,6 +1450,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1276">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Klippan</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2700483/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504614"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1234,6 +1462,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1277">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Åstorp</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2724424/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q201813"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1244,6 +1474,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1278">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Båstad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2723286/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499464"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1254,6 +1486,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1280">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Malmö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2692965/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503361"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1264,6 +1498,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1281">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lund</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2693555/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505018"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1274,6 +1510,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1282">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Landskrona</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2697719/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q502298"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1284,6 +1522,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1283">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Helsingborg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2706766/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q487648"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1294,6 +1534,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1284">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Höganäs</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2706001/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505013"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1304,6 +1546,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1285">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Eslöv</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715945/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1130264"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1314,6 +1558,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1286">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ystad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2662148/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505102"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1324,6 +1570,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1287">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Trelleborg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2667401/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504219"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1334,6 +1582,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1290">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kristianstad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2699308/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q498857"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1344,6 +1594,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1291">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Simrishamn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2679106/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504626"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1354,6 +1606,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1292">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ängelholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725898/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q255206"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1364,6 +1618,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1293">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hässleholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2707396/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q508125"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#12"/>
     </owl:NamedIndividual>
     
@@ -1374,6 +1630,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1315">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hylte</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2704007/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q498477"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
     </owl:NamedIndividual>
     
@@ -1384,6 +1642,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1380">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Halmstad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2708363/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504692"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
     </owl:NamedIndividual>
     
@@ -1394,6 +1654,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1381">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Laholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2697859/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q487502"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
     </owl:NamedIndividual>
     
@@ -1404,6 +1666,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1382">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Falkenberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715572/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q508168"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
     </owl:NamedIndividual>
     
@@ -1414,6 +1678,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1383">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Varberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2664994/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q179180"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
     </owl:NamedIndividual>
     
@@ -1424,6 +1690,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1384">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kungsbacka</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2698726/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499380"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#13"/>
     </owl:NamedIndividual>
     
@@ -1434,6 +1702,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1401">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Härryda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2707608/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q500125"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1444,6 +1714,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1402">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Partille</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2684394/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q125222"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1454,6 +1726,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1407">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Öckerö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2687508/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q293928"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1464,6 +1738,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1415">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Stenungsund</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2673874/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511438"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1474,6 +1750,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1419">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tjörn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2668674/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501448"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1484,6 +1762,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1421">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Orust</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2686247/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q338752"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1494,6 +1774,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1427">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sotenäs</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2674968/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501420"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1504,6 +1786,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1430">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Munkedal</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2690840/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q389040"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1514,6 +1798,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1435">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tanum</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2669414/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511228"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1524,6 +1810,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1438">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Dals-Ed</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2718152/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503132"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1534,6 +1822,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1439">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Färgelanda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715350/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499441"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1544,6 +1834,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1440">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ale</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726973/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q498470"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1554,6 +1846,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1441">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lerum</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2696500/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503188"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1564,6 +1858,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1442">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vårgårda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2664938/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511297"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1574,6 +1870,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1443">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Bollebygd</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3337401/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503102"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1584,6 +1882,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1444">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Grästorp</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2710884/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503148"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1594,6 +1894,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1445">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Essunga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715929/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503127"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1604,6 +1906,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1446">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Karlsborg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2701754/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499435"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1614,6 +1918,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1447">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gullspång</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2709910/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503193"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1624,6 +1930,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1452">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tranemo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2667598/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501479"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1634,6 +1942,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1460">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Bengtsfors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2723078/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q267462"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1644,6 +1954,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1461">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mellerud</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2692047/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501438"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1654,6 +1966,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1462">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lilla Edet</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2696058/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511241"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1664,6 +1978,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1463">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mark</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2692570/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q500153"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1674,6 +1990,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1465">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Svenljunga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2670043/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501487"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1684,6 +2002,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1466">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Herrljunga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2706522/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503111"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1694,6 +2014,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1470">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vara</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665011/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501428"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1704,6 +2026,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1471">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Götene</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2711525/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511281"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1714,6 +2038,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1472">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tibro</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2669117/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501432"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1724,6 +2050,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1473">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Töreboda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2668246/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501470"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1734,6 +2062,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1480">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Göteborg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2711533/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q52502"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1744,6 +2074,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1481">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mölndal</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2691457/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511270"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1754,6 +2086,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1482">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kungälv</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2698738/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511394"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1764,6 +2098,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1484">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lysekil</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2693300/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503173"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1774,6 +2110,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1485">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Uddevalla</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2666669/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501442"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1784,6 +2122,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1486">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Strömstad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2671222/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501424"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1794,6 +2134,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1487">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vänersborg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665170/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511426"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1804,6 +2146,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1488">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Trollhättan</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2667302/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q28532"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1814,6 +2158,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1489">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Alingsås</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726755/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503162"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1824,6 +2170,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1490">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Borås</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2720496/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q894327"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1834,6 +2182,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1491">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ulricehamn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2666492/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q382808"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1844,6 +2194,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1492">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Åmål</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726237/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q271079"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1854,6 +2206,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1493">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mariestad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2692611/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q427422"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1864,6 +2218,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1494">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lidköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2696328/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515358"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1874,6 +2230,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1495">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Skara</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2678205/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499421"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1884,6 +2242,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1496">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Skövde</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2677233/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501452"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1894,6 +2254,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1497">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hjo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2706183/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q428749"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1904,6 +2266,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1498">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Tidaholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2669112/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501459"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1914,6 +2278,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1499">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Falköping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715566/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503214"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#14"/>
     </owl:NamedIndividual>
     
@@ -1924,6 +2290,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1715">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kil</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2700878/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499393"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -1934,6 +2302,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1730">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Eda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2716958/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q498447"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -1944,6 +2314,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1737">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Torsby</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2667872/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q510135"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -1954,6 +2326,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1760">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Storfors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2672047/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505936"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -1964,6 +2338,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1761">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hammarö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2708180/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499359"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -1974,6 +2350,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1762">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Munkfors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2690828/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501494"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -1984,6 +2362,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1763">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Forshaga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2713969/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499385"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -1994,6 +2374,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1764">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Grums</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2710341/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503122"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2004,6 +2386,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1765">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Årjäng</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725378/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q2777887"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2014,6 +2398,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1766">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sunne</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2670703/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501205"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2024,6 +2410,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1780">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Karlstad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2701679/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q498453"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2034,6 +2422,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1781">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kristinehamn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2699281/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q510364"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2044,6 +2434,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1782">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Filipstad</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715080/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503204"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2054,6 +2446,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1783">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hagfors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2709213/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511407"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2064,6 +2458,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1784">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Arvika</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725122/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511365"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2074,6 +2470,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1785">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Säffle</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2680762/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q511326"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#17"/>
     </owl:NamedIndividual>
     
@@ -2084,6 +2482,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1814">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lekeberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/3337402/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515282"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2094,6 +2494,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1860">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Laxå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2696803/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515326"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2104,6 +2506,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1861">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hallsberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2708508/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q508180"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2114,6 +2518,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1862">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Degerfors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2717881/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509469"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2124,6 +2530,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1863">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hällefors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2708664/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q220881"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2134,6 +2542,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1864">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ljusnarsberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2694483/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514739"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2144,6 +2554,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1880">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Örebro</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2686656/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q297718"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2154,6 +2566,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1881">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kumla</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2698753/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504988"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2164,6 +2578,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1882">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Askersund</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2724776/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509501"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2174,6 +2590,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1883">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Karlskoga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2701714/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509634"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2184,6 +2602,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1884">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nora</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2689465/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q285894"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2194,6 +2614,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1885">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lindesberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2694892/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514858"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#18"/>
     </owl:NamedIndividual>
     
@@ -2204,6 +2626,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1904">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Skinnskatteberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2677592/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q37462"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2214,6 +2638,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1907">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Surahammar</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2670612/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q34078"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2224,6 +2650,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1960">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kungsör</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2698680/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q47169"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2234,6 +2662,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1961">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hallstahammar</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2708428/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q47019"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2244,6 +2674,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1962">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Norberg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2689450/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q37404"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2254,6 +2686,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1980">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Västerås</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2664441/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q34550"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2264,6 +2698,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1981">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sala</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2680657/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q37399"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2274,6 +2710,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1982">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Fagersta</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715650/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q47018"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2284,6 +2722,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1983">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Köping</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2699780/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q42009"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2294,6 +2734,8 @@
     <owl:NamedIndividual rdf:about="&municipality;1984">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Arboga</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725469/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q431271"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#19"/>
     </owl:NamedIndividual>
     
@@ -2304,6 +2746,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2021">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vansbro</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665061/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501551"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2314,6 +2758,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2023">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Malung-Sälen</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2692868/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504266"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2324,6 +2770,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2026">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gagnef</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2713217/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q2642771"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2334,6 +2782,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2029">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Leksand</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2696649/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509651"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2344,6 +2794,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2031">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Rättvik</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2682993/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504244"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2354,6 +2806,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2034">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Orsa</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2686378/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504630"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2364,6 +2818,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2039">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Älvdalen</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2726330/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q123855"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2374,6 +2830,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2061">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Smedjebacken</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2676585/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505046"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2384,6 +2842,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2062">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Mora</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2691395/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504239"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2394,6 +2854,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2080">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Falun</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2715458/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501545"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2404,6 +2866,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2081">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Borlänge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2720382/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503209"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2414,6 +2878,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2082">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Säter</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2679832/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q1345439"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2424,6 +2890,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2083">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hedemora</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2706981/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q507684"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2434,6 +2902,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2084">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Avesta</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2724230/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q500071"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2444,6 +2914,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2085">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ludvika</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2693757/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q503184"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#20"/>
     </owl:NamedIndividual>
     
@@ -2454,6 +2926,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2101">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ockelbo</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2687516/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505109"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2464,6 +2938,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2104">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hofors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2706055/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q62464"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2474,6 +2950,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2121">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ovanåker</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2685092/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q505085"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2484,6 +2962,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2132">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nordanstig</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2689383/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514805"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2494,6 +2974,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2161">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ljusdal</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2694502/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515235"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2504,6 +2986,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2180">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gävle</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2712409/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q510010"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2514,6 +2998,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2181">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sandviken</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2680068/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q149539"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2524,6 +3010,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2182">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Söderhamn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2676222/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q145835"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2534,6 +3022,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2183">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Bollnäs</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2720678/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q62469"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2544,6 +3034,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2184">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Hudiksvall</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2704611/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q29963"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#21"/>
     </owl:NamedIndividual>
     
@@ -2554,6 +3046,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2260">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ånge</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725906/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q271107"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
     </owl:NamedIndividual>
     
@@ -2564,6 +3058,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2262">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Timrå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2669046/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504983"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
     </owl:NamedIndividual>
     
@@ -2574,6 +3070,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2280">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Härnösand</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2707682/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q209634"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
     </owl:NamedIndividual>
     
@@ -2584,6 +3082,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2281">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sundsvall</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2670776/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504994"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
     </owl:NamedIndividual>
     
@@ -2594,6 +3094,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2282">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kramfors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2699393/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514815"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
     </owl:NamedIndividual>
     
@@ -2604,6 +3106,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2283">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sollefteå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2675415/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q221990"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
     </owl:NamedIndividual>
     
@@ -2614,6 +3118,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2284">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Örnsköldsvik</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2686466/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q298003"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#22"/>
     </owl:NamedIndividual>
     
@@ -2624,6 +3130,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2303">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Ragunda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2683605/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515342"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2634,6 +3142,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2305">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Bräcke</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2720000/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504261"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2644,6 +3154,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2309">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Krokom</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2699175/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514707"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2654,6 +3166,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2313">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Strömsund</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2671219/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514770"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2664,6 +3178,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2321">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Åre</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725422/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q271153"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2674,6 +3190,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2326">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Berg</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2722709/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q845930"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2684,6 +3202,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2361">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Härjedalen</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2707737/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q513421"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2694,6 +3214,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2380">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Östersund</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2685747/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q306789"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#23"/>
     </owl:NamedIndividual>
     
@@ -2704,6 +3226,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2401">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Nordmaling</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2689334/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q514722"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2714,6 +3238,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2403">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Bjurholm</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2721584/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q376003"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2724,6 +3250,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2404">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vindeln</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2662850/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q504505"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2734,6 +3262,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2409">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Robertsfors</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/603302/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q507670"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2744,6 +3274,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2417">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Norsjö</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2688170/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q507644"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2754,6 +3286,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2418">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Malå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2693147/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501540"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2764,6 +3298,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2421">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Storuman</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2671529/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499415"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2774,6 +3310,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2422">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Sorsele</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2675078/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q501463"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2784,6 +3322,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2425">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Dorotea</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2717400/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q132334"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2794,6 +3334,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2460">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vännäs</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2665089/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q500210"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2804,6 +3346,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2462">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Vilhelmina</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2662934/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q515861"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2814,6 +3358,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2463">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Åsele</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2724956/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q271274"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2824,6 +3370,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2480">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Umeå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/602149/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q507709"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2834,6 +3382,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2481">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Lycksele</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2693346/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q948462"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2844,6 +3394,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2482">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Skellefteå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/602912/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q430780"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#24"/>
     </owl:NamedIndividual>
     
@@ -2854,6 +3406,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2505">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Arvidsjaur</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725134/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499404"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2864,6 +3418,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2506">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Arjeplog</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2725371/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q493855"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2874,6 +3430,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2510">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Jokkmokk</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2702996/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q512048"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2884,6 +3442,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2513">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Överkalix</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/603822/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q307569"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2894,6 +3454,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2514">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kalix</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/605387/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q117091"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2904,6 +3466,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2518">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Övertorneå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/603813/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q307603"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2914,6 +3478,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2521">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Pajala</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/603760/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q186230"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2924,6 +3490,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2523">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Gällivare</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/606084/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q493815"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2934,6 +3502,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2560">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Älvsbyn</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/606833/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q255025"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2944,6 +3514,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2580">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Luleå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/604488/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q177019"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2954,6 +3526,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2581">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Piteå</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/603569/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q507656"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2964,6 +3538,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2582">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Boden</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/606530/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q509476"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2974,6 +3550,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2583">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Haparanda</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/605857/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q510310"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
     
@@ -2984,6 +3562,8 @@
     <owl:NamedIndividual rdf:about="&municipality;2584">
         <rdf:type rdf:resource="&municipality;Municipality"/>
         <ksamsok:name>Kiruna</ksamsok:name>
+        <rdfs:seeAlso rdf:resource="https://sws.geonames.org/2700801/"/>
+        <rdfs:seeAlso rdf:resource="http://www.wikidata.org/entity/Q499474"/>
         <county rdf:resource="http://kulturarvsdata.se/resurser/aukt/geo/county#25"/>
     </owl:NamedIndividual>
 </rdf:RDF>
