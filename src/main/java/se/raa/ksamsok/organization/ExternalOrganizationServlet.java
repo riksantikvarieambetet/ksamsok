@@ -75,6 +75,11 @@ public class ExternalOrganizationServlet extends HttpServlet {
 					logger.warn("Unexpected operation " + operation + " in doPost");
 			}
 		}
-		view.forward(req, resp);
+		try {
+			view.forward(req, resp);
+		} catch (ServletException | IOException e) {
+			logger.error("Can't show external organizations", e);
+			throw e;
+		}
 	}
 }
