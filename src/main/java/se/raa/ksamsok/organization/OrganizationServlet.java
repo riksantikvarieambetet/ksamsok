@@ -42,8 +42,7 @@ public class OrganizationServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		RequestDispatcher view = req.getRequestDispatcher("serviceOrganizationAdmin.jsp");
@@ -90,7 +89,12 @@ public class OrganizationServlet extends HttpServlet {
 			}
 		}
 		req.setAttribute("orgList", organizationManager.getServiceOrganizations());
-		view.forward(req, resp);
+		try {
+			view.forward(req, resp);
+		} catch (ServletException | IOException e) {
+			logger.error("Can't show organizations", e);
+			throw e;
+		}
 	}
 
 	@Override

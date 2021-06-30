@@ -8,7 +8,7 @@ Det går att peka till Solr och Postgres som inte finns lokalt.
 
  - ksamsok-solr
  - Tomcat 7.0.82
- - Java 1.8
+ - Java 11
  - Postgres (uppsatt med `repo.postgres.sql`)
 
 ### Bygga med Gradle
