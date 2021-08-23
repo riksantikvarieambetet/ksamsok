@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("unused")
-public class Protocol_1_2_0_Test extends AbstractProtocolTest {
+public class Protocol_1_2_0_Test extends AbstractDocumentTest {
 
 	@Test
 	public void testItemMark() throws Exception {

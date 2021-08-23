@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class Protocol_1_1_Test extends AbstractProtocolTest {
+public class Protocol_1_1_Test extends AbstractDocumentTest {
 
 	@Test
 	public void testCreateDoc_1_1() throws Exception {

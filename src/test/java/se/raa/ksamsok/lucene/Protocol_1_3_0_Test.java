@@ -2,19 +2,10 @@ package se.raa.ksamsok.lucene;
 
 import org.apache.jena.rdf.model.*;
 import org.apache.solr.common.SolrInputDocument;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
-import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -27,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 @SuppressWarnings("unused")
-public class Protocol_1_3_0_Test extends AbstractProtocolTest {
+public class Protocol_1_3_0_Test extends AbstractDocumentTest {
 
 
     @Test

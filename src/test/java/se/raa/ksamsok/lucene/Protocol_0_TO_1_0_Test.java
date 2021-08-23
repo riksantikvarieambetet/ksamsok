@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class Protocol_0_TO_1_0_Test extends AbstractProtocolTest {
+public class Protocol_0_TO_1_0_Test extends AbstractDocumentTest {
 
 
 	@Test

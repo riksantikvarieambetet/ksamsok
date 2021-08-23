@@ -30,15 +30,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class SamsokContentHelperTest {
+public class SamsokContentHelperTest extends AbstractDocumentTest{
 
-	private static DocumentBuilderFactory xmlFact;
-	private static TransformerFactory xformerFact;
-	static {
-		xmlFact = DocumentBuilderFactory.newInstance();
-	    xmlFact.setNamespaceAware(true);
-	    xformerFact = TransformerFactory.newInstance();
-	}
+
 
 	@Test
 	public void testExtractInfo__0_TO_1_0() throws Exception {
@@ -563,29 +557,6 @@ public class SamsokContentHelperTest {
 					", värden är " + docValues, docValues.contains(value));
 		}
 		 */
-	}
-
-	private String loadTestFileAsString(String fileName) throws Exception {
-		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		StringWriter sw = null;
-		try {
-			// förutsätter att testfallen körs med projektkatalogen som cwd
-			// vilket normalt är fallet både från ant och i eclipse
-			Document doc = builder.parse(new File("src/test/resources/" + fileName));
-			final int initialSize = 4096;
-			Source source = new DOMSource(doc);
-			Transformer xformer = xformerFact.newTransformer();
-			xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			sw = new StringWriter(initialSize);
-			Result result = new StreamResult(sw);
-	        xformer.transform(source, result);
-	        return sw.toString();
-		} finally {
-			if (sw != null) {
-				sw.close();
-			}
-		}
 	}
 
 	@Test

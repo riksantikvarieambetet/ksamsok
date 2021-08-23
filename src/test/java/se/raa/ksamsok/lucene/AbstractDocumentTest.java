@@ -10,7 +10,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.StringWriter;
 
-public abstract class AbstractProtocolTest {
+public abstract class AbstractDocumentTest {
     static DocumentBuilderFactory xmlFact;
     static TransformerFactory xformerFact;
     static {

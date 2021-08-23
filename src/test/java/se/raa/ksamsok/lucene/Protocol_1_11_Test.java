@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("unused")
-public class Protocol_1_11_Test extends AbstractProtocolTest {
+public class Protocol_1_11_Test extends AbstractDocumentTest {
 
 /* 1.11 ändrades så att mediaLicense och mediaLicenseUrl inte är obligatoriska trots allt
     vilket gör detta testfall felaktigt, men det får ligga kvar bortkommenterat tillsammans
