@@ -8,21 +8,9 @@ import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
-import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,15 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class Protocol_1_1_Test {
-
-	private static DocumentBuilderFactory xmlFact;
-	private static TransformerFactory xformerFact;
-	static {
-		xmlFact = DocumentBuilderFactory.newInstance();
-	    xmlFact.setNamespaceAware(true);
-	    xformerFact = TransformerFactory.newInstance();
-	}
+public class Protocol_1_1_Test extends AbstractProtocolTest {
 
 	@Test
 	public void testCreateDoc_1_1() throws Exception {
@@ -338,28 +318,6 @@ public class Protocol_1_1_Test {
 		for (String value: values) {
 			assertTrue("Värdet " + value + " saknas för " + indexName +
 					", värden är " + docValues, docValues.contains(value));
-		}
-	}
-
-
-	private String loadTestFileAsString(String fileName) throws Exception {
-		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		StringWriter sw = null;
-		try {
-			Document doc = builder.parse(new File("src/test/resources/" + fileName));
-			final int initialSize = 4096;
-			Source source = new DOMSource(doc);
-			Transformer xformer = xformerFact.newTransformer();
-			xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			sw = new StringWriter(initialSize);
-			Result result = new StreamResult(sw);
-	        xformer.transform(source, result);
-			return sw.toString();
-		} finally {
-			if (sw != null) {
-				sw.close();
-			}
 		}
 	}
 

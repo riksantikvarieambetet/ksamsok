@@ -258,6 +258,8 @@ public class SamsokProtocol {
 	static final URI uri_rToPeriodName = URI.create(uriPrefixKSamsok + "toPeriodName");
 	static final URI uri_rFromPeriodId = URI.create(uriPrefixKSamsok + "fromPeriodId");
 	static final URI uri_rToPeriodId = URI.create(uriPrefixKSamsok + "toPeriodId");
+	static final URI uri_rFromPeriod = URI.create(uriPrefixKSamsok + "fromPeriod");
+	static final URI uri_rToPeriod = URI.create(uriPrefixKSamsok + "toPeriod");
 	static final URI uri_rPeriodAuth = URI.create(uriPrefixKSamsok + "periodAuth");
 	static final URI uri_rEventName = URI.create(uriPrefixKSamsok + "eventName");
 	static final URI uri_rEventAuth = URI.create(uriPrefixKSamsok + "eventAuth");

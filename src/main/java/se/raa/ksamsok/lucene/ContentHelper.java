@@ -9,6 +9,7 @@ import se.raa.ksamsok.harvest.HarvestService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,6 +101,8 @@ public abstract class ContentHelper {
 	public static final String IX_TIME = "time"; // fritext i alla tidsfält
 	public static final String IX_FROMTIME = "fromTime";
 	public static final String IX_TOTIME = "toTime";
+	public static final String IX_FROMPERIOD = "fromPeriod";
+	public static final String IX_TOPERIOD = "toPeriod";
 	public static final String IX_FROMPERIODNAME = "fromPeriodName";
 	public static final String IX_TOPERIODNAME = "toPeriodName";
 	public static final String IX_FROMPERIODID = "fromPeriodId";
@@ -443,6 +446,8 @@ public abstract class ContentHelper {
 		addIndex(IX_TOPERIODNAME, "Tidpunkt eller slut på tidsintervall, namn [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_FROMPERIODID, "Tidpunkt eller start på tidsintervall, kod [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_TOPERIODID, "Tidpunkt eller slut på tidsintervall, kod [*]", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_FROMPERIOD, "Tidpunkt eller start på tidsintervall, uri", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_TOPERIOD, "Tidpunkt eller slut på tidsintervall, uri", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_EVENTNAME, "Namn på en händelse [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.TOLOWERCASE, true, false);
@@ -762,7 +767,7 @@ public abstract class ContentHelper {
 		}
 		// sen om det (troligen) är ett kontextindex, "[contextType]_[indexName]"
 		if (indexName.indexOf("_") > 0) {
-			String[] parts = indexName.split("\\_");
+			String[] parts = indexName.split("_");
 			if (parts.length == 2) {
 				return indices.containsKey(parts[1]);
 			}
@@ -982,7 +987,6 @@ public abstract class ContentHelper {
 	 * 
 	 * @param qs querysträng
 	 * @return map med avkodade parametrar och värden
-	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException {
 		HashMap<String, String> params = new HashMap<>();
@@ -992,7 +996,7 @@ public abstract class ContentHelper {
 				String[] par = tok.nextToken().split("=");
 				if (par.length > 1 && par[1].length() > 0) {
 					if (par.length == 2) {
-						params.put(par[0], URLDecoder.decode(par[1], "UTF-8"));
+						params.put(par[0], URLDecoder.decode(par[1], StandardCharsets.UTF_8));
 					} else {
 						// vi är snälla och tillåter = okodat i parametrar för att enklare
 						// kunna testa
@@ -1001,7 +1005,7 @@ public abstract class ContentHelper {
 						for (int i = 2; i < par.length; ++i) {
 							pVal.append("=").append(par[i]);
 						}
-						params.put(par[0], URLDecoder.decode(pVal.toString(), "UTF-8"));
+						params.put(par[0], URLDecoder.decode(pVal.toString(), StandardCharsets.UTF_8));
 					}
 				}
 			}

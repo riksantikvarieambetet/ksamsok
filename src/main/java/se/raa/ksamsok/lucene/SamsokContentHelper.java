@@ -56,6 +56,7 @@ public class SamsokContentHelper extends ContentHelper {
 	public final static ProtocolNumber PROTOCOL_NUMBER_1_1 = createProtocolNumber("1.1");
 	public final static ProtocolNumber PROTOCOL_NUMBER_1_11 = createProtocolNumber("1.11");
 	public final static ProtocolNumber PROTOCOL_NUMBER_1_2_0 = createProtocolNumber("1.2.0");
+	public final static ProtocolNumber PROTOCOL_NUMBER_1_3_0 = createProtocolNumber("1.3.0");
 
 	static {
 		xmlFact = DocumentBuilderFactory.newInstance();
@@ -231,7 +232,9 @@ public class SamsokContentHelper extends ContentHelper {
 		}
 
 		// due to unfortunate circumstances, version 1.11 was released before version 1.2.0
-		if (protocolNumber.equals(PROTOCOL_NUMBER_1_2_0)) {
+		if (protocolNumber.equals(PROTOCOL_NUMBER_1_3_0)) {
+			handler = new SamsokProtocolHandler_1_3_0(model, subject);
+		} else if (protocolNumber.equals(PROTOCOL_NUMBER_1_2_0)) {
 			handler = new SamsokProtocolHandler_1_2_0(model, subject);
 		} else if (protocolNumber.equals(PROTOCOL_NUMBER_1_11)) {
 			handler = new SamsokProtocolHandler_1_11(model, subject);
