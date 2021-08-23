@@ -230,6 +230,7 @@ public class SamsokProtocol {
 	static final URI uri_rCadastralUnit = URI.create(uriPrefixKSamsok + "cadastralUnit");
 	static final URI uri_rPlaceTermId = URI.create(uriPrefixKSamsok + "placeTermId");
 	static final URI uri_rPlaceTermAuth = URI.create(uriPrefixKSamsok + "placeTermAuth");
+	static final URI uri_rPlaceTerm = URI.create(uriPrefixKSamsok + "placeTerm");
 	static final URI uri_rCountyName = URI.create(uriPrefixKSamsok + "countyName");
 	static final URI uri_rMunicipalityName = URI.create(uriPrefixKSamsok + "municipalityName");
 	static final URI uri_rProvinceName = URI.create(uriPrefixKSamsok + "provinceName");

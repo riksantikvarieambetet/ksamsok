@@ -54,6 +54,38 @@ public class Protocol_1_3_0_Test extends AbstractDocumentTest {
         assertThat(fromPeriods, not(hasItems("http://kulturarvsdata.se/raa/test/1", "http://kulturarvsdata.se/raa/test/2")));
         assertThat(fromPeriods, not(hasItem((String) null)));
         assertThat(fromPeriods, hasItems("http://kulturarvsdata.se/raa/test/3", "http://kulturarvsdata.se/raa/test/4"));
+
     }
 
+    @Test
+    public void testPlaceTerm() throws Exception {
+
+        String rdf = loadTestFileAsString("hjalm_1.3.0.rdf");
+        Model model = RDFUtil.parseModel(rdf);
+        assertNotNull("Ingen graf, fel på rdf:en?", model);
+
+        Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
+        Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
+        SimpleSelector selector = new SimpleSelector(null, rdfType, samsokEntity);
+
+        Resource s = null;
+        StmtIterator iter = model.listStatements(selector);
+        while (iter.hasNext()) {
+            if (s != null) {
+                throw new Exception("Ska bara finnas en entity i rdf-grafen");
+            }
+            s = iter.next().getSubject();
+        }
+        SamsokProtocolHandler handler = new SamsokProtocolHandler_1_3_0(model, s);
+        HarvestService service = new HarvestServiceImpl();
+        service.setId("TESTID");
+        LinkedList<String> relations = new LinkedList<>();
+        List<String> gmlGeometries = new LinkedList<>();
+        SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
+        assertNotNull("Inget doc tillbaka", doc);
+        Collection<Object> placeTerms = doc.getFieldValues(ContentHelper.IX_PLACETERM);
+        assertThat(placeTerms, hasItems("http://kulturarvsdata.se/raa/test/5", "http://kulturarvsdata.se/raa/test/6"));
+        assertThat(placeTerms, not(hasItem((String) null)));
+        assertThat(placeTerms, not(hasItems("http://kulturarvsdata.se/raa/test/1", "http://kulturarvsdata.se/raa/test/4")));
+    }
 }

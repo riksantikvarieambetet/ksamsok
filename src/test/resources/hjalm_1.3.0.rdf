@@ -47,6 +47,8 @@
     <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#use"/>
     <ns5:contextSuperType rdf:resource="http://kulturarvsdata.se/resurser/ContextSuperType#interact"/>
     <rdf:type rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
+    <ns5:placeTerm rdf:resource="http://kulturarvsdata.se/raa/test/5"/>
+    <ns5:placeTerm rdf:resource="http://kulturarvsdata.se/raa/test/6"/>
     <ns6:name>Gustav Vasa</ns6:name>
     <crm:P51F.has_former_or_current_owner rdf:resource="http://libris.kb.se/resource/auth/58087"/>
 </rdf:Description>

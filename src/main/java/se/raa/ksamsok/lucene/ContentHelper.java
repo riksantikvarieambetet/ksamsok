@@ -129,6 +129,8 @@ public abstract class ContentHelper {
 	public static final String IX_CADASTRALUNIT = "cadastralUnit";
 	public static final String IX_PLACETERMID = "placeTermId";
 	public static final String IX_PLACETERMAUTH = "placeTermAuth";
+	public static final String IX_PLACETERM = "placeTerm";
+
 	// public static final String IX_COORDINATES = "coordinates";
 
 	// personer
@@ -392,6 +394,7 @@ public abstract class ContentHelper {
 		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_PLACETERMID, "Plats-ID hos auktoritet [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_PLACETERMAUTH, "Auktoritet för plats-ID [*]", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_PLACETERM, "Plats-ID (uri)", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_CONTINENTNAME, "Kontinent [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_COUNTRYNAME, "Land, namn [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_COUNTYNAME, "Län, namn [*]", IndexType.TOLOWERCASE, true, false);

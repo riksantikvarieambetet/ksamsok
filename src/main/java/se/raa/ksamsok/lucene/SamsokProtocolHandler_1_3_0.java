@@ -3,6 +3,8 @@ package se.raa.ksamsok.lucene;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 
+import java.util.List;
+
 import static se.raa.ksamsok.lucene.ContentHelper.*;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIODNAME;
 import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
@@ -24,6 +26,14 @@ public class SamsokProtocolHandler_1_3_0 extends SamsokProtocolHandler_1_2_0 {
 
         ip.setCurrent(IX_TOPERIOD, contextTypes);
         extractValue(model, cS, getURIRef(uri_rToPeriod), ip);
+    }
+
+    protected void extractContextPlaceInformation(Resource cS, String[] contextTypes, List<String> gmlGeometries) throws Exception {
+        super.extractContextPlaceInformation(cS, contextTypes, gmlGeometries);
+
+        ip.setCurrent(IX_PLACETERM, contextTypes);
+        extractValue(model, cS, getURIRef(uri_rPlaceTerm), ip);
+
     }
 
 
