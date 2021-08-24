@@ -4,31 +4,14 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
-import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class SamsokContentHelperTest extends AbstractDocumentTest{
 
@@ -565,6 +548,10 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		assertNotNull(sph);
 		assertEquals("SamsokProtocolHandler_1_2_0", sph.getClass().getSimpleName());
 
+		sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.3.0", null, null);
+		assertNotNull(sph);
+		assertEquals("SamsokProtocolHandler_1_3_0", sph.getClass().getSimpleName());
+
 		sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.1", null, null);
 		assertNotNull(sph);
 		assertEquals("SamsokProtocolHandler_1_1", sph.getClass().getSimpleName());
@@ -576,5 +563,12 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		sph = SamsokContentHelper.getProtocolHandlerForVersion ("0.99", null, null);
 		assertNotNull(sph);
 		assertEquals("SamsokProtocolHandler_0_TO_1_0", sph.getClass().getSimpleName());
+	}
+
+	@Override
+	SamsokProtocolHandler getSamsokProtocolHandler(Model model, Resource s) {
+		// not used in this class
+		fail("Should not be used in this class");
+		return null;
 	}
 }

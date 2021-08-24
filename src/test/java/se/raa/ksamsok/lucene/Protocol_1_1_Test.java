@@ -1,11 +1,6 @@
 package se.raa.ksamsok.lucene;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import se.raa.ksamsok.harvest.HarvestService;
@@ -16,29 +11,16 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class Protocol_1_1_Test extends AbstractDocumentTest {
 
 	@Test
 	public void testCreateDoc_1_1() throws Exception {
-		SamsokContentHelper helper = new SamsokContentHelper(true);
-		HarvestService service = new HarvestServiceImpl();
-		service.setId("TESTID");
-		String xmlContent = loadTestFileAsString("hjalm_1.1.rdf");
-		SolrInputDocument doc = helper.createSolrDocument(service, xmlContent, new Date());
-		assertNotNull("Inget solr-dokument", doc);
-		// kolla system-index
-		assertEquals("Felaktigt service-id", "TESTID", doc.getFieldValue(ContentHelper.I_IX_SERVICE));
-		assertEquals("Fel identifierare", "http://kulturarvsdata.se/raa/test/1", doc.getFieldValue(ContentHelper.IX_ITEMID));
-		assertNotNull("Ingen RDF", doc.getFieldValue(ContentHelper.I_IX_RDF));
-		assertNotNull("Inget pres-block", doc.getFieldValue(ContentHelper.I_IX_PRES));
 		// specialindexet för relationer
-		Collection<Object> relations = doc.getFieldValues(ContentHelper.I_IX_RELATIONS);
+		List<String> relations = new LinkedList<>();
+		SolrInputDocument doc = getSolrInputDocument("hjalm_1.1.rdf", relations);
+
 		assertNotNull("Specialindexet för relationer saknas", relations);
 		assertEquals("Specialindexet för relationer har fel antal", 2, relations.size());
 		assertTrue("Specialindexvärde finns inte med", relations.contains("isRelatedTo|http://kulturarvsdata.se/raa/test/2"));
@@ -321,4 +303,8 @@ public class Protocol_1_1_Test extends AbstractDocumentTest {
 		}
 	}
 
+	@Override
+	SamsokProtocolHandler getSamsokProtocolHandler(Model model, Resource s) {
+		return new SamsokProtocolHandler_1_1(model, s);
+	}
 }

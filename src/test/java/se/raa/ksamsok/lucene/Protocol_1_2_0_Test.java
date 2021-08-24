@@ -1,114 +1,37 @@
 package se.raa.ksamsok.lucene;
 
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
-import se.raa.ksamsok.harvest.HarvestService;
-import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @SuppressWarnings("unused")
 public class Protocol_1_2_0_Test extends AbstractDocumentTest {
 
 	@Test
 	public void testItemMark() throws Exception {
-		String rdf = loadTestFileAsString("hjalm_1.2.0.rdf");
-		Model model = RDFUtil.parseModel(rdf);
-		assertNotNull("Ingen graf, fel på rdf:en?", model);
-
-		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
-		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
-
-		Resource s = null;
-		StmtIterator iter = model.listStatements(selector);
-		while (iter.hasNext()){
-			if (s != null) {
-				throw new Exception("Ska bara finnas en entity i rdf-grafen");
-			}
-			s = iter.next().getSubject();
-		}
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_2_0(model, s);
-		HarvestService service = new HarvestServiceImpl();
-		service.setId("TESTID");
 		LinkedList<String> relations = new LinkedList<>();
-		List<String> gmlGeometries = new LinkedList<>();
-		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
-		assertNotNull("Inget doc tillbaka", doc);
+		SolrInputDocument doc = getSolrInputDocument("hjalm_1.2.0.rdf", relations);
 		assertEquals("Felaktig värde för itemMark", "Märke i hjälmen", doc.getFieldValue(ContentHelper.IX_ITEMMARK));
 	}
 
 	@Test
 	public void testItemInscription() throws Exception {
-		String rdf = loadTestFileAsString("hjalm_1.2.0.rdf");
-		Model model = RDFUtil.parseModel(rdf);
-		assertNotNull("Ingen graf, fel på rdf:en?", model);
 
-		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
-		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
-
-		Resource s = null;
-		StmtIterator iter = model.listStatements(selector);
-		while (iter.hasNext()){
-			if (s != null) {
-				throw new Exception("Ska bara finnas en entity i rdf-grafen");
-			}
-			s = iter.next().getSubject();
-		}
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_2_0(model, s);
-		HarvestService service = new HarvestServiceImpl();
-		service.setId("TESTID");
 		LinkedList<String> relations = new LinkedList<>();
-		List<String> gmlGeometries = new LinkedList<>();
-		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
-		assertNotNull("Inget doc tillbaka", doc);
+		SolrInputDocument doc = getSolrInputDocument("hjalm_1.2.0.rdf", relations);
 		assertEquals("Felaktig värde för itemInscription", "Inristning", doc.getFieldValue(ContentHelper.IX_ITEMINSCRIPTION));
 	}
 
-
-
-
-
-
 	@Test
 	public void testParseMedia() throws Exception {
-		String rdf = loadTestFileAsString("media.rdf");
-		Model model = RDFUtil.parseModel(rdf);
-		assertNotNull("Ingen graf, fel på rdf:en?", model);
-
-		Property rdfType = ResourceFactory.createProperty(SamsokProtocol.uri_rdfType.toString());
-		Resource samsokEntity = ResourceFactory.createResource(SamsokProtocol.uri_samsokEntity.toString());
-		SimpleSelector selector = new SimpleSelector (null, rdfType, samsokEntity);
-
-		Resource s = null;
-		StmtIterator iter = model.listStatements(selector);
-		while (iter.hasNext()){
-			if (s != null) {
-				throw new Exception("Ska bara finnas en entity i rdf-grafen");
-			}
-			s = iter.next().getSubject();
-		}
-		SamsokProtocolHandler handler = new SamsokProtocolHandler_1_2_0(model, s);
-		HarvestService service = new HarvestServiceImpl();
-		service.setId("TESTID");
 		LinkedList<String> relations = new LinkedList<>();
-		List<String> gmlGeometries = new LinkedList<>();
-		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
-		assertNotNull("Inget doc tillbaka", doc);
+		SolrInputDocument doc = getSolrInputDocument("media.rdf", relations);
 		assertEquals("Fel antal relationer tillbaka", 0, relations.size());
 		
 //		// kontrollera exists-index
@@ -129,4 +52,8 @@ public class Protocol_1_2_0_Test extends AbstractDocumentTest {
 
 	}
 
+	@Override
+	SamsokProtocolHandler getSamsokProtocolHandler(Model model, Resource s) {
+		return new SamsokProtocolHandler_1_2_0(model, s);
+	}
 }
