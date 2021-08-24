@@ -265,6 +265,7 @@ public class SamsokProtocol {
 	static final URI uri_rPeriodAuth = URI.create(uriPrefixKSamsok + "periodAuth");
 	static final URI uri_rEventName = URI.create(uriPrefixKSamsok + "eventName");
 	static final URI uri_rEventAuth = URI.create(uriPrefixKSamsok + "eventAuth");
+	static final URI uri_rEvent = URI.create(uriPrefixKSamsok + "event");
 	//static final URI uri_rTimeText = URI.create(uriPrefixKSamsok + "timeText");
 
 	// övriga

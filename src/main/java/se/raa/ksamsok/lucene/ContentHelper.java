@@ -110,6 +110,7 @@ public abstract class ContentHelper {
 	public static final String IX_PERIODAUTH = "periodAuth";
 	public static final String IX_EVENTNAME = "eventName";
 	public static final String IX_EVENTAUTH = "eventAuth";
+	public static final String IX_EVENT = "event";
 	// public static final String IX_TIMETEXT = "timeText";
 
 	// platser
@@ -456,6 +457,7 @@ public abstract class ContentHelper {
 		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_EVENTNAME, "Namn på en händelse [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_EVENT, "Händelse, uri", IndexType.TOLOWERCASE, true, false);
 		// addIndex(IX_TIMETEXT, "Annan tidsuppgift [*]", IndexType.ANALYZED);
 		addIndex(IX_TIME, "När - Fritext i tidsdata", IndexType.ANALYZED, true, false);
 

@@ -26,6 +26,9 @@ public class SamsokProtocolHandler_1_3_0 extends SamsokProtocolHandler_1_2_0 {
 
         ip.setCurrent(IX_TOPERIOD, contextTypes);
         extractValue(model, cS, getURIRef(uri_rToPeriod), ip);
+
+        ip.setCurrent(IX_EVENT, contextTypes);
+        extractValue(model, cS, getURIRef(uri_rEvent), ip);
     }
 
     protected void extractContextPlaceInformation(Resource cS, String[] contextTypes, List<String> gmlGeometries) throws Exception {

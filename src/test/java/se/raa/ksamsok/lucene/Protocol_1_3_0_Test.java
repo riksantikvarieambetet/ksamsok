@@ -53,10 +53,20 @@ public class Protocol_1_3_0_Test extends AbstractDocumentTest {
     public void testAgent() throws Exception {
         SolrInputDocument doc = getSolrInputDocument("hjalm_1.3.0.rdf", new LinkedList<>());
         assertNotNull("Inget doc tillbaka", doc);
-        Collection<Object> placeTerms = doc.getFieldValues(ContentHelper.IX_AGENT);
-        assertThat(placeTerms, hasItems("http://kulturarvsdata.se/raa/test/8", "http://kulturarvsdata.se/raa/test/9", "http://kulturarvsdata.se/raa/test/10"));
-        assertThat(placeTerms, not(hasItem((String) null)));
-        assertThat(placeTerms, not(hasItems("http://kulturarvsdata.se/raa/test/1", "http://kulturarvsdata.se/raa/test/4")));
+        Collection<Object> agents = doc.getFieldValues(ContentHelper.IX_AGENT);
+        assertThat(agents, hasItems("http://kulturarvsdata.se/raa/test/8", "http://kulturarvsdata.se/raa/test/9", "http://kulturarvsdata.se/raa/test/10"));
+        assertThat(agents, not(hasItem((String) null)));
+        assertThat(agents, not(hasItems("http://kulturarvsdata.se/raa/test/1", "http://kulturarvsdata.se/raa/test/4")));
+    }
+
+    @Test
+    public void testEvent() throws Exception {
+        SolrInputDocument doc = getSolrInputDocument("hjalm_1.3.0.rdf", new LinkedList<>());
+        assertNotNull("Inget doc tillbaka", doc);
+        Collection<Object> events = doc.getFieldValues(ContentHelper.IX_EVENT);
+        assertThat(events, hasItems("http://kulturarvsdata.se/raa/test/11", "http://kulturarvsdata.se/raa/test/12", "http://kulturarvsdata.se/raa/test/13"));
+        assertThat(events, not(hasItem((String) null)));
+        assertThat(events, not(hasItems("http://kulturarvsdata.se/raa/test/1", "http://kulturarvsdata.se/raa/test/4")));
     }
 
 }

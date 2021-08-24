@@ -43,6 +43,8 @@
     <ns5:fromPeriod rdf:resource="http://kulturarvsdata.se/raa/test/4"/>
     <ns6:name>Kunz Lochner</ns6:name>
     <ns5:agent>http://kulturarvsdata.se/raa/test/9</ns5:agent>
+    <ns5:event>http://kulturarvsdata.se/raa/test/11</ns5:event>
+    <ns5:event>http://kulturarvsdata.se/raa/test/12</ns5:event>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_3">
     <ns5:contextType rdf:resource="http://kulturarvsdata.se/resurser/ContextType#use"/>
@@ -54,6 +56,7 @@
     <crm:P51F.has_former_or_current_owner rdf:resource="http://libris.kb.se/resource/auth/58087"/>
     <ns5:agent>http://kulturarvsdata.se/raa/test/8</ns5:agent>
     <ns5:agent>http://kulturarvsdata.se/raa/test/10</ns5:agent>
+    <ns5:event>http://kulturarvsdata.se/raa/test/13</ns5:event>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_4">
 	<ns5:mediaLicense rdf:resource="http://kulturarvsdata.se/resurser/License#by"/>
