@@ -134,6 +134,7 @@ public abstract class ContentHelper {
 	// public static final String IX_COORDINATES = "coordinates";
 
 	// personer
+	public static final String IX_AGENT = "agent";
 	public static final String IX_ACTOR = "actor"; // alla fält sammanslagna (ej fritext dock!)
 	public static final String IX_FIRSTNAME = "firstName";
 	public static final String IX_SURNAME = "surname";
@@ -438,6 +439,7 @@ public abstract class ContentHelper {
 		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_NAMEAUTH, "Auktoritet för namn [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_ACTOR, "Vem - Fritext i person- och organisationsdata", IndexType.ANALYZED, true, false);
+		addIndex(IX_AGENT, "Agent, uri", IndexType.TOLOWERCASE, true, false);
 
 		// tid
 		addIndex(IX_FROMTIME, "Tidpunkt eller start på tidsintervall (årtal enligt ISO 8601) [*]",

@@ -49,4 +49,14 @@ public class Protocol_1_3_0_Test extends AbstractDocumentTest {
         assertThat(placeTerms, not(hasItems("http://kulturarvsdata.se/raa/test/1", "http://kulturarvsdata.se/raa/test/4")));
     }
 
+    @Test
+    public void testAgent() throws Exception {
+        SolrInputDocument doc = getSolrInputDocument("hjalm_1.3.0.rdf", new LinkedList<>());
+        assertNotNull("Inget doc tillbaka", doc);
+        Collection<Object> placeTerms = doc.getFieldValues(ContentHelper.IX_AGENT);
+        assertThat(placeTerms, hasItems("http://kulturarvsdata.se/raa/test/8", "http://kulturarvsdata.se/raa/test/9", "http://kulturarvsdata.se/raa/test/10"));
+        assertThat(placeTerms, not(hasItem((String) null)));
+        assertThat(placeTerms, not(hasItems("http://kulturarvsdata.se/raa/test/1", "http://kulturarvsdata.se/raa/test/4")));
+    }
+
 }

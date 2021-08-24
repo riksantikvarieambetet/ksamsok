@@ -36,5 +36,11 @@ public class SamsokProtocolHandler_1_3_0 extends SamsokProtocolHandler_1_2_0 {
 
     }
 
+    protected void extractContextActorInformation(Resource cS, String[] contextTypes, List<String> relations) throws Exception {
+        super.extractContextActorInformation(cS, contextTypes, relations);
+
+        ip.setCurrent(IX_AGENT, contextTypes);
+        extractValue(model, cS, getURIRef(uri_rAgent), ip);
+    }
 
 }

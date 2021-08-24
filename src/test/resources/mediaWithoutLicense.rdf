@@ -2,7 +2,7 @@
 <rdf:RDF xmlns="http://kulturarvsdata.se/ksamsok#" xmlns:foaf="http://xmlns.com/foaf/0.1/#"
          xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml"
          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <Entity rdf:about="http://kulturarvsdata.se/wws/object/646">
+    <Entity rdf:about="http://kulturarvsdata.se/wws/object/646_without_media_license">
         <ksamsokVersion>1.11</ksamsokVersion>
         <serviceName>object</serviceName>
         <serviceOrganization>wws</serviceOrganization>

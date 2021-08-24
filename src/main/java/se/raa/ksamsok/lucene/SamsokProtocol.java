@@ -251,6 +251,7 @@ public class SamsokProtocol {
 	static final URI uri_rTitle = URI.create(uriPrefixFoaf + "title");
 	static final URI uri_rNameId = URI.create(uriPrefixKSamsok + "nameId");
 	static final URI uri_rNameAuth = URI.create(uriPrefixKSamsok + "nameAuth");
+	static final URI uri_rAgent = URI.create(uriPrefixKSamsok + "agent");
 
 	// när-kontext
 	static final URI uri_rFromTime = URI.create(uriPrefixKSamsok + "fromTime");
