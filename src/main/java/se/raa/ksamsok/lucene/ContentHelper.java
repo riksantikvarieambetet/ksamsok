@@ -9,6 +9,7 @@ import se.raa.ksamsok.harvest.HarvestService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,6 +101,8 @@ public abstract class ContentHelper {
 	public static final String IX_TIME = "time"; // fritext i alla tidsfält
 	public static final String IX_FROMTIME = "fromTime";
 	public static final String IX_TOTIME = "toTime";
+	public static final String IX_FROMPERIOD = "fromPeriod";
+	public static final String IX_TOPERIOD = "toPeriod";
 	public static final String IX_FROMPERIODNAME = "fromPeriodName";
 	public static final String IX_TOPERIODNAME = "toPeriodName";
 	public static final String IX_FROMPERIODID = "fromPeriodId";
@@ -107,6 +110,7 @@ public abstract class ContentHelper {
 	public static final String IX_PERIODAUTH = "periodAuth";
 	public static final String IX_EVENTNAME = "eventName";
 	public static final String IX_EVENTAUTH = "eventAuth";
+	public static final String IX_EVENT = "event";
 	// public static final String IX_TIMETEXT = "timeText";
 
 	// platser
@@ -126,9 +130,12 @@ public abstract class ContentHelper {
 	public static final String IX_CADASTRALUNIT = "cadastralUnit";
 	public static final String IX_PLACETERMID = "placeTermId";
 	public static final String IX_PLACETERMAUTH = "placeTermAuth";
+	public static final String IX_PLACETERM = "placeTerm";
+
 	// public static final String IX_COORDINATES = "coordinates";
 
 	// personer
+	public static final String IX_AGENT = "agent";
 	public static final String IX_ACTOR = "actor"; // alla fält sammanslagna (ej fritext dock!)
 	public static final String IX_FIRSTNAME = "firstName";
 	public static final String IX_SURNAME = "surname";
@@ -389,6 +396,7 @@ public abstract class ContentHelper {
 		addIndex(IX_CADASTRALUNIT, "Fastighetsbeteckning [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_PLACETERMID, "Plats-ID hos auktoritet [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_PLACETERMAUTH, "Auktoritet för plats-ID [*]", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_PLACETERM, "Plats-ID (uri)", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_CONTINENTNAME, "Kontinent [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_COUNTRYNAME, "Land, namn [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_COUNTYNAME, "Län, namn [*]", IndexType.TOLOWERCASE, true, false);
@@ -432,6 +440,7 @@ public abstract class ContentHelper {
 		addIndex(IX_NAMEID, "Auktoriserat ID [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_NAMEAUTH, "Auktoritet för namn [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_ACTOR, "Vem - Fritext i person- och organisationsdata", IndexType.ANALYZED, true, false);
+		addIndex(IX_AGENT, "Agent, uri", IndexType.TOLOWERCASE, true, false);
 
 		// tid
 		addIndex(IX_FROMTIME, "Tidpunkt eller start på tidsintervall (årtal enligt ISO 8601) [*]",
@@ -443,9 +452,12 @@ public abstract class ContentHelper {
 		addIndex(IX_TOPERIODNAME, "Tidpunkt eller slut på tidsintervall, namn [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_FROMPERIODID, "Tidpunkt eller start på tidsintervall, kod [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_TOPERIODID, "Tidpunkt eller slut på tidsintervall, kod [*]", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_FROMPERIOD, "Tidpunkt eller start på tidsintervall, uri", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_TOPERIOD, "Tidpunkt eller slut på tidsintervall, uri", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_PERIODAUTH, "Auktoritet för perioder [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_EVENTNAME, "Namn på en händelse [*]", IndexType.TOLOWERCASE, true, false);
 		addIndex(IX_EVENTAUTH, "Auktoritet för händelser [*]", IndexType.TOLOWERCASE, true, false);
+		addIndex(IX_EVENT, "Händelse, uri", IndexType.TOLOWERCASE, true, false);
 		// addIndex(IX_TIMETEXT, "Annan tidsuppgift [*]", IndexType.ANALYZED);
 		addIndex(IX_TIME, "När - Fritext i tidsdata", IndexType.ANALYZED, true, false);
 
@@ -762,7 +774,7 @@ public abstract class ContentHelper {
 		}
 		// sen om det (troligen) är ett kontextindex, "[contextType]_[indexName]"
 		if (indexName.indexOf("_") > 0) {
-			String[] parts = indexName.split("\\_");
+			String[] parts = indexName.split("_");
 			if (parts.length == 2) {
 				return indices.containsKey(parts[1]);
 			}
@@ -982,7 +994,6 @@ public abstract class ContentHelper {
 	 * 
 	 * @param qs querysträng
 	 * @return map med avkodade parametrar och värden
-	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> extractUTF8Params(String qs) throws UnsupportedEncodingException {
 		HashMap<String, String> params = new HashMap<>();
@@ -992,7 +1003,7 @@ public abstract class ContentHelper {
 				String[] par = tok.nextToken().split("=");
 				if (par.length > 1 && par[1].length() > 0) {
 					if (par.length == 2) {
-						params.put(par[0], URLDecoder.decode(par[1], "UTF-8"));
+						params.put(par[0], URLDecoder.decode(par[1], StandardCharsets.UTF_8));
 					} else {
 						// vi är snälla och tillåter = okodat i parametrar för att enklare
 						// kunna testa
@@ -1001,7 +1012,7 @@ public abstract class ContentHelper {
 						for (int i = 2; i < par.length; ++i) {
 							pVal.append("=").append(par[i]);
 						}
-						params.put(par[0], URLDecoder.decode(pVal.toString(), "UTF-8"));
+						params.put(par[0], URLDecoder.decode(pVal.toString(), StandardCharsets.UTF_8));
 					}
 				}
 			}

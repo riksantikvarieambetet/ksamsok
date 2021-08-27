@@ -230,6 +230,7 @@ public class SamsokProtocol {
 	static final URI uri_rCadastralUnit = URI.create(uriPrefixKSamsok + "cadastralUnit");
 	static final URI uri_rPlaceTermId = URI.create(uriPrefixKSamsok + "placeTermId");
 	static final URI uri_rPlaceTermAuth = URI.create(uriPrefixKSamsok + "placeTermAuth");
+	static final URI uri_rPlaceTerm = URI.create(uriPrefixKSamsok + "placeTerm");
 	static final URI uri_rCountyName = URI.create(uriPrefixKSamsok + "countyName");
 	static final URI uri_rMunicipalityName = URI.create(uriPrefixKSamsok + "municipalityName");
 	static final URI uri_rProvinceName = URI.create(uriPrefixKSamsok + "provinceName");
@@ -250,6 +251,7 @@ public class SamsokProtocol {
 	static final URI uri_rTitle = URI.create(uriPrefixFoaf + "title");
 	static final URI uri_rNameId = URI.create(uriPrefixKSamsok + "nameId");
 	static final URI uri_rNameAuth = URI.create(uriPrefixKSamsok + "nameAuth");
+	static final URI uri_rAgent = URI.create(uriPrefixKSamsok + "agent");
 
 	// när-kontext
 	static final URI uri_rFromTime = URI.create(uriPrefixKSamsok + "fromTime");
@@ -258,9 +260,12 @@ public class SamsokProtocol {
 	static final URI uri_rToPeriodName = URI.create(uriPrefixKSamsok + "toPeriodName");
 	static final URI uri_rFromPeriodId = URI.create(uriPrefixKSamsok + "fromPeriodId");
 	static final URI uri_rToPeriodId = URI.create(uriPrefixKSamsok + "toPeriodId");
+	static final URI uri_rFromPeriod = URI.create(uriPrefixKSamsok + "fromPeriod");
+	static final URI uri_rToPeriod = URI.create(uriPrefixKSamsok + "toPeriod");
 	static final URI uri_rPeriodAuth = URI.create(uriPrefixKSamsok + "periodAuth");
 	static final URI uri_rEventName = URI.create(uriPrefixKSamsok + "eventName");
 	static final URI uri_rEventAuth = URI.create(uriPrefixKSamsok + "eventAuth");
+	static final URI uri_rEvent = URI.create(uriPrefixKSamsok + "event");
 	//static final URI uri_rTimeText = URI.create(uriPrefixKSamsok + "timeText");
 
 	// övriga

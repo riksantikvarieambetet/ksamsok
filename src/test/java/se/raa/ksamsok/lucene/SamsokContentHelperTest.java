@@ -4,41 +4,18 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
-import org.w3c.dom.Document;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-public class SamsokContentHelperTest {
+public class SamsokContentHelperTest extends AbstractDocumentTest{
 
-	private static DocumentBuilderFactory xmlFact;
-	private static TransformerFactory xformerFact;
-	static {
-		xmlFact = DocumentBuilderFactory.newInstance();
-	    xmlFact.setNamespaceAware(true);
-	    xformerFact = TransformerFactory.newInstance();
-	}
+
 
 	@Test
 	public void testExtractInfo__0_TO_1_0() throws Exception {
@@ -565,34 +542,15 @@ public class SamsokContentHelperTest {
 		 */
 	}
 
-	private String loadTestFileAsString(String fileName) throws Exception {
-		DocumentBuilder builder = xmlFact.newDocumentBuilder();
-		StringWriter sw = null;
-		try {
-			// förutsätter att testfallen körs med projektkatalogen som cwd
-			// vilket normalt är fallet både från ant och i eclipse
-			Document doc = builder.parse(new File("src/test/resources/" + fileName));
-			final int initialSize = 4096;
-			Source source = new DOMSource(doc);
-			Transformer xformer = xformerFact.newTransformer();
-			xformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			sw = new StringWriter(initialSize);
-			Result result = new StreamResult(sw);
-	        xformer.transform(source, result);
-	        return sw.toString();
-		} finally {
-			if (sw != null) {
-				sw.close();
-			}
-		}
-	}
-
 	@Test
 	public void testGetProtocolHandlerForVersion() throws Exception {
 		SamsokProtocolHandler sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.2.0", null, null);
 		assertNotNull(sph);
 		assertEquals("SamsokProtocolHandler_1_2_0", sph.getClass().getSimpleName());
+
+		sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.3.0", null, null);
+		assertNotNull(sph);
+		assertEquals("SamsokProtocolHandler_1_3_0", sph.getClass().getSimpleName());
 
 		sph = SamsokContentHelper.getProtocolHandlerForVersion ("1.1", null, null);
 		assertNotNull(sph);
@@ -605,5 +563,12 @@ public class SamsokContentHelperTest {
 		sph = SamsokContentHelper.getProtocolHandlerForVersion ("0.99", null, null);
 		assertNotNull(sph);
 		assertEquals("SamsokProtocolHandler_0_TO_1_0", sph.getClass().getSimpleName());
+	}
+
+	@Override
+	SamsokProtocolHandler getSamsokProtocolHandler(Model model, Resource s) {
+		// not used in this class
+		fail("Should not be used in this class");
+		return null;
 	}
 }
