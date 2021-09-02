@@ -135,7 +135,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				// kontrollera om timezone-användningen är korrekt map datumgränser mm
 				// url-kodning av timestamp behövs om tid är inblandat också
 				String fromDateStr = df.format(service.getLastHarvestDate());
-				fromDate = URLEncoder.encode(fromDateStr, "UTF-8");
+				fromDate = URLEncoder.encode(fromDateStr, StandardCharsets.UTF_8);
 				if (ss != null) {
 					ss.setStatusTextAndLog(service, "Fetching changes since latest harvest (" + fromDateStr + ")");
 				}
@@ -205,7 +205,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				try {
 					listRecords = new ListRecords(url, fromDate, toDate, setSpec, metadataPrefix);
 				} catch (IOException e) {
-					failedTry(tryNum, null, e, ss, service);
+					failedTry(tryNum, e, ss, service);
 				}
 			}
 			while (listRecords != null) {
@@ -289,7 +289,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 						try {
 							listRecords = new ListRecords(url, resumptionToken);
 						} catch (IOException e) {
-							failedTry(tryNum, null, e, ss, service);
+							failedTry(tryNum, e, ss, service);
 						}
 					}
 				}
@@ -319,7 +319,12 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			}
 			throw e;
 		} catch (IOException e) {
-			failedTry(tryNum, null, e, ss, service);
+			// the failedTry method is designed to be called from within a loop, not like it was here
+			if (logger != null) {
+				// logg this with exception specifically here since we want to understand better when and why this happens
+				logger.error("Unhandled IOException caught in OAIPMHHarvestjob#getRecords", e);
+			}
+			throw e;
 		} catch (ParserConfigurationException e) {
 			if (logger != null) {
 				logger.error("Det är problem med att initiera oai-pmh parser");
@@ -331,7 +336,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			String message = "Det är problem att parsa skördningen\n";
 			message = message + "Url: " + url + ", metadataPrefix=" + metadataPrefix + ", fromDate:" + fromDate +
 				", toDate: " + toDate + ", resumptionToken=" + resumptionToken + "\n";
-			message = message + baos.toString("UTF-8");
+			message = message + baos.toString(StandardCharsets.UTF_8);
 			if (ss != null) {
 				ss.setErrorTextAndLog(service, message);
 			}
@@ -351,14 +356,17 @@ public class OAIPMHHarvestJob extends HarvestJob {
 	}
 
 	// hantering av flera försök med viss tid mellan varje försök
-	private void failedTry(int tryNum, String resumptionToken, IOException ioe, StatusService ss,
+	private void failedTry(int tryNum,  IOException ioe, StatusService ss,
 		HarvestService service) throws Exception {
 		// TODO: bättre konstanter/värden
 		// skilj på connect/error?
 		// olika värden per tjänst? smh/va är helt tillståndslösa, oiacat inte
 		if (tryNum >= maxTries) {
-			throw new Exception("Problem when contacting the service, surrendered after " + maxTries + " tries" +
-				(resumptionToken != null ? " with token: " + resumptionToken : ""), ioe);
+			String msg = "Problem when contacting the service, surrendered after " + maxTries + " tries";
+			if (logger != null) {
+				logger.error(msg);
+			}
+			throw new Exception(msg, ioe);
 		}
 		// TODO: kan message vara så pass stor så att 4k-gränsen överskrids och ger nedanstående
 		// databasfel?
@@ -367,7 +375,9 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		// i så fall måste vi begränsa feltexten, se:
 		// http://vsadilovskiy.wordpress.com/2007/10/19/ora-01461-can-bind-a-long-value-only-for-insert-into-a-long-column/
 		String msg = "Exception (" + ioe.getMessage() + "), waiting " + waitSecs + " seconds and trying again";
-		logger.warn((service != null ? service.getId() + ": " : "") + msg);
+		if (logger != null) {
+			logger.warn((service != null ? service.getId() + ": " : "") + msg);
+		}
 		if (ss != null) {
 			ss.setStatusTextAndLog(service, msg);
 		}
