@@ -152,14 +152,11 @@ s&ouml;kning:</strong></td> <td><input name="query" size="30" type="text"></td><
 <script>
     window.dataLayer = window.dataLayer || [];
 
-    //let ga = ('create', '<ID>', {cookieFlags: 'samesite=none; secure'});
-    //let gid = ('create', '<ID>', {cookieFlags: 'samesite=none; secure'});
-
     function gtag(){
     dataLayer.push(arguments);
     }
 
-    window.dataLayer.push({'ga': ('create', '<ID>', {cookieFlags: 'samesite=none; secure'})});
+    window.dataLayer.push({'ga': ('create', '<ID>', {cookieFlags: 'SameSite=none; secure'})});
 
     gtag('js', new Date());
     gtag('config', 'UA-1898436-3', {'anonymize_ip': true });
