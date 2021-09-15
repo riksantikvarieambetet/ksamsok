@@ -159,13 +159,10 @@ s&ouml;kning:</strong></td> <td><input name="query" size="30" type="text"></td><
     dataLayer.push(arguments);
     }
 
+    window.dataLayer.push({'ga': ('create', '<ID>', {cookieFlags: 'samesite=none; secure'})});
+
     gtag('js', new Date());
     gtag('config', 'UA-1898436-3', {'anonymize_ip': true });
-</script>
-<script>
-    dataLayer.push ({'ga': '('create', '<ID>', {cookieFlags: 'samesite=none; secure'})',
-                  'gid': '('create', '<ID>', {cookieFlags: 'samesite=none; secure'})'
-    });
 </script>
 </body>
 </html>
