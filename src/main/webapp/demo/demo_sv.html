@@ -157,7 +157,11 @@ s&ouml;kning:</strong></td> <td><input name="query" size="30" type="text"></td><
     }
 
     gtag('js', new Date());
-    gtag('config', 'UA-1898436-3', {'anonymize_ip': true, cookie_flags: 'SameSite=none; secure'});
+    gtag('config', 'UA-1898436-3', {'anonymize_ip': true});
+
+    //Config för cookies så SameSite är secure
+    gtag('config', 'UA-1898436-3',
+    {'cookie_flags': 'SameSite=None;Secure'})
 </script>
 </body>
 </html>
