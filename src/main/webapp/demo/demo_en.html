@@ -144,10 +144,13 @@ search:</strong></td> <td><input name="query" size="30" type="text"></td></tr>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1898436-3"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'UA-1898436-3', {'anonymize_ip': true });
+    function gtag(){
+    dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-1898436-3', {'anonymize_ip': true, 'cookie_flags': 'SameSite=None; Secure' });
 </script>
 </body>
 </html>
