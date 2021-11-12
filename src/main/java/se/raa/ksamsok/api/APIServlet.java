@@ -3,8 +3,8 @@ package se.raa.ksamsok.api;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.solr.client.solrj.impl.BaseHttpSolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.json.JSONException;
 import org.json.XML;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -120,7 +120,7 @@ public class APIServlet extends HttpServlet {
 				resp.setHeader("Access-Control-Allow-Origin", "*");
 				try {
 					method.performMethod();
-				} catch (HttpSolrClient.RemoteSolrException e) {
+				} catch (BaseHttpSolrClient.RemoteSolrException e) {
 					// convert into BadParameterEXception so we can use the "diagnostic" method
 					if (e.getMessage().contains("undefined field")) {
 						throw new BadParameterException("Okänt sökfält: " + StringUtils.substringAfterLast(e.getMessage(), " "),
@@ -196,7 +196,7 @@ public class APIServlet extends HttpServlet {
 		transform.transform(source, strResult);
 		if (format == Format.JSON_LD) {
 			String json;
-			json = XML.toJSONObject(baos.toString("UTF-8")).toString();
+			json = XML.toJSONObject(baos.toString(StandardCharsets.UTF_8)).toString();
 			out.write(json.getBytes(StandardCharsets.UTF_8));
 		}
 

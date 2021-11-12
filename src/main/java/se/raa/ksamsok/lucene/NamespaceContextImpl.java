@@ -12,7 +12,7 @@ import java.util.Iterator;
  */
 public class NamespaceContextImpl implements NamespaceContext {
 
-	private PrefixResolver resolver;
+	private final PrefixResolver resolver;
 
 	NamespaceContextImpl(Document doc) {
 		this.resolver = new PrefixResolverDefault(doc.getDocumentElement());
@@ -27,8 +27,7 @@ public class NamespaceContextImpl implements NamespaceContext {
 		return null;
 	}
 
-	@SuppressWarnings({ "rawtypes" })
-	public Iterator getPrefixes(String namespaceURI) {
+	public Iterator<String> getPrefixes(String namespaceURI) {
 		// EJ IMPLEMENTERAD (används dock ej i vårt fall)
 		return null;
 	}
