@@ -41,18 +41,17 @@ configurations.all {
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
-    implementation (group: 'org.apache.solr', name: 'solr-solrj', version: '8.10.1') {
+    implementation (group: 'org.apache.solr', name: 'solr-solrj', version: '8.11.0') {
         exclude group: 'org.eclipse.jetty.http2', module: 'http2-client'
         exclude group: 'org.eclipse.jetty.http2', module: 'http2-common'
         exclude group: 'org.eclipse.jetty.http2', module: 'http2-hpack'
-        exclude group: 'org.eclipse.jetty.http2', module: 'http2-client-transport'
         exclude group: 'org.eclipse.jetty.http2', module: 'http2-http-client-transport'
         exclude group: 'org.eclipse.jetty', module: 'jetty-alpn-client'
-        exclude group: 'org.eclipse.jetty', module: 'jetty-util'
         exclude group: 'org.eclipse.jetty', module: 'jetty-alpn-java-client'
         exclude group: 'org.eclipse.jetty', module: 'jetty-client'
         exclude group: 'org.eclipse.jetty', module: 'jetty-http'
         exclude group: 'org.eclipse.jetty', module: 'jetty-io'
+        exclude group: 'org.eclipse.jetty', module: 'jetty-util'
     }
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.2'
