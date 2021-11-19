@@ -16,7 +16,7 @@
                 <TimeBasedTriggeringPolicy />
                 <SizeBasedTriggeringPolicy size="10MB"/>
             </Policies>
-            <DefaultRolloverStrategy>
+            <DefaultRolloverStrategy max="5">
                 <Delete basePath="logs">
                     <IfFileName glob="ksamsok-*.log" />
                     <IfLastModified age="60d" />

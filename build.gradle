@@ -99,11 +99,6 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
     testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.13'
     testImplementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.13'
-
-    // Extremely weird bug. If we use any higher version of solr-solrj than version 7.5.0,
-    // then we can't use a jetty-server 10.0.0 and higher, because then we get a
-    // NoClassDefFoundError "org/eclipse/jetty/util/Trie"
-    // in OAIPMHHarvestJobTest (line 54 (new ResourceHandler()) when running the junit tests
     testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '11.0.7'
 }
 
