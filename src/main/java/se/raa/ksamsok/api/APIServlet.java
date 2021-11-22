@@ -105,7 +105,7 @@ public class APIServlet extends HttpServlet {
 				reqParams = ContentHelper.extractUTF8Params(req.getQueryString());
 				stylesheet = reqParams.get("stylesheet");
 				method = apiMethodFactory.getAPIMethod(reqParams, out);
-				logger.info("Reqparams " + reqParams + "\nStylesheet " + stylesheet + "\nMethod " + method);
+				logger.info("Reqparams " + reqParams + " : Stylesheet " + stylesheet + " : Method " + method);
 				// Check which format the respond should be
 				String acceptFormat = req.getHeader("Accept");
 				if (acceptFormat != null && acceptFormat.toLowerCase().contains("json")) {
