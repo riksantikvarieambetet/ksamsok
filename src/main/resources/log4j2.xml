@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%-7p %d [%-20c]: %m%n"/>
-        </Console>
+        <File name="FILE_ECS" fileName="logs/ksamsok_ecs.log">
+            <EcsLayout serviceName="K-samsök"/>
+        </File>
         <RollingFile
                 name="FILE"
                 fileName="logs/ksamsok.log"
-                filePattern="logs/ksamsok.%i.log.gz"
+                filePattern="logs/ksamsok-%d{yyyy-MM-dd}.%i.log.gz"
                 ignoreExceptions="false">
             <PatternLayout>
                 <Pattern>%-7p %d [%-20c]: %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="5"/>
+            <DefaultRolloverStrategy max="10">
+                <Delete basePath="logs">
+                    <IfFileName glob="ksamsok-*.log.gz" />
+                    <IfLastModified age="30d" />
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
     </Appenders>
     <Loggers>
         <Logger name="se.raa.ksamsok" level="info"/>
         <Root level="warn">
-            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_ECS"/>
             <AppenderRef ref="FILE"/>
         </Root>
     </Loggers>
