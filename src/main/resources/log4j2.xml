@@ -7,7 +7,7 @@
         <RollingFile
                 name="FILE"
                 fileName="logs/ksamsok.log"
-                filePattern="logs/ksamsok-%d{yyyy-MM-dd}-%i.log.gz"
+                filePattern="logs/ksamsok-%d{yyyy-MM-dd}.%i.log.gz"
                 ignoreExceptions="false">
             <PatternLayout>
                 <Pattern>%-7p %d [%-20c]: %m%n</Pattern>
