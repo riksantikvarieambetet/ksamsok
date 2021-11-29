@@ -34,7 +34,7 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	// en generisk iso 8601-parser som klarar "alla" isoformat - egentligen ska vi bara stÃ¶dja tvÃ¥
 	// enl spec
-	private static DateTimeFormatter isoDateTimeParser = ISODateTimeFormat.dateTimeParser();
+	private final static DateTimeFormatter isoDateTimeParser = ISODateTimeFormat.dateTimeParser();
 
 	Connection c;
 	HarvestService service;
@@ -43,8 +43,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	Timestamp datestamp;
 	int mode = 0;
 	private boolean deleteRecord;
-	private StringBuffer buf = new StringBuffer();
-	private HashMap<String, String> prefixMap = new HashMap<>();
+	private final StringBuffer buf = new StringBuffer();
+	private final HashMap<String, String> prefixMap = new HashMap<>();
 	private static final int NORMAL = 0;
 	private static final int RECORD = 1;
 	private static final int COPY = 2;
@@ -56,10 +56,10 @@ public class OAIPMHHandler extends DefaultHandler {
 	private int numDeleted = 0, numDeletedXact = 0;
 	private int numInserted = 0, numInsertedXact = 0;
 	private int numUpdated = 0, numUpdatedXact = 0;
-	private ServiceMetadata sm;
+	private final ServiceMetadata sm;
 	private String errorCode;
-	private Timestamp ts;
-	private StatusService ss;
+	private final Timestamp ts;
+	private final StatusService ss;
 	private PreparedStatement oai2uriPst;
 	private PreparedStatement updatePst;
 	private PreparedStatement deleteUpdatePst;
@@ -114,7 +114,7 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
-		switch (mode) {
+			switch (mode) {
 			case NORMAL:
 				if ("record".equals(name)) {
 					// byt till "record-mode"
@@ -135,16 +135,17 @@ public class OAIPMHHandler extends DefaultHandler {
 						xxmlw = xxmlf.createXMLStreamWriter(xsw);
 						// inget start doc, vi vill ha xml-fragment
 						// xxmlw.writeStartDocument("UTF-8", "1.0");
-					} catch (Exception e) {
-						throw new SAXException(e);
+					}  catch (Exception e) {
+						String errMsg = "Error when creating XMLStreamWriter on uri: " + uri + ", localName: " + localName + ", name: " + name;
+						throw new SAXException(errMsg, e);
 					}
 				} else if ("header".equals(name)) {
-					// kontrollera om status sÃ¤ger deleted, dÃ¥ ska denna post bort
+					// kontrollera om status sÃ¤ger deleted, då ska denna post bort
 					String status = attributes.getValue("", "status");
 					if ("deleted".equals(status)) {
 						if (!sm.canSendDeletes()) {
-							throw new SAXException(
-								"Service is not supposed to handle deletes but did in fact send one!");
+							String errMsg = "Service is not supposed to handle deletes but did in fact send one! on uri: " + uri + ", localName: " + localName + ", name: " + name;
+							throw new SAXException(errMsg);
 						}
 						deleteRecord = true;
 					}
@@ -156,15 +157,18 @@ public class OAIPMHHandler extends DefaultHandler {
 				uri = correctFaultyUris(uri);
 				try {
 					xxmlw.writeStartElement(uri, localName);
-				} catch (Exception e) {
-					throw new SAXException(e);
+				}  catch (Exception e) {
+					String errMsg = "Error when writing start element on uri: " + uri + ", localName: " + localName + ", name: " + name;
+					logger.error(errMsg);
+					throw new SAXException(errMsg, e);
 				}
 				if (prefixMap.size() > 0) {
 					for (String prefix : prefixMap.keySet()) {
 						try {
 							xxmlw.writeNamespace(prefix, prefixMap.get(prefix));
-						} catch (Exception e) {
-							throw new SAXException(e);
+						}  catch (Exception e) {
+							String errMsg = "Error when writing namespace on uri: " + uri + ", localName: " + localName + ", name: " + name;
+							throw new SAXException(errMsg, e);
 						}
 					}
 				}
@@ -184,10 +188,11 @@ public class OAIPMHHandler extends DefaultHandler {
 						}
 					}
 				} catch (Exception e) {
-					throw new SAXException(e);
+					String errMsg = "Error when extracting attributes on uri: " + uri + ", localName: " + localName + ", name: " + name;
+					throw new SAXException(errMsg, e);
 				}
 				break;
-		}
+			}
 	}
 
 	private String correctFaultyUris(String uri) {
@@ -588,7 +593,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	}
 
 	/**
-	 * ÃterstÃ¤ller status-kolumnen och dÃ¤rmed status till ursprungligt sÃ¥ lÃ¥ngt det gÃ¥r.
+	 * Återställerr status-kolumnen och därmed status till ursprungligt så långt det går.
 	 * 
 	 * @throws Exception vid fel
 	 */
