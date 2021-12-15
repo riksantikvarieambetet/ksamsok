@@ -39,7 +39,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.15.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.16.0'
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
     implementation (group: 'org.apache.solr', name: 'solr-solrj', version: '8.11.0') {
         exclude group: 'org.eclipse.jetty.http2', module: 'http2-client'
