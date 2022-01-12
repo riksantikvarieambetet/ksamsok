@@ -20,7 +20,7 @@ public abstract class AbstractSearchMethod extends AbstractAPIMethod {
 	/** parameternamnet som anges för att välja startRecord */
 	public static final String START_RECORD = "startRecord";
 	/** max antal träffar */
-	public static final int MAX_HITS_PER_PAGE = 500;
+	public static final int MAX_HITS_PER_PAGE = 1000;
 
 	protected String queryString;
 	protected String originalQueryString;
