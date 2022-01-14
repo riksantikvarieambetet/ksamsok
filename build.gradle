@@ -28,15 +28,15 @@ apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'org.owasp.dependencycheck'
 
+compileJava   {
+  sourceCompatibility = '11'
+  targetCompatibility = '11'
+}
+
 repositories {
     maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
 }
 
-configurations.all {
-    resolutionStrategy {
-        force 'xml-apis:xml-apis:1.4.01'
-    }
-}
 
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.17.1'
@@ -79,14 +79,11 @@ dependencies {
     // geotools needs this to build
     implementation group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
 
-    // xml-apis-xerces is transitive dependency that we don't need - everything is provided in xml-apis
-    // and we can't use only xml-apis-xerces for some reason
-    providedRuntime group: 'xml-apis', name: 'xml-apis-xerces', version: '2.7.1'
-    implementation group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
-
     implementation group: 'joda-time', name: 'joda-time', version: '2.10.13'
     implementation group: 'org.json', name: 'json', version: '20210307'
-    implementation group: 'xalan', name: 'xalan', version: '2.7.2'
+    implementation (group: 'xalan', name: 'xalan', version: '2.7.2') {
+        exclude group: 'xml-apis', module: 'xml-apis'
+    }
 
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
     // old jars use old log4j, for example oclc-harvester2 0.1.12
