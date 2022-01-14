@@ -148,10 +148,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 			try {
 				long start = System.currentTimeMillis();
 				int count = getCount(service, ts);
-				if (logger.isInfoEnabled()) {
-					logger.info(service.getId() + ", updating index (" + count + " records) - start");
-				}
+				
 				serviceId = service.getId();
+				if (logger.isInfoEnabled()) {
+					logger.info(serviceId + ", updating index (" + count + " records) - start");
+				}
 				c = ds.getConnection();
 				String sql;
 				if (ts != null) {
@@ -169,7 +170,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				if (ts == null) {
 					solr.deleteByQuery(ContentHelper.I_IX_SERVICE + ":" + serviceId);
 				}
-				//String oaiURI;
 				String uri;
 				String xmlContent;
 				Timestamp added;
@@ -182,7 +182,6 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 				//       se http://wiki.apache.org/solr/Solrj#Streaming_documents_for_an_update
 				List<SolrInputDocument> docs = new ArrayList<>(solrBatchSize);
 				while (rs.next()) {
-					//oaiURI = rs.getString("oaiuri");
 					if (ts != null) {
 						uri = rs.getString("uri");
 						solr.deleteById(uri);

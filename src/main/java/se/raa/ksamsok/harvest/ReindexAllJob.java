@@ -68,13 +68,13 @@ public class ReindexAllJob extends HarvestJob {
 					ss.setStep(reindexMe, Step.INDEX);
 					hrm.updateIndex(reindexMe, null, service);
 				} catch (Exception e) {
-					// sätta felet på aktuell tjänst och kasta vidare så att det också sätts på reindexall
+					// sätta felet på aktuell tjänst men kasta inte vidare - vi vill fortsätta med nästa service
 					String errMsg = e.getMessage();
 					if (errMsg == null || errMsg.length() == 0) {
 						errMsg = e.toString();
 					}
 					ss.setErrorTextAndLog(reindexMe, errMsg);
-					throw e;
+					handleError(ss, service, e, errMsg);
 				} finally {
 					ss.setStep(reindexMe, Step.IDLE);
 				}
@@ -103,14 +103,18 @@ public class ReindexAllJob extends HarvestJob {
 			if (errMsg == null || errMsg.length() == 0) {
 				errMsg = e.toString();
 			}
-			if (ss != null) {
-				reportError(service, "Error when running job in step " + ss.getStep(service), e);
-				ss.setErrorTextAndLog(service, errMsg);
-				ss.setStep(service, Step.IDLE);
-			} else {
-				logger.error("No status service to report errors against!");
-				reportError(service, "Error when running job", e);
-			}
+			handleError(ss, service, e, errMsg);
+		}
+	}
+
+	private void handleError(StatusService ss, HarvestService service, Exception e, String errMsg) {
+		if (ss != null) {
+			reportError(service, "Error when running job in step " + ss.getStep(service), e);
+			ss.setErrorTextAndLog(service, errMsg);
+			ss.setStep(service, Step.IDLE);
+		} else {
+			logger.error("No status service to report errors against!");
+			reportError(service, "Error when running job", e);
 		}
 	}
 
