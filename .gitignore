@@ -38,3 +38,6 @@ test/test.iml
 /src/main/environment/local/
 /src/main/environment/local/environment.properties
 /out/
+ksamsok.sln
+.vscode/settings.json
+.vscode/launch.json
