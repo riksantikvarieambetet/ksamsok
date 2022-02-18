@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ADDEDTOINDEXDATE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_AGENT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_BUILD_DATE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CADASTRALUNIT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_COLLECTION;
@@ -35,9 +36,10 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_COUNTY;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_COUNTYNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_CREATEDDATE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_DATAQUALITY;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_EVENTAUTH;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_EVENT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_EVENTNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FIRSTNAME;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMPERIOD;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMPERIODID;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMPERIODNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMTIME;
@@ -69,15 +71,12 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_MEDIATYPE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MUNICIPALITY;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_MUNICIPALITYNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_NAME;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_NAMEAUTH;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_NAMEID;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ORGANIZATION;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PARISH;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PARISHNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PERIODAUTH;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PLACENAME;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_PLACETERMAUTH;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_PLACETERMID;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_PLACETERM;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PROVINCE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PROVINCENAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_RELURI;
@@ -91,6 +90,7 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_THUMBNAILEXISTS;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_THUMBNAIL_SOURCE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TIMEINFOEXISTS;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TITLE;
+import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIOD;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIODID;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIODNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOTIME;
@@ -340,10 +340,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			//		"' saknas för " + identifier);
 		}
 
-		Date buildDateAsDate = null;
 		String buildDate = extractSingleValue(model, subject, getURIRef(uri_rBuilddDate), null);
 		if (buildDate != null) {
-			buildDateAsDate = TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_BUILD_DATE, buildDate, ip);
+			TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_BUILD_DATE, buildDate, ip);
 		}
 
 	}
@@ -604,11 +603,28 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_CADASTRALUNIT, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rCadastralUnit), ip);
 
-		ip.setCurrent(IX_PLACETERMID, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rPlaceTermId), ip);
 
-		ip.setCurrent(IX_PLACETERMAUTH, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rPlaceTermAuth), ip);
+		// Vi vill inte använda placeTermId/placeTermAuth längre, utan slå ihop dem till IX_PLACETERM
+		// För att inte spara dem i dokumentet skickar vi inte med ip
+		String placeTermId = extractSingleValue(model, cS, getURIRef(uri_rPlaceTermId), null);
+		String placeTermAuth = extractSingleValue(model, cS, getURIRef(uri_rPlaceTermAuth), null);
+
+		// Slå ihop dem och lägg till i doc
+		if (placeTermAuth != null) {
+			if (!placeTermAuth.endsWith("/")) {
+				placeTermAuth += ("/");
+			}
+			if (placeTermId != null) {
+				String placeTerm = placeTermAuth + placeTermId;
+				ip.addToDoc(IX_PLACETERM, placeTerm);
+			}
+		}
+
+
+
+		
+
+		
 
 		ip.setCurrent(IX_CONTINENTNAME, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rContinentName), ip);
@@ -694,11 +710,21 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_TITLE, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rTitle), ip);
 
-		ip.setCurrent(IX_NAMEID, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rNameId), ip);
+		// Vi vill inte använda nameId/nameAuth längre, utan slå ihop dem till IX_AGENT
+		// För att inte spara dem i dokumentet skickar vi inte med ip
+		String nameId = extractSingleValue(model, cS, getURIRef(uri_rNameId), null);
+		String nameAuth = extractSingleValue(model, cS, getURIRef(uri_rNameAuth), null);
 
-		ip.setCurrent(IX_NAMEAUTH, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rNameAuth), ip);
+		// Slå ihop dem och lägg till i doc
+		if (nameAuth != null) {
+			if (!nameAuth.endsWith("/")) {
+				nameAuth += ("/");
+			}
+			if (nameId != null) {
+				String agent = nameAuth + nameId;
+				ip.addToDoc(IX_AGENT, agent);
+			}
+		}
 	}
 
 	/**
@@ -751,19 +777,33 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_TOPERIODNAME, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rToPeriodName), ip);
 
-		ip.setCurrent(IX_FROMPERIODID, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rFromPeriodId), ip);
 
-		ip.setCurrent(IX_TOPERIODID, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rToPeriodId), ip);
+		// Vi vill inte använda fromPeriodId/toPeriodId/periodAuth längre, utan slå ihop dem till IX_FROMPERIOD respektive IX_TOPERIOD
+		// För att inte spara dem i dokumentet skickar vi inte med ip
+		String fromPeriodId = extractSingleValue(model, cS, getURIRef(uri_rFromPeriodId), null);
+		String toPeriodId = extractSingleValue(model, cS, getURIRef(uri_rToPeriodId), null);
+		String periodAuth = extractSingleValue(model, cS, getURIRef(uri_rPeriodAuth), null);
 
-		ip.setCurrent(IX_PERIODAUTH, contextTypes);
-		extractSingleValue(model, cS, getURIRef(uri_rPeriodAuth), ip);
+		// Slå ihop dem och spara dem i doc
+		if (periodAuth != null) {
+			if (!periodAuth.endsWith("/")) {
+				periodAuth += "/";
+			}
+			if (fromPeriodId != null) {
+				String fromPeriod = periodAuth + fromPeriodId;
+				ip.addToDoc(IX_FROMPERIOD, fromPeriod);
+			}
+			if (toPeriodId != null) {
+				String toPeriod = periodAuth + toPeriodId;
+				ip.addToDoc(IX_TOPERIOD, toPeriod);
+			}
+		}
 
 		ip.setCurrent(IX_EVENTNAME, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rEventName), ip);
 
-		ip.setCurrent(IX_EVENTAUTH, contextTypes);
+		// Vi vill översätta eventauth till event, så vi skickar med IX_EVENT här istället för IX_EVENTAUTH
+		ip.setCurrent(IX_EVENT, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rEventAuth), ip);
 	}
 
