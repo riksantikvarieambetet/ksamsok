@@ -1,5 +1,16 @@
 package se.raa.ksamsok.harvest;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.HashMap;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,18 +20,13 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.lucene.SamsokProtocol;
 import se.raa.ksamsok.lucene.SamsokUriPrefix;
 
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.util.HashMap;
+
+
 
 /**
  * Handler för xml-parsning som lagrar poster i repositoryt och gör commit med jämna mellanrum
@@ -28,6 +34,81 @@ import java.util.HashMap;
  * för RawWrite, dvs i princip OAI-PMH med en omslutande tagg.
  */
 public class OAIPMHHandler extends DefaultHandler {
+
+
+	/**
+ * 
+ * Exempel på tagg som har flera "second parts":
+ *		
+ *		<soch:toPeriodId>Vikingatid</soch:toPeriodId>
+ *		<soch:periodAuth>http://kulturarvsdata.se/resurser/aukt/srdb/period#V</soch:periodAuth>
+ *		<soch:fromPeriodId>Vikingatid</soch:fromPeriodId>
+ * 
+ * Ovanstånde ska slås ihop till två separata taggar:
+ * 
+ * 		<soch:toPeriod>http://kulturarvsdata.se/resurser/aukt/srdb/period#V/Vikingatid</soch:toPeriod>
+ *		<soch:fromPeriod>http://kulturarvsdata.se/resurser/aukt/srdb/period#V/Vikingatid</soch:fromPeriodId>
+ * 
+ * 
+ */
+private class DeprecatedTagValues {
+	String nameAuth;
+	String nameId;
+	String placeAuth;
+	String placeId;
+	String periodAuth;
+	String fromPeriodId;
+	String toPeriodId;
+
+	public DeprecatedTagValues() {
+	}
+
+	public String getNameAuth() {
+		return nameAuth;
+	}
+	public void setNameAuth(String nameAuth) {
+		this.nameAuth = nameAuth;
+	}
+	public String getNameId() {
+		return nameId;
+	}
+	public void setNameId(String nameId) {
+		this.nameId = nameId;
+	}
+	public String getPlaceAuth() {
+		return placeAuth;
+	}
+	public void setPlaceAuth(String placeAuth) {
+		this.placeAuth = placeAuth;
+	}
+	public String getPlaceId() {
+		return placeId;
+	}
+	public void setPlaceId(String placeId) {
+		this.placeId = placeId;
+	}
+	public String getPeriodAuth() {
+		return periodAuth;
+	}
+	public void setPeriodAuth(String periodAuth) {
+		this.periodAuth = periodAuth;
+	}
+	public String getFromPeriodId() {
+		return fromPeriodId;
+	}
+	public void setFromPeriodId(String fromPeriodId) {
+		this.fromPeriodId = fromPeriodId;
+	}
+	public String getToPeriodId() {
+		return toPeriodId;
+	}
+	public void setToPeriodId(String toPeriodId) {
+		this.toPeriodId = toPeriodId;
+	}
+}
+
+private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new HashMap<>();
+
 
 	// antal databasoperationer innan en commit görs
 	private static final int XACT_LIMIT = 1000;
@@ -42,6 +123,8 @@ public class OAIPMHHandler extends DefaultHandler {
 	String oaiURI;
 	Timestamp datestamp;
 	int mode = 0;
+	private int level = 0;
+	private int ongoingDeprecatedTagFoundOnLevel = -1;
 	private boolean deleteRecord;
 	private final StringBuffer buf = new StringBuffer();
 	private final HashMap<String, String> prefixMap = new HashMap<>();
@@ -114,7 +197,8 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
-			switch (mode) {
+		level++;
+		switch (mode) {
 			case NORMAL:
 				if ("record".equals(name)) {
 					// byt till "record-mode"
@@ -153,8 +237,58 @@ public class OAIPMHHandler extends DefaultHandler {
 				break;
 			case COPY:
 				// i "copy-mode" kopiera hela taggen som den är
+
+
+				// Deprecated URI:er ska skrivas om till nya	
+				String fullUri = uri+localName;
+		
+
+				if (deprecatedUris.contains(fullUri)) {
+
+					// hantera i endElement?
+					return;
+
+					// hitta deprecatedValues från en nivå upp - från den omslutande taggen
+					DeprecatedTagValues deprecatedTagValues = deprecatedTagValuesByLevel.get(level - 1);
+					if (deprecatedTagValues == null) {
+						deprecatedTagValues = new DeprecatedTagValues();
+						deprecatedTagValuesByLevel.put(level - 1, deprecatedTagValues);
+					}
+				}
+
+				switch (fullUri) {
+					case SamsokProtocol.uri_rFromPeriodId.toString():
+						
+						break;
+				
+					default:
+						break;
+				}
+
+				if (SamsokProtocol.uri_rFromPeriodId.toString().equals(fullUri))  {
+
+					
+
+					if (ongoingDeprecatedTagFoundOnLevel != -1) {
+						// we're still on the same level in the xml, let's try to find matches
+						String match = tryToFindMatchOnLevel(level, fullUri);
+
+						if (match != null) {
+							// found, let's create the new one
+							String newUri = lookupNewUri();
+							
+						}
+
+					} else {
+						// this is a new deprecated tag
+						ongoingDeprecatedTagFoundOnLevel = level;
+					}
+				}	
+
+
 				// correct faulty uri:s from local nodes
 				uri = correctFaultyUris(uri);
+
 				try {
 					xxmlw.writeStartElement(uri, localName);
 				}  catch (Exception e) {
@@ -162,6 +296,8 @@ public class OAIPMHHandler extends DefaultHandler {
 					logger.error(errMsg);
 					throw new SAXException(errMsg, e);
 				}
+
+				
 				if (prefixMap.size() > 0) {
 					for (String prefix : prefixMap.keySet()) {
 						try {
@@ -192,7 +328,7 @@ public class OAIPMHHandler extends DefaultHandler {
 					throw new SAXException(errMsg, e);
 				}
 				break;
-			}
+		}
 	}
 
 	private String correctFaultyUris(String uri) {
@@ -265,6 +401,55 @@ public class OAIPMHHandler extends DefaultHandler {
 						throw new SAXException(e);
 					}
 				} else {
+					// Deprecated URI:er ska skrivas om till nya	
+					String fullUri = uri+localName;
+		
+
+					if (deprecatedUris.contains(fullUri)) {
+
+
+						// hitta deprecatedValues från en nivå upp - från den omslutande taggen
+						DeprecatedTagValues deprecatedTagValues = deprecatedTagValuesByLevel.get(level - 1);
+						if (deprecatedTagValues == null) {
+							deprecatedTagValues = new DeprecatedTagValues();
+							deprecatedTagValuesByLevel.put(level - 1, deprecatedTagValues);
+						}
+
+						switch (fullUri) {
+							case SamsokProtocol.uri_rFromPeriodId.toString():
+								// kolla om vi har "den andra delen" deprecatedTagValues
+								String value = deprecatedTagValues.getPeriodAuth();
+								if (!StringUtils.isEmpty(value)) {
+									// vi har redan den andra delen, dags att slå ihop och skriva ut
+									
+									String newLocalName = "fromPeriod"
+									try {
+										xxmlw.writeStartElement(uri, newLocalName);
+									}  catch (Exception e) {
+										String errMsg = "Error when writing start element on uri: " + uri + ", newLocalName: " + newLocalName + ", name: " + name;
+										logger.error(errMsg);
+										throw new SAXException(errMsg, e);
+									}
+									// innehåll i taggen och avsluta taggen
+									try {
+										xxmlw.writeCharacters(value + "/" + buf.toString().trim());
+										xxmlw.writeEndElement();
+									} catch (Exception e) {
+										throw new SAXException(e);
+									}
+
+								}
+								break;
+						
+							default:
+								break;
+						}
+					}
+
+					
+
+
+
 					// kopiera
 					try {
 						xxmlw.writeCharacters(buf.toString().trim());
@@ -314,7 +499,9 @@ public class OAIPMHHandler extends DefaultHandler {
 			default:
 				logger.warn("Unexpected mode " + mode + " found in endElement for uri + " + uri);
 		}
-
+		// vi flyttar upp en nivå, ta bort alla hittade deprecatedValues på den här nivån
+		deprecatedTagValuesByLevel.remove(level);
+		level--;
 	}
 
 	@Override

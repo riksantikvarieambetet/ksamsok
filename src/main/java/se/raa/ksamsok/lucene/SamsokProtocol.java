@@ -258,7 +258,7 @@ public class SamsokProtocol {
 	static final URI uri_rToTime = URI.create(uriPrefixKSamsok + "toTime");
 	static final URI uri_rFromPeriodName = URI.create(uriPrefixKSamsok + "fromPeriodName");
 	static final URI uri_rToPeriodName = URI.create(uriPrefixKSamsok + "toPeriodName");
-	static final URI uri_rFromPeriodId = URI.create(uriPrefixKSamsok + "fromPeriodId");
+	public static final URI uri_rFromPeriodId = URI.create(uriPrefixKSamsok + "fromPeriodId");
 	static final URI uri_rToPeriodId = URI.create(uriPrefixKSamsok + "toPeriodId");
 	static final URI uri_rFromPeriod = URI.create(uriPrefixKSamsok + "fromPeriod");
 	static final URI uri_rToPeriod = URI.create(uriPrefixKSamsok + "toPeriod");
