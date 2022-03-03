@@ -26,6 +26,7 @@
     </Appenders>
     <Loggers>
         <Logger name="se.raa.ksamsok" level="info"/>
+        <Logger name="se.raa.ksamsok.harvest.SamsokOAIPMHHarvestJob" level="debug"/>
         <Root level="warn">
             <AppenderRef ref="FILE_ECS"/>
             <AppenderRef ref="FILE"/>
