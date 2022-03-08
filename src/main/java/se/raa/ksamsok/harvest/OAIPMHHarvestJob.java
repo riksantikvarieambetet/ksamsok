@@ -5,6 +5,7 @@ import ORG.oclc.oai.harvester2.verb.ListMetadataFormats;
 import ORG.oclc.oai.harvester2.verb.ListRecords;
 import ORG.oclc.oai.harvester2.verb.ListSets;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -188,14 +189,16 @@ public class OAIPMHHarvestJob extends HarvestJob {
 		int completeListSize = -1;
 		long start = System.currentTimeMillis();
 		String resumptionToken = null;
+		String serviceId = (service != null ? service.getId() : "Unknown service") + ": ";
+		if (logger == null) {
+			logger = LogManager.getLogger(OAIPMHHarvestJob.class);
+		}
 		try {
 			try {
 				os.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes(StandardCharsets.UTF_8));
 				os.write("<harvest>\n".getBytes(StandardCharsets.UTF_8));
 			} catch (IOException e) {
-				if (logger != null) {
-					logger.error("Det är problem med att skriva till ut-strömmen");
-				}
+					logger.error(serviceId + "Det är problem med att skriva till ut-strömmen");
 				throw e;
 			}
 
@@ -210,52 +213,55 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			}
 			while (listRecords != null) {
 				// kolla om vi ska avbryta
+				logger.debug(serviceId + "In start of while loop, checking for interrupt signal");
 				checkInterrupt(ss, service);// TODO
 
+				logger.debug(serviceId + "Checking for errors in records");
 				NodeList errors = listRecords.getErrors();
 				if (errors != null && errors.getLength() > 0) {
 					// inga records är inte ett "fel" egentligen
 					if ("noRecordsMatch".equals(errors.item(0).getAttributes().getNamedItem("code").getNodeValue())) {
+						logger.debug(serviceId + "Found noRecordsMatch - this is not an error");
 						c = 0;
 						break;
 					}
-					if (logger != null) {
-						logger.error("Found " + errors.getLength() + " errors");
-					}
+						logger.error(serviceId + "Found " + errors.getLength() + " errors");
 					throw new Exception(listRecords.toString());
 				}
 				try {
+					logger.debug(serviceId + "About to write listRecords to outputStream");
 					os.write(listRecords.toString().getBytes(StandardCharsets.UTF_8));
+					logger.debug(serviceId + "Done writing listRecords to outputStream");
 					os.write("\n".getBytes(StandardCharsets.UTF_8));
 				} catch (IOException e) {
-					if (logger != null) {
-
-						logger.error("Det är problem med att skriva till ut-strömmen");
-					}
+						logger.error(serviceId + "Det är problem med att skriva till ut-strömmen");
 					throw e;
 				}
 				// om token är "" betyder det ingen resumption
+				logger.debug(serviceId + "Getting resumption token");
 				resumptionToken = listRecords.getResumptionToken();
+				logger.debug(serviceId + "Found resumption token");
 				// hämta totala antalet (om det skickas) fast bara första gången
 				if (completeListSize < 0 && c == 0 && StringUtils.isNotBlank(resumptionToken)) {
 					try {
+						logger.debug(serviceId + "Getting completeListSize");
 						completeListSize = Integer.parseInt(listRecords.getSingleString(
 							"/oai20:OAI-PMH/oai20:ListRecords/oai20:resumptionToken/@completeListSize"));
 					} catch (Exception e) {
-						if (logger != null && logger.isDebugEnabled()) {
-							logger.debug("Error when fetching completeListSize", e);
-						}
+						logger.error(serviceId + "Error when fetching completeListSize", e);
 					}
 				}
 				// räkna antal
+				logger.debug(serviceId + "Getting number of records");
 				c += Integer.parseInt(
 					listRecords.getSingleString("count(/oai20:OAI-PMH/oai20:ListRecords/oai20:record)"));
 				// beräkna ungefär kvarvarande hämtningstid
+				logger.debug(serviceId + "Calculating remaining time");
 				long deltaMillis = System.currentTimeMillis() - start;
 				long aproxMillisLeft = ContentHelper.getRemainingRunTimeMillis(deltaMillis, c, completeListSize);
 
-				if (logger != null && logger.isInfoEnabled()) {
-					logger.info((service != null ? service.getId() + ": " : "") + "fetched " + c +
+				if (logger.isInfoEnabled()) {
+					logger.info(serviceId + "fetched " + c +
 						(completeListSize > 0 ? "/" + completeListSize : "") + " records so far in " +
 						ContentHelper.formatRunTime(deltaMillis) +
 						(aproxMillisLeft >= 0
@@ -264,8 +270,9 @@ public class OAIPMHHarvestJob extends HarvestJob {
 						", resumptionToken: " + resumptionToken);
 				}
 				if (ss != null) {
-
+					
 					// vi uppdaterar bara status här, logg är inte intressant för dessa
+					logger.debug(serviceId + "Updating status in ss");
 					ss.setStatusText(service,
 						"Fetching data to temp file (fetched " + c +
 							(completeListSize > 0 ? "/" + completeListSize : "") + " records)" + (aproxMillisLeft >= 0
@@ -273,21 +280,18 @@ public class OAIPMHHarvestJob extends HarvestJob {
 								: ""));
 				}
 				if (resumptionToken == null || resumptionToken.length() == 0) {
-					if (logger != null && logger.isInfoEnabled()) {
-						logger.info((service != null ? service.getId() : "") + " No resumption, harvest done");
-					}
+						logger.info(serviceId + "No resumption, harvest done");
 					listRecords = null;
 				} else {
 					listRecords = null;
 					tryNum = 0;
 					while (listRecords == null) {
 						++tryNum;
-						if (logger != null && logger.isInfoEnabled()) {
-							logger.info((service != null ? service.getId() : "") + " Trying, attempt " + tryNum +
+							logger.info(serviceId + "Trying, attempt " + tryNum +
 								" resumption with token " + resumptionToken);
-						}
 						try {
 							listRecords = new ListRecords(url, resumptionToken);
+							logger.debug(serviceId + "Returned from listing records");
 						} catch (IOException e) {
 							failedTry(tryNum, e, ss, service);
 						}
@@ -298,9 +302,7 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				os.write("</harvest>\n".getBytes(StandardCharsets.UTF_8));
 				os.flush();
 			} catch (IOException e) {
-				if (logger != null) {
-					logger.error("Det är problem med att skriva till ut-strömmen");
-				}
+					logger.error(serviceId + "Det är problem med att skriva till ut-strömmen");
 				throw e;
 			}
 			long durationMillis = System.currentTimeMillis() - start;
@@ -310,25 +312,17 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				ss.setStatusTextAndLog(service, msg);
 			}
 
-			if (logger != null && logger.isInfoEnabled()) {
-				logger.info((service != null ? service.getId() + ": " : "") + msg);
-			}
+				logger.info(serviceId + msg);
 		} catch (UnsupportedEncodingException e) {
-			if (logger != null) {
-				logger.error("Det är problem med sträng konvertering");
-			}
+				logger.error(serviceId + "Det är problem med strängkonvertering");
 			throw e;
 		} catch (IOException e) {
 			// the failedTry method is designed to be called from within a loop, not like it was here
-			if (logger != null) {
 				// logg this with exception specifically here since we want to understand better when and why this happens
-				logger.error("Unhandled IOException caught in OAIPMHHarvestjob#getRecords", e);
-			}
+				logger.error(serviceId + "Unhandled IOException caught in OAIPMHHarvestjob#getRecords", e);
 			throw e;
 		} catch (ParserConfigurationException e) {
-			if (logger != null) {
-				logger.error("Det är problem med att initiera oai-pmh parser");
-			}
+				logger.error(serviceId + "Det är problem med att initiera oai-pmh parser");
 			throw e;
 		} catch (SAXException e) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -342,14 +336,10 @@ public class OAIPMHHarvestJob extends HarvestJob {
 			}
 			throw e;
 		} catch (TransformerException e) {
-			if (logger != null) {
-				logger.error("Det är problem med att initiera oai-pmh transformern");
-			}
+				logger.error(serviceId + "Det är problem med att initiera oai-pmh transformern");
 			throw e;
 		} catch (NoSuchFieldException e) {
-			if (logger != null) {
-				logger.error("Hittade inget resumption token");
-			}
+				logger.error(serviceId + "Hittade inget resumption token");
 			throw e;
 		}
 		return c;
