@@ -99,7 +99,7 @@
     <ns5:toPeriodName>Modern tid</ns5:toPeriodName>
     <ns5:fromPeriodId>1234</ns5:fromPeriodId>
     <ns5:toPeriodId>5678</ns5:toPeriodId>
-    <ns5:periodAuth>Tidsoptimisterna</ns5:periodAuth>
+    <ns5:periodAuth>http://mis.historiska.se/rdf/period</ns5:periodAuth>
     <ns6:name>Gustav Vasa</ns6:name>
 </rdf:Description>
 <rdf:Description rdf:nodeID="bNode_4">

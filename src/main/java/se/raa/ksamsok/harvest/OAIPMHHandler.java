@@ -35,14 +35,14 @@ import se.raa.ksamsok.lucene.SamsokUriPrefix;
 public class OAIPMHHandler extends DefaultHandler {
 
 
-	private static final String VIAF = "VIAF";
-	private static final String KUNGLIGA_BIBLIOTEKET = "Kungliga biblioteket";
-	private static final String HASHTAG = "#";
-	private static final String SLASH = "/";
-	private static final String KULTURARVSDATA_PERIOD_AUTH_URI = "http://kulturarvsdata.se/resurser/aukt/srdb/period#";
-	private static final String MIS_AUTH_URI = "http://mis.historiska.se/rdf/period";
-	private static final String VIAF_AUTH_URI = "http://viaf.org/viaf";
-	private static final String LIBRIS_AUTH_URI = "http://libris.kb.se/resource/auth";
+	public static final String VIAF = "VIAF";
+	public static final String KUNGLIGA_BIBLIOTEKET = "Kungliga biblioteket";
+	public static final String HASHTAG = "#";
+	public static final String SLASH = "/";
+	public static final String KULTURARVSDATA_PERIOD_AUTH_URI = "http://kulturarvsdata.se/resurser/aukt/srdb/period#";
+	public static final String MIS_AUTH_URI = "http://mis.historiska.se/rdf/period";
+	public static final String VIAF_AUTH_URI = "http://viaf.org/viaf";
+	public static final String LIBRIS_AUTH_URI = "http://libris.kb.se/resource/auth";
 	private static final String ACTOR = "actor";
 	private static final String FROM_PERIOD = "fromPeriod";
 	private static final String TO_PERIOD = "toPeriod";
@@ -478,7 +478,7 @@ public class OAIPMHHandler extends DefaultHandler {
 								deprecatedTags.remove(NAME_ID);
 							}
 						}
-						if (localNameToUse != null) {
+						if (localNameToUse != null && authContent != null && idContent != null) {
 							// vi har ett par med både auth och id, slå ihop!
 							if (authContent
 									.startsWith(KULTURARVSDATA_PERIOD_AUTH_URI)) {
@@ -572,7 +572,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		level--;
 	}
 
-	private String fixContent(String authContent, String delimiter, String idContent) {
+	public static String fixContent(String authContent, String delimiter, String idContent) {
 		String contentToUse;
 		contentToUse = authContent;
 

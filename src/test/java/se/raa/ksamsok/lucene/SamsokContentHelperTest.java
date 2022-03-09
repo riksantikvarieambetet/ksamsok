@@ -7,6 +7,7 @@ import org.junit.Test;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
+import se.raa.ksamsok.harvest.OAIPMHHandler;
 
 import java.util.Collection;
 import java.util.Date;
@@ -202,7 +203,7 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 				"Kung", "Smed"	
 		}, 2);
 		singleValueIndexAssert(doc, ContentHelper.IX_FULLNAME, "Gustav Vasa");
-		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, "VIAF/59878606");
+		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, OAIPMHHandler.VIAF_AUTH_URI + "/59878606");
 		
 
 		// kontext, tid
@@ -232,8 +233,8 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODNAME, "Omodern tid");
 		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODNAME, "Modern tid");
 
-		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIOD, "Tidsoptimisterna/1234");
-		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIOD, "Tidsoptimisterna/5678");
+		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#1234");
+		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#5678");
 
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTNAME, "Hj\u00e4lmhamrande");
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENT, "Hj\u00e4lmhamrarf\u00f6rbundet");
@@ -437,7 +438,7 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 				"Kung", "Smed"	
 		}, 2);
 		singleValueIndexAssert(doc, ContentHelper.IX_FULLNAME, "Gustav Vasa");
-		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, "VIAF/59878606");
+		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, OAIPMHHandler.VIAF_AUTH_URI + "/59878606");
 
 		// kontext, tid
 		multipleValueIndexAssert(doc, ContentHelper.IX_FROMTIME, new String[] {
@@ -468,8 +469,8 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODNAME, "Omodern tid");
 		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODNAME, "Modern tid");
 
-		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIOD, "Tidsoptimisterna/1234");
-		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIOD, "Tidsoptimisterna/5678");
+		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#1234");
+		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#5678");
 
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTNAME, "Hj\u00e4lmhamrande");
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENT, "Hj\u00e4lmhamrarf\u00f6rbundet");

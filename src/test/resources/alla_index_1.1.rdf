@@ -105,7 +105,7 @@
     <ns5:toPeriodName>Modern tid</ns5:toPeriodName>
     <ns5:fromPeriodId>1234</ns5:fromPeriodId>
     <ns5:toPeriodId>5678</ns5:toPeriodId>
-    <ns5:periodAuth>Tidsoptimisterna</ns5:periodAuth>
+    <ns5:periodAuth>http://mis.historiska.se/rdf/period</ns5:periodAuth>
     <ns6:name>Gustav Vasa</ns6:name>
     <crm:P49F.has_former_or_current_keeper rdf:resource="http://kulturarvsdata.se/raa/test/19" />
     <crm:P51F.has_former_or_current_owner rdf:resource="http://kulturarvsdata.se/raa/test/20" />

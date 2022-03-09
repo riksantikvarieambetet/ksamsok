@@ -6,8 +6,6 @@ import org.apache.jena.rdf.model.Resource;
 import java.util.List;
 
 import static se.raa.ksamsok.lucene.ContentHelper.*;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIODNAME;
-import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
 import static se.raa.ksamsok.lucene.RDFUtil.extractValue;
 import static se.raa.ksamsok.lucene.SamsokProtocol.*;
 
@@ -42,6 +40,7 @@ public class SamsokProtocolHandler_1_3_0 extends SamsokProtocolHandler_1_2_0 {
     protected void extractContextActorInformation(Resource cS, String[] contextTypes, List<String> relations) throws Exception {
         super.extractContextActorInformation(cS, contextTypes, relations);
 
+        // Vi ska även ta hand om agent här
         ip.setCurrent(IX_AGENT, contextTypes, false, null);
         extractValue(model, cS, getURIRef(uri_rAgent), ip);
     }

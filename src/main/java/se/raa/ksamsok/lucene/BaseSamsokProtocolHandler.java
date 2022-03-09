@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import se.raa.ksamsok.harvest.HarvestService;
+import se.raa.ksamsok.harvest.OAIPMHHandler;
 import se.raa.ksamsok.lucene.exception.SamsokProtocolException;
 
 import java.net.URI;
@@ -40,7 +41,6 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_EVENT;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_EVENTNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FIRSTNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMPERIOD;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMPERIODID;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMPERIODNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FROMTIME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_FULLNAME;
@@ -74,7 +74,6 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_NAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_ORGANIZATION;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PARISH;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PARISHNAME;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_PERIODAUTH;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PLACENAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PLACETERM;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_PROVINCE;
@@ -91,7 +90,6 @@ import static se.raa.ksamsok.lucene.ContentHelper.IX_THUMBNAIL_SOURCE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TIMEINFOEXISTS;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TITLE;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIOD;
-import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIODID;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOPERIODNAME;
 import static se.raa.ksamsok.lucene.ContentHelper.IX_TOTIME;
 import static se.raa.ksamsok.lucene.ContentHelper.addProblemMessage;
@@ -610,6 +608,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		String placeTermAuth = extractSingleValue(model, cS, getURIRef(uri_rPlaceTermAuth), null);
 
 		// Slå ihop dem och lägg till i doc
+		// Note: vi vet inte hur de ser ut på riktigt, vi antar att de har slash på slutet
 		if (placeTermAuth != null) {
 			if (!placeTermAuth.endsWith("/")) {
 				placeTermAuth += ("/");
@@ -619,7 +618,7 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 				ip.addToDoc(IX_PLACETERM, placeTerm);
 			}
 		}
-
+ 
 
 
 		
@@ -710,21 +709,28 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		ip.setCurrent(IX_TITLE, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rTitle), ip);
 
-		// Vi vill inte använda nameId/nameAuth längre, utan slå ihop dem till IX_AGENT
+	 	// Vi vill inte använda nameId/nameAuth längre, utan slå ihop dem till IX_AGENT
 		// För att inte spara dem i dokumentet skickar vi inte med ip
 		String nameId = extractSingleValue(model, cS, getURIRef(uri_rNameId), null);
 		String nameAuth = extractSingleValue(model, cS, getURIRef(uri_rNameAuth), null);
 
 		// Slå ihop dem och lägg till i doc
-		if (nameAuth != null) {
-			if (!nameAuth.endsWith("/")) {
-				nameAuth += ("/");
+		if (nameAuth != null && nameId != null) {
+			String agent = null;
+			if (nameAuth.startsWith(OAIPMHHandler.LIBRIS_AUTH_URI)) {
+				// slå ihop med id-content
+				agent = OAIPMHHandler.fixContent(nameAuth, OAIPMHHandler.SLASH, nameId);
+			} else if (nameAuth.equals(OAIPMHHandler.KUNGLIGA_BIBLIOTEKET)) {
+				// Byt ut mot libris och slå ihop med id-content
+				agent = OAIPMHHandler.fixContent(OAIPMHHandler.LIBRIS_AUTH_URI, OAIPMHHandler.SLASH, nameId);
+			} else if (nameAuth.equals(OAIPMHHandler.VIAF)) {
+				// Byt ut mot viaf-url och slå ihop med id-content
+				agent = OAIPMHHandler.fixContent(OAIPMHHandler.VIAF_AUTH_URI, OAIPMHHandler.SLASH, nameId);
 			}
-			if (nameId != null) {
-				String agent = nameAuth + nameId;
+			if (agent != null) {
 				ip.addToDoc(IX_AGENT, agent);
 			}
-		}
+		} 
 	}
 
 	/**
@@ -786,19 +792,25 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 
 		// Slå ihop dem och spara dem i doc
 		if (periodAuth != null) {
-			if (!periodAuth.endsWith("/")) {
-				periodAuth += "/";
+			String fromPeriod = null;
+			String toPeriod = null;
+			if (periodAuth.startsWith(OAIPMHHandler.KULTURARVSDATA_PERIOD_AUTH_URI)) {
+				// de här ska behållas som de är
+				fromPeriod = periodAuth;
+				toPeriod = periodAuth;
+			} else if (periodAuth.startsWith(OAIPMHHandler.MIS_AUTH_URI)) {
+				// Slå ihop med id-content
+				fromPeriod = OAIPMHHandler.fixContent(periodAuth, OAIPMHHandler.HASHTAG, fromPeriodId);
+				toPeriod = OAIPMHHandler.fixContent(periodAuth, OAIPMHHandler.HASHTAG, toPeriodId);
 			}
-			if (fromPeriodId != null) {
-				String fromPeriod = periodAuth + fromPeriodId;
+			if (fromPeriod != null) {
 				ip.addToDoc(IX_FROMPERIOD, fromPeriod);
 			}
-			if (toPeriodId != null) {
-				String toPeriod = periodAuth + toPeriodId;
+			if (toPeriod != null) {
 				ip.addToDoc(IX_TOPERIOD, toPeriod);
 			}
-		}
-
+		} 
+		
 		ip.setCurrent(IX_EVENTNAME, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rEventName), ip);
 
