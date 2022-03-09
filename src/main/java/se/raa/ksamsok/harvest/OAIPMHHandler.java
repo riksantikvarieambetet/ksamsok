@@ -43,7 +43,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	public static final String MIS_AUTH_URI = "http://mis.historiska.se/rdf/period";
 	public static final String VIAF_AUTH_URI = "http://viaf.org/viaf";
 	public static final String LIBRIS_AUTH_URI = "http://libris.kb.se/resource/auth";
-	private static final String ACTOR = "actor";
+	private static final String AGENT = "agent";
 	private static final String FROM_PERIOD = "fromPeriod";
 	private static final String TO_PERIOD = "toPeriod";
 	private static final String NAME_ID = "nameId";
@@ -471,7 +471,7 @@ public class OAIPMHHandler extends DefaultHandler {
 							nameToUse = nameAuthTag.getName();
 							if (nameIdTag != null) {
 								// Skapa en "http://kulturarvsdata.se/ksamsok#agent"-tagg istället för nameAuth+nameId-taggarna
-								localNameToUse = ACTOR;
+								localNameToUse = AGENT;
 								idContent = nameIdTag.getContent();
 
 								// vi måste ta bort den här från mappen så vi inte använder den igen nästa iteration
