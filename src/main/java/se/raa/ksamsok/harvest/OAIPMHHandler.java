@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 
 import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +22,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.SamsokProtocol;
 import se.raa.ksamsok.lucene.SamsokUriPrefix;
 
 
@@ -43,7 +41,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	private static final String SLASH = "/";
 	private static final String KULTURARVSDATA_PERIOD_AUTH_URI = "http://kulturarvsdata.se/resurser/aukt/srdb/period#";
 	private static final String MIS_AUTH_URI = "http://mis.historiska.se/rdf/period";
-	private static final String VIAF_AUTH_URI = "http://viaf.org/viaf/";
+	private static final String VIAF_AUTH_URI = "http://viaf.org/viaf";
 	private static final String LIBRIS_AUTH_URI = "http://libris.kb.se/resource/auth";
 	private static final String ACTOR = "actor";
 	private static final String FROM_PERIOD = "fromPeriod";
@@ -72,7 +70,6 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	private class DeprecatedTag {
 		String uri;
-		String localName;
 		String name;
 		Attributes attributes;
 		String content;
@@ -82,12 +79,6 @@ public class OAIPMHHandler extends DefaultHandler {
 		}
 		public void setUri(String uri) {
 			this.uri = uri;
-		}
-		public String getLocalName() {
-			return localName;
-		}
-		public void setLocalName(String localName) {
-			this.localName = localName;
 		}
 		public String getName() {
 			return name;
@@ -128,7 +119,6 @@ public class OAIPMHHandler extends DefaultHandler {
 	Timestamp datestamp;
 	int mode = 0;
 	private int level = 0;
-	private int ongoingDeprecatedTagFoundOnLevel = -1;
 	private boolean deleteRecord;
 	private final StringBuffer buf = new StringBuffer();
 	private final HashMap<String, String> prefixMap = new HashMap<>();
@@ -403,7 +393,7 @@ public class OAIPMHHandler extends DefaultHandler {
 						throw new SAXException(e);
 					}
 				} else {
-					// Deprecated URI:er ska skrivas om till nya
+					// Kolla om URI:ns localName innehåller någon av de deprekerade som ska skrivas om till nya
 
 					if (PERIOD_AUTH.equals(localName) ||
 							TO_PERIOD_ID.equals(localName) ||
@@ -429,12 +419,14 @@ public class OAIPMHHandler extends DefaultHandler {
 							throw new SAXException("Missing expected deprecatedTag for " + localName);
 						}
 
-						// läs ut värdet på buf (tecken som står mellan taggarna)
+						// läs ut värdet på buf (här finns strängen som står mellan taggarna; content)
 						String content = buf.toString().trim();
 
-						// skriv content i deprecatedTag, ifall vi behöver det nästa varv
+						// skriv content i deprecatedTag, 
+						// ifall vi behöver det nästa varv
 						deprecatedTag.setContent(content);
 
+						// Hämta alla deprecated tags som vi sett på den här nivån
 						DeprecatedTag periodAuthTag = deprecatedTags.get(PERIOD_AUTH);
 						DeprecatedTag fromPeriodIdTag = deprecatedTags.get(FROM_PERIOD_ID);
 						DeprecatedTag toPeriodIdTag = deprecatedTags.get(TO_PERIOD_ID);
@@ -449,22 +441,27 @@ public class OAIPMHHandler extends DefaultHandler {
 						Attributes attributesToUse = null;
 						String authContent = null;
 
+						// Räkna ut vilka värden vi ska använda
 						if (periodAuthTag != null) {
 							uriToUse = periodAuthTag.getUri();
 							attributesToUse = periodAuthTag.getAttributes();
 							authContent = periodAuthTag.getContent();
 							nameToUse = periodAuthTag.getName();
+
 							if (toPeriodIdTag != null) {
+
+								// Skapa en "http://kulturarvsdata.se/ksamsok#toPeriod"-tagg istället för periodAuth+toPeriodId-taggarna
 								localNameToUse = TO_PERIOD;
 								idContent = toPeriodIdTag.getContent();
 
-								// we have to remove this tag from the map so we don't use it again next iteration
+								// vi måste ta bort den här från mappen så vi inte använder den igen nästa iteration
 								deprecatedTags.remove(TO_PERIOD_ID);
 							} else if (fromPeriodIdTag != null) {
+								// Skapa en "http://kulturarvsdata.se/ksamsok#fromPeriod"-tagg istället för periodAuth+fromPeriod-taggarna
 								localNameToUse = FROM_PERIOD;
 								idContent = fromPeriodIdTag.getContent();
 								
-								// we have to remove this tag from the map so we don't use it again next iteration
+								// vi måste ta bort den här från mappen så vi inte använder den igen nästa iteration
 								deprecatedTags.remove(FROM_PERIOD_ID);
 							}
 						} else if (nameAuthTag != null) {
@@ -473,10 +470,11 @@ public class OAIPMHHandler extends DefaultHandler {
 							authContent = nameAuthTag.getContent();
 							nameToUse = nameAuthTag.getName();
 							if (nameIdTag != null) {
+								// Skapa en "http://kulturarvsdata.se/ksamsok#agent"-tagg istället för nameAuth+nameId-taggarna
 								localNameToUse = ACTOR;
 								idContent = nameIdTag.getContent();
 
-								// we have to remove this tag from the map so we don't use it again next iteration
+								// vi måste ta bort den här från mappen så vi inte använder den igen nästa iteration
 								deprecatedTags.remove(NAME_ID);
 							}
 						}
@@ -489,38 +487,16 @@ public class OAIPMHHandler extends DefaultHandler {
 								contentToUse = authContent;
 							} else if (authContent.startsWith(MIS_AUTH_URI)) {
 								// slå ihop med id-content
-								contentToUse = authContent;
-
-								// se till att det finns ett "#"
-								if (!contentToUse.endsWith(HASHTAG)) {
-									contentToUse += HASHTAG;
-								}
-
-								// och lägg till content från periodId-taggen
-								contentToUse += idContent;
+								contentToUse = fixContent(authContent, HASHTAG, idContent);
 							} else if (authContent.startsWith(LIBRIS_AUTH_URI)) {
 								// slå ihop med id-content
-								contentToUse = authContent;
-
-								// se till att det finns ett "/"
-								if (!contentToUse.endsWith(SLASH)) {
-									contentToUse += SLASH;
-								}
-
-								// och lägg till content från nameId-taggen
-								contentToUse += idContent;
+								contentToUse = fixContent(authContent, SLASH, idContent);
 							} else if (authContent.equals(KUNGLIGA_BIBLIOTEKET)) {
 								// Byt ut mot libris och slå ihop med id-content
-								contentToUse = LIBRIS_AUTH_URI + SLASH;
-
-								// och lägg till content från nameId-taggen
-								contentToUse += idContent;
+								contentToUse = fixContent(LIBRIS_AUTH_URI, SLASH, idContent);
 							} else if (authContent.equals(VIAF)) {
 								// Byt ut mot viaf-url och slå ihop med id-content
-								contentToUse = VIAF_AUTH_URI;
-
-								// och lägg till content från nameId-taggen
-								contentToUse += idContent;
+								contentToUse = fixContent(VIAF_AUTH_URI, SLASH, idContent);
 							}
 						}
 						if (contentToUse != null) {
@@ -541,7 +517,7 @@ public class OAIPMHHandler extends DefaultHandler {
 
 					} else {
 
-						// vanlig tag, kopiera
+						// det här är en vanlig tag, kopiera som den är
 						try {
 							xxmlw.writeCharacters(buf.toString().trim());
 							xxmlw.writeEndElement();
@@ -594,6 +570,20 @@ public class OAIPMHHandler extends DefaultHandler {
 		// vi flyttar upp en nivå, ta bort alla hittade deprecatedValues nivån under
 		deprecatedTagsByLevel.remove(level + 1);
 		level--;
+	}
+
+	private String fixContent(String authContent, String delimiter, String idContent) {
+		String contentToUse;
+		contentToUse = authContent;
+
+		// se till att det finns ett "#"
+		if (!contentToUse.endsWith(delimiter)) {
+			contentToUse += delimiter;
+		}
+
+		// och lägg till content från periodId-taggen
+		contentToUse += idContent;
+		return contentToUse;
 	}
 
 	
