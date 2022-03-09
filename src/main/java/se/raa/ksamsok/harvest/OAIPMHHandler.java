@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 
 import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +37,23 @@ import se.raa.ksamsok.lucene.SamsokUriPrefix;
 public class OAIPMHHandler extends DefaultHandler {
 
 
+	private static final String VIAF = "VIAF";
+	private static final String KUNGLIGA_BIBLIOTEKET = "Kungliga biblioteket";
+	private static final String HASHTAG = "#";
+	private static final String SLASH = "/";
+	private static final String KULTURARVSDATA_PERIOD_AUTH_URI = "http://kulturarvsdata.se/resurser/aukt/srdb/period#";
+	private static final String MIS_AUTH_URI = "http://mis.historiska.se/rdf/period";
+	private static final String VIAF_AUTH_URI = "http://viaf.org/viaf/";
+	private static final String LIBRIS_AUTH_URI = "http://libris.kb.se/resource/auth";
+	private static final String ACTOR = "actor";
+	private static final String FROM_PERIOD = "fromPeriod";
+	private static final String TO_PERIOD = "toPeriod";
+	private static final String NAME_ID = "nameId";
+	private static final String NAME_AUTH = "nameAuth";
+	private static final String TO_PERIOD_ID = "toPeriodId";
+	private static final String FROM_PERIOD_ID = "fromPeriodId";
+	private static final String PERIOD_AUTH = "periodAuth";
+
 	/**
  * 
  * Exempel på tagg som har flera "second parts":
@@ -51,63 +69,49 @@ public class OAIPMHHandler extends DefaultHandler {
  * 
  * 
  */
-private class DeprecatedTagValues {
-	String nameAuth;
-	String nameId;
-	String placeAuth;
-	String placeId;
-	String periodAuth;
-	String fromPeriodId;
-	String toPeriodId;
 
-	public DeprecatedTagValues() {
+	private class DeprecatedTag {
+		String uri;
+		String localName;
+		String name;
+		Attributes attributes;
+		String content;
+		
+		public String getUri() {
+			return uri;
+		}
+		public void setUri(String uri) {
+			this.uri = uri;
+		}
+		public String getLocalName() {
+			return localName;
+		}
+		public void setLocalName(String localName) {
+			this.localName = localName;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public Attributes getAttributes() {
+			return attributes;
+		}
+		public void setAttributes(Attributes attributes) {
+			this.attributes = attributes;
+		}
+		public String getContent() {
+			return content;
+		}
+		public void setContent(String content) {
+			this.content = content;
+		}
 	}
+	
+	//private HashMap<String, DeprecatedTag> deprecatedTags = new HashMap<>();
 
-	public String getNameAuth() {
-		return nameAuth;
-	}
-	public void setNameAuth(String nameAuth) {
-		this.nameAuth = nameAuth;
-	}
-	public String getNameId() {
-		return nameId;
-	}
-	public void setNameId(String nameId) {
-		this.nameId = nameId;
-	}
-	public String getPlaceAuth() {
-		return placeAuth;
-	}
-	public void setPlaceAuth(String placeAuth) {
-		this.placeAuth = placeAuth;
-	}
-	public String getPlaceId() {
-		return placeId;
-	}
-	public void setPlaceId(String placeId) {
-		this.placeId = placeId;
-	}
-	public String getPeriodAuth() {
-		return periodAuth;
-	}
-	public void setPeriodAuth(String periodAuth) {
-		this.periodAuth = periodAuth;
-	}
-	public String getFromPeriodId() {
-		return fromPeriodId;
-	}
-	public void setFromPeriodId(String fromPeriodId) {
-		this.fromPeriodId = fromPeriodId;
-	}
-	public String getToPeriodId() {
-		return toPeriodId;
-	}
-	public void setToPeriodId(String toPeriodId) {
-		this.toPeriodId = toPeriodId;
-	}
-}
-
-private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new HashMap<>();
+	private HashMap<Integer, HashMap<String, DeprecatedTag>> deprecatedTagsByLevel = new HashMap<>();
 
 
 	// antal databasoperationer innan en commit görs
@@ -197,7 +201,10 @@ private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new H
 
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
+		
+		// ny nivå i xml:en, håll reda på level
 		level++;
+
 		switch (mode) {
 			case NORMAL:
 				if ("record".equals(name)) {
@@ -239,95 +246,88 @@ private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new H
 				// i "copy-mode" kopiera hela taggen som den är
 
 
-				// Deprecated URI:er ska skrivas om till nya	
-				String fullUri = uri+localName;
-		
-
-				if (deprecatedUris.contains(fullUri)) {
-
-					// hantera i endElement?
-					return;
-
-					// hitta deprecatedValues från en nivå upp - från den omslutande taggen
-					DeprecatedTagValues deprecatedTagValues = deprecatedTagValuesByLevel.get(level - 1);
-					if (deprecatedTagValues == null) {
-						deprecatedTagValues = new DeprecatedTagValues();
-						deprecatedTagValuesByLevel.put(level - 1, deprecatedTagValues);
-					}
-				}
-
-				switch (fullUri) {
-					case SamsokProtocol.uri_rFromPeriodId.toString():
-						
-						break;
-				
-					default:
-						break;
-				}
-
-				if (SamsokProtocol.uri_rFromPeriodId.toString().equals(fullUri))  {
-
-					
-
-					if (ongoingDeprecatedTagFoundOnLevel != -1) {
-						// we're still on the same level in the xml, let's try to find matches
-						String match = tryToFindMatchOnLevel(level, fullUri);
-
-						if (match != null) {
-							// found, let's create the new one
-							String newUri = lookupNewUri();
-							
-						}
-
-					} else {
-						// this is a new deprecated tag
-						ongoingDeprecatedTagFoundOnLevel = level;
-					}
-				}	
-
-
 				// correct faulty uri:s from local nodes
 				uri = correctFaultyUris(uri);
 
-				try {
-					xxmlw.writeStartElement(uri, localName);
-				}  catch (Exception e) {
-					String errMsg = "Error when writing start element on uri: " + uri + ", localName: " + localName + ", name: " + name;
-					logger.error(errMsg);
-					throw new SAXException(errMsg, e);
+					
+				if (PERIOD_AUTH.equals(localName) ||
+						TO_PERIOD_ID.equals(localName) ||
+						FROM_PERIOD_ID.equals(localName) ||
+						NAME_AUTH.equals(localName) ||
+						NAME_ID.equals(localName)) {
+					
+					// Deprecated URI:er ska skrivas om till nya
+					// Spara undan informationen på rätt "nivå" i xml:en
+					
+					// fetch or create deprecatedValues 
+					HashMap<String, DeprecatedTag> deprecatedTags = deprecatedTagsByLevel.get(level);
+					if (deprecatedTags == null) {
+						deprecatedTags = new HashMap<>();
+						deprecatedTagsByLevel.put(level, deprecatedTags);
+					}
+
+					DeprecatedTag deprecatedTag = new DeprecatedTag();
+					deprecatedTag.setUri(uri);
+					deprecatedTag.setName(name);
+					deprecatedTag.setAttributes(attributes);
+
+					// spara informationen med localName som nyckel
+					deprecatedTags.put(localName, deprecatedTag);
+
+					// de här ska vi inte skriva ut här, kolla i endElement vad vi ska göra med den, om något
+					return;
 				}
 
-				
-				if (prefixMap.size() > 0) {
-					for (String prefix : prefixMap.keySet()) {
-						try {
-							xxmlw.writeNamespace(prefix, prefixMap.get(prefix));
-						}  catch (Exception e) {
-							String errMsg = "Error when writing namespace on uri: " + uri + ", localName: " + localName + ", name: " + name;
-							throw new SAXException(errMsg, e);
-						}
-					}
-				}
-				prefixMap.clear();
+				_writeStartElement(uri, localName, name, attributes);
+				break;
+		}
+	}
+
+	/**
+	 * 
+	 * @param uri
+	 * @param localName
+	 * @param name Används bara för felutskrifter - behöver vi ha med det?
+	 * @param attributes
+	 * @throws SAXException
+	 */
+	private void _writeStartElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
+		try {
+			xxmlw.writeStartElement(uri, localName);
+		}  catch (Exception e) {
+			String errMsg = "Error when writing start element on uri: " + uri + ", localName: " + localName + ", name: " + name;
+			logger.error(errMsg);
+			throw new SAXException(errMsg, e);
+		}
+		
+		if (prefixMap.size() > 0) {
+			for (String prefix : prefixMap.keySet()) {
 				try {
-					if (attributes != null && attributes.getLength() > 0) {
-						for (int i = 0; i < attributes.getLength(); ++i) {
-							String aUri = attributes.getURI(i);
-							String lName = attributes.getLocalName(i);
-							String value = attributes.getValue(i);
-							// Om ej rätt metod används blir det ett exception
-							if (aUri == null || "".equals(aUri)) {
-								xxmlw.writeAttribute(lName, value);
-							} else {
-								xxmlw.writeAttribute(aUri, lName, value);
-							}
-						}
-					}
-				} catch (Exception e) {
-					String errMsg = "Error when extracting attributes on uri: " + uri + ", localName: " + localName + ", name: " + name;
+					xxmlw.writeNamespace(prefix, prefixMap.get(prefix));
+				}  catch (Exception e) {
+					String errMsg = "Error when writing namespace on uri: " + uri + ", localName: " + localName + ", name: " + name;
 					throw new SAXException(errMsg, e);
 				}
-				break;
+			}
+		}
+		prefixMap.clear();
+		try {
+			if (attributes != null && attributes.getLength() > 0) {
+				for (int i = 0; i < attributes.getLength(); ++i) {
+					String aUri = attributes.getURI(i);
+					String lName = attributes.getLocalName(i);
+					String value = attributes.getValue(i);
+					// Om ej rätt metod används blir det ett exception
+					if (aUri == null || "".equals(aUri)) {
+						xxmlw.writeAttribute(lName, value);
+					} else {
+						xxmlw.writeAttribute(aUri, lName, value);
+					}
+				}
+			}
+		} catch (Exception e) {
+			String errMsg = "Error when extracting attributes on uri: " + uri + ", localName: " + localName + ", name: " + name;
+			throw new SAXException(errMsg, e);
 		}
 	}
 
@@ -382,8 +382,10 @@ private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new H
 
 	@Override
 	public void endElement(String uri, String localName, String name) throws SAXException {
-		// TODO: if uri is ever used in this method, it needs to be run through correctFaultyUris,
-		// but it's unnecessary as long as this method doesn't do anything with the uri:s
+		// TODO: if uri is ever used in this method, it needs to be run through
+		// correctFaultyUris,
+		// but it's unnecessary as long as this method doesn't do anything with the
+		// uri:s
 		switch (mode) {
 			case COPY:
 				if ("metadata".equals(name)) {
@@ -401,61 +403,151 @@ private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new H
 						throw new SAXException(e);
 					}
 				} else {
-					// Deprecated URI:er ska skrivas om till nya	
-					String fullUri = uri+localName;
-		
+					// Deprecated URI:er ska skrivas om till nya
 
-					if (deprecatedUris.contains(fullUri)) {
+					if (PERIOD_AUTH.equals(localName) ||
+							TO_PERIOD_ID.equals(localName) ||
+							FROM_PERIOD_ID.equals(localName) ||
+							NAME_AUTH.equals(localName) ||
+							NAME_ID.equals(localName)) {
 
+						// Deprecated URI:er ska skrivas om till nya
 
-						// hitta deprecatedValues från en nivå upp - från den omslutande taggen
-						DeprecatedTagValues deprecatedTagValues = deprecatedTagValuesByLevel.get(level - 1);
-						if (deprecatedTagValues == null) {
-							deprecatedTagValues = new DeprecatedTagValues();
-							deprecatedTagValuesByLevel.put(level - 1, deprecatedTagValues);
+						// fetch or create deprecatedValues
+						HashMap<String, DeprecatedTag> deprecatedTags = deprecatedTagsByLevel.get(level);
+						if (deprecatedTags == null) {
+							deprecatedTags = new HashMap<>();
+							deprecatedTagsByLevel.put(level, deprecatedTags);
 						}
 
-						switch (fullUri) {
-							case SamsokProtocol.uri_rFromPeriodId.toString():
-								// kolla om vi har "den andra delen" deprecatedTagValues
-								String value = deprecatedTagValues.getPeriodAuth();
-								if (!StringUtils.isEmpty(value)) {
-									// vi har redan den andra delen, dags att slå ihop och skriva ut
-									
-									String newLocalName = "fromPeriod"
-									try {
-										xxmlw.writeStartElement(uri, newLocalName);
-									}  catch (Exception e) {
-										String errMsg = "Error when writing start element on uri: " + uri + ", newLocalName: " + newLocalName + ", name: " + name;
-										logger.error(errMsg);
-										throw new SAXException(errMsg, e);
-									}
-									// innehåll i taggen och avsluta taggen
-									try {
-										xxmlw.writeCharacters(value + "/" + buf.toString().trim());
-										xxmlw.writeEndElement();
-									} catch (Exception e) {
-										throw new SAXException(e);
-									}
+						DeprecatedTag deprecatedTag = deprecatedTags.get(localName);
 
+						// här borde det finnas en, annars är något knasigt
+						if (deprecatedTag == null) {
+							logger.warn("Hittar ingen deprecatedTag trots att det borde finnas för localName "
+									+ localName + ", uri " + uri + ", level " + level);
+							throw new SAXException("Missing expected deprecatedTag for " + localName);
+						}
+
+						// läs ut värdet på buf (tecken som står mellan taggarna)
+						String content = buf.toString().trim();
+
+						// skriv content i deprecatedTag, ifall vi behöver det nästa varv
+						deprecatedTag.setContent(content);
+
+						DeprecatedTag periodAuthTag = deprecatedTags.get(PERIOD_AUTH);
+						DeprecatedTag fromPeriodIdTag = deprecatedTags.get(FROM_PERIOD_ID);
+						DeprecatedTag toPeriodIdTag = deprecatedTags.get(TO_PERIOD_ID);
+						DeprecatedTag nameAuthTag = deprecatedTags.get(NAME_AUTH);
+						DeprecatedTag nameIdTag = deprecatedTags.get(NAME_ID);
+
+						String contentToUse = null;
+						String idContent = null;
+						String uriToUse = null;
+						String localNameToUse = null;
+						String nameToUse = null;
+						Attributes attributesToUse = null;
+						String authContent = null;
+
+						if (periodAuthTag != null) {
+							uriToUse = periodAuthTag.getUri();
+							attributesToUse = periodAuthTag.getAttributes();
+							authContent = periodAuthTag.getContent();
+							nameToUse = periodAuthTag.getName();
+							if (toPeriodIdTag != null) {
+								localNameToUse = TO_PERIOD;
+								idContent = toPeriodIdTag.getContent();
+
+								// we have to remove this tag from the map so we don't use it again next iteration
+								deprecatedTags.remove(TO_PERIOD_ID);
+							} else if (fromPeriodIdTag != null) {
+								localNameToUse = FROM_PERIOD;
+								idContent = fromPeriodIdTag.getContent();
+								
+								// we have to remove this tag from the map so we don't use it again next iteration
+								deprecatedTags.remove(FROM_PERIOD_ID);
+							}
+						} else if (nameAuthTag != null) {
+							uriToUse = nameAuthTag.getUri();
+							attributesToUse = nameAuthTag.getAttributes();
+							authContent = nameAuthTag.getContent();
+							nameToUse = nameAuthTag.getName();
+							if (nameIdTag != null) {
+								localNameToUse = ACTOR;
+								idContent = nameIdTag.getContent();
+
+								// we have to remove this tag from the map so we don't use it again next iteration
+								deprecatedTags.remove(NAME_ID);
+							}
+						}
+						if (localNameToUse != null) {
+							// vi har ett par med både auth och id, slå ihop!
+							if (authContent
+									.startsWith(KULTURARVSDATA_PERIOD_AUTH_URI)) {
+								// de här ska behållas som de är, men taggarna ska bytas ut mot
+								// "toPeriod/fromPeriod"
+								contentToUse = authContent;
+							} else if (authContent.startsWith(MIS_AUTH_URI)) {
+								// slå ihop med id-content
+								contentToUse = authContent;
+
+								// se till att det finns ett "#"
+								if (!contentToUse.endsWith(HASHTAG)) {
+									contentToUse += HASHTAG;
 								}
-								break;
-						
-							default:
-								break;
+
+								// och lägg till content från periodId-taggen
+								contentToUse += idContent;
+							} else if (authContent.startsWith(LIBRIS_AUTH_URI)) {
+								// slå ihop med id-content
+								contentToUse = authContent;
+
+								// se till att det finns ett "/"
+								if (!contentToUse.endsWith(SLASH)) {
+									contentToUse += SLASH;
+								}
+
+								// och lägg till content från nameId-taggen
+								contentToUse += idContent;
+							} else if (authContent.equals(KUNGLIGA_BIBLIOTEKET)) {
+								// Byt ut mot libris och slå ihop med id-content
+								contentToUse = LIBRIS_AUTH_URI + SLASH;
+
+								// och lägg till content från nameId-taggen
+								contentToUse += idContent;
+							} else if (authContent.equals(VIAF)) {
+								// Byt ut mot viaf-url och slå ihop med id-content
+								contentToUse = VIAF_AUTH_URI;
+
+								// och lägg till content från nameId-taggen
+								contentToUse += idContent;
+							}
 						}
-					}
+						if (contentToUse != null) {
+							// Börja med att starta taggen
+							_writeStartElement(uriToUse, localNameToUse,
+									nameToUse, attributesToUse);
 
-					
+							// Sedan skriver vi content
+							try {
+								xxmlw.writeCharacters(contentToUse);
 
+								// och till sist stänger vi taggen
+								xxmlw.writeEndElement();
+							} catch (Exception e) {
+								throw new SAXException(e);
+							}
+						}
 
+					} else {
 
-					// kopiera
-					try {
-						xxmlw.writeCharacters(buf.toString().trim());
-						xxmlw.writeEndElement();
-					} catch (Exception e) {
-						throw new SAXException(e);
+						// vanlig tag, kopiera
+						try {
+							xxmlw.writeCharacters(buf.toString().trim());
+							xxmlw.writeEndElement();
+						} catch (Exception e) {
+							throw new SAXException(e);
+						}
 					}
 				}
 				// återställ char-buff
@@ -472,7 +564,7 @@ private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new H
 					if (datestamp == null) {
 						datestamp = new Timestamp((ts.getTime()));
 						ContentHelper.addProblemMessage("There was a problem parsing datestamp (" + datestampStr +
-							") for record, using 'now' instead");
+								") for record, using 'now' instead");
 					}
 				} else if ("record".equals(name)) {
 					// tillbaks till "normal-mode"
@@ -499,10 +591,12 @@ private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new H
 			default:
 				logger.warn("Unexpected mode " + mode + " found in endElement for uri + " + uri);
 		}
-		// vi flyttar upp en nivå, ta bort alla hittade deprecatedValues på den här nivån
-		deprecatedTagValuesByLevel.remove(level);
+		// vi flyttar upp en nivå, ta bort alla hittade deprecatedValues nivån under
+		deprecatedTagsByLevel.remove(level + 1);
 		level--;
 	}
+
+	
 
 	@Override
 	public void characters(char[] ch, int start, int length) {
@@ -833,7 +927,7 @@ private HashMap<Integer, DeprecatedTagValues> deprecatedTagValuesByLevel = new H
 		numUpdatedXact = 0;
 		numDeletedXact = 0;
 
-		String msg = "Committed (i/u/d " + numInserted + "/" + numUpdated + "/" + numDeleted + ") " +
+		String msg = "Committed (i/u/d " + numInserted + SLASH + numUpdated + SLASH + numDeleted + ") " +
 			(numInserted + numUpdated + numDeleted) + " database changes";
 		ss.setStatusText(service, msg);
 		if (logger.isDebugEnabled()) {
