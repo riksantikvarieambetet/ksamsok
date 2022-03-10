@@ -243,10 +243,23 @@ public class SamsokProtocolHandler_1_1 extends SamsokProtocolHandler_0_TO_1_0 {
 		// TODO: göra några obligatoriska eller varna om de saknas för agenter
 		//       (supertype==agent ovan kan tex användas)
 		// nya index för agenter på toppnivå
-		ip.setCurrent(ContentHelper.IX_NAMEAUTH);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rNameAuth), ip);
-		ip.setCurrent(ContentHelper.IX_NAMEID);
-		RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rNameId), ip);
+
+		// Vi vill inte använda nameId/nameAuth längre, utan slå ihop dem till IX_AGENT
+		// För att inte spara dem i dokumentet skickar vi inte med ip
+		String nameAuth = RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rNameAuth), null);
+		String nameId = RDFUtil.extractSingleValue(model, subject, getURIRef(SamsokProtocol.uri_rNameId), null);
+
+		// Slå ihop dem och lägg till i doc
+		if (nameAuth != null) {
+			if (!nameAuth.endsWith("/")) {
+				nameAuth += ("/");
+			}
+			if (nameId != null) {
+				String agent = nameAuth + nameId;
+				ip.addToDoc(ContentHelper.IX_AGENT, agent);
+			}
+		}
+
 		// TODO: foaf:name innehåller även alternativa namn men man kanske vill ha ett separat
 		//       index för detta? foaf innehåller inget sånt tyvärr så det var därför jag stoppade
 		//       in alternativa namn i namn-fältet enligt http://viaf.org/viaf/59878606/rdf.xml

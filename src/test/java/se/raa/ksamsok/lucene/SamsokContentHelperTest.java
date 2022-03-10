@@ -7,6 +7,7 @@ import org.junit.Test;
 import se.raa.ksamsok.harvest.ExtractedInfo;
 import se.raa.ksamsok.harvest.HarvestService;
 import se.raa.ksamsok.harvest.HarvestServiceImpl;
+import se.raa.ksamsok.harvest.OAIPMHHandler;
 
 import java.util.Collection;
 import java.util.Date;
@@ -176,8 +177,7 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		// kontext, plats
 		singleValueIndexAssert(doc, ContentHelper.IX_PLACENAME, "Stockholm");
 		singleValueIndexAssert(doc, ContentHelper.IX_CADASTRALUNIT, "Stockholm 1:1");
-		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERMID, "4711");
-		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERMAUTH, "Vaktm\u00e4staren");
+		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERM, "Vaktm\u00e4staren/4711");
 		singleValueIndexAssert(doc, ContentHelper.IX_CONTINENTNAME, "Europa");
 		singleValueIndexAssert(doc, ContentHelper.IX_COUNTRYNAME, "Sverige");
 		singleValueIndexAssert(doc, ContentHelper.IX_COUNTYNAME, "Stockholm");
@@ -203,8 +203,8 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 				"Kung", "Smed"	
 		}, 2);
 		singleValueIndexAssert(doc, ContentHelper.IX_FULLNAME, "Gustav Vasa");
-		singleValueIndexAssert(doc, ContentHelper.IX_NAMEID, "59878606");
-		singleValueIndexAssert(doc, ContentHelper.IX_NAMEAUTH, "VIAF");
+		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, OAIPMHHandler.VIAF_AUTH_URI + "/59878606");
+		
 
 		// kontext, tid
 		multipleValueIndexAssert(doc, ContentHelper.IX_FROMTIME, new String[] {
@@ -233,13 +233,11 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODNAME, "Omodern tid");
 		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODNAME, "Modern tid");
 
-		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODID, "1234");
-		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODID, "5678");
-
-		singleValueIndexAssert(doc, ContentHelper.IX_PERIODAUTH, "Tidsoptimisterna");
+		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#1234");
+		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#5678");
 
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTNAME, "Hj\u00e4lmhamrande");
-		singleValueIndexAssert(doc, ContentHelper.IX_EVENTAUTH, "Hj\u00e4lmhamrarf\u00f6rbundet");
+		singleValueIndexAssert(doc, ContentHelper.IX_EVENT, "Hj\u00e4lmhamrarf\u00f6rbundet");
 
 
 		assertEquals("Felaktigt värde för thumbnailSource", "http://localhost/thumbnail.jpg", doc.getFieldValue(ContentHelper.IX_THUMBNAIL_SOURCE));
@@ -414,8 +412,7 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		// kontext, plats
 		singleValueIndexAssert(doc, ContentHelper.IX_PLACENAME, "Stockholm");
 		singleValueIndexAssert(doc, ContentHelper.IX_CADASTRALUNIT, "Stockholm 1:1");
-		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERMID, "4711");
-		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERMAUTH, "Vaktm\u00e4staren");
+		singleValueIndexAssert(doc, ContentHelper.IX_PLACETERM, "Vaktm\u00e4staren/4711");
 		singleValueIndexAssert(doc, ContentHelper.IX_CONTINENTNAME, "Europa");
 		singleValueIndexAssert(doc, ContentHelper.IX_COUNTRYNAME, "Sverige");
 		singleValueIndexAssert(doc, ContentHelper.IX_COUNTYNAME, "Stockholm");
@@ -441,8 +438,7 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 				"Kung", "Smed"	
 		}, 2);
 		singleValueIndexAssert(doc, ContentHelper.IX_FULLNAME, "Gustav Vasa");
-		singleValueIndexAssert(doc, ContentHelper.IX_NAMEID, "59878606");
-		singleValueIndexAssert(doc, ContentHelper.IX_NAMEAUTH, "VIAF");
+		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, OAIPMHHandler.VIAF_AUTH_URI + "/59878606");
 
 		// kontext, tid
 		multipleValueIndexAssert(doc, ContentHelper.IX_FROMTIME, new String[] {
@@ -473,13 +469,11 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODNAME, "Omodern tid");
 		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODNAME, "Modern tid");
 
-		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIODID, "1234");
-		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIODID, "5678");
-
-		singleValueIndexAssert(doc, ContentHelper.IX_PERIODAUTH, "Tidsoptimisterna");
+		singleValueIndexAssert(doc, ContentHelper.IX_FROMPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#1234");
+		singleValueIndexAssert(doc, ContentHelper.IX_TOPERIOD, OAIPMHHandler.MIS_AUTH_URI + "#5678");
 
 		singleValueIndexAssert(doc, ContentHelper.IX_EVENTNAME, "Hj\u00e4lmhamrande");
-		singleValueIndexAssert(doc, ContentHelper.IX_EVENTAUTH, "Hj\u00e4lmhamrarf\u00f6rbundet");
+		singleValueIndexAssert(doc, ContentHelper.IX_EVENT, "Hj\u00e4lmhamrarf\u00f6rbundet");
 
 	}
 

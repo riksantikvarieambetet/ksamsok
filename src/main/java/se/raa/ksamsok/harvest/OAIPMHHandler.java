@@ -1,5 +1,16 @@
 package se.raa.ksamsok.harvest;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.HashMap;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,18 +20,12 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 import se.raa.ksamsok.lucene.ContentHelper;
 import se.raa.ksamsok.lucene.SamsokUriPrefix;
 
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.util.HashMap;
+
+
 
 /**
  * Handler för xml-parsning som lagrar poster i repositoryt och gör commit med jämna mellanrum
@@ -28,6 +33,77 @@ import java.util.HashMap;
  * för RawWrite, dvs i princip OAI-PMH med en omslutande tagg.
  */
 public class OAIPMHHandler extends DefaultHandler {
+
+
+	public static final String VIAF = "VIAF";
+	public static final String KUNGLIGA_BIBLIOTEKET = "Kungliga biblioteket";
+	public static final String HASHTAG = "#";
+	public static final String SLASH = "/";
+	public static final String KULTURARVSDATA_PERIOD_AUTH_URI = "http://kulturarvsdata.se/resurser/aukt/srdb/period#";
+	public static final String MIS_AUTH_URI = "http://mis.historiska.se/rdf/period";
+	public static final String VIAF_AUTH_URI = "http://viaf.org/viaf";
+	public static final String LIBRIS_AUTH_URI = "http://libris.kb.se/resource/auth";
+	private static final String AGENT = "agent";
+	private static final String FROM_PERIOD = "fromPeriod";
+	private static final String TO_PERIOD = "toPeriod";
+	private static final String NAME_ID = "nameId";
+	private static final String NAME_AUTH = "nameAuth";
+	private static final String TO_PERIOD_ID = "toPeriodId";
+	private static final String FROM_PERIOD_ID = "fromPeriodId";
+	private static final String PERIOD_AUTH = "periodAuth";
+
+	/**
+ * 
+ * Exempel på tagg som har flera "second parts":
+ *		
+ *		<soch:toPeriodId>Vikingatid</soch:toPeriodId>
+ *		<soch:periodAuth>http://kulturarvsdata.se/resurser/aukt/srdb/period#V</soch:periodAuth>
+ *		<soch:fromPeriodId>Vikingatid</soch:fromPeriodId>
+ * 
+ * Ovanstånde ska slås ihop till två separata taggar:
+ * 
+ * 		<soch:toPeriod>http://kulturarvsdata.se/resurser/aukt/srdb/period#V/Vikingatid</soch:toPeriod>
+ *		<soch:fromPeriod>http://kulturarvsdata.se/resurser/aukt/srdb/period#V/Vikingatid</soch:fromPeriodId>
+ * 
+ * 
+ */
+
+	private class DeprecatedTag {
+		String uri;
+		String name;
+		Attributes attributes;
+		String content;
+		
+		public String getUri() {
+			return uri;
+		}
+		public void setUri(String uri) {
+			this.uri = uri;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public Attributes getAttributes() {
+			return attributes;
+		}
+		public void setAttributes(Attributes attributes) {
+			this.attributes = attributes;
+		}
+		public String getContent() {
+			return content;
+		}
+		public void setContent(String content) {
+			this.content = content;
+		}
+	}
+	
+	//private HashMap<String, DeprecatedTag> deprecatedTags = new HashMap<>();
+
+	private HashMap<Integer, HashMap<String, DeprecatedTag>> deprecatedTagsByLevel = new HashMap<>();
+
 
 	// antal databasoperationer innan en commit görs
 	private static final int XACT_LIMIT = 1000;
@@ -42,6 +118,7 @@ public class OAIPMHHandler extends DefaultHandler {
 	String oaiURI;
 	Timestamp datestamp;
 	int mode = 0;
+	private int level = 0;
 	private boolean deleteRecord;
 	private final StringBuffer buf = new StringBuffer();
 	private final HashMap<String, String> prefixMap = new HashMap<>();
@@ -114,7 +191,11 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
-			switch (mode) {
+		
+		// ny nivå i xml:en, håll reda på level
+		level++;
+
+		switch (mode) {
 			case NORMAL:
 				if ("record".equals(name)) {
 					// byt till "record-mode"
@@ -153,46 +234,91 @@ public class OAIPMHHandler extends DefaultHandler {
 				break;
 			case COPY:
 				// i "copy-mode" kopiera hela taggen som den är
+
+
 				// correct faulty uri:s from local nodes
 				uri = correctFaultyUris(uri);
-				try {
-					xxmlw.writeStartElement(uri, localName);
-				}  catch (Exception e) {
-					String errMsg = "Error when writing start element on uri: " + uri + ", localName: " + localName + ", name: " + name;
-					logger.error(errMsg);
-					throw new SAXException(errMsg, e);
-				}
-				if (prefixMap.size() > 0) {
-					for (String prefix : prefixMap.keySet()) {
-						try {
-							xxmlw.writeNamespace(prefix, prefixMap.get(prefix));
-						}  catch (Exception e) {
-							String errMsg = "Error when writing namespace on uri: " + uri + ", localName: " + localName + ", name: " + name;
-							throw new SAXException(errMsg, e);
-						}
+
+					
+				if (PERIOD_AUTH.equals(localName) ||
+						TO_PERIOD_ID.equals(localName) ||
+						FROM_PERIOD_ID.equals(localName) ||
+						NAME_AUTH.equals(localName) ||
+						NAME_ID.equals(localName)) {
+					
+					// Deprecated URI:er ska skrivas om till nya
+					// Spara undan informationen på rätt "nivå" i xml:en
+					
+					// fetch or create deprecatedValues 
+					HashMap<String, DeprecatedTag> deprecatedTags = deprecatedTagsByLevel.get(level);
+					if (deprecatedTags == null) {
+						deprecatedTags = new HashMap<>();
+						deprecatedTagsByLevel.put(level, deprecatedTags);
 					}
+
+					DeprecatedTag deprecatedTag = new DeprecatedTag();
+					deprecatedTag.setUri(uri);
+					deprecatedTag.setName(name);
+					deprecatedTag.setAttributes(attributes);
+
+					// spara informationen med localName som nyckel
+					deprecatedTags.put(localName, deprecatedTag);
+
+					// de här ska vi inte skriva ut här, kolla i endElement vad vi ska göra med den, om något
+					return;
 				}
-				prefixMap.clear();
-				try {
-					if (attributes != null && attributes.getLength() > 0) {
-						for (int i = 0; i < attributes.getLength(); ++i) {
-							String aUri = attributes.getURI(i);
-							String lName = attributes.getLocalName(i);
-							String value = attributes.getValue(i);
-							// Om ej rätt metod används blir det ett exception
-							if (aUri == null || "".equals(aUri)) {
-								xxmlw.writeAttribute(lName, value);
-							} else {
-								xxmlw.writeAttribute(aUri, lName, value);
-							}
-						}
-					}
-				} catch (Exception e) {
-					String errMsg = "Error when extracting attributes on uri: " + uri + ", localName: " + localName + ", name: " + name;
-					throw new SAXException(errMsg, e);
-				}
+
+				_writeStartElement(uri, localName, name, attributes);
 				break;
+		}
+	}
+
+	/**
+	 * 
+	 * @param uri
+	 * @param localName
+	 * @param name Används bara för felutskrifter - behöver vi ha med det?
+	 * @param attributes
+	 * @throws SAXException
+	 */
+	private void _writeStartElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
+		try {
+			xxmlw.writeStartElement(uri, localName);
+		}  catch (Exception e) {
+			String errMsg = "Error when writing start element on uri: " + uri + ", localName: " + localName + ", name: " + name;
+			logger.error(errMsg);
+			throw new SAXException(errMsg, e);
+		}
+		
+		if (prefixMap.size() > 0) {
+			for (String prefix : prefixMap.keySet()) {
+				try {
+					xxmlw.writeNamespace(prefix, prefixMap.get(prefix));
+				}  catch (Exception e) {
+					String errMsg = "Error when writing namespace on uri: " + uri + ", localName: " + localName + ", name: " + name;
+					throw new SAXException(errMsg, e);
+				}
 			}
+		}
+		prefixMap.clear();
+		try {
+			if (attributes != null && attributes.getLength() > 0) {
+				for (int i = 0; i < attributes.getLength(); ++i) {
+					String aUri = attributes.getURI(i);
+					String lName = attributes.getLocalName(i);
+					String value = attributes.getValue(i);
+					// Om ej rätt metod används blir det ett exception
+					if (aUri == null || "".equals(aUri)) {
+						xxmlw.writeAttribute(lName, value);
+					} else {
+						xxmlw.writeAttribute(aUri, lName, value);
+					}
+				}
+			}
+		} catch (Exception e) {
+			String errMsg = "Error when extracting attributes on uri: " + uri + ", localName: " + localName + ", name: " + name;
+			throw new SAXException(errMsg, e);
+		}
 	}
 
 	private String correctFaultyUris(String uri) {
@@ -246,8 +372,10 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String name) throws SAXException {
-		// TODO: if uri is ever used in this method, it needs to be run through correctFaultyUris,
-		// but it's unnecessary as long as this method doesn't do anything with the uri:s
+		// TODO: if uri is ever used in this method, it needs to be run through
+		// correctFaultyUris,
+		// but it's unnecessary as long as this method doesn't do anything with the
+		// uri:s
 		switch (mode) {
 			case COPY:
 				if ("metadata".equals(name)) {
@@ -265,12 +393,137 @@ public class OAIPMHHandler extends DefaultHandler {
 						throw new SAXException(e);
 					}
 				} else {
-					// kopiera
-					try {
-						xxmlw.writeCharacters(buf.toString().trim());
-						xxmlw.writeEndElement();
-					} catch (Exception e) {
-						throw new SAXException(e);
+					// Kolla om URI:ns localName innehåller någon av de deprekerade som ska skrivas om till nya
+
+					if (PERIOD_AUTH.equals(localName) ||
+							TO_PERIOD_ID.equals(localName) ||
+							FROM_PERIOD_ID.equals(localName) ||
+							NAME_AUTH.equals(localName) ||
+							NAME_ID.equals(localName)) {
+
+						// Deprecated URI:er ska skrivas om till nya
+
+						// fetch or create deprecatedValues
+						HashMap<String, DeprecatedTag> deprecatedTags = deprecatedTagsByLevel.get(level);
+						if (deprecatedTags == null) {
+							deprecatedTags = new HashMap<>();
+							deprecatedTagsByLevel.put(level, deprecatedTags);
+						}
+
+						DeprecatedTag deprecatedTag = deprecatedTags.get(localName);
+
+						// här borde det finnas en, annars är något knasigt
+						if (deprecatedTag == null) {
+							logger.warn("Hittar ingen deprecatedTag trots att det borde finnas för localName "
+									+ localName + ", uri " + uri + ", level " + level);
+							throw new SAXException("Missing expected deprecatedTag for " + localName);
+						}
+
+						// läs ut värdet på buf (här finns strängen som står mellan taggarna; content)
+						String content = buf.toString().trim();
+
+						// skriv content i deprecatedTag, 
+						// ifall vi behöver det nästa varv
+						deprecatedTag.setContent(content);
+
+						// Hämta alla deprecated tags som vi sett på den här nivån
+						DeprecatedTag periodAuthTag = deprecatedTags.get(PERIOD_AUTH);
+						DeprecatedTag fromPeriodIdTag = deprecatedTags.get(FROM_PERIOD_ID);
+						DeprecatedTag toPeriodIdTag = deprecatedTags.get(TO_PERIOD_ID);
+						DeprecatedTag nameAuthTag = deprecatedTags.get(NAME_AUTH);
+						DeprecatedTag nameIdTag = deprecatedTags.get(NAME_ID);
+
+						String contentToUse = null;
+						String idContent = null;
+						String uriToUse = null;
+						String localNameToUse = null;
+						String nameToUse = null;
+						Attributes attributesToUse = null;
+						String authContent = null;
+
+						// Räkna ut vilka värden vi ska använda
+						if (periodAuthTag != null) {
+							uriToUse = periodAuthTag.getUri();
+							attributesToUse = periodAuthTag.getAttributes();
+							authContent = periodAuthTag.getContent();
+							nameToUse = periodAuthTag.getName();
+
+							if (toPeriodIdTag != null) {
+
+								// Skapa en "http://kulturarvsdata.se/ksamsok#toPeriod"-tagg istället för periodAuth+toPeriodId-taggarna
+								localNameToUse = TO_PERIOD;
+								idContent = toPeriodIdTag.getContent();
+
+								// vi måste ta bort den här från mappen så vi inte använder den igen nästa iteration
+								deprecatedTags.remove(TO_PERIOD_ID);
+							} else if (fromPeriodIdTag != null) {
+								// Skapa en "http://kulturarvsdata.se/ksamsok#fromPeriod"-tagg istället för periodAuth+fromPeriod-taggarna
+								localNameToUse = FROM_PERIOD;
+								idContent = fromPeriodIdTag.getContent();
+								
+								// vi måste ta bort den här från mappen så vi inte använder den igen nästa iteration
+								deprecatedTags.remove(FROM_PERIOD_ID);
+							}
+						} else if (nameAuthTag != null) {
+							uriToUse = nameAuthTag.getUri();
+							attributesToUse = nameAuthTag.getAttributes();
+							authContent = nameAuthTag.getContent();
+							nameToUse = nameAuthTag.getName();
+							if (nameIdTag != null) {
+								// Skapa en "http://kulturarvsdata.se/ksamsok#agent"-tagg istället för nameAuth+nameId-taggarna
+								localNameToUse = AGENT;
+								idContent = nameIdTag.getContent();
+
+								// vi måste ta bort den här från mappen så vi inte använder den igen nästa iteration
+								deprecatedTags.remove(NAME_ID);
+							}
+						}
+						if (localNameToUse != null && authContent != null && idContent != null) {
+							// vi har ett par med både auth och id, slå ihop!
+							if (authContent
+									.startsWith(KULTURARVSDATA_PERIOD_AUTH_URI)) {
+								// de här ska behållas som de är, men taggarna ska bytas ut mot
+								// "toPeriod/fromPeriod"
+								contentToUse = authContent;
+							} else if (authContent.startsWith(MIS_AUTH_URI)) {
+								// slå ihop med id-content
+								contentToUse = fixContent(authContent, HASHTAG, idContent);
+							} else if (authContent.startsWith(LIBRIS_AUTH_URI)) {
+								// slå ihop med id-content
+								contentToUse = fixContent(authContent, SLASH, idContent);
+							} else if (authContent.equals(KUNGLIGA_BIBLIOTEKET)) {
+								// Byt ut mot libris och slå ihop med id-content
+								contentToUse = fixContent(LIBRIS_AUTH_URI, SLASH, idContent);
+							} else if (authContent.equals(VIAF)) {
+								// Byt ut mot viaf-url och slå ihop med id-content
+								contentToUse = fixContent(VIAF_AUTH_URI, SLASH, idContent);
+							}
+						}
+						if (contentToUse != null) {
+							// Börja med att starta taggen
+							_writeStartElement(uriToUse, localNameToUse,
+									nameToUse, attributesToUse);
+
+							// Sedan skriver vi content
+							try {
+								xxmlw.writeCharacters(contentToUse);
+
+								// och till sist stänger vi taggen
+								xxmlw.writeEndElement();
+							} catch (Exception e) {
+								throw new SAXException(e);
+							}
+						}
+
+					} else {
+
+						// det här är en vanlig tag, kopiera som den är
+						try {
+							xxmlw.writeCharacters(buf.toString().trim());
+							xxmlw.writeEndElement();
+						} catch (Exception e) {
+							throw new SAXException(e);
+						}
 					}
 				}
 				// återställ char-buff
@@ -287,7 +540,7 @@ public class OAIPMHHandler extends DefaultHandler {
 					if (datestamp == null) {
 						datestamp = new Timestamp((ts.getTime()));
 						ContentHelper.addProblemMessage("There was a problem parsing datestamp (" + datestampStr +
-							") for record, using 'now' instead");
+								") for record, using 'now' instead");
 					}
 				} else if ("record".equals(name)) {
 					// tillbaks till "normal-mode"
@@ -314,8 +567,26 @@ public class OAIPMHHandler extends DefaultHandler {
 			default:
 				logger.warn("Unexpected mode " + mode + " found in endElement for uri + " + uri);
 		}
-
+		// vi flyttar upp en nivå, ta bort alla hittade deprecatedValues nivån under
+		deprecatedTagsByLevel.remove(level + 1);
+		level--;
 	}
+
+	public static String fixContent(String authContent, String delimiter, String idContent) {
+		String contentToUse;
+		contentToUse = authContent;
+
+		// se till att det finns ett "#"
+		if (!contentToUse.endsWith(delimiter)) {
+			contentToUse += delimiter;
+		}
+
+		// och lägg till content från periodId-taggen
+		contentToUse += idContent;
+		return contentToUse;
+	}
+
+	
 
 	@Override
 	public void characters(char[] ch, int start, int length) {
@@ -646,7 +917,7 @@ public class OAIPMHHandler extends DefaultHandler {
 		numUpdatedXact = 0;
 		numDeletedXact = 0;
 
-		String msg = "Committed (i/u/d " + numInserted + "/" + numUpdated + "/" + numDeleted + ") " +
+		String msg = "Committed (i/u/d " + numInserted + SLASH + numUpdated + SLASH + numDeleted + ") " +
 			(numInserted + numUpdated + numDeleted) + " database changes";
 		ss.setStatusText(service, msg);
 		if (logger.isDebugEnabled()) {
