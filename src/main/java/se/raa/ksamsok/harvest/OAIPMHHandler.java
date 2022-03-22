@@ -19,6 +19,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
 
 import se.raa.ksamsok.lucene.ContentHelper;
@@ -33,7 +34,6 @@ import se.raa.ksamsok.lucene.SamsokUriPrefix;
  * för RawWrite, dvs i princip OAI-PMH med en omslutande tagg.
  */
 public class OAIPMHHandler extends DefaultHandler {
-
 
 	public static final String VIAF = "VIAF";
 	public static final String KUNGLIGA_BIBLIOTEKET = "Kungliga biblioteket";
@@ -51,6 +51,9 @@ public class OAIPMHHandler extends DefaultHandler {
 	private static final String TO_PERIOD_ID = "toPeriodId";
 	private static final String FROM_PERIOD_ID = "fromPeriodId";
 	private static final String PERIOD_AUTH = "periodAuth";
+	private static final String RDF_NS_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+	private static final String RESOURCE = "resource";
+	private static final String CDATA = "CDATA";
 
 	/**
  * 
@@ -501,14 +504,18 @@ public class OAIPMHHandler extends DefaultHandler {
 						}
 						if (contentToUse != null) {
 							// Börja med att starta taggen
+
+							// innehållet ska sättas som ett rdf:resource-attribut på taggen
+
+							// Kopiera attributesToUse till en AttributesImpl så vi kan modifiera dem
+							AttributesImpl modifiedAttributes = new AttributesImpl(attributesToUse);
+							modifiedAttributes.addAttribute(RDF_NS_URI, RESOURCE, "", CDATA, contentToUse);
+
 							_writeStartElement(uriToUse, localNameToUse,
-									nameToUse, attributesToUse);
+									nameToUse, modifiedAttributes);
 
-							// Sedan skriver vi content
+							// stäng taggen
 							try {
-								xxmlw.writeCharacters(contentToUse);
-
-								// och till sist stänger vi taggen
 								xxmlw.writeEndElement();
 							} catch (Exception e) {
 								throw new SAXException(e);
@@ -971,37 +978,4 @@ public class OAIPMHHandler extends DefaultHandler {
 
 	}
 
-	//public static void main(String[] args) {
-		/*
-		 * funkar inte riktigt fn Connection c = null; Statement st = null; FSDirectory dir = null;
-		 * try { //File xmlFile = new File("d:/temp/oaipmh2.xml"); //File xmlFile = new
-		 * File("d:/temp/kthdiva_2694.xml"); File xmlFile = new File("d:/temp/kthdiva.xml");
-		 * SAXParserFactory spf = SAXParserFactory.newInstance(); spf.setNamespaceAware(true);
-		 * SAXParser p = spf.newSAXParser(); Class.forName("org.hsqldb.jdbcDriver"); c =
-		 * DriverManager.getConnection("jdbc:hsqldb:file:d:/temp/harvestdb", "sa", ""); dir =
-		 * FSDirectory.getDirectory(new File("d:/temp/lucene-index/test"));
-		 * 
-		 * OAIPMHHandler h = new OAIPMHHandler("test2", c); p.parse(xmlFile, h);
-		 * DBBasedManagerImpl.commit(c);
-		 * 
-		 * st = c.createStatement(); st.execute("SHUTDOWN"); Thread.sleep(3000);
-		 * System.out.println("OK - " + h.serviceId + ": handlesDeleted: " + h.getSupportsDeleted()
-		 * + ", inserted: " + h.getInserted() + ", deleted: " + h.getDeleted() + ", updated: " +
-		 * h.getUpdated()); } catch (Exception e) { e.printStackTrace();
-		 * DBBasedManagerImpl.rollback(c); } finally { DBBasedManagerImpl.closeDBResources(null,
-		 * null, c); }
-		 * 
-		 * IndexSearcher s = null; if (dir != null) { try { s = new IndexSearcher(dir); QueryParser
-		 * p = new QueryParser("dc_desc", new StandardAnalyzer()); String qs = (args.length == 0 ?
-		 * "chine" : args[0]); Query q = p.parse(qs); System.err.println("Söker med: " + qs); Hits
-		 * hits = s.search(q); int antal = hits.length(); System.out.println("Fick " + antal +
-		 * " träffar"); Iterator iter = hits.iterator(); int i = 0; while (iter.hasNext()) { Hit h
-		 * = (Hit) iter.next(); ++i; org.apache.lucene.document.Document d = h.getDocument();
-		 * System.out.println("## träff " + i + "/" + antal + ", score: " + h.getScore() + " ##");
-		 * System.out.println("creator: " + d.get("dc_creator")); System.out.println("desc: " +
-		 * d.get("dc_desc")); System.out.println(""); } } catch (Exception e) { e.printStackTrace();
-		 * } finally { if (s != null) { try { s.close(); } catch (IOException e) {
-		 * e.printStackTrace(); } } } }
-		 */
-	//}
 }
