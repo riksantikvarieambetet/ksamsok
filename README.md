@@ -65,7 +65,7 @@ För att kontrollera om projektets beroenden (ingående komponenter) är gamla o
 Gradletasken nedan skapar en rapport över alla ingående komponenter och dess status.
 Se även https://plugins.gradle.org/plugin/com.github.ben-manes.versions
 ```bash
-gradlew dependencyUpdates
+./gradlew dependencyUpdates
 ```
 ## HOWTO: Kontrollera om beroenden har kända sårbarheter
 För att kontrollera om projektets beroenden (ingående komponenter) har kända sårbarheter (security vulnerabilities).   
@@ -73,6 +73,6 @@ Gradletasken nedan skapar en rapport över alla ingående komponenter och dess s
 Första gången tasken körs kan ta upp till 20 minuter. Därefter tar det bara några sekunder.  
 Se även https://plugins.gradle.org/plugin/org.owasp.dependencycheck.
 ```bash
-gradlew dependencyCheckPurge dependencyCheckUpdate dependencyCheckAnalyze
+./gradlew dependencyCheckPurge dependencyCheckUpdate dependencyCheckAnalyze
 ls ./build/reports/dependency-check-report.html
 ```
