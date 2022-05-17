@@ -145,7 +145,7 @@ public class GMLUtil {
 	}
 
 	// försöker skapa en geometri-instans från gml
-	static Geometry parseGeometry(String gml) throws Exception {
+	private static Geometry parseGeometry(String gml) throws Exception {
 		Object o;
 		if (gml == null) {
 			throw new Exception("gml är null");
