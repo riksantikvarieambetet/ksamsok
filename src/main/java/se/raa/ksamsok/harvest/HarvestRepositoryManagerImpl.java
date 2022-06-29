@@ -41,7 +41,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	private static final ContentHelper samsokContentHelper = new SamsokContentHelper(true);
 
 	// antal solr-dokument som skickas per batch, för få -> mycket io, för många -> mycket minne
-	private static final int solrBatchSize = 50;
+	private static final int solrBatchSize = 10;
 	// statusrapportering sker efter uppdatering av detta antal objekt
 	private static final int statusReportBatchSize = 500;
 
@@ -240,7 +240,11 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					solr.add(docs);
 					docs.clear();
 				}
+				long commitStartTime = System.currentTimeMillis();
 				solr.commit();
+				long commitStopTime = System.currentTimeMillis();
+				long commitTime = commitStopTime - commitStartTime;
+				logger.warn("Commit took " + commitTime + " ms");
 				long durationMillis = (System.currentTimeMillis() - start);
 				String runTime = ContentHelper.formatRunTime(durationMillis);
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
