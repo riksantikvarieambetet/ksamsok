@@ -240,11 +240,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 					solr.add(docs);
 					docs.clear();
 				}
-				long commitStartTime = System.currentTimeMillis();
 				solr.commit();
-				long commitStopTime = System.currentTimeMillis();
-				long commitTime = commitStopTime - commitStartTime;
-				logger.warn("Commit took " + commitTime + " ms");
 				long durationMillis = (System.currentTimeMillis() - start);
 				String runTime = ContentHelper.formatRunTime(durationMillis);
 				String speed = ContentHelper.formatSpeedPerSec(count, durationMillis);
