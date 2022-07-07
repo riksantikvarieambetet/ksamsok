@@ -41,7 +41,7 @@ public class HarvestRepositoryManagerImpl extends DBBasedManagerImpl implements 
 	private static final ContentHelper samsokContentHelper = new SamsokContentHelper(true);
 
 	// antal solr-dokument som skickas per batch, för få -> mycket io, för många -> mycket minne
-	private static final int solrBatchSize = 50;
+	private static final int solrBatchSize = 10;
 	// statusrapportering sker efter uppdatering av detta antal objekt
 	private static final int statusReportBatchSize = 500;
 
