@@ -1,22 +1,24 @@
 package se.raa.ksamsok.api.method;
 
-import com.sun.syndication.feed.module.georss.GeoRSSModule;
-import com.sun.syndication.feed.module.georss.W3CGeoModuleImpl;
-import com.sun.syndication.feed.module.georss.geometries.Position;
-import com.sun.syndication.feed.module.mediarss.MediaEntryModule;
-import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl;
-import com.sun.syndication.feed.module.mediarss.types.MediaContent;
-import com.sun.syndication.feed.module.mediarss.types.Metadata;
-import com.sun.syndication.feed.module.mediarss.types.Thumbnail;
-import com.sun.syndication.feed.module.mediarss.types.UrlReference;
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedOutput;
+import com.rometools.modules.georss.GeoRSSModule;
+import com.rometools.modules.georss.W3CGeoModuleImpl;
+import com.rometools.modules.georss.geometries.Position;
+import com.rometools.modules.mediarss.MediaEntryModule;
+import com.rometools.modules.mediarss.MediaEntryModuleImpl;
+import com.rometools.modules.mediarss.types.MediaContent;
+import com.rometools.modules.mediarss.types.Metadata;
+import com.rometools.modules.mediarss.types.Thumbnail;
+import com.rometools.modules.mediarss.types.UrlReference;
+import com.rometools.rome.feed.module.Module;
+import com.rometools.rome.feed.module.ModuleImpl;
+import com.rometools.rome.feed.synd.SyndContent;
+import com.rometools.rome.feed.synd.SyndContentImpl;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndEntryImpl;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.feed.synd.SyndFeedImpl;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedOutput;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -149,6 +151,9 @@ public class RSS extends AbstractSearchMethod {
 		} catch (IOException e) {
 			logger.error(e);
 			throw new DiagnosticException("Det är problem med att skriva resultatet till utströmmen", this.getClass().getName(), e.getMessage(), false);
+		} catch (Throwable t) {
+			logger.error("Caught: ", t);
+			throw new DiagnosticException("Problem: ", this.getClass().getName(), t.getMessage(), false);
 		}
 	}
 
@@ -216,7 +221,6 @@ public class RSS extends AbstractSearchMethod {
 	 * @return ett entry med data från XML sträng
 	 * @throws DiagnosticException 
 	 */
-	@SuppressWarnings("unchecked")
 	protected SyndEntry getEntry(String content) throws DiagnosticException {
 		SyndEntry entry = new SyndEntryImpl();
 		try {
@@ -233,7 +237,7 @@ public class RSS extends AbstractSearchMethod {
 			String image = data.getImageUrl();
 			if (data.getCoords() != null) {
 				GeoRSSModule geoRssModule = getGeoRssModule(data.getCoords());
-				if(geoRssModule != null) {
+				if (geoRssModule != null) {
 					entry.getModules().add(geoRssModule);
 				}
 			}

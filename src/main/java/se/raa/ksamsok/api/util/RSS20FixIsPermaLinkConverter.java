@@ -1,10 +1,15 @@
 package se.raa.ksamsok.api.util;
 
-import com.sun.syndication.feed.rss.Guid;
-import com.sun.syndication.feed.rss.Item;
-import com.sun.syndication.feed.synd.Converter;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.impl.ConverterForRSS20;
+import com.rometools.rome.feed.rss.Guid;
+import com.rometools.rome.feed.rss.Item;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.impl.ConverterForRSS20;
+
+// import com.sun.syndication.feed.rss.Guid;
+// import com.sun.syndication.feed.rss.Item;
+// import com.sun.syndication.feed.synd.Converter;
+// import com.sun.syndication.feed.synd.SyndEntry;
+// import com.sun.syndication.feed.synd.impl.ConverterForRSS20;
 
 /**
  * Simple override for the ROME rss library and its rss 2.0 converter that
@@ -12,8 +17,7 @@ import com.sun.syndication.feed.synd.impl.ConverterForRSS20;
  * as the uri is an url and it is permanent.
  * See http://www.w3schools.com/rss/rss_tag_guid.asp and WEB-INF/classes/rome.properties
  */
-public class RSS20FixIsPermaLinkConverter extends ConverterForRSS20 implements
-		Converter {
+public class RSS20FixIsPermaLinkConverter extends ConverterForRSS20 {
 
 	public RSS20FixIsPermaLinkConverter() {
 		// same key as default rss 2.0 handler to override it 
