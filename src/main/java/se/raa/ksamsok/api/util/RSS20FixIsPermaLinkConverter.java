@@ -5,12 +5,6 @@ import com.rometools.rome.feed.rss.Item;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.impl.ConverterForRSS20;
 
-// import com.sun.syndication.feed.rss.Guid;
-// import com.sun.syndication.feed.rss.Item;
-// import com.sun.syndication.feed.synd.Converter;
-// import com.sun.syndication.feed.synd.SyndEntry;
-// import com.sun.syndication.feed.synd.impl.ConverterForRSS20;
-
 /**
  * Simple override for the ROME rss library and its rss 2.0 converter that
  * always sets permaLink to false if one sets the uri and we want it to be true

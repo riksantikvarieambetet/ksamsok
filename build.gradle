@@ -82,8 +82,6 @@ dependencies {
     }
 
     implementation group: 'org.dspace', name: 'oclc-harvester2', version: '1.0.0'
-    // old jars use old log4j, for example oclc-harvester2 0.1.12
-    //runtimeOnly group: 'log4j', name: 'log4j', version: '1.2.17'
     runtimeOnly group: 'co.elastic.logging', name: 'log4j2-ecs-layout', version: '1.5.0'
     runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.5.0'
     runtimeOnly group: 'javax.media.jai', name: 'com.springsource.javax.media.jai.core', version: '1.1.3'
