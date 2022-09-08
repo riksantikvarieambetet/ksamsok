@@ -1,9 +1,9 @@
 package se.raa.ksamsok.harvest;
 
-import ORG.oclc.oai.harvester2.verb.Identify;
-import ORG.oclc.oai.harvester2.verb.ListMetadataFormats;
-import ORG.oclc.oai.harvester2.verb.ListRecords;
-import ORG.oclc.oai.harvester2.verb.ListSets;
+import org.oclc.oai.harvester2.verb.Identify;
+import org.oclc.oai.harvester2.verb.ListMetadataFormats;
+import org.oclc.oai.harvester2.verb.ListRecords;
+import org.oclc.oai.harvester2.verb.ListSets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

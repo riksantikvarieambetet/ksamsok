@@ -3,7 +3,7 @@ buildscript {
         maven { url 'https://artifactory.raa.se/artifactory/raa-gradle-prod' }
     }
     dependencies {
-        classpath 'org.owasp:dependency-check-gradle:7.1.1'
+        classpath 'org.owasp:dependency-check-gradle:7.1.2'
     }
 }
 
@@ -40,7 +40,7 @@ repositories {
 
 
 dependencies {
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.17.2'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.18.0'
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
     implementation (group: 'org.apache.solr', name: 'solr-solrj', version: '8.11.1') {
         exclude group: 'org.eclipse.jetty.http2', module: 'http2-client'
@@ -56,37 +56,34 @@ dependencies {
     }
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
 
-    implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.2'
+    implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.19.0'
 
-    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.20'
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.20'
-    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.20'
-    implementation group: 'org.apache.jena', name: 'jena-core', version: '4.5.0'
-    implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.5.0'
-    implementation group: 'org.geonames', name: 'georss-rome', version: '0.9.8'
-    implementation group: 'rome', name: 'rome-mediarss', version: '0.2.2'
-    implementation group: 'rome', name: 'rome', version: '1.0'
+    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.22'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.22'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.22'
+    implementation group: 'org.apache.jena', name: 'jena-core', version: '4.6.0'
+    implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.6.0'
+    implementation group: 'com.rometools', name: 'rome', version: '1.18.0'
+    implementation group: 'com.rometools', name: 'rome-modules', version: '1.18.0'
     implementation group: 'org.z3950.zing', name: 'cql-java', version: '1.10'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.9.0'
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     
-    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '27.0'
-    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '27.0'
+    implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '27.1'
+    implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '27.1'
     // geotools needs this to build
     implementation group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
 
-    implementation group: 'joda-time', name: 'joda-time', version: '2.10.14'
+    implementation group: 'joda-time', name: 'joda-time', version: '2.11.1'
     implementation group: 'org.json', name: 'json', version: '20220320'
     implementation (group: 'xalan', name: 'xalan', version: '2.7.2') {
         exclude group: 'xml-apis', module: 'xml-apis'
     }
 
-    implementation group: 'org.dspace', name: 'oclc-harvester2', version: '0.1.12'
-    // old jars use old log4j, for example oclc-harvester2 0.1.12
-    runtimeOnly group: 'log4j', name: 'log4j', version: '1.2.17'
-    runtimeOnly group: 'co.elastic.logging', name: 'log4j2-ecs-layout', version: '1.4.0'
-    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.4.0'
+    implementation group: 'org.dspace', name: 'oclc-harvester2', version: '1.0.0'
+    runtimeOnly group: 'co.elastic.logging', name: 'log4j2-ecs-layout', version: '1.5.0'
+    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.5.0'
     runtimeOnly group: 'javax.media.jai', name: 'com.springsource.javax.media.jai.core', version: '1.1.3'
     runtimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.36'
     // när du vill uppgradera den här jstl-grejen så kolla att sidan /ksamsok/admin/orgAdmin fungerar - hagla lyckas inte idag
@@ -94,8 +91,8 @@ dependencies {
     runtimeOnly group: 'org.eclipse.jetty', name: 'apache-jstl', version: '10.0.9'
 
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
-    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.20'
-    testImplementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.20'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.22'
+    testImplementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.22'
     testImplementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '11.0.9'
 }
 
