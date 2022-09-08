@@ -152,8 +152,8 @@ public class RSS extends AbstractSearchMethod {
 			logger.error(e);
 			throw new DiagnosticException("Det är problem med att skriva resultatet till utströmmen", this.getClass().getName(), e.getMessage(), false);
 		} catch (Throwable t) {
-			logger.error("Caught: ", t);
-			throw new DiagnosticException("Problem: ", this.getClass().getName(), t.getMessage(), false);
+			logger.error(t);
+			throw new DiagnosticException("Oväntat problem med att generera ett RSS-flöde: ", this.getClass().getName(), t.getMessage(), false);
 		}
 	}
 
