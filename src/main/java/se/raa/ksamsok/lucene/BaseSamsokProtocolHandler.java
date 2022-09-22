@@ -616,14 +616,11 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			if (placeTermId != null) {
 				String placeTerm = placeTermAuth + placeTermId;
 				ip.addToDoc(IX_PLACETERM, placeTerm);
+
+				// lägg också till dem i relUri, eftersom de nu är en relationsUri
+				ip.addToDoc(IX_RELURI, placeTerm);
 			}
 		}
- 
-
-
-		
-
-		
 
 		ip.setCurrent(IX_CONTINENTNAME, contextTypes);
 		extractSingleValue(model, cS, getURIRef(uri_rContinentName), ip);
@@ -729,6 +726,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			}
 			if (agent != null) {
 				ip.addToDoc(IX_AGENT, agent);
+
+				// lägg också till dem i relUri, eftersom de nu är en relationsUri
+				ip.addToDoc(IX_RELURI, agent);
 			}
 		} 
 	}
@@ -805,9 +805,15 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			}
 			if (fromPeriod != null) {
 				ip.addToDoc(IX_FROMPERIOD, fromPeriod);
+
+				// lägg också till dem i relUri, eftersom de nu är en relationsUri
+				ip.addToDoc(IX_RELURI, fromPeriod);
 			}
 			if (toPeriod != null) {
 				ip.addToDoc(IX_TOPERIOD, toPeriod);
+
+				// lägg också till dem i relUri, eftersom de nu är en relationsUri
+				ip.addToDoc(IX_RELURI, toPeriod);
 			}
 		} 
 		
@@ -857,10 +863,6 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			extractValue(model, subjectNode, getURIRef(entry.getValue()), null, ip, relations);
 		}
 	}
-
-
-
-
 
 	/**
 	 * Beräknar när posten först lades till indexet, används för att få fram listningar

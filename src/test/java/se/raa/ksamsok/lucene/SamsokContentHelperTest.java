@@ -440,6 +440,9 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		singleValueIndexAssert(doc, ContentHelper.IX_FULLNAME, "Gustav Vasa");
 		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, OAIPMHHandler.VIAF_AUTH_URI + "/59878606");
 
+		// relUri
+		singleValueIndexAssert(doc, ContentHelper.IX_RELURI, "http://viaf.org/viaf/59878606", false, false);
+
 		// kontext, tid
 		multipleValueIndexAssert(doc, ContentHelper.IX_FROMTIME, new String[] {
 				"1540", "1542"	
@@ -503,25 +506,44 @@ public class SamsokContentHelperTest extends AbstractDocumentTest{
 		}, 2);
 	}
 
-	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value) {
-		singleValueIndexAssert(doc, indexName, value, false);
+	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String wantedValue) {
+		singleValueIndexAssert(doc, indexName, wantedValue, false);
 	}
 
-	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String value, boolean contains) {
-		String docValue = (String) doc.getFieldValue(indexName);
-		assertNotNull("Fältet " + indexName + " saknas", docValue);
+	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String wantedValue, boolean contains) {
+		singleValueIndexAssert(doc, indexName, wantedValue, contains, true);
+	}
+
+	private void singleValueIndexAssert(SolrInputDocument doc, String indexName, String wantedValue, boolean contains, boolean onlyOneAllowed) {
 		Collection<Object> docValues = doc.getFieldValues(indexName);
-		assertEquals("Fältet " + indexName + " ska bara ha ett värde, värden är, " +
+		assertNotNull("Fältet " + indexName + " saknas", docValues);
+		if (onlyOneAllowed) {
+			assertEquals("Fältet " + indexName + " ska bara ha ett värde, värden är, " +
 				docValues, 1, docValues.size());
-		if (contains) {
-			assertTrue("Fel värde för " + indexName, docValue.contains(value));
-		} else {
-			assertEquals("Fel värde för " + indexName, value, docValue);
 		}
+		boolean found = false;
+		for (Object docValue : docValues) {
+			if (found) {
+				break;
+			}
+			String stringValue = (String) docValue;
+			if (contains) {
+				found =  stringValue.contains(wantedValue);
+			} else {
+				found = stringValue.equals(wantedValue);
+			}
+		}
+		assertTrue("Fel värde för " +indexName, found);
 	}
 
 	private void multipleValueIndexAssert(SolrInputDocument doc, String indexName, String[] values, int count) {
 		// This doesn't work correctly when there are replaces-links to the test object...
+		// Let's at least check all the individual values, and skip the count for now
+		for (String value : values) {
+			singleValueIndexAssert(doc, indexName, value, false, false);
+		}
+
+		
 		/*
 		Collection<Object> docValues = doc.getFieldValues(indexName);
 		assertNotNull("Fältet " + indexName + " saknas", docValues);
