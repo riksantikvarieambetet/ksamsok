@@ -136,7 +136,6 @@ public class Protocol_1_1_Test extends AbstractDocumentTest {
 		List<String> gmlGeometries = new LinkedList<>();
 		SolrInputDocument doc = handler.handle(service, new Date(), relations, gmlGeometries);
 		assertNotNull("Inget doc tillbaka", doc);
-		singleValueIndexAssert(doc, ContentHelper.IX_AGENT, "RAÄ/1234");
 		multipleValueIndexAssert(doc, ContentHelper.IX_NAME, new String[] {
 				"Gustav Vasa", "Gustaf Vasa", "Gustav I", "Gustaf Eriksson Vasa",
 				"Erik Johansson" // från kontextet
