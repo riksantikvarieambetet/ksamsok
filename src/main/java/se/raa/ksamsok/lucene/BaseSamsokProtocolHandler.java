@@ -344,6 +344,9 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 		String buildDate = extractSingleValue(model, subject, getURIRef(uri_rBuilddDate), null);
 		if (buildDate != null) {
 			buildDateAsDate = TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_BUILD_DATE, buildDate, ip);
+		} else {
+			// om buildDate inte finns med ta för givet att posten genererades i samband med skördningen 
+			buildDateAsDate = new Date();
 		}
 
 	}
