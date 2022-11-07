@@ -249,6 +249,7 @@
 
     <owl:ObjectProperty rdf:about="http://kulturarvsdata.se/ksamsok#theme">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="http://kulturarvsdata.se/ksamsok#Theme"/>
     </owl:ObjectProperty>
@@ -651,6 +652,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#eventAuth">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
@@ -708,6 +710,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#fromPeriodId">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
@@ -1193,6 +1196,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#museumdatUrl">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
     </owl:DatatypeProperty>
@@ -1232,6 +1236,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#nameAuth">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
@@ -1242,6 +1247,7 @@
     <!-- http://kulturarvsdata.se/ksamsok#nameId -->
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#nameId">
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Entity"/>
         <rdfs:range rdf:resource="&xsd;string"/>
@@ -1312,6 +1318,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#periodAuth">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
@@ -1349,6 +1356,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#placeTermAuth">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
         <rdfs:domain>
@@ -1366,6 +1374,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#placeTermId">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
@@ -1574,6 +1583,7 @@
 
     <owl:DatatypeProperty rdf:about="http://kulturarvsdata.se/ksamsok#toPeriodId">
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
         <rdfs:domain rdf:resource="http://kulturarvsdata.se/ksamsok#Context"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
@@ -2568,6 +2578,7 @@
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment></rdfs:comment>
+	<owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
     </owl:Class>
 </rdf:RDF>
 
