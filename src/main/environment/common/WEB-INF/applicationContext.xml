@@ -21,11 +21,11 @@
 		<property name="jndiName" value="java:comp/env/jdbc/harvestdbreader" />
 	</bean>
 
-	<bean id="solrBuilder" class="org.apache.solr.client.solrj.impl.HttpSolrClient$Builder">
+	<bean id="solrBuilder" class="org.apache.solr.client.solrj.impl.Http2SolrClient$Builder">
 		<constructor-arg value="http://@solr.servername@:8080/solr/ksamsok" />
 	</bean>
 	
-	<bean id="solr" class="org.apache.solr.client.solrj.impl.HttpSolrClient" factory-bean="solrBuilder" factory-method="build" />
+	<bean id="solr" class="org.apache.solr.client.solrj.impl.Http2SolrClient" factory-bean="solrBuilder" factory-method="build" />
 	
 
 	<bean id="statusService" class="se.raa.ksamsok.harvest.StatusServiceImpl">

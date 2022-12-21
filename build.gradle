@@ -52,18 +52,7 @@ dependencyCheck {
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.19.0'
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
-    implementation (group: 'org.apache.solr', name: 'solr-solrj', version: '8.11.1') {
-        exclude group: 'org.eclipse.jetty.http2', module: 'http2-client'
-        exclude group: 'org.eclipse.jetty.http2', module: 'http2-common'
-        exclude group: 'org.eclipse.jetty.http2', module: 'http2-hpack'
-        exclude group: 'org.eclipse.jetty.http2', module: 'http2-http-client-transport'
-        exclude group: 'org.eclipse.jetty', module: 'jetty-alpn-client'
-        exclude group: 'org.eclipse.jetty', module: 'jetty-alpn-java-client'
-        exclude group: 'org.eclipse.jetty', module: 'jetty-client'
-        exclude group: 'org.eclipse.jetty', module: 'jetty-http'
-        exclude group: 'org.eclipse.jetty', module: 'jetty-io'
-        exclude group: 'org.eclipse.jetty', module: 'jetty-util'
-    }
+    implementation (group: 'org.apache.solr', name: 'solr-solrj', version: '9.1.0')
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
 
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.19.0'
@@ -79,6 +68,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.9.0'
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
     
     implementation group: 'org.geotools.xsd', name: 'gt-xsd-gml2', version: '28.0'
     implementation group: 'org.geotools', name: 'gt-epsg-wkt', version: '28.0'

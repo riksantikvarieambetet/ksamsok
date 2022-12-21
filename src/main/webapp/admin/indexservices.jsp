@@ -14,14 +14,7 @@
 	</head>
 	<body class="bgGrayUltraLight">
 		<%@include file="nav_and_services_i.jsp" %>
-<%
-		String indexInfoErrMess = null;
-		NamedList<Object> indexInfo = null;
-		try {
-			indexInfo = searchService.getIndexInfo();
-		} catch (SolrServerException e) {
-			indexInfoErrMess = "Fel vid solr-anrop: " + e.getMessage() + (e.getCause() != null ? " - " + e.getCause().getMessage() : "");
-		}
+<%		
 		HarvestService service = hsm.getService(HarvestServiceManager.SERVICE_INDEX_OPTIMIZE);
 		if (service != null) {
 			String serviceId = service.getId();
@@ -34,20 +27,7 @@
 				lastHarvest = ContentHelper.formatDate(lastHarvestDate, true);
 	   		}
 %>
-		<h4>Solr-info</h4>
-<%
-			if (indexInfo != null) {
-%>
-		Indexsökväg = <%= indexInfo.get("path") %>, indexstorlek = <%= indexInfo.get("size") %>,
-		ledigt diskutrymme = <%= indexInfo.get("free") %>
-<%
-			} else {
-%>
-		<%= indexInfoErrMess %>
-<%
-			}
-%>
-		<hr/>
+
 		<form action="serviceaction.jsp" method="post" accept-charset="iso-8859-1">
 			<table id="servicetable">
 				<thead class="bgGrayLight">

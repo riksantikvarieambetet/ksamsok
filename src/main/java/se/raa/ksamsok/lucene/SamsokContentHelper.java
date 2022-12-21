@@ -1,5 +1,6 @@
 package se.raa.ksamsok.lucene;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
@@ -11,7 +12,6 @@ import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.util.Base64;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -37,7 +37,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import static se.raa.ksamsok.lucene.RDFUtil.extractSingleValue;
@@ -186,12 +185,12 @@ public class SamsokContentHelper extends ContentHelper {
 				pres = serializeDocumentAsFragment(doc);
 				// lagra binärt, kodat i UTF-8
 				byte[] presBytes = pres.getBytes(StandardCharsets.UTF_8);
-				luceneDoc.addField(I_IX_PRES, Base64.byteArrayToBase64(presBytes, 0, presBytes.length));
+				luceneDoc.addField(I_IX_PRES, new String(Base64.encodeBase64(presBytes)));
 			}
 
 			// lagra rdf:en 
 			byte[] rdfBytes = xmlContent.getBytes(StandardCharsets.UTF_8);
-			luceneDoc.addField(I_IX_RDF, Base64.byteArrayToBase64(rdfBytes, 0, rdfBytes.length));
+			luceneDoc.addField(I_IX_RDF, new String(Base64.encodeBase64(rdfBytes)));
 
 		}
 		catch (Exception e) {
