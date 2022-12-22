@@ -46,12 +46,13 @@ public class QueryContentTest {
 
 	}
 
+	@Test
 	public void testGetQueryStringWithParams() {
 		String qs = qc.getQueryString("baz:\"three\"");
 		String[] result = qs.split(" AND ");
 		assertTrue(Arrays.asList(result).contains("foo:\"one\""));
 		assertTrue(Arrays.asList(result).contains("bar:\"two\""));
 		assertTrue(Arrays.asList(result).contains("baz:\"three\""));
+		}
 
-	}
 }

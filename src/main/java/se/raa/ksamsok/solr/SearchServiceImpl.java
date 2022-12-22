@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest.METHOD;
+import org.apache.solr.client.solrj.impl.Http2SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.FieldAnalysisRequest;
 import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.response.AnalysisResponseBase.AnalysisPhase;
@@ -154,21 +154,5 @@ public class SearchServiceImpl implements SearchService {
 			}
 		}
 		return countMap;
-	}
-
-	@Override
-	public String getSolrURL() {
-		return (solr instanceof HttpSolrClient ? ((HttpSolrClient) solr).getBaseURL() : null);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public NamedList<Object> getIndexInfo() throws SolrServerException, IOException {
-		final String qpath = "/admin/indexdiskinfo";
-		SolrQuery query = new SolrQuery();
-		query.setQuery(qpath);
-		QueryRequest qreq = new QueryRequest(query, METHOD.POST);
-		QueryResponse qres = qreq.process(solr);
-		return (NamedList<Object>) qres.getResponse().get("index");
 	}
 }

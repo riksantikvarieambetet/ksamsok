@@ -1,12 +1,10 @@
 package se.raa.ksamsok.api;
 
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.impl.Http2SolrClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,7 +44,7 @@ abstract public class AbstractBaseTest {
 	
 	public void setUp() throws MalformedURLException{
 		if (apiMethodFactory == null){
-			SolrClient solr = new HttpSolrClient.Builder(COMMON_SOLR_SERVER).build();
+			SolrClient solr = new Http2SolrClient.Builder(COMMON_SOLR_SERVER).build();
 			SearchServiceImpl searchService = new SearchServiceImpl();
 			// The solr is @Autowired in the project. It is necessary to set up it by hand in the test cases
 			ReflectionTestUtils.setField(searchService,"solr", solr);
