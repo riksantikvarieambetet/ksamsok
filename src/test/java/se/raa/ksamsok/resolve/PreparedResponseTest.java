@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 public class PreparedResponseTest {
 
 	private PreparedResponse pr;
-	private ArrayList<String> replaceUris = new ArrayList<>();
+	private ArrayList<String> replacedByUris = new ArrayList<>();
 
 	private final static String URI_1 = "foo";
 	private final static String URI_2 = "bar";
@@ -21,10 +21,10 @@ public class PreparedResponseTest {
 
 	@Before
 	public void setUp() {
-		replaceUris.add(URI_1);
-		replaceUris.add(URI_2);
+		replacedByUris.add(URI_1);
+		replacedByUris.add(URI_2);
 		pr = new PreparedResponse();
-		pr.setReplaceUris(replaceUris);
+		pr.setReplacedByUris(replacedByUris);
 		pr.setResponse(RESPONSE);
 	}
 
@@ -34,7 +34,7 @@ public class PreparedResponseTest {
 	}
 	@Test
 	public void testGetReplaceUri() {
-		ArrayList<String> replaceUris2 = pr.getReplaceUris();
+		ArrayList<String> replaceUris2 = pr.getReplacedByUris();
 		assertNotNull(replaceUris2);
 		assertEquals(URI_1, replaceUris2.get(0));
 		assertEquals(URI_2, replaceUris2.get(1));
@@ -43,8 +43,8 @@ public class PreparedResponseTest {
 	@Test
 	public void testAddReplaceUri() {
 		final String addedUri = "foobar";
-		pr.addReplaceUri(addedUri);
-		ArrayList<String> replaceUris2 = pr.getReplaceUris();
+		pr.addReplacedByUri(addedUri);
+		ArrayList<String> replaceUris2 = pr.getReplacedByUris();
 		assertNotNull(replaceUris2);
 		assertEquals(URI_1, replaceUris2.get(0));
 		assertEquals(URI_2, replaceUris2.get(1));
