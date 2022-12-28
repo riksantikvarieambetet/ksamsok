@@ -475,15 +475,16 @@ public class ResolverServlet extends HttpServlet {
 		}
 
 		// if we found only one replacedByUri, redirect immediately:
-		if (preparedResponse.getReplacedByUris().size() == 1) {
-			resp.sendRedirect(preparedResponse.getReplacedByUris().get(0));
+		ArrayList<String> replacedByUris = preparedResponse.getReplacedByUris();
+		if (replacedByUris.size() == 1) {
+			resp.sendRedirect(replacedByUris.get(0));
 			return;
 		}
 
 		switch (format) {
 			case JSON_LD:
-				if (preparedResponse.getReplacedByUris().size() > 1) {
-					String jsonReply = buildReplacedByMultipleUrisJsonReply(preparedResponse.getReplacedByUris());
+				if (replacedByUris.size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisJsonReply(replacedByUris);
 					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
 
 					PrintWriter out = resp.getWriter();
@@ -502,8 +503,8 @@ public class ResolverServlet extends HttpServlet {
 				break;
 			case RDF:
 			case XML:
-				if (preparedResponse.getReplacedByUris().size() > 1) {
-					String jsonReply = buildReplacedByMultipleUrisXmlReply(preparedResponse.getReplacedByUris());
+				if (replacedByUris.size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisXmlReply(replacedByUris);
 					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
 
 					PrintWriter out = resp.getWriter();
@@ -551,10 +552,12 @@ public class ResolverServlet extends HttpServlet {
 				break;
 			case HTML:
 			case MUSEUMDAT:
-				if (preparedResponse.getReplacedByUris().size() > 1) {
-					String jsonReply = buildReplacedByMultipleUrisHtmlReply(preparedResponse.getReplacedByUris());
+				if (replacedByUris.size() > 1) {
+					String jsonReply = buildReplacedByMultipleUrisHtmlReply(replacedByUris);
 					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
-
+					for (String replacedByUri : replacedByUris) {
+						resp.addHeader("Link", replacedByUri);
+					}
 					PrintWriter out = resp.getWriter();
 					resp.setContentType("text/html");
 					resp.setCharacterEncoding("UTF-8");
