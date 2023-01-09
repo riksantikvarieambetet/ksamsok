@@ -5,7 +5,7 @@ import java.util.ArrayList;
 class PreparedResponse {
 
 	private String response;
-	private ArrayList<String> replaceUris = new ArrayList<>();
+	private ArrayList<String> replacedByUris = new ArrayList<>();
 	private boolean gone = false;
 
 
@@ -17,16 +17,16 @@ class PreparedResponse {
 		this.response = response;
 	}
 
-	public ArrayList<String> getReplaceUris() {
-		return replaceUris;
+	public ArrayList<String> getReplacedByUris() {
+		return replacedByUris;
 	}
 
-	public void setReplaceUris(ArrayList<String> replaceUris) {
-		this.replaceUris = replaceUris;
+	public void setReplacedByUris(ArrayList<String> replacedByUris) {
+		this.replacedByUris = replacedByUris;
 	}
 
-	public void addReplaceUri(String replaceUri) {
-		replaceUris.add(replaceUri);
+	public void addReplacedByUri(String replaceUri) {
+		replacedByUris.add(replaceUri);
 	}
 
 	public void setGone(boolean gone) {

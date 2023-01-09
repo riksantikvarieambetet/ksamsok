@@ -1,36 +1,11 @@
 package se.raa.ksamsok.resolve;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.Selector;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.util.ClientUtils;
-import org.apache.solr.common.SolrDocumentList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-import se.raa.ksamsok.api.exception.DiagnosticException;
-import se.raa.ksamsok.api.method.AbstractAPIMethod;
-import se.raa.ksamsok.harvest.HarvestRepositoryManager;
-import se.raa.ksamsok.lucene.ContentHelper;
-import se.raa.ksamsok.lucene.RDFUtil;
-import se.raa.ksamsok.solr.SearchService;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -48,12 +23,34 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrDocumentList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import se.raa.ksamsok.api.exception.DiagnosticException;
+import se.raa.ksamsok.api.method.AbstractAPIMethod;
+import se.raa.ksamsok.harvest.HarvestRepositoryManager;
+import se.raa.ksamsok.lucene.ContentHelper;
+import se.raa.ksamsok.solr.SearchService;
 
 /**
  * Enkel servlet som söker i lucene mha pathInfo som en identifierare och gör redirect till
@@ -61,10 +58,22 @@ import java.util.HashMap;
  */
 public class ResolverServlet extends HttpServlet {
 
+	private static final String CHARSET_UTF_8 = "UTF-8";
+	private static final String INVALID_FORMAT = "Invalid format: ";
+	private static final String HEADER_ACCEPT = "Accept";
+	private static final String HEADER_ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
+	private static final String HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+	private static final String CONTENTTYPE_HTML = "text/html; charset=UTF-8";
+	private static final String CONTENTTYPE_RDF = "application/rdf+xml; charset=UTF-8";
+	private static final String CONTENTTYPE_XML = "application/xml; charset=UTF-8";
+	private static final String CONTENTTYPE_JSON = "application/json; charset=UTF-8";
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LogManager.getLogger(ResolverServlet.class);
-	// urlar att redirecta till får inte starta med detta (gemener)
-	private static final String badURLPrefix = "http://kulturarvsdata.se/";
+	private static final String KULTURARVSDATA_URL_PREFIX = "http://kulturarvsdata.se/";
+	private static final String DCTERMS_URI_PREFIX = "http://purl.org/dc/terms/";
+	private static final String RDF_URI_PREFIX = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+	private static final String LDP_URI_PREFIX = "http://www.w3.org/ns/ldp#";
+	private static final String HEADER_LINK = "Ĺink";
 
 	@Autowired
 	private SearchService searchService;
@@ -138,7 +147,7 @@ public class ResolverServlet extends HttpServlet {
 			resp.sendRedirect("index.jsp");
 			return null;
 		} else {
-			resp.setHeader("Access-Control-Allow-Origin", "*");
+			resp.setHeader(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 		}
 		// hantera "specialfallet" med /resurser/a/b/c[/d]
 		if (path != null && path.startsWith("/resurser")) {
@@ -190,8 +199,8 @@ public class ResolverServlet extends HttpServlet {
 	@Override
 	protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doOptions(req, resp);
-		resp.setHeader("Access-Control-Allow-Origin", "*");
-		resp.setHeader("Access-Control-Allow-Methods", "HEAD, GET, OPTIONS");
+		resp.setHeader(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+		resp.setHeader(HEADER_ACCESS_CONTROL_ALLOW_METHODS, "HEAD, GET, OPTIONS");
 	}
 
 	@Override
@@ -204,20 +213,21 @@ public class ResolverServlet extends HttpServlet {
 		Format format = null;
 		final String formatLowerCase;
 		boolean formatSetInPath = false;
+
 		// hantera olika format
 		if (pathComponents.length == 4) {
-			 formatLowerCase = pathComponents[2].toLowerCase();
+			formatLowerCase = pathComponents[2].toLowerCase();
 			format = Format.parseFormat(formatLowerCase);
 			if (format == null) {
-				logger.debug("Invalid format: " + pathComponents[2]);
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid format " + pathComponents[2]);
+				logger.debug(INVALID_FORMAT + pathComponents[2]);
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, INVALID_FORMAT + pathComponents[2]);
 				return;
 			}
 			formatSetInPath = true;
 			path = pathComponents[0] + "/" + pathComponents[1] + "/" + pathComponents[3];
 		} else {
 			// Check which format the respond should be
-			String acceptFormatString = req.getHeader("Accept") != null ? req.getHeader("Accept").toLowerCase() : "";
+			String acceptFormatString = req.getHeader(HEADER_ACCEPT) != null ? req.getHeader(HEADER_ACCEPT).toLowerCase() : "";
 
 			// A request header can contain several accepted formats, we honor the priority order
 			String[] acceptFormats = acceptFormatString.split(",");
@@ -244,22 +254,22 @@ public class ResolverServlet extends HttpServlet {
 		}
 		switch (format) {
 			case JSON_LD:
-				resp.setContentType("application/json; charset=UTF-8");
+				resp.setContentType(CONTENTTYPE_JSON);
 				break;
 			case MUSEUMDAT:
 			case XML:
-				resp.setContentType("application/xml; charset=UTF-8");
+				resp.setContentType(CONTENTTYPE_XML);
 				break;
 			case RDF:
-				resp.setContentType("application/rdf+xml; charset=UTF-8");
+				resp.setContentType(CONTENTTYPE_RDF);
 				break;
 			case HTML:
 			default:
-				resp.setContentType("text/html; charset=UTF-8");
+				resp.setContentType(CONTENTTYPE_HTML);
 				break;
 		}
 		try {
-			String urli = "http://kulturarvsdata.se/" + path;
+			String urli = KULTURARVSDATA_URL_PREFIX + path;
 			// Get content from solr or db
 			PreparedResponse preparedResponse = prepareResponse(urli, format, req, formatSetInPath);
 			// Make response
@@ -273,7 +283,7 @@ public class ResolverServlet extends HttpServlet {
 	/**
 	 * This method gets the data from Solr or in some cases from db
 	 *
-	 * @param urli   - The path to the request, i.e. which object shoud we get
+	 * @param urli   - The path to the request, i.e. which object should we get
 	 * @param format - The requested response format
 	 * @param req    - The http servlet request
 	 * @return - A string with the found content or null
@@ -295,10 +305,13 @@ public class ResolverServlet extends HttpServlet {
 
 		// we want any items that are replacing old items to come first
 		q.setSort(ContentHelper.IX_REPLACES, SolrQuery.ORDER.desc);
-		q.setRows(1);
+
+		// se till att vi får tillbaka alla i svaret
+		q.setRows(null);
 
 		// vi måste alltid ha rdf för att kunna kolla replaces
 		q.setFields(ContentHelper.I_IX_RDF);
+
 		// hämta bara nödvändigt fält
 		switch (format) {
 			case JSON_LD:
@@ -315,6 +328,7 @@ public class ResolverServlet extends HttpServlet {
 				break;
 		}
 		logger.debug("resolve of (" + format + ") uri: " + urli);
+
 		// Get data
 		QueryResponse response = searchService.query(q);
 		SolrDocumentList hits = response.getResults();
@@ -329,42 +343,47 @@ public class ResolverServlet extends HttpServlet {
 			}
 		} else {
 			// objektet finns i indexet
-			// vi måste alltid hämta ut rdf:en för att kolla replaces
-			xmlContent = (byte[]) hits.get(0).getFieldValue(ContentHelper.I_IX_RDF);
-			if (xmlContent != null) {
-				stringResponse = new String(xmlContent, StandardCharsets.UTF_8);
-			} else {
-				stringResponse = hrm.getXMLData(urli);
-			}
 
-			if (stringResponse != null) {
-				Model m = ModelFactory.createDefaultModel();
-				m.read(new ByteArrayInputStream(stringResponse.getBytes(StandardCharsets.UTF_8)), "UTF-8");
-				final ResIterator resIterator = m.listSubjects();
+			for (int i = 0; i < hits.getNumFound(); i++) {
+				// vi måste alltid hämta ut rdf:en för att kolla replaces
+				xmlContent = (byte[]) hits.get(i).getFieldValue(ContentHelper.I_IX_RDF);
+				if (xmlContent != null) {
+					stringResponse = new String(xmlContent, StandardCharsets.UTF_8);
+				} else {
+					stringResponse = hrm.getXMLData(urli);
+				}
 
-				while (resIterator.hasNext()) {
-					Resource res = resIterator.next();
-					final StmtIterator statementIterator = res.listProperties();
-					while (statementIterator.hasNext()) {
-						Statement statement = statementIterator.next();
-						Property predicate = statement.getPredicate();
-						if ("replaces".equals(predicate.getLocalName()) && urli.equals(statement.getObject().toString())) {
-							// we have found one that replaces the requested one
-							String replaceUri = res.getURI();
-							if (replaceUri != null) {
-								if (formatSetInPath) {
-									// the format has been explicitly requested in the url path, we have to
-									// put it back in there
-									final String formatString = format.getFormat();
-									int formatEntyIndex = replaceUri.lastIndexOf("/") + 1;
-									StringBuilder tmpBuf = new StringBuilder(replaceUri);
+				if (stringResponse != null) {
+					Model m = ModelFactory.createDefaultModel();
+					m.read(new ByteArrayInputStream(stringResponse.getBytes(StandardCharsets.UTF_8)), CHARSET_UTF_8);
+					final ResIterator resIterator = m.listSubjects();
 
-									tmpBuf.insert(formatEntyIndex, formatString + "/");
-									replaceUri = tmpBuf.toString();
+					while (resIterator.hasNext()) {
+						Resource res = resIterator.next();
+						final StmtIterator statementIterator = res.listProperties();
+						while (statementIterator.hasNext()) {
+							Statement statement = statementIterator.next();
+							Property predicate = statement.getPredicate();
+							if ("replaces".equals(predicate.getLocalName())
+									&& urli.equals(statement.getObject().toString())) {
+								// we have found one that replaces the requested one
+								String replacedByUri = res.getURI();
+								if (replacedByUri != null) {
+									if (formatSetInPath) {
+										// the format has been explicitly requested in the url path, we have to
+										// put it back in there
+										final String formatString = format.getFormat();
+										int formatEntyIndex = replacedByUri.lastIndexOf("/") + 1;
+										StringBuilder tmpBuf = new StringBuilder(replacedByUri);
+
+										tmpBuf.insert(formatEntyIndex, formatString + "/");
+										replacedByUri = tmpBuf.toString();
+									}
+									preparedResponse.addReplacedByUri(replacedByUri);
+								} else {
+									logger.warn("Found replaces: " + statement.getSubject().getLocalName()
+											+ " but no URL to redirect to");
 								}
-								preparedResponse.addReplaceUri(replaceUri);
-							} else {
-								logger.warn("Found replaces: " + statement.getSubject().getLocalName() + " but no URL to redirect to");
 							}
 						}
 					}
@@ -397,37 +416,48 @@ public class ResolverServlet extends HttpServlet {
 		return preparedResponse;
 	}
 
-	private String buildReplacedByMultipleUrisJsonReply(ArrayList<String> replaceUris) {
-		StringBuffer jsonBuf = new StringBuffer();
-		if (replaceUris.size() > 1) {
-			// create a json with all the redirect possibilities
-			jsonBuf = new StringBuffer("{\"isReplacedBy:\" [");
-			int counter = 0;
-			for (String replaceUri : replaceUris) {
-				jsonBuf.append("{\"record\": \"").append(replaceUri).append("\"}");
-				if (++counter < replaceUris.size()) {
-					jsonBuf.append(", ");
-				}
+	private Model buildReplacedByMultipleUrisRdfReply(String uri, ArrayList<String> replacedByUris) {
+		Model model = ModelFactory.createDefaultModel();
 
+		Resource uriResource = model.createResource(uri);
+		Property rdfType = model.createProperty(RDF_URI_PREFIX + "type");
+		Resource ldpBasicContainer = model.createResource(LDP_URI_PREFIX + "BasicContainer");
+
+		Property dcTermsIsReplacedBy = model.createProperty(DCTERMS_URI_PREFIX, "isReplacedBy");
+		Property ldpContains = model.createProperty(LDP_URI_PREFIX, "contains");
+
+		model.add(uriResource, rdfType, ldpBasicContainer);
+
+		 if (replacedByUris.size() > 1) {
+			for (String replacedByUri : replacedByUris) {
+				Resource replacedByUriResource = model.createResource(replacedByUri);
+				model.add(uriResource, dcTermsIsReplacedBy, replacedByUriResource);
+				model.add(uriResource, ldpContains, replacedByUriResource);
 			}
-			jsonBuf.append("]}");
 		}
-		return jsonBuf.toString();
+		model.setNsPrefix("rdf", RDF_URI_PREFIX);
+		model.setNsPrefix("ldp", LDP_URI_PREFIX);
+		model.setNsPrefix("dcterms", DCTERMS_URI_PREFIX);
+		return model;
 	}
 
-	private String buildReplacedByMultipleUrisXmlReply(ArrayList<String> replaceUris) {
-		StringBuffer xmlBuf = new StringBuffer();
-		if (replaceUris.size() > 1) {
-			// create an xml with all the redirect possibilities
-			xmlBuf = new StringBuffer("<isReplacedBy>");
-			for (String replaceUri : replaceUris) {
-				xmlBuf.append("<record>").append(replaceUri).append("</record>");
+	private String buildReplacedByMultipleUrisHtmlReply(ArrayList<String> replacedByUris) {
+		StringBuffer htmlBuf = new StringBuffer();
+		if (replacedByUris.size() > 1) {
+			// create an html with all the redirect possibilities
+			htmlBuf = new StringBuffer();
+			htmlBuf.append("<body>");
+			htmlBuf.append("<h2>Den efterfrågade URI:n har ersatts av följande URI:er</h2>");
+			htmlBuf.append("<ul>");
+			for (String replacedByUri : replacedByUris) {
+				htmlBuf.append("<li>").append("<a href=\"").append(replacedByUri).append("\">").append(replacedByUri).append("</a>").append("</li>");
 
 
 			}
-			xmlBuf.append("</isReplacedBy>");
+			htmlBuf.append("</ul>");
+			htmlBuf.append("</body>");
 		}
-		return xmlBuf.toString();
+		return htmlBuf.toString();
 	}
 
 	/**
@@ -448,43 +478,34 @@ public class ResolverServlet extends HttpServlet {
 			return;
 		}
 
-		// if we found only one replaceUri, redirect immediately:
-		if (preparedResponse.getReplaceUris().size() == 1) {
-			resp.sendRedirect(preparedResponse.getReplaceUris().get(0));
+		// if we found only one replacedByUri, redirect immediately:
+		ArrayList<String> replacedByUris = preparedResponse.getReplacedByUris();
+		if (replacedByUris.size() == 1) {
+			resp.sendRedirect(replacedByUris.get(0));
 			return;
 		}
 
 		switch (format) {
 			case JSON_LD:
-				if (preparedResponse.getReplaceUris().size() > 1) {
-					String jsonReply = buildReplacedByMultipleUrisJsonReply(preparedResponse.getReplaceUris());
-					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
-
-					PrintWriter out = resp.getWriter();
-					resp.setContentType("application/json");
-					resp.setCharacterEncoding("UTF-8");
-					out.print(jsonReply);
-					out.flush();
+				resp.setContentType(CONTENTTYPE_JSON);
+				if (replacedByUris.size() > 1) {
+					replyMultipleChoice(urli, resp, replacedByUris, RDFFormat.JSONLD10_COMPACT_FLAT);
 				} else if (preparedResponse.getResponse() != null) {
 					Model m = ModelFactory.createDefaultModel();
-					m.read(new ByteArrayInputStream(preparedResponse.getResponse().getBytes(StandardCharsets.UTF_8)), "UTF-8");
+					m.read(new ByteArrayInputStream(preparedResponse.getResponse().getBytes(StandardCharsets.UTF_8)), CHARSET_UTF_8);
 					// It is done in APIServlet.init JenaJSONLD.init();
-					RDFDataMgr.write(resp.getOutputStream(), m, RDFFormat.JSONLD_COMPACT_FLAT);
+					RDFDataMgr.write(resp.getOutputStream(), m, RDFFormat.JSONLD10_COMPACT_FLAT);
 				} else {
 					resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find record for path");
 				}
 				break;
 			case RDF:
 			case XML:
-				if (preparedResponse.getReplaceUris().size() > 1) {
-					String jsonReply = buildReplacedByMultipleUrisXmlReply(preparedResponse.getReplaceUris());
-					resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
-
-					PrintWriter out = resp.getWriter();
-					resp.setContentType("text/xml");
-					resp.setCharacterEncoding("UTF-8");
-					out.print(jsonReply);
-					out.flush();
+				if (replacedByUris.size() > 1) {
+					// Det går inte att använda application/rdf+xml i kombination med http 300 mulitple choice -
+					// Chrome säger att något gick fel och Firefox vägrar visa något alls
+					resp.setContentType(CONTENTTYPE_XML);
+					replyMultipleChoice(urli, resp, replacedByUris, RDFFormat.RDFXML_PLAIN);
 				} else if (preparedResponse.getResponse() != null) {
 					DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder docBuilder;
@@ -525,14 +546,23 @@ public class ResolverServlet extends HttpServlet {
 				break;
 			case HTML:
 			case MUSEUMDAT:
-				if (preparedResponse.getResponse() != null) {
-					if (preparedResponse.getResponse().toLowerCase().startsWith(badURLPrefix)) {
+				if (replacedByUris.size() > 1) {
+					addMultipleChoiceHeaders(resp, replacedByUris);
+					String jsonReply = buildReplacedByMultipleUrisHtmlReply(replacedByUris);
+					PrintWriter out = resp.getWriter();
+					resp.setContentType(CONTENTTYPE_HTML);
+					resp.setCharacterEncoding(CHARSET_UTF_8);
+					out.print(jsonReply);
+					out.flush();
+				} else if (preparedResponse.getResponse() != null) {
+					if (preparedResponse.getResponse().toLowerCase().startsWith(KULTURARVSDATA_URL_PREFIX)) {
+						// urlar att redirecta till får inte starta med detta (gemener)
 						if (format == Format.HTML) {
 							logger.warn(
-									"HTML link is wrong, points to " + badURLPrefix + " for " + urli + ": " + preparedResponse.getResponse());
+									"HTML link is wrong, points to " + KULTURARVSDATA_URL_PREFIX + " for " + urli + ": " + preparedResponse.getResponse());
 							resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid html url to pass on to");
 						} else {
-							logger.warn("Museumdat link is wrong, points to " + badURLPrefix + " för " + urli + ": " +
+							logger.warn("Museumdat link is wrong, points to " + KULTURARVSDATA_URL_PREFIX + " för " + urli + ": " +
 									preparedResponse.getResponse());
 							resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid museumdat url to pass on to");
 						}
@@ -548,33 +578,32 @@ public class ResolverServlet extends HttpServlet {
 				}
 				break;
 			default:
-				logger.warn("Invalid format: " + format);
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid format");
+				logger.warn(INVALID_FORMAT + format);
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST, INVALID_FORMAT);
 		}
 	}
 
-
-	/**
-	 * This method gets the url to the the original storage of the rdf data
-	 *
-	 * @param content - String containing a rdf
-	 * @return - a string with the url, if not found then null
-	 */
-	private String getRedirectUrl(String content) {
-		String redirectUrl = null;
-		try {
-			Model model = RDFUtil.parseModel(content);
-			Property uriPredicate = ResourceFactory.createProperty("http://kulturarvsdata.se/ksamsok#url");
-			Selector selector = new SimpleSelector(null, uriPredicate, (RDFNode) null);
-			StmtIterator iter = model.listStatements(selector);
-			if (iter.hasNext()) {
-				Statement s = iter.next();
-				redirectUrl = s.getObject().asLiteral().getString();
-			}
-		} catch (Exception e) {
-			logger.error(e);
+	private void addMultipleChoiceHeaders(HttpServletResponse resp, ArrayList<String> replacedByUris) {
+		resp.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+		resp.addHeader(HEADER_LINK, "<http://www.w3.org/ns/ldp#BasicContainer>; rel=\"type\"");
+		resp.addHeader(HEADER_LINK, "<http://www.w3.org/ns/ldp#Resource>; rel=\"type\"");
+		for (String replacedByUri : replacedByUris) {
+			resp.addHeader(HEADER_LINK, "<" + replacedByUri + ">; rel=\"alternate\"");
 		}
-		return redirectUrl;
+	}
+
+	private void replyMultipleChoice(String urli, HttpServletResponse resp, ArrayList<String> replacedByUris,
+			RDFFormat rdfFormat)
+			throws IOException {
+		addMultipleChoiceHeaders(resp, replacedByUris);
+		Model rdfModel = buildReplacedByMultipleUrisRdfReply(urli, replacedByUris);
+		resp.setCharacterEncoding(CHARSET_UTF_8);
+
+		// Jag lyckas inte att få RDFDataMgr att skriva med xml-deklarationen
+		if (rdfFormat == RDFFormat.RDFXML_PLAIN) {
+			resp.getOutputStream().println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		}
+		RDFDataMgr.write(resp.getOutputStream(), rdfModel, rdfFormat);
 	}
 
 	@Override
