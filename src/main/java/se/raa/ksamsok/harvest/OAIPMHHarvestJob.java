@@ -230,7 +230,12 @@ public class OAIPMHHarvestJob extends HarvestJob {
 				}
 				try {
 					logger.debug(serviceId + "About to write listRecords to outputStream");
-					os.write(listRecords.toString().getBytes(StandardCharsets.UTF_8));
+
+					// filtrera bort xsi:schemaLocation som vår xmlParser inte hanterar väl
+					String listRecordsString = listRecords.toString();
+					listRecordsString = StringUtils.remove(listRecordsString, "xsi:schemaLocation=\"http://www.w3.org/1999/02/22-rdf-syntax-ns# http://www.openarchives.org/OAI/2.0/rdf.xsd\"");
+					
+					os.write(listRecordsString.getBytes(StandardCharsets.UTF_8));
 					logger.debug(serviceId + "Done writing listRecords to outputStream");
 					os.write("\n".getBytes(StandardCharsets.UTF_8));
 				} catch (IOException e) {
