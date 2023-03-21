@@ -17,6 +17,7 @@ import se.raa.ksamsok.harvest.OAIPMHHandler;
 import se.raa.ksamsok.lucene.exception.SamsokProtocolException;
 
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -338,11 +339,12 @@ public abstract class BaseSamsokProtocolHandler implements SamsokProtocolHandler
 			//		"' saknas för " + identifier);
 		}
 
-		String buildDate = extractSingleValue(model, subject, getURIRef(uri_rBuilddDate), null);
-		if (buildDate != null) {
-			TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_BUILD_DATE, buildDate, ip);
+		String buildDate = extractSingleValue(model, subject, getURIRef(uri_rBuilddDate), null)
+		if (buildDate == null) {
+			Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String buildDate = formatter.format(new Date());
 		}
-
+		TimeUtil.parseAndIndexISO8601DateAsDate(identifier, IX_BUILD_DATE, buildDate, ip);
 	}
 
 	/**
